@@ -1,5 +1,11 @@
 # Guía de estilo para Desarrollo
 
+## Introducción
+A la hora de realizar tareas de desarrollo, mantenimiento, soporte y documentación de código en proyectos con equipos de varios desarrolladores, resulta muy conveniente que todos los miembros del equipo conozcan y hagan uso de un mismo estilo de codificación. Esto favorece tanto a la calidad como a la productividad.
+
+Con este propósito, se recomienda a los desarrolladores que deseen colaborar con el proyecto seguir las convenciones de codificación que se describen en esta Guía. La mejor manera de escribir código compatible es familiarizarse con el ya existente y tratar de adaptar un estilo similar.
+
+## Contenido
 * [Consideraciones generales](#consideraciones-generales)
 * [Nomenclatura](#nomenclatura)
 * [Comentarios](#comentarios)
