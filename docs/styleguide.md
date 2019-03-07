@@ -44,10 +44,10 @@ Object Type|y_
 
 * Se recomienda que los nombres de las tablas se encuentren en plural.
 * Se recomienda que los nombres de los campos se encuentren en singular.
-* Los campos que sirven de identificador o código deben usar el prefijo id_.
-* Se recomienda usar el prefijo lf_ para funciones locales.
-* Se recomienda usar el prefijo lp_ para procedimientos locales.
-* Se recomienda usar el prefijo ly_ para types locales.
+* Los campos que sirven de identificador o código deben usar el prefijo *id_*.
+* Se recomienda usar el prefijo *lf_* para funciones locales.
+* Se recomienda usar el prefijo *lp_* para procedimientos locales.
+* Se recomienda usar el prefijo *ly_* para types locales.
 
 ## Claves
 Los nombres de las claves de tablas deben usar prefijos y construirse de la siguiente manera:
@@ -58,7 +58,7 @@ Clave primaria|pk_|Prefijo _ Tabla 1
 Clave foránea|fk_|Prefijo _ Tabla principal _ Tabla referenciada 2
 Clave única|uk_|Prefijo _ Tabla _ Campo(s) 2
 
-1. Nombre de la tabla sin el prefijo t_
+1. Nombre de la tabla sin el prefijo *t_*
 2. En caso de superar el límite de 31 caracteres se recomienda abreviar el nombre de la tabla principal con los primeros tres caracteres de cada palabra, empezando por la primera (si existe más de una), hasta sortear dicho límite.
 
 ## Triggers
@@ -72,14 +72,14 @@ Trigger Before|gb_|Prefijo _ Tabla 1
 Trigger After|gf_|Prefijo _ Tabla 1
 Trigger Compound|gc_|Prefijo _ Tabla 1
 
-1. Nombre de la tabla sin el prefijo t_
+1. Nombre de la tabla sin el prefijo *t_*
 
 ## Constantes y Variables
-* Las constantes deben usar el prefijo c_
-* Las variables globales deben usar el prefijo g_
-* Las variables locales deben usar el prefijo l_
-* Los cursores deben usar el prefijo cr_
-* Los rowtype deben usar el prefijo rw_
+* Las constantes deben usar el prefijo *c_*.
+* Las variables globales deben usar el prefijo *g_*.
+* Las variables locales deben usar el prefijo *l_*.
+* Los cursores deben usar el prefijo *cr_*.
+* Los rowtype deben usar el prefijo *rw_*.
 
 ## Parámetros
 Los parámetros de funciones y procedimientos se deben definir en el siguiente orden:
@@ -87,12 +87,12 @@ Los parámetros de funciones y procedimientos se deben definir en el siguiente o
 1. Parámetros obligatorios de entrada
 1. Parámetros opcionales de entrada
 
-* Los parámetros de entrada deben usar el prefijo i_
-* Los parámetros de salida deben usar el prefijo o_
+* Los parámetros de entrada deben usar el prefijo *i_*.
+* Los parámetros de salida deben usar el prefijo *o_*.
 
 ## Otros
-* Las excepciones deben usar el prefijo ex_
-* Los savepoints deben usar el prefijo sv_
+* Las excepciones deben usar el prefijo *ex_*.
+* Los savepoints deben usar el prefijo *sv_*.
 
 
 # Comentarios
