@@ -35,6 +35,7 @@ Tipo de objeto|Prefijo
 --------------|-------
 Tabla|t_
 Vista|v_
+Vista materializada|vm_
 Función|f_
 Procedimiento|p_
 Paquete|k_
@@ -44,10 +45,36 @@ Object Type|y_
 
 * Se recomienda que los nombres de las tablas se encuentren en plural.
 * Se recomienda que los nombres de los campos se encuentren en singular.
+* Se recomienda que los nombres de los paquetes se encuentren en singular.
 * Los campos que sirven de identificador o código deben usar el prefijo *id_*.
 * Se recomienda usar el prefijo *lf_* para funciones locales.
 * Se recomienda usar el prefijo *lp_* para procedimientos locales.
 * Se recomienda usar el prefijo *ly_* para types locales.
+
+Sufijos comunes de tablas:
+
+Sufijo|Descripción
+------|-----------
+_hist|Datos históricos
+_temp|Datos temporales
+
+Nombres comunes de campos:
+
+TIPO,
+ESTADO,
+ACTIVO,
+DESCRIPCION,
+DENOMINACION,
+DETALLE,
+OBSERVACION,
+REFERENCIA,
+COMENTARIO,
+FECHA,
+FECHA_INICIO,
+FECHA_FIN,
+MONTO,
+CANTIDAD,
+ORDEN
 
 ## Claves
 Los nombres de las claves de tablas deben usar prefijos y construirse de la siguiente manera:
