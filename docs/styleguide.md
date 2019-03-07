@@ -44,7 +44,10 @@ Object Type|y_
 
 * Se recomienda que los nombres de las tablas se encuentren en plural.
 * Se recomienda que los nombres de los campos se encuentren en singular.
-* Los campos que sirven de identificador o código deben usar el prefijo id_
+* Los campos que sirven de identificador o código deben usar el prefijo id_.
+* Se recomienda usar el prefijo lf_ para funciones locales.
+* Se recomienda usar el prefijo lp_ para procedimientos locales.
+* Se recomienda usar el prefijo ly_ para types locales.
 
 ## Claves
 Los nombres de las claves de tablas deben usar prefijos y construirse de la siguiente manera:
@@ -71,14 +74,21 @@ Trigger Compound|gc_|Prefijo _ Tabla 1
 
 1. Nombre de la tabla sin el prefijo t_
 
-## Variables
+## Constantes y Variables
 * Las constantes deben usar el prefijo c_
 * Las variables globales deben usar el prefijo g_
 * Las variables locales deben usar el prefijo l_
-* Los parámetros de entrada deben usar el prefijo i_
-* Los parámetros de salida deben usar el prefijo o_
 * Los cursores deben usar el prefijo cr_
 * Los rowtype deben usar el prefijo rw_
+
+## Parámetros
+Los parámetros de funciones y procedimientos se deben definir en el siguiente orden:
+* Parámetros de salida
+* Parámetros obligatorios de entrada
+* Parámetros opcionales de entrada
+
+* Los parámetros de entrada deben usar el prefijo i_
+* Los parámetros de salida deben usar el prefijo o_
 
 ## Otros
 * Las excepciones deben usar el prefijo ex_
