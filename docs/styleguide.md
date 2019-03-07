@@ -77,9 +77,12 @@ Trigger Compound|gc_|Prefijo _ Tabla 1
 * Las variables locales deben usar el prefijo l_
 * Los parámetros de entrada deben usar el prefijo i_
 * Los parámetros de salida deben usar el prefijo o_
-* Los cursores deben usar el prefijo cu_
-* Los rowtype deben usar el prefijo r_
+* Los cursores deben usar el prefijo cr_
+* Los rowtype deben usar el prefijo rw_
+
+## Otros
 * Las excepciones deben usar el prefijo ex_
+* Los savepoints deben usar el prefijo sv_
 
 
 # Comentarios
