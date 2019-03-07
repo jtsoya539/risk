@@ -34,7 +34,7 @@ Procedimiento|p_
 Paquete|k_
 Trigger|g_
 Secuencia|s_
-Object Type|o_
+Object Type|y_
 
 * Se recomienda que los nombres de las tablas se encuentren en plural.
 * Se recomienda que los nombres de los campos se encuentren en singular.
@@ -68,7 +68,8 @@ Trigger Compound|gc_|Prefijo _ Tabla 1
 ## Variables
 * Las variables globales deben usar el prefijo g_
 * Las variables locales deben usar el prefijo l_
-* Los parámetros deben usar el prefijo p_
+* Los parámetros de entrada deben usar el prefijo i_
+* Los parámetros de salida deben usar el prefijo o_
 * Los cursores deben usar el prefijo c_
 * Los rowtype deben usar el prefijo r_
 
