@@ -82,13 +82,13 @@ Trigger Compound|gc_|Prefijo _ Tabla 1
 * Los rowtype deben usar el prefijo *rw_*.
 
 ## Parámetros
+* Los parámetros de entrada deben usar el prefijo *i_*.
+* Los parámetros de salida deben usar el prefijo *o_*.
+
 Los parámetros de funciones y procedimientos se deben definir en el siguiente orden:
 1. Parámetros de salida
 1. Parámetros obligatorios de entrada
 1. Parámetros opcionales de entrada
-
-* Los parámetros de entrada deben usar el prefijo *i_*.
-* Los parámetros de salida deben usar el prefijo *o_*.
 
 ## Otros
 * Las excepciones deben usar el prefijo *ex_*.
