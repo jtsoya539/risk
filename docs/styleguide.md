@@ -66,12 +66,14 @@ Trigger Compound|gc_|Prefijo _ Tabla 1
 1. Nombre de la tabla sin el prefijo t_
 
 ## Variables
+* Las constantes deben usar el prefijo c_
 * Las variables globales deben usar el prefijo g_
 * Las variables locales deben usar el prefijo l_
 * Los parámetros de entrada deben usar el prefijo i_
 * Los parámetros de salida deben usar el prefijo o_
-* Los cursores deben usar el prefijo c_
+* Los cursores deben usar el prefijo cu_
 * Los rowtype deben usar el prefijo r_
+* Las excepciones deben usar el prefijo ex_
 
 
 # Comentarios
