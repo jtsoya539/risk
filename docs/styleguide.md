@@ -111,6 +111,7 @@ Trigger Compound|gc_|Prefijo _ Tabla 1
 ## Parámetros
 * Los parámetros de entrada deben usar el prefijo *i_*.
 * Los parámetros de salida deben usar el prefijo *o_*.
+* Los parámetros de entrada y salida deben usar el prefijo *io_*.
 
 Los parámetros de funciones y procedimientos se deben definir en el siguiente orden:
 1. Parámetros de salida
