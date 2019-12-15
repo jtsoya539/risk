@@ -24,8 +24,14 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
   END;
 
   MEMBER FUNCTION to_json RETURN VARCHAR2 IS
+    l_json json_object_t;
   BEGIN
-    RETURN '{"codigo":"' || codigo || '", "mensaje":"' || mensaje || '", "mensaje_bd":"' || mensaje_bd || '", "origen":"' || origen || '"}';
+    l_json := json_object_t;
+    l_json.put('codigo', self.codigo);
+    l_json.put('mensaje', self.mensaje);
+    l_json.put('mensaje_bd', self.mensaje_bd);
+    l_json.put('origen', self.origen);
+    RETURN l_json.to_string;
   END;
 END;
 /

@@ -1,0 +1,30 @@
+-- Create table
+create table T_PAISES
+(
+  id_pais     NUMBER(3) not null,
+  nombre      VARCHAR2(100),
+  iso_alpha_2 VARCHAR2(2),
+  iso_alpha_3 VARCHAR2(3),
+  iso_numeric NUMBER(3)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table T_PAISES
+  is 'Paises';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_PAISES
+  add constraint PK_PAISES primary key (ID_PAIS)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255;

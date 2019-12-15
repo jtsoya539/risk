@@ -1,0 +1,29 @@
+-- Create table
+create table T_ROLES
+(
+  id_rol  NUMBER(3) not null,
+  nombre  VARCHAR2(100),
+  activo  CHAR(1),
+  detalle VARCHAR2(2000)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table T_ROLES
+  is 'Roles';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_ROLES
+  add constraint PK_ROLES primary key (ID_ROL)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255;

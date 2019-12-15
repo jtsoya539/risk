@@ -1,0 +1,33 @@
+-- Create table
+create table T_ROL_USUARIOS
+(
+  id_rol     NUMBER(3) not null,
+  id_usuario NUMBER(10) not null
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the table 
+comment on table T_ROL_USUARIOS
+  is 'Usuarios por Rol';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_ROL_USUARIOS
+  add constraint PK_ROL_USUARIOS primary key (ID_ROL, ID_USUARIO)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+alter table T_ROL_USUARIOS
+  add constraint FK_ROL_USUARIOS_ROLES foreign key (ID_ROL)
+  references T_ROLES (ID_ROL);
+alter table T_ROL_USUARIOS
+  add constraint FK_ROL_USUARIOS_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);

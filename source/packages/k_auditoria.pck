@@ -35,19 +35,19 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
   
     -- Genera comentarios
     l_sentencia := 'comment on column ' || i_tabla ||
-                   '.usuario_insercion is ''Usuario que realizo la insercion del registro.''';
+                   '.usuario_insercion is ''Usuario que realizo la insercion del registro''';
     EXECUTE IMMEDIATE l_sentencia;
   
     l_sentencia := 'comment on column ' || i_tabla ||
-                   '.fecha_insercion is ''Fecha en que se realizo la insercion del registro.''';
+                   '.fecha_insercion is ''Fecha en que se realizo la insercion del registro''';
     EXECUTE IMMEDIATE l_sentencia;
   
     l_sentencia := 'comment on column ' || i_tabla ||
-                   '.usuario_modificacion is ''Usuario que realizo la ultima modificacion en el registro.''';
+                   '.usuario_modificacion is ''Usuario que realizo la ultima modificacion en el registro''';
     EXECUTE IMMEDIATE l_sentencia;
   
     l_sentencia := 'comment on column ' || i_tabla ||
-                   '.fecha_modificacion is ''Fecha en que se realizo la ultima modificacion en el registro.''';
+                   '.fecha_modificacion is ''Fecha en que se realizo la ultima modificacion en el registro''';
     EXECUTE IMMEDIATE l_sentencia;
   END;
 
@@ -63,12 +63,7 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
   BEFORE DELETE OR INSERT OR UPDATE ON ' ||
                    lower(i_tabla) || '
   FOR EACH ROW
-
 DECLARE
-
-  PROCEDURE lp_insercion;
-  PROCEDURE lp_modificacion;
-
   -- Auditoria para insercion de registros
   PROCEDURE lp_insercion IS
   BEGIN
@@ -82,9 +77,7 @@ DECLARE
     :new.usuario_modificacion := substr(USER, 1, 10);
     :new.fecha_modificacion   := SYSDATE;
   END;
-
 BEGIN
-
   -- Registrar campos de auditoria
   IF inserting THEN
     lp_insercion;
@@ -92,7 +85,6 @@ BEGIN
   ELSIF updating THEN
     lp_modificacion;
   END IF;
-
 END;';
   
     EXECUTE IMMEDIATE l_sentencia;

@@ -31,6 +31,14 @@ CREATE OR REPLACE PACKAGE k_util IS
                             i_separador IN VARCHAR2 DEFAULT '~')
     RETURN VARCHAR2;
 
+  -- Retorna el significado de un codigo dentro de un dominio 
+  --
+  -- %param i_dominio Dominio
+  -- %param i_codigo Codigo
+  -- %return Significado
+  FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
+                                i_codigo  IN VARCHAR2) RETURN VARCHAR2;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_util IS
@@ -51,7 +59,6 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
     l_sentencia := 'CREATE OR REPLACE TRIGGER ' || l_trigger || '
   BEFORE INSERT ON ' || lower(i_tabla) || '
   FOR EACH ROW
-
 BEGIN
   SELECT s_' || lower(i_campo) || '.nextval INTO :new.' ||
                    lower(i_campo) || ' FROM dual;
@@ -114,6 +121,23 @@ END;';
                                  l_longitud_valor);
     END IF;
     RETURN l_valor;
+  END;
+
+  FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
+                                i_codigo  IN VARCHAR2) RETURN VARCHAR2 IS
+    l_significado t_significados.significado%TYPE;
+  BEGIN
+    BEGIN
+      SELECT a.significado
+        INTO l_significado
+        FROM t_significados a
+       WHERE a.dominio = i_dominio
+         AND a.codigo = i_codigo;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_significado := NULL;
+    END;
+    RETURN l_significado;
   END;
 
 BEGIN
