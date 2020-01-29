@@ -1,0 +1,12 @@
+create table T_PARAMETROS
+(
+  id_parametro VARCHAR2(50) not null,
+  descripcion  VARCHAR2(500),
+  valor        VARCHAR2(500)
+)
+;
+comment on table T_PARAMETROS
+  is 'Parametros';
+alter table T_PARAMETROS
+  add constraint PK_PARAMETROS primary key (ID_PARAMETRO);
+

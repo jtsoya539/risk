@@ -1,0 +1,11 @@
+create table T_ERRORES
+(
+  id_error VARCHAR2(10) not null,
+  mensaje  VARCHAR2(2000)
+)
+;
+comment on table T_ERRORES
+  is 'Errores';
+alter table T_ERRORES
+  add constraint PK_ERRORES primary key (ID_ERROR);
+

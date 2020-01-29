@@ -1,0 +1,21 @@
+create table T_ROL_PARAMETROS
+(
+  id_rol       NUMBER(3) not null,
+  id_parametro VARCHAR2(50) not null,
+  consultar    CHAR(1) default 'N',
+  insertar     CHAR(1) default 'N',
+  actualizar   CHAR(1) default 'N',
+  eliminar     CHAR(1) default 'N'
+)
+;
+comment on table T_ROL_PARAMETROS
+  is 'Parametros por Rol';
+alter table T_ROL_PARAMETROS
+  add constraint PK_ROL_PARAMETROS primary key (ID_ROL, ID_PARAMETRO);
+alter table T_ROL_PARAMETROS
+  add constraint FK_ROL_PARAMETROS_PARAMETROS foreign key (ID_PARAMETRO)
+  references T_PARAMETROS (ID_PARAMETRO);
+alter table T_ROL_PARAMETROS
+  add constraint FK_ROL_PARAMETROS_ROLES foreign key (ID_ROL)
+  references T_ROLES (ID_ROL);
+

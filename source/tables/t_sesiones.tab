@@ -1,0 +1,25 @@
+create table T_SESIONES
+(
+  id_sesion           NUMBER not null,
+  token               VARCHAR2(300),
+  estado              CHAR(1),
+  id_aplicacion       VARCHAR2(5),
+  fecha_autenticacion DATE,
+  fecha_expiracion    DATE,
+  id_usuario          NUMBER(10),
+  direccion_ip        VARCHAR2(50),
+  host                VARCHAR2(50),
+  terminal            VARCHAR2(50)
+)
+;
+comment on table T_SESIONES
+  is 'Sesiones';
+alter table T_SESIONES
+  add constraint PK_SESIONES primary key (ID_SESION);
+alter table T_SESIONES
+  add constraint FK_SESIONES_APLICACIONES foreign key (ID_APLICACION)
+  references T_APLICACIONES (ID_APLICACION);
+alter table T_SESIONES
+  add constraint FK_SESIONES_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);
+

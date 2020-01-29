@@ -1,0 +1,28 @@
+create table T_SERVICIOS
+(
+  id_servicio          NUMBER(3) not null,
+  nombre               VARCHAR2(100),
+  tipo                 CHAR(1),
+  activo               CHAR(1),
+  clave                VARCHAR2(50),
+  detalle              VARCHAR2(2000),
+  version_actual       VARCHAR2(10),
+  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
+  fecha_insercion      DATE default SYSDATE,
+  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
+  fecha_modificacion   DATE default SYSDATE
+)
+;
+comment on table T_SERVICIOS
+  is 'Servicios Web';
+comment on column T_SERVICIOS.usuario_insercion
+  is 'Usuario que realizo la insercion del registro';
+comment on column T_SERVICIOS.fecha_insercion
+  is 'Fecha en que se realizo la insercion del registro';
+comment on column T_SERVICIOS.usuario_modificacion
+  is 'Usuario que realizo la ultima modificacion en el registro';
+comment on column T_SERVICIOS.fecha_modificacion
+  is 'Fecha en que se realizo la ultima modificacion en el registro';
+alter table T_SERVICIOS
+  add constraint PK_SERVICIOS primary key (ID_SERVICIO);
+

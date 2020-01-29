@@ -1,0 +1,29 @@
+create table T_ROL_USUARIOS
+(
+  id_rol               NUMBER(3) not null,
+  id_usuario           NUMBER(10) not null,
+  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
+  fecha_insercion      DATE default SYSDATE,
+  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
+  fecha_modificacion   DATE default SYSDATE
+)
+;
+comment on table T_ROL_USUARIOS
+  is 'Usuarios por Rol';
+comment on column T_ROL_USUARIOS.usuario_insercion
+  is 'Usuario que realizo la insercion del registro';
+comment on column T_ROL_USUARIOS.fecha_insercion
+  is 'Fecha en que se realizo la insercion del registro';
+comment on column T_ROL_USUARIOS.usuario_modificacion
+  is 'Usuario que realizo la ultima modificacion en el registro';
+comment on column T_ROL_USUARIOS.fecha_modificacion
+  is 'Fecha en que se realizo la ultima modificacion en el registro';
+alter table T_ROL_USUARIOS
+  add constraint PK_ROL_USUARIOS primary key (ID_ROL, ID_USUARIO);
+alter table T_ROL_USUARIOS
+  add constraint FK_ROL_USUARIOS_ROLES foreign key (ID_ROL)
+  references T_ROLES (ID_ROL);
+alter table T_ROL_USUARIOS
+  add constraint FK_ROL_USUARIOS_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);
+

@@ -1,0 +1,26 @@
+create table T_PAISES
+(
+  id_pais              NUMBER(3) not null,
+  nombre               VARCHAR2(100),
+  iso_alpha_2          VARCHAR2(2),
+  iso_alpha_3          VARCHAR2(3),
+  iso_numeric          NUMBER(3),
+  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
+  fecha_insercion      DATE default SYSDATE,
+  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
+  fecha_modificacion   DATE default SYSDATE
+)
+;
+comment on table T_PAISES
+  is 'Paises';
+comment on column T_PAISES.usuario_insercion
+  is 'Usuario que realizo la insercion del registro';
+comment on column T_PAISES.fecha_insercion
+  is 'Fecha en que se realizo la insercion del registro';
+comment on column T_PAISES.usuario_modificacion
+  is 'Usuario que realizo la ultima modificacion en el registro';
+comment on column T_PAISES.fecha_modificacion
+  is 'Fecha en que se realizo la ultima modificacion en el registro';
+alter table T_PAISES
+  add constraint PK_PAISES primary key (ID_PAIS);
+

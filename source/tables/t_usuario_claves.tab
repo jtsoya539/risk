@@ -1,0 +1,21 @@
+create table T_USUARIO_CLAVES
+(
+  id_usuario                 NUMBER(10) not null,
+  tipo                       CHAR(1) not null,
+  estado                     CHAR(1),
+  hash                       VARCHAR2(500),
+  salt                       VARCHAR2(500),
+  algoritmo                  VARCHAR2(30),
+  cantidad_intentos_fallidos NUMBER(3),
+  iteraciones                NUMBER(10),
+  fecha_ultima_autenticacion DATE
+)
+;
+comment on table T_USUARIO_CLAVES
+  is 'Claves por Usuario';
+alter table T_USUARIO_CLAVES
+  add constraint PK_USUARIO_CLAVES primary key (ID_USUARIO, TIPO);
+alter table T_USUARIO_CLAVES
+  add constraint FK_USUARIO_CLAVES_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);
+

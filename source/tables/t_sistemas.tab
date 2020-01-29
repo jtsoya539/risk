@@ -1,0 +1,15 @@
+create table T_SISTEMAS
+(
+  id_sistema     VARCHAR2(5) not null,
+  nombre         VARCHAR2(100),
+  detalle        VARCHAR2(2000),
+  activo         CHAR(1),
+  fecha_actual   DATE,
+  version_actual VARCHAR2(10)
+)
+;
+comment on table T_SISTEMAS
+  is 'Sistemas';
+alter table T_SISTEMAS
+  add constraint PK_SISTEMAS primary key (ID_SISTEMA);
+
