@@ -19,20 +19,20 @@ prompt
 prompt Installing tables...
 prompt ===========================
 prompt
+@@tables/t_sistemas.tab
 @@tables/t_aplicaciones.tab
-@@tables/t_ciudades.tab
 @@tables/t_errores.tab
+@@tables/t_significados.tab
 @@tables/t_paises.tab
-@@tables/t_parametros.tab
+@@tables/t_ciudades.tab
 @@tables/t_personas.tab
+@@tables/t_usuarios.tab
 @@tables/t_roles.tab
+@@tables/t_parametros.tab
 @@tables/t_rol_parametros.tab
 @@tables/t_rol_usuarios.tab
 @@tables/t_servicios.tab
 @@tables/t_sesiones.tab
-@@tables/t_significados.tab
-@@tables/t_sistemas.tab
-@@tables/t_usuarios.tab
 @@tables/t_usuario_claves.tab
 
 prompt
@@ -66,11 +66,11 @@ prompt
 prompt Installing packages...
 prompt ===========================
 prompt
+@@packages/k_sistema.pck
+@@packages/k_util.pck
 @@packages/k_auditoria.pck
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_servicio.pck
-@@packages/k_sistema.pck
-@@packages/k_util.pck
 
 spool off
