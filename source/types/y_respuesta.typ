@@ -8,22 +8,25 @@ CREATE OR REPLACE TYPE y_respuesta AS OBJECT
   mensaje    VARCHAR2(2000), -- Mensaje de la respuesta
   mensaje_bd VARCHAR2(2000), -- Mensaje de Base de Datos
   origen     VARCHAR2(500), -- Origen de la respuesta
+  datos      CLOB, -- Datos
 
   CONSTRUCTOR FUNCTION y_respuesta RETURN SELF AS RESULT,
-  MEMBER FUNCTION to_json RETURN VARCHAR2
+  MEMBER FUNCTION to_json RETURN CLOB
 )
 /
+
 CREATE OR REPLACE TYPE BODY y_respuesta IS
   CONSTRUCTOR FUNCTION y_respuesta RETURN SELF AS RESULT AS
   BEGIN
     self.codigo     := '0';
-    self.mensaje    := '';
-    self.mensaje_bd := '';
-    self.origen     := '';
+    self.mensaje    := 'OK';
+    self.mensaje_bd := NULL;
+    self.origen     := NULL;
+    self.datos      := NULL;
     RETURN;
   END;
 
-  MEMBER FUNCTION to_json RETURN VARCHAR2 IS
+  MEMBER FUNCTION to_json RETURN CLOB IS
     l_json json_object_t;
   BEGIN
     l_json := json_object_t;
@@ -31,7 +34,9 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
     l_json.put('mensaje', self.mensaje);
     l_json.put('mensaje_bd', self.mensaje_bd);
     l_json.put('origen', self.origen);
-    RETURN l_json.to_string;
+    l_json.put('datos', self.datos);
+    RETURN l_json.to_clob;
   END;
 END;
 /
+
