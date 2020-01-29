@@ -1,3 +1,15 @@
+prompt ---------------------------------
+prompt |  _____   _____   _____  _  __ |
+prompt | |  __ \ |_   _| / ____|| |/ / |
+prompt | | |__) |  | |  | (___  | ' /  |
+prompt | |  _  /   | |   \___ \ |  <   |
+prompt | | | \ \  _| |_  ____) || . \  |
+prompt | |_|  \_\|_____||_____/ |_|\_\ |
+prompt |                               |
+prompt |    Risk Project for Oracle    |
+prompt |         By @jtsoya539         |
+prompt ---------------------------------
+
 spool install.log
 
 set feedback off
@@ -72,5 +84,12 @@ prompt
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_servicio.pck
+
+prompt
+prompt Running scripts...
+prompt ===========================
+prompt
+@@scripts/ins_t_sistemas.sql
+@@scripts/ins_t_significados.sql
 
 spool off
