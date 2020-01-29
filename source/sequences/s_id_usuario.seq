@@ -1,7 +1,7 @@
--- Create sequence 
-create sequence S_ID_CIUDAD
+create sequence S_ID_USUARIO
 minvalue 1
 maxvalue 9999999999999999999999999999
-start with 1
+start with 101
 increment by 1
 cache 20;
+
