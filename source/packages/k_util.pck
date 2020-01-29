@@ -13,12 +13,6 @@ CREATE OR REPLACE PACKAGE k_util IS
                                         i_campo   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL);
 
-  -- Retorna el mensaje de un error de BD
-  --
-  -- %param i_error Error de BD
-  -- %return Mensaje de error
-  FUNCTION f_mensaje_error(i_error IN VARCHAR2) RETURN VARCHAR2;
-
   -- Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
   -- Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
   --
@@ -31,6 +25,8 @@ CREATE OR REPLACE PACKAGE k_util IS
                             i_separador IN VARCHAR2 DEFAULT '~')
     RETURN VARCHAR2;
 
+  FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2;
+
   -- Retorna el significado de un codigo dentro de un dominio 
   --
   -- %param i_dominio Dominio
@@ -39,8 +35,17 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
                                 i_codigo  IN VARCHAR2) RETURN VARCHAR2;
 
+  FUNCTION f_base_datos RETURN VARCHAR2;
+
+  FUNCTION f_terminal RETURN VARCHAR2;
+
+  FUNCTION f_host RETURN VARCHAR2;
+
+  FUNCTION f_direccion_ip RETURN VARCHAR2;
+
 END;
 /
+
 CREATE OR REPLACE PACKAGE BODY k_util IS
 
   PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
@@ -65,18 +70,6 @@ BEGIN
 END;';
   
     EXECUTE IMMEDIATE l_sentencia;
-  END;
-
-  FUNCTION f_mensaje_error(i_error IN VARCHAR2) RETURN VARCHAR2 IS
-    l_posicion NUMBER := instr(i_error, 'ORA-', 1, 2);
-  BEGIN
-    IF l_posicion > 12 THEN
-      RETURN REPLACE(substr(REPLACE(i_error, '"', ' '), 1, l_posicion - 2),
-                     'ORA-20000:',
-                     '');
-    ELSE
-      RETURN TRIM(REPLACE(REPLACE(i_error, '"', ' '), 'ORA-20000:'));
-    END IF;
   END;
 
   FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,
@@ -123,6 +116,13 @@ END;';
     RETURN l_valor;
   END;
 
+  FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN translate(i_cadena,
+                     '·ÈÌÛ˙‡ËÏÚ˘‚ÍÓÙ˚‰ÎÔˆ¸Á„ı¡…Õ”⁄¿»Ã“Ÿ¬ Œ‘€ƒÀœ÷‹«√’',
+                     'aeiouaeiouaeiouaeioucaoAEIOUAEIOUAEIOUAEIOUCAO');
+  END;
+
   FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
                                 i_codigo  IN VARCHAR2) RETURN VARCHAR2 IS
     l_significado t_significados.significado%TYPE;
@@ -140,8 +140,29 @@ END;';
     RETURN l_significado;
   END;
 
+  FUNCTION f_base_datos RETURN VARCHAR2 IS
+  BEGIN
+    RETURN sys_context('USERENV', 'DB_NAME');
+  END;
+
+  FUNCTION f_terminal RETURN VARCHAR2 IS
+  BEGIN
+    RETURN sys_context('USERENV', 'TERMINAL');
+  END;
+
+  FUNCTION f_host RETURN VARCHAR2 IS
+  BEGIN
+    RETURN sys_context('USERENV', 'HOST');
+  END;
+
+  FUNCTION f_direccion_ip RETURN VARCHAR2 IS
+  BEGIN
+    RETURN sys_context('USERENV', 'IP_ADDRESS');
+  END;
+
 BEGIN
   -- Initialization
   NULL;
 END;
 /
+

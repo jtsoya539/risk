@@ -18,6 +18,7 @@ CREATE OR REPLACE PACKAGE k_auditoria IS
 
 END;
 /
+
 CREATE OR REPLACE PACKAGE BODY k_auditoria IS
 
   PROCEDURE p_generar_campos_auditoria(i_tabla IN VARCHAR2) IS
@@ -95,3 +96,4 @@ BEGIN
   NULL;
 END;
 /
+

@@ -36,6 +36,7 @@ CREATE OR REPLACE PACKAGE k_sistema IS
 
 END;
 /
+
 CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
   TYPE ly_parametros IS TABLE OF VARCHAR2(50) INDEX BY VARCHAR2(30);
@@ -83,9 +84,23 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
 BEGIN
   -- Inicializar parametros
-  p_definir_parametro('SISTEMA', 'RISK');
-  p_definir_parametro('VERSION', '0.1');
+  DECLARE
+    l_nombre         t_sistemas.nombre%TYPE;
+    l_version_actual t_sistemas.version_actual%TYPE;
+    l_fecha_actual   t_sistemas.fecha_actual%TYPE;
+  BEGIN
+    SELECT nombre, version_actual, fecha_actual
+      INTO l_nombre, l_version_actual, l_fecha_actual
+      FROM t_sistemas
+     WHERE id_sistema = 'RISK';
+    p_definir_parametro('SISTEMA', l_nombre);
+    p_definir_parametro('VERSION', l_version_actual);
+    p_definir_parametro('FECHA', to_char(l_fecha_actual, 'YYYY-MM-DD'));
+  EXCEPTION
+    WHEN OTHERS THEN
+      NULL;
+  END;
   p_definir_parametro('USUARIO', USER);
-  p_definir_parametro('FECHA', to_char(SYSDATE, 'YYYY-MM-DD'));
 END;
 /
+
