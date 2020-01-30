@@ -1,3 +1,8 @@
+spool install.log
+
+set feedback off
+set define off
+
 prompt ---------------------------------
 prompt |  _____   _____   _____  _  __ |
 prompt | |  __ \ |_   _| / ____|| |/ / |
@@ -10,14 +15,15 @@ prompt |    Risk Project for Oracle    |
 prompt |         By @jtsoya539         |
 prompt ---------------------------------
 
-spool install.log
-
-set feedback off
-set define off
+prompt
+prompt ===========================
+prompt Installing Risk Project
+prompt ===========================
+prompt
 
 prompt
 prompt Installing sequences...
-prompt ===========================
+prompt ---------------------------
 prompt
 @@sequences/s_id_ciudad.seq
 @@sequences/s_id_pais.seq
@@ -29,7 +35,7 @@ prompt
 
 prompt
 prompt Installing tables...
-prompt ===========================
+prompt ---------------------------
 prompt
 @@tables/t_sistemas.tab
 @@tables/t_aplicaciones.tab
@@ -49,7 +55,7 @@ prompt
 
 prompt
 prompt Installing triggers...
-prompt ===========================
+prompt ---------------------------
 prompt
 @@triggers/ga_aplicaciones.trg
 @@triggers/ga_ciudades.trg
@@ -70,13 +76,13 @@ prompt
 
 prompt
 prompt Installing types...
-prompt ===========================
+prompt ---------------------------
 prompt
 @@types/y_respuesta.typ
 
 prompt
 prompt Installing packages...
-prompt ===========================
+prompt ---------------------------
 prompt
 @@packages/k_sistema.pck
 @@packages/k_util.pck
@@ -87,7 +93,7 @@ prompt
 
 prompt
 prompt Running scripts...
-prompt ===========================
+prompt ---------------------------
 prompt
 @@scripts/ins_t_sistemas.sql
 @@scripts/ins_t_significados.sql
