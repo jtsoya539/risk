@@ -28,7 +28,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2);
 
-  PROCEDURE p_finalizar_sesion(i_id_sesion IN NUMBER);
+  PROCEDURE p_finalizar_sesion(i_token IN VARCHAR2);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
@@ -45,6 +46,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   -- Excepciones
   ex_credenciales_invalidas EXCEPTION;
   ex_usuario_inexistente    EXCEPTION;
+  ex_sesion_inexistente     EXCEPTION;
 
   -- https://mikepargeter.wordpress.com/2012/11/26/pbkdf2-in-oracle
   -- https://www.ietf.org/rfc/rfc6070.txt
@@ -95,6 +97,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         l_id_usuario := NULL;
     END;
     RETURN l_id_usuario;
+  END;
+
+  FUNCTION lf_id_sesion(i_token IN VARCHAR2) RETURN NUMBER IS
+    l_id_sesion t_sesiones.id_sesion%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_sesion
+        INTO l_id_sesion
+        FROM t_sesiones
+       WHERE token = i_token;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_sesion := NULL;
+      WHEN OTHERS THEN
+        l_id_sesion := NULL;
+    END;
+    RETURN l_id_sesion;
   END;
 
   PROCEDURE lp_registrar_intento_fallido(i_id_usuario IN NUMBER,
@@ -366,9 +385,22 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Usuario inexistente');
   END;
 
-  PROCEDURE p_finalizar_sesion(i_id_sesion IN NUMBER) IS
+  PROCEDURE p_finalizar_sesion(i_token IN VARCHAR2) IS
+    l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
-    UPDATE t_sesiones SET estado = 'F' WHERE id_sesion = i_id_sesion;
+    -- Busca sesion
+    l_id_sesion := lf_id_sesion(i_token);
+  
+    IF l_id_sesion IS NULL THEN
+      RAISE ex_sesion_inexistente;
+    END IF;
+  
+    -- Actualiza sesion
+    UPDATE t_sesiones SET estado = 'F' WHERE id_sesion = l_id_sesion;
+  EXCEPTION
+    WHEN ex_sesion_inexistente THEN
+      /*raise_application_error(-20000, 'Sesion inexistente');*/
+      NULL;
   END;
 
 BEGIN

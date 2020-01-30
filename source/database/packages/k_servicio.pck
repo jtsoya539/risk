@@ -10,11 +10,10 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION api_iniciar_sesion(i_usuario IN VARCHAR2,
                               i_token   IN VARCHAR2) RETURN CLOB;
 
-  FUNCTION api_finalizar_sesion(i_id_sesion IN NUMBER) RETURN CLOB;
+  FUNCTION api_finalizar_sesion(i_token IN VARCHAR2) RETURN CLOB;
 
 END;
 /
-
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   -- Excepciones
@@ -166,20 +165,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     RETURN l_resp;
   END;
 
-  FUNCTION lf_finalizar_sesion(i_id_sesion IN NUMBER) RETURN y_respuesta IS
+  FUNCTION lf_finalizar_sesion(i_token IN VARCHAR2) RETURN y_respuesta IS
     resp y_respuesta;
   BEGIN
     -- Inicializa respuesta
     resp := NEW y_respuesta();
   
     resp.origen := 'Validando parametros';
-    IF i_id_sesion IS NULL THEN
-      lp_respuesta_error(resp, '1', 'Debe ingresar id_sesion');
+    IF i_token IS NULL THEN
+      lp_respuesta_error(resp, '1', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
     resp.origen := 'Finalizando sesion';
-    k_autenticacion.p_finalizar_sesion(i_id_sesion);
+    k_autenticacion.p_finalizar_sesion(i_token);
   
     lp_respuesta_ok(resp);
     RETURN resp;
@@ -198,16 +197,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN resp;
   END;
 
-  FUNCTION api_finalizar_sesion(i_id_sesion IN NUMBER) RETURN CLOB IS
+  FUNCTION api_finalizar_sesion(i_token IN VARCHAR2) RETURN CLOB IS
     l_prms json_object_t;
     l_resp CLOB;
   BEGIN
     -- Log de entrada
     l_prms := json_object_t;
-    l_prms.put('i_id_sesion', i_id_sesion);
+    l_prms.put('i_token', i_token);
     plog.info(l_prms.to_clob);
     -- Proceso
-    l_resp := lf_finalizar_sesion(i_id_sesion).to_json;
+    l_resp := lf_finalizar_sesion(i_token).to_json;
     -- Log de salida
     plog.info(l_resp);
     RETURN l_resp;
@@ -218,4 +217,3 @@ BEGIN
   NULL;
 END;
 /
-
