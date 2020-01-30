@@ -7,15 +7,23 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   PROCEDURE p_registrar_usuario(i_usuario IN VARCHAR2,
                                 i_clave   IN VARCHAR2);
 
+  PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
+                              i_clave      IN VARCHAR2,
+                              i_tipo_clave IN CHAR DEFAULT 'A');
+
   PROCEDURE p_cambiar_clave(i_usuario       IN VARCHAR2,
                             i_clave_antigua IN VARCHAR2,
-                            i_clave_nueva   IN VARCHAR2);
+                            i_clave_nueva   IN VARCHAR2,
+                            i_tipo_clave    IN CHAR DEFAULT 'A');
 
-  FUNCTION f_validar_credenciales(i_usuario IN VARCHAR2,
-                                  i_clave   IN VARCHAR2) RETURN BOOLEAN;
+  FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
+                                  i_clave      IN VARCHAR2,
+                                  i_tipo_clave IN CHAR DEFAULT 'A')
+    RETURN BOOLEAN;
 
-  PROCEDURE p_validar_credenciales(i_usuario IN VARCHAR2,
-                                   i_clave   IN VARCHAR2);
+  PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
+                                   i_clave      IN VARCHAR2,
+                                   i_tipo_clave IN CHAR DEFAULT 'A');
 
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2);
@@ -23,14 +31,14 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   PROCEDURE p_finalizar_sesion(i_id_sesion IN NUMBER);
 END;
 /
-
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   c_algoritmo      CONSTANT PLS_INTEGER := sys.dbms_crypto.hmac_sh1;
   c_iteraciones    CONSTANT PLS_INTEGER := 4096;
   c_longitud_bytes CONSTANT PLS_INTEGER := 32;
 
-  c_clave_acceso CONSTANT CHAR(1) := 'A';
+  c_clave_acceso        CONSTANT CHAR(1) := 'A';
+  c_clave_transaccional CONSTANT CHAR(1) := 'T';
 
   cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
 
@@ -123,7 +131,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   BEGIN
     UPDATE t_usuario_claves
        SET cantidad_intentos_fallidos = 0,
-           fecha_ultima_autenticacion = SYSDATE
+           fecha_ultima_autenticacion = SYSDATE,
+           estado = CASE
+                      WHEN nvl(estado, 'N') = 'N' THEN
+                       'A'
+                      ELSE
+                       estado
+                    END
      WHERE id_usuario = i_id_usuario
        AND tipo = i_tipo;
     COMMIT;
@@ -135,14 +149,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   PROCEDURE p_registrar_usuario(i_usuario IN VARCHAR2,
                                 i_clave   IN VARCHAR2) IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
-    l_hash       t_usuario_claves.hash%TYPE;
-    l_salt       t_usuario_claves.salt%TYPE;
   BEGIN
-    -- Genera salt
-    l_salt := rawtohex(sys.dbms_crypto.randombytes(c_longitud_bytes));
-    -- Genera hash
-    l_hash := pbkdf2(i_clave, l_salt, c_iteraciones, c_longitud_bytes);
-  
     -- Inserta usuario
     INSERT INTO t_usuarios
       (alias, estado)
@@ -150,32 +157,15 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       (i_usuario, 'A')
     RETURNING id_usuario INTO l_id_usuario;
   
-    -- Inserta clave de usuario
-    INSERT INTO t_usuario_claves c
-      (id_usuario,
-       tipo,
-       estado,
-       HASH,
-       salt,
-       algoritmo,
-       iteraciones,
-       cantidad_intentos_fallidos,
-       fecha_ultima_autenticacion)
-    VALUES
-      (l_id_usuario,
-       c_clave_acceso,
-       'A',
-       l_hash,
-       l_salt,
-       c_algoritmo,
-       c_iteraciones,
-       0,
-       SYSDATE);
+    p_registrar_clave(i_usuario, i_clave, c_clave_acceso);
+  EXCEPTION
+    WHEN dup_val_on_index THEN
+      raise_application_error(-20000, 'Usuario ya existe');
   END;
 
-  PROCEDURE p_cambiar_clave(i_usuario       IN VARCHAR2,
-                            i_clave_antigua IN VARCHAR2,
-                            i_clave_nueva   IN VARCHAR2) IS
+  PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
+                              i_clave      IN VARCHAR2,
+                              i_tipo_clave IN CHAR DEFAULT 'A') IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
     l_hash       t_usuario_claves.hash%TYPE;
     l_salt       t_usuario_claves.salt%TYPE;
@@ -187,7 +177,56 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RAISE ex_usuario_inexistente;
     END IF;
   
-    IF NOT f_validar_credenciales(i_usuario, i_clave_antigua) THEN
+    -- Genera salt
+    l_salt := rawtohex(sys.dbms_crypto.randombytes(c_longitud_bytes));
+    -- Genera hash
+    l_hash := pbkdf2(i_clave, l_salt, c_iteraciones, c_longitud_bytes);
+  
+    -- Inserta clave de usuario
+    INSERT INTO t_usuario_claves
+      (id_usuario,
+       tipo,
+       estado,
+       HASH,
+       salt,
+       algoritmo,
+       iteraciones,
+       cantidad_intentos_fallidos,
+       fecha_ultima_autenticacion)
+    VALUES
+      (l_id_usuario,
+       i_tipo_clave,
+       'N',
+       l_hash,
+       l_salt,
+       c_algoritmo,
+       c_iteraciones,
+       0,
+       NULL);
+  EXCEPTION
+    WHEN ex_usuario_inexistente THEN
+      raise_application_error(-20000, 'Usuario inexistente');
+    WHEN dup_val_on_index THEN
+      raise_application_error(-20000,
+                              'Usuario ya tiene una clave registrada');
+  END;
+
+  PROCEDURE p_cambiar_clave(i_usuario       IN VARCHAR2,
+                            i_clave_antigua IN VARCHAR2,
+                            i_clave_nueva   IN VARCHAR2,
+                            i_tipo_clave    IN CHAR DEFAULT 'A') IS
+    l_id_usuario t_usuarios.id_usuario%TYPE;
+    l_hash       t_usuario_claves.hash%TYPE;
+    l_salt       t_usuario_claves.salt%TYPE;
+  BEGIN
+    -- Busca usuario
+    l_id_usuario := lf_id_usuario(i_usuario);
+  
+    IF l_id_usuario IS NULL THEN
+      RAISE ex_usuario_inexistente;
+    END IF;
+  
+    IF NOT f_validar_credenciales(i_usuario, i_clave_antigua, i_tipo_clave) THEN
       RAISE ex_credenciales_invalidas;
     END IF;
   
@@ -202,27 +241,29 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
            salt                       = l_salt,
            algoritmo                  = c_algoritmo,
            iteraciones                = c_iteraciones,
+           estado                     = 'N',
            cantidad_intentos_fallidos = 0,
-           fecha_ultima_autenticacion = SYSDATE
+           fecha_ultima_autenticacion = NULL
      WHERE id_usuario = l_id_usuario
-       AND tipo = c_clave_acceso
-       AND estado = 'A';
-    IF SQL%NOTFOUND THEN
+       AND tipo = i_tipo_clave
+       AND estado IN ('N', 'A');
+    /*IF SQL%NOTFOUND THEN
       RAISE ex_credenciales_invalidas;
-    END IF;
+    END IF;*/
   EXCEPTION
     WHEN ex_usuario_inexistente THEN
       raise_application_error(-20000, 'Credenciales invalidas');
     WHEN ex_credenciales_invalidas THEN
-      lp_registrar_intento_fallido(l_id_usuario, c_clave_acceso);
       raise_application_error(-20000, 'Credenciales invalidas');
     WHEN OTHERS THEN
-      lp_registrar_intento_fallido(l_id_usuario, c_clave_acceso);
+      lp_registrar_intento_fallido(l_id_usuario, i_tipo_clave);
       raise_application_error(-20000, 'Credenciales invalidas');
   END;
 
-  FUNCTION f_validar_credenciales(i_usuario IN VARCHAR2,
-                                  i_clave   IN VARCHAR2) RETURN BOOLEAN IS
+  FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
+                                  i_clave      IN VARCHAR2,
+                                  i_tipo_clave IN CHAR DEFAULT 'A')
+    RETURN BOOLEAN IS
     l_id_usuario  t_usuarios.id_usuario%TYPE;
     l_hash        t_usuario_claves.hash%TYPE;
     l_salt        t_usuario_claves.salt%TYPE;
@@ -240,8 +281,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         INTO l_hash, l_salt, l_iteraciones
         FROM t_usuario_claves c
        WHERE c.id_usuario = l_id_usuario
-         AND c.tipo = c_clave_acceso
-         AND c.estado = 'A';
+         AND c.tipo = i_tipo_clave
+         AND c.estado IN ('N', 'A');
     EXCEPTION
       WHEN OTHERS THEN
         RAISE ex_credenciales_invalidas;
@@ -254,23 +295,24 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RAISE ex_credenciales_invalidas;
     END IF;
   
-    lp_registrar_autenticacion(l_id_usuario, c_clave_acceso);
+    lp_registrar_autenticacion(l_id_usuario, i_tipo_clave);
     RETURN TRUE;
   EXCEPTION
     WHEN ex_usuario_inexistente THEN
       RETURN FALSE;
     WHEN ex_credenciales_invalidas THEN
-      lp_registrar_intento_fallido(l_id_usuario, c_clave_acceso);
+      lp_registrar_intento_fallido(l_id_usuario, i_tipo_clave);
       RETURN FALSE;
     WHEN OTHERS THEN
-      lp_registrar_intento_fallido(l_id_usuario, c_clave_acceso);
+      lp_registrar_intento_fallido(l_id_usuario, i_tipo_clave);
       RETURN FALSE;
   END;
 
-  PROCEDURE p_validar_credenciales(i_usuario IN VARCHAR2,
-                                   i_clave   IN VARCHAR2) IS
+  PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
+                                   i_clave      IN VARCHAR2,
+                                   i_tipo_clave IN CHAR DEFAULT 'A') IS
   BEGIN
-    IF NOT f_validar_credenciales(i_usuario, i_clave) THEN
+    IF NOT f_validar_credenciales(i_usuario, i_clave, i_tipo_clave) THEN
       raise_application_error(-20000, 'Credenciales invalidas');
     END IF;
   END;
@@ -334,4 +376,3 @@ BEGIN
   NULL;
 END;
 /
-
