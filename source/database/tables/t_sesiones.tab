@@ -17,6 +17,8 @@ comment on table T_SESIONES
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES
+  add constraint UK_SESIONES_TOKEN unique (TOKEN);
+alter table T_SESIONES
   add constraint FK_SESIONES_APLICACIONES foreign key (ID_APLICACION)
   references T_APLICACIONES (ID_APLICACION);
 alter table T_SESIONES
