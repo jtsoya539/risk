@@ -6,6 +6,6 @@ namespace Risk.API.Services
     {
         YRespuesta ApiValidarCredenciales(string usuario, string clave);
         YRespuesta ApiIniciarSesion(string usuario, string token);
-        YRespuesta ApiFinalizarSesion(int idSesion);
+        YRespuesta ApiFinalizarSesion(string token);
     }
 }

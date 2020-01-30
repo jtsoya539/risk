@@ -21,9 +21,9 @@ namespace Risk.API.Controllers
 
         // DELETE poliscrum/api/auth/sesion
         [HttpDelete("sesion")]
-        public IActionResult finalizarSesion(int idSesion)
+        public IActionResult finalizarSesion(string token)
         {
-            YRespuesta respuesta = service.ApiFinalizarSesion(idSesion);
+            YRespuesta respuesta = service.ApiFinalizarSesion(token);
             return Ok(respuesta);
         }
     }

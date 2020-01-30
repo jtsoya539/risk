@@ -18,11 +18,11 @@ namespace Risk.API.Services
         {
         }
 
-        public YRespuesta ApiFinalizarSesion(int idSesion)
+        public YRespuesta ApiFinalizarSesion(string token)
         {
             base.SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             string respuesta = null;
-            if (idSesion != null)
+            if (token != null)
             {
                 OracleConnection con = GetOracleConnection();
 
@@ -35,15 +35,15 @@ namespace Risk.API.Services
 
                     OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
                     cmd.Parameters.Add(return_value);
-                    OracleParameter i_id_sesion = new OracleParameter("i_id_sesion", OracleDbType.Int32, idSesion, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_id_sesion);
+                    OracleParameter i_token = new OracleParameter("i_token", OracleDbType.Varchar2, token, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_token);
 
                     cmd.ExecuteNonQuery();
 
                     respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
 
                     return_value.Dispose();
-                    i_id_sesion.Dispose();
+                    i_token.Dispose();
                     con.Close();
                 }
             }
