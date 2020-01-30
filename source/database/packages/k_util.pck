@@ -35,6 +35,8 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
                                 i_codigo  IN VARCHAR2) RETURN VARCHAR2;
 
+  FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
+
   FUNCTION f_base_datos RETURN VARCHAR2;
 
   FUNCTION f_terminal RETURN VARCHAR2;
@@ -45,7 +47,6 @@ CREATE OR REPLACE PACKAGE k_util IS
 
 END;
 /
-
 CREATE OR REPLACE PACKAGE BODY k_util IS
 
   PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
@@ -140,6 +141,21 @@ END;';
     RETURN l_significado;
   END;
 
+  FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2 IS
+    l_valor t_parametros.valor%TYPE;
+  BEGIN
+    BEGIN
+      SELECT a.valor
+        INTO l_valor
+        FROM t_parametros a
+       WHERE a.id_parametro = i_id_parametro;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_valor := NULL;
+    END;
+    RETURN l_valor;
+  END;
+
   FUNCTION f_base_datos RETURN VARCHAR2 IS
   BEGIN
     RETURN sys_context('USERENV', 'DB_NAME');
@@ -165,4 +181,3 @@ BEGIN
   NULL;
 END;
 /
-
