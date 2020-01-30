@@ -1,7 +1,7 @@
 create table T_USUARIOS
 (
   id_usuario           NUMBER(10) not null,
-  alias                VARCHAR2(30),
+  alias                VARCHAR2(300),
   id_persona           NUMBER(10),
   estado               CHAR(1),
   avatar               BLOB,
