@@ -2,51 +2,57 @@ prompt Importing table T_SIGNIFICADOS...
 set feedback off
 set define off
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_SESION', 'A', 'ACTIVO', null, 'S', 'RISK', to_date('31-03-2019 21:42:09', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('31-03-2019 21:42:09', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_CLAVE', 'A', 'ACCESO', null, 'S', 'JMEZA', to_date('30-01-2020 09:48:44', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:48:44', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_SESION', 'X', 'EXPIRADO', null, 'S', 'RISK', to_date('31-03-2019 21:42:09', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('31-03-2019 21:42:09', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_CLAVE', 'T', 'TRANSACCIONAL', null, 'S', 'JMEZA', to_date('30-01-2020 09:48:44', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:48:44', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_SESION', 'F', 'FINALIZADO', null, 'S', 'RISK', to_date('31-03-2019 21:42:09', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('31-03-2019 21:48:41', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_SESION', 'A', 'ACTIVO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_PERSONA', 'F', 'FÍSICA', null, 'S', 'RISK', to_date('09-03-2019 20:25:10', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:25:10', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_SESION', 'X', 'EXPIRADO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_PERSONA', 'J', 'JURÍDICA', null, 'S', 'RISK', to_date('09-03-2019 20:25:10', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:25:10', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_SESION', 'F', 'FINALIZADO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_APLICACION', 'W', 'WEB', null, 'S', 'RISK', to_date('09-03-2019 20:27:54', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:27:54', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_PERSONA', 'F', 'FÍSICA', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_APLICACION', 'M', 'MOBILE', null, 'S', 'RISK', to_date('09-03-2019 20:27:54', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:27:54', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_PERSONA', 'J', 'JURÍDICA', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_APLICACION', 'D', 'DESKTOP', null, 'S', 'RISK', to_date('09-03-2019 20:27:54', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:27:54', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_APLICACION', 'W', 'WEB', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_USUARIO', 'A', 'ACTIVO', null, 'S', 'RISK', to_date('09-03-2019 20:32:57', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:32:57', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_APLICACION', 'M', 'MOBILE', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_USUARIO', 'I', 'INACTIVO', null, 'S', 'RISK', to_date('09-03-2019 20:32:57', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:32:57', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_APLICACION', 'D', 'DESKTOP', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_USUARIO', 'B', 'BLOQUEADO', null, 'S', 'RISK', to_date('09-03-2019 20:32:57', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:32:57', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_USUARIO', 'A', 'ACTIVO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_SERVICIO', 'S', 'SOAP', null, 'S', 'RISK', to_date('09-03-2019 20:53:28', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:53:28', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_USUARIO', 'I', 'INACTIVO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('TIPO_SERVICIO', 'R', 'REST', null, 'S', 'RISK', to_date('09-03-2019 20:53:28', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('09-03-2019 20:53:28', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_USUARIO', 'B', 'BLOQUEADO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_CLAVE', 'N', 'NUEVO', null, 'S', 'RISK', to_date('13-03-2019 23:54:05', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('13-03-2019 23:54:28', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_SERVICIO', 'S', 'SOAP', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_CLAVE', 'A', 'ACTIVO', null, 'S', 'RISK', to_date('13-03-2019 23:54:05', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('13-03-2019 23:54:28', 'dd-mm-yyyy hh24:mi:ss'));
+values ('TIPO_SERVICIO', 'R', 'REST', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
-values ('ESTADO_CLAVE', 'B', 'BLOQUEADO', null, 'S', 'RISK', to_date('13-03-2019 23:54:05', 'dd-mm-yyyy hh24:mi:ss'), 'RISK', to_date('13-03-2019 23:54:28', 'dd-mm-yyyy hh24:mi:ss'));
+values ('ESTADO_CLAVE', 'N', 'NUEVO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
+
+insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
+values ('ESTADO_CLAVE', 'A', 'ACTIVO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
+
+insert into T_SIGNIFICADOS (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO, USUARIO_INSERCION, FECHA_INSERCION, USUARIO_MODIFICACION, FECHA_MODIFICACION)
+values ('ESTADO_CLAVE', 'B', 'BLOQUEADO', null, 'S', 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'), 'JMEZA', to_date('30-01-2020 09:36:19', 'dd-mm-yyyy hh24:mi:ss'));
 
 prompt Done.
