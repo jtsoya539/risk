@@ -10,6 +10,18 @@ create table T_SISTEMAS
 ;
 comment on table T_SISTEMAS
   is 'Sistemas';
+comment on column T_SISTEMAS.id_sistema
+  is 'Identificador del sistema';
+comment on column T_SISTEMAS.nombre
+  is 'Nombre del sistema';
+comment on column T_SISTEMAS.detalle
+  is 'Detalles adicionales del sistema';
+comment on column T_SISTEMAS.activo
+  is 'El sistema esta activo? (S/N)';
+comment on column T_SISTEMAS.fecha_actual
+  is 'Fecha actual del sistema';
+comment on column T_SISTEMAS.version_actual
+  is 'Version actual del sistema';
 alter table T_SISTEMAS
   add constraint PK_SISTEMAS primary key (ID_SISTEMA);
 

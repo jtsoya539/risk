@@ -10,6 +10,10 @@ create table T_ROL_USUARIOS
 ;
 comment on table T_ROL_USUARIOS
   is 'Usuarios por Rol';
+comment on column T_ROL_USUARIOS.id_rol
+  is 'Identificador del rol';
+comment on column T_ROL_USUARIOS.id_usuario
+  is 'Identificador del usuario';
 comment on column T_ROL_USUARIOS.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_ROL_USUARIOS.fecha_insercion

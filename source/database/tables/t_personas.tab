@@ -17,6 +17,24 @@ create table T_PERSONAS
 ;
 comment on table T_PERSONAS
   is 'Personas';
+comment on column T_PERSONAS.id_persona
+  is 'Identificador de la persona';
+comment on column T_PERSONAS.nombre
+  is 'Nombre de la persona';
+comment on column T_PERSONAS.apellido
+  is 'Apellido de la persona';
+comment on column T_PERSONAS.nombre_completo
+  is 'Nombre completo de la persona';
+comment on column T_PERSONAS.tipo_persona
+  is 'Tipo de la persona';
+comment on column T_PERSONAS.tipo_documento
+  is 'Tipo de documento de la persona';
+comment on column T_PERSONAS.numero_documento
+  is 'Numero de documento de la persona';
+comment on column T_PERSONAS.id_pais
+  is 'Pais de la persona';
+comment on column T_PERSONAS.fecha_nacimiento
+  is 'Fecha de nacimiento de la persona';
 comment on column T_PERSONAS.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_PERSONAS.fecha_insercion

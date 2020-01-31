@@ -6,6 +6,10 @@ create table T_ERRORES
 ;
 comment on table T_ERRORES
   is 'Errores';
+comment on column T_ERRORES.id_error
+  is 'Identificador del error';
+comment on column T_ERRORES.mensaje
+  is 'Mensaje del error';
 alter table T_ERRORES
   add constraint PK_ERRORES primary key (ID_ERROR);
 

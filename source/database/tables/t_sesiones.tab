@@ -14,6 +14,26 @@ create table T_SESIONES
 ;
 comment on table T_SESIONES
   is 'Sesiones';
+comment on column T_SESIONES.id_sesion
+  is 'Identificador de la sesion';
+comment on column T_SESIONES.token
+  is 'Token de acceso de la sesion';
+comment on column T_SESIONES.estado
+  is 'Estado de la sesion';
+comment on column T_SESIONES.id_aplicacion
+  is 'Aplicacion relacionada a la sesion';
+comment on column T_SESIONES.fecha_autenticacion
+  is 'Fecha de autenticacion de la sesion';
+comment on column T_SESIONES.fecha_expiracion
+  is 'Fecha de expiracion de la sesion';
+comment on column T_SESIONES.id_usuario
+  is 'Usuario relacionado a la sesion';
+comment on column T_SESIONES.direccion_ip
+  is 'Direccion IP de la sesion';
+comment on column T_SESIONES.host
+  is 'Host de la sesion';
+comment on column T_SESIONES.terminal
+  is 'Terminal de la sesion';
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES

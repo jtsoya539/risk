@@ -13,6 +13,16 @@ create table T_USUARIOS
 ;
 comment on table T_USUARIOS
   is 'Usuarios';
+comment on column T_USUARIOS.id_usuario
+  is 'Identificador del usuario';
+comment on column T_USUARIOS.alias
+  is 'Alias del usuario (identificador para autenticacion)';
+comment on column T_USUARIOS.id_persona
+  is 'Persona relacionada al usuario';
+comment on column T_USUARIOS.estado
+  is 'Estado del usuario';
+comment on column T_USUARIOS.avatar
+  is 'Avatar del usuario (imagen de perfil)';
 comment on column T_USUARIOS.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_USUARIOS.fecha_insercion

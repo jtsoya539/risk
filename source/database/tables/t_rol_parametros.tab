@@ -10,6 +10,18 @@ create table T_ROL_PARAMETROS
 ;
 comment on table T_ROL_PARAMETROS
   is 'Parametros por Rol';
+comment on column T_ROL_PARAMETROS.id_rol
+  is 'Identificador del rol';
+comment on column T_ROL_PARAMETROS.id_parametro
+  is 'Identificador del parametro';
+comment on column T_ROL_PARAMETROS.consultar
+  is 'Puede consultar? (S/N)';
+comment on column T_ROL_PARAMETROS.insertar
+  is 'Puede insertar? (S/N)';
+comment on column T_ROL_PARAMETROS.actualizar
+  is 'Puede actualizar? (S/N)';
+comment on column T_ROL_PARAMETROS.eliminar
+  is 'Puede eliminar? (S/N)';
 alter table T_ROL_PARAMETROS
   add constraint PK_ROL_PARAMETROS primary key (ID_ROL, ID_PARAMETRO);
 alter table T_ROL_PARAMETROS

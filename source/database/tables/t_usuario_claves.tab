@@ -13,6 +13,24 @@ create table T_USUARIO_CLAVES
 ;
 comment on table T_USUARIO_CLAVES
   is 'Claves por Usuario';
+comment on column T_USUARIO_CLAVES.id_usuario
+  is 'Usuario relacionado a la clave';
+comment on column T_USUARIO_CLAVES.tipo
+  is 'Tipo de la clave';
+comment on column T_USUARIO_CLAVES.estado
+  is 'Estado de la clave';
+comment on column T_USUARIO_CLAVES.hash
+  is 'Hash de la clave';
+comment on column T_USUARIO_CLAVES.salt
+  is 'Salt (parametro para validacion)';
+comment on column T_USUARIO_CLAVES.algoritmo
+  is 'Algoritmo (parametro para validacion)';
+comment on column T_USUARIO_CLAVES.cantidad_intentos_fallidos
+  is 'Cantidad de intentos fallidos de autenticacion';
+comment on column T_USUARIO_CLAVES.iteraciones
+  is 'Iteraciones (parametro para validacion)';
+comment on column T_USUARIO_CLAVES.fecha_ultima_autenticacion
+  is 'Fecha de la ultima autenticacion exitosa';
 alter table T_USUARIO_CLAVES
   add constraint PK_USUARIO_CLAVES primary key (ID_USUARIO, TIPO);
 alter table T_USUARIO_CLAVES

@@ -13,6 +13,16 @@ create table T_SIGNIFICADOS
 ;
 comment on table T_SIGNIFICADOS
   is 'Significados';
+comment on column T_SIGNIFICADOS.dominio
+  is 'Dominio';
+comment on column T_SIGNIFICADOS.codigo
+  is 'Codigo';
+comment on column T_SIGNIFICADOS.significado
+  is 'Significado';
+comment on column T_SIGNIFICADOS.referencia
+  is 'Referencia adicional';
+comment on column T_SIGNIFICADOS.activo
+  is 'El significado esta activo? (S/N)';
 comment on column T_SIGNIFICADOS.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_SIGNIFICADOS.fecha_insercion

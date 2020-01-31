@@ -11,6 +11,12 @@ create table T_CIUDADES
 ;
 comment on table T_CIUDADES
   is 'Ciudades';
+comment on column T_CIUDADES.id_pais
+  is 'Pais de la ciudad';
+comment on column T_CIUDADES.id_ciudad
+  is 'Identificador de la ciudad';
+comment on column T_CIUDADES.nombre
+  is 'Nombre de la ciudad';
 comment on column T_CIUDADES.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_CIUDADES.fecha_insercion

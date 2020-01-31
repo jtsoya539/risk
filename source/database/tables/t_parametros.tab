@@ -7,6 +7,12 @@ create table T_PARAMETROS
 ;
 comment on table T_PARAMETROS
   is 'Parametros';
+comment on column T_PARAMETROS.id_parametro
+  is 'Identificador del parametro';
+comment on column T_PARAMETROS.descripcion
+  is 'Descripcion del parametro';
+comment on column T_PARAMETROS.valor
+  is 'Valor del parametro';
 alter table T_PARAMETROS
   add constraint PK_PARAMETROS primary key (ID_PARAMETRO);
 

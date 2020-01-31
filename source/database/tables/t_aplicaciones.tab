@@ -15,6 +15,18 @@ create table T_APLICACIONES
 ;
 comment on table T_APLICACIONES
   is 'Aplicaciones';
+comment on column T_APLICACIONES.id_aplicacion
+  is 'Identificador de la aplicacion';
+comment on column T_APLICACIONES.nombre
+  is 'Nombre de la aplicacion';
+comment on column T_APLICACIONES.tipo
+  is 'Tipo de la aplicacion';
+comment on column T_APLICACIONES.activo
+  is 'La aplicacion esta activa? (S/N)';
+comment on column T_APLICACIONES.clave
+  is 'Clave de la aplicacion';
+comment on column T_APLICACIONES.detalle
+  is 'Detalles adicionales de la aplicacion';
 comment on column T_APLICACIONES.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_APLICACIONES.fecha_insercion
@@ -23,6 +35,8 @@ comment on column T_APLICACIONES.usuario_modificacion
   is 'Usuario que realizo la ultima modificacion en el registro';
 comment on column T_APLICACIONES.fecha_modificacion
   is 'Fecha en que se realizo la ultima modificacion en el registro';
+comment on column T_APLICACIONES.version_actual
+  is 'Version actual de la aplicacion';
 alter table T_APLICACIONES
   add constraint PK_APLICACIONES primary key (ID_APLICACION);
 

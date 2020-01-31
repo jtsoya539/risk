@@ -13,6 +13,16 @@ create table T_PAISES
 ;
 comment on table T_PAISES
   is 'Paises';
+comment on column T_PAISES.id_pais
+  is 'Identificador del pais';
+comment on column T_PAISES.nombre
+  is 'Nombre del pais';
+comment on column T_PAISES.iso_alpha_2
+  is 'Codigo del pais segun estandar ISO 3166-1 alpha-2';
+comment on column T_PAISES.iso_alpha_3
+  is 'Codigo del pais segun estandar ISO 3166-1 alpha-3';
+comment on column T_PAISES.iso_numeric
+  is 'Codigo del pais segun estandar ISO 3166-1 numeric';
 comment on column T_PAISES.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_PAISES.fecha_insercion

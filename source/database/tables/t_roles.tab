@@ -12,6 +12,14 @@ create table T_ROLES
 ;
 comment on table T_ROLES
   is 'Roles';
+comment on column T_ROLES.id_rol
+  is 'Identificador del rol';
+comment on column T_ROLES.nombre
+  is 'Nombre del rol';
+comment on column T_ROLES.activo
+  is 'El rol esta activo? (S/N)';
+comment on column T_ROLES.detalle
+  is 'Detalles adicionales del rol';
 comment on column T_ROLES.usuario_insercion
   is 'Usuario que realizo la insercion del registro';
 comment on column T_ROLES.fecha_insercion
