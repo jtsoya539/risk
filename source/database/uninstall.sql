@@ -70,4 +70,10 @@ drop sequence s_id_servicio;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
 
+prompt
+prompt Purging recyclebin...
+prompt ---------------------------
+prompt
+purge recyclebin;
+
 spool off
