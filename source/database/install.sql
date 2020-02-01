@@ -57,15 +57,6 @@ prompt
 prompt Installing triggers...
 prompt ---------------------------
 prompt
-@@triggers/ga_aplicaciones.trg
-@@triggers/ga_ciudades.trg
-@@triggers/ga_paises.trg
-@@triggers/ga_personas.trg
-@@triggers/ga_roles.trg
-@@triggers/ga_rol_usuarios.trg
-@@triggers/ga_servicios.trg
-@@triggers/ga_significados.trg
-@@triggers/ga_usuarios.trg
 @@triggers/gs_ciudades.trg
 @@triggers/gs_paises.trg
 @@triggers/gs_personas.trg
@@ -95,6 +86,7 @@ prompt
 prompt Running scripts...
 prompt ---------------------------
 prompt
+@@install_audit.sql
 @@scripts/ins_t_sistemas.sql
 @@scripts/ins_t_significados.sql
 
