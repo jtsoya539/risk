@@ -13,3 +13,4 @@ BEGIN
     k_auditoria.p_generar_trigger_auditoria(i_tabla => t.tabla);
   END LOOP;
 END;
+/
