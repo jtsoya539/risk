@@ -1,18 +1,14 @@
 create table T_PERSONAS
 (
-  id_persona           NUMBER(10) not null,
-  nombre               VARCHAR2(100),
-  apellido             VARCHAR2(100),
-  nombre_completo      VARCHAR2(200),
-  tipo_persona         CHAR(1),
-  tipo_documento       VARCHAR2(3),
-  numero_documento     VARCHAR2(20),
-  id_pais              NUMBER(3),
-  fecha_nacimiento     DATE,
-  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_insercion      DATE default SYSDATE,
-  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_modificacion   DATE default SYSDATE
+  id_persona       NUMBER(10) not null,
+  nombre           VARCHAR2(100),
+  apellido         VARCHAR2(100),
+  nombre_completo  VARCHAR2(200),
+  tipo_persona     CHAR(1),
+  tipo_documento   VARCHAR2(3),
+  numero_documento VARCHAR2(20),
+  id_pais          NUMBER(3),
+  fecha_nacimiento DATE
 )
 ;
 comment on table T_PERSONAS
@@ -35,14 +31,6 @@ comment on column T_PERSONAS.id_pais
   is 'Pais de la persona';
 comment on column T_PERSONAS.fecha_nacimiento
   is 'Fecha de nacimiento de la persona';
-comment on column T_PERSONAS.usuario_insercion
-  is 'Usuario que realizo la insercion del registro';
-comment on column T_PERSONAS.fecha_insercion
-  is 'Fecha en que se realizo la insercion del registro';
-comment on column T_PERSONAS.usuario_modificacion
-  is 'Usuario que realizo la ultima modificacion en el registro';
-comment on column T_PERSONAS.fecha_modificacion
-  is 'Fecha en que se realizo la ultima modificacion en el registro';
 alter table T_PERSONAS
   add constraint PK_PERSONAS primary key (ID_PERSONA);
 alter table T_PERSONAS

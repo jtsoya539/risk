@@ -1,12 +1,8 @@
 create table T_CIUDADES
 (
-  id_pais              NUMBER(3) not null,
-  id_ciudad            NUMBER(3) not null,
-  nombre               VARCHAR2(100),
-  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_insercion      DATE default SYSDATE,
-  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_modificacion   DATE default SYSDATE
+  id_pais   NUMBER(3) not null,
+  id_ciudad NUMBER(3) not null,
+  nombre    VARCHAR2(100)
 )
 ;
 comment on table T_CIUDADES
@@ -17,14 +13,6 @@ comment on column T_CIUDADES.id_ciudad
   is 'Identificador de la ciudad';
 comment on column T_CIUDADES.nombre
   is 'Nombre de la ciudad';
-comment on column T_CIUDADES.usuario_insercion
-  is 'Usuario que realizo la insercion del registro';
-comment on column T_CIUDADES.fecha_insercion
-  is 'Fecha en que se realizo la insercion del registro';
-comment on column T_CIUDADES.usuario_modificacion
-  is 'Usuario que realizo la ultima modificacion en el registro';
-comment on column T_CIUDADES.fecha_modificacion
-  is 'Fecha en que se realizo la ultima modificacion en el registro';
 alter table T_CIUDADES
   add constraint PK_CIUDADES primary key (ID_PAIS, ID_CIUDAD);
 

@@ -1,14 +1,10 @@
 create table T_USUARIOS
 (
-  id_usuario           NUMBER(10) not null,
-  alias                VARCHAR2(300),
-  id_persona           NUMBER(10),
-  estado               CHAR(1),
-  avatar               BLOB,
-  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_insercion      DATE default SYSDATE,
-  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_modificacion   DATE default SYSDATE
+  id_usuario NUMBER(10) not null,
+  alias      VARCHAR2(300),
+  id_persona NUMBER(10),
+  estado     CHAR(1),
+  avatar     BLOB
 )
 ;
 comment on table T_USUARIOS
@@ -23,14 +19,6 @@ comment on column T_USUARIOS.estado
   is 'Estado del usuario';
 comment on column T_USUARIOS.avatar
   is 'Avatar del usuario (imagen de perfil)';
-comment on column T_USUARIOS.usuario_insercion
-  is 'Usuario que realizo la insercion del registro';
-comment on column T_USUARIOS.fecha_insercion
-  is 'Fecha en que se realizo la insercion del registro';
-comment on column T_USUARIOS.usuario_modificacion
-  is 'Usuario que realizo la ultima modificacion en el registro';
-comment on column T_USUARIOS.fecha_modificacion
-  is 'Fecha en que se realizo la ultima modificacion en el registro';
 alter table T_USUARIOS
   add constraint PK_USUARIOS primary key (ID_USUARIO);
 alter table T_USUARIOS

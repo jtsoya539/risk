@@ -1,14 +1,10 @@
 create table T_SIGNIFICADOS
 (
-  dominio              VARCHAR2(50) not null,
-  codigo               VARCHAR2(30) not null,
-  significado          VARCHAR2(300),
-  referencia           VARCHAR2(50),
-  activo               CHAR(1),
-  usuario_insercion    VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_insercion      DATE default SYSDATE,
-  usuario_modificacion VARCHAR2(10) default SUBSTR(USER, 1, 10),
-  fecha_modificacion   DATE default SYSDATE
+  dominio     VARCHAR2(50) not null,
+  codigo      VARCHAR2(30) not null,
+  significado VARCHAR2(300),
+  referencia  VARCHAR2(50),
+  activo      CHAR(1)
 )
 ;
 comment on table T_SIGNIFICADOS
@@ -23,14 +19,6 @@ comment on column T_SIGNIFICADOS.referencia
   is 'Referencia adicional';
 comment on column T_SIGNIFICADOS.activo
   is 'El significado esta activo? (S/N)';
-comment on column T_SIGNIFICADOS.usuario_insercion
-  is 'Usuario que realizo la insercion del registro';
-comment on column T_SIGNIFICADOS.fecha_insercion
-  is 'Fecha en que se realizo la insercion del registro';
-comment on column T_SIGNIFICADOS.usuario_modificacion
-  is 'Usuario que realizo la ultima modificacion en el registro';
-comment on column T_SIGNIFICADOS.fecha_modificacion
-  is 'Fecha en que se realizo la ultima modificacion en el registro';
 alter table T_SIGNIFICADOS
   add constraint PK_SIGNIFICADOS primary key (DOMINIO, CODIGO);
 
