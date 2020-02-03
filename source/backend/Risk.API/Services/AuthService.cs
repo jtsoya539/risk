@@ -52,12 +52,72 @@ namespace Risk.API.Services
 
         public YRespuesta ApiIniciarSesion(string usuario, string token)
         {
-            throw new System.NotImplementedException();
+            base.SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            string respuesta = null;
+            if (usuario != null && token != null)
+            {
+                OracleConnection con = GetOracleConnection();
+
+                using (OracleCommand cmd = con.CreateCommand())
+                {
+                    con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = SQL_API_INICIAR_SESION;
+                    cmd.BindByName = true;
+
+                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
+                    cmd.Parameters.Add(return_value);
+                    OracleParameter i_usuario = new OracleParameter("i_usuario", OracleDbType.Varchar2, usuario, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_usuario);
+                    OracleParameter i_token = new OracleParameter("i_token", OracleDbType.Varchar2, token, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_token);
+
+                    cmd.ExecuteNonQuery();
+
+                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
+
+                    return_value.Dispose();
+                    i_usuario.Dispose();
+                    i_token.Dispose();
+                    con.Close();
+                }
+            }
+            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
         }
 
         public YRespuesta ApiValidarCredenciales(string usuario, string clave)
         {
-            throw new System.NotImplementedException();
+            base.SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            string respuesta = null;
+            if (usuario != null && clave != null)
+            {
+                OracleConnection con = GetOracleConnection();
+
+                using (OracleCommand cmd = con.CreateCommand())
+                {
+                    con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = SQL_API_VALIDAR_CREDENCIALES;
+                    cmd.BindByName = true;
+
+                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
+                    cmd.Parameters.Add(return_value);
+                    OracleParameter i_usuario = new OracleParameter("i_usuario", OracleDbType.Varchar2, usuario, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_usuario);
+                    OracleParameter i_clave = new OracleParameter("i_clave", OracleDbType.Varchar2, clave, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_clave);
+
+                    cmd.ExecuteNonQuery();
+
+                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
+
+                    return_value.Dispose();
+                    i_usuario.Dispose();
+                    i_clave.Dispose();
+                    con.Close();
+                }
+            }
+            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
         }
     }
 

@@ -1,9 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Risk.API.Entities;
+using Risk.API.Models;
 using Risk.API.Services;
 
 namespace Risk.API.Controllers
@@ -12,18 +18,63 @@ namespace Risk.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService service;
+        private readonly IAuthService _authService;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IConfiguration configuration)
         {
-            service = authService;
+            _authService = authService;
+            _configuration = configuration;
         }
 
-        // DELETE poliscrum/api/auth/sesion
-        [HttpDelete("sesion")]
-        public IActionResult finalizarSesion(string token)
+        // POST /api/auth/sesion
+        [HttpPost("sesion")]
+        public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody iniciarSesionRequestBody)
         {
-            YRespuesta respuesta = service.ApiFinalizarSesion(token);
+            YRespuesta respuesta = _authService.ApiValidarCredenciales(iniciarSesionRequestBody.Usuario, iniciarSesionRequestBody.Clave);
+
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                return BadRequest(respuesta);
+            }
+
+            var secretKey = _configuration.GetValue<string>("SecretKey");
+            var key = Encoding.ASCII.GetBytes(secretKey);
+
+            // Creamos los claims (pertenencias, características) del usuario
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, iniciarSesionRequestBody.Usuario)
+            };
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                // Nuestro token va a durar un día
+                Expires = DateTime.UtcNow.AddDays(1),
+                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.WriteToken(createdToken);
+
+            respuesta = _authService.ApiIniciarSesion(iniciarSesionRequestBody.Usuario, token);
+
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                return BadRequest(respuesta);
+            }
+
+            return Ok(token);
+        }
+
+        // DELETE /api/auth/sesion
+        [HttpDelete("sesion")]
+        public IActionResult FinalizarSesion([FromBody] string token)
+        {
+            YRespuesta respuesta = _authService.ApiFinalizarSesion(token);
             return Ok(respuesta);
         }
     }
