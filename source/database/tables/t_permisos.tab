@@ -1,0 +1,18 @@
+create table T_PERMISOS
+(
+  id_permiso  VARCHAR2(50) not null,
+  descripcion VARCHAR2(500),
+  detalle     VARCHAR2(2000)
+)
+;
+comment on table T_PERMISOS
+  is 'Permisos';
+comment on column T_PERMISOS.id_permiso
+  is 'Identificador del permiso';
+comment on column T_PERMISOS.descripcion
+  is 'Descripcion del permiso';
+comment on column T_PERMISOS.detalle
+  is 'Detalles adicionales del permiso';
+alter table T_PERMISOS
+  add constraint PK_PERMISOS primary key (ID_PERMISO);
+

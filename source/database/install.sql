@@ -3,27 +3,27 @@ spool install.log
 set feedback off
 set define off
 
-prompt ---------------------------------
-prompt |  _____   _____   _____  _  __ |
-prompt | |  __ \ |_   _| / ____|| |/ / |
-prompt | | |__) |  | |  | (___  | ' /  |
-prompt | |  _  /   | |   \___ \ |  <   |
-prompt | | | \ \  _| |_  ____) || . \  |
-prompt | |_|  \_\|_____||_____/ |_|\_\ |
-prompt |                               |
-prompt |    Risk Project for Oracle    |
-prompt |         By @jtsoya539         |
-prompt ---------------------------------
+prompt ###################################
+prompt #   _____   _____   _____  _  __  #
+prompt #  |  __ \ |_   _| / ____|| |/ /  #
+prompt #  | |__) |  | |  | (___  | ' /   #
+prompt #  |  _  /   | |   \___ \ |  <    #
+prompt #  | | \ \  _| |_  ____) || . \   #
+prompt #  |_|  \_\|_____||_____/ |_|\_\  #
+prompt #                                 #
+prompt #          Proyecto RISK          #
+prompt #            jtsoya539            #
+prompt ###################################
 
 prompt
-prompt ===========================
-prompt Installing Risk Project
-prompt ===========================
+prompt ===================================
+prompt Instalacion iniciada
+prompt ===================================
 prompt
 
 prompt
-prompt Installing sequences...
-prompt ---------------------------
+prompt Creando secuencias...
+prompt -----------------------------------
 prompt
 @@sequences/s_id_ciudad.seq
 @@sequences/s_id_pais.seq
@@ -34,8 +34,8 @@ prompt
 @@sequences/s_id_usuario.seq
 
 prompt
-prompt Installing tables...
-prompt ---------------------------
+prompt Creando tablas...
+prompt -----------------------------------
 prompt
 @@tables/t_sistemas.tab
 @@tables/t_aplicaciones.tab
@@ -48,14 +48,16 @@ prompt
 @@tables/t_roles.tab
 @@tables/t_parametros.tab
 @@tables/t_rol_parametros.tab
+@@tables/t_permisos.tab
+@@tables/t_rol_permisos.tab
 @@tables/t_rol_usuarios.tab
 @@tables/t_servicios.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
 
 prompt
-prompt Installing triggers...
-prompt ---------------------------
+prompt Creando triggers...
+prompt -----------------------------------
 prompt
 @@triggers/gs_ciudades.trg
 @@triggers/gs_paises.trg
@@ -66,14 +68,14 @@ prompt
 @@triggers/gs_usuarios.trg
 
 prompt
-prompt Installing types...
-prompt ---------------------------
+prompt Creando types...
+prompt -----------------------------------
 prompt
 @@types/y_respuesta.typ
 
 prompt
-prompt Installing packages...
-prompt ---------------------------
+prompt Creando paquetes...
+prompt -----------------------------------
 prompt
 @@packages/k_sistema.pck
 @@packages/k_util.pck
@@ -83,11 +85,17 @@ prompt
 @@packages/k_servicio.pck
 
 prompt
-prompt Running scripts...
-prompt ---------------------------
+prompt Ejecutando scripts...
+prompt -----------------------------------
 prompt
 @@install_audit.sql
 @@scripts/ins_t_sistemas.sql
 @@scripts/ins_t_significados.sql
+
+prompt
+prompt ===================================
+prompt Instalacion finalizada
+prompt ===================================
+prompt
 
 spool off

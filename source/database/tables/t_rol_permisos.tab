@@ -1,0 +1,33 @@
+create table T_ROL_PERMISOS
+(
+  id_rol     NUMBER(3) not null,
+  id_permiso VARCHAR2(50) not null,
+  consultar  CHAR(1) default 'N',
+  insertar   CHAR(1) default 'N',
+  actualizar CHAR(1) default 'N',
+  eliminar   CHAR(1) default 'N'
+)
+;
+comment on table T_ROL_PERMISOS
+  is 'Permisos por Rol';
+comment on column T_ROL_PERMISOS.id_rol
+  is 'Identificador del rol';
+comment on column T_ROL_PERMISOS.id_permiso
+  is 'Identificador del permiso';
+comment on column T_ROL_PERMISOS.consultar
+  is 'Puede consultar? (S/N)';
+comment on column T_ROL_PERMISOS.insertar
+  is 'Puede insertar? (S/N)';
+comment on column T_ROL_PERMISOS.actualizar
+  is 'Puede actualizar? (S/N)';
+comment on column T_ROL_PERMISOS.eliminar
+  is 'Puede eliminar? (S/N)';
+alter table T_ROL_PERMISOS
+  add constraint PK_ROL_PERMISOS primary key (ID_ROL, ID_PERMISO);
+alter table T_ROL_PERMISOS
+  add constraint FK_ROL_PERMISOS_PERMISOS foreign key (ID_PERMISO)
+  references T_PERMISOS (ID_PERMISO);
+alter table T_ROL_PERMISOS
+  add constraint FK_ROL_PERMISOS_ROLES foreign key (ID_ROL)
+  references T_ROLES (ID_ROL);
+
