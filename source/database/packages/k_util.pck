@@ -47,6 +47,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_direccion_ip RETURN VARCHAR2;
 
+  FUNCTION f_esquema_actual RETURN VARCHAR2;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_util IS
@@ -182,6 +184,11 @@ END;';
   FUNCTION f_direccion_ip RETURN VARCHAR2 IS
   BEGIN
     RETURN sys_context('USERENV', 'IP_ADDRESS');
+  END;
+
+  FUNCTION f_esquema_actual RETURN VARCHAR2 IS
+  BEGIN
+    RETURN sys_context('USERENV', 'CURRENT_SCHEMA');
   END;
 
 BEGIN
