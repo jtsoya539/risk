@@ -4,6 +4,11 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   --
   -- %author jmeza 17/3/2019 15:23:21
 
+  TYPE y_parametros IS TABLE OF anydata NOT NULL INDEX BY VARCHAR2(100);
+
+  FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
+                                  i_parametros  IN CLOB) RETURN y_parametros;
+
   FUNCTION api_validar_credenciales(i_usuario IN VARCHAR2,
                                     i_clave   IN VARCHAR2) RETURN CLOB;
 
@@ -12,12 +17,34 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   FUNCTION api_finalizar_sesion(i_token IN VARCHAR2) RETURN CLOB;
 
+  FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
+                                 i_parametros  IN CLOB) RETURN CLOB;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   -- Excepciones
   ex_api_error EXCEPTION;
+
+  FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
+                                  i_parametros  IN CLOB) RETURN y_parametros IS
+    l_parametros  y_parametros;
+    l_json_object json_object_t;
+    CURSOR c_servicio_parametros IS
+      SELECT lower(nombre) nombre, tipo_dato
+        FROM t_servicio_parametros
+       WHERE id_servicio = i_id_servicio
+         AND activo = 'S';
+  BEGIN
+    l_json_object := json_object_t.parse(i_parametros);
+    FOR par IN c_servicio_parametros LOOP
+      IF par.tipo_dato = 'S' THEN
+        l_parametros(par.nombre) := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
+      END IF;
+    END LOOP;
+    RETURN l_parametros;
+  END;
 
   FUNCTION lf_mensaje_error(i_id_error IN VARCHAR2) RETURN VARCHAR2 IS
     l_mensaje t_errores.mensaje%TYPE;
@@ -208,6 +235,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     plog.info(l_prms.to_clob);
     -- Proceso
     l_resp := lf_finalizar_sesion(i_token).to_json;
+    -- Log de salida
+    plog.info(l_resp);
+    RETURN l_resp;
+  END;
+
+  FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
+                                 i_parametros  IN CLOB) RETURN CLOB IS
+    l_resp CLOB;
+  BEGIN
+    -- Log de entrada
+    plog.info(i_parametros);
+    -- Proceso
+    l_resp := 'Aca tiene que procesar el servicio';
     -- Log de salida
     plog.info(l_resp);
     RETURN l_resp;
