@@ -52,6 +52,7 @@ prompt
 @@tables/t_rol_permisos.tab
 @@tables/t_rol_usuarios.tab
 @@tables/t_servicios.tab
+@@tables/t_servicio_parametros.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
 
@@ -71,6 +72,7 @@ prompt
 prompt Creando types...
 prompt -----------------------------------
 prompt
+@@types/y_dato.typ
 @@types/y_respuesta.typ
 
 prompt

@@ -37,6 +37,7 @@ prompt Borrando types...
 prompt -----------------------------------
 prompt
 drop type y_respuesta force;
+drop type y_dato force;
 
 prompt
 prompt Borrando tablas...
@@ -44,6 +45,7 @@ prompt -----------------------------------
 prompt
 drop table t_usuario_claves cascade constraints;
 drop table t_sesiones cascade constraints;
+drop table t_servicio_parametros cascade constraints;
 drop table t_servicios cascade constraints;
 drop table t_rol_usuarios cascade constraints;
 drop table t_rol_permisos cascade constraints;
