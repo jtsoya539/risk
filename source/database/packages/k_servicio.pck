@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE k_servicio IS
 
-  -- Agrupa operaciones relacionadas con la API del sistema
+  -- Agrupa operaciones relacionadas con los Servicios Web del sistema
   --
   -- %author jmeza 17/3/2019 15:23:21
 
@@ -51,12 +51,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   END;
 
   PROCEDURE lp_respuesta_ok(io_respuesta IN OUT y_respuesta,
-                            i_datos      IN CLOB DEFAULT NULL) IS
+                            i_datos      IN anydata DEFAULT NULL) IS
   BEGIN
     io_respuesta.codigo     := '0';
     io_respuesta.mensaje    := 'OK';
     io_respuesta.mensaje_bd := NULL;
-    io_respuesta.datos      := i_datos;
+    io_respuesta.datos      := nvl(i_datos,
+                                   anydata.convertobject(NEW y_dato()));
   END;
 
   FUNCTION lf_validar_credenciales(i_usuario IN VARCHAR2,
@@ -66,7 +67,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Inicializa respuesta
     resp := NEW y_respuesta();
   
-    resp.origen := 'Validando parametros';
+    resp.lugar := 'Validando parametros';
     IF i_usuario IS NULL THEN
       lp_respuesta_error(resp, '1', 'Debe ingresar usuario');
       RAISE ex_api_error;
@@ -77,7 +78,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_api_error;
     END IF;
   
-    resp.origen := 'Validando credenciales';
+    resp.lugar := 'Validando credenciales';
     IF NOT k_autenticacion.f_validar_credenciales(i_usuario, i_clave) THEN
       lp_respuesta_error(resp, '3', 'Credenciales invalidas');
       RAISE ex_api_error;
@@ -117,7 +118,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Inicializa respuesta
     resp := NEW y_respuesta();
   
-    resp.origen := 'Validando parametros';
+    resp.lugar := 'Validando parametros';
     IF i_usuario IS NULL THEN
       lp_respuesta_error(resp, '1', 'Debe ingresar usuario');
       RAISE ex_api_error;
@@ -128,7 +129,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_api_error;
     END IF;
   
-    resp.origen := 'Iniciando sesion';
+    resp.lugar := 'Iniciando sesion';
     k_autenticacion.p_iniciar_sesion(i_usuario, i_token);
   
     lp_respuesta_ok(resp);
@@ -171,13 +172,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Inicializa respuesta
     resp := NEW y_respuesta();
   
-    resp.origen := 'Validando parametros';
+    resp.lugar := 'Validando parametros';
     IF i_token IS NULL THEN
       lp_respuesta_error(resp, '1', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
-    resp.origen := 'Finalizando sesion';
+    resp.lugar := 'Finalizando sesion';
     k_autenticacion.p_finalizar_sesion(i_token);
   
     lp_respuesta_ok(resp);

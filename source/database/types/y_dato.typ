@@ -1,6 +1,6 @@
 CREATE OR REPLACE TYPE y_dato AS OBJECT
 (
--- Agrupa datos de respuesta de un proceso
+-- Contiene un dato simple en formato de texto
 --
 -- %author jmeza 9/3/2019 16:28:00
 
