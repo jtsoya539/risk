@@ -4,15 +4,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   --
   -- %author jmeza 17/3/2019 15:23:21
 
-  TYPE ly_parametros IS TABLE OF anydata NOT NULL INDEX BY VARCHAR2(100);
-
-  FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
-                                  i_parametros  IN CLOB) RETURN ly_parametros;
-
-  FUNCTION lf_validar_credenciales(i_parametros IN ly_parametros)
+  FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta;
-
-  FUNCTION api_validar_credenciales(i_parametros IN CLOB) RETURN CLOB;
 
   FUNCTION api_iniciar_sesion(i_usuario IN VARCHAR2,
                               i_token   IN VARCHAR2) RETURN CLOB;
@@ -29,9 +22,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   -- Excepciones
   ex_api_error EXCEPTION;
 
+  FUNCTION lf_valor_parametro(i_parametros IN y_parametros,
+                              i_nombre     IN VARCHAR2) RETURN anydata IS
+    l_valor anydata;
+    i       INTEGER;
+  BEGIN
+    i := i_parametros.first;
+    WHILE i IS NOT NULL AND l_valor IS NULL LOOP
+      IF lower(i_parametros(i).nombre) = lower(i_nombre) THEN
+        l_valor := i_parametros(i).valor;
+      END IF;
+      i := i_parametros.next(i);
+    END LOOP;
+    RETURN l_valor;
+  END;
+
   FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
-                                  i_parametros  IN CLOB) RETURN ly_parametros IS
-    l_parametros  ly_parametros;
+                                  i_parametros  IN CLOB) RETURN y_parametros IS
+    l_parametros  y_parametros;
+    l_parametro   y_parametro;
     l_json_object json_object_t;
     CURSOR c_servicio_parametros IS
       SELECT lower(nombre) nombre, tipo_dato
@@ -39,11 +48,17 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
        WHERE id_servicio = i_id_servicio
          AND activo = 'S';
   BEGIN
+    -- Inicializa respuesta
+    l_parametros  := NEW y_parametros();
     l_json_object := json_object_t.parse(i_parametros);
     FOR par IN c_servicio_parametros LOOP
+      l_parametro        := NEW y_parametro();
+      l_parametro.nombre := par.nombre;
       IF par.tipo_dato = 'S' THEN
-        l_parametros(par.nombre) := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
+        l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
       END IF;
+      l_parametros.extend;
+      l_parametros(l_parametros.count) := l_parametro;
     END LOOP;
     RETURN l_parametros;
   END;
@@ -76,7 +91,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       io_respuesta.mensaje := substr(i_mensaje, 1, 4000);
     END IF;
     io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
-    io_respuesta.datos      := anydata.convertobject(NEW y_dato());
+    io_respuesta.datos      := NULL;
   END;
 
   PROCEDURE lp_respuesta_ok(io_respuesta IN OUT y_respuesta,
@@ -85,11 +100,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     io_respuesta.codigo     := '0';
     io_respuesta.mensaje    := 'OK';
     io_respuesta.mensaje_bd := NULL;
-    io_respuesta.datos      := nvl(i_datos,
-                                   anydata.convertobject(NEW y_dato()));
+    io_respuesta.datos      := i_datos;
   END;
 
-  FUNCTION lf_validar_credenciales(i_parametros IN ly_parametros)
+  FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     resp y_respuesta;
   BEGIN
@@ -97,20 +111,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     resp := NEW y_respuesta();
   
     resp.lugar := 'Validando parametros';
-    IF anydata.accessvarchar2(i_parametros('usuario')) IS NULL THEN
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
       lp_respuesta_error(resp, '1', 'Debe ingresar usuario');
       RAISE ex_api_error;
     END IF;
   
-    IF anydata.accessvarchar2(i_parametros('clave')) IS NULL THEN
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'clave')) IS NULL THEN
       lp_respuesta_error(resp, '2', 'Debe ingresar clave');
       RAISE ex_api_error;
     END IF;
   
     resp.lugar := 'Validando credenciales';
     IF NOT
-        k_autenticacion.f_validar_credenciales(anydata.accessvarchar2(i_parametros('usuario')),
-                                               anydata.accessvarchar2(i_parametros('clave'))) THEN
+        k_autenticacion.f_validar_credenciales(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                         'usuario')),
+                                               anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                         'clave'))) THEN
       lp_respuesta_error(resp, '3', 'Credenciales invalidas');
       RAISE ex_api_error;
     END IF;
@@ -123,18 +139,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN OTHERS THEN
       lp_respuesta_error(resp, '999', lf_mensaje_error('999'), SQLERRM);
       RETURN resp;
-  END;
-
-  FUNCTION api_validar_credenciales(i_parametros IN CLOB) RETURN CLOB IS
-    l_resp CLOB;
-  BEGIN
-    -- Log de entrada
-    plog.info(i_parametros);
-    -- Proceso
-    l_resp := lf_validar_credenciales(lf_procesar_parametros(1, i_parametros)).to_json;
-    -- Log de salida
-    plog.info(l_resp);
-    RETURN l_resp;
   END;
 
   FUNCTION lf_iniciar_sesion(i_usuario IN VARCHAR2,
@@ -242,7 +246,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
                                 i_parametros  IN CLOB) RETURN y_respuesta IS
     resp              y_respuesta;
-    params            ly_parametros;
+    params            y_parametros;
     l_nombre_servicio t_servicios.nombre%TYPE;
   BEGIN
     -- Inicializa respuesta
@@ -273,14 +277,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END;
   
     resp.lugar := 'Procesando servicio';
-    EXECUTE IMMEDIATE 'DECLARE
-  l_result     y_respuesta;
-  l_parametros k_servicio.ly_parametros := :l_parametros;
-BEGIN
-  :l_result := k_servicio.' || l_nombre_servicio ||
-                      '(i_parametros => l_parametros);
-END;'
-      USING IN params, OUT resp;
+    EXECUTE IMMEDIATE 'BEGIN :resp := k_servicio.' || l_nombre_servicio ||
+                      '(i_parametros => :params); END;'
+      USING OUT resp, IN params;
+  
+    IF resp.codigo <> '0' THEN
+      RAISE ex_api_error;
+    END IF;
   
     lp_respuesta_ok(resp);
     RETURN resp;
