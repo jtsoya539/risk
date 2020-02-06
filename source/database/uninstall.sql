@@ -37,7 +37,8 @@ prompt Borrando types...
 prompt -----------------------------------
 prompt
 drop type y_respuesta force;
-drop type y_dato force;
+drop type y_parametros force;
+drop type y_parametro force;
 
 prompt
 prompt Borrando tablas...

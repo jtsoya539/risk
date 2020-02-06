@@ -72,7 +72,8 @@ prompt
 prompt Creando types...
 prompt -----------------------------------
 prompt
-@@types/y_dato.typ
+@@types/y_parametro.typ
+@@types/y_parametros.typ
 @@types/y_respuesta.typ
 
 prompt
