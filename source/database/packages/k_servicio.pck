@@ -7,10 +7,10 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
-  FUNCTION api_iniciar_sesion(i_usuario IN VARCHAR2,
-                              i_token   IN VARCHAR2) RETURN CLOB;
+  FUNCTION f_iniciar_sesion(i_parametros IN y_parametros) RETURN y_respuesta;
 
-  FUNCTION api_finalizar_sesion(i_token IN VARCHAR2) RETURN CLOB;
+  FUNCTION f_finalizar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta;
 
   FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN CLOB;
@@ -21,21 +21,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   -- Excepciones
   ex_api_error EXCEPTION;
-
-  FUNCTION lf_valor_parametro(i_parametros IN y_parametros,
-                              i_nombre     IN VARCHAR2) RETURN anydata IS
-    l_valor anydata;
-    i       INTEGER;
-  BEGIN
-    i := i_parametros.first;
-    WHILE i IS NOT NULL AND l_valor IS NULL LOOP
-      IF lower(i_parametros(i).nombre) = lower(i_nombre) THEN
-        l_valor := i_parametros(i).valor;
-      END IF;
-      i := i_parametros.next(i);
-    END LOOP;
-    RETURN l_valor;
-  END;
 
   FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
                                   i_parametros  IN CLOB) RETURN y_parametros IS
@@ -61,6 +46,21 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       l_parametros(l_parametros.count) := l_parametro;
     END LOOP;
     RETURN l_parametros;
+  END;
+
+  FUNCTION lf_valor_parametro(i_parametros IN y_parametros,
+                              i_nombre     IN VARCHAR2) RETURN anydata IS
+    l_valor anydata;
+    i       INTEGER;
+  BEGIN
+    i := i_parametros.first;
+    WHILE i IS NOT NULL AND l_valor IS NULL LOOP
+      IF lower(i_parametros(i).nombre) = lower(i_nombre) THEN
+        l_valor := i_parametros(i).valor;
+      END IF;
+      i := i_parametros.next(i);
+    END LOOP;
+    RETURN l_valor;
   END;
 
   FUNCTION lf_mensaje_error(i_id_error IN VARCHAR2) RETURN VARCHAR2 IS
@@ -105,207 +105,179 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta IS
-    resp y_respuesta;
+    l_rsp y_respuesta;
   BEGIN
     -- Inicializa respuesta
-    resp := NEW y_respuesta();
+    l_rsp := NEW y_respuesta();
   
-    resp.lugar := 'Validando parametros';
+    l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
-      lp_respuesta_error(resp, '1', 'Debe ingresar usuario');
+      lp_respuesta_error(l_rsp, '1', 'Debe ingresar usuario');
       RAISE ex_api_error;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'clave')) IS NULL THEN
-      lp_respuesta_error(resp, '2', 'Debe ingresar clave');
+      lp_respuesta_error(l_rsp, '2', 'Debe ingresar clave');
       RAISE ex_api_error;
     END IF;
   
-    resp.lugar := 'Validando credenciales';
+    l_rsp.lugar := 'Validando credenciales';
     IF NOT
         k_autenticacion.f_validar_credenciales(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                          'usuario')),
                                                anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                          'clave'))) THEN
-      lp_respuesta_error(resp, '3', 'Credenciales invalidas');
+      lp_respuesta_error(l_rsp, '3', 'Credenciales invalidas');
       RAISE ex_api_error;
     END IF;
   
-    lp_respuesta_ok(resp);
-    RETURN resp;
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
   EXCEPTION
     WHEN ex_api_error THEN
-      RETURN resp;
+      RETURN l_rsp;
     WHEN OTHERS THEN
-      lp_respuesta_error(resp, '999', lf_mensaje_error('999'), SQLERRM);
-      RETURN resp;
+      lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
+      RETURN l_rsp;
   END;
 
-  FUNCTION lf_iniciar_sesion(i_usuario IN VARCHAR2,
-                             i_token   IN VARCHAR2) RETURN y_respuesta IS
-    resp y_respuesta;
+  FUNCTION f_iniciar_sesion(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp y_respuesta;
   BEGIN
     -- Inicializa respuesta
-    resp := NEW y_respuesta();
+    l_rsp := NEW y_respuesta();
   
-    resp.lugar := 'Validando parametros';
-    IF i_usuario IS NULL THEN
-      lp_respuesta_error(resp, '1', 'Debe ingresar usuario');
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
+      lp_respuesta_error(l_rsp, '1', 'Debe ingresar usuario');
       RAISE ex_api_error;
     END IF;
   
-    IF i_token IS NULL THEN
-      lp_respuesta_error(resp, '2', 'Debe ingresar token');
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
+      lp_respuesta_error(l_rsp, '2', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
-    resp.lugar := 'Iniciando sesion';
-    k_autenticacion.p_iniciar_sesion(i_usuario, i_token);
+    l_rsp.lugar := 'Iniciando sesion';
+    k_autenticacion.p_iniciar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                               'usuario')),
+                                     anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                               'token')));
   
-    lp_respuesta_ok(resp);
-    RETURN resp;
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
   EXCEPTION
     WHEN ex_api_error THEN
-      RETURN resp;
+      RETURN l_rsp;
     WHEN OTHERS THEN
       IF k_error.f_tipo_error(SQLCODE) = k_error.user_defined_error THEN
-        lp_respuesta_error(resp,
+        lp_respuesta_error(l_rsp,
                            '998',
                            k_error.f_mensaje_error(SQLERRM, SQLCODE),
                            SQLERRM);
       ELSE
-        lp_respuesta_error(resp, '999', lf_mensaje_error('999'), SQLERRM);
+        lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
       END IF;
-      RETURN resp;
+      RETURN l_rsp;
   END;
 
-  FUNCTION api_iniciar_sesion(i_usuario IN VARCHAR2,
-                              i_token   IN VARCHAR2) RETURN CLOB IS
-    l_prms json_object_t;
-    l_resp CLOB;
-  BEGIN
-    -- Log de entrada
-    l_prms := json_object_t;
-    l_prms.put('i_usuario', i_usuario);
-    l_prms.put('i_token', i_token);
-    plog.info(l_prms.to_clob);
-    -- Proceso
-    l_resp := lf_iniciar_sesion(i_usuario, i_token).to_json;
-    -- Log de salida
-    plog.info(l_resp);
-    RETURN l_resp;
-  END;
-
-  FUNCTION lf_finalizar_sesion(i_token IN VARCHAR2) RETURN y_respuesta IS
-    resp y_respuesta;
+  FUNCTION f_finalizar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp y_respuesta;
   BEGIN
     -- Inicializa respuesta
-    resp := NEW y_respuesta();
+    l_rsp := NEW y_respuesta();
   
-    resp.lugar := 'Validando parametros';
-    IF i_token IS NULL THEN
-      lp_respuesta_error(resp, '1', 'Debe ingresar token');
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
+      lp_respuesta_error(l_rsp, '1', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
-    resp.lugar := 'Finalizando sesion';
-    k_autenticacion.p_finalizar_sesion(i_token);
+    l_rsp.lugar := 'Finalizando sesion';
+    k_autenticacion.p_finalizar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                 'token')));
   
-    lp_respuesta_ok(resp);
-    RETURN resp;
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
   EXCEPTION
     WHEN ex_api_error THEN
-      RETURN resp;
+      RETURN l_rsp;
     WHEN OTHERS THEN
       IF k_error.f_tipo_error(SQLCODE) = k_error.user_defined_error THEN
-        lp_respuesta_error(resp,
+        lp_respuesta_error(l_rsp,
                            '998',
                            k_error.f_mensaje_error(SQLERRM, SQLCODE),
                            SQLERRM);
       ELSE
-        lp_respuesta_error(resp, '999', lf_mensaje_error('999'), SQLERRM);
+        lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
       END IF;
-      RETURN resp;
-  END;
-
-  FUNCTION api_finalizar_sesion(i_token IN VARCHAR2) RETURN CLOB IS
-    l_prms json_object_t;
-    l_resp CLOB;
-  BEGIN
-    -- Log de entrada
-    l_prms := json_object_t;
-    l_prms.put('i_token', i_token);
-    plog.info(l_prms.to_clob);
-    -- Proceso
-    l_resp := lf_finalizar_sesion(i_token).to_json;
-    -- Log de salida
-    plog.info(l_resp);
-    RETURN l_resp;
+      RETURN l_rsp;
   END;
 
   FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
                                 i_parametros  IN CLOB) RETURN y_respuesta IS
-    resp              y_respuesta;
-    params            y_parametros;
+    l_rsp             y_respuesta;
+    l_prms            y_parametros;
     l_nombre_servicio t_servicios.nombre%TYPE;
   BEGIN
     -- Inicializa respuesta
-    resp := NEW y_respuesta();
+    l_rsp := NEW y_respuesta();
   
-    resp.lugar := 'Buscando nombre del servicio';
+    l_rsp.lugar := 'Buscando nombre del servicio';
     BEGIN
-      SELECT nombre
+      SELECT upper(nombre)
         INTO l_nombre_servicio
         FROM t_servicios
        WHERE activo = 'S'
          AND id_servicio = i_id_servicio;
     EXCEPTION
       WHEN no_data_found THEN
-        lp_respuesta_error(resp, '1', 'Servicio inexistente o inactivo');
+        lp_respuesta_error(l_rsp, '1', 'Servicio inexistente o inactivo');
         RAISE ex_api_error;
     END;
   
-    resp.lugar := 'Procesando parametros del servicio';
+    l_rsp.lugar := 'Procesando parametros del servicio';
     BEGIN
-      params := lf_procesar_parametros(i_id_servicio, i_parametros);
+      l_prms := lf_procesar_parametros(i_id_servicio, i_parametros);
     EXCEPTION
       WHEN OTHERS THEN
-        lp_respuesta_error(resp,
+        lp_respuesta_error(l_rsp,
                            '2',
                            'Error al procesar parametros del servicio');
         RAISE ex_api_error;
     END;
   
-    resp.lugar := 'Procesando servicio';
-    EXECUTE IMMEDIATE 'BEGIN :resp := k_servicio.' || l_nombre_servicio ||
-                      '(i_parametros => :params); END;'
-      USING OUT resp, IN params;
+    l_rsp.lugar := 'Procesando servicio';
+    EXECUTE IMMEDIATE 'BEGIN :1 := K_SERVICIO.' || l_nombre_servicio ||
+                      '(:2); END;'
+      USING OUT l_rsp, IN l_prms;
   
-    IF resp.codigo <> '0' THEN
+    IF l_rsp.codigo <> '0' THEN
       RAISE ex_api_error;
     END IF;
   
-    lp_respuesta_ok(resp);
-    RETURN resp;
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
   EXCEPTION
     WHEN ex_api_error THEN
-      RETURN resp;
+      RETURN l_rsp;
     WHEN OTHERS THEN
-      lp_respuesta_error(resp, '999', lf_mensaje_error('999'), SQLERRM);
-      RETURN resp;
+      lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
+      RETURN l_rsp;
   END;
 
   FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN CLOB IS
-    l_resp CLOB;
+    l_rsp CLOB;
   BEGIN
     -- Log de entrada
     plog.info(i_parametros);
     -- Proceso
-    l_resp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
     -- Log de salida
-    plog.info(l_resp);
-    RETURN l_resp;
+    plog.info(l_rsp);
+    RETURN l_rsp;
   END;
 
 BEGIN

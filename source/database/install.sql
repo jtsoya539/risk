@@ -94,6 +94,8 @@ prompt
 @@install_audit.sql
 @@scripts/ins_t_sistemas.sql
 @@scripts/ins_t_significados.sql
+@@scripts/ins_t_servicios.sql
+@@scripts/ins_t_servicio_parametros.sql
 
 prompt
 prompt ===================================
