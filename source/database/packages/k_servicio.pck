@@ -4,13 +4,15 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   --
   -- %author jmeza 17/3/2019 15:23:21
 
-  TYPE y_parametros IS TABLE OF anydata NOT NULL INDEX BY VARCHAR2(100);
+  TYPE ly_parametros IS TABLE OF anydata NOT NULL INDEX BY VARCHAR2(100);
 
   FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
-                                  i_parametros  IN CLOB) RETURN y_parametros;
+                                  i_parametros  IN CLOB) RETURN ly_parametros;
 
-  FUNCTION api_validar_credenciales(i_usuario IN VARCHAR2,
-                                    i_clave   IN VARCHAR2) RETURN CLOB;
+  FUNCTION lf_validar_credenciales(i_parametros IN ly_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION api_validar_credenciales(i_parametros IN CLOB) RETURN CLOB;
 
   FUNCTION api_iniciar_sesion(i_usuario IN VARCHAR2,
                               i_token   IN VARCHAR2) RETURN CLOB;
@@ -28,8 +30,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   ex_api_error EXCEPTION;
 
   FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
-                                  i_parametros  IN CLOB) RETURN y_parametros IS
-    l_parametros  y_parametros;
+                                  i_parametros  IN CLOB) RETURN ly_parametros IS
+    l_parametros  ly_parametros;
     l_json_object json_object_t;
     CURSOR c_servicio_parametros IS
       SELECT lower(nombre) nombre, tipo_dato
@@ -71,10 +73,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       io_respuesta.mensaje := lf_mensaje_error(io_respuesta.codigo);
     ELSE
       io_respuesta.codigo  := substr(i_codigo, 1, 10);
-      io_respuesta.mensaje := substr(i_mensaje, 1, 2000);
+      io_respuesta.mensaje := substr(i_mensaje, 1, 4000);
     END IF;
-    io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 2000);
-    io_respuesta.datos      := NULL;
+    io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
+    io_respuesta.datos      := anydata.convertobject(NEW y_dato());
   END;
 
   PROCEDURE lp_respuesta_ok(io_respuesta IN OUT y_respuesta,
@@ -87,26 +89,28 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                    anydata.convertobject(NEW y_dato()));
   END;
 
-  FUNCTION lf_validar_credenciales(i_usuario IN VARCHAR2,
-                                   i_clave   IN VARCHAR2) RETURN y_respuesta IS
+  FUNCTION lf_validar_credenciales(i_parametros IN ly_parametros)
+    RETURN y_respuesta IS
     resp y_respuesta;
   BEGIN
     -- Inicializa respuesta
     resp := NEW y_respuesta();
   
     resp.lugar := 'Validando parametros';
-    IF i_usuario IS NULL THEN
+    IF anydata.accessvarchar2(i_parametros('usuario')) IS NULL THEN
       lp_respuesta_error(resp, '1', 'Debe ingresar usuario');
       RAISE ex_api_error;
     END IF;
   
-    IF i_clave IS NULL THEN
+    IF anydata.accessvarchar2(i_parametros('clave')) IS NULL THEN
       lp_respuesta_error(resp, '2', 'Debe ingresar clave');
       RAISE ex_api_error;
     END IF;
   
     resp.lugar := 'Validando credenciales';
-    IF NOT k_autenticacion.f_validar_credenciales(i_usuario, i_clave) THEN
+    IF NOT
+        k_autenticacion.f_validar_credenciales(anydata.accessvarchar2(i_parametros('usuario')),
+                                               anydata.accessvarchar2(i_parametros('clave'))) THEN
       lp_respuesta_error(resp, '3', 'Credenciales invalidas');
       RAISE ex_api_error;
     END IF;
@@ -121,18 +125,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN resp;
   END;
 
-  FUNCTION api_validar_credenciales(i_usuario IN VARCHAR2,
-                                    i_clave   IN VARCHAR2) RETURN CLOB IS
-    l_prms json_object_t;
+  FUNCTION api_validar_credenciales(i_parametros IN CLOB) RETURN CLOB IS
     l_resp CLOB;
   BEGIN
     -- Log de entrada
-    l_prms := json_object_t;
-    l_prms.put('i_usuario', i_usuario);
-    l_prms.put('i_clave', i_clave);
-    plog.info(l_prms.to_clob);
+    plog.info(i_parametros);
     -- Proceso
-    l_resp := lf_validar_credenciales(i_usuario, i_clave).to_json;
+    l_resp := lf_validar_credenciales(lf_procesar_parametros(1, i_parametros)).to_json;
     -- Log de salida
     plog.info(l_resp);
     RETURN l_resp;
@@ -240,6 +239,59 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     RETURN l_resp;
   END;
 
+  FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
+                                i_parametros  IN CLOB) RETURN y_respuesta IS
+    resp              y_respuesta;
+    params            ly_parametros;
+    l_nombre_servicio t_servicios.nombre%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    resp := NEW y_respuesta();
+  
+    resp.lugar := 'Buscando nombre del servicio';
+    BEGIN
+      SELECT nombre
+        INTO l_nombre_servicio
+        FROM t_servicios
+       WHERE activo = 'S'
+         AND id_servicio = i_id_servicio;
+    EXCEPTION
+      WHEN no_data_found THEN
+        lp_respuesta_error(resp, '1', 'Servicio inexistente o inactivo');
+        RAISE ex_api_error;
+    END;
+  
+    resp.lugar := 'Procesando parametros del servicio';
+    BEGIN
+      params := lf_procesar_parametros(i_id_servicio, i_parametros);
+    EXCEPTION
+      WHEN OTHERS THEN
+        lp_respuesta_error(resp,
+                           '2',
+                           'Error al procesar parametros del servicio');
+        RAISE ex_api_error;
+    END;
+  
+    resp.lugar := 'Procesando servicio';
+    EXECUTE IMMEDIATE 'DECLARE
+  l_result     y_respuesta;
+  l_parametros k_servicio.ly_parametros := :l_parametros;
+BEGIN
+  :l_result := k_servicio.' || l_nombre_servicio ||
+                      '(i_parametros => l_parametros);
+END;'
+      USING IN params, OUT resp;
+  
+    lp_respuesta_ok(resp);
+    RETURN resp;
+  EXCEPTION
+    WHEN ex_api_error THEN
+      RETURN resp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(resp, '999', lf_mensaje_error('999'), SQLERRM);
+      RETURN resp;
+  END;
+
   FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN CLOB IS
     l_resp CLOB;
@@ -247,7 +299,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Log de entrada
     plog.info(i_parametros);
     -- Proceso
-    l_resp := 'Aca tiene que procesar el servicio';
+    l_resp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
     -- Log de salida
     plog.info(l_resp);
     RETURN l_resp;
