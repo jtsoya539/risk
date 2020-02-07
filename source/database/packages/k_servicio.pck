@@ -4,6 +4,9 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   --
   -- %author jmeza 17/3/2019 15:23:21
 
+  FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
+                                  i_parametros  IN CLOB) RETURN y_parametros;
+
   FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -24,24 +27,79 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
                                   i_parametros  IN CLOB) RETURN y_parametros IS
-    l_parametros  y_parametros;
-    l_parametro   y_parametro;
-    l_json_object json_object_t;
+    l_parametros   y_parametros;
+    l_parametro    y_parametro;
+    l_json_object  json_object_t;
+    l_json_element json_element_t;
     CURSOR c_servicio_parametros IS
-      SELECT lower(nombre) nombre, tipo_dato
+      SELECT id_servicio,
+             lower(nombre) nombre,
+             direccion,
+             tipo_dato,
+             formato,
+             obligatorio,
+             valor_defecto
         FROM t_servicio_parametros
-       WHERE id_servicio = i_id_servicio
-         AND activo = 'S';
+       WHERE activo = 'S'
+         AND id_servicio = i_id_servicio;
   BEGIN
     -- Inicializa respuesta
-    l_parametros  := NEW y_parametros();
+    l_parametros := NEW y_parametros();
+  
     l_json_object := json_object_t.parse(i_parametros);
+  
     FOR par IN c_servicio_parametros LOOP
+      IF par.obligatorio = 'S' THEN
+        IF NOT l_json_object.has(par.nombre) THEN
+          raise_application_error(-20000,
+                                  'Parametro ' || par.nombre ||
+                                  ' obligatorio');
+        ELSE
+          l_json_element := l_json_object.get(par.nombre);
+          IF l_json_element.is_null THEN
+            raise_application_error(-20000,
+                                    'Parametro ' || par.nombre ||
+                                    ' debe tener valor');
+          END IF;
+        END IF;
+      END IF;
+    
       l_parametro        := NEW y_parametro();
       l_parametro.nombre := par.nombre;
-      IF par.tipo_dato = 'S' THEN
-        l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
-      END IF;
+    
+      CASE par.tipo_dato
+        WHEN 'S' THEN
+          -- String
+          l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
+          IF l_parametro.valor.accessvarchar2 IS NULL AND
+             par.valor_defecto IS NOT NULL THEN
+            l_parametro.valor := anydata.convertvarchar2(par.valor_defecto);
+          END IF;
+        WHEN 'N' THEN
+          -- Number
+          l_parametro.valor := anydata.convertnumber(l_json_object.get_number(par.nombre));
+          IF l_parametro.valor.accessnumber IS NULL AND
+             par.valor_defecto IS NOT NULL THEN
+            l_parametro.valor := anydata.convertnumber(par.valor_defecto);
+          END IF;
+        WHEN 'B' THEN
+          -- Boolean
+          l_parametro.valor := anydata.convertnumber(sys.diutil.bool_to_int(l_json_object.get_boolean(par.nombre)));
+          IF l_parametro.valor.accessnumber IS NULL AND
+             par.valor_defecto IS NOT NULL THEN
+            l_parametro.valor := anydata.convertnumber(par.valor_defecto);
+          END IF;
+        WHEN 'D' THEN
+          -- Date
+          l_parametro.valor := anydata.convertdate(l_json_object.get_date(par.nombre));
+          IF l_parametro.valor.accessdate IS NULL AND
+             par.valor_defecto IS NOT NULL THEN
+            l_parametro.valor := anydata.convertdate(par.valor_defecto);
+          END IF;
+        ELSE
+          raise_application_error(-20000, 'Tipo de dato no soportado');
+      END CASE;
+    
       l_parametros.extend;
       l_parametros(l_parametros.count) := l_parametro;
     END LOOP;
@@ -63,21 +121,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     RETURN l_valor;
   END;
 
-  FUNCTION lf_mensaje_error(i_id_error IN VARCHAR2) RETURN VARCHAR2 IS
-    l_mensaje t_errores.mensaje%TYPE;
-  BEGIN
-    BEGIN
-      SELECT mensaje
-        INTO l_mensaje
-        FROM t_errores
-       WHERE id_error = i_id_error;
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_mensaje := 'Error no registrado';
-    END;
-    RETURN l_mensaje;
-  END;
-
   PROCEDURE lp_respuesta_error(io_respuesta IN OUT y_respuesta,
                                i_codigo     IN VARCHAR2,
                                i_mensaje    IN VARCHAR2,
@@ -85,7 +128,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   BEGIN
     IF i_codigo = '0' THEN
       io_respuesta.codigo  := '999';
-      io_respuesta.mensaje := lf_mensaje_error(io_respuesta.codigo);
+      io_respuesta.mensaje := k_error.f_mensaje_error(io_respuesta.codigo);
     ELSE
       io_respuesta.codigo  := substr(i_codigo, 1, 10);
       io_respuesta.mensaje := substr(i_mensaje, 1, 4000);
@@ -137,7 +180,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN ex_api_error THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         k_error.f_mensaje_error('999'),
+                         SQLERRM);
       RETURN l_rsp;
   END;
 
@@ -170,14 +216,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN ex_api_error THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      IF k_error.f_tipo_error(SQLCODE) = k_error.user_defined_error THEN
-        lp_respuesta_error(l_rsp,
-                           '998',
-                           k_error.f_mensaje_error(SQLERRM, SQLCODE),
-                           SQLERRM);
-      ELSE
-        lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
-      END IF;
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         k_error.oracle_predefined_error THEN
+                         k_error.f_mensaje_error('999') WHEN
+                         k_error.user_defined_error THEN
+                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         SQLERRM);
       RETURN l_rsp;
   END;
 
@@ -204,14 +250,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN ex_api_error THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      IF k_error.f_tipo_error(SQLCODE) = k_error.user_defined_error THEN
-        lp_respuesta_error(l_rsp,
-                           '998',
-                           k_error.f_mensaje_error(SQLERRM, SQLCODE),
-                           SQLERRM);
-      ELSE
-        lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
-      END IF;
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         k_error.oracle_predefined_error THEN
+                         k_error.f_mensaje_error('999') WHEN
+                         k_error.user_defined_error THEN
+                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         SQLERRM);
       RETURN l_rsp;
   END;
 
@@ -244,7 +290,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       WHEN OTHERS THEN
         lp_respuesta_error(l_rsp,
                            '2',
-                           'Error al procesar parametros del servicio');
+                           CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                           k_error.oracle_predefined_error THEN
+                           'Error al procesar parametros del servicio' WHEN
+                           k_error.user_defined_error THEN
+                           k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                           SQLERRM);
         RAISE ex_api_error;
     END;
   
@@ -263,7 +314,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN ex_api_error THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      lp_respuesta_error(l_rsp, '999', lf_mensaje_error('999'), SQLERRM);
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         k_error.f_mensaje_error('999'),
+                         SQLERRM);
       RETURN l_rsp;
   END;
 

@@ -178,12 +178,12 @@ END;';
       IF l_typecode = dbms_types.typecode_object THEN
         EXECUTE IMMEDIATE 'DECLARE
   l_retorno PLS_INTEGER;
-  l_anydata anydata := :l_anydata;
+  l_anydata anydata := :1;
   l_object  ' || i_objeto.gettypename || ';
   l_clob    CLOB;
 BEGIN
   l_retorno := l_anydata.getobject(obj => l_object);
-  :l_clob   := l_object.to_json();
+  :2        := l_object.to_json();
 END;'
           USING IN i_objeto, OUT l_json;
       END IF;
