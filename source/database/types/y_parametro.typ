@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE y_parametro AS OBJECT
 (
   nombre VARCHAR2(100), -- Nombre del parametro
-  valor  anydata,
+  valor  anydata, -- Valor del parametro
 
   CONSTRUCTOR FUNCTION y_parametro RETURN SELF AS RESULT,
   MEMBER FUNCTION to_json RETURN CLOB
