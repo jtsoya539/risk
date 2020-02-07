@@ -76,6 +76,12 @@ drop sequence s_id_sesion;
 drop sequence s_id_usuario;
 
 prompt
+prompt Borrando logs...
+prompt -----------------------------------
+prompt
+exec plog.purge;
+
+prompt
 prompt Vaciando papelera de reciclaje...
 prompt -----------------------------------
 prompt
