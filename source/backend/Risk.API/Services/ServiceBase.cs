@@ -42,7 +42,7 @@ namespace Risk.API.Services
             con.Close();
         }
 
-        public YRespuesta ApiProcesarServicio(int idServicio, string parametros)
+        public string ApiProcesarServicio(int idServicio, string parametros)
         {
             SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             string respuesta = null;
@@ -74,7 +74,7 @@ namespace Risk.API.Services
                     con.Close();
                 }
             }
-            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
+            return respuesta;
         }
 
     }

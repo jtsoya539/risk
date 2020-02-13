@@ -31,7 +31,7 @@ namespace Risk.API.Controllers
         [HttpPost("sesion")]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody iniciarSesionRequestBody)
         {
-            YRespuesta respuesta = _authService.ApiValidarCredenciales(iniciarSesionRequestBody.Usuario, iniciarSesionRequestBody.Clave);
+            YRespuesta respuesta = _authService.ApiValidarCredenciales(iniciarSesionRequestBody.Usuario, iniciarSesionRequestBody.Clave, iniciarSesionRequestBody.TipoClave);
 
             if (!respuesta.Codigo.Equals("0"))
             {

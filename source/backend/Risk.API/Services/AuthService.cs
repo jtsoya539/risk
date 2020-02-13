@@ -2,6 +2,7 @@ using System.Data;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
@@ -10,114 +11,84 @@ namespace Risk.API.Services
 {
     public class AuthService : ServiceBase, IAuthService
     {
-        private const string SQL_API_VALIDAR_CREDENCIALES = "K_SERVICIO.API_VALIDAR_CREDENCIALES";
-        private const string SQL_API_INICIAR_SESION = "K_SERVICIO.API_INICIAR_SESION";
-        private const string SQL_API_FINALIZAR_SESION = "K_SERVICIO.API_FINALIZAR_SESION";
+        private const int ID_VALIDAR_CREDENCIALES = 1;
+        private const int ID_INICIAR_SESION = 2;
+        private const int ID_FINALIZAR_SESION = 3;
+        private const int ID_REGISTRAR_USUARIO = 4;
+        private const int ID_REGISTRAR_CLAVE = 5;
+        private const int ID_CAMBIAR_CLAVE = 6;
 
         public AuthService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
         }
 
+        public YRespuesta ApiCambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("clave_antigua", claveAntigua);
+            prms.Add("clave_nueva", claveNueva);
+            prms.Add("tipo_clave", tipoClave);
+
+            string rsp = base.ApiProcesarServicio(ID_CAMBIAR_CLAVE, prms.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+        }
+
         public YRespuesta ApiFinalizarSesion(string token)
         {
-            base.SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            string respuesta = null;
-            if (token != null)
-            {
-                OracleConnection con = GetOracleConnection();
+            JObject prms = new JObject();
+            prms.Add("token", token);
 
-                using (OracleCommand cmd = con.CreateCommand())
-                {
-                    con.Open();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = SQL_API_FINALIZAR_SESION;
-                    cmd.BindByName = true;
+            string rsp = base.ApiProcesarServicio(ID_FINALIZAR_SESION, prms.ToString(Formatting.None));
 
-                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
-                    cmd.Parameters.Add(return_value);
-                    OracleParameter i_token = new OracleParameter("i_token", OracleDbType.Varchar2, token, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_token);
-
-                    cmd.ExecuteNonQuery();
-
-                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
-
-                    return_value.Dispose();
-                    i_token.Dispose();
-                    con.Close();
-                }
-            }
-            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
         public YRespuesta ApiIniciarSesion(string usuario, string token)
         {
-            base.SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            string respuesta = null;
-            if (usuario != null && token != null)
-            {
-                OracleConnection con = GetOracleConnection();
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("token", token);
 
-                using (OracleCommand cmd = con.CreateCommand())
-                {
-                    con.Open();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = SQL_API_INICIAR_SESION;
-                    cmd.BindByName = true;
+            string rsp = base.ApiProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
 
-                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
-                    cmd.Parameters.Add(return_value);
-                    OracleParameter i_usuario = new OracleParameter("i_usuario", OracleDbType.Varchar2, usuario, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_usuario);
-                    OracleParameter i_token = new OracleParameter("i_token", OracleDbType.Varchar2, token, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_token);
-
-                    cmd.ExecuteNonQuery();
-
-                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
-
-                    return_value.Dispose();
-                    i_usuario.Dispose();
-                    i_token.Dispose();
-                    con.Close();
-                }
-            }
-            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiValidarCredenciales(string usuario, string clave)
+        public YRespuesta ApiRegistrarClave(string usuario, string clave, string tipoClave)
         {
-            base.SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
-            string respuesta = null;
-            if (usuario != null && clave != null)
-            {
-                OracleConnection con = GetOracleConnection();
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("clave", clave);
+            prms.Add("tipo_clave", tipoClave);
 
-                using (OracleCommand cmd = con.CreateCommand())
-                {
-                    con.Open();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = SQL_API_VALIDAR_CREDENCIALES;
-                    cmd.BindByName = true;
+            string rsp = base.ApiProcesarServicio(ID_REGISTRAR_CLAVE, prms.ToString(Formatting.None));
 
-                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
-                    cmd.Parameters.Add(return_value);
-                    OracleParameter i_usuario = new OracleParameter("i_usuario", OracleDbType.Varchar2, usuario, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_usuario);
-                    OracleParameter i_clave = new OracleParameter("i_clave", OracleDbType.Varchar2, clave, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_clave);
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+        }
 
-                    cmd.ExecuteNonQuery();
+        public YRespuesta ApiRegistrarUsuario(string usuario, string clave)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("clave", clave);
 
-                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
+            string rsp = base.ApiProcesarServicio(ID_REGISTRAR_USUARIO, prms.ToString(Formatting.None));
 
-                    return_value.Dispose();
-                    i_usuario.Dispose();
-                    i_clave.Dispose();
-                    con.Close();
-                }
-            }
-            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+        }
+
+        public YRespuesta ApiValidarCredenciales(string usuario, string clave, string tipoClave)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("clave", clave);
+            prms.Add("tipo_clave", tipoClave);
+
+            string rsp = base.ApiProcesarServicio(ID_VALIDAR_CREDENCIALES, prms.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
     }
 
