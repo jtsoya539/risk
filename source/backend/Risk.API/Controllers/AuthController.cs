@@ -29,9 +29,9 @@ namespace Risk.API.Controllers
 
         // POST /api/auth/sesion
         [HttpPost("sesion")]
-        public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody iniciarSesionRequestBody)
+        public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiValidarCredenciales(iniciarSesionRequestBody.Usuario, iniciarSesionRequestBody.Clave, iniciarSesionRequestBody.TipoClave);
+            YRespuesta respuesta = _authService.ApiValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
             if (!respuesta.Codigo.Equals("0"))
             {
@@ -44,7 +44,7 @@ namespace Risk.API.Controllers
             // Creamos los claims (pertenencias, características) del usuario
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, iniciarSesionRequestBody.Usuario)
+                new Claim(ClaimTypes.NameIdentifier, requestBody.Usuario)
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -60,7 +60,7 @@ namespace Risk.API.Controllers
             var createdToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(createdToken);
 
-            respuesta = _authService.ApiIniciarSesion(iniciarSesionRequestBody.Usuario, token);
+            respuesta = _authService.ApiIniciarSesion(requestBody.Usuario, token);
 
             if (!respuesta.Codigo.Equals("0"))
             {
@@ -72,9 +72,9 @@ namespace Risk.API.Controllers
 
         // DELETE /api/auth/sesion
         [HttpDelete("sesion")]
-        public IActionResult FinalizarSesion([FromBody] string token)
+        public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiFinalizarSesion(token);
+            YRespuesta respuesta = _authService.ApiFinalizarSesion(requestBody.Token);
             return Ok(respuesta);
         }
     }
