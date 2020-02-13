@@ -7,7 +7,8 @@ create table T_SERVICIO_PARAMETROS
   formato       VARCHAR2(100),
   obligatorio   CHAR(1),
   valor_defecto VARCHAR2(1000),
-  activo        CHAR(1)
+  activo        CHAR(1),
+  orden         NUMBER(3) not null
 )
 ;
 comment on table T_SERVICIO_PARAMETROS
@@ -28,8 +29,12 @@ comment on column T_SERVICIO_PARAMETROS.valor_defecto
   is 'Valor por defecto';
 comment on column T_SERVICIO_PARAMETROS.activo
   is 'El parametro esta activo? (S/N)';
+comment on column T_SERVICIO_PARAMETROS.orden
+  is 'Numero de orden del parametro';
 alter table T_SERVICIO_PARAMETROS
   add constraint PK_SERVICIO_PARAMETROS primary key (ID_SERVICIO, NOMBRE);
+alter table T_SERVICIO_PARAMETROS
+  add constraint UK_SER_PAR_ID_SERVICIO_ORDEN unique (ID_SERVICIO, ORDEN);
 alter table T_SERVICIO_PARAMETROS
   add constraint FK_SERVICIO_PARAMETROS_SERVICIOS foreign key (ID_SERVICIO)
   references T_SERVICIOS (ID_SERVICIO);

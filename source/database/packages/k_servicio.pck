@@ -10,6 +10,10 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION f_registrar_usuario(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION f_registrar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
+
+  FUNCTION f_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -44,7 +48,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
              valor_defecto
         FROM t_servicio_parametros
        WHERE activo = 'S'
-         AND id_servicio = i_id_servicio;
+         AND id_servicio = i_id_servicio
+       ORDER BY orden;
   BEGIN
     -- Inicializa respuesta
     l_parametros := NEW y_parametros();
@@ -163,6 +168,74 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                                                   'usuario')),
                                         anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                   'clave')));
+  
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_api_error THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         k_error.oracle_predefined_error THEN
+                         k_error.f_mensaje_error('999') WHEN
+                         k_error.user_defined_error THEN
+                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         SQLERRM);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION f_registrar_clave(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    -- l_rsp.lugar := 'Validando parametros';
+  
+    l_rsp.lugar := 'Registrando clave';
+    k_autenticacion.p_registrar_clave(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                'usuario')),
+                                      anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                'clave')),
+                                      anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                'tipo_clave')));
+  
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_api_error THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         k_error.oracle_predefined_error THEN
+                         k_error.f_mensaje_error('999') WHEN
+                         k_error.user_defined_error THEN
+                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         SQLERRM);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION f_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    -- l_rsp.lugar := 'Validando parametros';
+  
+    l_rsp.lugar := 'Cambiando clave';
+    k_autenticacion.p_cambiar_clave(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                              'usuario')),
+                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                              'clave_antigua')),
+                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                              'clave_nueva')),
+                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                              'tipo_clave')));
   
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;

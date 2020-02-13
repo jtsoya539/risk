@@ -13,4 +13,10 @@ values (3, 'F_FINALIZAR_SESION', 'R', 'S', null, null, null);
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, CLAVE, DETALLE, VERSION_ACTUAL)
 values (4, 'F_REGISTRAR_USUARIO', 'R', 'S', null, null, null);
 
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, CLAVE, DETALLE, VERSION_ACTUAL)
+values (5, 'F_REGISTRAR_CLAVE', 'R', 'S', null, null, null);
+
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, CLAVE, DETALLE, VERSION_ACTUAL)
+values (6, 'F_CAMBIAR_CLAVE', 'R', 'S', null, null, null);
+
 prompt Done.
