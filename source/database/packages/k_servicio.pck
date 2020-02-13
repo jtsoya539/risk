@@ -139,6 +139,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   BEGIN
     plog.info('[' || to_char(i_id_servicio) || '][' || i_tipo_log || '][' ||
               i_dato || ']');
+  EXCEPTION
+    WHEN OTHERS THEN
+      NULL;
   END;
 
   PROCEDURE lp_respuesta_error(io_respuesta IN OUT y_respuesta,
