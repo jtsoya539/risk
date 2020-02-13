@@ -436,11 +436,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp CLOB;
   BEGIN
     -- Log de entrada
-    plog.info(i_parametros);
+    plog.info('[' || to_char(i_id_servicio) || '][ENTRADA][' ||
+              i_parametros || ']');
     -- Proceso
     l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
     -- Log de salida
-    plog.info(l_rsp);
+    plog.info('[' || to_char(i_id_servicio) || '][SALIDA][' || l_rsp || ']');
     RETURN l_rsp;
   END;
 
