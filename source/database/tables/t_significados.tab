@@ -4,7 +4,7 @@ create table T_SIGNIFICADOS
   codigo      VARCHAR2(30) not null,
   significado VARCHAR2(300),
   referencia  VARCHAR2(50),
-  activo      CHAR(1)
+  activo      CHAR(1) default 'N' not null
 )
 ;
 comment on table T_SIGNIFICADOS

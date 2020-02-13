@@ -7,7 +7,7 @@ create table T_SERVICIO_PARAMETROS
   formato       VARCHAR2(100),
   obligatorio   CHAR(1),
   valor_defecto VARCHAR2(1000),
-  activo        CHAR(1),
+  activo        CHAR(1) default 'N' not null,
   orden         NUMBER(3) not null
 )
 ;
