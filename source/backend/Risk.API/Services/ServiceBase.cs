@@ -1,7 +1,10 @@
 using System.Data;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
 
 namespace Risk.API.Services
@@ -10,6 +13,8 @@ namespace Risk.API.Services
     {
         public RiskDbContext _dbContext { get; private set; }
         public IConfiguration _configuration { get; private set; }
+
+        private const string SQL_API_PROCESAR_SERVICIO = "K_SERVICIO.API_PROCESAR_SERVICIO";
 
         public ServiceBase(RiskDbContext dbContext, IConfiguration configuration)
         {
@@ -35,6 +40,41 @@ namespace Risk.API.Services
             con.ModuleName = moduleName;
             con.ActionName = actionName;
             con.Close();
+        }
+
+        public YRespuesta ApiProcesarServicio(int idServicio, string parametros)
+        {
+            SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            string respuesta = null;
+            if (idServicio > 0)
+            {
+                OracleConnection con = GetOracleConnection();
+
+                using (OracleCommand cmd = con.CreateCommand())
+                {
+                    con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = SQL_API_PROCESAR_SERVICIO;
+                    cmd.BindByName = true;
+
+                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
+                    cmd.Parameters.Add(return_value);
+                    OracleParameter i_id_servicio = new OracleParameter("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_id_servicio);
+                    OracleParameter i_parametros = new OracleParameter("i_parametros", OracleDbType.Clob, parametros, ParameterDirection.Input);
+                    cmd.Parameters.Add(i_parametros);
+
+                    cmd.ExecuteNonQuery();
+
+                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
+
+                    return_value.Dispose();
+                    i_id_servicio.Dispose();
+                    i_parametros.Dispose();
+                    con.Close();
+                }
+            }
+            return JsonConvert.DeserializeObject<YRespuesta>(respuesta);
         }
 
     }
