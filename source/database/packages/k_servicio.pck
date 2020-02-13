@@ -277,7 +277,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         k_autenticacion.f_validar_credenciales(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                          'usuario')),
                                                anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                         'clave'))) THEN
+                                                                                         'clave')),
+                                               anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                         'tipo_clave'))) THEN
       lp_respuesta_error(l_rsp, '3', 'Credenciales invalidas');
       RAISE ex_api_error;
     END IF;
