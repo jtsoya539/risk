@@ -29,6 +29,10 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
+  -- Tipos de log
+  c_log_entrada CONSTANT VARCHAR2(10) := 'ENTRADA';
+  c_log_salida  CONSTANT VARCHAR2(10) := 'SALIDA';
+
   -- Excepciones
   ex_api_error EXCEPTION;
 
@@ -127,6 +131,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       i := i_parametros.next(i);
     END LOOP;
     RETURN l_valor;
+  END;
+
+  PROCEDURE lp_registrar_log(i_id_servicio IN NUMBER,
+                             i_tipo_log    IN VARCHAR2,
+                             i_dato        IN CLOB) IS
+  BEGIN
+    plog.info('[' || to_char(i_id_servicio) || '][' || i_tipo_log || '][' ||
+              i_dato || ']');
   END;
 
   PROCEDURE lp_respuesta_error(io_respuesta IN OUT y_respuesta,
@@ -436,12 +448,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp CLOB;
   BEGIN
     -- Log de entrada
-    plog.info('[' || to_char(i_id_servicio) || '][ENTRADA][' ||
-              i_parametros || ']');
+    lp_registrar_log(i_id_servicio, c_log_entrada, i_parametros);
     -- Proceso
     l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
     -- Log de salida
-    plog.info('[' || to_char(i_id_servicio) || '][SALIDA][' || l_rsp || ']');
+    lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
     RETURN l_rsp;
   END;
 
