@@ -30,6 +30,10 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   PROCEDURE p_finalizar_sesion(i_token IN VARCHAR2);
 
+  FUNCTION f_sesion_activa(i_token IN VARCHAR2) RETURN BOOLEAN;
+
+  PROCEDURE p_sesion_activa(i_token IN VARCHAR2);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
@@ -41,7 +45,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   c_clave_acceso        CONSTANT CHAR(1) := 'A';
   c_clave_transaccional CONSTANT CHAR(1) := 'T';
 
-  cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
+  c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
 
   -- Excepciones
   ex_credenciales_invalidas EXCEPTION;
@@ -124,14 +128,14 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        SET cantidad_intentos_fallidos = CASE
                                           WHEN nvl(cantidad_intentos_fallidos,
                                                    0) >=
-                                               cantidad_intentos_permitidos THEN
+                                               c_cantidad_intentos_permitidos THEN
                                            cantidad_intentos_fallidos
                                           ELSE
                                            nvl(cantidad_intentos_fallidos, 0) + 1
                                         END,
            estado = CASE
                       WHEN nvl(cantidad_intentos_fallidos, 0) >=
-                           cantidad_intentos_permitidos THEN
+                           c_cantidad_intentos_permitidos THEN
                        'B'
                       ELSE
                        estado
@@ -401,6 +405,27 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     WHEN ex_sesion_inexistente THEN
       /*raise_application_error(-20000, 'Sesion inexistente');*/
       NULL;
+  END;
+
+  FUNCTION f_sesion_activa(i_token IN VARCHAR2) RETURN BOOLEAN IS
+    l_id_sesion t_sesiones.id_sesion%TYPE;
+  BEGIN
+    SELECT id_sesion
+      INTO l_id_sesion
+      FROM t_sesiones
+     WHERE estado = 'A'
+       AND token = i_token;
+    RETURN TRUE;
+  EXCEPTION
+    WHEN no_data_found THEN
+      RETURN FALSE;
+  END;
+
+  PROCEDURE p_sesion_activa(i_token IN VARCHAR2) IS
+  BEGIN
+    IF NOT f_sesion_activa(i_token) THEN
+      raise_application_error(-20000, 'Sesion no se encuentra activa');
+    END IF;
   END;
 
 BEGIN
