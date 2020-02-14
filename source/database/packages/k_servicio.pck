@@ -144,6 +144,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       NULL;
   END;
 
+  PROCEDURE lp_registrar_ejecucion(i_id_servicio IN NUMBER) IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+  BEGIN
+    UPDATE t_servicios
+       SET cantidad_ejecuciones   = nvl(cantidad_ejecuciones, 0) + 1,
+           fecha_ultima_ejecucion = SYSDATE
+     WHERE id_servicio = i_id_servicio;
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+  END;
+
   PROCEDURE lp_respuesta_error(io_respuesta IN OUT y_respuesta,
                                i_codigo     IN VARCHAR2,
                                i_mensaje    IN VARCHAR2,
@@ -453,6 +466,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Log de entrada
     lp_registrar_log(i_id_servicio, c_log_entrada, i_parametros);
     -- Proceso
+    lp_registrar_ejecucion(i_id_servicio);
     l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
     -- Log de salida
     lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
