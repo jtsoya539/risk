@@ -1,7 +1,7 @@
 set define on
 set serveroutput on size unlimited
 
-accept v_generar_auditoria char prompt 'Generar campos y triggers de auditoria? (S/N)'
+accept v_generar_auditoria char default 'N' prompt 'Generar campos y triggers de auditoria? (S/N)'
 
 DECLARE
   CURSOR cr_tablas IS
@@ -9,7 +9,7 @@ DECLARE
       FROM user_tables
      WHERE lower(table_name) LIKE 't\_%' ESCAPE '\';
 BEGIN
-  IF lower('&v_generar_auditoria') = 's' THEN
+  IF upper('&v_generar_auditoria') = 'S' THEN
     FOR t IN cr_tablas LOOP
       dbms_output.put_line('Generando campos de auditoria para tabla ' ||
                            upper(t.tabla) || '...');
