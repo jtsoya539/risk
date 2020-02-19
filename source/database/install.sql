@@ -81,6 +81,7 @@ prompt Creando paquetes...
 prompt -----------------------------------
 prompt
 @@packages/k_sistema.pck
+@@packages/k_html.pck
 @@packages/k_util.pck
 @@packages/k_auditoria.pck
 @@packages/k_autenticacion.pck

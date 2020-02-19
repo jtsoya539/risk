@@ -30,6 +30,7 @@ drop package k_error;
 drop package k_autenticacion;
 drop package k_auditoria;
 drop package k_util;
+drop package k_html;
 drop package k_sistema;
 
 prompt
