@@ -4,7 +4,7 @@ create table T_SERVICIOS
   nombre                 VARCHAR2(100),
   tipo                   CHAR(1),
   activo                 CHAR(1) default 'N' not null,
-  clave                  VARCHAR2(50),
+  dominio                VARCHAR2(30),
   detalle                VARCHAR2(2000),
   version_actual         VARCHAR2(10),
   cantidad_ejecuciones   NUMBER(15),
@@ -21,8 +21,8 @@ comment on column T_SERVICIOS.tipo
   is 'Tipo del servicio';
 comment on column T_SERVICIOS.activo
   is 'El servicio esta activo? (S/N)';
-comment on column T_SERVICIOS.clave
-  is 'Clave del servicio';
+comment on column T_SERVICIOS.dominio
+  is 'Dominio del servicio';
 comment on column T_SERVICIOS.detalle
   is 'Detalles adicionales del servicio';
 comment on column T_SERVICIOS.version_actual

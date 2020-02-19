@@ -4,29 +4,29 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   --
   -- %author jmeza 17/3/2019 15:23:21
 
-  FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
-                                  i_parametros  IN CLOB) RETURN y_parametros;
-
-  FUNCTION f_registrar_usuario(i_parametros IN y_parametros)
-    RETURN y_respuesta;
-
-  FUNCTION f_registrar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
-
-  FUNCTION f_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
-
-  FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
-    RETURN y_respuesta;
-
-  FUNCTION f_iniciar_sesion(i_parametros IN y_parametros) RETURN y_respuesta;
-
-  FUNCTION f_finalizar_sesion(i_parametros IN y_parametros)
-    RETURN y_respuesta;
-
   FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN CLOB;
 
+  FUNCTION aut_registrar_usuario(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION aut_registrar_clave(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION aut_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
+
+  FUNCTION aut_validar_credenciales(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION aut_iniciar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION aut_finalizar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
 END;
 /
+
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   -- Tipos de log
@@ -182,7 +182,82 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     io_respuesta.datos      := i_datos;
   END;
 
-  FUNCTION f_registrar_usuario(i_parametros IN y_parametros)
+  FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
+                                i_parametros  IN CLOB) RETURN y_respuesta IS
+    l_rsp              y_respuesta;
+    l_prms             y_parametros;
+    l_nombre_servicio  t_servicios.nombre%TYPE;
+    l_dominio_servicio t_servicios.dominio%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Buscando nombre del servicio';
+    BEGIN
+      SELECT upper(nombre), upper(dominio)
+        INTO l_nombre_servicio, l_dominio_servicio
+        FROM t_servicios
+       WHERE activo = 'S'
+         AND id_servicio = i_id_servicio;
+    EXCEPTION
+      WHEN no_data_found THEN
+        lp_respuesta_error(l_rsp, '1', 'Servicio inexistente o inactivo');
+        RAISE ex_api_error;
+    END;
+  
+    l_rsp.lugar := 'Procesando parametros del servicio';
+    BEGIN
+      l_prms := lf_procesar_parametros(i_id_servicio, i_parametros);
+    EXCEPTION
+      WHEN OTHERS THEN
+        lp_respuesta_error(l_rsp,
+                           '2',
+                           CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                           k_error.oracle_predefined_error THEN
+                           'Error al procesar parametros del servicio' WHEN
+                           k_error.user_defined_error THEN
+                           k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                           SQLERRM);
+        RAISE ex_api_error;
+    END;
+  
+    l_rsp.lugar := 'Procesando servicio';
+    EXECUTE IMMEDIATE 'BEGIN :1 := K_SERVICIO.' || l_dominio_servicio || '_' ||
+                      l_nombre_servicio || '(:2); END;'
+      USING OUT l_rsp, IN l_prms;
+  
+    IF l_rsp.codigo <> '0' THEN
+      RAISE ex_api_error;
+    END IF;
+  
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_api_error THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         '999',
+                         k_error.f_mensaje_error('999'),
+                         SQLERRM);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
+                                 i_parametros  IN CLOB) RETURN CLOB IS
+    l_rsp CLOB;
+  BEGIN
+    -- Log de entrada
+    lp_registrar_log(i_id_servicio, c_log_entrada, i_parametros);
+    -- Proceso
+    lp_registrar_ejecucion(i_id_servicio);
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
+    -- Log de salida
+    lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
+    RETURN l_rsp;
+  END;
+
+  FUNCTION aut_registrar_usuario(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
@@ -214,7 +289,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION f_registrar_clave(i_parametros IN y_parametros) RETURN y_respuesta IS
+  FUNCTION aut_registrar_clave(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
     -- Inicializa respuesta
@@ -247,7 +323,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION f_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta IS
+  FUNCTION aut_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
     -- Inicializa respuesta
@@ -282,7 +358,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION f_validar_credenciales(i_parametros IN y_parametros)
+  FUNCTION aut_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
@@ -325,7 +401,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION f_iniciar_sesion(i_parametros IN y_parametros) RETURN y_respuesta IS
+  FUNCTION aut_iniciar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
     -- Inicializa respuesta
@@ -365,7 +442,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION f_finalizar_sesion(i_parametros IN y_parametros)
+  FUNCTION aut_finalizar_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
@@ -399,82 +476,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
-                                i_parametros  IN CLOB) RETURN y_respuesta IS
-    l_rsp             y_respuesta;
-    l_prms            y_parametros;
-    l_nombre_servicio t_servicios.nombre%TYPE;
-  BEGIN
-    -- Inicializa respuesta
-    l_rsp := NEW y_respuesta();
-  
-    l_rsp.lugar := 'Buscando nombre del servicio';
-    BEGIN
-      SELECT upper(nombre)
-        INTO l_nombre_servicio
-        FROM t_servicios
-       WHERE activo = 'S'
-         AND id_servicio = i_id_servicio;
-    EXCEPTION
-      WHEN no_data_found THEN
-        lp_respuesta_error(l_rsp, '1', 'Servicio inexistente o inactivo');
-        RAISE ex_api_error;
-    END;
-  
-    l_rsp.lugar := 'Procesando parametros del servicio';
-    BEGIN
-      l_prms := lf_procesar_parametros(i_id_servicio, i_parametros);
-    EXCEPTION
-      WHEN OTHERS THEN
-        lp_respuesta_error(l_rsp,
-                           '2',
-                           CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                           k_error.oracle_predefined_error THEN
-                           'Error al procesar parametros del servicio' WHEN
-                           k_error.user_defined_error THEN
-                           k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
-                           SQLERRM);
-        RAISE ex_api_error;
-    END;
-  
-    l_rsp.lugar := 'Procesando servicio';
-    EXECUTE IMMEDIATE 'BEGIN :1 := K_SERVICIO.' || l_nombre_servicio ||
-                      '(:2); END;'
-      USING OUT l_rsp, IN l_prms;
-  
-    IF l_rsp.codigo <> '0' THEN
-      RAISE ex_api_error;
-    END IF;
-  
-    lp_respuesta_ok(l_rsp);
-    RETURN l_rsp;
-  EXCEPTION
-    WHEN ex_api_error THEN
-      RETURN l_rsp;
-    WHEN OTHERS THEN
-      lp_respuesta_error(l_rsp,
-                         '999',
-                         k_error.f_mensaje_error('999'),
-                         SQLERRM);
-      RETURN l_rsp;
-  END;
-
-  FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
-                                 i_parametros  IN CLOB) RETURN CLOB IS
-    l_rsp CLOB;
-  BEGIN
-    -- Log de entrada
-    lp_registrar_log(i_id_servicio, c_log_entrada, i_parametros);
-    -- Proceso
-    lp_registrar_ejecucion(i_id_servicio);
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
-    -- Log de salida
-    lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
-    RETURN l_rsp;
-  END;
-
 BEGIN
   -- Initialization
   NULL;
 END;
 /
+
