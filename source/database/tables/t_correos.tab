@@ -1,0 +1,12 @@
+create table T_CORREOS
+(
+  id_correo NUMBER not null
+)
+;
+comment on table T_CORREOS
+  is 'Correos electronicos (E-mail)';
+comment on column T_CORREOS.id_correo
+  is 'Identificador del correo electronico';
+alter table T_CORREOS
+  add constraint PK_CORREOS primary key (ID_CORREO);
+

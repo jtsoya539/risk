@@ -1,0 +1,15 @@
+create table T_CORREO_ADJUNTOS
+(
+  id_correo_adjunto NUMBER not null,
+  id_correo         NUMBER
+)
+;
+comment on table T_CORREO_ADJUNTOS
+  is 'Archivos adjuntos de Correos electronicos (E-mail)';
+comment on column T_CORREO_ADJUNTOS.id_correo_adjunto
+  is 'Identificador del archivo adjunto';
+comment on column T_CORREO_ADJUNTOS.id_correo
+  is 'Identificador del correo electronico';
+alter table T_CORREO_ADJUNTOS
+  add constraint PK_CORREO_ADJUNTOS primary key (ID_CORREO_ADJUNTO);
+

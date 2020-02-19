@@ -1,0 +1,12 @@
+create table T_MENSAJES
+(
+  id_mensaje NUMBER not null
+)
+;
+comment on table T_MENSAJES
+  is 'Mensajes de texto (SMS)';
+comment on column T_MENSAJES.id_mensaje
+  is 'Identificador del mensaje de texto';
+alter table T_MENSAJES
+  add constraint PK_MENSAJES primary key (ID_MENSAJE);
+
