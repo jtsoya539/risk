@@ -26,7 +26,6 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
 END;
 /
-
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   -- Tipos de log
@@ -137,8 +136,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                              i_tipo_log    IN VARCHAR2,
                              i_dato        IN CLOB) IS
   BEGIN
-    plog.info('[' || to_char(i_id_servicio) || '][' || i_tipo_log || '][' ||
-              i_dato || ']');
+    plog.info(utl_lms.format_message('[%s][%s][%s]',
+                                     to_char(i_id_servicio),
+                                     i_tipo_log,
+                                     dbms_lob.substr(i_dato)));
   EXCEPTION
     WHEN OTHERS THEN
       NULL;
@@ -481,4 +482,3 @@ BEGIN
   NULL;
 END;
 /
-
