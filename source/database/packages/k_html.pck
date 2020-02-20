@@ -3,117 +3,410 @@ CREATE OR REPLACE PACKAGE k_html IS
   -- Agrupa operaciones relacionadas con la generacion de HTML.
   -- %author jtsoya539
 
-  l_salto VARCHAR2(2) := chr(10);
+  FUNCTION f_documento RETURN CLOB;
 
-  PROCEDURE p_inicializa(p_contenido IN VARCHAR2 DEFAULT l_salto);
+  FUNCTION f_escapar_texto(i_texto IN VARCHAR2) RETURN VARCHAR2;
 
-  PROCEDURE p_inicializa(p_contenido IN CLOB DEFAULT l_salto);
+  PROCEDURE p_inicializar(i_contenido IN VARCHAR2 DEFAULT NULL);
 
-  PROCEDURE p_agrega(p_contenido IN VARCHAR2);
+  PROCEDURE p_reemplazar(i_de IN VARCHAR2,
+                         i_a  IN VARCHAR2);
 
-  PROCEDURE p_agrega(p_contenido IN CLOB);
+  PROCEDURE p_escapar;
 
-  PROCEDURE p_reemplaza(p_de IN VARCHAR2,
-                        p_a  IN VARCHAR2);
+  PROCEDURE p_agregar(i_contenido IN VARCHAR2);
 
-  PROCEDURE p_formatea;
+  PROCEDURE p_agregar_linea(i_contenido IN VARCHAR2);
 
-  PROCEDURE p_convierte_string;
+  PROCEDURE p_agregar_css(i_href IN VARCHAR2);
 
-  FUNCTION f_resultado RETURN CLOB;
+  PROCEDURE p_agregar_js(i_src IN VARCHAR2);
 
-  PROCEDURE p_agrega_comentario(p_comentario IN VARCHAR2);
+  PROCEDURE p_agregar_comentario(i_comentario IN VARCHAR2);
 
-  PROCEDURE p_agrega_script(p_contenido  IN VARCHAR2,
-                            p_comentario IN VARCHAR2 DEFAULT NULL);
+  FUNCTION f_em(i_contenido IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_strong(i_contenido IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_b(i_contenido IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_i(i_contenido IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_u(i_contenido IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_br RETURN VARCHAR2;
+
+  PROCEDURE p_br;
+
+  PROCEDURE p_hr;
+
+  PROCEDURE p_title(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_h1(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_h2(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_h3(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_h4(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_h5(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_h6(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_p(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_span(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_script(i_contenido  IN VARCHAR2,
+                     i_comentario IN VARCHAR2 DEFAULT NULL);
+
+  PROCEDURE p_html_abrir(i_lang IN VARCHAR2 DEFAULT NULL);
+
+  PROCEDURE p_html_cerrar;
+
+  PROCEDURE p_head_abrir(i_title       IN VARCHAR2 DEFAULT NULL,
+                         i_author      IN VARCHAR2 DEFAULT NULL,
+                         i_description IN VARCHAR2 DEFAULT NULL);
+
+  PROCEDURE p_head_cerrar;
+
+  PROCEDURE p_body_abrir;
+
+  PROCEDURE p_body_cerrar;
+
+  PROCEDURE p_main_abrir;
+
+  PROCEDURE p_main_cerrar;
+
+  PROCEDURE p_header_abrir;
+
+  PROCEDURE p_header_cerrar;
+
+  PROCEDURE p_footer_abrir;
+
+  PROCEDURE p_footer_cerrar;
+
+  PROCEDURE p_article_abrir;
+
+  PROCEDURE p_article_cerrar;
+
+  PROCEDURE p_section_abrir;
+
+  PROCEDURE p_section_cerrar;
+
+  PROCEDURE p_nav_abrir;
+
+  PROCEDURE p_nav_cerrar;
+
+  PROCEDURE p_aside_abrir;
+
+  PROCEDURE p_aside_cerrar;
+
+  PROCEDURE p_div_abrir;
+
+  PROCEDURE p_div_cerrar;
 
 END;
 /
-
 CREATE OR REPLACE PACKAGE BODY k_html IS
 
-  l_resultado          CLOB;
-  l_resultado_anterior CLOB;
+  g_documento CLOB;
 
-  PROCEDURE p_inicializa(p_contenido IN VARCHAR2 DEFAULT l_salto) IS
+  c_crlf CONSTANT VARCHAR2(2) := unistr('\000D\000A');
+
+  FUNCTION f_documento RETURN CLOB IS
   BEGIN
-    l_resultado          := p_contenido;
-    l_resultado_anterior := '';
+    RETURN g_documento;
   END;
 
-  PROCEDURE p_inicializa(p_contenido IN CLOB DEFAULT l_salto) IS
+  FUNCTION f_escapar_texto(i_texto IN VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
-    l_resultado          := p_contenido;
-    l_resultado_anterior := '';
+    RETURN REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(i_texto,
+                                                   '&',
+                                                   '&' || 'amp;'),
+                                           '''',
+                                           '&' || 'apos;'),
+                                   '"',
+                                   '&' || 'quot;'),
+                           '>',
+                           '&' || 'gt;'),
+                   '<',
+                   '&' || 'lt;');
   END;
 
-  PROCEDURE p_agrega(p_contenido IN VARCHAR2) IS
+  PROCEDURE p_inicializar(i_contenido IN VARCHAR2 DEFAULT NULL) IS
   BEGIN
-    IF length(l_resultado) > 30000 THEN
-      l_resultado_anterior := l_resultado_anterior || l_resultado;
-      l_resultado          := '';
+    g_documento := nvl(i_contenido, '');
+  END;
+
+  PROCEDURE p_reemplazar(i_de IN VARCHAR2,
+                         i_a  IN VARCHAR2) IS
+  BEGIN
+    g_documento := REPLACE(g_documento, i_de, i_a);
+  END;
+
+  PROCEDURE p_escapar IS
+  BEGIN
+    p_reemplazar('Á', '&' || 'Aacute;');
+    p_reemplazar('É', '&' || 'Eacute;');
+    p_reemplazar('Í', '&' || 'Iacute;');
+    p_reemplazar('Ó', '&' || 'Oacute;');
+    p_reemplazar('Ú', '&' || 'Uacute;');
+    p_reemplazar('Ñ', '&' || 'Ntilde;');
+    p_reemplazar('á', '&' || 'aacute;');
+    p_reemplazar('é', '&' || 'eacute;');
+    p_reemplazar('í', '&' || 'iacute;');
+    p_reemplazar('ó', '&' || 'oacute;');
+    p_reemplazar('ú', '&' || 'uacute;');
+    p_reemplazar('ñ', '&' || 'ntilde;');
+  END;
+
+  PROCEDURE p_agregar(i_contenido IN VARCHAR2) IS
+  BEGIN
+    g_documento := g_documento || i_contenido;
+  END;
+
+  PROCEDURE p_agregar_linea(i_contenido IN VARCHAR2) IS
+  BEGIN
+    g_documento := g_documento || i_contenido || c_crlf;
+  END;
+
+  PROCEDURE p_agregar_css(i_href IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<link rel="stylesheet" href="' || i_href || '">');
+  END;
+
+  PROCEDURE p_agregar_js(i_src IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<script src="' || i_src || '"></script>');
+  END;
+
+  PROCEDURE p_agregar_comentario(i_comentario IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<!-- ' || i_comentario || ' -->');
+  END;
+
+  FUNCTION f_em(i_contenido IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<em>' || i_contenido || '</em>';
+  END;
+
+  FUNCTION f_strong(i_contenido IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<strong>' || i_contenido || '</strong>';
+  END;
+
+  FUNCTION f_b(i_contenido IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<b>' || i_contenido || '</b>';
+  END;
+
+  FUNCTION f_i(i_contenido IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<i>' || i_contenido || '</i>';
+  END;
+
+  FUNCTION f_u(i_contenido IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<u>' || i_contenido || '</u>';
+  END;
+
+  FUNCTION f_br RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<br>';
+  END;
+
+  PROCEDURE p_br IS
+  BEGIN
+    p_agregar_linea('<br>');
+  END;
+
+  PROCEDURE p_hr IS
+  BEGIN
+    p_agregar_linea('<hr>');
+  END;
+
+  PROCEDURE p_title(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<title>' || i_contenido || '</title>');
+  END;
+
+  PROCEDURE p_h1(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<h1>' || i_contenido || '</h1>');
+  END;
+
+  PROCEDURE p_h2(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<h2>' || i_contenido || '</h2>');
+  END;
+
+  PROCEDURE p_h3(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<h3>' || i_contenido || '</h3>');
+  END;
+
+  PROCEDURE p_h4(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<h4>' || i_contenido || '</h4>');
+  END;
+
+  PROCEDURE p_h5(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<h5>' || i_contenido || '</h5>');
+  END;
+
+  PROCEDURE p_h6(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<h6>' || i_contenido || '</h6>');
+  END;
+
+  PROCEDURE p_p(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<p>' || i_contenido || '</p>');
+  END;
+
+  PROCEDURE p_span(i_contenido IN VARCHAR2) IS
+  BEGIN
+    p_agregar_linea('<span>' || i_contenido || '</span>');
+  END;
+
+  PROCEDURE p_script(i_contenido  IN VARCHAR2,
+                     i_comentario IN VARCHAR2 DEFAULT NULL) IS
+  BEGIN
+    IF i_comentario IS NOT NULL THEN
+      p_agregar_comentario(i_comentario);
     END IF;
-    l_resultado := l_resultado || p_contenido || l_salto;
+    p_agregar_linea('<script>');
+    p_agregar_linea(i_contenido);
+    p_agregar_linea('</script>');
   END;
 
-  PROCEDURE p_agrega(p_contenido IN CLOB) IS
+  PROCEDURE p_html_abrir(i_lang IN VARCHAR2 DEFAULT NULL) IS
   BEGIN
-    IF length(l_resultado) > 30000 THEN
-      l_resultado_anterior := l_resultado_anterior || l_resultado;
-      l_resultado          := '';
+    p_agregar_linea('<!DOCTYPE html>');
+    p_agregar_linea('<html lang="' || nvl(i_lang, 'es') || '">');
+  END;
+
+  PROCEDURE p_html_cerrar IS
+  BEGIN
+    p_agregar_linea('</html>');
+  END;
+
+  PROCEDURE p_head_abrir(i_title       IN VARCHAR2 DEFAULT NULL,
+                         i_author      IN VARCHAR2 DEFAULT NULL,
+                         i_description IN VARCHAR2 DEFAULT NULL) IS
+  BEGIN
+    p_agregar_linea('<head>');
+    p_agregar_linea('<meta charset="utf-8">');
+    IF i_author IS NOT NULL THEN
+      p_agregar_linea('<meta name="author" content="' ||
+                      f_escapar_texto(i_author) || '">');
     END IF;
-    l_resultado := l_resultado || p_contenido || l_salto;
-  END;
-
-  PROCEDURE p_reemplaza(p_de IN VARCHAR2,
-                        p_a  IN VARCHAR2) IS
-  BEGIN
-    l_resultado := REPLACE(l_resultado_anterior || l_resultado, p_de, p_a);
-  END;
-
-  PROCEDURE p_formatea IS
-  BEGIN
-    p_reemplaza('Á', '&' || 'Aacute;');
-    p_reemplaza('É', '&' || 'Eacute;');
-    p_reemplaza('Í', '&' || 'Iacute;');
-    p_reemplaza('Ó', '&' || 'Oacute;');
-    p_reemplaza('Ú', '&' || 'Uacute;');
-    p_reemplaza('Ñ', '&' || 'Ntilde;');
-    p_reemplaza('á', '&' || 'aacute;');
-    p_reemplaza('é', '&' || 'eacute;');
-    p_reemplaza('í', '&' || 'iacute;');
-    p_reemplaza('ó', '&' || 'oacute;');
-    p_reemplaza('ú', '&' || 'uacute;');
-    p_reemplaza('ñ', '&' || 'ntilde;');
-  END;
-
-  PROCEDURE p_convierte_string IS
-  BEGIN
-    p_reemplaza('"', '\"');
-    p_reemplaza(chr(10), '\n" + "');
-  END;
-
-  FUNCTION f_resultado RETURN CLOB IS
-  BEGIN
-    RETURN l_resultado_anterior || l_resultado;
-  END;
-
-  PROCEDURE p_agrega_comentario(p_comentario IN VARCHAR2) IS
-  BEGIN
-    p_agrega('<!-- ' || p_comentario || ' -->');
-  END;
-
-  PROCEDURE p_agrega_script(p_contenido  IN VARCHAR2,
-                            p_comentario IN VARCHAR2 DEFAULT NULL) IS
-  BEGIN
-    IF p_comentario IS NOT NULL THEN
-      p_agrega_comentario(p_comentario);
+    IF i_description IS NOT NULL THEN
+      p_agregar_linea('<meta name="description" content="' ||
+                      f_escapar_texto(i_description) || '">');
     END IF;
-    p_agrega('<script>');
-    p_agrega(p_contenido);
-    p_agrega('</script>');
+    IF i_title IS NOT NULL THEN
+      p_title(i_title);
+    END IF;
+  END;
+
+  PROCEDURE p_head_cerrar IS
+  BEGIN
+    p_agregar_linea('</head>');
+  END;
+
+  PROCEDURE p_body_abrir IS
+  BEGIN
+    p_agregar_linea('<body>');
+  END;
+
+  PROCEDURE p_body_cerrar IS
+  BEGIN
+    p_agregar_linea('</body>');
+  END;
+
+  PROCEDURE p_main_abrir IS
+  BEGIN
+    p_agregar_linea('<main>');
+  END;
+
+  PROCEDURE p_main_cerrar IS
+  BEGIN
+    p_agregar_linea('</main>');
+  END;
+
+  PROCEDURE p_header_abrir IS
+  BEGIN
+    p_agregar_linea('<header>');
+  END;
+
+  PROCEDURE p_header_cerrar IS
+  BEGIN
+    p_agregar_linea('</header>');
+  END;
+
+  PROCEDURE p_footer_abrir IS
+  BEGIN
+    p_agregar_linea('<footer>');
+  END;
+
+  PROCEDURE p_footer_cerrar IS
+  BEGIN
+    p_agregar_linea('</footer>');
+  END;
+
+  PROCEDURE p_article_abrir IS
+  BEGIN
+    p_agregar_linea('<article>');
+  END;
+
+  PROCEDURE p_article_cerrar IS
+  BEGIN
+    p_agregar_linea('</article>');
+  END;
+
+  PROCEDURE p_section_abrir IS
+  BEGIN
+    p_agregar_linea('<section>');
+  END;
+
+  PROCEDURE p_section_cerrar IS
+  BEGIN
+    p_agregar_linea('</section>');
+  END;
+
+  PROCEDURE p_nav_abrir IS
+  BEGIN
+    p_agregar_linea('<nav>');
+  END;
+
+  PROCEDURE p_nav_cerrar IS
+  BEGIN
+    p_agregar_linea('</nav>');
+  END;
+
+  PROCEDURE p_aside_abrir IS
+  BEGIN
+    p_agregar_linea('<aside>');
+  END;
+
+  PROCEDURE p_aside_cerrar IS
+  BEGIN
+    p_agregar_linea('</aside>');
+  END;
+
+  PROCEDURE p_div_abrir IS
+  BEGIN
+    p_agregar_linea('<div>');
+  END;
+
+  PROCEDURE p_div_cerrar IS
+  BEGIN
+    p_agregar_linea('</div>');
   END;
 
 END;
 /
-
