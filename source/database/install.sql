@@ -78,6 +78,7 @@ prompt
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_servicio.pck
+@@packages/k_mensajeria.pck
 
 prompt
 prompt Creando triggers...
