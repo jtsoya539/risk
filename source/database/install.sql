@@ -32,9 +32,6 @@ prompt
 @@sequences/s_id_servicio.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
-@@sequences/s_id_correo.seq
-@@sequences/s_id_correo_adjunto.seq
-@@sequences/s_id_mensaje.seq
 
 prompt
 prompt Creando tablas...
@@ -63,21 +60,6 @@ prompt
 @@tables/t_mensajes.tab
 
 prompt
-prompt Creando triggers...
-prompt -----------------------------------
-prompt
-@@triggers/gs_ciudades.trg
-@@triggers/gs_paises.trg
-@@triggers/gs_personas.trg
-@@triggers/gs_roles.trg
-@@triggers/gs_servicios.trg
-@@triggers/gs_sesiones.trg
-@@triggers/gs_usuarios.trg
-@@triggers/gs_correos.trg
-@@triggers/gs_correo_adjuntos.trg
-@@triggers/gs_mensajes.trg
-
-prompt
 prompt Creando types...
 prompt -----------------------------------
 prompt
@@ -96,6 +78,20 @@ prompt
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_servicio.pck
+@@packages/k_mensajeria.pck
+
+prompt
+prompt Creando triggers...
+prompt -----------------------------------
+prompt
+@@triggers/gs_ciudades.trg
+@@triggers/gs_paises.trg
+@@triggers/gs_personas.trg
+@@triggers/gs_roles.trg
+@@triggers/gs_servicios.trg
+@@triggers/gs_sesiones.trg
+@@triggers/gs_usuarios.trg
+@@triggers/gb_usuarios.trg
 
 prompt
 prompt Ejecutando scripts...

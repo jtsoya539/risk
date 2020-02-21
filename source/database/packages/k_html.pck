@@ -24,6 +24,12 @@ CREATE OR REPLACE PACKAGE k_html IS
 
   PROCEDURE p_agregar_comentario(i_comentario IN VARCHAR2);
 
+  FUNCTION f_a(i_contenido IN VARCHAR2,
+               i_href      IN VARCHAR2,
+               i_target    IN VARCHAR2 DEFAULT NULL,
+               i_title     IN VARCHAR2 DEFAULT NULL,
+               i_download  IN VARCHAR2 DEFAULT NULL) RETURN VARCHAR2;
+
   FUNCTION f_em(i_contenido IN VARCHAR2) RETURN VARCHAR2;
 
   FUNCTION f_strong(i_contenido IN VARCHAR2) RETURN VARCHAR2;
@@ -55,6 +61,12 @@ CREATE OR REPLACE PACKAGE k_html IS
   PROCEDURE p_h6(i_contenido IN VARCHAR2);
 
   PROCEDURE p_p(i_contenido IN VARCHAR2);
+
+  PROCEDURE p_a(i_contenido IN VARCHAR2,
+                i_href      IN VARCHAR2,
+                i_target    IN VARCHAR2 DEFAULT NULL,
+                i_title     IN VARCHAR2 DEFAULT NULL,
+                i_download  IN VARCHAR2 DEFAULT NULL);
 
   PROCEDURE p_span(i_contenido IN VARCHAR2);
 
@@ -174,17 +186,28 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
 
   PROCEDURE p_agregar_css(i_href IN VARCHAR2) IS
   BEGIN
-    p_agregar_linea('<link rel="stylesheet" href="' || i_href || '">');
+    p_agregar_linea('<link rel="stylesheet" href="' ||
+                    utl_url.escape(i_href) || '">');
   END;
 
   PROCEDURE p_agregar_js(i_src IN VARCHAR2) IS
   BEGIN
-    p_agregar_linea('<script src="' || i_src || '"></script>');
+    p_agregar_linea('<script src="' || utl_url.escape(i_src) ||
+                    '"></script>');
   END;
 
   PROCEDURE p_agregar_comentario(i_comentario IN VARCHAR2) IS
   BEGIN
     p_agregar_linea('<!-- ' || i_comentario || ' -->');
+  END;
+
+  FUNCTION f_a(i_contenido IN VARCHAR2,
+               i_href      IN VARCHAR2,
+               i_target    IN VARCHAR2 DEFAULT NULL,
+               i_title     IN VARCHAR2 DEFAULT NULL,
+               i_download  IN VARCHAR2 DEFAULT NULL) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN '<a href="' || utl_url.escape(i_href) || '"' || CASE WHEN i_target IS NOT NULL THEN ' target="' || i_target || '"' ELSE '' END || CASE WHEN i_title IS NOT NULL THEN ' title="' || i_title || '"' ELSE '' END || CASE WHEN i_download IS NOT NULL THEN ' download="' || i_download || '"' ELSE '' END || '>' || i_contenido || '</a>';
   END;
 
   FUNCTION f_em(i_contenido IN VARCHAR2) RETURN VARCHAR2 IS
@@ -267,6 +290,15 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
     p_agregar_linea('<p>' || i_contenido || '</p>');
   END;
 
+  PROCEDURE p_a(i_contenido IN VARCHAR2,
+                i_href      IN VARCHAR2,
+                i_target    IN VARCHAR2 DEFAULT NULL,
+                i_title     IN VARCHAR2 DEFAULT NULL,
+                i_download  IN VARCHAR2 DEFAULT NULL) IS
+  BEGIN
+    p_agregar_linea(f_a(i_contenido, i_href, i_target, i_title, i_download));
+  END;
+
   PROCEDURE p_span(i_contenido IN VARCHAR2) IS
   BEGIN
     p_agregar_linea('<span>' || i_contenido || '</span>');
@@ -301,12 +333,11 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
     p_agregar_linea('<head>');
     p_agregar_linea('<meta charset="utf-8">');
     IF i_author IS NOT NULL THEN
-      p_agregar_linea('<meta name="author" content="' ||
-                      f_escapar_texto(i_author) || '">');
+      p_agregar_linea('<meta name="author" content="' || i_author || '">');
     END IF;
     IF i_description IS NOT NULL THEN
       p_agregar_linea('<meta name="description" content="' ||
-                      f_escapar_texto(i_description) || '">');
+                      i_description || '">');
     END IF;
     IF i_title IS NOT NULL THEN
       p_title(i_title);

@@ -1,10 +1,12 @@
 create table T_USUARIOS
 (
-  id_usuario NUMBER(10) not null,
-  alias      VARCHAR2(300),
-  id_persona NUMBER(10),
-  estado     CHAR(1),
-  avatar     BLOB
+  id_usuario       NUMBER(10) not null,
+  alias            VARCHAR2(300),
+  id_persona       NUMBER(10),
+  estado           CHAR(1),
+  avatar           BLOB,
+  direccion_correo VARCHAR2(320),
+  numero_telefono  VARCHAR2(160)
 )
 ;
 comment on table T_USUARIOS
@@ -19,6 +21,10 @@ comment on column T_USUARIOS.estado
   is 'Estado del usuario';
 comment on column T_USUARIOS.avatar
   is 'Avatar del usuario (imagen de perfil)';
+comment on column T_USUARIOS.direccion_correo
+  is 'Direccion de correo electronico principal del usuario';
+comment on column T_USUARIOS.numero_telefono
+  is 'Numero de telefono principal del usuario';
 alter table T_USUARIOS
   add constraint PK_USUARIOS primary key (ID_USUARIO);
 alter table T_USUARIOS
