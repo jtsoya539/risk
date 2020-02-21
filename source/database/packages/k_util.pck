@@ -25,12 +25,6 @@ CREATE OR REPLACE PACKAGE k_util IS
                             i_separador IN VARCHAR2 DEFAULT '~')
     RETURN VARCHAR2;
 
-  FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
-    RETURN BOOLEAN;
-
-  FUNCTION f_validar_numero_telefono(i_numero_telefono VARCHAR2)
-    RETURN BOOLEAN;
-
   FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2;
 
   -- Retorna el significado de un codigo dentro de un dominio 
@@ -125,19 +119,6 @@ END;';
                                  l_longitud_valor);
     END IF;
     RETURN l_valor;
-  END;
-
-  FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
-    RETURN BOOLEAN IS
-  BEGIN
-    RETURN regexp_like(i_direccion_correo,
-                       '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$');
-  END;
-
-  FUNCTION f_validar_numero_telefono(i_numero_telefono VARCHAR2)
-    RETURN BOOLEAN IS
-  BEGIN
-    RETURN regexp_like(i_numero_telefono, 'regexp');
   END;
 
   FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2 IS

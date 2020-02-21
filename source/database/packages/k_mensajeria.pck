@@ -7,6 +7,12 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   --
   -- %author jmeza 5/1/2019 21:42:37
 
+  FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
+    RETURN BOOLEAN;
+
+  FUNCTION f_validar_numero_telefono(i_numero_telefono VARCHAR2)
+    RETURN BOOLEAN;
+
   FUNCTION f_direccion_correo_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
   FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
@@ -14,6 +20,19 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
+
+  FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
+    RETURN BOOLEAN IS
+  BEGIN
+    RETURN regexp_like(i_direccion_correo,
+                       '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$');
+  END;
+
+  FUNCTION f_validar_numero_telefono(i_numero_telefono VARCHAR2)
+    RETURN BOOLEAN IS
+  BEGIN
+    RETURN regexp_like(i_numero_telefono, 'regexp');
+  END;
 
   FUNCTION f_direccion_correo_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS
     l_direccion_correo t_usuarios.direccion_correo%TYPE;
