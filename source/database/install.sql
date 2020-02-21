@@ -32,6 +32,9 @@ prompt
 @@sequences/s_id_servicio.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
+@@sequences/s_id_correo.seq
+@@sequences/s_id_correo_adjunto.seq
+@@sequences/s_id_mensaje.seq
 
 prompt
 prompt Creando tablas...
@@ -70,6 +73,9 @@ prompt
 @@triggers/gs_servicios.trg
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
+@@triggers/gs_correos.trg
+@@triggers/gs_correo_adjuntos.trg
+@@triggers/gs_mensajes.trg
 
 prompt
 prompt Creando types...

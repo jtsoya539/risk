@@ -78,6 +78,9 @@ drop sequence s_id_rol;
 drop sequence s_id_servicio;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
+drop sequence s_id_correo;
+drop sequence s_id_correo_adjunto;
+drop sequence s_id_mensaje;
 
 prompt
 prompt Borrando logs...
