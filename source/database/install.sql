@@ -91,6 +91,9 @@ prompt
 @@triggers/gs_servicios.trg
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
+@@triggers/gs_correos.trg
+@@triggers/gs_correo_adjuntos.trg
+@@triggers/gs_mensajes.trg
 @@triggers/gb_usuarios.trg
 
 prompt
