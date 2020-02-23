@@ -32,6 +32,9 @@ prompt
 @@sequences/s_id_servicio.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
+@@sequences/s_id_correo.seq
+@@sequences/s_id_correo_adjunto.seq
+@@sequences/s_id_mensaje.seq
 
 prompt
 prompt Creando tablas...
