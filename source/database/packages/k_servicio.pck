@@ -33,7 +33,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   c_log_salida  CONSTANT VARCHAR2(10) := 'SALIDA';
 
   -- Errores
-  c_error_inesperado CONSTANT VARCHAR2(10) := 'api_9999';
+  c_error_inesperado CONSTANT VARCHAR2(10) := 'api9999';
 
   -- Excepciones
   ex_api_error EXCEPTION;
