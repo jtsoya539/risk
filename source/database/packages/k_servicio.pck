@@ -63,7 +63,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Inicializa respuesta
     l_parametros := NEW y_parametros();
   
-    l_json_object := json_object_t.parse(i_parametros);
+    IF i_parametros IS NULL OR dbms_lob.getlength(i_parametros) = 0 THEN
+      l_json_object := json_object_t.parse('{}');
+    ELSE
+      l_json_object := json_object_t.parse(i_parametros);
+    END IF;
   
     FOR par IN c_servicio_parametros LOOP
       IF par.obligatorio = 'S' THEN
@@ -208,7 +212,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
          AND id_servicio = i_id_servicio;
     EXCEPTION
       WHEN no_data_found THEN
-        lp_respuesta_error(l_rsp, '1', 'Servicio inexistente o inactivo');
+        lp_respuesta_error(l_rsp,
+                           'api0001',
+                           'Servicio inexistente o inactivo');
         RAISE ex_api_error;
     END;
   
@@ -218,7 +224,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     EXCEPTION
       WHEN OTHERS THEN
         lp_respuesta_error(l_rsp,
-                           '2',
+                           'api0002',
                            CASE
                            k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                            k_error.c_user_defined_error THEN
