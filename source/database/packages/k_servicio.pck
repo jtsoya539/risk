@@ -196,7 +196,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
-    l_rsp.lugar := 'Buscando nombre del servicio';
+    l_rsp.lugar := 'Buscando nombre y dominio del servicio';
     BEGIN
       SELECT upper(nombre), upper(dominio)
         INTO l_nombre_servicio, l_dominio_servicio
@@ -216,12 +216,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       WHEN OTHERS THEN
         lp_respuesta_error(l_rsp,
                            '2',
-                           CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                           CASE
+                           k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                            k_error.c_user_defined_error THEN
-                           utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                           utl_call_stack.error_msg(1) WHEN
                            k_error.c_oracle_predefined_error THEN
                            'Error al procesar parametros del servicio' END,
-                           SQLERRM);
+                           dbms_utility.format_error_stack);
         RAISE ex_api_error;
     END;
   
@@ -243,7 +244,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
                          k_error.f_mensaje_error(c_error_inesperado),
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -284,12 +285,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
-                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         CASE
+                         k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                          k_error.c_user_defined_error THEN
-                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         utl_call_stack.error_msg(1) WHEN
                          k_error.c_oracle_predefined_error THEN
                          k_error.f_mensaje_error(c_error_inesperado) END,
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -318,12 +320,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
-                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         CASE
+                         k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                          k_error.c_user_defined_error THEN
-                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         utl_call_stack.error_msg(1) WHEN
                          k_error.c_oracle_predefined_error THEN
                          k_error.f_mensaje_error(c_error_inesperado) END,
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -353,12 +356,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
-                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         CASE
+                         k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                          k_error.c_user_defined_error THEN
-                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         utl_call_stack.error_msg(1) WHEN
                          k_error.c_oracle_predefined_error THEN
                          k_error.f_mensaje_error(c_error_inesperado) END,
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -401,7 +405,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
                          k_error.f_mensaje_error(c_error_inesperado),
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -437,12 +441,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
-                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         CASE
+                         k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                          k_error.c_user_defined_error THEN
-                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         utl_call_stack.error_msg(1) WHEN
                          k_error.c_oracle_predefined_error THEN
                          k_error.f_mensaje_error(c_error_inesperado) END,
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -471,12 +476,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
-                         CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
+                         CASE
+                         k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                          k_error.c_user_defined_error THEN
-                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         utl_call_stack.error_msg(1) WHEN
                          k_error.c_oracle_predefined_error THEN
                          k_error.f_mensaje_error(c_error_inesperado) END,
-                         SQLERRM);
+                         dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
