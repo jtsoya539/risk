@@ -10,5 +10,6 @@ namespace Risk.API.Services
         YRespuesta ApiRegistrarUsuario(string usuario, string clave);
         YRespuesta ApiRegistrarClave(string usuario, string clave, string tipoClave);
         YRespuesta ApiCambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave);
+        YRespuesta ApiValidarSesion(string token);
     }
 }

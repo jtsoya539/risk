@@ -17,6 +17,7 @@ namespace Risk.API.Services
         private const int ID_REGISTRAR_USUARIO = 4;
         private const int ID_REGISTRAR_CLAVE = 5;
         private const int ID_CAMBIAR_CLAVE = 6;
+        private const int ID_VALIDAR_SESION = 7;
 
         public AuthService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -87,6 +88,16 @@ namespace Risk.API.Services
             prms.Add("tipo_clave", tipoClave);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CREDENCIALES, prms.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+        }
+
+        public YRespuesta ApiValidarSesion(string token)
+        {
+            JObject prms = new JObject();
+            prms.Add("token", token);
+
+            string rsp = base.ApiProcesarServicio(ID_VALIDAR_SESION, prms.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
