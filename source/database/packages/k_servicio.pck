@@ -32,6 +32,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   c_log_entrada CONSTANT VARCHAR2(10) := 'ENTRADA';
   c_log_salida  CONSTANT VARCHAR2(10) := 'SALIDA';
 
+  -- Errores
+  c_error_inesperado CONSTANT VARCHAR2(10) := 'api_9999';
+
   -- Excepciones
   ex_api_error EXCEPTION;
 
@@ -164,7 +167,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                i_mensaje_bd IN VARCHAR2 DEFAULT NULL) IS
   BEGIN
     IF i_codigo = '0' THEN
-      io_respuesta.codigo  := '999';
+      io_respuesta.codigo  := c_error_inesperado;
       io_respuesta.mensaje := k_error.f_mensaje_error(io_respuesta.codigo);
     ELSE
       io_respuesta.codigo  := substr(i_codigo, 1, 10);
@@ -214,10 +217,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         lp_respuesta_error(l_rsp,
                            '2',
                            CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                           k_error.oracle_predefined_error THEN
-                           'Error al procesar parametros del servicio' WHEN
-                           k_error.user_defined_error THEN
-                           k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                           k_error.c_user_defined_error THEN
+                           utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                           k_error.c_oracle_predefined_error THEN
+                           'Error al procesar parametros del servicio' END,
                            SQLERRM);
         RAISE ex_api_error;
     END;
@@ -238,8 +241,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
-                         k_error.f_mensaje_error('999'),
+                         c_error_inesperado,
+                         k_error.f_mensaje_error(c_error_inesperado),
                          SQLERRM);
       RETURN l_rsp;
   END;
@@ -280,12 +283,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
+                         c_error_inesperado,
                          CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                         k_error.oracle_predefined_error THEN
-                         k_error.f_mensaje_error('999') WHEN
-                         k_error.user_defined_error THEN
-                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         k_error.c_user_defined_error THEN
+                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         k_error.c_oracle_predefined_error THEN
+                         k_error.f_mensaje_error(c_error_inesperado) END,
                          SQLERRM);
       RETURN l_rsp;
   END;
@@ -314,12 +317,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
+                         c_error_inesperado,
                          CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                         k_error.oracle_predefined_error THEN
-                         k_error.f_mensaje_error('999') WHEN
-                         k_error.user_defined_error THEN
-                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         k_error.c_user_defined_error THEN
+                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         k_error.c_oracle_predefined_error THEN
+                         k_error.f_mensaje_error(c_error_inesperado) END,
                          SQLERRM);
       RETURN l_rsp;
   END;
@@ -349,12 +352,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
+                         c_error_inesperado,
                          CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                         k_error.oracle_predefined_error THEN
-                         k_error.f_mensaje_error('999') WHEN
-                         k_error.user_defined_error THEN
-                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         k_error.c_user_defined_error THEN
+                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         k_error.c_oracle_predefined_error THEN
+                         k_error.f_mensaje_error(c_error_inesperado) END,
                          SQLERRM);
       RETURN l_rsp;
   END;
@@ -396,8 +399,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
-                         k_error.f_mensaje_error('999'),
+                         c_error_inesperado,
+                         k_error.f_mensaje_error(c_error_inesperado),
                          SQLERRM);
       RETURN l_rsp;
   END;
@@ -433,12 +436,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
+                         c_error_inesperado,
                          CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                         k_error.oracle_predefined_error THEN
-                         k_error.f_mensaje_error('999') WHEN
-                         k_error.user_defined_error THEN
-                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         k_error.c_user_defined_error THEN
+                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         k_error.c_oracle_predefined_error THEN
+                         k_error.f_mensaje_error(c_error_inesperado) END,
                          SQLERRM);
       RETURN l_rsp;
   END;
@@ -467,12 +470,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
-                         '999',
+                         c_error_inesperado,
                          CASE k_error.f_tipo_excepcion(SQLCODE) WHEN
-                         k_error.oracle_predefined_error THEN
-                         k_error.f_mensaje_error('999') WHEN
-                         k_error.user_defined_error THEN
-                         k_error.f_mensaje_excepcion(SQLERRM, SQLCODE) END,
+                         k_error.c_user_defined_error THEN
+                         utl_call_stack.error_msg(utl_call_stack.error_depth) WHEN
+                         k_error.c_oracle_predefined_error THEN
+                         k_error.f_mensaje_error(c_error_inesperado) END,
                          SQLERRM);
       RETURN l_rsp;
   END;

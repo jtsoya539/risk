@@ -5,8 +5,8 @@ CREATE OR REPLACE PACKAGE k_error IS
   -- %author jmeza 25/3/2019 21:04:47
 
   -- Tipos de error
-  oracle_predefined_error CONSTANT VARCHAR2(3) := 'OPE';
-  user_defined_error      CONSTANT VARCHAR2(3) := 'UDE';
+  c_oracle_predefined_error CONSTANT VARCHAR2(3) := 'OPE';
+  c_user_defined_error      CONSTANT VARCHAR2(3) := 'UDE';
 
   FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2;
 
@@ -29,9 +29,9 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     l_tipo_error VARCHAR2(3);
   BEGIN
     IF i_sqlcode >= -20999 AND i_sqlcode <= -20000 THEN
-      l_tipo_error := user_defined_error;
+      l_tipo_error := c_user_defined_error;
     ELSE
-      l_tipo_error := oracle_predefined_error;
+      l_tipo_error := c_oracle_predefined_error;
     END IF;
     RETURN l_tipo_error;
   END;
