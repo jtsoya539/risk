@@ -70,10 +70,11 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
   BEFORE INSERT ON ' || lower(i_tabla) || '
   FOR EACH ROW
 BEGIN
-  SELECT s_' || lower(i_campo) || '.nextval INTO :new.' ||
-                   lower(i_campo) || ' FROM dual;
+  IF :new.' || lower(i_campo) || ' IS NULL THEN
+    :new.' || lower(i_campo) || ' := s_' ||
+                   lower(i_campo) || '.nextval;
+  END IF;
 END;';
-  
     EXECUTE IMMEDIATE l_sentencia;
   END;
 

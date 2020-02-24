@@ -2,7 +2,9 @@ CREATE OR REPLACE TRIGGER gs_sesiones
   BEFORE INSERT ON t_sesiones
   FOR EACH ROW
 BEGIN
-  SELECT s_id_sesion.nextval INTO :new.id_sesion FROM dual;
+  IF :new.id_sesion IS NULL THEN
+    :new.id_sesion := s_id_sesion.nextval;
+  END IF;
 END;
 /
 

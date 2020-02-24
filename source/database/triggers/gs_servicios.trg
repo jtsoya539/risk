@@ -2,7 +2,9 @@ CREATE OR REPLACE TRIGGER gs_servicios
   BEFORE INSERT ON t_servicios
   FOR EACH ROW
 BEGIN
-  SELECT s_id_servicio.nextval INTO :new.id_servicio FROM dual;
+  IF :new.id_servicio IS NULL THEN
+    :new.id_servicio := s_id_servicio.nextval;
+  END IF;
 END;
 /
 
