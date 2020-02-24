@@ -25,13 +25,14 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     RETURN BOOLEAN IS
   BEGIN
     RETURN regexp_like(i_direccion_correo,
-                       '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$');
+                       k_util.f_valor_parametro('REGEXP_VALIDAR_DIRECCION_CORREO'));
   END;
 
   FUNCTION f_validar_numero_telefono(i_numero_telefono VARCHAR2)
     RETURN BOOLEAN IS
   BEGIN
-    RETURN regexp_like(i_numero_telefono, '^(\+595|0)9[6-9][1-9][0-9]{6}$');
+    RETURN regexp_like(i_numero_telefono,
+                       k_util.f_valor_parametro('REGEXP_VALIDAR_NUMERO_TELEFONO'));
   END;
 
   FUNCTION f_direccion_correo_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS

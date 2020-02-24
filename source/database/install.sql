@@ -107,6 +107,7 @@ prompt
 @@scripts/ins_t_sistemas.sql
 @@scripts/ins_t_significados.sql
 @@scripts/ins_t_errores.sql
+@@scripts/ins_t_parametros.sql
 @@scripts/ins_t_servicios.sql
 @@scripts/ins_t_servicio_parametros.sql
 
