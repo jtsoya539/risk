@@ -424,7 +424,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   PROCEDURE p_sesion_activa(i_token IN VARCHAR2) IS
   BEGIN
     IF NOT f_sesion_activa(i_token) THEN
-      raise_application_error(-20000, 'Sesion no se encuentra activa');
+      raise_application_error(-20000, 'Sesion finalizada o expirada');
     END IF;
   END;
 
