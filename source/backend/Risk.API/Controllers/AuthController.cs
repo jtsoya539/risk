@@ -27,8 +27,14 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
-        // POST /api/auth/sesion
-        [HttpPost("sesion")]
+        [HttpPost("RegistrarUsuario")]
+        public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
+        {
+            YRespuesta respuesta = _authService.ApiRegistrarUsuario(requestBody.Usuario, requestBody.Clave);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("IniciarSesion")]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
             YRespuesta respuesta = _authService.ApiValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
@@ -70,11 +76,31 @@ namespace Risk.API.Controllers
             return Ok(token);
         }
 
-        // DELETE /api/auth/sesion
-        [HttpDelete("sesion")]
+        [HttpPost("FinalizarSesion")]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
             YRespuesta respuesta = _authService.ApiFinalizarSesion(requestBody.Token);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("RegistrarClaveTransaccional")]
+        public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
+        {
+            YRespuesta respuesta = _authService.ApiRegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
+            return Ok(respuesta);
+        }
+
+        [HttpPost("CambiarClaveAcceso")]
+        public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
+        {
+            YRespuesta respuesta = _authService.ApiCambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
+            return Ok(respuesta);
+        }
+
+        [HttpPost("CambiarClaveTransaccional")]
+        public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
+        {
+            YRespuesta respuesta = _authService.ApiCambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
             return Ok(respuesta);
         }
     }
