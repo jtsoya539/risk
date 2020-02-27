@@ -49,4 +49,13 @@ values (6, 'TIPO_CLAVE', 'I', 'S', null, 'N', 'A', 'S', 4);
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (7, 'TOKEN', 'I', 'S', null, 'S', null, 'S', 1);
 
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (8, 'PARAMETRO', 'I', 'S', null, 'S', null, 'S', 1);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (9, 'DOMINIO', 'I', 'S', null, 'S', null, 'S', 1);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (9, 'CODIGO', 'I', 'S', null, 'S', null, 'S', 2);
+
 prompt Done.

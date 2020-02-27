@@ -22,4 +22,10 @@ values (6, 'CAMBIAR_CLAVE', 'R', 'S', 'AUT', null, null, null, null);
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (7, 'VALIDAR_SESION', 'R', 'S', 'AUT', null, null, null, null);
 
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (8, 'VALOR_PARAMETRO', 'R', 'S', 'GEN', null, null, null, null);
+
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (9, 'SIGNIFICADO_CODIGO', 'R', 'S', 'GEN', null, null, null, null);
+
 prompt Done.

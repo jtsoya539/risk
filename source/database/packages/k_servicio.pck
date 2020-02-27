@@ -39,7 +39,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   c_error_inesperado CONSTANT VARCHAR2(10) := 'api9999';
 
   -- Excepciones
-  ex_api_error EXCEPTION;
+  ex_api_error                EXCEPTION;
+  ex_servicio_no_implementado EXCEPTION;
+  PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
 
   FUNCTION lf_procesar_parametros(i_id_servicio IN NUMBER,
                                   i_parametros  IN CLOB) RETURN y_parametros IS
@@ -236,9 +238,29 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END;
   
     l_rsp.lugar := 'Procesando servicio';
-    EXECUTE IMMEDIATE 'BEGIN :1 := K_SERVICIO.' || l_dominio_servicio || '_' ||
-                      l_nombre_servicio || '(:2); END;'
-      USING OUT l_rsp, IN l_prms;
+    BEGIN
+      EXECUTE IMMEDIATE 'BEGIN :1 := K_SERVICIO.' || l_dominio_servicio || '_' ||
+                        l_nombre_servicio || '(:2); END;'
+        USING OUT l_rsp, IN l_prms;
+    EXCEPTION
+      WHEN ex_servicio_no_implementado THEN
+        lp_respuesta_error(l_rsp,
+                           'api0003',
+                           'Servicio no implementado',
+                           dbms_utility.format_error_stack);
+        RAISE ex_api_error;
+      WHEN OTHERS THEN
+        lp_respuesta_error(l_rsp,
+                           'api0004',
+                           CASE
+                           k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                           k_error.c_user_defined_error THEN
+                           utl_call_stack.error_msg(1) WHEN
+                           k_error.c_oracle_predefined_error THEN
+                           'Error al procesar servicio' END,
+                           dbms_utility.format_error_stack);
+        RAISE ex_api_error;
+    END;
   
     IF l_rsp.codigo <> '0' THEN
       RAISE ex_api_error;
