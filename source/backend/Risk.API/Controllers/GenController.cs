@@ -33,5 +33,12 @@ namespace Risk.API.Controllers
             YRespuesta<YDato> respuesta = _genService.ValorParametro(parametro);
             return Ok(respuesta);
         }
+
+        [HttpGet("SignificadoCodigo")]
+        public IActionResult SignificadoCodigo([FromQuery] string dominio, [FromQuery] string codigo)
+        {
+            YRespuesta<YDato> respuesta = _genService.SignificadoCodigo(dominio, codigo);
+            return Ok(respuesta);
+        }
     }
 }
