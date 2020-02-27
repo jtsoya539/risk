@@ -493,12 +493,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
-      lp_respuesta_error(l_rsp, '1', 'Debe ingresar usuario');
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
       RAISE ex_api_error;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'clave')) IS NULL THEN
-      lp_respuesta_error(l_rsp, '2', 'Debe ingresar clave');
+      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar clave');
       RAISE ex_api_error;
     END IF;
   
@@ -510,7 +510,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                                                          'clave')),
                                                anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                          'tipo_clave'))) THEN
-      lp_respuesta_error(l_rsp, '3', 'Credenciales invalidas');
+      lp_respuesta_error(l_rsp, 'aut0003', 'Credenciales invalidas');
       RAISE ex_api_error;
     END IF;
   
@@ -536,7 +536,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, '1', 'Debe ingresar token');
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
@@ -544,7 +544,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     IF NOT
         k_autenticacion.f_sesion_activa(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                   'token'))) THEN
-      lp_respuesta_error(l_rsp, '2', 'Sesion finalizada o expirada');
+      lp_respuesta_error(l_rsp, 'aut0002', 'Sesion finalizada o expirada');
       RAISE ex_api_error;
     END IF;
   
@@ -570,12 +570,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
-      lp_respuesta_error(l_rsp, '1', 'Debe ingresar usuario');
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
       RAISE ex_api_error;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, '2', 'Debe ingresar token');
+      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
@@ -612,7 +612,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, '1', 'Debe ingresar token');
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar token');
       RAISE ex_api_error;
     END IF;
   
