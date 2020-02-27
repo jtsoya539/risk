@@ -23,7 +23,7 @@ namespace Risk.API.Services
         {
         }
 
-        public YRespuesta CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
+        public YRespuesta<YDato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -33,20 +33,20 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_CAMBIAR_CLAVE, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta FinalizarSesion(string token)
+        public YRespuesta<YDato> FinalizarSesion(string token)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
 
             string rsp = base.ApiProcesarServicio(ID_FINALIZAR_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta IniciarSesion(string usuario, string token)
+        public YRespuesta<YDato> IniciarSesion(string usuario, string token)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -54,10 +54,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta RegistrarClave(string usuario, string clave, string tipoClave)
+        public YRespuesta<YDato> RegistrarClave(string usuario, string clave, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -66,10 +66,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_CLAVE, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta RegistrarUsuario(string usuario, string clave)
+        public YRespuesta<YDato> RegistrarUsuario(string usuario, string clave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -77,10 +77,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_USUARIO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta ValidarCredenciales(string usuario, string clave, string tipoClave)
+        public YRespuesta<YDato> ValidarCredenciales(string usuario, string clave, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -89,17 +89,17 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CREDENCIALES, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta ValidarSesion(string token)
+        public YRespuesta<YDato> ValidarSesion(string token)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
     }
 

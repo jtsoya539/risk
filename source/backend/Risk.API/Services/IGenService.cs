@@ -4,7 +4,7 @@ namespace Risk.API.Services
 {
     public interface IGenService
     {
-        YRespuesta ValorParametro(string parametro);
-        YRespuesta SignificadoCodigo(string dominio, string codigo);
+        YRespuesta<YDato> ValorParametro(string parametro);
+        YRespuesta<YDato> SignificadoCodigo(string dominio, string codigo);
     }
 }

@@ -30,14 +30,14 @@ namespace Risk.API.Controllers
         [HttpPost("RegistrarUsuario")]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
-            YRespuesta respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave);
+            YRespuesta<YDato> respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave);
             return Ok(respuesta);
         }
 
         [HttpPost("IniciarSesion")]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
-            YRespuesta respuesta = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
+            YRespuesta<YDato> respuesta = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
             if (!respuesta.Codigo.Equals("0"))
             {
@@ -79,28 +79,28 @@ namespace Risk.API.Controllers
         [HttpPost("FinalizarSesion")]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            YRespuesta respuesta = _autService.FinalizarSesion(requestBody.Token);
+            YRespuesta<YDato> respuesta = _autService.FinalizarSesion(requestBody.Token);
             return Ok(respuesta);
         }
 
         [HttpPost("RegistrarClaveTransaccional")]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
-            YRespuesta respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
+            YRespuesta<YDato> respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
             return Ok(respuesta);
         }
 
         [HttpPost("CambiarClaveAcceso")]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
-            YRespuesta respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
+            YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
             return Ok(respuesta);
         }
 
         [HttpPost("CambiarClaveTransaccional")]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
-            YRespuesta respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
+            YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
             return Ok(respuesta);
         }
     }

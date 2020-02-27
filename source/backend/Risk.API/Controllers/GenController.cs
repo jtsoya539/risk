@@ -30,7 +30,7 @@ namespace Risk.API.Controllers
         [HttpGet("ValorParametro")]
         public IActionResult ValorParametro([FromQuery] string parametro)
         {
-            YRespuesta respuesta = _genService.ValorParametro(parametro);
+            YRespuesta<YDato> respuesta = _genService.ValorParametro(parametro);
             return Ok(respuesta);
         }
     }

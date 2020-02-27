@@ -18,17 +18,17 @@ namespace Risk.API.Services
         {
         }
 
-        public YRespuesta ValorParametro(string parametro)
+        public YRespuesta<YDato> ValorParametro(string parametro)
         {
             JObject prms = new JObject();
             prms.Add("parametro", parametro);
 
             string rsp = base.ApiProcesarServicio(ID_VALOR_PARAMETRO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta SignificadoCodigo(string dominio, string codigo)
+        public YRespuesta<YDato> SignificadoCodigo(string dominio, string codigo)
         {
             JObject prms = new JObject();
             prms.Add("dominio", dominio);
@@ -36,7 +36,7 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_SIGNIFICADO_CODIGO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta>(rsp);
+            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
     }
 
