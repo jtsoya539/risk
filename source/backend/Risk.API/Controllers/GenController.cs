@@ -11,9 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 using Risk.API.Entities;
 using Risk.API.Models;
 using Risk.API.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers
 {
+    [SwaggerTag("Servicios Web del dominio GENERAL", "https://github.com/jtsoya539")]
     [Route("api/[controller]")]
     [ApiController]
     public class GenController : ControllerBase
@@ -27,15 +29,21 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
+        [SwaggerOperation(Summary = "Summary",
+            Description = "Description",
+            OperationId = "ValorParametro")]
         [HttpGet("ValorParametro")]
-        public IActionResult ValorParametro([FromQuery] string parametro)
+        public IActionResult ValorParametro([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string parametro)
         {
             YRespuesta<YDato> respuesta = _genService.ValorParametro(parametro);
             return Ok(respuesta);
         }
 
+        [SwaggerOperation(Summary = "Summary",
+            Description = "Description",
+            OperationId = "SignificadoCodigo")]
         [HttpGet("SignificadoCodigo")]
-        public IActionResult SignificadoCodigo([FromQuery] string dominio, [FromQuery] string codigo)
+        public IActionResult SignificadoCodigo([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string dominio, [SwaggerParameter(Description = "Description", Required = true)][FromQuery] string codigo)
         {
             YRespuesta<YDato> respuesta = _genService.SignificadoCodigo(dominio, codigo);
             return Ok(respuesta);

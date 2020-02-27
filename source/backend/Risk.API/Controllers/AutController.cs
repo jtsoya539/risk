@@ -11,9 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 using Risk.API.Entities;
 using Risk.API.Models;
 using Risk.API.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers
 {
+    [SwaggerTag("Servicios Web del dominio AUTENTICACION")]
     [Route("api/[controller]")]
     [ApiController]
     public class AutController : ControllerBase
@@ -101,6 +103,13 @@ namespace Risk.API.Controllers
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
             YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
+            return Ok(respuesta);
+        }
+
+        [HttpGet("ValidarSesion")]
+        public IActionResult ValidarSesion([FromQuery] string token)
+        {
+            YRespuesta<YDato> respuesta = _autService.ValidarSesion(token);
             return Ok(respuesta);
         }
     }
