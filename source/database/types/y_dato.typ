@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_dato AS OBJECT
+CREATE OR REPLACE TYPE y_dato UNDER y_serializable
 (
 -- Contiene un dato simple en formato de texto
 --
@@ -7,7 +7,7 @@ CREATE OR REPLACE TYPE y_dato AS OBJECT
   dato CLOB,
 
   CONSTRUCTOR FUNCTION y_dato RETURN SELF AS RESULT,
-  MEMBER FUNCTION to_json RETURN CLOB
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /
 CREATE OR REPLACE TYPE BODY y_dato IS
@@ -18,7 +18,7 @@ CREATE OR REPLACE TYPE BODY y_dato IS
     RETURN;
   END;
 
-  MEMBER FUNCTION to_json RETURN CLOB IS
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
     l_json_object json_object_t;
   BEGIN
     l_json_object := NEW json_object_t();

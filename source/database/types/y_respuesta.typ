@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_respuesta AS OBJECT
+CREATE OR REPLACE TYPE y_respuesta UNDER y_serializable
 (
 -- Agrupa datos de respuesta de un proceso
 --
@@ -11,7 +11,7 @@ CREATE OR REPLACE TYPE y_respuesta AS OBJECT
   datos      anydata, -- Datos adicionales
 
   CONSTRUCTOR FUNCTION y_respuesta RETURN SELF AS RESULT,
-  MEMBER FUNCTION to_json RETURN CLOB
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /
 CREATE OR REPLACE TYPE BODY y_respuesta IS
@@ -26,7 +26,7 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
     RETURN;
   END;
 
-  MEMBER FUNCTION to_json RETURN CLOB IS
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
     l_json_object json_object_t;
   BEGIN
     l_json_object := NEW json_object_t();

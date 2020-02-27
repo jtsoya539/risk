@@ -66,6 +66,7 @@ prompt
 prompt Creando types...
 prompt -----------------------------------
 prompt
+@@types/y_serializable.typ
 @@types/y_dato.typ
 @@types/y_parametro.typ
 @@types/y_parametros.typ

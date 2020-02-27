@@ -1,10 +1,10 @@
-CREATE OR REPLACE TYPE y_parametro AS OBJECT
+CREATE OR REPLACE TYPE y_parametro UNDER y_serializable
 (
   nombre VARCHAR2(100), -- Nombre del parametro
   valor  anydata, -- Valor del parametro
 
   CONSTRUCTOR FUNCTION y_parametro RETURN SELF AS RESULT,
-  MEMBER FUNCTION to_json RETURN CLOB
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /
 CREATE OR REPLACE TYPE BODY y_parametro IS
@@ -16,7 +16,7 @@ CREATE OR REPLACE TYPE BODY y_parametro IS
     RETURN;
   END;
 
-  MEMBER FUNCTION to_json RETURN CLOB IS
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
     l_json_object json_object_t;
   BEGIN
     l_json_object := NEW json_object_t();
