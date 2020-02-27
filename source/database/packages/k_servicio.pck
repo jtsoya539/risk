@@ -7,6 +7,12 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN CLOB;
 
+  FUNCTION gen_valor_parametro(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION gen_significado_codigo(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION aut_registrar_usuario(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -266,7 +272,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_api_error;
     END IF;
   
-    lp_respuesta_ok(l_rsp);
+    lp_respuesta_ok(l_rsp, l_rsp.datos);
     RETURN l_rsp;
   EXCEPTION
     WHEN ex_api_error THEN
@@ -291,6 +297,87 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Log de salida
     lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
     RETURN l_rsp;
+  END;
+
+  FUNCTION gen_valor_parametro(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp  y_respuesta;
+    l_dato y_dato;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'parametro')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'gen0001', 'Debe ingresar parametro');
+      RAISE ex_api_error;
+    END IF;
+  
+    l_rsp.lugar := 'Obteniendo valor del parametro';
+    l_dato.dato := k_util.f_valor_parametro(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                      'parametro')));
+  
+    IF l_dato.dato IS NULL THEN
+      lp_respuesta_error(l_rsp, 'gen0002', 'Parametro inexistente');
+      RAISE ex_api_error;
+    END IF;
+  
+    lp_respuesta_ok(l_rsp, anydata.convertobject(l_dato));
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_api_error THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         c_error_inesperado,
+                         k_error.f_mensaje_error(c_error_inesperado),
+                         dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION gen_significado_codigo(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp  y_respuesta;
+    l_dato y_dato;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'dominio')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'gen0001', 'Debe ingresar dominio');
+      RAISE ex_api_error;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'codigo')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'gen0002', 'Debe ingresar codigo');
+      RAISE ex_api_error;
+    END IF;
+  
+    l_rsp.lugar := 'Obteniendo significado';
+    l_dato.dato := k_util.f_significado_codigo(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                         'dominio')),
+                                               anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                         'codigo')));
+  
+    IF l_dato.dato IS NULL THEN
+      lp_respuesta_error(l_rsp, 'gen0003', 'Significado inexistente');
+      RAISE ex_api_error;
+    END IF;
+  
+    lp_respuesta_ok(l_rsp, anydata.convertobject(l_dato));
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_api_error THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         c_error_inesperado,
+                         k_error.f_mensaje_error(c_error_inesperado),
+                         dbms_utility.format_error_stack);
+      RETURN l_rsp;
   END;
 
   FUNCTION aut_registrar_usuario(i_parametros IN y_parametros)
