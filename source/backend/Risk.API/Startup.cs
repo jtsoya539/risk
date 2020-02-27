@@ -44,7 +44,8 @@ namespace Risk.API
 
             OracleConnection con = new OracleConnection(connectionString);
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
-            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IGenService, GenService>();
+            services.AddScoped<IAutService, AutService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

@@ -16,28 +16,28 @@ namespace Risk.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AutController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IAutService _autService;
         private readonly IConfiguration _configuration;
 
-        public AuthController(IAuthService authService, IConfiguration configuration)
+        public AutController(IAutService autService, IConfiguration configuration)
         {
-            _authService = authService;
+            _autService = autService;
             _configuration = configuration;
         }
 
         [HttpPost("RegistrarUsuario")]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiRegistrarUsuario(requestBody.Usuario, requestBody.Clave);
+            YRespuesta respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave);
             return Ok(respuesta);
         }
 
         [HttpPost("IniciarSesion")]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
+            YRespuesta respuesta = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
             if (!respuesta.Codigo.Equals("0"))
             {
@@ -66,7 +66,7 @@ namespace Risk.API.Controllers
             var createdToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(createdToken);
 
-            respuesta = _authService.ApiIniciarSesion(requestBody.Usuario, token);
+            respuesta = _autService.IniciarSesion(requestBody.Usuario, token);
 
             if (!respuesta.Codigo.Equals("0"))
             {
@@ -79,28 +79,28 @@ namespace Risk.API.Controllers
         [HttpPost("FinalizarSesion")]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiFinalizarSesion(requestBody.Token);
+            YRespuesta respuesta = _autService.FinalizarSesion(requestBody.Token);
             return Ok(respuesta);
         }
 
         [HttpPost("RegistrarClaveTransaccional")]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiRegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
+            YRespuesta respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
             return Ok(respuesta);
         }
 
         [HttpPost("CambiarClaveAcceso")]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiCambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
+            YRespuesta respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
             return Ok(respuesta);
         }
 
         [HttpPost("CambiarClaveTransaccional")]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
-            YRespuesta respuesta = _authService.ApiCambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
+            YRespuesta respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
             return Ok(respuesta);
         }
     }

@@ -9,7 +9,7 @@ using Risk.API.Entities;
 
 namespace Risk.API.Services
 {
-    public class AuthService : ServiceBase, IAuthService
+    public class AutService : ServiceBase, IAutService
     {
         private const int ID_VALIDAR_CREDENCIALES = 1;
         private const int ID_INICIAR_SESION = 2;
@@ -19,11 +19,11 @@ namespace Risk.API.Services
         private const int ID_CAMBIAR_CLAVE = 6;
         private const int ID_VALIDAR_SESION = 7;
 
-        public AuthService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
+        public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
         }
 
-        public YRespuesta ApiCambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
+        public YRespuesta CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -36,7 +36,7 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiFinalizarSesion(string token)
+        public YRespuesta FinalizarSesion(string token)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
@@ -46,7 +46,7 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiIniciarSesion(string usuario, string token)
+        public YRespuesta IniciarSesion(string usuario, string token)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -57,7 +57,7 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiRegistrarClave(string usuario, string clave, string tipoClave)
+        public YRespuesta RegistrarClave(string usuario, string clave, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -69,7 +69,7 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiRegistrarUsuario(string usuario, string clave)
+        public YRespuesta RegistrarUsuario(string usuario, string clave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -80,7 +80,7 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiValidarCredenciales(string usuario, string clave, string tipoClave)
+        public YRespuesta ValidarCredenciales(string usuario, string clave, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -92,7 +92,7 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta>(rsp);
         }
 
-        public YRespuesta ApiValidarSesion(string token)
+        public YRespuesta ValidarSesion(string token)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
