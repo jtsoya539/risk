@@ -4,6 +4,10 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   --
   -- %author jmeza 11/3/2019 23:24:54
 
+  PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
+                            i_clave      IN VARCHAR2,
+                            i_tipo_clave IN CHAR DEFAULT 'A');
+
   PROCEDURE p_registrar_usuario(i_usuario IN VARCHAR2,
                                 i_clave   IN VARCHAR2);
 
@@ -169,10 +173,107 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       ROLLBACK;
   END;
 
+  PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
+                            i_clave      IN VARCHAR2,
+                            i_tipo_clave IN CHAR DEFAULT 'A') IS
+    l_lon_minima       NUMBER(6) := to_number(k_util.f_valor_parametro('LONGITUD_MINIMA_CLAVE_' ||
+                                                                       k_util.f_significado_codigo('TIPO_CLAVE',
+                                                                                                   i_tipo_clave)));
+    l_lon_clave        NUMBER(6) := length(i_clave);
+    l_can_letras       NUMBER(6) := 0;
+    l_can_letras_may   NUMBER(6) := 0;
+    l_can_letras_min   NUMBER(6) := 0;
+    l_can_numeros      NUMBER(6) := 0;
+    l_can_otros        NUMBER(6) := 0;
+    l_can_repeticiones NUMBER(6) := 0;
+    l_caracter         VARCHAR2(1);
+  BEGIN
+    -- Valida la longitud de la clave
+    IF l_lon_clave < l_lon_minima THEN
+      raise_application_error(-20000,
+                              'La clave debe contener al menos ' ||
+                              to_char(l_lon_minima) || ' caracteres');
+    END IF;
+  
+    FOR i IN 1 .. l_lon_clave LOOP
+      l_caracter := substr(i_clave, i, 1);
+    
+      -- Cuenta la cantidad de mayusculas, minusculas, numeros y caracteres especiales
+      IF l_caracter BETWEEN 'A' AND 'Z' THEN
+        l_can_letras_may := l_can_letras_may + 1;
+      ELSIF l_caracter BETWEEN 'a' AND 'z' THEN
+        l_can_letras_min := l_can_letras_min + 1;
+      ELSIF l_caracter BETWEEN '0' AND '9' THEN
+        l_can_numeros := l_can_numeros + 1;
+      ELSE
+        l_can_otros := l_can_otros + 1;
+      END IF;
+    
+      -- Valida la cantidad de repeticiones de un mismo caracter
+      l_can_repeticiones := 0;
+      FOR j IN i .. l_lon_clave LOOP
+        IF l_caracter = substr(i_clave, j, 1) THEN
+          l_can_repeticiones := l_can_repeticiones + 1;
+        END IF;
+      END LOOP;
+      IF l_can_repeticiones > 2 THEN
+        raise_application_error(-20000,
+                                'La clave no puede contener más de 2 caracteres iguales');
+      END IF;
+    END LOOP;
+  
+    l_can_letras := l_can_letras_min + l_can_letras_may;
+  
+    -- Valida que la clave no sea igual al usuario
+    IF i_clave = i_usuario THEN
+      raise_application_error(-20000,
+                              'La clave no puede ser igual al usuario');
+    END IF;
+    -- Valida que la clave no contenga el usuario
+    IF instr(upper(i_clave), upper(i_usuario)) > 0 THEN
+      raise_application_error(-20000,
+                              'La clave no debe contener el usuario');
+    END IF;
+  
+    -- Valida la cantidad de letras
+    IF l_can_letras < 3 THEN
+      raise_application_error(-20000,
+                              'La clave debe contener al menos 3 letras del abecedario');
+    END IF;
+    -- Valida la cantidad de letras mayusculas
+    IF l_can_letras_may = 0 THEN
+      raise_application_error(-20000,
+                              'La clave debe contener al menos 1 letra mayúscula');
+    END IF;
+    -- Valida la cantidad de letras minusculas
+    IF l_can_letras_min = 0 THEN
+      raise_application_error(-20000,
+                              'La clave debe contener al menos 1 letra minúscula');
+    END IF;
+    -- Valida la cantidad de numeros
+    IF l_can_numeros = 0 THEN
+      raise_application_error(-20000,
+                              'La clave debe contener al menos 1 número');
+    END IF;
+    -- Valida la cantidad de caracteres especiales
+    IF l_can_otros = 0 THEN
+      raise_application_error(-20000,
+                              'La clave debe contener al menos 1 caracter especial');
+    END IF;
+    -- Valida caracteres no permitidos
+    IF instr(i_clave, '&') > 0 THEN
+      raise_application_error(-20000,
+                              'La clave no puede contener el caracter "&"');
+    END IF;
+  END;
+
   PROCEDURE p_registrar_usuario(i_usuario IN VARCHAR2,
                                 i_clave   IN VARCHAR2) IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
   BEGIN
+    -- Valida clave
+    p_validar_clave(i_usuario, i_clave, c_clave_acceso);
+  
     -- Inserta usuario
     INSERT INTO t_usuarios
       (alias, estado)
@@ -193,6 +294,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_hash       t_usuario_claves.hash%TYPE;
     l_salt       t_usuario_claves.salt%TYPE;
   BEGIN
+    -- Valida clave
+    p_validar_clave(i_usuario, i_clave, i_tipo_clave);
+  
     -- Busca usuario
     l_id_usuario := lf_id_usuario(i_usuario);
   
@@ -242,6 +346,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_hash       t_usuario_claves.hash%TYPE;
     l_salt       t_usuario_claves.salt%TYPE;
   BEGIN
+    -- Valida clave
+    p_validar_clave(i_usuario, i_clave_nueva, i_tipo_clave);
+  
     -- Busca usuario
     l_id_usuario := lf_id_usuario(i_usuario);
   

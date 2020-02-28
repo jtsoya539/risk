@@ -7,4 +7,10 @@ values ('REGEXP_VALIDAR_DIRECCION_CORREO', 'Expresión Regular para validación de
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('REGEXP_VALIDAR_NUMERO_TELEFONO', 'Expresión Regular para validación de números de teléfono', '^(\+595|0)9[6-9][1-9][0-9]{6}$');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('LONGITUD_MINIMA_CLAVE_ACCESO', 'Longitud mínima permitida para clave de acceso', '8');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('LONGITUD_MINIMA_CLAVE_TRANSACCIONAL', 'Longitud mínima permitida para clave transaccional', '6');
+
 prompt Done.
