@@ -8,8 +8,12 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A');
 
-  PROCEDURE p_registrar_usuario(i_usuario IN VARCHAR2,
-                                i_clave   IN VARCHAR2);
+  PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
+                                i_clave            IN VARCHAR2,
+                                i_nombre           IN VARCHAR2,
+                                i_apellido         IN VARCHAR2,
+                                i_direccion_correo IN VARCHAR2,
+                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL);
 
   PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
                               i_clave      IN VARCHAR2,
@@ -267,19 +271,53 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  PROCEDURE p_registrar_usuario(i_usuario IN VARCHAR2,
-                                i_clave   IN VARCHAR2) IS
-    l_id_usuario t_usuarios.id_usuario%TYPE;
+  PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
+                                i_clave            IN VARCHAR2,
+                                i_nombre           IN VARCHAR2,
+                                i_apellido         IN VARCHAR2,
+                                i_direccion_correo IN VARCHAR2,
+                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL) IS
+    l_id_persona t_personas.id_persona%TYPE;
   BEGIN
     -- Valida clave
     p_validar_clave(i_usuario, i_clave, c_clave_acceso);
   
+    -- Inserta persona
+    INSERT INTO t_personas
+      (nombre,
+       apellido,
+       nombre_completo,
+       tipo_persona,
+       tipo_documento,
+       numero_documento,
+       id_pais,
+       fecha_nacimiento)
+    VALUES
+      (i_nombre,
+       i_apellido,
+       i_nombre || ' ' || i_apellido,
+       'F',
+       NULL,
+       NULL,
+       NULL,
+       NULL)
+    RETURNING id_persona INTO l_id_persona;
+  
     -- Inserta usuario
     INSERT INTO t_usuarios
-      (alias, estado)
+      (alias,
+       id_persona,
+       estado,
+       avatar,
+       direccion_correo,
+       numero_telefono)
     VALUES
-      (i_usuario, 'A')
-    RETURNING id_usuario INTO l_id_usuario;
+      (i_usuario,
+       l_id_persona,
+       'A',
+       NULL,
+       i_direccion_correo,
+       i_numero_telefono);
   
     p_registrar_clave(i_usuario, i_clave, c_clave_acceso);
   EXCEPTION

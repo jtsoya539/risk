@@ -387,13 +387,48 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
-    -- l_rsp.lugar := 'Validando parametros';
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
+      RAISE ex_api_error;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'clave')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar clave');
+      RAISE ex_api_error;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'nombre')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0003', 'Debe ingresar nombre');
+      RAISE ex_api_error;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'apellido')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0004', 'Debe ingresar apellido');
+      RAISE ex_api_error;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'direccion_correo')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0005',
+                         'Debe ingresar direccion de correo');
+      RAISE ex_api_error;
+    END IF;
   
     l_rsp.lugar := 'Registrando usuario';
     k_autenticacion.p_registrar_usuario(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                   'usuario')),
                                         anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                  'clave')));
+                                                                                  'clave')),
+                                        anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                  'nombre')),
+                                        anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                  'apellido')),
+                                        anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                  'direccion_correo')),
+                                        anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                  'numero_telefono')));
   
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
