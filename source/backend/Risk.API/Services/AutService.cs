@@ -69,11 +69,15 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta<YDato> RegistrarUsuario(string usuario, string clave)
+        public YRespuesta<YDato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
+            prms.Add("nombre", nombre);
+            prms.Add("apellido", apellido);
+            prms.Add("direccion_correo", direccionCorreo);
+            prms.Add("numero_telefono", numeroTelefono);
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_USUARIO, prms.ToString(Formatting.None));
 

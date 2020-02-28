@@ -32,7 +32,7 @@ namespace Risk.API.Controllers
         [HttpPost("RegistrarUsuario")]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave);
+            YRespuesta<YDato> respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
             return Ok(respuesta);
         }
 
