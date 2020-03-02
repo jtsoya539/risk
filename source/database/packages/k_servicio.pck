@@ -45,7 +45,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   c_error_inesperado CONSTANT VARCHAR2(10) := 'api9999';
 
   -- Excepciones
-  ex_api_error                EXCEPTION;
+  ex_error_general            EXCEPTION;
+  ex_error_parametro          EXCEPTION;
   ex_servicio_no_implementado EXCEPTION;
   PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
 
@@ -223,7 +224,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         lp_respuesta_error(l_rsp,
                            'api0001',
                            'Servicio inexistente o inactivo');
-        RAISE ex_api_error;
+        RAISE ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Procesando parametros del servicio';
@@ -240,7 +241,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                            k_error.c_oracle_predefined_error THEN
                            'Error al procesar parametros del servicio' END,
                            dbms_utility.format_error_stack);
-        RAISE ex_api_error;
+        RAISE ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Procesando servicio';
@@ -254,7 +255,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                            'api0003',
                            'Servicio no implementado',
                            dbms_utility.format_error_stack);
-        RAISE ex_api_error;
+        RAISE ex_error_general;
       WHEN OTHERS THEN
         lp_respuesta_error(l_rsp,
                            'api0004',
@@ -265,19 +266,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                            k_error.c_oracle_predefined_error THEN
                            'Error al procesar servicio' END,
                            dbms_utility.format_error_stack);
-        RAISE ex_api_error;
+        RAISE ex_error_general;
     END;
   
-    IF l_rsp.codigo <> '0' THEN
-      RAISE ex_api_error;
+    IF l_rsp.codigo = '0' THEN
+      COMMIT;
+    ELSE
+      RAISE ex_error_general;
     END IF;
   
     lp_respuesta_ok(l_rsp, l_rsp.datos);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN ex_error_general THEN
+      ROLLBACK;
       RETURN l_rsp;
     WHEN OTHERS THEN
+      ROLLBACK;
       lp_respuesta_error(l_rsp,
                          c_error_inesperado,
                          k_error.f_mensaje_error(c_error_inesperado),
@@ -311,7 +318,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'parametro')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0001', 'Debe ingresar parametro');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Obteniendo valor del parametro';
@@ -320,13 +327,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     IF l_dato.dato IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0002', 'Parametro inexistente');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     lp_respuesta_ok(l_rsp, anydata.convertobject(l_dato));
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -348,12 +355,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'dominio')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0001', 'Debe ingresar dominio');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'codigo')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0002', 'Debe ingresar codigo');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Obteniendo significado';
@@ -364,13 +371,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     IF l_dato.dato IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0003', 'Significado inexistente');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     lp_respuesta_ok(l_rsp, anydata.convertobject(l_dato));
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -390,22 +397,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'clave')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar clave');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'nombre')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0003', 'Debe ingresar nombre');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'apellido')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0004', 'Debe ingresar apellido');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
@@ -413,7 +420,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       lp_respuesta_error(l_rsp,
                          'aut0005',
                          'Debe ingresar direccion de correo');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Registrando usuario';
@@ -433,7 +440,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -468,7 +475,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -504,7 +511,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -529,12 +536,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'clave')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar clave');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Validando credenciales';
@@ -546,13 +553,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                          'tipo_clave'))) THEN
       lp_respuesta_error(l_rsp, 'aut0003', 'Credenciales invalidas');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -572,7 +579,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar token');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Validando sesion';
@@ -580,13 +587,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         k_autenticacion.f_sesion_activa(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                   'token'))) THEN
       lp_respuesta_error(l_rsp, 'aut0002', 'Sesion finalizada o expirada');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -606,12 +613,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar token');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Iniciando sesion';
@@ -623,7 +630,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
@@ -648,7 +655,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar token');
-      RAISE ex_api_error;
+      RAISE ex_error_general;
     END IF;
   
     l_rsp.lugar := 'Finalizando sesion';
@@ -658,7 +665,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_api_error THEN
+    WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
       lp_respuesta_error(l_rsp,
