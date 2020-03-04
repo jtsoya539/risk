@@ -113,6 +113,8 @@ prompt
 @@scripts/ins_t_parametros.sql
 @@scripts/ins_t_servicios.sql
 @@scripts/ins_t_servicio_parametros.sql
+commit;
+/
 
 prompt
 prompt ===================================
