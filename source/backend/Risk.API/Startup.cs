@@ -66,6 +66,7 @@ namespace Risk.API
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator());
             });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
