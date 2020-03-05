@@ -30,7 +30,7 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION aut_iniciar_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
-  FUNCTION aut_finalizar_sesion(i_parametros IN y_parametros)
+  FUNCTION aut_cambiar_estado_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
 END;
@@ -645,7 +645,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-  FUNCTION aut_finalizar_sesion(i_parametros IN y_parametros)
+  FUNCTION aut_cambiar_estado_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     l_rsp y_respuesta;
   BEGIN
@@ -658,9 +658,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_error_general;
     END IF;
   
-    l_rsp.lugar := 'Finalizando sesion';
-    k_autenticacion.p_finalizar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                 'token')));
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'estado')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar estado');
+      RAISE ex_error_general;
+    END IF;
+  
+    l_rsp.lugar := 'Cambiando estado de sesion';
+    k_autenticacion.p_cambiar_estado_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                      'token')),
+                                            anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                      'estado')));
   
     lp_respuesta_ok(l_rsp);
     RETURN l_rsp;

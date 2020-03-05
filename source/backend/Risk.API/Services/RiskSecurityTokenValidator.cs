@@ -47,11 +47,23 @@ namespace Risk.API.Services
 
             if (!respuesta.Codigo.Equals("0"))
             {
-                throw new Microsoft.IdentityModel.Tokens.SecurityTokenValidationException(respuesta.Mensaje);
-
+                throw new SecurityTokenValidationException(respuesta.Mensaje);
             }
 
-            return _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+            try
+            {
+                return _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                respuesta = _autService.CambiarEstadoSesion(securityToken, "X");
+                throw;
+            }
+            catch (SecurityTokenValidationException)
+            {
+                respuesta = _autService.CambiarEstadoSesion(securityToken, "I");
+                throw;
+            }
         }
     }
 }

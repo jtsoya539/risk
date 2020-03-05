@@ -8,7 +8,7 @@ insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VE
 values (2, 'INICIAR_SESION', 'R', 'S', 'AUT', null, null, null, null);
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
-values (3, 'FINALIZAR_SESION', 'R', 'S', 'AUT', null, null, null, null);
+values (3, 'CAMBIAR_ESTADO_SESION', 'R', 'S', 'AUT', null, null, null, null);
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (4, 'REGISTRAR_USUARIO', 'R', 'S', 'AUT', null, null, null, null);

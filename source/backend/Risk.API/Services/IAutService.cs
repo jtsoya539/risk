@@ -6,7 +6,7 @@ namespace Risk.API.Services
     {
         YRespuesta<YDato> ValidarCredenciales(string usuario, string clave, string tipoClave);
         YRespuesta<YDato> IniciarSesion(string usuario, string token);
-        YRespuesta<YDato> FinalizarSesion(string token);
+        YRespuesta<YDato> CambiarEstadoSesion(string token, string estado);
         YRespuesta<YDato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
         YRespuesta<YDato> RegistrarClave(string usuario, string clave, string tipoClave);
         YRespuesta<YDato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave);

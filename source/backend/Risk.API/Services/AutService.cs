@@ -13,7 +13,7 @@ namespace Risk.API.Services
     {
         private const int ID_VALIDAR_CREDENCIALES = 1;
         private const int ID_INICIAR_SESION = 2;
-        private const int ID_FINALIZAR_SESION = 3;
+        private const int ID_CAMBIAR_ESTADO_SESION = 3;
         private const int ID_REGISTRAR_USUARIO = 4;
         private const int ID_REGISTRAR_CLAVE = 5;
         private const int ID_CAMBIAR_CLAVE = 6;
@@ -36,12 +36,13 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta<YDato> FinalizarSesion(string token)
+        public YRespuesta<YDato> CambiarEstadoSesion(string token, string estado)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
+            prms.Add("estado", estado);
 
-            string rsp = base.ApiProcesarServicio(ID_FINALIZAR_SESION, prms.ToString(Formatting.None));
+            string rsp = base.ApiProcesarServicio(ID_CAMBIAR_ESTADO_SESION, prms.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }

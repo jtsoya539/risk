@@ -36,7 +36,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2);
 
-  PROCEDURE p_finalizar_sesion(i_token IN VARCHAR2);
+  PROCEDURE p_cambiar_estado_sesion(i_token  IN VARCHAR2,
+                                    i_estado IN VARCHAR2);
 
   FUNCTION f_sesion_activa(i_token IN VARCHAR2) RETURN BOOLEAN;
 
@@ -552,7 +553,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Usuario inexistente');
   END;
 
-  PROCEDURE p_finalizar_sesion(i_token IN VARCHAR2) IS
+  PROCEDURE p_cambiar_estado_sesion(i_token  IN VARCHAR2,
+                                    i_estado IN VARCHAR2) IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     -- Busca sesion
@@ -563,7 +565,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Actualiza sesion
-    UPDATE t_sesiones SET estado = 'F' WHERE id_sesion = l_id_sesion;
+    UPDATE t_sesiones
+       SET estado = i_estado
+     WHERE id_sesion = l_id_sesion
+       AND estado <> i_estado;
   
     -- Elimina sesion
     /*DELETE t_sesiones WHERE id_sesion = l_id_sesion;*/

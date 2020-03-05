@@ -84,7 +84,7 @@ namespace Risk.API.Controllers
         [HttpPost("FinalizarSesion")]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.FinalizarSesion(requestBody.Token);
+            YRespuesta<YDato> respuesta = _autService.CambiarEstadoSesion(requestBody.Token, "F");
             return Ok(respuesta);
         }
 
