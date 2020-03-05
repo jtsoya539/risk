@@ -86,6 +86,6 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('DOMINIO_SERVICIO', 'API', 'SERVICIO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('ESTADO_SESION', 'I', 'INACTIVO', null, 'S');
+values ('ESTADO_SESION', 'I', 'INVÁLIDO', null, 'S');
 
 prompt Done.
