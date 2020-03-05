@@ -1,3 +1,4 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 
@@ -5,25 +6,53 @@ namespace Risk.API.Services
 {
     public class RiskSecurityTokenValidator : ISecurityTokenValidator
     {
-        public bool CanValidateToken => throw new System.NotImplementedException();
-
-        public int MaximumTokenSizeInBytes { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
+        private int _maximumTokenSizeInBytes = TokenValidationParameters.DefaultMaximumTokenSizeInBytes;
         private readonly IAutService _autService;
+        private JwtSecurityTokenHandler _tokenHandler;
+
+        public bool CanValidateToken
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        public int MaximumTokenSizeInBytes
+        {
+            get
+            {
+                return _maximumTokenSizeInBytes;
+            }
+            set
+            {
+                _maximumTokenSizeInBytes = value;
+            }
+        }
 
         public RiskSecurityTokenValidator(IAutService autService)
         {
             _autService = autService;
+            _tokenHandler = new JwtSecurityTokenHandler();
         }
 
         public bool CanReadToken(string securityToken)
         {
-            throw new System.NotImplementedException();
+            return _tokenHandler.CanReadToken(securityToken);
         }
 
         public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters, out SecurityToken validatedToken)
         {
-            throw new System.NotImplementedException();
+            var respuesta = _autService.ValidarSesion(securityToken);
+            if (respuesta.Codigo.Equals("0"))
+            {
+                return _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+            }
+            else
+            {
+                validatedToken = null;
+                return new ClaimsPrincipal();
+            }
         }
     }
 }

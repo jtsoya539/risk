@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +17,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Risk.API.Controllers
 {
     [SwaggerTag("Servicios Web del dominio AUTENTICACION")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AutController : ControllerBase
@@ -36,6 +38,7 @@ namespace Risk.API.Controllers
             return Ok(respuesta);
         }
 
+        [AllowAnonymous]
         [HttpPost("IniciarSesion")]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
@@ -46,8 +49,7 @@ namespace Risk.API.Controllers
                 return BadRequest(respuesta);
             }
 
-            var secretKey = _configuration.GetValue<string>("SecretKey");
-            var key = Encoding.ASCII.GetBytes(secretKey);
+            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
             // Creamos los claims (pertenencias, características) del usuario
             var claims = new[]

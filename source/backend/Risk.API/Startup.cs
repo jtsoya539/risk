@@ -40,7 +40,7 @@ namespace Risk.API
             //Enter directory where wallet is stored locally
             OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
 
-            string connectionString = Configuration.GetConnectionString("Digital");
+            string connectionString = Configuration.GetConnectionString("OracleXE");
 
             OracleConnection con = new OracleConnection(connectionString);
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
@@ -51,12 +51,16 @@ namespace Risk.API
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
 
+            var sp = services.BuildServiceProvider();
+
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
+                x.SecurityTokenValidators.Clear();
+                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(sp.GetService<IAutService>()));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -66,7 +70,6 @@ namespace Risk.API
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator());
             });
 
             // Register the Swagger generator, defining 1 or more Swagger documents
