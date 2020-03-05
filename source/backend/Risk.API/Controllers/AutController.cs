@@ -18,7 +18,7 @@ namespace Risk.API.Controllers
 {
     [SwaggerTag("Servicios Web del dominio AUTENTICACION")]
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("Api/[controller]")]
     [ApiController]
     public class AutController : ControllerBase
     {
@@ -31,6 +31,7 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("RegistrarUsuario")]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
@@ -60,8 +61,8 @@ namespace Risk.API.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                // Nuestro token va a durar un día
-                Expires = DateTime.UtcNow.AddDays(1),
+                // Nuestro token va a durar 15 minutos
+                Expires = DateTime.UtcNow.AddMinutes(15),
                 // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

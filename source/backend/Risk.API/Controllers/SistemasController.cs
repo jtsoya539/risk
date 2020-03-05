@@ -11,7 +11,7 @@ namespace Risk.API.Controllers
 
 {
 
-    [Route("api/[controller]")]
+    [Route("Api/[controller]")]
     [ApiController]
     public class SistemasController : Controller
 

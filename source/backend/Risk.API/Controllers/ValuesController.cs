@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Risk.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase
     {

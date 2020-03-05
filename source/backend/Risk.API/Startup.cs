@@ -40,7 +40,7 @@ namespace Risk.API
             //Enter directory where wallet is stored locally
             OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
 
-            string connectionString = Configuration.GetConnectionString("OracleXE");
+            string connectionString = Configuration.GetConnectionString("Digital");
 
             OracleConnection con = new OracleConnection(connectionString);
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
@@ -68,7 +68,8 @@ namespace Risk.API
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.FromSeconds(30)
                 };
             });
 

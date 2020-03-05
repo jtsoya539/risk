@@ -177,6 +177,20 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       ROLLBACK;
   END;
 
+  FUNCTION lf_fecha_expiracion_token(i_token IN VARCHAR2) RETURN DATE IS
+    l_exp          NUMBER;
+    l_payload_json json_object_t;
+  BEGIN
+    l_payload_json := json_object_t.parse(utl_raw.cast_to_varchar2(utl_encode.base64_decode(utl_raw.cast_to_raw(k_util.f_valor_posicion(i_token,
+                                                                                                                                        2,
+                                                                                                                                        '.')))));
+    l_exp          := l_payload_json.get_number('exp');
+    RETURN to_date('19700101', 'YYYYMMDD') +(l_exp / 24 / 60 / 60);
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
+  END;
+
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A') IS
@@ -487,8 +501,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2) IS
-    l_id_usuario t_usuarios.id_usuario%TYPE;
-    l_cantidad   NUMBER(3);
+    l_id_usuario       t_usuarios.id_usuario%TYPE;
+    l_cantidad         NUMBER(3);
+    l_fecha_expiracion DATE;
   BEGIN
     -- Busca usuario
     l_id_usuario := lf_id_usuario(i_usuario);
@@ -508,6 +523,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Usuario tiene una sesion activa');
     END IF;
   
+    -- Obtiene la fecha de expiracion del token
+    l_fecha_expiracion := lf_fecha_expiracion_token(i_token);
+  
     -- Inserta sesion
     INSERT INTO t_sesiones
       (token,
@@ -524,7 +542,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        'A',
        NULL,
        SYSDATE,
-       NULL,
+       l_fecha_expiracion,
        l_id_usuario,
        k_util.f_direccion_ip,
        k_util.f_host,
@@ -546,6 +564,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Actualiza sesion
     UPDATE t_sesiones SET estado = 'F' WHERE id_sesion = l_id_sesion;
+  
+    -- Elimina sesion
+    /*DELETE t_sesiones WHERE id_sesion = l_id_sesion;*/
   EXCEPTION
     WHEN ex_sesion_inexistente THEN
       /*raise_application_error(-20000, 'Sesion inexistente');*/

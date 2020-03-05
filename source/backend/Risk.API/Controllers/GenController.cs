@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -16,7 +17,8 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Risk.API.Controllers
 {
     [SwaggerTag("Servicios Web del dominio GENERAL", "https://github.com/jtsoya539")]
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("Api/[controller]")]
     [ApiController]
     public class GenController : ControllerBase
     {

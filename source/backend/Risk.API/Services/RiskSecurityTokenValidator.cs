@@ -44,15 +44,14 @@ namespace Risk.API.Services
         public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters, out SecurityToken validatedToken)
         {
             var respuesta = _autService.ValidarSesion(securityToken);
-            if (respuesta.Codigo.Equals("0"))
+
+            if (!respuesta.Codigo.Equals("0"))
             {
-                return _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+                throw new Microsoft.IdentityModel.Tokens.SecurityTokenValidationException(respuesta.Mensaje);
+
             }
-            else
-            {
-                validatedToken = null;
-                return new ClaimsPrincipal();
-            }
+
+            return _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
         }
     }
 }
