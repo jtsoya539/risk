@@ -34,6 +34,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(Summary = "Summary",
             Description = "Description",
             OperationId = "ValorParametro")]
+        [Authorize(Roles = "ADMIN")]
         [HttpGet("ValorParametro")]
         public IActionResult ValorParametro([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string parametro)
         {
@@ -44,6 +45,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(Summary = "Summary",
             Description = "Description",
             OperationId = "SignificadoCodigo")]
+        [Authorize(Roles = "ADMIN,USER")]
         [HttpGet("SignificadoCodigo")]
         public IActionResult SignificadoCodigo([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string dominio, [SwaggerParameter(Description = "Description", Required = true)][FromQuery] string codigo)
         {

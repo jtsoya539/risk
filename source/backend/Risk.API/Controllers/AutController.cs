@@ -55,7 +55,8 @@ namespace Risk.API.Controllers
             // Creamos los claims (pertenencias, características) del usuario
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, requestBody.Usuario)
+                new Claim(ClaimTypes.Name, requestBody.Usuario),
+                new Claim(ClaimTypes.Role, "[USER,ADMIN,ALGO]", ClaimValueTypes.Base64Binary)
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
