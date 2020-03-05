@@ -91,11 +91,12 @@ namespace Risk.API
                 c.EnableAnnotations();
                 c.AddSecurityDefinition("AccessToken", new OpenApiSecurityScheme
                 {
-                    Type = SecuritySchemeType.Http,
+                    Type = SecuritySchemeType.ApiKey, //SecuritySchemeType.Http
                     Name = "Authorization",
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
                     In = ParameterLocation.Header,
-                    Scheme = JwtBearerDefaults.AuthenticationScheme
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "xxxxx.yyyyy.zzzzz"
                 });
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
