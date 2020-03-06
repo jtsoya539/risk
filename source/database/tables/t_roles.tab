@@ -18,4 +18,6 @@ comment on column T_ROLES.detalle
   is 'Detalles adicionales del rol';
 alter table T_ROLES
   add constraint PK_ROLES primary key (ID_ROL);
+alter table T_ROLES
+  add constraint UK_ROLES_NOMBRE unique (NOMBRE);
 
