@@ -186,7 +186,11 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                                                                                                                         2,
                                                                                                                                         '.')))));
     l_exp          := l_payload_json.get_number('exp');
-    RETURN to_date('19700101', 'YYYYMMDD') +(l_exp / 24 / 60 / 60);
+    RETURN to_date('19700101', 'YYYYMMDD') +((l_exp +
+                                             ((to_number(substr(tz_offset(sessiontimezone),
+                                                                 1,
+                                                                 3)) + 0) * 3600)) /
+                                             86400);
   EXCEPTION
     WHEN OTHERS THEN
       RETURN NULL;
