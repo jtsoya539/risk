@@ -13,4 +13,7 @@ values ('LONGITUD_MINIMA_CLAVE_ACCESO', 'Longitud mínima permitida para clave de
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('LONGITUD_MINIMA_CLAVE_TRANSACCIONAL', 'Longitud mínima permitida para clave transaccional', '6');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('NOMBRE_ROL_DEFECTO', 'Nombre del Rol que se agrega por defecto a un usuario cuando se registra', 'USUARIO');
+
 prompt Done.

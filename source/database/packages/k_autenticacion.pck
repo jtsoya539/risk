@@ -297,6 +297,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                 i_direccion_correo IN VARCHAR2,
                                 i_numero_telefono  IN VARCHAR2 DEFAULT NULL) IS
     l_id_persona t_personas.id_persona%TYPE;
+    l_id_usuario t_usuarios.id_usuario%TYPE;
   BEGIN
     -- Valida clave
     p_validar_clave(i_usuario, i_clave, c_clave_acceso);
@@ -336,7 +337,14 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        'A',
        NULL,
        i_direccion_correo,
-       i_numero_telefono);
+       i_numero_telefono)
+    RETURNING id_usuario INTO l_id_usuario;
+  
+    INSERT INTO t_rol_usuarios
+      (id_rol, id_usuario)
+      SELECT id_rol, l_id_usuario
+        FROM t_roles
+       WHERE nombre = k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO');
   
     p_registrar_clave(i_usuario, i_clave, c_clave_acceso);
   EXCEPTION
