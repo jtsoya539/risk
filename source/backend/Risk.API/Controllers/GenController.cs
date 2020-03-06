@@ -17,7 +17,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Risk.API.Controllers
 {
     [SwaggerTag("Servicios Web del dominio GENERAL", "https://github.com/jtsoya539")]
-    [Authorize]
+    [Authorize(Roles = "ADMINISTRADOR,USUARIO")]
     [Route("Api/[controller]")]
     [ApiController]
     public class GenController : ControllerBase
@@ -34,7 +34,6 @@ namespace Risk.API.Controllers
         [SwaggerOperation(Summary = "Summary",
             Description = "Description",
             OperationId = "ValorParametro")]
-        [Authorize(Roles = "ADMIN")]
         [HttpGet("ValorParametro")]
         public IActionResult ValorParametro([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string parametro)
         {
@@ -45,7 +44,6 @@ namespace Risk.API.Controllers
         [SwaggerOperation(Summary = "Summary",
             Description = "Description",
             OperationId = "SignificadoCodigo")]
-        [Authorize(Roles = "ADMIN,USER")]
         [HttpGet("SignificadoCodigo")]
         public IActionResult SignificadoCodigo([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string dominio, [SwaggerParameter(Description = "Description", Required = true)][FromQuery] string codigo)
         {
