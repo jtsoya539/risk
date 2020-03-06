@@ -1,7 +1,7 @@
 create table T_SESIONES
 (
   id_sesion           NUMBER not null,
-  token               VARCHAR2(300),
+  token               VARCHAR2(1000),
   estado              CHAR(1),
   id_aplicacion       VARCHAR2(5),
   fecha_autenticacion DATE,
