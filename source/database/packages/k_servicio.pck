@@ -33,6 +33,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION aut_cambiar_estado_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION aut_datos_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
@@ -683,6 +685,94 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                          utl_call_stack.error_msg(1) WHEN
                          k_error.c_oracle_predefined_error THEN
                          k_error.f_mensaje_error(c_error_inesperado) END,
+                         dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION aut_datos_usuario(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp     y_respuesta;
+    l_usuario y_usuario;
+    l_roles   y_roles;
+    l_rol     y_rol;
+  
+    i_usuario VARCHAR2(4000) := anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                          
+                                                                          'usuario'));
+  
+    CURSOR cr_roles(i_id_usuario IN NUMBER) IS
+      SELECT r.id_rol, r.nombre, r.activo, r.detalle
+        FROM t_rol_usuarios ru, t_roles r
+       WHERE r.id_rol = ru.id_rol
+         AND r.activo = 'S'
+         AND ru.id_usuario = i_id_usuario;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp     := NEW y_respuesta();
+    l_usuario := NEW y_usuario();
+    l_roles   := NEW y_roles();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar := 'Buscando datos del usuario';
+    BEGIN
+      SELECT u.id_usuario,
+             u.alias,
+             p.nombre,
+             p.apellido,
+             p.tipo_persona,
+             u.estado,
+             u.direccion_correo,
+             u.numero_telefono
+        INTO l_usuario.id_usuario,
+             l_usuario.alias,
+             l_usuario.nombre,
+             l_usuario.apellido,
+             l_usuario.tipo_persona,
+             l_usuario.estado,
+             l_usuario.direccion_correo,
+             l_usuario.numero_telefono
+        FROM t_usuarios u, t_personas p
+       WHERE p.id_persona = u.id_persona
+         AND u.alias = i_usuario;
+    EXCEPTION
+      WHEN no_data_found THEN
+        lp_respuesta_error(l_rsp, 'aut0002', 'Usuario inexistente');
+        RAISE ex_error_general;
+      WHEN OTHERS THEN
+        lp_respuesta_error(l_rsp,
+                           'aut0003',
+                           'Error al buscar datos del usuario');
+        RAISE ex_error_general;
+    END;
+  
+    l_rsp.lugar := 'Buscando roles del usuario';
+    FOR c IN cr_roles(l_usuario.id_usuario) LOOP
+      l_rol         := NEW y_rol();
+      l_rol.id_rol  := c.id_rol;
+      l_rol.nombre  := c.nombre;
+      l_rol.activo  := c.activo;
+      l_rol.detalle := c.detalle;
+    
+      l_roles.extend;
+      l_roles(l_roles.count) := l_rol;
+    END LOOP;
+    l_usuario.roles := l_roles;
+  
+    lp_respuesta_ok(l_rsp, anydata.convertobject(l_usuario));
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         c_error_inesperado,
+                         k_error.f_mensaje_error(c_error_inesperado),
                          dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;

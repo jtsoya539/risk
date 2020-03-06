@@ -73,4 +73,7 @@ values (9, 'DOMINIO', 'I', 'S', null, 'S', null, 'S', 1);
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (9, 'CODIGO', 'I', 'S', null, 'S', null, 'S', 2);
 
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (10, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1);
+
 prompt Done.
