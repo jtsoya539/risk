@@ -100,6 +100,7 @@ prompt
 @@triggers/gs_correo_adjuntos.trg
 @@triggers/gs_mensajes.trg
 @@triggers/gb_usuarios.trg
+@@triggers/gb_sesiones.trg
 
 prompt
 prompt Ejecutando scripts...

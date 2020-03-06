@@ -9,7 +9,8 @@ create table T_SESIONES
   id_usuario          NUMBER(10),
   direccion_ip        VARCHAR2(50),
   host                VARCHAR2(50),
-  terminal            VARCHAR2(50)
+  terminal            VARCHAR2(50),
+  fecha_estado        DATE
 )
 ;
 comment on table T_SESIONES
@@ -34,6 +35,8 @@ comment on column T_SESIONES.host
   is 'Host de la sesion';
 comment on column T_SESIONES.terminal
   is 'Terminal de la sesion';
+comment on column T_SESIONES.fecha_estado
+  is 'Fecha del ultimo cambio de estado';
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES
