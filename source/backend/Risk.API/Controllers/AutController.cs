@@ -60,23 +60,24 @@ namespace Risk.API.Controllers
             YUsuario usuario = respuesta2.Datos;
 
             // Creamos los claims (pertenencias, características) del usuario
-            var claims = new[]
+            List<Claim> claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, usuario.Alias));
+            claims.Add(new Claim(ClaimTypes.GivenName, usuario.Nombre ?? ""));
+            claims.Add(new Claim(ClaimTypes.Surname, usuario.Apellido ?? ""));
+            claims.Add(new Claim(ClaimTypes.Email, usuario.DireccionCorreo ?? ""));
+            //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
+
+            foreach (var rol in usuario.Roles)
             {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Alias),
-                new Claim(ClaimTypes.GivenName, usuario.Nombre),
-                new Claim(ClaimTypes.Surname, usuario.Apellido),
-                new Claim(ClaimTypes.Email, usuario.DireccionCorreo),
-                new Claim(ClaimTypes.MobilePhone, usuario.NumeroTelefono),
-                new Claim(ClaimTypes.Role, "USER"),
-                new Claim(ClaimTypes.Role, "ADMIN"),
-                new Claim(ClaimTypes.Role, "ALGO")
-            };
+                claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
+            }
 
             var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),
+                Subject = new ClaimsIdentity(claims.ToArray()),
                 // Nuestro token va a durar 15 minutos
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
