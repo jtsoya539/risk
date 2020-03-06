@@ -50,16 +50,29 @@ namespace Risk.API.Controllers
                 return BadRequest(respuesta);
             }
 
-            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+            var respuesta2 = _autService.DatosUsuario(requestBody.Usuario);
+
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                return BadRequest(respuesta2);
+            }
+
+            YUsuario usuario = respuesta2.Datos;
 
             // Creamos los claims (pertenencias, características) del usuario
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, requestBody.Usuario),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Alias),
+                new Claim(ClaimTypes.GivenName, usuario.Nombre),
+                new Claim(ClaimTypes.Surname, usuario.Apellido),
+                new Claim(ClaimTypes.Email, usuario.DireccionCorreo),
+                new Claim(ClaimTypes.MobilePhone, usuario.NumeroTelefono),
                 new Claim(ClaimTypes.Role, "USER"),
                 new Claim(ClaimTypes.Role, "ADMIN"),
                 new Claim(ClaimTypes.Role, "ALGO")
             };
+
+            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

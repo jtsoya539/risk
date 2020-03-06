@@ -18,6 +18,7 @@ namespace Risk.API.Services
         private const int ID_REGISTRAR_CLAVE = 5;
         private const int ID_CAMBIAR_CLAVE = 6;
         private const int ID_VALIDAR_SESION = 7;
+        private const int ID_DATOS_USUARIO = 10;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -105,6 +106,16 @@ namespace Risk.API.Services
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_SESION, prms.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+        }
+
+        public YRespuesta<YUsuario> DatosUsuario(string usuario)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+
+            string rsp = base.ApiProcesarServicio(ID_DATOS_USUARIO, prms.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
         }
     }
 
