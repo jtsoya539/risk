@@ -38,6 +38,9 @@ prompt
 prompt Borrando types...
 prompt -----------------------------------
 prompt
+drop type y_usuario force;
+drop type y_roles force;
+drop type y_rol force;
 drop type y_respuesta force;
 drop type y_parametros force;
 drop type y_parametro force;

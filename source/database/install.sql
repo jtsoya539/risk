@@ -71,6 +71,9 @@ prompt
 @@types/y_parametro.typ
 @@types/y_parametros.typ
 @@types/y_respuesta.typ
+@@types/y_rol.typ
+@@types/y_roles.typ
+@@types/y_usuario.typ
 
 prompt
 prompt Creando paquetes...

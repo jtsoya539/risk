@@ -1,0 +1,3 @@
+CREATE OR REPLACE TYPE y_roles IS TABLE OF y_rol
+/
+
