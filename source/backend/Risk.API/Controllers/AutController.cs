@@ -56,7 +56,9 @@ namespace Risk.API.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, requestBody.Usuario),
-                new Claim(ClaimTypes.Role, "[USER,ADMIN,ALGO]", ClaimValueTypes.Base64Binary)
+                new Claim(ClaimTypes.Role, "USER"),
+                new Claim(ClaimTypes.Role, "ADMIN"),
+                new Claim(ClaimTypes.Role, "ALGO")
             };
 
             var tokenDescriptor = new SecurityTokenDescriptor
