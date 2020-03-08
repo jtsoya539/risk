@@ -621,8 +621,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_error_parametro;
     END IF;
   
-    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar token');
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'access_token')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar Access Token');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'refresh_token')) IS NULL THEN
+      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar Refresh Token');
       RAISE ex_error_parametro;
     END IF;
   
@@ -630,7 +637,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_id_sesion := k_autenticacion.f_iniciar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                               'usuario')),
                                                     anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                              'token')));
+                                                                                              'access_token')),
+                                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                              'refresh_token')));
   
     l_rsp.lugar := 'Buscando datos de la sesion';
     BEGIN

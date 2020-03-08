@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -31,6 +32,16 @@ namespace Risk.API.Controllers
             _autService = autService;
             _genService = genService;
             _configuration = configuration;
+        }
+
+        private string GenerateRefreshToken(int size = 32)
+        {
+            var randomNumber = new byte[size];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
         }
 
         [AllowAnonymous]
@@ -89,9 +100,10 @@ namespace Risk.API.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var createdToken = tokenHandler.CreateToken(tokenDescriptor);
-            var token = tokenHandler.WriteToken(createdToken);
+            var accessToken = tokenHandler.WriteToken(createdToken);
+            var refreshToken = GenerateRefreshToken();
 
-            var respuesta3 = _autService.IniciarSesion(requestBody.Usuario, token);
+            var respuesta3 = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken);
 
             if (!respuesta3.Codigo.Equals("0"))
             {

@@ -14,7 +14,10 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (2, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (2, 'TOKEN', 'I', 'S', null, 'S', null, 'S', 2);
+values (2, 'ACCESS_TOKEN', 'I', 'S', null, 'S', null, 'S', 2);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (2, 'REFRESH_TOKEN', 'I', 'S', null, 'S', null, 'S', 3);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (3, 'TOKEN', 'I', 'S', null, 'S', null, 'S', 1);

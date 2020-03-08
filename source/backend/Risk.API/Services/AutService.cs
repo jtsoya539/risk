@@ -48,11 +48,12 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta<YSesion> IniciarSesion(string usuario, string token)
+        public YRespuesta<YSesion> IniciarSesion(string usuario, string accessToken, string refreshToken)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
-            prms.Add("token", token);
+            prms.Add("access_token", accessToken);
+            prms.Add("refresh_token", refreshToken);
 
             string rsp = base.ApiProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
 

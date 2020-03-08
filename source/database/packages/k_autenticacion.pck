@@ -33,8 +33,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                    i_clave      IN VARCHAR2,
                                    i_tipo_clave IN CHAR DEFAULT 'A');
 
-  FUNCTION f_iniciar_sesion(i_usuario IN VARCHAR2,
-                            i_token   IN VARCHAR2) RETURN NUMBER;
+  FUNCTION f_iniciar_sesion(i_usuario       IN VARCHAR2,
+                            i_access_token  IN VARCHAR2,
+                            i_refresh_token IN VARCHAR2) RETURN NUMBER;
 
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2);
@@ -515,8 +516,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  FUNCTION f_iniciar_sesion(i_usuario IN VARCHAR2,
-                            i_token   IN VARCHAR2) RETURN NUMBER IS
+  FUNCTION f_iniciar_sesion(i_usuario       IN VARCHAR2,
+                            i_access_token  IN VARCHAR2,
+                            i_refresh_token IN VARCHAR2) RETURN NUMBER IS
     l_id_sesion        t_sesiones.id_sesion%TYPE;
     l_id_usuario       t_usuarios.id_usuario%TYPE;
     l_cantidad         NUMBER(3);
@@ -540,12 +542,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Usuario tiene una sesion activa');
     END IF;
   
-    -- Obtiene la fecha de expiracion del token
-    l_fecha_expiracion := lf_fecha_expiracion_token(i_token);
+    -- Obtiene la fecha de expiracion del Access Token
+    l_fecha_expiracion := lf_fecha_expiracion_token(i_access_token);
   
     -- Inserta sesion
     INSERT INTO t_sesiones
       (access_token,
+       refresh_token,
        estado,
        id_aplicacion,
        fecha_autenticacion,
@@ -555,7 +558,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        host,
        terminal)
     VALUES
-      (i_token,
+      (i_access_token,
+       i_refresh_token,
        'A',
        NULL,
        SYSDATE,
