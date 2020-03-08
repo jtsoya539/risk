@@ -34,7 +34,49 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
-        private string GenerateRefreshToken(int size = 32)
+        private string GenerarAccessToken(string usuario)
+        {
+            var respDatosUsuario = _autService.DatosUsuario(usuario);
+
+            if (!respDatosUsuario.Codigo.Equals("0"))
+            {
+                return string.Empty;
+            }
+
+            YUsuario datosUsuario = respDatosUsuario.Datos;
+
+            // Creamos los claims (pertenencias, características) del usuario
+            List<Claim> claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, datosUsuario.Alias));
+            claims.Add(new Claim(ClaimTypes.GivenName, datosUsuario.Nombre ?? ""));
+            claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? ""));
+            claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? ""));
+            //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
+
+            foreach (var rol in datosUsuario.Roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
+            }
+
+            int tiempoExpiracion = int.Parse(_genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN").Datos.Dato);
+            var securityKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims.ToArray()),
+                // Nuestro token va a durar 15 minutos
+                Expires = DateTime.UtcNow.AddSeconds(tiempoExpiracion),
+                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(securityKey), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(createdToken);
+        }
+
+        private string GenerarRefreshToken(int size = 32)
         {
             var randomNumber = new byte[size];
             using (var rng = RandomNumberGenerator.Create())
@@ -56,61 +98,57 @@ namespace Risk.API.Controllers
         [HttpPost("IniciarSesion")]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
+            var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
-            if (!respuesta.Codigo.Equals("0"))
+            if (!respValidarCredenciales.Codigo.Equals("0"))
             {
-                return BadRequest(respuesta);
+                return BadRequest(respValidarCredenciales);
             }
 
-            var respuesta2 = _autService.DatosUsuario(requestBody.Usuario);
+            var accessToken = GenerarAccessToken(requestBody.Usuario);
+            var refreshToken = GenerarRefreshToken();
 
-            if (!respuesta.Codigo.Equals("0"))
+            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken);
+
+            if (!respIniciarSesion.Codigo.Equals("0"))
             {
-                return BadRequest(respuesta2);
+                return BadRequest(respIniciarSesion);
             }
 
-            YUsuario usuario = respuesta2.Datos;
+            return Ok(respIniciarSesion);
+        }
 
-            // Creamos los claims (pertenencias, características) del usuario
-            List<Claim> claims = new List<Claim>();
+        [AllowAnonymous]
+        [HttpPost("RefrescarSesion")]
+        public IActionResult RefrescarSesion([FromBody] RefrescarSesionRequestBody requestBody)
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken validatedToken;
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, usuario.Alias));
-            claims.Add(new Claim(ClaimTypes.GivenName, usuario.Nombre ?? ""));
-            claims.Add(new Claim(ClaimTypes.Surname, usuario.Apellido ?? ""));
-            claims.Add(new Claim(ClaimTypes.Email, usuario.DireccionCorreo ?? ""));
-            //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
-
-            foreach (var rol in usuario.Roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
-            }
-
-            int tiempoExpiracion = int.Parse(_genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN").Datos.Dato);
             var securityKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            ClaimsPrincipal claimsPrincipal = tokenHandler.ValidateToken(requestBody.AccessToken, new TokenValidationParameters
             {
-                Subject = new ClaimsIdentity(claims.ToArray()),
-                // Nuestro token va a durar 15 minutos
-                Expires = DateTime.UtcNow.AddSeconds(tiempoExpiracion),
-                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(securityKey), SecurityAlgorithms.HmacSha256Signature)
-            };
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(securityKey),
+                ValidateLifetime = false // we check expired tokens here
+            }, out validatedToken);
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
-            var accessToken = tokenHandler.WriteToken(createdToken);
-            var refreshToken = GenerateRefreshToken();
+            string usuario = claimsPrincipal.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-            var respuesta3 = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken);
+            var accessTokenNuevo = GenerarAccessToken(usuario);
+            var refreshTokenNuevo = GenerarRefreshToken();
 
-            if (!respuesta3.Codigo.Equals("0"))
+            var respRefrescarSesion = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
+
+            if (!respRefrescarSesion.Codigo.Equals("0"))
             {
-                return BadRequest(respuesta3);
+                return BadRequest(respRefrescarSesion);
             }
 
-            return Ok(respuesta3);
+            return Ok(respRefrescarSesion);
         }
 
         [HttpPost("FinalizarSesion")]

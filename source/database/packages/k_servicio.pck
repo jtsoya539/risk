@@ -30,6 +30,9 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION aut_iniciar_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION aut_refrescar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION aut_cambiar_estado_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -629,7 +632,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                  'refresh_token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar Refresh Token');
+      lp_respuesta_error(l_rsp, 'aut0003', 'Debe ingresar Refresh Token');
       RAISE ex_error_parametro;
     END IF;
   
@@ -657,11 +660,109 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
        WHERE id_sesion = l_id_sesion;
     EXCEPTION
       WHEN no_data_found THEN
-        lp_respuesta_error(l_rsp, 'aut0003', 'Sesion inexistente');
+        lp_respuesta_error(l_rsp, 'aut0004', 'Sesion inexistente');
         RAISE ex_error_general;
       WHEN OTHERS THEN
         lp_respuesta_error(l_rsp,
-                           'aut0004',
+                           'aut0005',
+                           'Error al buscar datos de la sesion');
+        RAISE ex_error_general;
+    END;
+  
+    lp_respuesta_ok(l_rsp, anydata.convertobject(l_sesion));
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         c_error_inesperado,
+                         CASE
+                         k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                         k_error.c_user_defined_error THEN
+                         utl_call_stack.error_msg(1) WHEN
+                         k_error.c_oracle_predefined_error THEN
+                         k_error.f_mensaje_error(c_error_inesperado) END,
+                         dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION aut_refrescar_sesion(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_sesion    y_sesion;
+    l_id_sesion t_sesiones.id_sesion%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp    := NEW y_respuesta();
+    l_sesion := NEW y_sesion();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'access_token_antiguo')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0001',
+                         'Debe ingresar antiguo Access Token');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'refresh_token_antiguo')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0002',
+                         'Debe ingresar antiguo Refresh Token');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'access_token_nuevo')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0003',
+                         'Debe ingresar nuevo Access Token');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'refresh_token_nuevo')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0004',
+                         'Debe ingresar nuevo Refresh Token');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar := 'Refrescando sesion';
+    l_id_sesion := k_autenticacion.f_refrescar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                                'access_token_antiguo')),
+                                                      anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                                'refresh_token_antiguo')),
+                                                      anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                                'access_token_nuevo')),
+                                                      anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                                'refresh_token_nuevo')));
+  
+    l_rsp.lugar := 'Buscando datos de la sesion';
+    BEGIN
+      SELECT id_sesion,
+             estado,
+             access_token,
+             refresh_token,
+             to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+        INTO l_sesion.id_sesion,
+             l_sesion.estado,
+             l_sesion.access_token,
+             l_sesion.refresh_token,
+             l_sesion.tiempo_expiracion
+        FROM t_sesiones
+       WHERE id_sesion = l_id_sesion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        lp_respuesta_error(l_rsp, 'aut0005', 'Sesion inexistente');
+        RAISE ex_error_general;
+      WHEN OTHERS THEN
+        lp_respuesta_error(l_rsp,
+                           'aut0006',
                            'Error al buscar datos de la sesion');
         RAISE ex_error_general;
     END;

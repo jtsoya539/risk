@@ -37,15 +37,18 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                             i_access_token  IN VARCHAR2,
                             i_refresh_token IN VARCHAR2) RETURN NUMBER;
 
-  PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
-                             i_token   IN VARCHAR2);
+  FUNCTION f_refrescar_sesion(i_access_token_antiguo  IN VARCHAR2,
+                              i_refresh_token_antiguo IN VARCHAR2,
+                              i_access_token_nuevo    IN VARCHAR2,
+                              i_refresh_token_nuevo   IN VARCHAR2)
+    RETURN NUMBER;
 
-  PROCEDURE p_cambiar_estado_sesion(i_token  IN VARCHAR2,
-                                    i_estado IN VARCHAR2);
+  PROCEDURE p_cambiar_estado_sesion(i_access_token IN VARCHAR2,
+                                    i_estado       IN VARCHAR2);
 
-  FUNCTION f_sesion_activa(i_token IN VARCHAR2) RETURN BOOLEAN;
+  FUNCTION f_sesion_activa(i_access_token IN VARCHAR2) RETURN BOOLEAN;
 
-  PROCEDURE p_sesion_activa(i_token IN VARCHAR2);
+  PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2);
 
 END;
 /
@@ -116,14 +119,14 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     RETURN l_id_usuario;
   END;
 
-  FUNCTION lf_id_sesion(i_token IN VARCHAR2) RETURN NUMBER IS
+  FUNCTION lf_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     BEGIN
       SELECT id_sesion
         INTO l_id_sesion
         FROM t_sesiones
-       WHERE access_token = i_token;
+       WHERE access_token = i_access_token;
     EXCEPTION
       WHEN no_data_found THEN
         l_id_sesion := NULL;
@@ -576,65 +579,50 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Usuario inexistente');
   END;
 
-  PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
-                             i_token   IN VARCHAR2) IS
-    l_id_usuario       t_usuarios.id_usuario%TYPE;
-    l_cantidad         NUMBER(3);
+  FUNCTION f_refrescar_sesion(i_access_token_antiguo  IN VARCHAR2,
+                              i_refresh_token_antiguo IN VARCHAR2,
+                              i_access_token_nuevo    IN VARCHAR2,
+                              i_refresh_token_nuevo   IN VARCHAR2)
+    RETURN NUMBER IS
+    l_id_sesion        t_sesiones.id_sesion%TYPE;
     l_fecha_expiracion DATE;
   BEGIN
-    -- Busca usuario
-    l_id_usuario := lf_id_usuario(i_usuario);
+    -- Busca sesion
+    l_id_sesion := lf_id_sesion(i_access_token_antiguo);
   
-    IF l_id_usuario IS NULL THEN
-      RAISE ex_usuario_inexistente;
+    IF l_id_sesion IS NULL THEN
+      RAISE ex_sesion_inexistente;
     END IF;
   
-    -- Obtiene cantidad de sesiones del usuario
-    SELECT COUNT(id_sesion)
-      INTO l_cantidad
-      FROM t_sesiones
-     WHERE estado = 'A'
-       AND id_usuario = l_id_usuario;
+    -- Obtiene la fecha de expiracion del Access Token
+    l_fecha_expiracion := lf_fecha_expiracion_token(i_access_token_nuevo);
   
-    IF l_cantidad > 0 THEN
-      raise_application_error(-20000, 'Usuario tiene una sesion activa');
+    -- Actualiza sesion
+    UPDATE t_sesiones s
+       SET access_token     = i_access_token_nuevo,
+           refresh_token    = i_refresh_token_nuevo,
+           estado           = 'A',
+           fecha_expiracion = l_fecha_expiracion
+     WHERE s.id_sesion = l_id_sesion
+       AND s.access_token = i_access_token_antiguo
+       AND s.refresh_token = i_refresh_token_antiguo
+       AND s.estado IN ('A', 'X');
+    IF SQL%NOTFOUND THEN
+      RAISE ex_sesion_inexistente;
     END IF;
   
-    -- Obtiene la fecha de expiracion del token
-    l_fecha_expiracion := lf_fecha_expiracion_token(i_token);
-  
-    -- Inserta sesion
-    INSERT INTO t_sesiones
-      (access_token,
-       estado,
-       id_aplicacion,
-       fecha_autenticacion,
-       fecha_expiracion,
-       id_usuario,
-       direccion_ip,
-       host,
-       terminal)
-    VALUES
-      (i_token,
-       'A',
-       NULL,
-       SYSDATE,
-       l_fecha_expiracion,
-       l_id_usuario,
-       k_util.f_direccion_ip,
-       k_util.f_host,
-       k_util.f_terminal);
+    RETURN l_id_sesion;
   EXCEPTION
-    WHEN ex_usuario_inexistente THEN
-      raise_application_error(-20000, 'Usuario inexistente');
+    WHEN ex_sesion_inexistente THEN
+      raise_application_error(-20000, 'Sesion inexistente');
   END;
 
-  PROCEDURE p_cambiar_estado_sesion(i_token  IN VARCHAR2,
-                                    i_estado IN VARCHAR2) IS
+  PROCEDURE p_cambiar_estado_sesion(i_access_token IN VARCHAR2,
+                                    i_estado       IN VARCHAR2) IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     -- Busca sesion
-    l_id_sesion := lf_id_sesion(i_token);
+    l_id_sesion := lf_id_sesion(i_access_token);
   
     IF l_id_sesion IS NULL THEN
       RAISE ex_sesion_inexistente;
@@ -654,23 +642,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       NULL;
   END;
 
-  FUNCTION f_sesion_activa(i_token IN VARCHAR2) RETURN BOOLEAN IS
+  FUNCTION f_sesion_activa(i_access_token IN VARCHAR2) RETURN BOOLEAN IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     SELECT id_sesion
       INTO l_id_sesion
       FROM t_sesiones
      WHERE estado = 'A'
-       AND access_token = i_token;
+       AND access_token = i_access_token;
     RETURN TRUE;
   EXCEPTION
     WHEN no_data_found THEN
       RETURN FALSE;
   END;
 
-  PROCEDURE p_sesion_activa(i_token IN VARCHAR2) IS
+  PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2) IS
   BEGIN
-    IF NOT f_sesion_activa(i_token) THEN
+    IF NOT f_sesion_activa(i_access_token) THEN
       raise_application_error(-20000, 'Sesion finalizada o expirada');
     END IF;
   END;

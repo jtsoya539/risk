@@ -19,6 +19,7 @@ namespace Risk.API.Services
         private const int ID_CAMBIAR_CLAVE = 6;
         private const int ID_VALIDAR_SESION = 7;
         private const int ID_DATOS_USUARIO = 10;
+        private const int ID_REFRESCAR_SESION = 11;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -56,6 +57,19 @@ namespace Risk.API.Services
             prms.Add("refresh_token", refreshToken);
 
             string rsp = base.ApiProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
+
+            return JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
+        }
+
+        public YRespuesta<YSesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
+        {
+            JObject prms = new JObject();
+            prms.Add("access_token_antiguo", accessTokenAntiguo);
+            prms.Add("refresh_token_antiguo", refreshTokenAntiguo);
+            prms.Add("access_token_nuevo", accessTokenNuevo);
+            prms.Add("refresh_token_nuevo", refreshTokenNuevo);
+
+            string rsp = base.ApiProcesarServicio(ID_REFRESCAR_SESION, prms.ToString(Formatting.None));
 
             return JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
         }
@@ -118,6 +132,8 @@ namespace Risk.API.Services
 
             return JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
         }
+
+
     }
 
 }
