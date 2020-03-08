@@ -1,7 +1,7 @@
 create table T_SESIONES
 (
   id_sesion           NUMBER not null,
-  token               VARCHAR2(1000),
+  access_token        VARCHAR2(1000),
   estado              CHAR(1),
   id_aplicacion       VARCHAR2(5),
   fecha_autenticacion DATE,
@@ -10,15 +10,16 @@ create table T_SESIONES
   direccion_ip        VARCHAR2(50),
   host                VARCHAR2(50),
   terminal            VARCHAR2(50),
-  fecha_estado        DATE
+  fecha_estado        DATE,
+  refresh_token       VARCHAR2(1000)
 )
 ;
 comment on table T_SESIONES
   is 'Sesiones';
 comment on column T_SESIONES.id_sesion
   is 'Identificador de la sesion';
-comment on column T_SESIONES.token
-  is 'Token de acceso de la sesion';
+comment on column T_SESIONES.access_token
+  is 'Access Token de la sesion';
 comment on column T_SESIONES.estado
   is 'Estado de la sesion';
 comment on column T_SESIONES.id_aplicacion
@@ -37,10 +38,12 @@ comment on column T_SESIONES.terminal
   is 'Terminal de la sesion';
 comment on column T_SESIONES.fecha_estado
   is 'Fecha del ultimo cambio de estado';
+comment on column T_SESIONES.refresh_token
+  is 'Refresh Token de la sesion';
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES
-  add constraint UK_SESIONES_TOKEN unique (TOKEN);
+  add constraint UK_SESIONES_TOKEN unique (ACCESS_TOKEN);
 alter table T_SESIONES
   add constraint FK_SESIONES_APLICACIONES foreign key (ID_APLICACION)
   references T_APLICACIONES (ID_APLICACION);

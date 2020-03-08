@@ -607,31 +607,61 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   FUNCTION aut_iniciar_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta IS
-    l_rsp y_respuesta;
+    l_rsp       y_respuesta;
+    l_sesion    y_sesion;
+    l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     -- Inicializa respuesta
-    l_rsp := NEW y_respuesta();
+    l_rsp    := NEW y_respuesta();
+    l_sesion := NEW y_sesion();
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'usuario')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar usuario');
-      RAISE ex_error_general;
+      RAISE ex_error_parametro;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros, 'token')) IS NULL THEN
       lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar token');
-      RAISE ex_error_general;
+      RAISE ex_error_parametro;
     END IF;
   
     l_rsp.lugar := 'Iniciando sesion';
-    k_autenticacion.p_iniciar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                               'usuario')),
-                                     anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                               'token')));
+    l_id_sesion := k_autenticacion.f_iniciar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                              'usuario')),
+                                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                              'token')));
   
-    lp_respuesta_ok(l_rsp);
+    l_rsp.lugar := 'Buscando datos de la sesion';
+    BEGIN
+      SELECT id_sesion,
+             estado,
+             access_token,
+             refresh_token,
+             to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+        INTO l_sesion.id_sesion,
+             l_sesion.estado,
+             l_sesion.access_token,
+             l_sesion.refresh_token,
+             l_sesion.tiempo_expiracion
+        FROM t_sesiones
+       WHERE id_sesion = l_id_sesion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        lp_respuesta_error(l_rsp, 'aut0003', 'Sesion inexistente');
+        RAISE ex_error_general;
+      WHEN OTHERS THEN
+        lp_respuesta_error(l_rsp,
+                           'aut0004',
+                           'Error al buscar datos de la sesion');
+        RAISE ex_error_general;
+    END;
+  
+    lp_respuesta_ok(l_rsp, anydata.convertobject(l_sesion));
     RETURN l_rsp;
   EXCEPTION
+    WHEN ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN

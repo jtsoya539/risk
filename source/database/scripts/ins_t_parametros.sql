@@ -16,4 +16,7 @@ values ('LONGITUD_MINIMA_CLAVE_TRANSACCIONAL', 'Longitud mínima permitida para c
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('NOMBRE_ROL_DEFECTO', 'Nombre del Rol que se agrega por defecto a un usuario cuando se registra', 'USUARIO');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('TIEMPO_EXPIRACION_ACCESS_TOKEN', 'Tiempo de expiración del Access Token en segundos', '300');
+
 prompt Done.

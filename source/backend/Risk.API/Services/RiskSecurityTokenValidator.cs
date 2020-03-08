@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
+using Risk.API.Entities;
 
 namespace Risk.API.Services
 {
@@ -43,16 +44,12 @@ namespace Risk.API.Services
 
         public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters, out SecurityToken validatedToken)
         {
-            var respuesta = _autService.ValidarSesion(securityToken);
-
-            if (!respuesta.Codigo.Equals("0"))
-            {
-                throw new SecurityTokenValidationException(respuesta.Mensaje);
-            }
+            ClaimsPrincipal claimsPrincipal;
+            YRespuesta<YDato> respuesta;
 
             try
             {
-                return _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
+                claimsPrincipal = _tokenHandler.ValidateToken(securityToken, validationParameters, out validatedToken);
             }
             catch (SecurityTokenExpiredException)
             {
@@ -64,6 +61,15 @@ namespace Risk.API.Services
                 respuesta = _autService.CambiarEstadoSesion(securityToken, "I");
                 throw;
             }
+
+            respuesta = _autService.ValidarSesion(securityToken);
+
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                throw new SecurityTokenValidationException(respuesta.Mensaje);
+            }
+
+            return claimsPrincipal;
         }
     }
 }

@@ -33,6 +33,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                    i_clave      IN VARCHAR2,
                                    i_tipo_clave IN CHAR DEFAULT 'A');
 
+  FUNCTION f_iniciar_sesion(i_usuario IN VARCHAR2,
+                            i_token   IN VARCHAR2) RETURN NUMBER;
+
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2);
 
@@ -119,7 +122,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       SELECT id_sesion
         INTO l_id_sesion
         FROM t_sesiones
-       WHERE token = i_token;
+       WHERE access_token = i_token;
     EXCEPTION
       WHEN no_data_found THEN
         l_id_sesion := NULL;
@@ -512,6 +515,63 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
+  FUNCTION f_iniciar_sesion(i_usuario IN VARCHAR2,
+                            i_token   IN VARCHAR2) RETURN NUMBER IS
+    l_id_sesion        t_sesiones.id_sesion%TYPE;
+    l_id_usuario       t_usuarios.id_usuario%TYPE;
+    l_cantidad         NUMBER(3);
+    l_fecha_expiracion DATE;
+  BEGIN
+    -- Busca usuario
+    l_id_usuario := lf_id_usuario(i_usuario);
+  
+    IF l_id_usuario IS NULL THEN
+      RAISE ex_usuario_inexistente;
+    END IF;
+  
+    -- Obtiene cantidad de sesiones del usuario
+    SELECT COUNT(id_sesion)
+      INTO l_cantidad
+      FROM t_sesiones
+     WHERE estado = 'A'
+       AND id_usuario = l_id_usuario;
+  
+    IF l_cantidad > 0 THEN
+      raise_application_error(-20000, 'Usuario tiene una sesion activa');
+    END IF;
+  
+    -- Obtiene la fecha de expiracion del token
+    l_fecha_expiracion := lf_fecha_expiracion_token(i_token);
+  
+    -- Inserta sesion
+    INSERT INTO t_sesiones
+      (access_token,
+       estado,
+       id_aplicacion,
+       fecha_autenticacion,
+       fecha_expiracion,
+       id_usuario,
+       direccion_ip,
+       host,
+       terminal)
+    VALUES
+      (i_token,
+       'A',
+       NULL,
+       SYSDATE,
+       l_fecha_expiracion,
+       l_id_usuario,
+       k_util.f_direccion_ip,
+       k_util.f_host,
+       k_util.f_terminal)
+    RETURNING id_sesion INTO l_id_sesion;
+  
+    RETURN l_id_sesion;
+  EXCEPTION
+    WHEN ex_usuario_inexistente THEN
+      raise_application_error(-20000, 'Usuario inexistente');
+  END;
+
   PROCEDURE p_iniciar_sesion(i_usuario IN VARCHAR2,
                              i_token   IN VARCHAR2) IS
     l_id_usuario       t_usuarios.id_usuario%TYPE;
@@ -541,7 +601,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Inserta sesion
     INSERT INTO t_sesiones
-      (token,
+      (access_token,
        estado,
        id_aplicacion,
        fecha_autenticacion,
@@ -597,7 +657,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       INTO l_id_sesion
       FROM t_sesiones
      WHERE estado = 'A'
-       AND token = i_token;
+       AND access_token = i_token;
     RETURN TRUE;
   EXCEPTION
     WHEN no_data_found THEN

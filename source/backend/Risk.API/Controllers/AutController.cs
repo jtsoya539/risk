@@ -23,11 +23,13 @@ namespace Risk.API.Controllers
     public class AutController : ControllerBase
     {
         private readonly IAutService _autService;
+        private readonly IGenService _genService;
         private readonly IConfiguration _configuration;
 
-        public AutController(IAutService autService, IConfiguration configuration)
+        public AutController(IAutService autService, IGenService genService, IConfiguration configuration)
         {
             _autService = autService;
+            _genService = genService;
             _configuration = configuration;
         }
 
@@ -73,29 +75,30 @@ namespace Risk.API.Controllers
                 claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
             }
 
-            var key = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+            int tiempoExpiracion = int.Parse(_genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN").Datos.Dato);
+            var securityKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
                 // Nuestro token va a durar 15 minutos
-                Expires = DateTime.UtcNow.AddMinutes(15),
+                Expires = DateTime.UtcNow.AddSeconds(tiempoExpiracion),
                 // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(securityKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var createdToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(createdToken);
 
-            respuesta = _autService.IniciarSesion(requestBody.Usuario, token);
+            var respuesta3 = _autService.IniciarSesion(requestBody.Usuario, token);
 
-            if (!respuesta.Codigo.Equals("0"))
+            if (!respuesta3.Codigo.Equals("0"))
             {
-                return BadRequest(respuesta);
+                return BadRequest(respuesta3);
             }
 
-            return Ok(token);
+            return Ok(respuesta3);
         }
 
         [HttpPost("FinalizarSesion")]
