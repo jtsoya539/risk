@@ -19,4 +19,7 @@ values ('NOMBRE_ROL_DEFECTO', 'Nombre del Rol que se agrega por defecto a un usu
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('TIEMPO_EXPIRACION_ACCESS_TOKEN', 'Tiempo de expiración del Access Token en segundos', '300');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('TIEMPO_EXPIRACION_REFRESH_TOKEN', 'Tiempo de expiración del Refresh Token en horas', '5');
+
 prompt Done.

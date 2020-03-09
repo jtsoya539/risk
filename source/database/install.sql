@@ -113,6 +113,7 @@ prompt
 @@install_audit.sql
 @@compile_schema.sql
 @@scripts/ins_t_sistemas.sql
+@@scripts/ins_t_aplicaciones.sql
 @@scripts/ins_t_significados.sql
 @@scripts/ins_t_errores.sql
 @@scripts/ins_t_parametros.sql
