@@ -74,6 +74,7 @@ prompt
 @@types/y_rol.typ
 @@types/y_roles.typ
 @@types/y_usuario.typ
+@@types/y_sesion.typ
 
 prompt
 prompt Creando paquetes...
