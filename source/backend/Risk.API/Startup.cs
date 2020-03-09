@@ -49,9 +49,9 @@ namespace Risk.API
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            var key = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
+            var signingKey = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
 
-            var sp = services.BuildServiceProvider();
+            var serviceProvider = services.BuildServiceProvider();
 
             services.AddAuthentication(x =>
             {
@@ -60,16 +60,18 @@ namespace Risk.API
             }).AddJwtBearer(x =>
             {
                 x.SecurityTokenValidators.Clear();
-                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(sp.GetService<IAutService>()));
+                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(serviceProvider.GetService<IAutService>()));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ClockSkew = TimeSpan.FromSeconds(30)
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromSeconds(10)
+                    // ClockSkew = TimeSpan.Zero
                 };
             });
 

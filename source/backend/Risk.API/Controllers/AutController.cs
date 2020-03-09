@@ -37,7 +37,6 @@ namespace Risk.API.Controllers
         private string GenerarAccessToken(string usuario)
         {
             var respDatosUsuario = _autService.DatosUsuario(usuario);
-
             if (!respDatosUsuario.Codigo.Equals("0"))
             {
                 return string.Empty;
@@ -45,30 +44,35 @@ namespace Risk.API.Controllers
 
             YUsuario datosUsuario = respDatosUsuario.Datos;
 
-            // Creamos los claims (pertenencias, características) del usuario
+            // Crea la lista de claims (pertenencias, características) del usuario
             List<Claim> claims = new List<Claim>();
 
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, datosUsuario.Alias));
+            claims.Add(new Claim(ClaimTypes.Name, datosUsuario.Alias));
             claims.Add(new Claim(ClaimTypes.GivenName, datosUsuario.Nombre ?? ""));
             claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? ""));
             claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? ""));
             //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
 
+            // Agrega los roles del usuario a la lista de claims
             foreach (var rol in datosUsuario.Roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
             }
 
-            int tiempoExpiracion = int.Parse(_genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN").Datos.Dato);
-            var securityKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+            var respValorParametro = _genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN");
+            if (!respValorParametro.Codigo.Equals("0"))
+            {
+                return string.Empty;
+            }
+
+            int tiempoExpiracion = int.Parse(respValorParametro.Datos.Dato);
+            var signingKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims.ToArray()),
-                // Nuestro token va a durar 15 minutos
                 Expires = DateTime.UtcNow.AddSeconds(tiempoExpiracion),
-                // Credenciales para generar el token usando nuestro secretykey y el algoritmo hash 256
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(securityKey), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(signingKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -84,6 +88,34 @@ namespace Risk.API.Controllers
                 rng.GetBytes(randomNumber);
                 return Convert.ToBase64String(randomNumber);
             }
+        }
+
+        private string ObtenerUsuarioDeAccessToken(string accessToken)
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+
+            ClaimsPrincipal claimsPrincipal;
+            SecurityToken validatedToken;
+
+            var signingKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+
+            try
+            {
+                claimsPrincipal = tokenHandler.ValidateToken(accessToken, new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                    ValidateLifetime = false // No se valida el tiempo de expiración del JWT
+                }, out validatedToken);
+            }
+            catch (ArgumentException)
+            {
+                return string.Empty;
+            }
+
+            return claimsPrincipal.Identity.Name;
         }
 
         [AllowAnonymous]
@@ -122,21 +154,7 @@ namespace Risk.API.Controllers
         [HttpPost("RefrescarSesion")]
         public IActionResult RefrescarSesion([FromBody] RefrescarSesionRequestBody requestBody)
         {
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken validatedToken;
-
-            var securityKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
-
-            ClaimsPrincipal claimsPrincipal = tokenHandler.ValidateToken(requestBody.AccessToken, new TokenValidationParameters
-            {
-                ValidateAudience = false,
-                ValidateIssuer = false,
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(securityKey),
-                ValidateLifetime = false // we check expired tokens here
-            }, out validatedToken);
-
-            string usuario = claimsPrincipal.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            string usuario = ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
 
             var accessTokenNuevo = GenerarAccessToken(usuario);
             var refreshTokenNuevo = GenerarRefreshToken();
