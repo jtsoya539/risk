@@ -115,6 +115,12 @@ namespace Risk.API.Controllers
                 return string.Empty;
             }
 
+            var jwtSecurityToken = validatedToken as JwtSecurityToken;
+            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return string.Empty;
+            }
+
             return claimsPrincipal.Identity.Name;
         }
 
