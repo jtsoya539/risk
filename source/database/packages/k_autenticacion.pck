@@ -185,11 +185,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       ROLLBACK;
   END;
 
-  FUNCTION lf_fecha_expiracion_token(i_token IN VARCHAR2) RETURN DATE IS
+  FUNCTION lf_fecha_expiracion_access_token(i_access_token IN VARCHAR2)
+    RETURN DATE IS
     l_exp          NUMBER;
     l_payload_json json_object_t;
   BEGIN
-    l_payload_json := json_object_t.parse(utl_raw.cast_to_varchar2(utl_encode.base64_decode(utl_raw.cast_to_raw(k_util.f_valor_posicion(i_token,
+    l_payload_json := json_object_t.parse(utl_raw.cast_to_varchar2(utl_encode.base64_decode(utl_raw.cast_to_raw(k_util.f_valor_posicion(i_access_token,
                                                                                                                                         2,
                                                                                                                                         '.')))));
     l_exp          := l_payload_json.get_number('exp');
@@ -534,19 +535,21 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RAISE ex_usuario_inexistente;
     END IF;
   
-    -- Obtiene cantidad de sesiones del usuario
+    -- Obtiene cantidad de sesiones activas del usuario
     SELECT COUNT(id_sesion)
       INTO l_cantidad
       FROM t_sesiones
      WHERE estado = 'A'
        AND id_usuario = l_id_usuario;
   
-    IF l_cantidad > 0 THEN
-      raise_application_error(-20000, 'Usuario tiene una sesion activa');
+    IF l_cantidad >=
+       to_number(k_util.f_valor_parametro('CANTIDAD_MAXIMA_SESIONES_USUARIO')) THEN
+      raise_application_error(-20000,
+                              'Usuario ha alcanzado la cantidad máxima de sesiones activas');
     END IF;
   
     -- Obtiene la fecha de expiracion del Access Token
-    l_fecha_expiracion := lf_fecha_expiracion_token(i_access_token);
+    l_fecha_expiracion := lf_fecha_expiracion_access_token(i_access_token);
   
     -- Inserta sesion
     INSERT INTO t_sesiones
@@ -595,7 +598,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Obtiene la fecha de expiracion del Access Token
-    l_fecha_expiracion := lf_fecha_expiracion_token(i_access_token_nuevo);
+    l_fecha_expiracion := lf_fecha_expiracion_access_token(i_access_token_nuevo);
   
     -- Actualiza sesion
     UPDATE t_sesiones s
