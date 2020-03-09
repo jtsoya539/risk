@@ -37,7 +37,11 @@ namespace Risk.API.Controllers
         [HttpGet("ValorParametro")]
         public IActionResult ValorParametro([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string parametro)
         {
-            YRespuesta<YDato> respuesta = _genService.ValorParametro(parametro);
+            var respuesta = _genService.ValorParametro(parametro);
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                return BadRequest(respuesta);
+            }
             return Ok(respuesta);
         }
 
@@ -47,7 +51,11 @@ namespace Risk.API.Controllers
         [HttpGet("SignificadoCodigo")]
         public IActionResult SignificadoCodigo([SwaggerParameter(Description = "Description", Required = true)][FromQuery] string dominio, [SwaggerParameter(Description = "Description", Required = true)][FromQuery] string codigo)
         {
-            YRespuesta<YDato> respuesta = _genService.SignificadoCodigo(dominio, codigo);
+            var respuesta = _genService.SignificadoCodigo(dominio, codigo);
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                return BadRequest(respuesta);
+            }
             return Ok(respuesta);
         }
     }
