@@ -2,8 +2,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Risk.API.Entities;
+using Risk.API.Services;
 
-namespace Risk.API.Services
+namespace Risk.API.Middlewares
 {
     public class RiskSecurityTokenValidator : ISecurityTokenValidator
     {
