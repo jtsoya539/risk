@@ -625,20 +625,30 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'clave_aplicacion')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0002',
+                         'Debe ingresar clave_aplicacion');
+      RAISE ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                  'access_token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, 'aut0002', 'Debe ingresar Access Token');
+      lp_respuesta_error(l_rsp, 'aut0003', 'Debe ingresar Access Token');
       RAISE ex_error_parametro;
     END IF;
   
     IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                  'refresh_token')) IS NULL THEN
-      lp_respuesta_error(l_rsp, 'aut0003', 'Debe ingresar Refresh Token');
+      lp_respuesta_error(l_rsp, 'aut0004', 'Debe ingresar Refresh Token');
       RAISE ex_error_parametro;
     END IF;
   
     l_rsp.lugar := 'Iniciando sesion';
     l_id_sesion := k_autenticacion.f_iniciar_sesion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                               'usuario')),
+                                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                              'clave_aplicacion')),
                                                     anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                               'access_token')),
                                                     anydata.accessvarchar2(lf_valor_parametro(i_parametros,
@@ -660,11 +670,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
        WHERE id_sesion = l_id_sesion;
     EXCEPTION
       WHEN no_data_found THEN
-        lp_respuesta_error(l_rsp, 'aut0004', 'Sesion inexistente');
+        lp_respuesta_error(l_rsp, 'aut0005', 'Sesion inexistente');
         RAISE ex_error_general;
       WHEN OTHERS THEN
         lp_respuesta_error(l_rsp,
-                           'aut0005',
+                           'aut0006',
                            'Error al buscar datos de la sesion');
         RAISE ex_error_general;
     END;

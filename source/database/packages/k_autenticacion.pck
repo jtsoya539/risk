@@ -33,9 +33,12 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                    i_clave      IN VARCHAR2,
                                    i_tipo_clave IN CHAR DEFAULT 'A');
 
-  FUNCTION f_iniciar_sesion(i_usuario       IN VARCHAR2,
-                            i_access_token  IN VARCHAR2,
-                            i_refresh_token IN VARCHAR2) RETURN NUMBER;
+  PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2);
+
+  FUNCTION f_iniciar_sesion(i_usuario          IN VARCHAR2,
+                            i_clave_aplicacion IN VARCHAR2,
+                            i_access_token     IN VARCHAR2,
+                            i_refresh_token    IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_refrescar_sesion(i_access_token_antiguo  IN VARCHAR2,
                               i_refresh_token_antiguo IN VARCHAR2,
@@ -101,6 +104,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       l_result := utl_raw.concat(l_result, l_xorsum);
     END LOOP;
     RETURN rawtohex(utl_raw.substr(l_result, 1, p_key_length));
+  END;
+
+  FUNCTION lf_id_aplicacion(i_clave_aplicacion IN VARCHAR2) RETURN VARCHAR2 IS
+    l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_aplicacion
+        INTO l_id_aplicacion
+        FROM t_aplicaciones
+       WHERE clave = i_clave_aplicacion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_aplicacion := NULL;
+      WHEN OTHERS THEN
+        l_id_aplicacion := NULL;
+    END;
+    RETURN l_id_aplicacion;
   END;
 
   FUNCTION lf_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER IS
@@ -529,15 +549,31 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  FUNCTION f_iniciar_sesion(i_usuario       IN VARCHAR2,
-                            i_access_token  IN VARCHAR2,
-                            i_refresh_token IN VARCHAR2) RETURN NUMBER IS
+  PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2) IS
+  BEGIN
+    IF lf_id_aplicacion(i_clave_aplicacion) IS NULL THEN
+      raise_application_error(-20000, 'Clave invalida');
+    END IF;
+  END;
+
+  FUNCTION f_iniciar_sesion(i_usuario          IN VARCHAR2,
+                            i_clave_aplicacion IN VARCHAR2,
+                            i_access_token     IN VARCHAR2,
+                            i_refresh_token    IN VARCHAR2) RETURN NUMBER IS
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_id_usuario                     t_usuarios.id_usuario%TYPE;
+    l_id_aplicacion                  t_aplicaciones.id_aplicacion%TYPE;
     l_cantidad                       NUMBER(3);
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
   BEGIN
+    -- Busca aplicacion
+    l_id_aplicacion := lf_id_aplicacion(i_clave_aplicacion);
+  
+    IF l_id_aplicacion IS NULL THEN
+      raise_application_error(-20000, 'Aplicacion inexistente');
+    END IF;
+  
     -- Busca usuario
     l_id_usuario := lf_id_usuario(i_usuario);
   
@@ -577,7 +613,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        terminal)
     VALUES
       (l_id_usuario,
-       NULL,
+       l_id_aplicacion,
        'A',
        SYSDATE,
        i_access_token,

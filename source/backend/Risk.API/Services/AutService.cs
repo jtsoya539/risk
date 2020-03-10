@@ -49,10 +49,11 @@ namespace Risk.API.Services
             return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
         }
 
-        public YRespuesta<YSesion> IniciarSesion(string usuario, string accessToken, string refreshToken)
+        public YRespuesta<YSesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
+            prms.Add("clave_aplicacion", claveAplicacion);
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
 

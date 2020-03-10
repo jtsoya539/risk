@@ -146,7 +146,7 @@ namespace Risk.API.Controllers
             var accessToken = GenerarAccessToken(requestBody.Usuario);
             var refreshToken = GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken);
+            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, "KM1gROAnPUAZykrHcOOJRAC1jkcnyBVLRWXcRD3pjvQ=", accessToken, refreshToken);
 
             if (!respIniciarSesion.Codigo.Equals("0"))
             {

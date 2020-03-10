@@ -5,7 +5,7 @@ namespace Risk.API.Services
     public interface IAutService
     {
         YRespuesta<YDato> ValidarCredenciales(string usuario, string clave, string tipoClave);
-        YRespuesta<YSesion> IniciarSesion(string usuario, string accessToken, string refreshToken);
+        YRespuesta<YSesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken);
         YRespuesta<YSesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo);
         YRespuesta<YDato> CambiarEstadoSesion(string token, string estado);
         YRespuesta<YDato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
