@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Oracle.ManagedDataAccess.Client;
 using Risk.API.Entities;
+using Risk.API.Middlewares;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -136,6 +137,8 @@ namespace Risk.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseRiskApplicationKeyValidator();
 
             app.UseAuthentication();
 
