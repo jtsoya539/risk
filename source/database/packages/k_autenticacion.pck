@@ -33,6 +33,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                    i_clave      IN VARCHAR2,
                                    i_tipo_clave IN CHAR DEFAULT 'A');
 
+  FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
+    RETURN BOOLEAN;
+
   PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2);
 
   FUNCTION f_iniciar_sesion(i_usuario          IN VARCHAR2,
@@ -549,9 +552,22 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2) IS
+  FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
+    RETURN BOOLEAN IS
   BEGIN
     IF lf_id_aplicacion(i_clave_aplicacion) IS NULL THEN
+      RETURN FALSE;
+    ELSE
+      RETURN TRUE;
+    END IF;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN FALSE;
+  END;
+
+  PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2) IS
+  BEGIN
+    IF NOT f_validar_clave_aplicacion(i_clave_aplicacion) THEN
       raise_application_error(-20000, 'Clave invalida');
     END IF;
   END;

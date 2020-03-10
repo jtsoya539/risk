@@ -24,6 +24,9 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION aut_validar_credenciales(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION aut_validar_clave_aplicacion(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION aut_validar_sesion(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -558,6 +561,43 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                anydata.accessvarchar2(lf_valor_parametro(i_parametros,
                                                                                          'tipo_clave'))) THEN
       lp_respuesta_error(l_rsp, 'aut0003', 'Credenciales invalidas');
+      RAISE ex_error_general;
+    END IF;
+  
+    lp_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      lp_respuesta_error(l_rsp,
+                         c_error_inesperado,
+                         k_error.f_mensaje_error(c_error_inesperado),
+                         dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION aut_validar_clave_aplicacion(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                 'clave_aplicacion')) IS NULL THEN
+      lp_respuesta_error(l_rsp,
+                         'aut0001',
+                         'Debe ingresar clave_aplicacion');
+      RAISE ex_error_general;
+    END IF;
+  
+    l_rsp.lugar := 'Validando clave de aplicacion';
+    IF NOT
+        k_autenticacion.f_validar_clave_aplicacion(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                             'clave_aplicacion'))) THEN
+      lp_respuesta_error(l_rsp, 'aut0002', 'Clave de aplicacion invalida');
       RAISE ex_error_general;
     END IF;
   
