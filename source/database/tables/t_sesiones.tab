@@ -1,17 +1,18 @@
 create table T_SESIONES
 (
-  id_sesion           NUMBER not null,
-  access_token        VARCHAR2(1000),
-  estado              CHAR(1),
-  id_aplicacion       VARCHAR2(5),
-  fecha_autenticacion DATE,
-  fecha_expiracion    DATE,
-  id_usuario          NUMBER(10),
-  direccion_ip        VARCHAR2(50),
-  host                VARCHAR2(50),
-  terminal            VARCHAR2(50),
-  fecha_estado        DATE,
-  refresh_token       VARCHAR2(1000)
+  id_sesion                      NUMBER not null,
+  access_token                   VARCHAR2(1000),
+  estado                         CHAR(1),
+  id_aplicacion                  VARCHAR2(5),
+  fecha_autenticacion            DATE,
+  fecha_expiracion_access_token  DATE,
+  id_usuario                     NUMBER(10),
+  direccion_ip                   VARCHAR2(50),
+  host                           VARCHAR2(50),
+  terminal                       VARCHAR2(50),
+  fecha_estado                   DATE,
+  refresh_token                  VARCHAR2(1000),
+  fecha_expiracion_refresh_token DATE
 )
 ;
 comment on table T_SESIONES
@@ -26,8 +27,8 @@ comment on column T_SESIONES.id_aplicacion
   is 'Aplicacion relacionada a la sesion';
 comment on column T_SESIONES.fecha_autenticacion
   is 'Fecha de autenticacion de la sesion';
-comment on column T_SESIONES.fecha_expiracion
-  is 'Fecha de expiracion de la sesion';
+comment on column T_SESIONES.fecha_expiracion_access_token
+  is 'Fecha de expiracion del Access Token';
 comment on column T_SESIONES.id_usuario
   is 'Usuario relacionado a la sesion';
 comment on column T_SESIONES.direccion_ip
@@ -40,6 +41,8 @@ comment on column T_SESIONES.fecha_estado
   is 'Fecha del ultimo cambio de estado';
 comment on column T_SESIONES.refresh_token
   is 'Refresh Token de la sesion';
+comment on column T_SESIONES.fecha_expiracion_refresh_token
+  is 'Fecha de expiracion del Refresh Token';
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES
