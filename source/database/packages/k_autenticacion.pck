@@ -109,14 +109,17 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     RETURN rawtohex(utl_raw.substr(l_result, 1, p_key_length));
   END;
 
-  FUNCTION lf_id_aplicacion(i_clave_aplicacion IN VARCHAR2) RETURN VARCHAR2 IS
+  FUNCTION lf_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
+                            i_activo           IN VARCHAR2 DEFAULT NULL)
+    RETURN VARCHAR2 IS
     l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
   BEGIN
     BEGIN
       SELECT id_aplicacion
         INTO l_id_aplicacion
         FROM t_aplicaciones
-       WHERE clave = i_clave_aplicacion;
+       WHERE clave = i_clave_aplicacion
+         AND activo = nvl(i_activo, activo);
     EXCEPTION
       WHEN no_data_found THEN
         l_id_aplicacion := NULL;
@@ -555,7 +558,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
     RETURN BOOLEAN IS
   BEGIN
-    IF lf_id_aplicacion(i_clave_aplicacion) IS NULL THEN
+    IF lf_id_aplicacion(i_clave_aplicacion, 'S') IS NULL THEN
       RETURN FALSE;
     ELSE
       RETURN TRUE;
@@ -568,7 +571,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2) IS
   BEGIN
     IF NOT f_validar_clave_aplicacion(i_clave_aplicacion) THEN
-      raise_application_error(-20000, 'Clave invalida');
+      raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
     END IF;
   END;
 
@@ -584,10 +587,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_fecha_expiracion_refresh_token DATE;
   BEGIN
     -- Busca aplicacion
-    l_id_aplicacion := lf_id_aplicacion(i_clave_aplicacion);
+    l_id_aplicacion := lf_id_aplicacion(i_clave_aplicacion, 'S');
   
     IF l_id_aplicacion IS NULL THEN
-      raise_application_error(-20000, 'Aplicacion inexistente');
+      raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
     END IF;
   
     -- Busca usuario
