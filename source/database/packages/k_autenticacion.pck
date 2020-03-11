@@ -33,6 +33,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                    i_clave      IN VARCHAR2,
                                    i_tipo_clave IN CHAR DEFAULT 'A');
 
+  FUNCTION f_generar_clave_aplicacion RETURN VARCHAR2;
+
   FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
     RETURN BOOLEAN;
 
@@ -553,6 +555,11 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     IF NOT f_validar_credenciales(i_usuario, i_clave, i_tipo_clave) THEN
       raise_application_error(-20000, 'Credenciales invalidas');
     END IF;
+  END;
+
+  FUNCTION f_generar_clave_aplicacion RETURN VARCHAR2 IS
+  BEGIN
+    RETURN utl_raw.cast_to_varchar2(utl_encode.base64_encode(dbms_crypto.randombytes(number_bytes => 32)));
   END;
 
   FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
