@@ -127,7 +127,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RegistrarUsuario")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "RegistrarUsuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
@@ -137,7 +137,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("IniciarSesion")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "IniciarSesion")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
@@ -163,7 +163,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RefrescarSesion")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "RefrescarSesion")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RefrescarSesion([FromBody] RefrescarSesionRequestBody requestBody)
         {
@@ -183,7 +183,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("FinalizarSesion")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "FinalizarSesion")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
@@ -192,7 +192,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("RegistrarClaveTransaccional")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "RegistrarClaveTransaccional")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
@@ -201,7 +201,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("CambiarClaveAcceso")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "CambiarClaveAcceso")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
@@ -210,7 +210,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("CambiarClaveTransaccional")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "CambiarClaveTransaccional")]
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
@@ -219,7 +219,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("ValidarSesion")]
-        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "ValidarSesion")]
         public IActionResult ValidarSesion([FromQuery] string token)
         {
             YRespuesta<YDato> respuesta = _autService.ValidarSesion(token);
