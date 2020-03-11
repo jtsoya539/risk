@@ -14,7 +14,7 @@ namespace Risk.API.Filters
             operation.Parameters.Add(new OpenApiParameter
             {
                 Name = "Risk-App-Key",
-                Description = "Clave de la aplicación",
+                Description = "Clave de la aplicación habilitada para consumir los servicios",
                 In = ParameterLocation.Header,
                 Required = true
             });

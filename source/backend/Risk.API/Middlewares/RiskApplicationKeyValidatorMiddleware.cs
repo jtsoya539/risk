@@ -16,21 +16,24 @@ namespace Risk.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IAutService autService)
         {
-            if (!context.Request.Headers.Keys.Contains("Risk-App-Key"))
+            if (context.Request.Path.StartsWithSegments(new PathString("/Api")))
             {
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-                await context.Response.WriteAsync("Risk-App-Key missing");
-                return;
-            }
-            else
-            {
-                var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(context.Request.Headers["Risk-App-Key"]);
-
-                if (!respValidarClaveAplicacion.Codigo.Equals("0"))
+                if (!context.Request.Headers.Keys.Contains("Risk-App-Key"))
                 {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("Invalid Risk-App-Key");
+                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                    await context.Response.WriteAsync("Risk-App-Key missing");
                     return;
+                }
+                else
+                {
+                    var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(context.Request.Headers["Risk-App-Key"]);
+
+                    if (!respValidarClaveAplicacion.Codigo.Equals("0"))
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsync("Invalid Risk-App-Key");
+                        return;
+                    }
                 }
             }
 
