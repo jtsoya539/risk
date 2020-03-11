@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Oracle.ManagedDataAccess.Client;
 using Risk.API.Entities;
+using Risk.API.Filters;
 using Risk.API.Middlewares;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -41,7 +42,7 @@ namespace Risk.API
             //Enter directory where wallet is stored locally
             OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
 
-            string connectionString = Configuration.GetConnectionString("Digital");
+            string connectionString = Configuration.GetConnectionString("OracleXE");
 
             OracleConnection con = new OracleConnection(connectionString);
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
@@ -111,6 +112,7 @@ namespace Risk.API
                         new string[] { }
                     }
                 });
+                c.OperationFilter<RiskApplicationKeyHeaderOperationFilter>();
             });
         }
 
