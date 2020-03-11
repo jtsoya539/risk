@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mime;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -126,6 +127,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RegistrarUsuario")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
             YRespuesta<YDato> respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
@@ -134,6 +136,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("IniciarSesion")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
             var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
@@ -158,6 +161,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RefrescarSesion")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RefrescarSesion([FromBody] RefrescarSesionRequestBody requestBody)
         {
             string usuario = ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
@@ -176,6 +180,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("FinalizarSesion")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
             YRespuesta<YDato> respuesta = _autService.CambiarEstadoSesion(requestBody.Token, "F");
@@ -183,6 +188,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("RegistrarClaveTransaccional")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
             YRespuesta<YDato> respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
@@ -190,6 +196,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("CambiarClaveAcceso")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
             YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
@@ -197,6 +204,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpPost("CambiarClaveTransaccional")]
+        [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
             YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
