@@ -16,7 +16,11 @@ namespace Risk.API.Filters
                 Name = "Risk-App-Key",
                 Description = "Clave de la aplicación habilitada para consumir los servicios",
                 In = ParameterLocation.Header,
-                Required = true
+                Required = true,
+                Schema = new OpenApiSchema
+                {
+                    Type = "string"
+                }
             });
         }
     }
