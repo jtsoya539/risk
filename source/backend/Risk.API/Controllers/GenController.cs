@@ -33,10 +33,8 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
-        [SwaggerOperation(Summary = "Summary",
-            Description = "Description",
-            OperationId = "ValorParametro")]
         [HttpGet("ValorParametro")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "ValorParametro")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(YRespuesta<YDato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(YRespuesta<YDato>))]
@@ -51,10 +49,8 @@ namespace Risk.API.Controllers
             return Ok(respuesta);
         }
 
-        [SwaggerOperation(Summary = "Summary",
-            Description = "Description",
-            OperationId = "SignificadoCodigo")]
         [HttpGet("SignificadoCodigo")]
+        [SwaggerOperation(Summary = "Summary", Description = "Description", OperationId = "SignificadoCodigo")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(YRespuesta<YDato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(YRespuesta<YDato>))]
