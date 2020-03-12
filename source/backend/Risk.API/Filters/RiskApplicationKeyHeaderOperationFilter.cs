@@ -43,7 +43,8 @@ namespace Risk.API.Filters
                 Required = true,
                 Schema = new OpenApiSchema
                 {
-                    Type = "string"
+                    Type = "string",
+                    Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, "{{Risk-App-Key}}")
                 }
             });
         }
