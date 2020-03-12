@@ -1,6 +1,6 @@
 # RISK Docs
 
-Bienvenido/a a la documentación del Proyecto RISK!
+Bienvenido/a a la documentación del Proyecto RISK
 
 ## Requerimientos
 ### Base de Datos
