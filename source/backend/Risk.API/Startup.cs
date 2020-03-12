@@ -142,6 +142,7 @@ namespace Risk.API
                     }
                 });
                 c.OperationFilter<RiskApplicationKeyHeaderOperationFilter>();
+                c.DocumentFilter<RiskDocumentFilter>();
             });
         }
 
