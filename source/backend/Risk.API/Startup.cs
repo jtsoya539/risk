@@ -87,9 +87,14 @@ namespace Risk.API
                     Version = "v1",
                     Contact = new OpenApiContact
                     {
-                        Name = "Javier Meza",
+                        Name = "jtsoya539",
                         Url = new Uri("https://github.com/jtsoya539"),
                         Email = "javier.meza.py@gmail.com"
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "MIT",
+                        Url = new Uri("https://github.com/jtsoya539")
                     }
                 });
                 c.EnableAnnotations();
