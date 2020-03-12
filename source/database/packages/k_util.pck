@@ -80,7 +80,7 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
   PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
                                         i_campo   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL) IS
-    l_sentencia VARCHAR2(1000) := '';
+    l_sentencia VARCHAR2(4000) := '';
     l_trigger   VARCHAR2(30);
   BEGIN
     l_trigger := lower(nvl(i_trigger, 'gs_' || substr(i_tabla, 3)));
@@ -94,6 +94,30 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
   BEFORE INSERT ON ' || lower(i_tabla) || '
   FOR EACH ROW
 BEGIN
+  /*
+  --------------------------------- MIT License ---------------------------------
+  Copyright (c) 2019 jtsoya539
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+  -------------------------------------------------------------------------------
+  */
+  
   IF :new.' || lower(i_campo) || ' IS NULL THEN
     :new.' || lower(i_campo) || ' := s_' ||
                    lower(i_campo) || '.nextval;
