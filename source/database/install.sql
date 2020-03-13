@@ -80,6 +80,7 @@ prompt
 @@tables/t_rol_usuarios.tab
 @@tables/t_servicios.tab
 @@tables/t_servicio_parametros.tab
+@@tables/t_servicio_logs.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
 @@tables/t_correos.tab
