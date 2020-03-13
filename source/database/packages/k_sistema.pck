@@ -28,6 +28,10 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   --
   -- %author jmeza 5/1/2019 19:48:32
 
+  FUNCTION f_es_produccion RETURN BOOLEAN;
+
+  FUNCTION f_fecha_actual RETURN DATE;
+
   -- Retorna el valor de un parametro de sistema, si no existe retorna null
   --
   -- %param i_parametro Nombre del parametro de sistema
@@ -66,6 +70,18 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
   g_parametros ly_parametros;
   g_indice     VARCHAR2(30);
+
+  FUNCTION f_es_produccion RETURN BOOLEAN IS
+  BEGIN
+    RETURN upper(k_util.f_valor_parametro('BASE_DATOS_PRODUCCION')) = upper(k_util.f_base_datos);
+  END;
+
+  FUNCTION f_fecha_actual RETURN DATE IS
+  BEGIN
+    RETURN to_date(f_valor_parametro('FECHA') || ' ' ||
+                   to_char(SYSDATE, 'HH24:MI:SS'),
+                   'YYYY-MM-DD HH24:MI:SS');
+  END;
 
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2 IS
   BEGIN

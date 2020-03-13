@@ -2,6 +2,9 @@ prompt Importing table t_parametros...
 set feedback off
 set define off
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('BASE_DATOS_PRODUCCION', 'Nombre de la Base de Datos del entorno de Producción', 'RISK');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('CANTIDAD_MAXIMA_SESIONES_USUARIO', 'Cantidad máxima permitida de sesiones activas por usuario', '2');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
