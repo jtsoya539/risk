@@ -80,7 +80,7 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
   PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
                                         i_campo   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL) IS
-    l_sentencia VARCHAR2(4000) := '';
+    l_sentencia VARCHAR2(4000);
     l_trigger   VARCHAR2(30);
   BEGIN
     l_trigger := lower(nvl(i_trigger, 'gs_' || substr(i_tabla, 3)));

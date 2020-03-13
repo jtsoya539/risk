@@ -45,7 +45,7 @@ END;
 CREATE OR REPLACE PACKAGE BODY k_auditoria IS
 
   PROCEDURE p_generar_campos_auditoria(i_tabla IN VARCHAR2) IS
-    l_sentencia VARCHAR2(1000) := '';
+    l_sentencia VARCHAR2(4000);
   BEGIN
     -- Genera campos
     l_sentencia := 'alter table ' || i_tabla || ' add
@@ -77,7 +77,7 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
 
   PROCEDURE p_generar_trigger_auditoria(i_tabla   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL) IS
-    l_sentencia VARCHAR2(4000) := '';
+    l_sentencia VARCHAR2(4000);
     l_trigger   VARCHAR2(30);
   BEGIN
     l_trigger := lower(nvl(i_trigger, 'ga_' || substr(i_tabla, 3)));
