@@ -196,6 +196,21 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       NULL;
   END;
 
+  PROCEDURE lp_registrar_log(i_id_servicio IN NUMBER,
+                             i_parametros  IN CLOB,
+                             i_respuesta   IN CLOB) IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+  BEGIN
+    INSERT INTO t_servicio_logs
+      (id_servicio, parametros, respuesta)
+    VALUES
+      (i_id_servicio, i_parametros, i_respuesta);
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+  END;
+
   PROCEDURE lp_registrar_ejecucion(i_id_servicio IN NUMBER) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
   BEGIN
@@ -329,12 +344,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp CLOB;
   BEGIN
     -- Log de entrada
-    lp_registrar_log(i_id_servicio, c_log_entrada, i_parametros);
+    -- lp_registrar_log(i_id_servicio, c_log_entrada, i_parametros);
     -- Proceso
     lp_registrar_ejecucion(i_id_servicio);
     l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
     -- Log de salida
-    lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
+    -- lp_registrar_log(i_id_servicio, c_log_salida, l_rsp);
+    lp_registrar_log(i_id_servicio, i_parametros, l_rsp);
     RETURN l_rsp;
   END;
 
