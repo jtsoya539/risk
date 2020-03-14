@@ -108,6 +108,7 @@ drop sequence s_id_pais;
 drop sequence s_id_persona;
 drop sequence s_id_rol;
 drop sequence s_id_servicio;
+drop sequence s_id_servicio_log;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
 drop sequence s_id_correo;

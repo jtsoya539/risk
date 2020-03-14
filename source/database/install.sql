@@ -54,6 +54,7 @@ prompt
 @@sequences/s_id_persona.seq
 @@sequences/s_id_rol.seq
 @@sequences/s_id_servicio.seq
+@@sequences/s_id_servicio_log.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
 @@sequences/s_id_correo.seq
@@ -123,6 +124,7 @@ prompt
 @@triggers/gs_personas.trg
 @@triggers/gs_roles.trg
 @@triggers/gs_servicios.trg
+@@triggers/gs_servicio_logs.trg
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
 @@triggers/gs_correos.trg
