@@ -1,5 +1,0 @@
-{
-    "targetFramework": "netstandard2.0",
-    "packageName": "Risk.API.Client",
-    "packageVersion": "1.0"
-}

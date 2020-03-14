@@ -1,7 +1,0 @@
-Risk.API.Client
-
-Invoke-WebRequest -OutFile openapi-generator-cli.jar https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.2.3/openapi-generator-cli-4.2.3.jar
-
-java -jar openapi-generator-cli.jar help
-
-java -jar openapi-generator-cli.jar generate -i http://localhost:5000/swagger/v1/swagger.json -o Risk.API.Client -g csharp-netcore -c config.json
