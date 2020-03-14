@@ -431,3 +431,10 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+##
+## Risk.API.Client
+##
+Risk.API.Client/
+!Risk.API.Client/config.json
+!Risk.API.Client/README.txt
