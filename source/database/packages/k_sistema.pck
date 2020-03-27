@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_sistema IS
 
+  /**
+  Agrupa operaciones relacionadas con los parametros de sistema
+  
+  %author jtsoya539 27/3/2020 16:58:36
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -24,42 +30,53 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   -------------------------------------------------------------------------------
   */
 
-  -- Agrupa operaciones relacionadas con los parametros de sistema
-  --
-  -- %author jmeza 5/1/2019 19:48:32
-
   FUNCTION f_es_produccion RETURN BOOLEAN;
 
   FUNCTION f_fecha_actual RETURN DATE;
 
-  -- Retorna el valor de un parametro de sistema, si no existe retorna null
-  --
-  -- %param i_parametro Nombre del parametro de sistema
-  -- %return Valor del parametro de sistema
-  -- %raises <exception> 
+  /**
+  Retorna el valor de un parametro de sistema, si no existe retorna null
+  
+  %author jtsoya539 27/3/2020 16:59:44
+  %param i_parametro Nombre del parametro de sistema
+  %return Valor del parametro de sistema
+  %raises <exception>
+  */
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2;
 
-  -- Define el valor de un parametro de sistema
-  --
-  -- %param i_parametro Nombre del parametro de sistema
-  -- %param i_valor Valor del parametro de sistema
-  -- %raises <exception> 
+  /**
+  Define el valor de un parametro de sistema
+  
+  %author jtsoya539 27/3/2020 17:00:28
+  %param i_parametro Nombre del parametro de sistema
+  %param i_valor Valor del parametro de sistema
+  %raises <exception>
+  */
   PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
                                 i_valor     IN VARCHAR2);
 
-  -- Define el valor de todos los parametros de sistema a null
-  --
-  -- %raises <exception> 
+  /**
+  Define el valor de todos los parametros de sistema a null
+  
+  %author jtsoya539 27/3/2020 17:01:24
+  %raises <exception>
+  */
   PROCEDURE p_limpiar_parametros;
 
-  -- Elimina todos los parametros de sistema definidos
-  --
-  -- %raises <exception> 
+  /**
+  Elimina todos los parametros de sistema definidos
+  
+  %author jtsoya539 27/3/2020 17:02:14
+  %raises <exception>
+  */
   PROCEDURE p_eliminar_parametros;
 
-  -- Imprime todos los parametros de sistema definidos
-  --
-  -- %raises <exception> 
+  /**
+  Imprime todos los parametros de sistema definidos
+  
+  %author jtsoya539 27/3/2020 17:02:58
+  %raises <exception>
+  */
   PROCEDURE p_imprimir_parametros;
 
 END;

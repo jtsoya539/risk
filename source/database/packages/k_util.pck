@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_util IS
 
+  /**
+  Agrupa herramientas para facilitar el desarrollo
+  
+  %author jtsoya539 27/3/2020 17:05:34
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -24,26 +30,28 @@ CREATE OR REPLACE PACKAGE k_util IS
   -------------------------------------------------------------------------------
   */
 
-  -- Agrupa herramientas para facilitar el desarrollo
-  --
-  -- %author jmeza 5/1/2019 21:42:37
-
-  -- Genera trigger de secuencia para un campo de una tabla
-  --
-  -- %param i_tabla Tabla
-  -- %param i_campo Campo
-  -- %param i_trigger Trigger
+  /**
+  Genera trigger de secuencia para un campo de una tabla
+  
+  %author jtsoya539 27/3/2020 17:06:21
+  %param i_tabla Tabla
+  %param i_campo Campo
+  %param i_trigger Trigger
+  */
   PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
                                         i_campo   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL);
 
-  -- Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
-  -- Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
-  --
-  -- %param i_cadena Cadena
-  -- %param i_posicion Posicion dentro de la cadena
-  -- %param i_separador Caracter separador. Por defecto '~'
-  -- %return Valor que se encuenta en la posicion indicada
+  /**
+  Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
+  Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
+  
+  %author jtsoya539 27/3/2020 17:07:15
+  %param i_cadena Cadena
+  %param i_posicion Posicion dentro de la cadena
+  %param i_separador Caracter separador. Por defecto '~'
+  %return Valor que se encuenta en la posicion indicada
+  */
   FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,
                             i_posicion  IN NUMBER,
                             i_separador IN VARCHAR2 DEFAULT '~')
@@ -51,11 +59,14 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2;
 
-  -- Retorna el significado de un codigo dentro de un dominio 
-  --
-  -- %param i_dominio Dominio
-  -- %param i_codigo Codigo
-  -- %return Significado
+  /**
+  Retorna el significado de un codigo dentro de un dominio
+  
+  %author jtsoya539 27/3/2020 17:08:39
+  %param i_dominio Dominio
+  %param i_codigo Codigo
+  %return Significado
+  */
   FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
                                 i_codigo  IN VARCHAR2) RETURN VARCHAR2;
 
@@ -257,8 +268,5 @@ END;'
     RETURN sys_context('USERENV', 'CURRENT_SCHEMA');
   END;
 
-BEGIN
-  -- Initialization
-  NULL;
 END;
 /

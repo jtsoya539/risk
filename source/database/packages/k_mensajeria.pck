@@ -1,5 +1,17 @@
 CREATE OR REPLACE PACKAGE k_mensajeria IS
 
+  /**
+  Agrupa operaciones relacionadas con el envio de mensajes a los usuarios
+  
+  El envio de mensajes se puede realizar a traves de:
+  <ul>
+  <li>Correo electronico (E-mail)</li>
+  <li>Mensaje de texto (SMS)</li>
+  </ul>
+  
+  %author jtsoya539 27/3/2020 16:38:22
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -23,13 +35,6 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   SOFTWARE.
   -------------------------------------------------------------------------------
   */
-
-  -- Agrupa operaciones relacionadas con el envio de mensajes a los usuarios
-  -- a traves de:
-  -- * Correo electronico (E-mail)
-  -- * Mensaje de texto (SMS)
-  --
-  -- %author jmeza 5/1/2019 21:42:37
 
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN;
@@ -89,8 +94,5 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     RETURN l_numero_telefono;
   END;
 
-BEGIN
-  -- Initialization
-  NULL;
 END;
 /

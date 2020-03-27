@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_autenticacion IS
 
+  /**
+  Agrupa operaciones relacionadas con la autenticacion de usuarios
+  
+  %author jtsoya539 27/3/2020 16:16:59
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -23,10 +29,6 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   SOFTWARE.
   -------------------------------------------------------------------------------
   */
-
-  -- Agrupa operaciones relacionadas con la autenticacion de usuarios
-  --
-  -- %author jmeza 11/3/2019 23:24:54
 
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
                             i_clave      IN VARCHAR2,
@@ -770,8 +772,5 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-BEGIN
-  -- Initialization
-  NULL;
 END;
 /

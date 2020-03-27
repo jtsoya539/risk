@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_html IS
 
+  /**
+  Agrupa operaciones relacionadas con la generacion de HTML
+  
+  %author jtsoya539 27/3/2020 16:36:54
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -23,9 +29,6 @@ CREATE OR REPLACE PACKAGE k_html IS
   SOFTWARE.
   -------------------------------------------------------------------------------
   */
-
-  -- Agrupa operaciones relacionadas con la generacion de HTML.
-  -- %author jtsoya539
 
   FUNCTION f_documento RETURN CLOB;
 

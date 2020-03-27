@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_auditoria IS
 
+  /**
+  Agrupa operaciones relacionadas con la auditoria de tablas
+  
+  %author jtsoya539 27/3/2020 16:14:30
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -24,19 +30,19 @@ CREATE OR REPLACE PACKAGE k_auditoria IS
   -------------------------------------------------------------------------------
   */
 
-  -- Agrupa operaciones relacionadas con la auditoria de tablas
-  --
-  -- %author jmeza 5/1/2019 21:42:37
-
-  -- Genera campos de auditoria para una tabla
-  --
-  -- %param i_tabla Tabla
+  /**
+  Genera campos de auditoria para una tabla
+  
+  %param i_tabla Tabla
+  */
   PROCEDURE p_generar_campos_auditoria(i_tabla IN VARCHAR2);
 
-  -- Genera trigger de auditoria para una tabla
-  --
-  -- %param i_tabla Tabla
-  -- %param i_trigger Trigger
+  /**
+  Genera trigger de auditoria para una tabla
+  
+  %param i_tabla Tabla
+  %param i_trigger Trigger
+  */
   PROCEDURE p_generar_trigger_auditoria(i_tabla   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL);
 
@@ -138,8 +144,5 @@ END;';
     EXECUTE IMMEDIATE l_sentencia;
   END;
 
-BEGIN
-  -- Initialization
-  NULL;
 END;
 /

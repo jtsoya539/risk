@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_error IS
 
+  /**
+  Agrupa operaciones relacionadas con los errores del sistema
+  
+  %author jtsoya539 27/3/2020 16:22:16
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -24,21 +30,20 @@ CREATE OR REPLACE PACKAGE k_error IS
   -------------------------------------------------------------------------------
   */
 
-  -- Agrupa operaciones relacionadas con los errores del sistema
-  --
-  -- %author jmeza 25/3/2019 21:04:47
-
   -- Tipos de error
   c_oracle_predefined_error CONSTANT VARCHAR2(3) := 'OPE';
   c_user_defined_error      CONSTANT VARCHAR2(3) := 'UDE';
 
   FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2;
 
-  -- Retorna el mensaje de una excepcion de Oracle
-  --
-  -- %param i_sqlerrm Mensaje de excepcion
-  -- %param i_sqlcode Codigo de excepcion
-  -- %return Mensaje de error
+  /**
+  Retorna el mensaje de una excepcion de Oracle
+  
+  %author jtsoya539 27/3/2020 16:23:08
+  %param i_sqlerrm Mensaje de excepcion
+  %param i_sqlcode Codigo de excepcion
+  %return Mensaje de error
+  */
   FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2,
                                i_sqlcode IN NUMBER DEFAULT NULL)
     RETURN VARCHAR2;
@@ -93,8 +98,5 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     RETURN l_mensaje;
   END;
 
-BEGIN
-  -- Initialization
-  NULL;
 END;
 /

@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE k_servicio IS
 
+  /**
+  Agrupa operaciones relacionadas con los Servicios Web del sistema
+  
+  %author jtsoya539 27/3/2020 16:42:26
+  */
+
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -23,10 +29,6 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   SOFTWARE.
   -------------------------------------------------------------------------------
   */
-
-  -- Agrupa operaciones relacionadas con los Servicios Web del sistema
-  --
-  -- %author jmeza 17/3/2019 15:23:21
 
   FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN CLOB;
@@ -1007,8 +1009,5 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RETURN l_rsp;
   END;
 
-BEGIN
-  -- Initialization
-  NULL;
 END;
 /
