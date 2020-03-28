@@ -1,6 +1,6 @@
 # RISK Docs
 
-Bienvenido/a a la documentación del Proyecto RISK
+Bienvenido/a a la documentación del Proyecto RISK.
 
 ## Requerimientos
 ### Base de Datos
@@ -9,6 +9,11 @@ Bienvenido/a a la documentación del Proyecto RISK
 
 ### Back-End
 * .NET Core 2.1
+
+## Instalación
+### Base de Datos
+
+### Back-End
 
 ## Contenido
 * [Guía de estilo para Desarrollo](database/styleguide.md)
