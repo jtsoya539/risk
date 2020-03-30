@@ -66,7 +66,7 @@ namespace Risk.API
             //Enter directory where wallet is stored locally
             OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
 
-            string connectionString = Configuration.GetConnectionString("OracleDB1");
+            string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
 
             OracleConnection con = new OracleConnection(connectionString);
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
