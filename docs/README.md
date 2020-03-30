@@ -12,6 +12,7 @@ Bienvenido/a a la documentación del Proyecto RISK.
 
 ## Instalación
 ### Base de Datos
+
 Script|Descripción
 ------|-----------
 compile_schema.sql|Compila objetos inválidos del esquema actual.
