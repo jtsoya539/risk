@@ -5,7 +5,7 @@
  <TITLE>Type y_usuario</TITLE>
  <META name="object" content="TYPE">
  <META name="name" content="y_usuario">
- <META name="description" content="">
+ <META name="description" content="Agrupa datos de un usuario.">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,7 +14,19 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Type y_usuario</P>
+Agrupa datos de un usuario.<br>
 
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:57:43
+</TD></TR>
+</TABLE>
 <BR>
 </TD></TR></TABLE>
 <HR>
@@ -26,47 +38,47 @@ Attributes
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#ID_USUARIO">id_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Identificador del usuario
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#ALIAS">alias</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Alias del usuario (identificador para autenticacion)
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Nombre de la persona
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#APELLIDO">apellido</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Apellido de la persona
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#TIPO_PERSONA">tipo_persona</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Tipo de la persona
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#ESTADO">estado</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Estado del usuario
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#DIRECCION_CORREO">direccion_correo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Direccion de correo electronico principal del usuario
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#NUMERO_TELEFONO">numero_telefono</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Numero de telefono principal del usuario
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#ROLES">roles</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Roles del usuario
 </TD></TR>
 </TABLE>
 <BR>
@@ -78,12 +90,12 @@ Program units
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#Y_USUARIO">y_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Constructor del objeto sin par&#225;metros.
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el objeto serializado en formato JSON.
 </TD></TR>
 </TABLE>
 <BR>
@@ -93,48 +105,78 @@ Program units
 id_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
-id_usuario       NUMBER(10)
+id_usuario NUMBER(10)
 </PRE>
+<P CLASS="DESC_TEXT">
+Identificador del usuario<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="ALIAS"></A>
 <P CLASS="TYPE_TITLE">
 alias
 </P>
 <PRE CLASS="DECL_TEXT">
-alias            VARCHAR2(300)
+alias VARCHAR2(300)
 </PRE>
+<P CLASS="DESC_TEXT">
+Alias del usuario (identificador para autenticacion)<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="NOMBRE"></A>
 <P CLASS="TYPE_TITLE">
 nombre
 </P>
 <PRE CLASS="DECL_TEXT">
-nombre           VARCHAR2(100)
+nombre VARCHAR2(100)
 </PRE>
+<P CLASS="DESC_TEXT">
+Nombre de la persona<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="APELLIDO"></A>
 <P CLASS="TYPE_TITLE">
 apellido
 </P>
 <PRE CLASS="DECL_TEXT">
-apellido         VARCHAR2(100)
+apellido VARCHAR2(100)
 </PRE>
+<P CLASS="DESC_TEXT">
+Apellido de la persona<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="TIPO_PERSONA"></A>
 <P CLASS="TYPE_TITLE">
 tipo_persona
 </P>
 <PRE CLASS="DECL_TEXT">
-tipo_persona     CHAR(1)
+tipo_persona CHAR(1)
 </PRE>
+<P CLASS="DESC_TEXT">
+Tipo de la persona<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="ESTADO"></A>
 <P CLASS="TYPE_TITLE">
 estado
 </P>
 <PRE CLASS="DECL_TEXT">
-estado           CHAR(1)
+estado CHAR(1)
 </PRE>
+<P CLASS="DESC_TEXT">
+Estado del usuario<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="DIRECCION_CORREO"></A>
 <P CLASS="TYPE_TITLE">
@@ -143,22 +185,37 @@ direccion_correo
 <PRE CLASS="DECL_TEXT">
 direccion_correo VARCHAR2(320)
 </PRE>
+<P CLASS="DESC_TEXT">
+Direccion de correo electronico principal del usuario<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="NUMERO_TELEFONO"></A>
 <P CLASS="TYPE_TITLE">
 numero_telefono
 </P>
 <PRE CLASS="DECL_TEXT">
-numero_telefono  VARCHAR2(160)
+numero_telefono VARCHAR2(160)
 </PRE>
+<P CLASS="DESC_TEXT">
+Numero de telefono principal del usuario<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="ROLES"></A>
 <P CLASS="TYPE_TITLE">
 roles
 </P>
 <PRE CLASS="DECL_TEXT">
-roles            y_roles
+roles y_roles
 </PRE>
+<P CLASS="DESC_TEXT">
+Roles del usuario<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="Y_USUARIO"></A>
 <P CLASS="TYPE_TITLE">
@@ -168,6 +225,35 @@ y_usuario
 FUNCTION y_usuario RETURN SELF AS RESULT
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Constructor del objeto sin par&#225;metros.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:08:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Objeto del tipo y_usuario.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="TO_JSON"></A>
 <P CLASS="TYPE_TITLE">
@@ -177,6 +263,35 @@ to_json
 FUNCTION to_json RETURN CLOB
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el objeto serializado en formato JSON.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 09:42:09<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+JSON con los atributos del objeto.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <P>&nbsp;</P>
 <P>&nbsp;</P>
 </BODY>
