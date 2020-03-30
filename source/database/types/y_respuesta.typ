@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE y_respuesta UNDER y_serializable
 (
 /**
-Agrupa datos de respuesta de un servicio o proceso.
+Agrupa datos de una respuesta de servicio o proceso.
 
 %author jtsoya539 30/3/2020 10:03:16
 */

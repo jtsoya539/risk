@@ -1,5 +1,11 @@
 CREATE OR REPLACE TYPE y_parametro UNDER y_serializable
 (
+/**
+Agrupa datos de un parámetro de servicio o proceso.
+
+%author jtsoya539 30/3/2020 10:03:16
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
@@ -24,10 +30,25 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-  nombre VARCHAR2(100), -- Nombre del parametro
-  valor  anydata, -- Valor del parametro
+/** Nombre del parametro */
+  nombre VARCHAR2(100),
+/** Valor del parametro */
+  valor anydata,
 
+/**
+Constructor del objeto sin parámetros.
+
+%author jtsoya539 30/3/2020 10:08:08
+%return Objeto del tipo y_parametro.
+*/
   CONSTRUCTOR FUNCTION y_parametro RETURN SELF AS RESULT,
+
+/**
+Retorna el objeto serializado en formato JSON.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return JSON con los atributos del objeto.
+*/
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /

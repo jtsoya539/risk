@@ -5,7 +5,7 @@
  <TITLE>Type y_rol</TITLE>
  <META name="object" content="TYPE">
  <META name="name" content="y_rol">
- <META name="description" content="">
+ <META name="description" content="Agrupa datos de un rol.">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,7 +14,19 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Type y_rol</P>
+Agrupa datos de un rol.<br>
 
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 11:13:53
+</TD></TR>
+</TABLE>
 <BR>
 </TD></TR></TABLE>
 <HR>
@@ -26,22 +38,22 @@ Attributes
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#ID_ROL">id_rol</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Identificador del rol
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Nombre del rol
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#ACTIVO">activo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+El rol esta activo? (S/N)
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#DETALLE">detalle</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Detalles adicionales del rol
 </TD></TR>
 </TABLE>
 <BR>
@@ -53,12 +65,12 @@ Program units
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#Y_ROL">y_rol</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Constructor del objeto sin par&#225;metros.
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el objeto serializado en formato JSON.
 </TD></TR>
 </TABLE>
 <BR>
@@ -68,24 +80,39 @@ Program units
 id_rol
 </P>
 <PRE CLASS="DECL_TEXT">
-id_rol  NUMBER(3)
+id_rol NUMBER(3)
 </PRE>
+<P CLASS="DESC_TEXT">
+Identificador del rol<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="NOMBRE"></A>
 <P CLASS="TYPE_TITLE">
 nombre
 </P>
 <PRE CLASS="DECL_TEXT">
-nombre  VARCHAR2(100)
+nombre VARCHAR2(100)
 </PRE>
+<P CLASS="DESC_TEXT">
+Nombre del rol<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="ACTIVO"></A>
 <P CLASS="TYPE_TITLE">
 activo
 </P>
 <PRE CLASS="DECL_TEXT">
-activo  CHAR(1)
+activo CHAR(1)
 </PRE>
+<P CLASS="DESC_TEXT">
+El rol esta activo? (S/N)<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="DETALLE"></A>
 <P CLASS="TYPE_TITLE">
@@ -94,6 +121,11 @@ detalle
 <PRE CLASS="DECL_TEXT">
 detalle VARCHAR2(2000)
 </PRE>
+<P CLASS="DESC_TEXT">
+Detalles adicionales del rol<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="Y_ROL"></A>
 <P CLASS="TYPE_TITLE">
@@ -103,6 +135,35 @@ y_rol
 FUNCTION y_rol RETURN SELF AS RESULT
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Constructor del objeto sin par&#225;metros.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:08:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Objeto del tipo y_rol.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="TO_JSON"></A>
 <P CLASS="TYPE_TITLE">
@@ -112,6 +173,35 @@ to_json
 FUNCTION to_json RETURN CLOB
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el objeto serializado en formato JSON.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 09:42:09<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+JSON con los atributos del objeto.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <P>&nbsp;</P>
 <P>&nbsp;</P>
 </BODY>

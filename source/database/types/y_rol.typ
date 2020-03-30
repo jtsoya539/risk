@@ -1,5 +1,11 @@
 CREATE OR REPLACE TYPE y_rol UNDER y_serializable
 (
+/**
+Agrupa datos de un rol.
+
+%author jtsoya539 30/3/2020 11:13:53
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
@@ -24,12 +30,29 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-  id_rol  NUMBER(3), -- Identificador del rol
-  nombre  VARCHAR2(100), -- Nombre del rol
-  activo  CHAR(1), -- El rol esta activo? (S/N)
-  detalle VARCHAR2(2000), -- Detalles adicionales del rol
+/** Identificador del rol */
+  id_rol NUMBER(3),
+/** Nombre del rol */
+  nombre VARCHAR2(100),
+/** El rol esta activo? (S/N) */
+  activo CHAR(1),
+/** Detalles adicionales del rol */
+  detalle VARCHAR2(2000),
 
+/**
+Constructor del objeto sin parámetros.
+
+%author jtsoya539 30/3/2020 10:08:08
+%return Objeto del tipo y_rol.
+*/
   CONSTRUCTOR FUNCTION y_rol RETURN SELF AS RESULT,
+
+/**
+Retorna el objeto serializado en formato JSON.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return JSON con los atributos del objeto.
+*/
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /

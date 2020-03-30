@@ -1,4 +1,10 @@
 CREATE OR REPLACE TYPE y_roles IS TABLE OF y_rol
+/**
+Lista de roles.
+
+%author jtsoya539 30/3/2020 11:20:21
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539

@@ -5,7 +5,7 @@
  <TITLE>Type y_parametro</TITLE>
  <META name="object" content="TYPE">
  <META name="name" content="y_parametro">
- <META name="description" content="">
+ <META name="description" content="Agrupa datos de un par&#225;metro de servicio o proceso.">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,7 +14,19 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Type y_parametro</P>
+Agrupa datos de un par&#225;metro de servicio o proceso.<br>
 
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:03:16
+</TD></TR>
+</TABLE>
 <BR>
 </TD></TR></TABLE>
 <HR>
@@ -26,12 +38,12 @@ Attributes
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Nombre del parametro
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#VALOR">valor</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Valor del parametro
 </TD></TR>
 </TABLE>
 <BR>
@@ -43,12 +55,12 @@ Program units
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#Y_PARAMETRO">y_parametro</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Constructor del objeto sin par&#225;metros.
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el objeto serializado en formato JSON.
 </TD></TR>
 </TABLE>
 <BR>
@@ -60,14 +72,24 @@ nombre
 <PRE CLASS="DECL_TEXT">
 nombre VARCHAR2(100)
 </PRE>
+<P CLASS="DESC_TEXT">
+Nombre del parametro<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="VALOR"></A>
 <P CLASS="TYPE_TITLE">
 valor
 </P>
 <PRE CLASS="DECL_TEXT">
-valor  anydata
+valor anydata
 </PRE>
+<P CLASS="DESC_TEXT">
+Valor del parametro<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="Y_PARAMETRO"></A>
 <P CLASS="TYPE_TITLE">
@@ -77,6 +99,35 @@ y_parametro
 FUNCTION y_parametro RETURN SELF AS RESULT
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Constructor del objeto sin par&#225;metros.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:08:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Objeto del tipo y_parametro.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="TO_JSON"></A>
 <P CLASS="TYPE_TITLE">
@@ -86,6 +137,35 @@ to_json
 FUNCTION to_json RETURN CLOB
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el objeto serializado en formato JSON.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 09:42:09<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+JSON con los atributos del objeto.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <P>&nbsp;</P>
 <P>&nbsp;</P>
 </BODY>

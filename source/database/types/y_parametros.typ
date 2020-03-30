@@ -1,4 +1,10 @@
 CREATE OR REPLACE TYPE y_parametros IS TABLE OF y_parametro
+/**
+Lista de parámetros de servicio o proceso.
+
+%author jtsoya539 30/3/2020 11:21:37
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
