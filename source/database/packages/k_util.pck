@@ -74,6 +74,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_json_objeto(i_objeto IN anydata) RETURN CLOB;
 
+  FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
+
   FUNCTION f_base_datos RETURN VARCHAR2;
 
   FUNCTION f_terminal RETURN VARCHAR2;
@@ -241,6 +243,28 @@ END;'
       END IF;
     END IF;
     RETURN l_json;
+  END;
+
+  FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB IS
+    -- -----------------------------------------------------------------------------------
+    -- File Name    : https://oracle-base.com/dba/miscellaneous/base64encode.sql
+    -- Author       : Tim Hall
+    -- Description  : Encodes a BLOB into a Base64 CLOB.
+    -- Last Modified: 09/11/2011
+    -- -----------------------------------------------------------------------------------
+    l_clob CLOB;
+    l_step PLS_INTEGER := 12000; -- make sure you set a multiple of 3 not higher than 24573
+  BEGIN
+    IF i_blob IS NOT NULL AND dbms_lob.getlength(i_blob) > 0 THEN
+      FOR i IN 0 .. trunc((dbms_lob.getlength(i_blob) - 1) / l_step) LOOP
+        l_clob := l_clob ||
+                  utl_raw.cast_to_varchar2(utl_encode.base64_encode(dbms_lob.substr(i_blob,
+                                                                                    l_step,
+                                                                                    i *
+                                                                                    l_step + 1)));
+      END LOOP;
+    END IF;
+    RETURN l_clob;
   END;
 
   FUNCTION f_base_datos RETURN VARCHAR2 IS
