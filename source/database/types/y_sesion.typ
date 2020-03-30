@@ -1,5 +1,11 @@
 CREATE OR REPLACE TYPE y_sesion UNDER y_serializable
 (
+/**
+Agrupa datos de una sesión.
+
+%author jtsoya539 30/3/2020 10:54:26
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
@@ -24,13 +30,31 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-  id_sesion         NUMBER, -- Identificador de la sesion
-  estado            CHAR(1), -- Estado de la sesion
-  access_token      VARCHAR2(1000), -- Access Token de la sesion
-  refresh_token     VARCHAR2(1000), -- Refresh Token de la sesion
-  tiempo_expiracion NUMBER, -- Tiempo de expiración del Access Token en segundos
+/** Identificador de la sesion */
+  id_sesion NUMBER,
+/** Estado de la sesion */
+  estado CHAR(1),
+/** Access Token de la sesion */
+  access_token VARCHAR2(1000),
+/** Refresh Token de la sesion */
+  refresh_token VARCHAR2(1000),
+/** Tiempo de expiración del Access Token en segundos */
+  tiempo_expiracion NUMBER,
 
+/**
+Constructor del objeto sin parámetros.
+
+%author jtsoya539 30/3/2020 10:08:08
+%return Objeto del tipo y_sesion.
+*/
   CONSTRUCTOR FUNCTION y_sesion RETURN SELF AS RESULT,
+
+/**
+Retorna el objeto serializado en formato JSON.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return JSON con los atributos del objeto.
+*/
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /

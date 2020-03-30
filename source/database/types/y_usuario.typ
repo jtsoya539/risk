@@ -1,5 +1,11 @@
 CREATE OR REPLACE TYPE y_usuario UNDER y_serializable
 (
+/**
+Agrupa datos de un usuario.
+
+%author jtsoya539 30/3/2020 10:57:43
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
@@ -24,17 +30,39 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-  id_usuario       NUMBER(10), -- Identificador del usuario
-  alias            VARCHAR2(300), -- Alias del usuario (identificador para autenticacion)
-  nombre           VARCHAR2(100), -- Nombre de la persona
-  apellido         VARCHAR2(100), -- Apellido de la persona
-  tipo_persona     CHAR(1), -- Tipo de la persona
-  estado           CHAR(1), -- Estado del usuario
-  direccion_correo VARCHAR2(320), -- Direccion de correo electronico principal del usuario
-  numero_telefono  VARCHAR2(160), -- Numero de telefono principal del usuario
-  roles            y_roles, -- Roles del usuario
+/** Identificador del usuario */
+  id_usuario NUMBER(10),
+/** Alias del usuario (identificador para autenticacion) */
+  alias VARCHAR2(300),
+/** Nombre de la persona */
+  nombre VARCHAR2(100),
+/** Apellido de la persona */
+  apellido VARCHAR2(100),
+/** Tipo de la persona */
+  tipo_persona CHAR(1),
+/** Estado del usuario */
+  estado CHAR(1),
+/** Direccion de correo electronico principal del usuario */
+  direccion_correo VARCHAR2(320),
+/** Numero de telefono principal del usuario */
+  numero_telefono VARCHAR2(160),
+/** Roles del usuario */
+  roles y_roles,
 
+/**
+Constructor del objeto sin parámetros.
+
+%author jtsoya539 30/3/2020 10:08:08
+%return Objeto del tipo y_usuario.
+*/
   CONSTRUCTOR FUNCTION y_usuario RETURN SELF AS RESULT,
+
+/**
+Retorna el objeto serializado en formato JSON.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return JSON con los atributos del objeto.
+*/
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /

@@ -32,16 +32,12 @@ SOFTWARE.
 
 /** Código de la respuesta. */
   codigo VARCHAR2(10),
-
 /** Mensaje de la respuesta. */
   mensaje VARCHAR2(4000),
-
 /** Mensaje de Base de Datos. */
   mensaje_bd VARCHAR2(4000),
-
 /** Lugar en el proceso. */
   lugar VARCHAR2(1000),
-
 /** Datos adicionales. */
   datos anydata,
 
