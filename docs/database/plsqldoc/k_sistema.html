@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_sistema</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_sistema">
+ <META name="description" content="Agrupa operaciones relacionadas con los parametros de sistema">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_sistema</P>
+Agrupa operaciones relacionadas con los parametros de sistema<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:58:36
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ES_PRODUCCION">f_es_produccion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_FECHA_ACTUAL">f_fecha_actual</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO">f_valor_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el valor de un parametro de sistema, si no existe retorna null
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DEFINIR_PARAMETRO">p_definir_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Define el valor de un parametro de sistema
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_LIMPIAR_PARAMETROS">p_limpiar_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Define el valor de todos los parametros de sistema a null
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ELIMINAR_PARAMETROS">p_eliminar_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Elimina todos los parametros de sistema definidos
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_IMPRIMIR_PARAMETROS">p_imprimir_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Imprime todos los parametros de sistema definidos
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_ES_PRODUCCION"></A>
+<P CLASS="TYPE_TITLE">
+f_es_produccion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_es_produccion RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_FECHA_ACTUAL"></A>
+<P CLASS="TYPE_TITLE">
+f_fecha_actual
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_fecha_actual RETURN DATE
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor de un parametro de sistema, si no existe retorna null<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:59:44<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del parametro de sistema<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Raises"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Raises
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+<exception>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del parametro de sistema<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_DEFINIR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+p_definir_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
+                              i_valor     IN VARCHAR2)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de un parametro de sistema<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:00:28<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del parametro de sistema<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_valor&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del parametro de sistema<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Raises"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Raises
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+<exception>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_LIMPIAR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+p_limpiar_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_limpiar_parametros
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de todos los parametros de sistema a null<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:01:24<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Raises"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Raises
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+<exception>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_ELIMINAR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+p_eliminar_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_eliminar_parametros
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Elimina todos los parametros de sistema definidos<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:02:14<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Raises"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Raises
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+<exception>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_IMPRIMIR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+p_imprimir_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_imprimir_parametros
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Imprime todos los parametros de sistema definidos<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:02:58<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Raises"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Raises
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+<exception>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

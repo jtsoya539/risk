@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_servicio</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_servicio">
+ <META name="description" content="Agrupa operaciones relacionadas con los Servicios Web del sistema">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_servicio</P>
+Agrupa operaciones relacionadas con los Servicios Web del sistema<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:42:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#API_PROCESAR_SERVICIO">api_procesar_servicio</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#GEN_VALOR_PARAMETRO">gen_valor_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#GEN_SIGNIFICADO_CODIGO">gen_significado_codigo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_REGISTRAR_USUARIO">aut_registrar_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_REGISTRAR_CLAVE">aut_registrar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_CAMBIAR_CLAVE">aut_cambiar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_VALIDAR_CREDENCIALES">aut_validar_credenciales</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_VALIDAR_CLAVE_APLICACION">aut_validar_clave_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_VALIDAR_SESION">aut_validar_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_INICIAR_SESION">aut_iniciar_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_REFRESCAR_SESION">aut_refrescar_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_CAMBIAR_ESTADO_SESION">aut_cambiar_estado_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#AUT_DATOS_USUARIO">aut_datos_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="API_PROCESAR_SERVICIO"></A>
+<P CLASS="TYPE_TITLE">
+api_procesar_servicio
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION api_procesar_servicio(i_id_servicio IN NUMBER,
+                               i_parametros  IN CLOB) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="GEN_VALOR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+gen_valor_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION gen_valor_parametro(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="GEN_SIGNIFICADO_CODIGO"></A>
+<P CLASS="TYPE_TITLE">
+gen_significado_codigo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION gen_significado_codigo(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_REGISTRAR_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+aut_registrar_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_registrar_usuario(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_REGISTRAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+aut_registrar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_registrar_clave(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_CAMBIAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+aut_cambiar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_VALIDAR_CREDENCIALES"></A>
+<P CLASS="TYPE_TITLE">
+aut_validar_credenciales
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_validar_credenciales(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_VALIDAR_CLAVE_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+aut_validar_clave_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_validar_clave_aplicacion(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_VALIDAR_SESION"></A>
+<P CLASS="TYPE_TITLE">
+aut_validar_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_validar_sesion(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_INICIAR_SESION"></A>
+<P CLASS="TYPE_TITLE">
+aut_iniciar_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_iniciar_sesion(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_REFRESCAR_SESION"></A>
+<P CLASS="TYPE_TITLE">
+aut_refrescar_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_refrescar_sesion(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_CAMBIAR_ESTADO_SESION"></A>
+<P CLASS="TYPE_TITLE">
+aut_cambiar_estado_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_cambiar_estado_sesion(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="AUT_DATOS_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+aut_datos_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION aut_datos_usuario(i_parametros IN y_parametros) RETURN y_respuesta
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_autenticacion</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_autenticacion">
+ <META name="description" content="Agrupa operaciones relacionadas con la autenticacion de usuarios">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_autenticacion</P>
+Agrupa operaciones relacionadas con la autenticacion de usuarios<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:16:59
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_REGISTRAR_USUARIO">p_registrar_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_REGISTRAR_CLAVE">p_registrar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_CAMBIAR_CLAVE">p_cambiar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_CREDENCIALES">f_validar_credenciales</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_VALIDAR_CREDENCIALES">p_validar_credenciales</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_GENERAR_CLAVE_APLICACION">f_generar_clave_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_CLAVE_APLICACION">f_validar_clave_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_VALIDAR_CLAVE_APLICACION">p_validar_clave_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_INICIAR_SESION">f_iniciar_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_REFRESCAR_SESION">f_refrescar_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_CAMBIAR_ESTADO_SESION">p_cambiar_estado_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SESION_ACTIVA">f_sesion_activa</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_SESION_ACTIVA">p_sesion_activa</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_VALIDAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+p_validar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
+                          i_clave      IN VARCHAR2,
+                          i_tipo_clave IN CHAR DEFAULT 'A')
+
+</PRE>
+<HR>
+<A NAME="P_REGISTRAR_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+p_registrar_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
+                              i_clave            IN VARCHAR2,
+                              i_nombre           IN VARCHAR2,
+                              i_apellido         IN VARCHAR2,
+                              i_direccion_correo IN VARCHAR2,
+                              i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_REGISTRAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+p_registrar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
+                            i_clave      IN VARCHAR2,
+                            i_tipo_clave IN CHAR DEFAULT 'A')
+
+</PRE>
+<HR>
+<A NAME="P_CAMBIAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+p_cambiar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_cambiar_clave(i_usuario       IN VARCHAR2,
+                          i_clave_antigua IN VARCHAR2,
+                          i_clave_nueva   IN VARCHAR2,
+                          i_tipo_clave    IN CHAR DEFAULT 'A')
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_CREDENCIALES"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_credenciales
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
+                                i_clave      IN VARCHAR2,
+                                i_tipo_clave IN CHAR DEFAULT 'A')
+  RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="P_VALIDAR_CREDENCIALES"></A>
+<P CLASS="TYPE_TITLE">
+p_validar_credenciales
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
+                                 i_clave      IN VARCHAR2,
+                                 i_tipo_clave IN CHAR DEFAULT 'A')
+
+</PRE>
+<HR>
+<A NAME="F_GENERAR_CLAVE_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+f_generar_clave_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_generar_clave_aplicacion RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_CLAVE_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_clave_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
+  RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="P_VALIDAR_CLAVE_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+p_validar_clave_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="F_INICIAR_SESION"></A>
+<P CLASS="TYPE_TITLE">
+f_iniciar_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_iniciar_sesion(i_usuario          IN VARCHAR2,
+                          i_clave_aplicacion IN VARCHAR2,
+                          i_access_token     IN VARCHAR2,
+                          i_refresh_token    IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_REFRESCAR_SESION"></A>
+<P CLASS="TYPE_TITLE">
+f_refrescar_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_refrescar_sesion(i_access_token_antiguo  IN VARCHAR2,
+                            i_refresh_token_antiguo IN VARCHAR2,
+                            i_access_token_nuevo    IN VARCHAR2,
+                            i_refresh_token_nuevo   IN VARCHAR2)
+  RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="P_CAMBIAR_ESTADO_SESION"></A>
+<P CLASS="TYPE_TITLE">
+p_cambiar_estado_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_cambiar_estado_sesion(i_access_token IN VARCHAR2,
+                                  i_estado       IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="F_SESION_ACTIVA"></A>
+<P CLASS="TYPE_TITLE">
+f_sesion_activa
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_sesion_activa(i_access_token IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="P_SESION_ACTIVA"></A>
+<P CLASS="TYPE_TITLE">
+p_sesion_activa
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2)
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_usuario</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_usuario">
+ <META name="description" content="">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_usuario</P>
+
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_USUARIO">id_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ALIAS">alias</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#APELLIDO">apellido</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TIPO_PERSONA">tipo_persona</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ESTADO">estado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#DIRECCION_CORREO">direccion_correo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NUMERO_TELEFONO">numero_telefono</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ROLES">roles</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_USUARIO">y_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="ID_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+id_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+id_usuario       NUMBER(10)
+</PRE>
+<HR>
+<A NAME="ALIAS"></A>
+<P CLASS="TYPE_TITLE">
+alias
+</P>
+<PRE CLASS="DECL_TEXT">
+alias            VARCHAR2(300)
+</PRE>
+<HR>
+<A NAME="NOMBRE"></A>
+<P CLASS="TYPE_TITLE">
+nombre
+</P>
+<PRE CLASS="DECL_TEXT">
+nombre           VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="APELLIDO"></A>
+<P CLASS="TYPE_TITLE">
+apellido
+</P>
+<PRE CLASS="DECL_TEXT">
+apellido         VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="TIPO_PERSONA"></A>
+<P CLASS="TYPE_TITLE">
+tipo_persona
+</P>
+<PRE CLASS="DECL_TEXT">
+tipo_persona     CHAR(1)
+</PRE>
+<HR>
+<A NAME="ESTADO"></A>
+<P CLASS="TYPE_TITLE">
+estado
+</P>
+<PRE CLASS="DECL_TEXT">
+estado           CHAR(1)
+</PRE>
+<HR>
+<A NAME="DIRECCION_CORREO"></A>
+<P CLASS="TYPE_TITLE">
+direccion_correo
+</P>
+<PRE CLASS="DECL_TEXT">
+direccion_correo VARCHAR2(320)
+</PRE>
+<HR>
+<A NAME="NUMERO_TELEFONO"></A>
+<P CLASS="TYPE_TITLE">
+numero_telefono
+</P>
+<PRE CLASS="DECL_TEXT">
+numero_telefono  VARCHAR2(160)
+</PRE>
+<HR>
+<A NAME="ROLES"></A>
+<P CLASS="TYPE_TITLE">
+roles
+</P>
+<PRE CLASS="DECL_TEXT">
+roles            y_roles
+</PRE>
+<HR>
+<A NAME="Y_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+y_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_usuario RETURN SELF AS RESULT
+
+</PRE>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

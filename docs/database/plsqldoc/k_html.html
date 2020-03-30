@@ -1,0 +1,783 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_html</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_html">
+ <META name="description" content="Agrupa operaciones relacionadas con la generacion de HTML">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_html</P>
+Agrupa operaciones relacionadas con la generacion de HTML<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:36:54
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DOCUMENTO">f_documento</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ESCAPAR_TEXTO">f_escapar_texto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_INICIALIZAR">p_inicializar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_REEMPLAZAR">p_reemplazar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ESCAPAR">p_escapar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR">p_agregar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR_LINEA">p_agregar_linea</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR_CSS">p_agregar_css</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR_JS">p_agregar_js</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR_COMENTARIO">p_agregar_comentario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_A">f_a</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_EM">f_em</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_STRONG">f_strong</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_B">f_b</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_I">f_i</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_U">f_u</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_BR">f_br</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_BR">p_br</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HR">p_hr</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_TITLE">p_title</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_H1">p_h1</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_H2">p_h2</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_H3">p_h3</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_H4">p_h4</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_H5">p_h5</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_H6">p_h6</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_P">p_p</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_A">p_a</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_SPAN">p_span</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_SCRIPT">p_script</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HTML_ABRIR">p_html_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HTML_CERRAR">p_html_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HEAD_ABRIR">p_head_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HEAD_CERRAR">p_head_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_BODY_ABRIR">p_body_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_BODY_CERRAR">p_body_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_MAIN_ABRIR">p_main_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_MAIN_CERRAR">p_main_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HEADER_ABRIR">p_header_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_HEADER_CERRAR">p_header_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_FOOTER_ABRIR">p_footer_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_FOOTER_CERRAR">p_footer_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ARTICLE_ABRIR">p_article_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ARTICLE_CERRAR">p_article_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_SECTION_ABRIR">p_section_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_SECTION_CERRAR">p_section_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_NAV_ABRIR">p_nav_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_NAV_CERRAR">p_nav_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ASIDE_ABRIR">p_aside_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ASIDE_CERRAR">p_aside_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DIV_ABRIR">p_div_abrir</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DIV_CERRAR">p_div_cerrar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_DOCUMENTO"></A>
+<P CLASS="TYPE_TITLE">
+f_documento
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_documento RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_ESCAPAR_TEXTO"></A>
+<P CLASS="TYPE_TITLE">
+f_escapar_texto
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_escapar_texto(i_texto IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="P_INICIALIZAR"></A>
+<P CLASS="TYPE_TITLE">
+p_inicializar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_inicializar(i_contenido IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_REEMPLAZAR"></A>
+<P CLASS="TYPE_TITLE">
+p_reemplazar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_reemplazar(i_de IN VARCHAR2,
+                       i_a  IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_ESCAPAR"></A>
+<P CLASS="TYPE_TITLE">
+p_escapar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_escapar
+
+</PRE>
+<HR>
+<A NAME="P_AGREGAR"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_AGREGAR_LINEA"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar_linea
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar_linea(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_AGREGAR_CSS"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar_css
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar_css(i_href IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_AGREGAR_JS"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar_js
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar_js(i_src IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_AGREGAR_COMENTARIO"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar_comentario
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar_comentario(i_comentario IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="F_A"></A>
+<P CLASS="TYPE_TITLE">
+f_a
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_a(i_contenido IN VARCHAR2,
+             i_href      IN VARCHAR2,
+             i_target    IN VARCHAR2 DEFAULT NULL,
+             i_title     IN VARCHAR2 DEFAULT NULL,
+             i_download  IN VARCHAR2 DEFAULT NULL) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_EM"></A>
+<P CLASS="TYPE_TITLE">
+f_em
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_em(i_contenido IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_STRONG"></A>
+<P CLASS="TYPE_TITLE">
+f_strong
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_strong(i_contenido IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_B"></A>
+<P CLASS="TYPE_TITLE">
+f_b
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_b(i_contenido IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_I"></A>
+<P CLASS="TYPE_TITLE">
+f_i
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_i(i_contenido IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_U"></A>
+<P CLASS="TYPE_TITLE">
+f_u
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_u(i_contenido IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_BR"></A>
+<P CLASS="TYPE_TITLE">
+f_br
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_br RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="P_BR"></A>
+<P CLASS="TYPE_TITLE">
+p_br
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_br
+
+</PRE>
+<HR>
+<A NAME="P_HR"></A>
+<P CLASS="TYPE_TITLE">
+p_hr
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_hr
+
+</PRE>
+<HR>
+<A NAME="P_TITLE"></A>
+<P CLASS="TYPE_TITLE">
+p_title
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_title(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_H1"></A>
+<P CLASS="TYPE_TITLE">
+p_h1
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_h1(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_H2"></A>
+<P CLASS="TYPE_TITLE">
+p_h2
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_h2(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_H3"></A>
+<P CLASS="TYPE_TITLE">
+p_h3
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_h3(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_H4"></A>
+<P CLASS="TYPE_TITLE">
+p_h4
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_h4(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_H5"></A>
+<P CLASS="TYPE_TITLE">
+p_h5
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_h5(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_H6"></A>
+<P CLASS="TYPE_TITLE">
+p_h6
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_h6(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_P"></A>
+<P CLASS="TYPE_TITLE">
+p_p
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_p(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_A"></A>
+<P CLASS="TYPE_TITLE">
+p_a
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_a(i_contenido IN VARCHAR2,
+              i_href      IN VARCHAR2,
+              i_target    IN VARCHAR2 DEFAULT NULL,
+              i_title     IN VARCHAR2 DEFAULT NULL,
+              i_download  IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_SPAN"></A>
+<P CLASS="TYPE_TITLE">
+p_span
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_span(i_contenido IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_SCRIPT"></A>
+<P CLASS="TYPE_TITLE">
+p_script
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_script(i_contenido  IN VARCHAR2,
+                   i_comentario IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_HTML_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_html_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_html_abrir(i_lang IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_HTML_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_html_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_html_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_HEAD_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_head_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_head_abrir(i_title       IN VARCHAR2 DEFAULT NULL,
+                       i_author      IN VARCHAR2 DEFAULT NULL,
+                       i_description IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_HEAD_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_head_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_head_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_BODY_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_body_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_body_abrir
+
+</PRE>
+<HR>
+<A NAME="P_BODY_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_body_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_body_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_MAIN_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_main_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_main_abrir
+
+</PRE>
+<HR>
+<A NAME="P_MAIN_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_main_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_main_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_HEADER_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_header_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_header_abrir
+
+</PRE>
+<HR>
+<A NAME="P_HEADER_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_header_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_header_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_FOOTER_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_footer_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_footer_abrir
+
+</PRE>
+<HR>
+<A NAME="P_FOOTER_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_footer_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_footer_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_ARTICLE_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_article_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_article_abrir
+
+</PRE>
+<HR>
+<A NAME="P_ARTICLE_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_article_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_article_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_SECTION_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_section_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_section_abrir
+
+</PRE>
+<HR>
+<A NAME="P_SECTION_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_section_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_section_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_NAV_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_nav_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_nav_abrir
+
+</PRE>
+<HR>
+<A NAME="P_NAV_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_nav_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_nav_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_ASIDE_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_aside_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_aside_abrir
+
+</PRE>
+<HR>
+<A NAME="P_ASIDE_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_aside_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_aside_cerrar
+
+</PRE>
+<HR>
+<A NAME="P_DIV_ABRIR"></A>
+<P CLASS="TYPE_TITLE">
+p_div_abrir
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_div_abrir
+
+</PRE>
+<HR>
+<A NAME="P_DIV_CERRAR"></A>
+<P CLASS="TYPE_TITLE">
+p_div_cerrar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_div_cerrar
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

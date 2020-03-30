@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_mensajeria</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_mensajeria">
+ <META name="description" content="Agrupa operaciones relacionadas con el envio de mensajes a los usuarios">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_mensajeria</P>
+Agrupa operaciones relacionadas con el envio de mensajes a los usuarios<br>
+&nbsp;<br>
+El envio de mensajes se puede realizar a traves de: <ul>
+<li>Correo electronico (E-mail)</li>
+<li>Mensaje de texto (SMS)</li>
+</ul>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:38:22
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_DIRECCION_CORREO">f_validar_direccion_correo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_NUMERO_TELEFONO">f_validar_numero_telefono</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DIRECCION_CORREO_USUARIO">f_direccion_correo_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_NUMERO_TELEFONO_USUARIO">f_numero_telefono_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_VALIDAR_DIRECCION_CORREO"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_direccion_correo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
+  RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_NUMERO_TELEFONO"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_numero_telefono
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_numero_telefono(i_numero_telefono VARCHAR2)
+  RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_DIRECCION_CORREO_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_direccion_correo_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_direccion_correo_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_NUMERO_TELEFONO_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_numero_telefono_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_auditoria</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_auditoria">
+ <META name="description" content="Agrupa operaciones relacionadas con la auditoria de tablas">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_auditoria</P>
+Agrupa operaciones relacionadas con la auditoria de tablas<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:14:30
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GENERAR_CAMPOS_AUDITORIA">p_generar_campos_auditoria</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Genera campos de auditoria para una tabla
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GENERAR_TRIGGER_AUDITORIA">p_generar_trigger_auditoria</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Genera trigger de auditoria para una tabla
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_GENERAR_CAMPOS_AUDITORIA"></A>
+<P CLASS="TYPE_TITLE">
+p_generar_campos_auditoria
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_generar_campos_auditoria(i_tabla IN VARCHAR2)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Genera campos de auditoria para una tabla<br>
+
+<BR>
+</P>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_tabla&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tabla<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_GENERAR_TRIGGER_AUDITORIA"></A>
+<P CLASS="TYPE_TITLE">
+p_generar_trigger_auditoria
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_generar_trigger_auditoria(i_tabla   IN VARCHAR2,
+                                      i_trigger IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Genera trigger de auditoria para una tabla<br>
+
+<BR>
+</P>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_tabla&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tabla<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_trigger&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Trigger<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -1,0 +1,355 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_util</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_util">
+ <META name="description" content="Agrupa herramientas para facilitar el desarrollo">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_util</P>
+Agrupa herramientas para facilitar el desarrollo<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:05:34
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GENERAR_TRIGGER_SECUENCIA">p_generar_trigger_secuencia</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Genera trigger de secuencia para un campo de una tabla
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_POSICION">f_valor_posicion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_REEMPLAZAR_ACENTOS">f_reemplazar_acentos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SIGNIFICADO_CODIGO">f_significado_codigo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el significado de un codigo dentro de un dominio
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO">f_valor_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_JSON_OBJETO">f_json_objeto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_BASE_DATOS">f_base_datos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_TERMINAL">f_terminal</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_HOST">f_host</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DIRECCION_IP">f_direccion_ip</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ESQUEMA_ACTUAL">f_esquema_actual</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_GENERAR_TRIGGER_SECUENCIA"></A>
+<P CLASS="TYPE_TITLE">
+p_generar_trigger_secuencia
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
+                                      i_campo   IN VARCHAR2,
+                                      i_trigger IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Genera trigger de secuencia para un campo de una tabla<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:06:21<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_tabla&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tabla<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_campo&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_trigger&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Trigger<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_VALOR_POSICION"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_posicion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,
+                          i_posicion  IN NUMBER,
+                          i_separador IN VARCHAR2 DEFAULT '~')
+  RETURN VARCHAR2
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:07:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_cadena&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Cadena<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_posicion&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Posicion dentro de la cadena<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_separador&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Caracter separador. Por defecto '~'<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor que se encuenta en la posicion indicada<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_REEMPLAZAR_ACENTOS"></A>
+<P CLASS="TYPE_TITLE">
+f_reemplazar_acentos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_SIGNIFICADO_CODIGO"></A>
+<P CLASS="TYPE_TITLE">
+f_significado_codigo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
+                              i_codigo  IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el significado de un codigo dentro de un dominio<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:08:39<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_dominio&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Dominio<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_codigo&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Codigo<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Significado<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_VALOR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_JSON_OBJETO"></A>
+<P CLASS="TYPE_TITLE">
+f_json_objeto
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_json_objeto(i_objeto IN anydata) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_BASE_DATOS"></A>
+<P CLASS="TYPE_TITLE">
+f_base_datos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_base_datos RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_TERMINAL"></A>
+<P CLASS="TYPE_TITLE">
+f_terminal
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_terminal RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_HOST"></A>
+<P CLASS="TYPE_TITLE">
+f_host
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_host RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_DIRECCION_IP"></A>
+<P CLASS="TYPE_TITLE">
+f_direccion_ip
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_direccion_ip RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_ESQUEMA_ACTUAL"></A>
+<P CLASS="TYPE_TITLE">
+f_esquema_actual
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_esquema_actual RETURN VARCHAR2
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_error</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_error">
+ <META name="description" content="Agrupa operaciones relacionadas con los errores del sistema">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_error</P>
+Agrupa operaciones relacionadas con los errores del sistema<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:22:16
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_TIPO_EXCEPCION">f_tipo_excepcion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_MENSAJE_EXCEPCION">f_mensaje_excepcion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el mensaje de una excepcion de Oracle
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_MENSAJE_ERROR">f_mensaje_error</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ORACLE_PREDEFINED_ERROR">c_oracle_predefined_error</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_USER_DEFINED_ERROR">c_user_defined_error</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_ORACLE_PREDEFINED_ERROR"></A>
+<P CLASS="TYPE_TITLE">
+c_oracle_predefined_error
+</P>
+<PRE CLASS="DECL_TEXT">
+c_oracle_predefined_error CONSTANT VARCHAR2(3) := 'OPE';
+</PRE>
+<HR>
+<A NAME="C_USER_DEFINED_ERROR"></A>
+<P CLASS="TYPE_TITLE">
+c_user_defined_error
+</P>
+<PRE CLASS="DECL_TEXT">
+c_user_defined_error      CONSTANT VARCHAR2(3) := 'UDE';
+</PRE>
+<HR>
+<A NAME="F_TIPO_EXCEPCION"></A>
+<P CLASS="TYPE_TITLE">
+f_tipo_excepcion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_MENSAJE_EXCEPCION"></A>
+<P CLASS="TYPE_TITLE">
+f_mensaje_excepcion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2,
+                             i_sqlcode IN NUMBER DEFAULT NULL)
+  RETURN VARCHAR2
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el mensaje de una excepcion de Oracle<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:23:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_sqlerrm&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Mensaje de excepcion<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_sqlcode&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Codigo de excepcion<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Mensaje de error<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_MENSAJE_ERROR"></A>
+<P CLASS="TYPE_TITLE">
+f_mensaje_error
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_mensaje_error(i_id_error IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

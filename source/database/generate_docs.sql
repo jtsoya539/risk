@@ -58,11 +58,42 @@ prompt
 prompt Generando docs de tablas...
 prompt -----------------------------------
 prompt
+plugin plsqldoc generate t_aplicaciones;
+plugin plsqldoc generate t_ciudades;
+plugin plsqldoc generate t_correo_adjuntos;
+plugin plsqldoc generate t_correos;
+plugin plsqldoc generate t_errores;
+plugin plsqldoc generate t_mensajes;
+plugin plsqldoc generate t_paises;
+plugin plsqldoc generate t_parametros;
+plugin plsqldoc generate t_permisos;
+plugin plsqldoc generate t_personas;
+plugin plsqldoc generate t_roles;
+plugin plsqldoc generate t_rol_parametros;
+plugin plsqldoc generate t_rol_permisos;
+plugin plsqldoc generate t_rol_usuarios;
+plugin plsqldoc generate t_servicio_logs;
+plugin plsqldoc generate t_servicio_parametros;
+plugin plsqldoc generate t_servicios;
+plugin plsqldoc generate t_sesiones;
+plugin plsqldoc generate t_significados;
+plugin plsqldoc generate t_sistemas;
+plugin plsqldoc generate t_usuario_claves;
+plugin plsqldoc generate t_usuarios;
 
 prompt
 prompt Generando docs de types...
 prompt -----------------------------------
 prompt
+plugin plsqldoc generate y_dato;
+plugin plsqldoc generate y_parametro;
+plugin plsqldoc generate y_parametros;
+plugin plsqldoc generate y_respuesta;
+plugin plsqldoc generate y_rol;
+plugin plsqldoc generate y_roles;
+plugin plsqldoc generate y_serializable;
+plugin plsqldoc generate y_sesion;
+plugin plsqldoc generate y_usuario;
 
 prompt
 prompt Generando docs de paquetes...
