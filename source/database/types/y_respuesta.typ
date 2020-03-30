@@ -1,5 +1,11 @@
 CREATE OR REPLACE TYPE y_respuesta UNDER y_serializable
 (
+/**
+Agrupa datos de respuesta de un servicio o proceso.
+
+%author jtsoya539 30/3/2020 10:03:16
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
@@ -24,17 +30,35 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
--- Agrupa datos de respuesta de un proceso
---
--- %author jmeza 9/3/2019 16:28:00
+/** Código de la respuesta. */
+  codigo VARCHAR2(10),
 
-  codigo     VARCHAR2(10), -- Codigo de la respuesta
-  mensaje    VARCHAR2(4000), -- Mensaje de la respuesta
-  mensaje_bd VARCHAR2(4000), -- Mensaje de Base de Datos
-  lugar      VARCHAR2(1000), -- Lugar en el proceso
-  datos      anydata, -- Datos adicionales
+/** Mensaje de la respuesta. */
+  mensaje VARCHAR2(4000),
 
+/** Mensaje de Base de Datos. */
+  mensaje_bd VARCHAR2(4000),
+
+/** Lugar en el proceso. */
+  lugar VARCHAR2(1000),
+
+/** Datos adicionales. */
+  datos anydata,
+
+/**
+Constructor del objeto sin parámetros.
+
+%author jtsoya539 30/3/2020 10:08:08
+%return Objeto del tipo y_respuesta.
+*/
   CONSTRUCTOR FUNCTION y_respuesta RETURN SELF AS RESULT,
+
+/**
+Retorna el objeto serializado en formato JSON.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return JSON con los atributos del objeto.
+*/
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /

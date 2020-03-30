@@ -1,5 +1,11 @@
 CREATE OR REPLACE TYPE y_dato UNDER y_serializable
 (
+/**
+Contiene un dato en formato de texto.
+
+%author jtsoya539 30/3/2020 10:35:55
+*/
+
 /*
 --------------------------------- MIT License ---------------------------------
 Copyright (c) 2019 jtsoya539
@@ -24,13 +30,23 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
--- Contiene un dato simple en formato de texto
---
--- %author jmeza 9/3/2019 16:28:00
-
+/** Dato en formato de texto. */
   dato CLOB,
 
+/**
+Constructor del objeto sin parámetros.
+
+%author jtsoya539 30/3/2020 10:08:08
+%return Objeto del tipo y_dato.
+*/
   CONSTRUCTOR FUNCTION y_dato RETURN SELF AS RESULT,
+
+/**
+Retorna el objeto serializado en formato JSON.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return JSON con los atributos del objeto.
+*/
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /
