@@ -36,6 +36,16 @@ Attributes
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CONTENIDO">contenido</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Contenido del archivo
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TAMANO">tamano</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tama&#241;o del archivo en bytes
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Nombre del archivo
@@ -44,11 +54,6 @@ Nombre del archivo
 <A HREF="#EXTENSION">extension</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Extensi&#243;n del archivo
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#CONTENIDO">contenido</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Contenido del archivo
 </TD></TR>
 </TABLE>
 <BR>
@@ -69,6 +74,32 @@ Retorna el objeto serializado en formato JSON.
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="CONTENIDO"></A>
+<P CLASS="TYPE_TITLE">
+contenido
+</P>
+<PRE CLASS="DECL_TEXT">
+contenido BLOB
+</PRE>
+<P CLASS="DESC_TEXT">
+Contenido del archivo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="TAMANO"></A>
+<P CLASS="TYPE_TITLE">
+tamano
+</P>
+<PRE CLASS="DECL_TEXT">
+tamano NUMBER
+</PRE>
+<P CLASS="DESC_TEXT">
+Tama&#241;o del archivo en bytes<br>
+
+<BR>
+</P>
 <HR>
 <A NAME="NOMBRE"></A>
 <P CLASS="TYPE_TITLE">
@@ -92,19 +123,6 @@ extension VARCHAR2(100)
 </PRE>
 <P CLASS="DESC_TEXT">
 Extensi&#243;n del archivo<br>
-
-<BR>
-</P>
-<HR>
-<A NAME="CONTENIDO"></A>
-<P CLASS="TYPE_TITLE">
-contenido
-</P>
-<PRE CLASS="DECL_TEXT">
-contenido BLOB
-</PRE>
-<P CLASS="DESC_TEXT">
-Contenido del archivo<br>
 
 <BR>
 </P>
@@ -157,7 +175,7 @@ FUNCTION to_json RETURN CLOB
 </PRE>
 <P CLASS="DESC_TEXT">
 Retorna el objeto serializado en formato JSON.<br>
-El contenido del archivo se codifica en formato Base64.<br>
+El contenido del archivo se comprime con gzip y se codifica en formato Base64.<br>
 
 <BR>
 </P>

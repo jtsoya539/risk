@@ -30,12 +30,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+/** Contenido del archivo */
+  contenido BLOB,
+/** Tamaño del archivo en bytes */
+  tamano NUMBER,
 /** Nombre del archivo */
   nombre VARCHAR2(4000),
 /** Extensión del archivo */
   extension VARCHAR2(100),
-/** Contenido del archivo */
-  contenido BLOB,
 
 /**
 Constructor del objeto sin parámetros.
@@ -47,7 +49,7 @@ Constructor del objeto sin parámetros.
 
 /**
 Retorna el objeto serializado en formato JSON.
-El contenido del archivo se codifica en formato Base64.
+El contenido del archivo se comprime con gzip y se codifica en formato Base64.
   
 %author jtsoya539 30/3/2020 09:42:09
 %return JSON con los atributos del objeto.
@@ -59,25 +61,28 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
 
   CONSTRUCTOR FUNCTION y_archivo RETURN SELF AS RESULT AS
   BEGIN
+    self.contenido := NULL;
+    self.tamano    := NULL;
     self.nombre    := NULL;
     self.extension := NULL;
-    self.contenido := NULL;
     RETURN;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
-    l_json_object      json_object_t;
-    l_contenido_base64 CLOB;
+    l_json_object json_object_t;
+    l_gzip_base64 CLOB;
   BEGIN
-    l_contenido_base64 := k_util.base64encode(self.contenido);
-    IF l_contenido_base64 IS NOT NULL THEN
-      -- Elimina los caracteres de nueva línea para evitar error de sintaxis JSON
-      l_contenido_base64 := REPLACE(l_contenido_base64, utl_tcp.crlf);
-      l_json_object      := json_object_t.parse('{"contenido":"' ||
-                                                l_contenido_base64 || '"}');
-    ELSE
+    IF self.contenido IS NULL OR dbms_lob.getlength(self.contenido) = 0 THEN
       l_json_object := json_object_t.parse('{"contenido":null}');
+    ELSE
+      -- Comprime con gzip y codifica en formato Base64
+      l_gzip_base64 := k_util.base64encode(utl_compress.lz_compress(self.contenido));
+      -- Elimina caracteres de nueva línea para evitar error de sintaxis JSON
+      l_gzip_base64 := REPLACE(l_gzip_base64, utl_tcp.crlf);
+      l_json_object := json_object_t.parse('{"contenido":"' ||
+                                           l_gzip_base64 || '"}');
     END IF;
+    l_json_object.put('tamano', self.tamano);
     l_json_object.put('nombre', self.nombre);
     l_json_object.put('extension', self.extension);
     RETURN l_json_object.to_clob;
