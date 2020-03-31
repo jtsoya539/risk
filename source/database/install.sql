@@ -94,6 +94,7 @@ prompt -----------------------------------
 prompt
 @@types/y_serializable.typ
 @@types/y_dato.typ
+@@types/y_archivo.typ
 @@types/y_parametro.typ
 @@types/y_parametros.typ
 @@types/y_respuesta.typ
