@@ -47,6 +47,7 @@ Constructor del objeto sin parámetros.
 
 /**
 Retorna el objeto serializado en formato JSON.
+El contenido del archivo se codifica en formato Base64.
   
 %author jtsoya539 30/3/2020 09:42:09
 %return JSON con los atributos del objeto.
@@ -65,12 +66,20 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
-    l_json_object json_object_t;
+    l_json_object      json_object_t;
+    l_contenido_base64 CLOB;
   BEGIN
-    l_json_object := NEW json_object_t();
+    l_contenido_base64 := k_util.base64encode(self.contenido);
+    IF l_contenido_base64 IS NOT NULL THEN
+      -- Elimina los caracteres de nueva línea para evitar error de sintaxis JSON
+      l_contenido_base64 := REPLACE(l_contenido_base64, utl_tcp.crlf);
+      l_json_object      := json_object_t.parse('{"contenido":"' ||
+                                                l_contenido_base64 || '"}');
+    ELSE
+      l_json_object := json_object_t.parse('{"contenido":null}');
+    END IF;
     l_json_object.put('nombre', self.nombre);
     l_json_object.put('extension', self.extension);
-    l_json_object.put('contenido', k_util.base64encode(self.contenido));
     RETURN l_json_object.to_clob;
   END;
 

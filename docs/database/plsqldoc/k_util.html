@@ -66,6 +66,11 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#BASE64ENCODE">base64encode</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_BASE_DATOS">f_base_datos</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -302,6 +307,15 @@ f_json_objeto
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_json_objeto(i_objeto IN anydata) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="BASE64ENCODE"></A>
+<P CLASS="TYPE_TITLE">
+base64encode
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB
 
 </PRE>
 <HR>

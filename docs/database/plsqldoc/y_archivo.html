@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_archivo</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_archivo">
+ <META name="description" content="Agrupa datos de un archivo.">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_archivo</P>
+Agrupa datos de un archivo.<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:35:55
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del archivo
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EXTENSION">extension</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Extensi&#243;n del archivo
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CONTENIDO">contenido</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Contenido del archivo
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_ARCHIVO">y_archivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Constructor del objeto sin par&#225;metros.
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el objeto serializado en formato JSON.
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="NOMBRE"></A>
+<P CLASS="TYPE_TITLE">
+nombre
+</P>
+<PRE CLASS="DECL_TEXT">
+nombre VARCHAR2(4000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Nombre del archivo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="EXTENSION"></A>
+<P CLASS="TYPE_TITLE">
+extension
+</P>
+<PRE CLASS="DECL_TEXT">
+extension VARCHAR2(100)
+</PRE>
+<P CLASS="DESC_TEXT">
+Extensi&#243;n del archivo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="CONTENIDO"></A>
+<P CLASS="TYPE_TITLE">
+contenido
+</P>
+<PRE CLASS="DECL_TEXT">
+contenido BLOB
+</PRE>
+<P CLASS="DESC_TEXT">
+Contenido del archivo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="Y_ARCHIVO"></A>
+<P CLASS="TYPE_TITLE">
+y_archivo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_archivo RETURN SELF AS RESULT
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Constructor del objeto sin par&#225;metros.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:08:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Objeto del tipo y_archivo.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el objeto serializado en formato JSON.<br>
+El contenido del archivo se codifica en formato Base64.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 09:42:09<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+JSON con los atributos del objeto.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>
