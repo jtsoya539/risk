@@ -41,6 +41,11 @@ Attributes
 Contenido del archivo
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CHECKSUM">checksum</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Hash del archivo calculado con el algoritmo SHA-1
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#TAMANO">tamano</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Tama&#241;o del archivo en bytes
@@ -68,6 +73,11 @@ Program units
 Constructor del objeto sin par&#225;metros.
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CALCULAR_PROPIEDADES">calcular_propiedades</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Calcula las propiedades del archivo.
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Retorna el objeto serializado en formato JSON.
@@ -84,6 +94,19 @@ contenido BLOB
 </PRE>
 <P CLASS="DESC_TEXT">
 Contenido del archivo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="CHECKSUM"></A>
+<P CLASS="TYPE_TITLE">
+checksum
+</P>
+<PRE CLASS="DECL_TEXT">
+checksum VARCHAR2(100)
+</PRE>
+<P CLASS="DESC_TEXT">
+Hash del archivo calculado con el algoritmo SHA-1<br>
 
 <BR>
 </P>
@@ -160,6 +183,32 @@ Returns
 <TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Objeto del tipo y_archivo.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="CALCULAR_PROPIEDADES"></A>
+<P CLASS="TYPE_TITLE">
+calcular_propiedades
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE calcular_propiedades
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Calcula las propiedades del archivo.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 1/4/2020 10:10:10<br>
 
 </TD></TR>
 </TABLE>
