@@ -32,6 +32,8 @@ SOFTWARE.
 
 /** Contenido del archivo */
   contenido BLOB,
+/** Hash del archivo calculado con el algoritmo SHA-1 */
+  checksum VARCHAR2(100),
 /** Tamaño del archivo en bytes */
   tamano NUMBER,
 /** Nombre del archivo */
@@ -48,6 +50,13 @@ Constructor del objeto sin parámetros.
   CONSTRUCTOR FUNCTION y_archivo RETURN SELF AS RESULT,
 
 /**
+Calcula las propiedades del archivo.
+
+%author jtsoya539 1/4/2020 10:10:10
+*/
+  MEMBER PROCEDURE calcular_propiedades,
+
+/**
 Retorna el objeto serializado en formato JSON.
 El contenido del archivo se comprime con gzip y se codifica en formato Base64.
   
@@ -62,10 +71,23 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
   CONSTRUCTOR FUNCTION y_archivo RETURN SELF AS RESULT AS
   BEGIN
     self.contenido := NULL;
+    self.checksum  := NULL;
     self.tamano    := NULL;
     self.nombre    := NULL;
     self.extension := NULL;
     RETURN;
+  END;
+
+  MEMBER PROCEDURE calcular_propiedades IS
+  BEGIN
+    IF self.contenido IS NULL OR dbms_lob.getlength(self.contenido) = 0 THEN
+      self.checksum := NULL;
+      self.tamano   := NULL;
+    ELSE
+      self.checksum := to_char(rawtohex(dbms_crypto.hash(self.contenido,
+                                                         dbms_crypto.hash_sh1)));
+      self.tamano   := dbms_lob.getlength(self.contenido);
+    END IF;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
@@ -82,6 +104,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
       l_json_object := json_object_t.parse('{"contenido":"' ||
                                            l_gzip_base64 || '"}');
     END IF;
+    l_json_object.put('checksum', self.checksum);
     l_json_object.put('tamano', self.tamano);
     l_json_object.put('nombre', self.nombre);
     l_json_object.put('extension', self.extension);
