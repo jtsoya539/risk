@@ -1,6 +1,12 @@
-# RISK Docs
+# Documentación
 
 Bienvenido/a a la documentación del Proyecto RISK.
+
+## Contenido
+* [Requerimientos](#requerimientos)
+* [Instalación](#instalación)
+* [Guía de estilo para Desarrollo](database/styleguide.md)
+* [API PL/SQL](database/plsqldoc/index.html)
 
 ## Requerimientos
 ### Base de Datos
@@ -23,7 +29,3 @@ install_audit.sql|Genera campos y triggers de auditoría.
 uninstall.sql|Desinstala del esquema actual los objetos de Base de Datos del Proyecto RISK.
 
 ### Back-End
-
-## Contenido
-* [Guía de estilo para Desarrollo](database/styleguide.md)
-* [API PL/SQL](database/plsqldoc/index.html)
