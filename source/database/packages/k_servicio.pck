@@ -371,11 +371,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_error_general;
     END IF;
   
-    l_rsp.lugar := 'Obteniendo valor del parametro';
-    l_dato.dato := k_util.f_valor_parametro(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                      'parametro')));
+    l_rsp.lugar      := 'Obteniendo valor del parametro';
+    l_dato.contenido := k_util.f_valor_parametro(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                           'parametro')));
   
-    IF l_dato.dato IS NULL THEN
+    IF l_dato.contenido IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0002', 'Parametro inexistente');
       RAISE ex_error_general;
     END IF;
@@ -413,13 +413,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_error_general;
     END IF;
   
-    l_rsp.lugar := 'Obteniendo significado';
-    l_dato.dato := k_util.f_significado_codigo(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                         'dominio')),
-                                               anydata.accessvarchar2(lf_valor_parametro(i_parametros,
-                                                                                         'codigo')));
+    l_rsp.lugar      := 'Obteniendo significado';
+    l_dato.contenido := k_util.f_significado_codigo(anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                              'dominio')),
+                                                    anydata.accessvarchar2(lf_valor_parametro(i_parametros,
+                                                                                              'codigo')));
   
-    IF l_dato.dato IS NULL THEN
+    IF l_dato.contenido IS NULL THEN
       lp_respuesta_error(l_rsp, 'gen0003', 'Significado inexistente');
       RAISE ex_error_general;
     END IF;

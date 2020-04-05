@@ -30,8 +30,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-/** Dato en formato de texto. */
-  dato CLOB,
+/** Contenido en formato de texto. */
+  contenido CLOB,
 
 /**
 Constructor del objeto sin parámetros.
@@ -54,7 +54,7 @@ CREATE OR REPLACE TYPE BODY y_dato IS
 
   CONSTRUCTOR FUNCTION y_dato RETURN SELF AS RESULT AS
   BEGIN
-    self.dato := NULL;
+    self.contenido := NULL;
     RETURN;
   END;
 
@@ -62,7 +62,7 @@ CREATE OR REPLACE TYPE BODY y_dato IS
     l_json_object json_object_t;
   BEGIN
     l_json_object := NEW json_object_t();
-    l_json_object.put('dato', self.dato);
+    l_json_object.put('contenido', self.contenido);
     RETURN l_json_object.to_clob;
   END;
 
