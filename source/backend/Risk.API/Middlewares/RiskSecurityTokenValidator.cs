@@ -26,6 +26,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Risk.API.Entities;
+using Risk.API.Models;
 using Risk.API.Services;
 
 namespace Risk.API.Middlewares
@@ -70,7 +71,7 @@ namespace Risk.API.Middlewares
         public ClaimsPrincipal ValidateToken(string securityToken, TokenValidationParameters validationParameters, out SecurityToken validatedToken)
         {
             ClaimsPrincipal claimsPrincipal;
-            YRespuesta<YDato> respuesta;
+            Respuesta<Dato> respuesta;
 
             try
             {

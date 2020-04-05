@@ -28,7 +28,7 @@ namespace Risk.API.Entities
 {
     public class YDato
     {
-        [JsonProperty("dato")]
-        public string Dato { get; set; }
+        [JsonProperty("contenido")]
+        public string Contenido { get; set; }
     }
 }

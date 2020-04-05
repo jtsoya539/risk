@@ -67,7 +67,7 @@ namespace Risk.API.Controllers
                 return string.Empty;
             }
 
-            YUsuario datosUsuario = respDatosUsuario.Datos;
+            Usuario datosUsuario = respDatosUsuario.Datos;
 
             // Crea la lista de claims (pertenencias, características) del usuario
             List<Claim> claims = new List<Claim>();
@@ -90,7 +90,7 @@ namespace Risk.API.Controllers
                 return string.Empty;
             }
 
-            int tiempoExpiracion = int.Parse(respValorParametro.Datos.Dato);
+            int tiempoExpiracion = int.Parse(respValorParametro.Datos.Contenido);
             var signingKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -155,8 +155,8 @@ namespace Risk.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
-            return Ok(respuesta);
+            var respRegistrarUsuario = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
+            return Ok(respRegistrarUsuario);
         }
 
         [AllowAnonymous]
@@ -211,8 +211,8 @@ namespace Risk.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.CambiarEstadoSesion(requestBody.Token, "F");
-            return Ok(respuesta);
+            var respCambiarEstadoSesion = _autService.CambiarEstadoSesion(requestBody.Token, "F");
+            return Ok(respCambiarEstadoSesion);
         }
 
         [HttpPost("RegistrarClaveTransaccional")]
@@ -220,8 +220,8 @@ namespace Risk.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
-            return Ok(respuesta);
+            var respRegistrarClave = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
+            return Ok(respRegistrarClave);
         }
 
         [HttpPost("CambiarClaveAcceso")]
@@ -229,8 +229,8 @@ namespace Risk.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
-            return Ok(respuesta);
+            var respCambiarClave = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
+            return Ok(respCambiarClave);
         }
 
         [HttpPost("CambiarClaveTransaccional")]
@@ -238,16 +238,16 @@ namespace Risk.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
-            YRespuesta<YDato> respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
-            return Ok(respuesta);
+            var respCambiarClave = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
+            return Ok(respCambiarClave);
         }
 
         [HttpGet("ValidarSesion")]
         [SwaggerOperation(Summary = "ValidarSesion", Description = "Description", OperationId = "ValidarSesion")]
         public IActionResult ValidarSesion([FromQuery] string token)
         {
-            YRespuesta<YDato> respuesta = _autService.ValidarSesion(token);
-            return Ok(respuesta);
+            var respValidarSesion = _autService.ValidarSesion(token);
+            return Ok(respValidarSesion);
         }
     }
 }

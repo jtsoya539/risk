@@ -30,6 +30,7 @@ using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
+using Risk.API.Models;
 
 namespace Risk.API.Services
 {
@@ -50,7 +51,7 @@ namespace Risk.API.Services
         {
         }
 
-        public YRespuesta<YDato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
+        public Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -60,10 +61,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_CAMBIAR_CLAVE, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YDato> CambiarEstadoSesion(string token, string estado)
+        public Respuesta<Dato> CambiarEstadoSesion(string token, string estado)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
@@ -71,10 +72,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_CAMBIAR_ESTADO_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YSesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken)
+        public Respuesta<Sesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -84,10 +85,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Sesion>>(rsp);
         }
 
-        public YRespuesta<YSesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
+        public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
         {
             JObject prms = new JObject();
             prms.Add("access_token_antiguo", accessTokenAntiguo);
@@ -97,10 +98,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_REFRESCAR_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Sesion>>(rsp);
         }
 
-        public YRespuesta<YDato> RegistrarClave(string usuario, string clave, string tipoClave)
+        public Respuesta<Dato> RegistrarClave(string usuario, string clave, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -109,10 +110,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_CLAVE, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YDato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
+        public Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -124,10 +125,10 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_USUARIO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YDato> ValidarCredenciales(string usuario, string clave, string tipoClave)
+        public Respuesta<Dato> ValidarCredenciales(string usuario, string clave, string tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -136,37 +137,37 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CREDENCIALES, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YDato> ValidarSesion(string token)
+        public Respuesta<Dato> ValidarSesion(string token)
         {
             JObject prms = new JObject();
             prms.Add("token", token);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_SESION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YUsuario> DatosUsuario(string usuario)
+        public Respuesta<Usuario> DatosUsuario(string usuario)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
 
             string rsp = base.ApiProcesarServicio(ID_DATOS_USUARIO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Usuario>>(rsp);
         }
 
-        public YRespuesta<YDato> ValidarClaveAplicacion(string claveAplicacion)
+        public Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion)
         {
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CLAVE_APLICACION, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
     }
 

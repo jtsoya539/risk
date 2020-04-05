@@ -30,6 +30,7 @@ using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
+using Risk.API.Models;
 
 namespace Risk.API.Services
 {
@@ -42,17 +43,17 @@ namespace Risk.API.Services
         {
         }
 
-        public YRespuesta<YDato> ValorParametro(string parametro)
+        public Respuesta<Dato> ValorParametro(string parametro)
         {
             JObject prms = new JObject();
             prms.Add("parametro", parametro);
 
             string rsp = base.ApiProcesarServicio(ID_VALOR_PARAMETRO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
 
-        public YRespuesta<YDato> SignificadoCodigo(string dominio, string codigo)
+        public Respuesta<Dato> SignificadoCodigo(string dominio, string codigo)
         {
             JObject prms = new JObject();
             prms.Add("dominio", dominio);
@@ -60,7 +61,7 @@ namespace Risk.API.Services
 
             string rsp = base.ApiProcesarServicio(ID_SIGNIFICADO_CODIGO, prms.ToString(Formatting.None));
 
-            return JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
         }
     }
 

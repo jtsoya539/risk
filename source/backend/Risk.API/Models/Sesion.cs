@@ -22,13 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
-
-namespace Risk.API.Services
+namespace Risk.API.Models
 {
-    public interface IGenService
+    public class Sesion
     {
-        Respuesta<Dato> ValorParametro(string parametro);
-        Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
+        public int IdSesion { get; set; }
+        public string Estado { get; set; }
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
+        public int TiempoExpiracion { get; set; }
     }
 }

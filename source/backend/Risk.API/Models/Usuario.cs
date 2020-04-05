@@ -22,13 +22,20 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
+using System.Collections.Generic;
 
-namespace Risk.API.Services
+namespace Risk.API.Models
 {
-    public interface IGenService
+    public class Usuario
     {
-        Respuesta<Dato> ValorParametro(string parametro);
-        Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
+        public int IdUsuario { get; set; }
+        public string Alias { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string TipoPersona { get; set; }
+        public string Estado { get; set; }
+        public string DireccionCorreo { get; set; }
+        public string NumeroTelefono { get; set; }
+        public List<Rol> Roles { get; set; }
     }
 }
