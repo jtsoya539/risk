@@ -60,8 +60,8 @@ namespace Risk.API.Controllers
         [HttpGet("ValorParametro")]
         [SwaggerOperation(Summary = "ValorParametro", Description = "Servicio para obtener el valor de un parámetro", OperationId = "ValorParametro")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(YRespuesta<YDato>))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(YRespuesta<YDato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
         public IActionResult ValorParametro([SwaggerParameter(Description = "Identificador del parámetro", Required = true)][FromQuery] string parametro)
         {
@@ -76,8 +76,8 @@ namespace Risk.API.Controllers
         [HttpGet("SignificadoCodigo")]
         [SwaggerOperation(Summary = "SignificadoCodigo", Description = "Servicio para obtener el significado de un código dentro de un dominio", OperationId = "SignificadoCodigo")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(YRespuesta<YDato>))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(YRespuesta<YDato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
         public IActionResult SignificadoCodigo([SwaggerParameter(Description = "Dominio", Required = true)][FromQuery] string dominio, [SwaggerParameter(Description = "Código", Required = true)][FromQuery] string codigo)
         {
