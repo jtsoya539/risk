@@ -118,7 +118,7 @@ namespace Risk.API
                     License = new OpenApiLicense
                     {
                         Name = "MIT",
-                        Url = new Uri("https://github.com/jtsoya539")
+                        Url = new Uri("https://github.com/jtsoya539/risk/blob/master/LICENSE")
                     }
                 });
                 c.EnableAnnotations();

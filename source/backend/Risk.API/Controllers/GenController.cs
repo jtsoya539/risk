@@ -42,7 +42,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers
 {
-    [SwaggerTag("Servicios Web del dominio GENERAL", "https://github.com/jtsoya539")]
+    [SwaggerTag("Servicios del dominio GENERAL", "https://jtsoya539.github.io/risk/")]
     [Authorize(Roles = "ADMINISTRADOR,USUARIO")]
     [Route("Api/[controller]")]
     [ApiController]
@@ -63,7 +63,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
-        public IActionResult ValorParametro([SwaggerParameter(Description = "Identificador del parámetro", Required = true)][FromQuery] string parametro)
+        public IActionResult ValorParametro([FromQuery, SwaggerParameter(Description = "Identificador del parámetro", Required = true)] string parametro)
         {
             var respuesta = _genService.ValorParametro(parametro);
             if (!respuesta.Codigo.Equals("0"))
@@ -79,7 +79,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
-        public IActionResult SignificadoCodigo([SwaggerParameter(Description = "Dominio", Required = true)][FromQuery] string dominio, [SwaggerParameter(Description = "Código", Required = true)][FromQuery] string codigo)
+        public IActionResult SignificadoCodigo([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio, [FromQuery, SwaggerParameter(Description = "Código", Required = true)] string codigo)
         {
             var respuesta = _genService.SignificadoCodigo(dominio, codigo);
             if (!respuesta.Codigo.Equals("0"))
