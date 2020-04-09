@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_rol UNDER y_serializable
+CREATE OR REPLACE TYPE y_rol UNDER y_objeto
 (
 /**
 Agrupa datos de un rol.
@@ -47,6 +47,8 @@ Constructor del objeto sin parámetros.
 */
   CONSTRUCTOR FUNCTION y_rol RETURN SELF AS RESULT,
 
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
+
 /**
 Retorna el objeto serializado en formato JSON.
   
@@ -65,6 +67,11 @@ CREATE OR REPLACE TYPE BODY y_rol IS
     self.activo  := NULL;
     self.detalle := NULL;
     RETURN;
+  END;
+
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+  BEGIN
+    RETURN NEW y_rol();
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

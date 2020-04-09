@@ -87,12 +87,12 @@ prompt -----------------------------------
 prompt
 plugin plsqldoc generate y_archivo;
 plugin plsqldoc generate y_dato;
+plugin plsqldoc generate y_objeto;
 plugin plsqldoc generate y_parametro;
 plugin plsqldoc generate y_parametros;
 plugin plsqldoc generate y_respuesta;
 plugin plsqldoc generate y_rol;
 plugin plsqldoc generate y_roles;
-plugin plsqldoc generate y_serializable;
 plugin plsqldoc generate y_sesion;
 plugin plsqldoc generate y_usuario;
 

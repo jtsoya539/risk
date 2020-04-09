@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_respuesta UNDER y_serializable
+CREATE OR REPLACE TYPE y_respuesta UNDER y_objeto
 (
 /**
 Agrupa datos de una respuesta de servicio o proceso.
@@ -49,6 +49,8 @@ Constructor del objeto sin parámetros.
 */
   CONSTRUCTOR FUNCTION y_respuesta RETURN SELF AS RESULT,
 
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
+
 /**
 Retorna el objeto serializado en formato JSON.
   
@@ -68,6 +70,11 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
     self.lugar      := NULL;
     self.datos      := NULL;
     RETURN;
+  END;
+
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+  BEGIN
+    RETURN NEW y_respuesta();
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

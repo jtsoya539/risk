@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_archivo UNDER y_serializable
+CREATE OR REPLACE TYPE y_archivo UNDER y_objeto
 (
 /**
 Agrupa datos de un archivo.
@@ -56,6 +56,8 @@ Calcula las propiedades del archivo.
 */
   MEMBER PROCEDURE calcular_propiedades,
 
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
+
 /**
 Retorna el objeto serializado en formato JSON.
 El contenido del archivo se comprime con gzip y se codifica en formato Base64.
@@ -88,6 +90,11 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
                                                          dbms_crypto.hash_sh1)));
       self.tamano   := dbms_lob.getlength(self.contenido);
     END IF;
+  END;
+
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+  BEGIN
+    RETURN NEW y_archivo();
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

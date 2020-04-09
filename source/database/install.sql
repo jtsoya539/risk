@@ -92,7 +92,7 @@ prompt
 prompt Creando types...
 prompt -----------------------------------
 prompt
-@@types/y_serializable.typ
+@@types/y_objeto.typ
 @@types/y_dato.typ
 @@types/y_archivo.typ
 @@types/y_parametro.typ

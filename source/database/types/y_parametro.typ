@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_parametro UNDER y_serializable
+CREATE OR REPLACE TYPE y_parametro UNDER y_objeto
 (
 /**
 Agrupa datos de un parámetro de servicio o proceso.
@@ -43,6 +43,8 @@ Constructor del objeto sin parámetros.
 */
   CONSTRUCTOR FUNCTION y_parametro RETURN SELF AS RESULT,
 
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
+
 /**
 Retorna el objeto serializado en formato JSON.
   
@@ -59,6 +61,11 @@ CREATE OR REPLACE TYPE BODY y_parametro IS
     self.nombre := NULL;
     self.valor  := NULL;
     RETURN;
+  END;
+
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+  BEGIN
+    RETURN NEW y_parametro();
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

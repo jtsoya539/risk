@@ -1,7 +1,7 @@
-CREATE OR REPLACE TYPE y_serializable AS OBJECT
+CREATE OR REPLACE TYPE y_objeto AS OBJECT
 (
 /**
-Tipo base para un objeto que puede ser serializado en formato JSON.
+Tipo base para un objeto que puede ser serializado/deserializado con formato JSON.
 
 %author jtsoya539 30/3/2020 09:35:21
 */
@@ -34,12 +34,23 @@ SOFTWARE.
   version VARCHAR2(10),
 
 /**
-Retorna el objeto serializado en formato JSON.
-Cada sub-tipo del tipo base y_serializable debe implementar esta función con
-los atributos correspondientes al objeto.
+Retorna el objeto deserializado a partir de un JSON.
+Cada sub-tipo del tipo base y_objeto debe implementar esta función con los
+atributos correspondientes.
   
 %author jtsoya539 30/3/2020 09:42:09
-%return JSON con los atributos del objeto.
+%param i_json JSON del objeto a deserializar.
+%return Objeto deserializado a partir de un JSON.
+*/
+  NOT FINAL STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
+
+/**
+Retorna el objeto serializado en formato JSON.
+Cada sub-tipo del tipo base y_objeto debe implementar esta función con los
+atributos correspondientes.
+  
+%author jtsoya539 30/3/2020 09:42:09
+%return Objeto serializado en formato JSON.
 */
   NOT FINAL NOT INSTANTIABLE MEMBER FUNCTION to_json RETURN CLOB
 )
