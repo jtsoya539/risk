@@ -70,8 +70,16 @@ CREATE OR REPLACE TYPE BODY y_rol IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_rol         y_rol;
+    l_json_object json_object_t;
   BEGIN
-    RETURN NEW y_rol();
+    l_rol         := NEW y_rol();
+    l_json_object := json_object_t.parse(i_json);
+    l_rol.id_rol  := l_json_object.get_number('id_rol');
+    l_rol.nombre  := l_json_object.get_string('nombre');
+    l_rol.activo  := l_json_object.get_string('activo');
+    l_rol.detalle := l_json_object.get_string('detalle');
+    RETURN l_rol;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
