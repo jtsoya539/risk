@@ -71,10 +71,6 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
-  -- Tipos de log
-  c_log_entrada CONSTANT VARCHAR2(10) := 'ENTRADA';
-  c_log_salida  CONSTANT VARCHAR2(10) := 'SALIDA';
-
   -- Errores
   c_error_inesperado CONSTANT VARCHAR2(10) := 'api9999';
 
@@ -183,19 +179,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       i := i_parametros.next(i);
     END LOOP;
     RETURN l_valor;
-  END;
-
-  PROCEDURE lp_registrar_log(i_id_servicio IN NUMBER,
-                             i_tipo_log    IN VARCHAR2,
-                             i_dato        IN CLOB) IS
-  BEGIN
-    plog.info(utl_lms.format_message('[%s][%s][%s]',
-                                     to_char(i_id_servicio),
-                                     i_tipo_log,
-                                     dbms_lob.substr(i_dato)));
-  EXCEPTION
-    WHEN OTHERS THEN
-      NULL;
   END;
 
   PROCEDURE lp_registrar_log(i_id_servicio IN NUMBER,
