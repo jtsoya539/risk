@@ -59,6 +59,8 @@ namespace Risk.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             //Connect descriptor and net service name entry
             //Enter the database machine port, hostname/IP, service name, and distinguished name
             OracleConfiguration.OracleDataSources.Add("autonomous", "(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=q7m0i1h19jy7xqj_microcred_tp.atp.oraclecloud.com))(security=(ssl_server_cert_dn=\"CN=adb.sa-saopaulo-1.oraclecloud.com,OU=Oracle ADB SAOPAULO,O=Oracle Corporation,L=Redwood City,ST=California,C=US\")))");
@@ -73,11 +75,12 @@ namespace Risk.API
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IAutService, AutService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-            var signingKey = Encoding.ASCII.GetBytes(Configuration.GetValue<string>("SecretKey"));
-
             var serviceProvider = services.BuildServiceProvider();
+            IGenService genService = serviceProvider.GetService<IGenService>();
+            IAutService autService = serviceProvider.GetService<IAutService>();
+
+            var respValorParametro = genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
+            var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
 
             services.AddAuthentication(x =>
             {
@@ -86,7 +89,7 @@ namespace Risk.API
             }).AddJwtBearer(x =>
             {
                 x.SecurityTokenValidators.Clear();
-                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(serviceProvider.GetService<IAutService>()));
+                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(autService));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters

@@ -89,9 +89,14 @@ namespace Risk.API.Controllers
             {
                 return string.Empty;
             }
-
             int tiempoExpiracion = int.Parse(respValorParametro.Datos.Contenido);
-            var signingKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+
+            var respValorParametro2 = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
+            if (!respValorParametro2.Codigo.Equals("0"))
+            {
+                return string.Empty;
+            }
+            var signingKey = Encoding.ASCII.GetBytes(respValorParametro2.Datos.Contenido);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -122,7 +127,12 @@ namespace Risk.API.Controllers
             ClaimsPrincipal claimsPrincipal;
             SecurityToken validatedToken;
 
-            var signingKey = Encoding.ASCII.GetBytes(_configuration.GetValue<string>("SecretKey"));
+            var respValorParametro2 = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
+            if (!respValorParametro2.Codigo.Equals("0"))
+            {
+                return string.Empty;
+            }
+            var signingKey = Encoding.ASCII.GetBytes(respValorParametro2.Datos.Contenido);
 
             try
             {

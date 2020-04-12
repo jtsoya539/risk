@@ -28,4 +28,7 @@ values ('TIEMPO_EXPIRACION_ACCESS_TOKEN', 'Tiempo de expiración del Access Token
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('TIEMPO_EXPIRACION_REFRESH_TOKEN', 'Tiempo de expiración del Refresh Token en horas', '5');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('CLAVE_VALIDACION_ACCESS_TOKEN', 'Clave de validación del Access Token', '9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=');
+
 prompt Done.
