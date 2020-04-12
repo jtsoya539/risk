@@ -73,8 +73,19 @@ CREATE OR REPLACE TYPE BODY y_sesion IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_sesion      y_sesion;
+    l_json_object json_object_t;
   BEGIN
-    RETURN NEW y_sesion();
+    l_json_object := json_object_t.parse(i_json);
+  
+    l_sesion                   := NEW y_sesion();
+    l_sesion.id_sesion         := l_json_object.get_number('id_sesion');
+    l_sesion.estado            := l_json_object.get_string('estado');
+    l_sesion.access_token      := l_json_object.get_string('access_token');
+    l_sesion.refresh_token     := l_json_object.get_string('refresh_token');
+    l_sesion.tiempo_expiracion := l_json_object.get_number('tiempo_expiracion');
+  
+    RETURN l_sesion;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

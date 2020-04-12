@@ -85,8 +85,23 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_usuario     y_usuario;
+    l_json_object json_object_t;
   BEGIN
-    RETURN NEW y_usuario();
+    l_json_object := json_object_t.parse(i_json);
+  
+    l_usuario                  := NEW y_usuario();
+    l_usuario.id_usuario       := l_json_object.get_number('id_usuario');
+    l_usuario.alias            := l_json_object.get_string('alias');
+    l_usuario.nombre           := l_json_object.get_string('nombre');
+    l_usuario.apellido         := l_json_object.get_string('apellido');
+    l_usuario.tipo_persona     := l_json_object.get_string('tipo_persona');
+    l_usuario.estado           := l_json_object.get_string('estado');
+    l_usuario.direccion_correo := l_json_object.get_string('direccion_correo');
+    l_usuario.numero_telefono  := l_json_object.get_string('numero_telefono');
+    l_usuario.roles            := NULL; -- TODO
+  
+    RETURN l_usuario;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

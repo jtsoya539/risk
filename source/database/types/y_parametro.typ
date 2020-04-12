@@ -64,8 +64,16 @@ CREATE OR REPLACE TYPE BODY y_parametro IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_parametro   y_parametro;
+    l_json_object json_object_t;
   BEGIN
-    RETURN NEW y_parametro();
+    l_json_object := json_object_t.parse(i_json);
+  
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := l_json_object.get_string('nombre');
+    l_parametro.valor  := NULL; -- TODO
+  
+    RETURN l_parametro;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

@@ -73,12 +73,14 @@ CREATE OR REPLACE TYPE BODY y_rol IS
     l_rol         y_rol;
     l_json_object json_object_t;
   BEGIN
-    l_rol         := NEW y_rol();
     l_json_object := json_object_t.parse(i_json);
+  
+    l_rol         := NEW y_rol();
     l_rol.id_rol  := l_json_object.get_number('id_rol');
     l_rol.nombre  := l_json_object.get_string('nombre');
     l_rol.activo  := l_json_object.get_string('activo');
     l_rol.detalle := l_json_object.get_string('detalle');
+  
     RETURN l_rol;
   END;
 

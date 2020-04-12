@@ -93,8 +93,19 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_archivo     y_archivo;
+    l_json_object json_object_t;
   BEGIN
-    RETURN NEW y_archivo();
+    l_json_object := json_object_t.parse(i_json);
+  
+    l_archivo           := NEW y_archivo();
+    l_archivo.contenido := NULL; -- TODO
+    l_archivo.checksum  := l_json_object.get_string('checksum');
+    l_archivo.tamano    := l_json_object.get_number('tamano');
+    l_archivo.nombre    := l_json_object.get_string('nombre');
+    l_archivo.extension := l_json_object.get_string('extension');
+  
+    RETURN l_archivo;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS

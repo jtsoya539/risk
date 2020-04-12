@@ -73,8 +73,19 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_respuesta   y_respuesta;
+    l_json_object json_object_t;
   BEGIN
-    RETURN NEW y_respuesta();
+    l_json_object := json_object_t.parse(i_json);
+  
+    l_respuesta            := NEW y_respuesta();
+    l_respuesta.codigo     := l_json_object.get_string('codigo');
+    l_respuesta.mensaje    := l_json_object.get_string('mensaje');
+    l_respuesta.mensaje_bd := l_json_object.get_string('mensaje_bd');
+    l_respuesta.lugar      := l_json_object.get_string('lugar');
+    l_respuesta.datos      := NULL; -- TODO
+  
+    RETURN l_respuesta;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
