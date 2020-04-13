@@ -76,6 +76,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
 
+  FUNCTION base64decode(i_clob CLOB) RETURN BLOB;
+
   FUNCTION f_base_datos RETURN VARCHAR2;
 
   FUNCTION f_terminal RETURN VARCHAR2;
@@ -265,6 +267,34 @@ END;'
       END LOOP;
     END IF;
     RETURN l_clob;
+  END;
+
+  FUNCTION base64decode(i_clob CLOB) RETURN BLOB IS
+    -- -----------------------------------------------------------------------------------
+    -- File Name    : https://oracle-base.com/dba/miscellaneous/base64decode.sql
+    -- Author       : Tim Hall
+    -- Description  : Decodes a Base64 CLOB into a BLOB
+    -- Last Modified: 09/11/2011
+    -- -----------------------------------------------------------------------------------
+    l_blob   BLOB;
+    l_raw    RAW(32767);
+    l_amt    NUMBER := 7700;
+    l_offset NUMBER := 1;
+    l_temp   VARCHAR2(32767);
+  BEGIN
+    BEGIN
+      dbms_lob.createtemporary(l_blob, FALSE, dbms_lob.call);
+      LOOP
+        dbms_lob.read(i_clob, l_amt, l_offset, l_temp);
+        l_offset := l_offset + l_amt;
+        l_raw    := utl_encode.base64_decode(utl_raw.cast_to_raw(l_temp));
+        dbms_lob.append(l_blob, to_blob(l_raw));
+      END LOOP;
+    EXCEPTION
+      WHEN no_data_found THEN
+        NULL;
+    END;
+    RETURN l_blob;
   END;
 
   FUNCTION f_base_datos RETURN VARCHAR2 IS

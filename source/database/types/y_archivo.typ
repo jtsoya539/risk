@@ -95,11 +95,18 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
     l_archivo     y_archivo;
     l_json_object json_object_t;
+    l_gzip_base64 CLOB;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
-    l_archivo           := NEW y_archivo();
-    l_archivo.contenido := NULL; -- TODO
+    l_archivo     := NEW y_archivo();
+    l_gzip_base64 := l_json_object.get_clob('contenido');
+    IF l_gzip_base64 IS NULL OR dbms_lob.getlength(l_gzip_base64) = 0 THEN
+      l_archivo.contenido := NULL;
+    ELSE
+      -- Decodifica en formato Base64 y descomprime con gzip
+      l_archivo.contenido := utl_compress.lz_uncompress(k_util.base64decode(l_gzip_base64));
+    END IF;
     l_archivo.checksum  := l_json_object.get_string('checksum');
     l_archivo.tamano    := l_json_object.get_number('tamano');
     l_archivo.nombre    := l_json_object.get_string('nombre');
