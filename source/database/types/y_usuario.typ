@@ -87,6 +87,9 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
     l_usuario     y_usuario;
     l_json_object json_object_t;
+    l_rol         y_rol;
+    l_roles       y_roles;
+    l_json_array  json_array_t;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
@@ -99,7 +102,22 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
     l_usuario.estado           := l_json_object.get_string('estado');
     l_usuario.direccion_correo := l_json_object.get_string('direccion_correo');
     l_usuario.numero_telefono  := l_json_object.get_string('numero_telefono');
-    l_usuario.roles            := NULL; -- TODO
+  
+    l_json_array := l_json_object.get_array('roles');
+  
+    IF l_json_array IS NULL THEN
+      l_usuario.roles := NULL;
+    ELSE
+      l_roles := NEW y_roles();
+      FOR i IN 1 .. l_json_array.get_size LOOP
+        l_rol := NEW y_rol();
+        l_rol := treat(y_rol.parse_json(l_json_array.get(i).to_clob) AS
+                       y_rol);
+        l_roles.extend;
+        l_roles(l_roles.count) := l_rol;
+      END LOOP;
+      l_usuario.roles := l_roles;
+    END IF;
   
     RETURN l_usuario;
   END;
@@ -119,13 +137,17 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
     l_json_object.put('direccion_correo', self.direccion_correo);
     l_json_object.put('numero_telefono', self.numero_telefono);
   
-    l_json_array := NEW json_array_t();
-    i            := self.roles.first;
-    WHILE i IS NOT NULL LOOP
-      l_json_array.append(json_object_t.parse(self.roles(i).to_json));
-      i := self.roles.next(i);
-    END LOOP;
-    l_json_object.put('roles', l_json_array);
+    IF self.roles IS NULL THEN
+      l_json_object.put_null('roles');
+    ELSE
+      l_json_array := NEW json_array_t();
+      i            := self.roles.first;
+      WHILE i IS NOT NULL LOOP
+        l_json_array.append(json_object_t.parse(self.roles(i).to_json));
+        i := self.roles.next(i);
+      END LOOP;
+      l_json_object.put('roles', l_json_array);
+    END IF;
   
     RETURN l_json_object.to_clob;
   END;
