@@ -66,7 +66,7 @@ CREATE OR REPLACE TYPE BODY y_dato IS
   BEGIN
     l_json_object    := json_object_t.parse(i_json);
     l_dato           := NEW y_dato();
-    l_dato.contenido := l_json_object.get_string('contenido');
+    l_dato.contenido := l_json_object.get_clob('contenido');
     RETURN l_dato;
   END;
 
