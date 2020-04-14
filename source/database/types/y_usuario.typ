@@ -109,7 +109,7 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
       l_usuario.roles := NULL;
     ELSE
       l_roles := NEW y_roles();
-      FOR i IN 1 .. l_json_array.get_size LOOP
+      FOR i IN 0 .. l_json_array.get_size - 1 LOOP
         l_rol := NEW y_rol();
         l_rol := treat(y_rol.parse_json(l_json_array.get(i).to_clob) AS
                        y_rol);
