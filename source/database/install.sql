@@ -114,6 +114,8 @@ prompt
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_servicio.pck
+@@packages/k_servicio_aut.pck
+@@packages/k_servicio_gen.pck
 @@packages/k_mensajeria.pck
 
 prompt

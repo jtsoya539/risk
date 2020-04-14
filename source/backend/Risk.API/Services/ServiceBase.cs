@@ -38,7 +38,7 @@ namespace Risk.API.Services
         public RiskDbContext _dbContext { get; private set; }
         public IConfiguration _configuration { get; private set; }
 
-        private const string SQL_API_PROCESAR_SERVICIO = "K_SERVICIO.API_PROCESAR_SERVICIO";
+        private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
 
         public ServiceBase(RiskDbContext dbContext, IConfiguration configuration)
         {
@@ -78,7 +78,7 @@ namespace Risk.API.Services
                 {
                     con.Open();
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = SQL_API_PROCESAR_SERVICIO;
+                    cmd.CommandText = SQL_PROCESAR_SERVICIO;
                     cmd.BindByName = true;
 
                     OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);

@@ -50,6 +50,8 @@ prompt Borrando paquetes...
 prompt -----------------------------------
 prompt
 drop package k_mensajeria;
+drop package k_servicio_gen;
+drop package k_servicio_aut;
 drop package k_servicio;
 drop package k_error;
 drop package k_autenticacion;

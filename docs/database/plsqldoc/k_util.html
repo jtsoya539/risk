@@ -71,6 +71,11 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#BASE64DECODE">base64decode</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_BASE_DATOS">f_base_datos</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -316,6 +321,15 @@ base64encode
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="BASE64DECODE"></A>
+<P CLASS="TYPE_TITLE">
+base64decode
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION base64decode(i_clob CLOB) RETURN BLOB
 
 </PRE>
 <HR>
