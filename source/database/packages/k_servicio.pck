@@ -209,6 +209,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_parametro    y_parametro;
     l_json_object  json_object_t;
     l_json_element json_element_t;
+  
     CURSOR c_servicio_parametros IS
       SELECT id_servicio,
              lower(nombre) nombre,
@@ -263,22 +264,26 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
           l_parametro.valor := anydata.convertnumber(l_json_object.get_number(par.nombre));
           IF l_parametro.valor.accessnumber IS NULL AND
              par.valor_defecto IS NOT NULL THEN
-            l_parametro.valor := anydata.convertnumber(par.valor_defecto);
+            l_parametro.valor := anydata.convertnumber(to_number(par.valor_defecto));
           END IF;
         WHEN 'B' THEN
           -- Boolean
           l_parametro.valor := anydata.convertnumber(sys.diutil.bool_to_int(l_json_object.get_boolean(par.nombre)));
           IF l_parametro.valor.accessnumber IS NULL AND
              par.valor_defecto IS NOT NULL THEN
-            l_parametro.valor := anydata.convertnumber(par.valor_defecto);
+            l_parametro.valor := anydata.convertnumber(to_number(par.valor_defecto));
           END IF;
         WHEN 'D' THEN
           -- Date
           l_parametro.valor := anydata.convertdate(l_json_object.get_date(par.nombre));
           IF l_parametro.valor.accessdate IS NULL AND
              par.valor_defecto IS NOT NULL THEN
-            l_parametro.valor := anydata.convertdate(par.valor_defecto);
+            l_parametro.valor := anydata.convertdate(to_date(par.valor_defecto,
+                                                             'YYYY-MM-DD'));
           END IF;
+        WHEN 'O' THEN
+          -- Object
+          l_parametro.valor := anydata.convertobject(y_dato.parse_json('{}'));
         ELSE
           raise_application_error(-20000, 'Tipo de dato no soportado');
       END CASE;
