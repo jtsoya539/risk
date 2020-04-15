@@ -32,14 +32,23 @@ namespace Risk.API.Services
     {
         public static Archivo GetArchivoFromEntity(YArchivo entity)
         {
-            return new Archivo
+            Archivo model;
+            if (entity == null)
             {
-                Contenido = entity.Contenido,
-                Checksum = entity.Checksum,
-                Tamano = entity.Tamano,
-                Nombre = entity.Nombre,
-                Extension = entity.Extension
-            };
+                model = null;
+            }
+            else
+            {
+                model = new Archivo
+                {
+                    Contenido = entity.Contenido,
+                    Checksum = entity.Checksum,
+                    Tamano = entity.Tamano,
+                    Nombre = entity.Nombre,
+                    Extension = entity.Extension
+                };
+            }
+            return model;
         }
 
         public static Dato GetDatoFromEntity(YDato entity)
@@ -71,13 +80,22 @@ namespace Risk.API.Services
 
         public static Rol GetRolFromEntity(YRol entity)
         {
-            return new Rol
+            Rol model;
+            if (entity == null)
             {
-                IdRol = entity.IdRol,
-                Nombre = entity.Nombre,
-                Activo = entity.Activo,
-                Detalle = entity.Detalle
-            };
+                model = null;
+            }
+            else
+            {
+                model = new Rol
+                {
+                    IdRol = entity.IdRol,
+                    Nombre = entity.Nombre,
+                    Activo = entity.Activo,
+                    Detalle = entity.Detalle
+                };
+            }
+            return model;
         }
 
         public static List<Rol> GetRolListFromEntity(List<YRol> entityList)
@@ -92,30 +110,48 @@ namespace Risk.API.Services
 
         public static Sesion GetSesionFromEntity(YSesion entity)
         {
-            return new Sesion
+            Sesion model;
+            if (entity == null)
             {
-                IdSesion = entity.IdSesion,
-                Estado = entity.Estado,
-                AccessToken = entity.AccessToken,
-                RefreshToken = entity.RefreshToken,
-                TiempoExpiracion = entity.TiempoExpiracion
-            };
+                model = null;
+            }
+            else
+            {
+                model = new Sesion
+                {
+                    IdSesion = entity.IdSesion,
+                    Estado = entity.Estado,
+                    AccessToken = entity.AccessToken,
+                    RefreshToken = entity.RefreshToken,
+                    TiempoExpiracion = entity.TiempoExpiracion
+                };
+            }
+            return model;
         }
 
         public static Usuario GetUsuarioFromEntity(YUsuario entity)
         {
-            return new Usuario
+            Usuario model;
+            if (entity == null)
             {
-                IdUsuario = entity.IdUsuario,
-                Alias = entity.Alias,
-                Nombre = entity.Nombre,
-                Apellido = entity.Apellido,
-                TipoPersona = entity.TipoPersona,
-                Estado = entity.Estado,
-                DireccionCorreo = entity.DireccionCorreo,
-                NumeroTelefono = entity.NumeroTelefono,
-                Roles = GetRolListFromEntity(entity.Roles)
-            };
+                model = null;
+            }
+            else
+            {
+                model = new Usuario
+                {
+                    IdUsuario = entity.IdUsuario,
+                    Alias = entity.Alias,
+                    Nombre = entity.Nombre,
+                    Apellido = entity.Apellido,
+                    TipoPersona = entity.TipoPersona,
+                    Estado = entity.Estado,
+                    DireccionCorreo = entity.DireccionCorreo,
+                    NumeroTelefono = entity.NumeroTelefono,
+                    Roles = GetRolListFromEntity(entity.Roles)
+                };
+            }
+            return model;
         }
     }
 }

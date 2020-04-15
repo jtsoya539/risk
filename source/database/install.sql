@@ -135,6 +135,7 @@ prompt
 @@triggers/gs_mensajes.trg
 @@triggers/gb_usuarios.trg
 @@triggers/gb_sesiones.trg
+@@triggers/gb_personas.trg
 
 prompt
 prompt Ejecutando scripts...
