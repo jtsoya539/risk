@@ -22,12 +22,18 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Respuesta de un servicio o proceso")]
     public class Respuesta<T>
     {
+        [SwaggerSchema("Código de la respuesta")]
         public string Codigo { get; set; }
+        [SwaggerSchema("Mensaje de la respuesta")]
         public string Mensaje { get; set; }
+        [SwaggerSchema("Datos adicionales")]
         public T Datos { get; set; }
     }
 }

@@ -49,8 +49,9 @@ namespace Risk.API.Services
             prms.Add("parametro", parametro);
 
             string rsp = base.ApiProcesarServicio(ID_VALOR_PARAMETRO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> SignificadoCodigo(string dominio, string codigo)
@@ -60,8 +61,9 @@ namespace Risk.API.Services
             prms.Add("codigo", codigo);
 
             string rsp = base.ApiProcesarServicio(ID_SIGNIFICADO_CODIGO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
     }
 

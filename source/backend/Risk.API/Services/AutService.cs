@@ -60,8 +60,9 @@ namespace Risk.API.Services
             prms.Add("tipo_clave", tipoClave);
 
             string rsp = base.ApiProcesarServicio(ID_CAMBIAR_CLAVE, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> CambiarEstadoSesion(string token, string estado)
@@ -71,8 +72,9 @@ namespace Risk.API.Services
             prms.Add("estado", estado);
 
             string rsp = base.ApiProcesarServicio(ID_CAMBIAR_ESTADO_SESION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Sesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken)
@@ -84,8 +86,9 @@ namespace Risk.API.Services
             prms.Add("refresh_token", refreshToken);
 
             string rsp = base.ApiProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Sesion>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetSesionFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
@@ -97,8 +100,9 @@ namespace Risk.API.Services
             prms.Add("refresh_token_nuevo", refreshTokenNuevo);
 
             string rsp = base.ApiProcesarServicio(ID_REFRESCAR_SESION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Sesion>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetSesionFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarClave(string usuario, string clave, string tipoClave)
@@ -109,8 +113,9 @@ namespace Risk.API.Services
             prms.Add("tipo_clave", tipoClave);
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_CLAVE, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
@@ -124,8 +129,9 @@ namespace Risk.API.Services
             prms.Add("numero_telefono", numeroTelefono);
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_USUARIO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarCredenciales(string usuario, string clave, string tipoClave)
@@ -136,8 +142,9 @@ namespace Risk.API.Services
             prms.Add("tipo_clave", tipoClave);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CREDENCIALES, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarSesion(string token)
@@ -146,8 +153,9 @@ namespace Risk.API.Services
             prms.Add("token", token);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_SESION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Usuario> DatosUsuario(string usuario)
@@ -156,8 +164,9 @@ namespace Risk.API.Services
             prms.Add("usuario", usuario);
 
             string rsp = base.ApiProcesarServicio(ID_DATOS_USUARIO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Usuario>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Usuario, YUsuario>(entityRsp, EntitiesMapper.GetUsuarioFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion)
@@ -166,8 +175,9 @@ namespace Risk.API.Services
             prms.Add("clave_aplicacion", claveAplicacion);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CLAVE_APLICACION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
-            return JsonConvert.DeserializeObject<Respuesta<Dato>>(rsp);
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
     }
 

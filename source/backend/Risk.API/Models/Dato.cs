@@ -22,10 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Dato en formato de texto")]
     public class Dato
     {
+        [SwaggerSchema("Contenido en formato de texto")]
         public string Contenido { get; set; }
     }
 }
