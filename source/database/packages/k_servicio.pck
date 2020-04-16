@@ -47,7 +47,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
                               i_mensaje    IN VARCHAR2,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL);
 
-  FUNCTION f_objeto_parse_json(i_json IN CLOB) RETURN anydata;
+  FUNCTION f_objeto_parse_json(i_json        IN CLOB,
+                               i_nombre_tipo IN VARCHAR2) RETURN anydata;
 
   FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB;
 
@@ -207,10 +208,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     io_respuesta.datos      := NULL;
   END;
 
-  FUNCTION f_objeto_parse_json(i_json IN CLOB) RETURN anydata IS
-    functionresult anydata;
+  FUNCTION f_objeto_parse_json(i_json        IN CLOB,
+                               i_nombre_tipo IN VARCHAR2) RETURN anydata IS
+    l_retorno anydata;
+    l_objeto  y_objeto;
   BEGIN
-    RETURN functionresult;
+    IF i_json IS NOT NULL AND i_nombre_tipo IS NOT NULL THEN
+      EXECUTE IMMEDIATE 'BEGIN :1 := ' || lower(i_nombre_tipo) ||
+                        '.parse_json(i_json => :2); END;'
+        USING OUT l_objeto, IN i_json;
+      l_retorno := anydata.convertobject(l_objeto);
+    END IF;
+    RETURN l_retorno;
   END;
 
   FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB IS
@@ -316,7 +325,13 @@ END;'
           END IF;
         WHEN 'O' THEN
           -- Object
-          l_parametro.valor := anydata.convertobject(y_dato.parse_json('{}'));
+          l_parametro.valor := f_objeto_parse_json(l_json_object.get(par.nombre)
+                                                   .to_clob,
+                                                   par.formato);
+          IF l_parametro.valor IS NULL AND par.valor_defecto IS NOT NULL THEN
+            l_parametro.valor := f_objeto_parse_json(par.valor_defecto,
+                                                     par.formato);
+          END IF;
         ELSE
           raise_application_error(-20000, 'Tipo de dato no soportado');
       END CASE;
