@@ -40,12 +40,16 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
 
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
-                           i_datos      IN anydata DEFAULT NULL);
+                           i_datos      IN y_objeto DEFAULT NULL);
 
   PROCEDURE p_respuesta_error(io_respuesta IN OUT y_respuesta,
                               i_codigo     IN VARCHAR2,
                               i_mensaje    IN VARCHAR2,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL);
+
+  FUNCTION f_objeto_parse_json(i_json IN CLOB) RETURN anydata;
+
+  FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB;
 
   FUNCTION f_procesar_parametros(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN y_parametros;
@@ -179,7 +183,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   END;
 
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
-                           i_datos      IN anydata DEFAULT NULL) IS
+                           i_datos      IN y_objeto DEFAULT NULL) IS
   BEGIN
     io_respuesta.codigo     := '0';
     io_respuesta.mensaje    := 'OK';
@@ -201,6 +205,35 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END IF;
     io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
     io_respuesta.datos      := NULL;
+  END;
+
+  FUNCTION f_objeto_parse_json(i_json IN CLOB) RETURN anydata IS
+    functionresult anydata;
+  BEGIN
+    RETURN functionresult;
+  END;
+
+  FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB IS
+    l_json     CLOB;
+    l_typeinfo anytype;
+    l_typecode PLS_INTEGER;
+  BEGIN
+    IF i_objeto IS NOT NULL THEN
+      l_typecode := i_objeto.gettype(l_typeinfo);
+      IF l_typecode = dbms_types.typecode_object THEN
+        EXECUTE IMMEDIATE 'DECLARE
+  l_retorno PLS_INTEGER;
+  l_anydata anydata := :1;
+  l_object  ' || i_objeto.gettypename || ';
+  l_clob    CLOB;
+BEGIN
+  l_retorno := l_anydata.getobject(obj => l_object);
+  :2        := l_object.to_json();
+END;'
+          USING IN i_objeto, OUT l_json;
+      END IF;
+    END IF;
+    RETURN l_json;
   END;
 
   FUNCTION f_procesar_parametros(i_id_servicio IN NUMBER,

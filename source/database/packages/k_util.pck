@@ -72,8 +72,6 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
-  FUNCTION f_json_objeto(i_objeto IN anydata) RETURN CLOB;
-
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
 
   FUNCTION base64decode(i_clob CLOB) RETURN BLOB;
@@ -222,29 +220,6 @@ END;';
         l_valor := NULL;
     END;
     RETURN l_valor;
-  END;
-
-  FUNCTION f_json_objeto(i_objeto IN anydata) RETURN CLOB IS
-    l_json     CLOB;
-    l_typeinfo anytype;
-    l_typecode PLS_INTEGER;
-  BEGIN
-    IF i_objeto IS NOT NULL THEN
-      l_typecode := i_objeto.gettype(l_typeinfo);
-      IF l_typecode = dbms_types.typecode_object THEN
-        EXECUTE IMMEDIATE 'DECLARE
-  l_retorno PLS_INTEGER;
-  l_anydata anydata := :1;
-  l_object  ' || i_objeto.gettypename || ';
-  l_clob    CLOB;
-BEGIN
-  l_retorno := l_anydata.getobject(obj => l_object);
-  :2        := l_object.to_json();
-END;'
-          USING IN i_objeto, OUT l_json;
-      END IF;
-    END IF;
-    RETURN l_json;
   END;
 
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB IS

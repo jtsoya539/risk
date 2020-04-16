@@ -407,7 +407,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
         RAISE k_servicio.ex_error_general;
     END;
   
-    k_servicio.p_respuesta_ok(l_rsp, anydata.convertobject(l_sesion));
+    k_servicio.p_respuesta_ok(l_rsp, l_sesion);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN
@@ -506,7 +506,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
         RAISE k_servicio.ex_error_general;
     END;
   
-    k_servicio.p_respuesta_ok(l_rsp, anydata.convertobject(l_sesion));
+    k_servicio.p_respuesta_ok(l_rsp, l_sesion);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN
@@ -650,7 +650,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     END LOOP;
     l_usuario.roles := l_roles;
   
-    k_servicio.p_respuesta_ok(l_rsp, anydata.convertobject(l_usuario));
+    k_servicio.p_respuesta_ok(l_rsp, l_usuario);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN

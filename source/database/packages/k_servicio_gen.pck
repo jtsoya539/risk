@@ -67,7 +67,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
       RAISE k_servicio.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, anydata.convertobject(l_dato));
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_general THEN
@@ -119,7 +119,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
       RAISE k_servicio.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, anydata.convertobject(l_dato));
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_general THEN

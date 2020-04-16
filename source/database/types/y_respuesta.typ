@@ -39,7 +39,7 @@ SOFTWARE.
 /** Lugar en el proceso. */
   lugar VARCHAR2(1000),
 /** Datos adicionales. */
-  datos anydata,
+  datos y_objeto,
 
 /**
 Constructor del objeto sin parámetros.
@@ -96,11 +96,10 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
     l_json_object.put('mensaje', self.mensaje);
     l_json_object.put('mensaje_bd', self.mensaje_bd);
     l_json_object.put('lugar', self.lugar);
-    IF k_util.f_json_objeto(self.datos) IS NOT NULL THEN
-      l_json_object.put('datos',
-                        json_element_t.parse(k_util.f_json_objeto(self.datos)));
-    ELSE
+    IF self.datos IS NULL THEN
       l_json_object.put_null('datos');
+    ELSE
+      l_json_object.put('datos', json_element_t.parse(self.datos.to_json));
     END IF;
     RETURN l_json_object.to_clob;
   END;

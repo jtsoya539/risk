@@ -46,6 +46,16 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_OBJETO_PARSE_JSON">f_objeto_parse_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_OBJETO_TO_JSON">f_objeto_to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -135,7 +145,7 @@ p_respuesta_ok
 </P>
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
-                         i_datos      IN anydata DEFAULT NULL)
+                         i_datos      IN y_objeto DEFAULT NULL)
 
 </PRE>
 <HR>
@@ -148,6 +158,24 @@ PROCEDURE p_respuesta_error(io_respuesta IN OUT y_respuesta,
                             i_codigo     IN VARCHAR2,
                             i_mensaje    IN VARCHAR2,
                             i_mensaje_bd IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="F_OBJETO_PARSE_JSON"></A>
+<P CLASS="TYPE_TITLE">
+f_objeto_parse_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_objeto_parse_json(i_json IN CLOB) RETURN anydata
+
+</PRE>
+<HR>
+<A NAME="F_OBJETO_TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+f_objeto_to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB
 
 </PRE>
 <HR>
