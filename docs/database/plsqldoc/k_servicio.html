@@ -166,7 +166,8 @@ PROCEDURE p_respuesta_error(io_respuesta IN OUT y_respuesta,
 f_objeto_parse_json
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_objeto_parse_json(i_json IN CLOB) RETURN anydata
+FUNCTION f_objeto_parse_json(i_json        IN CLOB,
+                             i_nombre_tipo IN VARCHAR2) RETURN anydata
 
 </PRE>
 <HR>
