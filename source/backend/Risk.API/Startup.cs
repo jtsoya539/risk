@@ -62,23 +62,24 @@ namespace Risk.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            //Connect descriptor and net service name entry
-            //Enter the database machine port, hostname/IP, service name, and distinguished name
-            OracleConfiguration.OracleDataSources.Add("autonomous", "(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=q7m0i1h19jy7xqj_microcred_tp.atp.oraclecloud.com))(security=(ssl_server_cert_dn=\"CN=adb.sa-saopaulo-1.oraclecloud.com,OU=Oracle ADB SAOPAULO,O=Oracle Corporation,L=Redwood City,ST=California,C=US\")))");
-
-            string walletPath = Environment.GetEnvironmentVariable("HOME") + @"\Wallet_microcred\cwallet.sso";
-            if (!File.Exists(walletPath))
+            string oracleLocation = Configuration["OracleConfiguration:OracleLocation"];
+            if (!Directory.Exists(oracleLocation))
             {
-                throw new Exception($"El archivo {walletPath} no existe");
+                throw new Exception($"El directorio {oracleLocation} no existe");
             }
 
+            //Enter directory where the tnsnames.ora and sqlnet.ora files are located
+            OracleConfiguration.TnsAdmin = oracleLocation;
+
             //Enter directory where wallet is stored locally
-            //OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
-            OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{walletPath}\")))";
+            OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{oracleLocation}\")))";
 
             string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
+            OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
+            //connStrBuilder.MinPoolSize = 10;
+            //connStrBuilder.ConnectionTimeout = 300;
 
-            OracleConnection con = new OracleConnection(connectionString);
+            OracleConnection con = new OracleConnection(connStrBuilder.ToString());
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IAutService, AutService>();
@@ -87,8 +88,9 @@ namespace Risk.API
             IGenService genService = serviceProvider.GetService<IGenService>();
             IAutService autService = serviceProvider.GetService<IAutService>();
 
-            var respValorParametro = genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
+            //var respValorParametro = genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
+            //var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
+            var signingKey = Encoding.ASCII.GetBytes("9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=");
 
             services.AddAuthentication(x =>
             {
