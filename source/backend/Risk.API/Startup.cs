@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,8 +66,15 @@ namespace Risk.API
             //Enter the database machine port, hostname/IP, service name, and distinguished name
             OracleConfiguration.OracleDataSources.Add("autonomous", "(description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=q7m0i1h19jy7xqj_microcred_tp.atp.oraclecloud.com))(security=(ssl_server_cert_dn=\"CN=adb.sa-saopaulo-1.oraclecloud.com,OU=Oracle ADB SAOPAULO,O=Oracle Corporation,L=Redwood City,ST=California,C=US\")))");
 
+            string walletPath = Environment.GetEnvironmentVariable("HOME") + @"\Wallet_microcred\cwallet.sso";
+            if (!File.Exists(walletPath))
+            {
+                throw new Exception($"El archivo {walletPath} no existe");
+            }
+
             //Enter directory where wallet is stored locally
-            OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
+            //OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{Configuration["OracleConfiguration:WalletLocation"]}\")))";
+            OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{walletPath}\")))";
 
             string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
 
