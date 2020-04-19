@@ -76,7 +76,7 @@ namespace Risk.API
 
             string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
-            //connStrBuilder.MinPoolSize = 10;
+            connStrBuilder.MinPoolSize = 5;
             //connStrBuilder.ConnectionTimeout = 300;
 
             OracleConnection con = new OracleConnection(connStrBuilder.ToString());
