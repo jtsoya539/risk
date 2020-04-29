@@ -88,7 +88,7 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
-  c_algoritmo      CONSTANT PLS_INTEGER := sys.dbms_crypto.hmac_sh1;
+  c_algoritmo      CONSTANT PLS_INTEGER := dbms_crypto.hmac_sh1;
   c_iteraciones    CONSTANT PLS_INTEGER := 4096;
   c_longitud_bytes CONSTANT PLS_INTEGER := 32;
 
@@ -123,9 +123,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                                                   utl_raw.big_endian));
       l_xorsum := NULL;
       FOR j IN 1 .. p_count LOOP
-        l_last := sys.dbms_crypto.mac(l_last,
-                                      c_algoritmo,
-                                      utl_raw.cast_to_raw(p_password));
+        l_last := dbms_crypto.mac(l_last,
+                                  c_algoritmo,
+                                  utl_raw.cast_to_raw(p_password));
         IF l_xorsum IS NULL THEN
           l_xorsum := l_last;
         ELSE
@@ -441,7 +441,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Genera salt
-    l_salt := rawtohex(sys.dbms_crypto.randombytes(c_longitud_bytes));
+    l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
     -- Genera hash
     l_hash := pbkdf2(i_clave, l_salt, c_iteraciones, c_longitud_bytes);
   
@@ -497,7 +497,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Genera salt
-    l_salt := rawtohex(sys.dbms_crypto.randombytes(c_longitud_bytes));
+    l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
     -- Genera hash
     l_hash := pbkdf2(i_clave_nueva, l_salt, c_iteraciones, c_longitud_bytes);
   
