@@ -29,7 +29,7 @@ accept v_generar_auditoria char default 'N' prompt 'Generar campos y triggers de
 
 DECLARE
   CURSOR cr_tablas IS
-    SELECT lower(table_name) tabla
+    SELECT lower(table_name) AS tabla
       FROM user_tables
      WHERE lower(table_name) LIKE 't\_%' ESCAPE '\';
 BEGIN
