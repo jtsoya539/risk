@@ -2,12 +2,12 @@ create table T_SERVICIO_PARAMETROS
 (
   id_servicio   NUMBER(3) not null,
   nombre        VARCHAR2(100) not null,
-  direccion     CHAR(1) not null,
-  tipo_dato     CHAR(1) not null,
+  direccion     VARCHAR2(1) not null,
+  tipo_dato     VARCHAR2(1) not null,
   formato       VARCHAR2(100),
-  obligatorio   CHAR(1),
+  obligatorio   VARCHAR2(1),
   valor_defecto VARCHAR2(1000),
-  activo        CHAR(1) default 'N' not null,
+  activo        VARCHAR2(1) default 'N' not null,
   orden         NUMBER(3) not null
 )
 ;

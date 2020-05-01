@@ -4,7 +4,7 @@ create table T_PERSONAS
   nombre           VARCHAR2(100),
   apellido         VARCHAR2(100),
   nombre_completo  VARCHAR2(200),
-  tipo_persona     CHAR(1),
+  tipo_persona     VARCHAR2(1),
   tipo_documento   VARCHAR2(3),
   numero_documento VARCHAR2(20),
   id_pais          NUMBER(3),

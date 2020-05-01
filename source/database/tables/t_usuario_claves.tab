@@ -1,8 +1,8 @@
 create table T_USUARIO_CLAVES
 (
   id_usuario                 NUMBER(10) not null,
-  tipo                       CHAR(1) not null,
-  estado                     CHAR(1),
+  tipo                       VARCHAR2(1) not null,
+  estado                     VARCHAR2(1),
   hash                       VARCHAR2(500),
   salt                       VARCHAR2(500),
   algoritmo                  VARCHAR2(30),

@@ -2,8 +2,8 @@ create table T_APLICACIONES
 (
   id_aplicacion  VARCHAR2(5) not null,
   nombre         VARCHAR2(100),
-  tipo           CHAR(1),
-  activo         CHAR(1) default 'N' not null,
+  tipo           VARCHAR2(1),
+  activo         VARCHAR2(1) default 'N' not null,
   clave          VARCHAR2(50),
   detalle        VARCHAR2(2000),
   version_actual VARCHAR2(10)

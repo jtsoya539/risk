@@ -2,7 +2,7 @@ create table T_ROLES
 (
   id_rol  NUMBER(3) not null,
   nombre  VARCHAR2(100),
-  activo  CHAR(1) default 'N' not null,
+  activo  VARCHAR2(1) default 'N' not null,
   detalle VARCHAR2(2000)
 )
 ;

@@ -3,7 +3,7 @@ create table T_SISTEMAS
   id_sistema     VARCHAR2(5) not null,
   nombre         VARCHAR2(100),
   detalle        VARCHAR2(2000),
-  activo         CHAR(1) default 'N' not null,
+  activo         VARCHAR2(1) default 'N' not null,
   fecha_actual   DATE,
   version_actual VARCHAR2(10)
 )

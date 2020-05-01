@@ -2,10 +2,10 @@ create table T_ROL_PARAMETROS
 (
   id_rol       NUMBER(3) not null,
   id_parametro VARCHAR2(50) not null,
-  consultar    CHAR(1) default 'N' not null,
-  insertar     CHAR(1) default 'N' not null,
-  actualizar   CHAR(1) default 'N' not null,
-  eliminar     CHAR(1) default 'N' not null
+  consultar    VARCHAR2(1) default 'N' not null,
+  insertar     VARCHAR2(1) default 'N' not null,
+  actualizar   VARCHAR2(1) default 'N' not null,
+  eliminar     VARCHAR2(1) default 'N' not null
 )
 ;
 comment on table T_ROL_PARAMETROS
