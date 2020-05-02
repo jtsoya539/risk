@@ -21,7 +21,7 @@ namespace Risk.API.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseOracle("Name=OracleXE");
+                throw new Exception("RiskDbContext no configurado");
             }
         }
 
