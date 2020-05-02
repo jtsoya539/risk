@@ -76,8 +76,13 @@ namespace Risk.API
 
             string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
-            connStrBuilder.MinPoolSize = 5;
-            //connStrBuilder.ConnectionTimeout = 300;
+
+            // Connection Pooling Configuration
+            connStrBuilder.Pooling = true; // Connection pooling.
+            connStrBuilder.MinPoolSize = 5; // Minimum number of connections in a pool.
+            connStrBuilder.MaxPoolSize = 5; // Maximum number of connections in a pool.
+            //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
+            //connStrBuilder.ConnectionTimeout = 30; // Maximum time (in seconds) to wait for a free connection from the pool.
 
             OracleConnection con = new OracleConnection(connStrBuilder.ToString());
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
