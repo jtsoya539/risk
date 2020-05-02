@@ -62,6 +62,8 @@ namespace Risk.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddCors();
+
             string oracleLocation = Configuration["OracleConfiguration:OracleLocation"];
             if (!Directory.Exists(oracleLocation))
             {
@@ -81,7 +83,7 @@ namespace Risk.API
             connStrBuilder.Pooling = true; // Connection pooling.
             connStrBuilder.MinPoolSize = 5; // Minimum number of connections in a pool.
             connStrBuilder.MaxPoolSize = 5; // Maximum number of connections in a pool.
-            //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
+            connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
             //connStrBuilder.ConnectionTimeout = 30; // Maximum time (in seconds) to wait for a free connection from the pool.
 
             OracleConnection con = new OracleConnection(connStrBuilder.ToString());
@@ -191,6 +193,10 @@ namespace Risk.API
             app.UseRiskApplicationKeyValidator();
 
             app.UseAuthentication();
+
+            app.UseCors(builder =>
+               builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials()
+            );
 
             app.UseMvc();
         }

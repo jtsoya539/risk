@@ -32,7 +32,10 @@ namespace Risk.API.Filters
     {
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
-            swaggerDoc.Servers = new List<OpenApiServer>() { new OpenApiServer { Description = "localhost", Url = "http://localhost:5000" } };
+            swaggerDoc.Servers = new List<OpenApiServer>() {
+                new OpenApiServer { Description = "localhost", Url = "http://localhost:5000" },
+                new OpenApiServer { Description = "Azure", Url = "https://risk-project.azurewebsites.net" }
+            };
         }
     }
 }
