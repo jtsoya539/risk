@@ -68,15 +68,18 @@ namespace Risk.API.Services
 
         public string ApiProcesarServicio(int idServicio, string parametros)
         {
-            SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
+            //SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             string respuesta = null;
             if (idServicio > 0)
             {
                 OracleConnection con = GetOracleConnection();
+                if (con.State != ConnectionState.Open)
+                {
+                    con.Open();
+                }
 
                 using (OracleCommand cmd = con.CreateCommand())
                 {
-                    con.Open();
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = SQL_PROCESAR_SERVICIO;
                     cmd.BindByName = true;
@@ -95,8 +98,9 @@ namespace Risk.API.Services
                     return_value.Dispose();
                     i_id_servicio.Dispose();
                     i_parametros.Dispose();
-                    con.Close();
                 }
+
+                con.Close();
             }
             return respuesta;
         }

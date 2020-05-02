@@ -87,6 +87,8 @@ namespace Risk.API
             //connStrBuilder.ConnectionTimeout = 30; // Maximum time (in seconds) to wait for a free connection from the pool.
 
             OracleConnection con = new OracleConnection(connStrBuilder.ToString());
+            OracleConnection.ClearAllPools();
+
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IAutService, AutService>();
