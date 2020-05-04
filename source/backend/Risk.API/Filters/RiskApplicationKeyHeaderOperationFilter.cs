@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -32,23 +33,28 @@ namespace Risk.API.Filters
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            if (operation.Parameters == null)
-            {
-                operation.Parameters = new List<OpenApiParameter>();
-            }
+            var descriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
 
-            operation.Parameters.Add(new OpenApiParameter
+            if (descriptor != null && !descriptor.ActionName.Equals("VersionSistema"))
             {
-                Name = "Risk-App-Key",
-                Description = "Clave de la aplicación habilitada para consumir los servicios",
-                In = ParameterLocation.Header,
-                Required = true,
-                Schema = new OpenApiSchema
+                if (operation.Parameters == null)
                 {
-                    Type = "string",
-                    Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, "{{Risk-App-Key}}")
+                    operation.Parameters = new List<OpenApiParameter>();
                 }
-            });
+
+                operation.Parameters.Add(new OpenApiParameter
+                {
+                    Name = "Risk-App-Key",
+                    Description = "Clave de la aplicación habilitada para consumir los servicios",
+                    In = ParameterLocation.Header,
+                    Required = true,
+                    Schema = new OpenApiSchema
+                    {
+                        Type = "string",
+                        Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, "{{Risk-App-Key}}")
+                    }
+                });
+            }
         }
     }
 }
