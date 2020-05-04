@@ -119,12 +119,6 @@ drop sequence s_id_correo_adjunto;
 drop sequence s_id_mensaje;
 
 prompt
-prompt Borrando logs...
-prompt -----------------------------------
-prompt
-exec plog.purge;
-
-prompt
 prompt Vaciando papelera de reciclaje...
 prompt -----------------------------------
 prompt
