@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -30,12 +31,24 @@ namespace Risk.API.Filters
 {
     public class RiskDocumentFilter : IDocumentFilter
     {
+        private readonly IConfiguration Configuration;
+
+        public RiskDocumentFilter(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
-            swaggerDoc.Servers = new List<OpenApiServer>() {
-                new OpenApiServer { Description = "localhost", Url = "http://localhost:5000" },
-                new OpenApiServer { Description = "Azure", Url = "https://risk-project.azurewebsites.net" }
-            };
+            List<OpenApiServer> openApiServers = new List<OpenApiServer>();
+
+            var servers = Configuration.GetSection("Servers").GetChildren();
+            foreach (var item in servers)
+            {
+                openApiServers.Add(new OpenApiServer { Description = item.Key, Url = item.Value });
+            }
+
+            swaggerDoc.Servers = openApiServers;
         }
     }
 }
