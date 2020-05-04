@@ -4,8 +4,8 @@ DECLARE
   l_rsp_clob CLOB;
   l_rsp_json json_object_t;
 BEGIN
-  l_rsp_clob    := k_servicio.api_procesar_servicio(i_id_servicio => :i_id_servicio,
-                                                    i_parametros  => :i_parametros);
+  l_rsp_clob    := k_servicio.f_procesar_servicio(i_id_servicio => :i_id_servicio,
+                                                  i_parametros  => :i_parametros);
   l_rsp_json    := json_object_t.parse(l_rsp_clob);
   :o_codigo     := l_rsp_json.get_string('codigo');
   :o_mensaje    := l_rsp_json.get_string('mensaje');
@@ -15,26 +15,24 @@ END;
 6
 i_id_servicio
 1
-4
+13
 4
 i_parametros
-1
-{"usuario":"jmeza","clave":"123456"}
+0
 5
 o_codigo
 1
-999
+0
 5
 o_mensaje
 1
-Usuario ya existe
+OK
 5
 o_mensaje_bd
-1
-ORA-20000: Usuario ya existe
+0
 5
 o_lugar
 1
-Registrando usuario
+Obteniendo versión del sistema
 5
 0

@@ -57,6 +57,23 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
+        [HttpGet("VersionSistema")]
+        [SwaggerOperation(Summary = "VersionSistema", Description = "Servicio para obtener la versión actual del sistema", OperationId = "VersionSistema")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
+        public IActionResult VersionSistema()
+        {
+            var respuesta = _genService.VersionSistema();
+            if (!respuesta.Codigo.Equals("0"))
+            {
+                return BadRequest(respuesta);
+            }
+            return Ok(respuesta);
+        }
+
         [HttpGet("ValorParametro")]
         [SwaggerOperation(Summary = "ValorParametro", Description = "Servicio para obtener el valor de un parámetro", OperationId = "ValorParametro")]
         [Produces(MediaTypeNames.Application.Json)]

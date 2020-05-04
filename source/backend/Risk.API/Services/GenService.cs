@@ -39,8 +39,20 @@ namespace Risk.API.Services
         private const int ID_VALOR_PARAMETRO = 8;
         private const int ID_SIGNIFICADO_CODIGO = 9;
 
+        private const int ID_VERSION_SISTEMA = 13;
+
         public GenService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
+        }
+
+        public Respuesta<Dato> VersionSistema()
+        {
+            JObject prms = new JObject();
+
+            string rsp = base.ApiProcesarServicio(ID_VERSION_SISTEMA, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValorParametro(string parametro)
@@ -66,5 +78,4 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
     }
-
 }

@@ -30,6 +30,8 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
   -------------------------------------------------------------------------------
   */
 
+  FUNCTION version_sistema(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION valor_parametro(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION significado_codigo(i_parametros IN y_parametros)
@@ -38,6 +40,41 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
+
+  FUNCTION version_sistema(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp  y_respuesta;
+    l_dato y_dato;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Obteniendo versión del sistema';
+    BEGIN
+      SELECT version_actual
+        INTO l_dato.contenido
+        FROM t_sistemas
+       WHERE id_sistema = 'RISK';
+    EXCEPTION
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'gen0001',
+                                     'Error al obtener versión del sistema');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   k_servicio.c_error_inesperado,
+                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado),
+                                   dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
 
   FUNCTION valor_parametro(i_parametros IN y_parametros) RETURN y_respuesta IS
     l_rsp  y_respuesta;

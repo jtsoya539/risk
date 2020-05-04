@@ -28,6 +28,7 @@ namespace Risk.API.Services
 {
     public interface IGenService
     {
+        Respuesta<Dato> VersionSistema();
         Respuesta<Dato> ValorParametro(string parametro);
         Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
     }
