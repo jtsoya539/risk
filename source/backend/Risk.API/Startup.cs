@@ -65,24 +65,27 @@ namespace Risk.API
             services.AddCors();
 
             string oracleLocation = Configuration["OracleConfiguration:OracleLocation"];
-            if (!Directory.Exists(oracleLocation))
+            if (!oracleLocation.Equals(string.Empty))
             {
-                throw new Exception($"El directorio {oracleLocation} no existe");
+                if (!Directory.Exists(oracleLocation))
+                {
+                    throw new Exception($"El directorio {oracleLocation} no existe");
+                }
+
+                //Enter directory where the tnsnames.ora and sqlnet.ora files are located
+                OracleConfiguration.TnsAdmin = oracleLocation;
+
+                //Enter directory where wallet is stored locally
+                OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{oracleLocation}\")))";
             }
-
-            //Enter directory where the tnsnames.ora and sqlnet.ora files are located
-            OracleConfiguration.TnsAdmin = oracleLocation;
-
-            //Enter directory where wallet is stored locally
-            OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{oracleLocation}\")))";
 
             string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
 
             // Connection Pooling Configuration
             connStrBuilder.Pooling = true; // Connection pooling.
-            connStrBuilder.MinPoolSize = 5; // Minimum number of connections in a pool.
-            connStrBuilder.MaxPoolSize = 5; // Maximum number of connections in a pool.
+            connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
+            connStrBuilder.MaxPoolSize = 3; // Maximum number of connections in a pool.
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
             //connStrBuilder.ConnectionTimeout = 30; // Maximum time (in seconds) to wait for a free connection from the pool.
 
