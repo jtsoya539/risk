@@ -62,6 +62,7 @@ plugin plsqldoc generate t_aplicaciones;
 plugin plsqldoc generate t_ciudades;
 plugin plsqldoc generate t_correo_adjuntos;
 plugin plsqldoc generate t_correos;
+plugin plsqldoc generate t_dispositivos;
 plugin plsqldoc generate t_errores;
 plugin plsqldoc generate t_mensajes;
 plugin plsqldoc generate t_paises;

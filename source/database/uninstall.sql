@@ -83,6 +83,7 @@ prompt
 drop table t_mensajes cascade constraints;
 drop table t_correo_adjuntos cascade constraints;
 drop table t_correos cascade constraints;
+drop table t_dispositivos cascade constraints;
 drop table t_usuario_claves cascade constraints;
 drop table t_sesiones cascade constraints;
 drop table t_servicio_logs cascade constraints;
@@ -115,6 +116,7 @@ drop sequence s_id_servicio;
 drop sequence s_id_servicio_log;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
+drop sequence s_id_dispositivo;
 drop sequence s_id_correo;
 drop sequence s_id_correo_adjunto;
 drop sequence s_id_mensaje;

@@ -1,0 +1,44 @@
+create table T_DISPOSITIVOS
+(
+  id_dispositivo            NUMBER(15) not null,
+  token_dispositivo         VARCHAR2(500) not null,
+  fecha_ultimo_acceso       DATE,
+  id_aplicacion             VARCHAR2(5),
+  nombre_sistema_operativo  VARCHAR2(100),
+  version_sistema_operativo VARCHAR2(100),
+  tipo                      VARCHAR2(100),
+  nombre_navegador          VARCHAR2(100),
+  version_navegador         VARCHAR2(100),
+  token_notificacion        VARCHAR2(500)
+)
+;
+comment on table T_DISPOSITIVOS
+  is 'Dispositivos';
+comment on column T_DISPOSITIVOS.id_dispositivo
+  is 'Identificador del dispositivo';
+comment on column T_DISPOSITIVOS.token_dispositivo
+  is 'Token del dispositivo';
+comment on column T_DISPOSITIVOS.fecha_ultimo_acceso
+  is 'Fecha del ultimo acceso al dispositivo';
+comment on column T_DISPOSITIVOS.id_aplicacion
+  is 'Aplicacion relacionada al dispositivo';
+comment on column T_DISPOSITIVOS.nombre_sistema_operativo
+  is 'Nombre del sistema operativo';
+comment on column T_DISPOSITIVOS.version_sistema_operativo
+  is 'Version del sistema operativo';
+comment on column T_DISPOSITIVOS.tipo
+  is 'Tipo del dispositivo';
+comment on column T_DISPOSITIVOS.nombre_navegador
+  is 'Nombre del navegador';
+comment on column T_DISPOSITIVOS.version_navegador
+  is 'Version del navegador';
+comment on column T_DISPOSITIVOS.token_notificacion
+  is 'Token de notificacion del dispositivo';
+alter table T_DISPOSITIVOS
+  add constraint PK_DISPOSITIVOS primary key (ID_DISPOSITIVO);
+alter table T_DISPOSITIVOS
+  add constraint UK_DISPOSITIVOS_TOKEN unique (TOKEN_DISPOSITIVO);
+alter table T_DISPOSITIVOS
+  add constraint FK_DISPOSITIVOS_APLICACIONES foreign key (ID_APLICACION)
+  references T_APLICACIONES (ID_APLICACION);
+

@@ -57,6 +57,7 @@ prompt
 @@sequences/s_id_servicio_log.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
+@@sequences/s_id_dispositivo.seq
 @@sequences/s_id_correo.seq
 @@sequences/s_id_correo_adjunto.seq
 @@sequences/s_id_mensaje.seq
@@ -84,6 +85,7 @@ prompt
 @@tables/t_servicio_logs.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
+@@tables/t_dispositivos.tab
 @@tables/t_correos.tab
 @@tables/t_correo_adjuntos.tab
 @@tables/t_mensajes.tab
@@ -131,6 +133,7 @@ prompt
 @@triggers/gs_servicio_logs.trg
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
+@@triggers/gs_dispositivos.trg
 @@triggers/gs_correos.trg
 @@triggers/gs_correo_adjuntos.trg
 @@triggers/gs_mensajes.trg
