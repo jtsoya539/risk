@@ -1,0 +1,259 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_dispositivo</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_dispositivo">
+ <META name="description" content="Agrupa datos de un dispositivo.">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_dispositivo</P>
+Agrupa datos de un dispositivo.<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:54:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_DISPOSITIVO">id_dispositivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Identificador del dispositivo
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TOKEN_DISPOSITIVO">token_dispositivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NOMBRE_SISTEMA_OPERATIVO">nombre_sistema_operativo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#VERSION_SISTEMA_OPERATIVO">version_sistema_operativo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TIPO">tipo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NOMBRE_NAVEGADOR">nombre_navegador</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#VERSION_NAVEGADOR">version_navegador</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TOKEN_NOTIFICACION">token_notificacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_DISPOSITIVO">y_dispositivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Constructor del objeto sin par&#225;metros.
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#PARSE_JSON">parse_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el objeto serializado en formato JSON.
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="ID_DISPOSITIVO"></A>
+<P CLASS="TYPE_TITLE">
+id_dispositivo
+</P>
+<PRE CLASS="DECL_TEXT">
+id_dispositivo NUMBER(15)
+</PRE>
+<P CLASS="DESC_TEXT">
+Identificador del dispositivo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="TOKEN_DISPOSITIVO"></A>
+<P CLASS="TYPE_TITLE">
+token_dispositivo
+</P>
+<PRE CLASS="DECL_TEXT">
+token_dispositivo VARCHAR2(500)
+</PRE>
+<HR>
+<A NAME="NOMBRE_SISTEMA_OPERATIVO"></A>
+<P CLASS="TYPE_TITLE">
+nombre_sistema_operativo
+</P>
+<PRE CLASS="DECL_TEXT">
+nombre_sistema_operativo VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="VERSION_SISTEMA_OPERATIVO"></A>
+<P CLASS="TYPE_TITLE">
+version_sistema_operativo
+</P>
+<PRE CLASS="DECL_TEXT">
+version_sistema_operativo VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="TIPO"></A>
+<P CLASS="TYPE_TITLE">
+tipo
+</P>
+<PRE CLASS="DECL_TEXT">
+tipo VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="NOMBRE_NAVEGADOR"></A>
+<P CLASS="TYPE_TITLE">
+nombre_navegador
+</P>
+<PRE CLASS="DECL_TEXT">
+nombre_navegador VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="VERSION_NAVEGADOR"></A>
+<P CLASS="TYPE_TITLE">
+version_navegador
+</P>
+<PRE CLASS="DECL_TEXT">
+version_navegador VARCHAR2(100)
+</PRE>
+<HR>
+<A NAME="TOKEN_NOTIFICACION"></A>
+<P CLASS="TYPE_TITLE">
+token_notificacion
+</P>
+<PRE CLASS="DECL_TEXT">
+token_notificacion VARCHAR2(500)
+</PRE>
+<HR>
+<A NAME="Y_DISPOSITIVO"></A>
+<P CLASS="TYPE_TITLE">
+y_dispositivo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_dispositivo RETURN SELF AS RESULT
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Constructor del objeto sin par&#225;metros.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:08:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Objeto del tipo y_dispositivo.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="PARSE_JSON"></A>
+<P CLASS="TYPE_TITLE">
+parse_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el objeto serializado en formato JSON.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 09:42:09<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+JSON con los atributos del objeto.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

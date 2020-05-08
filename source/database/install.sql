@@ -105,6 +105,7 @@ prompt
 @@types/y_roles.typ
 @@types/y_usuario.typ
 @@types/y_sesion.typ
+@@types/y_dispositivo.typ
 
 prompt
 prompt Creando paquetes...

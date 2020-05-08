@@ -88,6 +88,7 @@ prompt -----------------------------------
 prompt
 plugin plsqldoc generate y_archivo;
 plugin plsqldoc generate y_dato;
+plugin plsqldoc generate y_dispositivo;
 plugin plsqldoc generate y_objeto;
 plugin plsqldoc generate y_objetos;
 plugin plsqldoc generate y_parametro;

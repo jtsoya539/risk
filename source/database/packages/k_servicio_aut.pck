@@ -53,6 +53,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION datos_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
@@ -661,6 +664,63 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
       k_servicio.p_respuesta_error(l_rsp,
                                    k_servicio.c_error_inesperado,
                                    k_error.f_mensaje_error(k_servicio.c_error_inesperado),
+                                   dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp         y_respuesta;
+    l_retorno     PLS_INTEGER;
+    l_anydata     anydata;
+    l_dispositivo y_dispositivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'clave_aplicacion')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0001',
+                                   'Debe ingresar clave_aplicacion');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    l_anydata := k_servicio.f_valor_parametro(i_parametros, 'dispositivo');
+    l_retorno := l_anydata.getobject(l_dispositivo);
+    IF l_dispositivo IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0002',
+                                   'Debe ingresar dispositivo');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    l_rsp.lugar := 'Registrando dispositivo';
+    k_autenticacion.p_registrar_dispositivo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                'clave_aplicacion')),
+                                            l_dispositivo.token_dispositivo,
+                                            l_dispositivo.token_notificacion,
+                                            l_dispositivo.nombre_sistema_operativo,
+                                            l_dispositivo.version_sistema_operativo,
+                                            l_dispositivo.tipo,
+                                            l_dispositivo.nombre_navegador,
+                                            l_dispositivo.version_navegador);
+  
+    k_servicio.p_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   k_servicio.c_error_inesperado,
+                                   CASE
+                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                   k_error.c_user_defined_error THEN
+                                   utl_call_stack.error_msg(1) WHEN
+                                   k_error.c_oracle_predefined_error THEN
+                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
                                    dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;

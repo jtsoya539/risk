@@ -64,6 +64,7 @@ prompt
 prompt Borrando types...
 prompt -----------------------------------
 prompt
+drop type y_dispositivo force;
 drop type y_sesion force;
 drop type y_usuario force;
 drop type y_roles force;
