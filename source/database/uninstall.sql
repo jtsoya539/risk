@@ -73,6 +73,7 @@ drop type y_parametros force;
 drop type y_parametro force;
 drop type y_archivo force;
 drop type y_dato force;
+drop type y_objetos force;
 drop type y_objeto force;
 
 prompt
