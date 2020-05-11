@@ -259,5 +259,15 @@ namespace Risk.API.Controllers
             var respValidarSesion = _autService.ValidarSesion(token);
             return Ok(respValidarSesion);
         }
+
+        [AllowAnonymous]
+        [HttpPost("RegistrarDispositivo")]
+        [SwaggerOperation(Summary = "RegistrarDispositivo", Description = "Description", OperationId = "RegistrarDispositivo")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
+        {
+            var respCambiarClave = _autService.RegistrarDispositivo(Request.Headers["Risk-App-Key"], requestBody.Dispositivo);
+            return Ok(respCambiarClave);
+        }
     }
 }

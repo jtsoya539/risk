@@ -46,6 +46,7 @@ namespace Risk.API.Services
         private const int ID_DATOS_USUARIO = 10;
         private const int ID_REFRESCAR_SESION = 11;
         private const int ID_VALIDAR_CLAVE_APLICACION = 12;
+        private const int ID_REGISTRAR_DISPOSITIVO = 14;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -175,6 +176,18 @@ namespace Risk.API.Services
             prms.Add("clave_aplicacion", claveAplicacion);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_CLAVE_APLICACION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo)
+        {
+            JObject prms = new JObject();
+            prms.Add("clave_aplicacion", claveAplicacion);
+            prms.Add("dispositivo", JToken.FromObject(EntitiesMapper.GetYDispositivoFromModel(dispositivo)));
+
+            string rsp = base.ApiProcesarServicio(ID_REGISTRAR_DISPOSITIVO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
