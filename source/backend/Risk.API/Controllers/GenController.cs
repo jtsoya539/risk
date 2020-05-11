@@ -59,11 +59,11 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("VersionSistema")]
-        [SwaggerOperation(Summary = "VersionSistema", Description = "Servicio para obtener la versión actual del sistema", OperationId = "VersionSistema")]
+        [SwaggerOperation(OperationId = "VersionSistema", Summary = "VersionSistema", Description = "Obtiene la versión actual del sistema")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
         public IActionResult VersionSistema()
         {
             var respuesta = _genService.VersionSistema();
@@ -75,11 +75,11 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("ValorParametro")]
-        [SwaggerOperation(Summary = "ValorParametro", Description = "Servicio para obtener el valor de un parámetro", OperationId = "ValorParametro")]
+        [SwaggerOperation(OperationId = "ValorParametro", Summary = "ValorParametro", Description = "Obtiene el valor de un parámetro")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
         public IActionResult ValorParametro([FromQuery, SwaggerParameter(Description = "Identificador del parámetro", Required = true)] string parametro)
         {
             var respuesta = _genService.ValorParametro(parametro);
@@ -91,11 +91,11 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("SignificadoCodigo")]
-        [SwaggerOperation(Summary = "SignificadoCodigo", Description = "Servicio para obtener el significado de un código dentro de un dominio", OperationId = "SignificadoCodigo")]
+        [SwaggerOperation(OperationId = "SignificadoCodigo", Summary = "SignificadoCodigo", Description = "Obtiene el significado de un código dentro de un dominio")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Sin permiso para realizar operación")]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
         public IActionResult SignificadoCodigo([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio, [FromQuery, SwaggerParameter(Description = "Código", Required = true)] string codigo)
         {
             var respuesta = _genService.SignificadoCodigo(dominio, codigo);
