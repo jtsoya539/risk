@@ -166,8 +166,9 @@ namespace Risk.API
                         new string[] { }
                     }
                 });
-                c.DocumentFilter<RiskDocumentFilter>();
+                c.DocumentFilter<ServersDocumentFilter>();
                 c.OperationFilter<RiskApplicationKeyHeaderOperationFilter>();
+                c.SchemaFilter<NotNullableSchemaFilter>();
             });
         }
 

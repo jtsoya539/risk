@@ -29,11 +29,11 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters
 {
-    public class RiskDocumentFilter : IDocumentFilter
+    public class ServersDocumentFilter : IDocumentFilter
     {
         private readonly IConfiguration Configuration;
 
-        public RiskDocumentFilter(IConfiguration configuration)
+        public ServersDocumentFilter(IConfiguration configuration)
         {
             Configuration = configuration;
         }
