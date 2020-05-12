@@ -1,13 +1,16 @@
 Risk.API.Client
 
-// Descargar el generador de clientes openapi-generator-cli.jar
-Invoke-WebRequest -OutFile openapi-generator-cli.jar https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.2.3/openapi-generator-cli-4.2.3.jar
+// Descargar el generador de clientes openapi-generator-cli.jar o swagger-codegen-cli.jar
+Invoke-WebRequest -OutFile openapi-generator-cli.jar https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.3.1/openapi-generator-cli-4.3.1.jar
+Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.19/swagger-codegen-cli-3.0.19.jar
 
 java -jar openapi-generator-cli.jar help
+java -jar swagger-codegen-cli.jar version
 
-// Generar cliente .NET
-java -jar openapi-generator-cli.jar generate -i http://localhost:5000/swagger/v1/swagger.json -o Risk.API.Client -g csharp-netcore -c config.json
-java -jar openapi-generator-cli.jar generate -i http://localhost:5000/swagger/v1/swagger.json -g csharp-netcore -c config.json
+// Generar cliente
+java -jar openapi-generator-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.Client -g csharp-netcore -c config.json
+java -jar swagger-codegen-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.JavaClient -l java
+
 
 // Agregar los metadatos del paquete NuGet en Risk.API.Client.csproj
   <PropertyGroup>
