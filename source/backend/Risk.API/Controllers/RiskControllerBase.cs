@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Risk.API.Models;
 
@@ -29,19 +30,22 @@ namespace Risk.API.Controllers
 {
     public class RiskControllerBase : ControllerBase
     {
+        public const string CODIGO_OK = "0";
+        public const string CODIGO_ERROR_INESPERADO = "api9999";
+        public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
+
         public IActionResult ProcesarRespuesta<T>(Respuesta<T> respuesta)
         {
-            // https://httpstatuses.com/
-            if (respuesta.Codigo.Equals("0"))
+            if (respuesta.Codigo.Equals(CODIGO_OK))
             {
                 return Ok(respuesta); // 200 OK
             }
             else
             {
-                if (respuesta.Codigo.Equals("api9999"))
-                    return StatusCode(500, respuesta); // 500 Internal Server Error
-                else if (respuesta.Codigo.Equals("api0001") || respuesta.Codigo.Equals("api0003"))
-                    return StatusCode(501, respuesta); // 501 Not Implemented
+                if (respuesta.Codigo.Equals(CODIGO_ERROR_INESPERADO))
+                    return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
+                else if (respuesta.Codigo.Equals(CODIGO_SERVICIO_NO_IMPLEMENTADO))
+                    return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
                 else
                     return BadRequest(respuesta); // 400 Bad Request
             }

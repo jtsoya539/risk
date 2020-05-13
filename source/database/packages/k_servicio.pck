@@ -31,7 +31,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   */
 
   -- Errores
-  c_error_inesperado CONSTANT VARCHAR2(10) := 'api9999';
+  c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
+  c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
 
   -- Excepciones
   ex_error_general            EXCEPTION;
@@ -113,7 +114,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     EXCEPTION
       WHEN no_data_found THEN
         p_respuesta_error(l_rsp,
-                          'api0001',
+                          c_servicio_no_implementado,
                           'Servicio inexistente o inactivo');
         RAISE ex_error_parametro;
     END;
@@ -143,7 +144,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     EXCEPTION
       WHEN ex_servicio_no_implementado THEN
         p_respuesta_error(l_rsp,
-                          'api0003',
+                          c_servicio_no_implementado,
                           'Servicio no implementado',
                           dbms_utility.format_error_stack);
         RAISE ex_error_general;
