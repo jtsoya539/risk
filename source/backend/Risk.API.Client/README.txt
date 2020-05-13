@@ -8,8 +8,8 @@ java -jar openapi-generator-cli.jar help
 java -jar swagger-codegen-cli.jar version
 
 // Generar cliente
-java -jar openapi-generator-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.Client -g csharp-netcore -c config.json
-java -jar swagger-codegen-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.JavaClient -l java
+java -jar openapi-generator-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.Client -g csharp-netcore -c config-csharp-netcore.json
+java -jar swagger-codegen-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.JavaClient -l java -c config-java.json
 
 
 // Agregar los metadatos del paquete NuGet en Risk.API.Client.csproj

@@ -436,5 +436,6 @@ $RECYCLE.BIN/
 ## Risk.API.Client
 ##
 Risk.API.Client/
-!Risk.API.Client/config.json
+!Risk.API.Client/config-csharp-netcore.json
+!Risk.API.Client/config-java.json
 !Risk.API.Client/README.txt
