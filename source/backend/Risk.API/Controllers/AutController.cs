@@ -46,7 +46,7 @@ namespace Risk.API.Controllers
     [Authorize(Roles = "ADMINISTRADOR,USUARIO")]
     [Route("Api/[controller]")]
     [ApiController]
-    public class AutController : ControllerBase
+    public class AutController : RiskControllerBase
     {
         private readonly IAutService _autService;
         private readonly IGenService _genService;

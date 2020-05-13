@@ -46,7 +46,7 @@ namespace Risk.API.Controllers
     [Authorize(Roles = "ADMINISTRADOR,USUARIO")]
     [Route("Api/[controller]")]
     [ApiController]
-    public class GenController : ControllerBase
+    public class GenController : RiskControllerBase
     {
         private readonly IGenService _genService;
         private readonly IConfiguration _configuration;
@@ -67,11 +67,7 @@ namespace Risk.API.Controllers
         public IActionResult VersionSistema()
         {
             var respuesta = _genService.VersionSistema();
-            if (!respuesta.Codigo.Equals("0"))
-            {
-                return BadRequest(respuesta);
-            }
-            return Ok(respuesta);
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpGet("ValorParametro")]
@@ -83,11 +79,7 @@ namespace Risk.API.Controllers
         public IActionResult ValorParametro([FromQuery, SwaggerParameter(Description = "Identificador del parámetro", Required = true)] string parametro)
         {
             var respuesta = _genService.ValorParametro(parametro);
-            if (!respuesta.Codigo.Equals("0"))
-            {
-                return BadRequest(respuesta);
-            }
-            return Ok(respuesta);
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpGet("SignificadoCodigo")]
@@ -99,11 +91,7 @@ namespace Risk.API.Controllers
         public IActionResult SignificadoCodigo([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio, [FromQuery, SwaggerParameter(Description = "Código", Required = true)] string codigo)
         {
             var respuesta = _genService.SignificadoCodigo(dominio, codigo);
-            if (!respuesta.Codigo.Equals("0"))
-            {
-                return BadRequest(respuesta);
-            }
-            return Ok(respuesta);
+            return ProcesarRespuesta(respuesta);
         }
     }
 }
