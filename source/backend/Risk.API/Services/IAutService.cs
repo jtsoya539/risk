@@ -31,11 +31,11 @@ namespace Risk.API.Services
         Respuesta<Dato> ValidarCredenciales(string usuario, string clave, string tipoClave);
         Respuesta<Sesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken);
         Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo);
-        Respuesta<Dato> CambiarEstadoSesion(string token, string estado);
+        Respuesta<Dato> CambiarEstadoSesion(string accessToken, string estado);
         Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
         Respuesta<Dato> RegistrarClave(string usuario, string clave, string tipoClave);
         Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave);
-        Respuesta<Dato> ValidarSesion(string token);
+        Respuesta<Dato> ValidarSesion(string accessToken);
         Respuesta<Usuario> DatosUsuario(string usuario);
         Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion);
         Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo);

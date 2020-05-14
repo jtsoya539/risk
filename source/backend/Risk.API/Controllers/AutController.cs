@@ -231,7 +231,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            var respuesta = _autService.CambiarEstadoSesion(requestBody.Token, "F");
+            var respuesta = _autService.CambiarEstadoSesion(requestBody.AccessToken, "F");
             return ProcesarRespuesta(respuesta);
         }
 
@@ -281,11 +281,17 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("ValidarSesion")]
-        [SwaggerOperation(Summary = "ValidarSesion", Description = "Description", OperationId = "ValidarSesion")]
-        public IActionResult ValidarSesion([FromQuery] string token)
+        [SwaggerOperation(OperationId = "ValidarSesion", Summary = "ValidarSesion", Description = "Permite validar si una sesión está activa o no")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult ValidarSesion([FromQuery, SwaggerParameter(Description = "Access Token de la sesión", Required = true)] string accessToken)
         {
-            var respValidarSesion = _autService.ValidarSesion(token);
-            return Ok(respValidarSesion);
+            var respuesta = _autService.ValidarSesion(accessToken);
+            return ProcesarRespuesta(respuesta);
         }
 
         [AllowAnonymous]

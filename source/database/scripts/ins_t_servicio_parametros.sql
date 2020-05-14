@@ -1,6 +1,7 @@
 prompt Importing table t_servicio_parametros...
 set feedback off
 set define off
+
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (1, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1);
 
@@ -23,7 +24,7 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (2, 'REFRESH_TOKEN', 'I', 'S', null, 'S', null, 'S', 4);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (3, 'TOKEN', 'I', 'S', null, 'S', null, 'S', 1);
+values (3, 'ACCESS_TOKEN', 'I', 'S', null, 'S', null, 'S', 1);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (3, 'ESTADO', 'I', 'S', null, 'S', null, 'S', 2);
@@ -68,7 +69,7 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (6, 'TIPO_CLAVE', 'I', 'S', null, 'N', 'A', 'S', 4);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (7, 'TOKEN', 'I', 'S', null, 'S', null, 'S', 1);
+values (7, 'ACCESS_TOKEN', 'I', 'S', null, 'S', null, 'S', 1);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (8, 'PARAMETRO', 'I', 'S', null, 'S', null, 'S', 1);

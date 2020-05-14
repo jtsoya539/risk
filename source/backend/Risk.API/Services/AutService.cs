@@ -66,10 +66,10 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> CambiarEstadoSesion(string token, string estado)
+        public Respuesta<Dato> CambiarEstadoSesion(string accessToken, string estado)
         {
             JObject prms = new JObject();
-            prms.Add("token", token);
+            prms.Add("access_token", accessToken);
             prms.Add("estado", estado);
 
             string rsp = base.ApiProcesarServicio(ID_CAMBIAR_ESTADO_SESION, prms.ToString(Formatting.None));
@@ -148,10 +148,10 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> ValidarSesion(string token)
+        public Respuesta<Dato> ValidarSesion(string accessToken)
         {
             JObject prms = new JObject();
-            prms.Add("token", token);
+            prms.Add("access_token", accessToken);
 
             string rsp = base.ApiProcesarServicio(ID_VALIDAR_SESION, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
@@ -185,7 +185,7 @@ namespace Risk.API.Services
         {
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
-            prms.Add("dispositivo", JToken.FromObject(EntitiesMapper.GetYDispositivoFromModel(dispositivo)));
+            prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetYDispositivoFromModel(dispositivo)));
 
             string rsp = base.ApiProcesarServicio(ID_REGISTRAR_DISPOSITIVO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

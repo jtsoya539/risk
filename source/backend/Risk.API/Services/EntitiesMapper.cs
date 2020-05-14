@@ -153,30 +153,5 @@ namespace Risk.API.Services
             }
             return model;
         }
-
-        public static YDispositivo GetYDispositivoFromModel(Dispositivo model)
-        {
-            YDispositivo entity;
-            if (model == null)
-            {
-                entity = null;
-            }
-            else
-            {
-                entity = new YDispositivo
-                {
-                    IdDispositivo = model.IdDispositivo,
-                    TokenDispositivo = model.TokenDispositivo,
-                    NombreSistemaOperativo = model.NombreSistemaOperativo,
-                    VersionSistemaOperativo = model.VersionSistemaOperativo,
-                    Tipo = model.Tipo,
-                    NombreNavegador = model.NombreNavegador,
-                    VersionNavegador = model.VersionNavegador,
-                    TokenNotificacion = model.TokenNotificacion
-                };
-            }
-            return entity;
-        }
-
     }
 }

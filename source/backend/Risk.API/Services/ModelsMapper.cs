@@ -22,10 +22,36 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Models
+using System.Collections.Generic;
+using Risk.API.Entities;
+using Risk.API.Models;
+
+namespace Risk.API.Services
 {
-    public class FinalizarSesionRequestBody
+    public class ModelsMapper
     {
-        public string AccessToken { get; set; }
+        public static YDispositivo GetYDispositivoFromModel(Dispositivo model)
+        {
+            YDispositivo entity;
+            if (model == null)
+            {
+                entity = null;
+            }
+            else
+            {
+                entity = new YDispositivo
+                {
+                    IdDispositivo = model.IdDispositivo,
+                    TokenDispositivo = model.TokenDispositivo,
+                    NombreSistemaOperativo = model.NombreSistemaOperativo,
+                    VersionSistemaOperativo = model.VersionSistemaOperativo,
+                    Tipo = model.Tipo,
+                    NombreNavegador = model.NombreNavegador,
+                    VersionNavegador = model.VersionNavegador,
+                    TokenNotificacion = model.TokenNotificacion
+                };
+            }
+            return entity;
+        }
     }
 }
