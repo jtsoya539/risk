@@ -1,0 +1,6 @@
+{
+    "artifactId": "risk-api-client",
+    "artifactVersion": "1.0.0",
+    "groupId": "py.com.risk",
+    "packageName": "py.com.risk.client"
+}
