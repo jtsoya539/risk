@@ -25,17 +25,15 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Risk.API.Entities;
 using Risk.API.Models;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -161,44 +159,56 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RegistrarUsuario")]
-        [SwaggerOperation(Summary = "RegistrarUsuario", Description = "Description", OperationId = "RegistrarUsuario")]
+        [SwaggerOperation(OperationId = "RegistrarUsuario", Summary = "RegistrarUsuario", Description = "Permite registrar un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
-            var respRegistrarUsuario = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
-            return Ok(respRegistrarUsuario);
+            var respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
+            return ProcesarRespuesta(respuesta);
         }
 
         [AllowAnonymous]
         [HttpPost("IniciarSesion")]
-        [SwaggerOperation(Summary = "IniciarSesion", Description = "Description", OperationId = "IniciarSesion")]
+        [SwaggerOperation(OperationId = "IniciarSesion", Summary = "IniciarSesion", Description = "Permite iniciar la sesión de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
             var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
-            if (!respValidarCredenciales.Codigo.Equals("0"))
+            if (!respValidarCredenciales.Codigo.Equals(CODIGO_OK))
             {
-                return BadRequest(respValidarCredenciales);
+                return ProcesarRespuesta(respValidarCredenciales);
             }
 
             var accessToken = GenerarAccessToken(requestBody.Usuario);
             var refreshToken = GenerarRefreshToken();
 
             var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, Request.Headers["Risk-App-Key"], accessToken, refreshToken);
-
-            if (!respIniciarSesion.Codigo.Equals("0"))
-            {
-                return BadRequest(respIniciarSesion);
-            }
-
-            return Ok(respIniciarSesion);
+            return ProcesarRespuesta(respIniciarSesion);
         }
 
         [AllowAnonymous]
         [HttpPost("RefrescarSesion")]
-        [SwaggerOperation(Summary = "RefrescarSesion", Description = "Description", OperationId = "RefrescarSesion")]
+        [SwaggerOperation(OperationId = "RefrescarSesion", Summary = "RefrescarSesion", Description = "Permite refrescar la sesión de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult RefrescarSesion([FromBody] RefrescarSesionRequestBody requestBody)
         {
             string usuario = ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
@@ -206,50 +216,68 @@ namespace Risk.API.Controllers
             var accessTokenNuevo = GenerarAccessToken(usuario);
             var refreshTokenNuevo = GenerarRefreshToken();
 
-            var respRefrescarSesion = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
-
-            if (!respRefrescarSesion.Codigo.Equals("0"))
-            {
-                return BadRequest(respRefrescarSesion);
-            }
-
-            return Ok(respRefrescarSesion);
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpPost("FinalizarSesion")]
-        [SwaggerOperation(Summary = "FinalizarSesion", Description = "Description", OperationId = "FinalizarSesion")]
+        [SwaggerOperation(OperationId = "FinalizarSesion", Summary = "FinalizarSesion", Description = "Permite finalizar la sesión de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            var respCambiarEstadoSesion = _autService.CambiarEstadoSesion(requestBody.Token, "F");
-            return Ok(respCambiarEstadoSesion);
+            var respuesta = _autService.CambiarEstadoSesion(requestBody.Token, "F");
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpPost("RegistrarClaveTransaccional")]
-        [SwaggerOperation(Summary = "RegistrarClaveTransaccional", Description = "Description", OperationId = "RegistrarClaveTransaccional")]
+        [SwaggerOperation(OperationId = "RegistrarClaveTransaccional", Summary = "RegistrarClaveTransaccional", Description = "Permite registrar una clave transaccional para un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
-            var respRegistrarClave = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
-            return Ok(respRegistrarClave);
+            var respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, "T");
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpPost("CambiarClaveAcceso")]
-        [SwaggerOperation(Summary = "CambiarClaveAcceso", Description = "Description", OperationId = "CambiarClaveAcceso")]
+        [SwaggerOperation(OperationId = "CambiarClaveAcceso", Summary = "CambiarClaveAcceso", Description = "Permite cambiar la clave de acceso de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
-            var respCambiarClave = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
-            return Ok(respCambiarClave);
+            var respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "A");
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpPost("CambiarClaveTransaccional")]
-        [SwaggerOperation(Summary = "CambiarClaveTransaccional", Description = "Description", OperationId = "CambiarClaveTransaccional")]
+        [SwaggerOperation(OperationId = "CambiarClaveTransaccional", Summary = "CambiarClaveTransaccional", Description = "Permite cambiar la clave transaccional de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
-            var respCambiarClave = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
-            return Ok(respCambiarClave);
+            var respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, "T");
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpGet("ValidarSesion")]
@@ -262,12 +290,18 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RegistrarDispositivo")]
-        [SwaggerOperation(Summary = "RegistrarDispositivo", Description = "Description", OperationId = "RegistrarDispositivo")]
+        [SwaggerOperation(OperationId = "RegistrarDispositivo", Summary = "RegistrarDispositivo", Description = "Permite registrar un dispositivo")]
         [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Operación no autorizada")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
         {
-            var respCambiarClave = _autService.RegistrarDispositivo(Request.Headers["Risk-App-Key"], requestBody.Dispositivo);
-            return Ok(respCambiarClave);
+            var respuesta = _autService.RegistrarDispositivo(Request.Headers["Risk-App-Key"], requestBody.Dispositivo);
+            return ProcesarRespuesta(respuesta);
         }
     }
 }
