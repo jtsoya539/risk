@@ -156,25 +156,15 @@ namespace Risk.API
                 c.EnableAnnotations();
                 c.AddSecurityDefinition("AccessToken", new OpenApiSecurityScheme
                 {
-                    Type = SecuritySchemeType.ApiKey, //SecuritySchemeType.Http
+                    Type = SecuritySchemeType.Http, //SecuritySchemeType.Http ApiKey
                     Name = "Authorization",
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
                     In = ParameterLocation.Header,
                     Scheme = JwtBearerDefaults.AuthenticationScheme,
                     BearerFormat = "xxxxx.yyyyy.zzzzz"
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = "AccessToken" }
-                        },
-                        new string[] { }
-                    }
-                });
                 c.DocumentFilter<ServersDocumentFilter>();
-                c.OperationFilter<RiskApplicationKeyHeaderOperationFilter>();
+                c.OperationFilter<SecurityRequirementsOperationFilter>();
                 c.SchemaFilter<NotNullableSchemaFilter>();
             });
         }

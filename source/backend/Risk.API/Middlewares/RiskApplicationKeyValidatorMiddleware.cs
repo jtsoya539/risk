@@ -45,7 +45,7 @@ namespace Risk.API.Middlewares
             {
                 if (!context.Request.Headers.Keys.Contains("Risk-App-Key"))
                 {
-                    context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
                     await context.Response.WriteAsync("Risk-App-Key missing");
                     return;
                 }
@@ -55,7 +55,7 @@ namespace Risk.API.Middlewares
 
                     if (!respValidarClaveAplicacion.Codigo.Equals("0"))
                     {
-                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.StatusCode = StatusCodes.Status403Forbidden;
                         await context.Response.WriteAsync("Invalid Risk-App-Key");
                         return;
                     }

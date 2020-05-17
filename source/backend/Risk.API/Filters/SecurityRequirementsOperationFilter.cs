@@ -23,19 +23,22 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Controllers;
+using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters
 {
-    public class RiskApplicationKeyHeaderOperationFilter : IOperationFilter
+    public class SecurityRequirementsOperationFilter : IOperationFilter
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
-            var descriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
+            var allowAnyClientAttributes = context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnyClientAttribute>();
 
-            if (descriptor != null && !descriptor.ActionName.Equals("VersionSistema"))
+            if (!allowAnyClientAttributes.Any())
             {
                 if (operation.Parameters == null)
                 {
@@ -45,7 +48,7 @@ namespace Risk.API.Filters
                 operation.Parameters.Add(new OpenApiParameter
                 {
                     Name = "Risk-App-Key",
-                    Description = "Clave de la aplicación habilitada para consumir los servicios",
+                    Description = "Clave de la aplicación habilitada para consumir servicios",
                     In = ParameterLocation.Header,
                     Required = true,
                     Schema = new OpenApiSchema
@@ -54,7 +57,41 @@ namespace Risk.API.Filters
                         Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, "{{Risk-App-Key}}")
                     }
                 });
+
+                if (!operation.Responses.ContainsKey("403"))
+                {
+                    operation.Responses.Add("403", new OpenApiResponse { Description = "Aplicación no autorizada" });
+                }
             }
+
+            var authorizeAttributes = context.MethodInfo.DeclaringType.GetCustomAttributes(true).Union(context.MethodInfo.GetCustomAttributes(true)).OfType<AuthorizeAttribute>();
+            var allowAnonymousAttributes = context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnonymousAttribute>();
+
+            if (authorizeAttributes.Any() && !allowAnonymousAttributes.Any())
+            {
+                operation.Security = new List<OpenApiSecurityRequirement>
+                {
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = "AccessToken" }
+                            },
+                            new string[] { }
+                        }
+                    }
+                };
+
+                if (!operation.Responses.ContainsKey("401"))
+                {
+                    operation.Responses.Add("401", new OpenApiResponse { Description = "Operación no autorizada" });
+                }
+            }
+
+
+
+
         }
     }
 }
