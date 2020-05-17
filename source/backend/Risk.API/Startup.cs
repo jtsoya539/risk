@@ -156,7 +156,7 @@ namespace Risk.API
                 c.EnableAnnotations();
                 c.AddSecurityDefinition("AccessToken", new OpenApiSecurityScheme
                 {
-                    Type = SecuritySchemeType.Http, //SecuritySchemeType.Http ApiKey
+                    Type = SecuritySchemeType.ApiKey, // SecuritySchemeType.Http
                     Name = "Authorization",
                     Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
                     In = ParameterLocation.Header,
