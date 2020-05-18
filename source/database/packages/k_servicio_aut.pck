@@ -125,15 +125,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -159,15 +154,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -195,15 +185,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -249,10 +234,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado),
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -288,10 +273,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado),
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -324,10 +309,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado),
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -418,15 +403,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -517,15 +497,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -563,15 +538,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -661,10 +631,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado),
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -713,15 +683,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   CASE
-                                   k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                   k_error.c_user_defined_error THEN
-                                   utl_call_stack.error_msg(1) WHEN
-                                   k_error.c_oracle_predefined_error THEN
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado) END,
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 

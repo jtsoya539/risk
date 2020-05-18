@@ -30,7 +30,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   -------------------------------------------------------------------------------
   */
 
-  -- Errores
+  -- Códigos de respuesta
+  c_ok                       CONSTANT VARCHAR2(10) := '0';
   c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
   c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
 
@@ -47,6 +48,11 @@ CREATE OR REPLACE PACKAGE k_servicio IS
                               i_codigo     IN VARCHAR2,
                               i_mensaje    IN VARCHAR2,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL);
+
+  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT y_respuesta,
+                                  i_error_number IN NUMBER,
+                                  i_error_msg    IN VARCHAR2,
+                                  i_error_stack  IN VARCHAR2);
 
   FUNCTION f_objeto_parse_json(i_json        IN CLOB,
                                i_nombre_tipo IN VARCHAR2) RETURN anydata;
@@ -161,7 +167,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         RAISE ex_error_general;
     END;
   
-    IF l_rsp.codigo = '0' THEN
+    IF l_rsp.codigo = c_ok THEN
       COMMIT;
     ELSE
       RAISE ex_error_general;
@@ -187,7 +193,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
                            i_datos      IN y_objeto DEFAULT NULL) IS
   BEGIN
-    io_respuesta.codigo     := '0';
+    io_respuesta.codigo     := c_ok;
     io_respuesta.mensaje    := 'OK';
     io_respuesta.mensaje_bd := NULL;
     io_respuesta.datos      := i_datos;
@@ -198,7 +204,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                               i_mensaje    IN VARCHAR2,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL) IS
   BEGIN
-    IF i_codigo = '0' THEN
+    IF i_codigo = c_ok THEN
       io_respuesta.codigo  := c_error_inesperado;
       io_respuesta.mensaje := k_error.f_mensaje_error(io_respuesta.codigo);
     ELSE
@@ -207,6 +213,26 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END IF;
     io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
     io_respuesta.datos      := NULL;
+  END;
+
+  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT y_respuesta,
+                                  i_error_number IN NUMBER,
+                                  i_error_msg    IN VARCHAR2,
+                                  i_error_stack  IN VARCHAR2) IS
+  BEGIN
+    IF k_error.f_tipo_excepcion(i_error_number) =
+       k_error.c_user_defined_error THEN
+      p_respuesta_error(io_respuesta,
+                        'api0099',
+                        i_error_msg,
+                        i_error_stack);
+    ELSIF k_error.f_tipo_excepcion(i_error_number) =
+          k_error.c_oracle_predefined_error THEN
+      p_respuesta_error(io_respuesta,
+                        c_error_inesperado,
+                        k_error.f_mensaje_error(c_error_inesperado),
+                        i_error_stack);
+    END IF;
   END;
 
   FUNCTION f_objeto_parse_json(i_json        IN CLOB,
