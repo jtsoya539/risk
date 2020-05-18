@@ -53,6 +53,8 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION datos_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION avatar_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -624,6 +626,61 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_usuario.roles := l_roles;
   
     k_servicio.p_respuesta_ok(l_rsp, l_usuario);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION avatar_usuario(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp     y_respuesta;
+    l_archivo y_archivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp     := NEW y_respuesta();
+    l_archivo := NEW y_archivo();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'usuario')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0001',
+                                   'Debe ingresar usuario');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar := 'Buscando avatar del usuario';
+    BEGIN
+      SELECT avatar, 'avatar', 'png'
+        INTO l_archivo.contenido, l_archivo.nombre, l_archivo.extension
+        FROM t_usuarios
+       WHERE alias =
+             anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                 'usuario'));
+    EXCEPTION
+      WHEN no_data_found THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'aut0002',
+                                     'Usuario inexistente');
+        RAISE k_servicio.ex_error_general;
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'aut0003',
+                                     'Error al buscar avatar del usuario');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    l_archivo.calcular_propiedades;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_archivo);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN

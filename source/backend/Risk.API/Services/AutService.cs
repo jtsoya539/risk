@@ -47,6 +47,7 @@ namespace Risk.API.Services
         private const int ID_REFRESCAR_SESION = 11;
         private const int ID_VALIDAR_CLAVE_APLICACION = 12;
         private const int ID_REGISTRAR_DISPOSITIVO = 14;
+        private const int ID_AVATAR_USUARIO = 15;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -168,6 +169,17 @@ namespace Risk.API.Services
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Usuario, YUsuario>(entityRsp, EntitiesMapper.GetUsuarioFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Archivo> AvatarUsuario(string usuario)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+
+            string rsp = base.ApiProcesarServicio(ID_AVATAR_USUARIO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion)
