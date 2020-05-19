@@ -678,6 +678,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
         RAISE k_servicio.ex_error_general;
     END;
   
+    IF l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+      k_servicio.p_respuesta_error(l_rsp, 'aut0004', 'Usuario sin avatar');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
     l_archivo.calcular_propiedades;
   
     k_servicio.p_respuesta_ok(l_rsp, l_archivo);

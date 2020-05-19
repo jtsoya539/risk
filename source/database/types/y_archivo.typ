@@ -84,7 +84,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
   BEGIN
     IF self.contenido IS NULL OR dbms_lob.getlength(self.contenido) = 0 THEN
       self.checksum := NULL;
-      self.tamano   := NULL;
+      self.tamano   := 0;
     ELSE
       self.checksum := to_char(rawtohex(dbms_crypto.hash(self.contenido,
                                                          dbms_crypto.hash_sh1)));
