@@ -30,6 +30,7 @@ using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
+using Risk.API.Helpers;
 using Risk.API.Models;
 
 namespace Risk.API.Services

@@ -22,29 +22,32 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Risk.API.Helpers;
-using Risk.API.Models;
+using System.IO;
+using System.IO.Compression;
 
-namespace Risk.API.Controllers
+namespace Risk.API.Helpers
 {
-    public class RiskControllerBase : ControllerBase
+    public static class GZipHelper
     {
-        public IActionResult ProcesarRespuesta<T>(Respuesta<T> respuesta)
+        public static byte[] Compress(byte[] data)
         {
-            if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            using (var compressedStream = new MemoryStream())
+            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress))
             {
-                return Ok(respuesta); // 200 OK
+                zipStream.Write(data, 0, data.Length);
+                zipStream.Close();
+                return compressedStream.ToArray();
             }
-            else
+        }
+
+        public static byte[] Decompress(byte[] data)
+        {
+            using (var compressedStream = new MemoryStream(data))
+            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Decompress))
+            using (var resultStream = new MemoryStream())
             {
-                if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_ERROR_INESPERADO))
-                    return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
-                else if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
-                    return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
-                else
-                    return BadRequest(respuesta); // 400 Bad Request
+                zipStream.CopyTo(resultStream);
+                return resultStream.ToArray();
             }
         }
     }

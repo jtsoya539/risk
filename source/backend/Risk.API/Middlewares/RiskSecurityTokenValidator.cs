@@ -25,7 +25,7 @@ SOFTWARE.
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
-using Risk.API.Entities;
+using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
 
@@ -90,7 +90,7 @@ namespace Risk.API.Middlewares
 
             respuesta = _autService.ValidarSesion(securityToken);
 
-            if (!respuesta.Codigo.Equals("0"))
+            if (!respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 throw new SecurityTokenValidationException(respuesta.Mensaje);
             }

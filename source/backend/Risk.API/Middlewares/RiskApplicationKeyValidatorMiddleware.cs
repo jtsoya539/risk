@@ -23,8 +23,8 @@ SOFTWARE.
 */
 
 using Microsoft.AspNetCore.Http;
+using Risk.API.Helpers;
 using Risk.API.Services;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Risk.API.Middlewares
@@ -53,7 +53,7 @@ namespace Risk.API.Middlewares
                 {
                     var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(context.Request.Headers["Risk-App-Key"]);
 
-                    if (!respValidarClaveAplicacion.Codigo.Equals("0"))
+                    if (!respValidarClaveAplicacion.Codigo.Equals(RiskDbConstants.CODIGO_OK))
                     {
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
                         await context.Response.WriteAsync("Invalid Risk-App-Key");

@@ -34,6 +34,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -60,7 +61,7 @@ namespace Risk.API.Controllers
         private string GenerarAccessToken(string usuario)
         {
             var respDatosUsuario = _autService.DatosUsuario(usuario);
-            if (!respDatosUsuario.Codigo.Equals("0"))
+            if (!respDatosUsuario.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
@@ -83,14 +84,14 @@ namespace Risk.API.Controllers
             }
 
             var respValorParametro = _genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN");
-            if (!respValorParametro.Codigo.Equals("0"))
+            if (!respValorParametro.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
             int tiempoExpiracion = int.Parse(respValorParametro.Datos.Contenido);
 
             var respValorParametro2 = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro2.Codigo.Equals("0"))
+            if (!respValorParametro2.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
@@ -126,7 +127,7 @@ namespace Risk.API.Controllers
             SecurityToken validatedToken;
 
             var respValorParametro2 = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro2.Codigo.Equals("0"))
+            if (!respValorParametro2.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
@@ -185,7 +186,7 @@ namespace Risk.API.Controllers
         {
             var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
-            if (!respValidarCredenciales.Codigo.Equals(CODIGO_OK))
+            if (!respValidarCredenciales.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 return ProcesarRespuesta(respValidarCredenciales);
             }
@@ -299,6 +300,27 @@ namespace Risk.API.Controllers
         {
             var respuesta = _autService.RegistrarDispositivo(Request.Headers["Risk-App-Key"], requestBody.Dispositivo);
             return ProcesarRespuesta(respuesta);
+        }
+
+        [HttpGet("AvatarUsuario")]
+        [SwaggerOperation(OperationId = "AvatarUsuario", Summary = "AvatarUsuario", Description = "Obtiene el avatar de un usuario")]
+        [Produces(MediaTypeNames.Application.Json, new[] { "image/gif", "image/jpeg", "image/png" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Access Token de la sesión", Required = true)] string usuario)
+        {
+            var respuesta = _autService.AvatarUsuario(usuario);
+
+            if (!respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respuesta);
+            }
+
+            var archivo = respuesta.Datos;
+            byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
+            return File(contenido, string.Concat("image/", archivo.Extension), string.Concat(archivo.Nombre, ".", archivo.Extension));
         }
     }
 }

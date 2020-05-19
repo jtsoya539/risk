@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using Risk.API.Entities;
 using Risk.API.Models;
 
-namespace Risk.API.Services
+namespace Risk.API.Helpers
 {
     public class ModelsMapper
     {
