@@ -309,7 +309,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Access Token de la sesión", Required = true)] string usuario)
+        public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
         {
             var respuesta = _autService.AvatarUsuario(usuario);
 
