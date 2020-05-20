@@ -305,7 +305,7 @@ namespace Risk.API.Controllers
         [HttpGet("AvatarUsuario")]
         [SwaggerOperation(OperationId = "AvatarUsuario", Summary = "AvatarUsuario", Description = "Obtiene el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "image/gif", "image/jpeg", "image/png" })]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
