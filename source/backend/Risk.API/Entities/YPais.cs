@@ -22,15 +22,15 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
+using Newtonsoft.Json;
 
-namespace Risk.API.Services
+namespace Risk.API.Entities
 {
-    public interface IGenService
+    public class YPais
     {
-        Respuesta<Dato> VersionSistema();
-        Respuesta<Dato> ValorParametro(string parametro);
-        Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
-        Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null);
+        [JsonProperty("id_pais")]
+        public int IdPais { get; set; }
+        [JsonProperty("nombre")]
+        public string Nombre { get; set; }
     }
 }

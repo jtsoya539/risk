@@ -22,13 +22,9 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Data;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Oracle.ManagedDataAccess.Client;
-using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Models;
@@ -39,8 +35,8 @@ namespace Risk.API.Services
     {
         private const int ID_VALOR_PARAMETRO = 8;
         private const int ID_SIGNIFICADO_CODIGO = 9;
-
         private const int ID_VERSION_SISTEMA = 13;
+        private const int ID_LISTAR_PAISES = 16;
 
         public GenService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -77,6 +73,19 @@ namespace Risk.API.Services
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null)
+        {
+            JObject prms = new JObject();
+            prms.Add("id_pais", idPais);
+
+            string rsp = base.ApiProcesarServicio(ID_LISTAR_PAISES, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
+
+
+            var datos = EntitiesMapper.GetPaginaFromEntity<Pais, YPais>(entityRsp.Datos, EntitiesMapper.GetPaisListFromEntity(entityRsp.Datos.Elementos));
+            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Pais>, YPagina<YPais>>(entityRsp, datos);
         }
     }
 }

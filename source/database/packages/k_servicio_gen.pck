@@ -37,6 +37,8 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
   FUNCTION significado_codigo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
@@ -157,6 +159,56 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END IF;
   
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp    y_respuesta;
+    l_pagina y_pagina;
+    l_paises y_objetos;
+    l_pais   y_pais;
+  
+    CURSOR cr_paises(i_id_pais IN NUMBER) IS
+      SELECT p.id_pais,
+             p.nombre,
+             p.iso_alpha_2,
+             p.iso_alpha_3,
+             p.iso_numeric
+        FROM t_paises p
+       WHERE p.id_pais = nvl(i_id_pais, p.id_pais);
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp    := NEW y_respuesta();
+    l_pagina := NEW y_pagina();
+    l_paises := NEW y_objetos();
+  
+    FOR pai IN cr_paises(anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                                           'id_pais'))) LOOP
+      l_pais         := NEW y_pais();
+      l_pais.id_pais := pai.id_pais;
+      l_pais.nombre  := pai.nombre;
+    
+      l_paises.extend;
+      l_paises(l_paises.count) := l_pais;
+    END LOOP;
+    l_pagina.numero_actual      := 0;
+    l_pagina.numero_siguiente   := 0;
+    l_pagina.numero_ultima      := 0;
+    l_pagina.numero_primera     := 0;
+    l_pagina.numero_anterior    := 0;
+    l_pagina.cantidad_elementos := l_paises.count;
+    l_pagina.elementos          := l_paises;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_general THEN

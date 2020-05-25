@@ -89,5 +89,33 @@ namespace Risk.API.Controllers
             var respuesta = _genService.SignificadoCodigo(dominio, codigo);
             return ProcesarRespuesta(respuesta);
         }
+
+        [AllowAnonymous]
+        [HttpGet("ListarPaises")]
+        [SwaggerOperation(OperationId = "ListarPaises", Summary = "ListarPaises", Description = "Obtiene una lista de países")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult ListarPaises()
+        {
+            var respuesta = _genService.ListarPaises();
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{idPais}")]
+        [SwaggerOperation(OperationId = "ListarPais", Summary = "ListarPais", Description = "Obtiene los datos de un país")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult ListarPaises([FromRoute, SwaggerParameter(Description = "Identificador del país", Required = true)] int idPais)
+        {
+            var respuesta = _genService.ListarPaises(idPais);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }

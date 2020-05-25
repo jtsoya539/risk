@@ -22,13 +22,9 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Data;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Oracle.ManagedDataAccess.Client;
-using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Models;

@@ -107,6 +107,7 @@ prompt
 @@types/y_sesion.typ
 @@types/y_dispositivo.typ
 @@types/y_pagina.typ
+@@types/y_pais.typ
 
 prompt
 prompt Creando paquetes...

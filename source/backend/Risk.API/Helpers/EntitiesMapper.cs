@@ -100,12 +100,12 @@ namespace Risk.API.Helpers
 
         public static List<Rol> GetRolListFromEntity(List<YRol> entityList)
         {
-            List<Rol> roles = new List<Rol>();
+            List<Rol> modelList = new List<Rol>();
             foreach (var item in entityList)
             {
-                roles.Add(GetRolFromEntity(item));
+                modelList.Add(GetRolFromEntity(item));
             }
-            return roles;
+            return modelList;
         }
 
         public static Sesion GetSesionFromEntity(YSesion entity)
@@ -152,6 +152,48 @@ namespace Risk.API.Helpers
                 };
             }
             return model;
+        }
+
+        public static Pais GetPaisFromEntity(YPais entity)
+        {
+            Pais model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Pais
+                {
+                    IdPais = entity.IdPais,
+                    Nombre = entity.Nombre
+                };
+            }
+            return model;
+        }
+
+        public static List<Pais> GetPaisListFromEntity(List<YPais> entityList)
+        {
+            List<Pais> modelList = new List<Pais>();
+            foreach (var item in entityList)
+            {
+                modelList.Add(GetPaisFromEntity(item));
+            }
+            return modelList;
+        }
+
+        public static Pagina<T> GetPaginaFromEntity<T, YT>(YPagina<YT> entity, List<T> elementos)
+        {
+            return new Pagina<T>
+            {
+                NumeroActual = entity.NumeroActual,
+                NumeroSiguiente = entity.NumeroSiguiente,
+                NumeroUltima = entity.NumeroUltima,
+                NumeroPrimera = entity.NumeroPrimera,
+                NumeroAnterior = entity.NumeroAnterior,
+                CantidadElementos = entity.CantidadElementos,
+                Elementos = elementos
+            };
         }
     }
 }

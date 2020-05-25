@@ -22,15 +22,18 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
+using System.Collections.Generic;
 
-namespace Risk.API.Services
+namespace Risk.API.Models
 {
-    public interface IGenService
+    public class Pagina<T>
     {
-        Respuesta<Dato> VersionSistema();
-        Respuesta<Dato> ValorParametro(string parametro);
-        Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
-        Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null);
+        public int NumeroActual { get; set; }
+        public int NumeroSiguiente { get; set; }
+        public int NumeroUltima { get; set; }
+        public int NumeroPrimera { get; set; }
+        public int NumeroAnterior { get; set; }
+        public int CantidadElementos { get; set; }
+        public List<T> Elementos { get; set; }
     }
 }
