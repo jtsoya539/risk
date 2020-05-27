@@ -105,7 +105,7 @@ namespace Risk.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("{idPais}")]
+        [HttpGet("ListarPaises/{idPais}")]
         [SwaggerOperation(OperationId = "ListarPais", Summary = "ListarPais", Description = "Obtiene los datos de un país")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]

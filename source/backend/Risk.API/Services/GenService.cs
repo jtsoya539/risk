@@ -83,8 +83,12 @@ namespace Risk.API.Services
             string rsp = base.ApiProcesarServicio(ID_LISTAR_PAISES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
 
+            Pagina<Pais> datos = null;
+            if (entityRsp.Datos != null)
+            {
+                datos = EntitiesMapper.GetPaginaFromEntity<Pais, YPais>(entityRsp.Datos, EntitiesMapper.GetPaisListFromEntity(entityRsp.Datos.Elementos));
+            }
 
-            var datos = EntitiesMapper.GetPaginaFromEntity<Pais, YPais>(entityRsp.Datos, EntitiesMapper.GetPaisListFromEntity(entityRsp.Datos.Elementos));
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Pais>, YPagina<YPais>>(entityRsp, datos);
         }
     }
