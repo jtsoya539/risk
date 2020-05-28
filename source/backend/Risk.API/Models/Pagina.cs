@@ -28,11 +28,11 @@ namespace Risk.API.Models
 {
     public class Pagina<T>
     {
-        public int NumeroActual { get; set; }
-        public int NumeroSiguiente { get; set; }
-        public int NumeroUltima { get; set; }
-        public int NumeroPrimera { get; set; }
-        public int NumeroAnterior { get; set; }
+        public string PaginaActual { get; set; }
+        public string PaginaSiguiente { get; set; }
+        public string PaginaUltima { get; set; }
+        public string PaginaPrimera { get; set; }
+        public string PaginaAnterior { get; set; }
         public int CantidadElementos { get; set; }
         public List<T> Elementos { get; set; }
     }

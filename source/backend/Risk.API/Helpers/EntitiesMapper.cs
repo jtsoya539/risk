@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
 using System.Collections.Generic;
 using Risk.API.Entities;
 using Risk.API.Models;
@@ -186,11 +187,11 @@ namespace Risk.API.Helpers
         {
             return new Pagina<T>
             {
-                NumeroActual = entity.NumeroActual,
-                NumeroSiguiente = entity.NumeroSiguiente,
-                NumeroUltima = entity.NumeroUltima,
-                NumeroPrimera = entity.NumeroPrimera,
-                NumeroAnterior = entity.NumeroAnterior,
+                PaginaActual = Convert.ToString(entity.NumeroActual),
+                PaginaSiguiente = Convert.ToString(entity.NumeroSiguiente),
+                PaginaUltima = Convert.ToString(entity.NumeroUltima),
+                PaginaPrimera = Convert.ToString(entity.NumeroPrimera),
+                PaginaAnterior = Convert.ToString(entity.NumeroAnterior),
                 CantidadElementos = entity.CantidadElementos,
                 Elementos = elementos
             };

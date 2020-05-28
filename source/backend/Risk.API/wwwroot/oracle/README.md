@@ -1,1 +1,1 @@
-En este directorio se puede almacenar los archivos descomprimidos del Oracle Wallet.
+En este directorio se pueden almacenar los archivos descomprimidos del Oracle Wallet.
