@@ -23,11 +23,8 @@ SOFTWARE.
 */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,8 +32,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
@@ -51,12 +46,19 @@ namespace Risk.API
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        private OracleConnection oracleConnection;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        // This method gets called when the application host is performing a graceful shutdown.
+        private void OnShutdown()
+        {
+            OracleConnection.ClearPool(oracleConnection);
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -96,10 +98,9 @@ namespace Risk.API
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
             //connStrBuilder.ConnectionTimeout = 30; // Maximum time (in seconds) to wait for a free connection from the pool.
 
-            OracleConnection con = new OracleConnection(connStrBuilder.ToString());
-            OracleConnection.ClearAllPools();
+            oracleConnection = new OracleConnection(connStrBuilder.ToString());
 
-            services.AddDbContext<RiskDbContext>(options => options.UseOracle(con));
+            services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IAutService, AutService>();
 
@@ -170,7 +171,7 @@ namespace Risk.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
         {
             app.UseStaticFiles();
 
@@ -202,6 +203,8 @@ namespace Risk.API
             );
 
             app.UseMvc();
+
+            appLifetime.ApplicationStopping.Register(OnShutdown);
         }
     }
 }
