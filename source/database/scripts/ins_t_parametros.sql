@@ -1,11 +1,15 @@
 prompt Importing table t_parametros...
 set feedback off
 set define off
+
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('BASE_DATOS_PRODUCCION', 'Nombre de la Base de Datos del entorno de Producción', 'RISK');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('CANTIDAD_MAXIMA_SESIONES_USUARIO', 'Cantidad máxima permitida de sesiones activas por usuario', '2');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('CLAVE_VALIDACION_ACCESS_TOKEN', 'Clave de validación del Access Token', '9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('LONGITUD_MINIMA_CLAVE_ACCESO', 'Longitud mínima permitida para clave de acceso', '8');
@@ -29,6 +33,6 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('TIEMPO_EXPIRACION_REFRESH_TOKEN', 'Tiempo de expiración del Refresh Token en horas', '5');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
-values ('CLAVE_VALIDACION_ACCESS_TOKEN', 'Clave de validación del Access Token', '9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=');
+values ('URL_SERVICIOS_PRODUCCION', 'URL base de los Servicios Web del entorno de Producción', 'http://localhost:5000');
 
 prompt Done.
