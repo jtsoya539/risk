@@ -112,4 +112,10 @@ values (15, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1);
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (16, 'ID_PAIS', 'I', 'N', null, 'N', null, 'S', 1);
 
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (17, 'CLAVE_APLICACION', 'I', 'S', null, 'S', null, 'S', 1);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (17, 'TIPO_TOKEN', 'I', 'S', null, 'N', 'A', 'S', 2);
+
 prompt Done.

@@ -58,6 +58,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
   FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
@@ -755,6 +758,63 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp           y_respuesta;
+    l_dato          y_dato;
+    l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'clave_aplicacion')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0001',
+                                   'Debe ingresar clave_aplicacion');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar     := 'Buscando aplicación';
+    l_id_aplicacion := k_autenticacion.f_id_aplicacion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                           'clave_aplicacion')),
+                                                       'S');
+    IF l_id_aplicacion IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0002',
+                                   'Aplicacion inexistente o inactiva');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    l_rsp.lugar      := 'Obteniendo tiempo de expiración';
+    l_dato.contenido := to_char(k_autenticacion.f_tiempo_expiracion_token(l_id_aplicacion,
+                                                                          anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                                              'tipo_token'))));
+  
+    IF l_dato.contenido IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0003',
+                                   'Error al obtener tiempo de expiración');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN

@@ -40,5 +40,6 @@ namespace Risk.API.Services
         Respuesta<Archivo> AvatarUsuario(string usuario);
         Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion);
         Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo);
+        Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken);
     }
 }

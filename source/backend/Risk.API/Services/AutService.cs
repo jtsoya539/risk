@@ -45,6 +45,7 @@ namespace Risk.API.Services
         private const int ID_VALIDAR_CLAVE_APLICACION = 12;
         private const int ID_REGISTRAR_DISPOSITIVO = 14;
         private const int ID_AVATAR_USUARIO = 15;
+        private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -202,6 +203,17 @@ namespace Risk.API.Services
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
-    }
 
+        public Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken)
+        {
+            JObject prms = new JObject();
+            prms.Add("clave_aplicacion", claveAplicacion);
+            prms.Add("tipo_token", tipoToken);
+
+            string rsp = base.ApiProcesarServicio(ID_TIEMPO_EXPIRACION_TOKEN, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+    }
 }

@@ -41,6 +41,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   ex_servicio_no_implementado EXCEPTION;
   PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
 
+  PROCEDURE p_limpiar_historial;
+
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
                            i_datos      IN y_objeto DEFAULT NULL);
 
@@ -188,6 +190,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                         k_error.f_mensaje_error(c_error_inesperado),
                         dbms_utility.format_error_stack);
       RETURN l_rsp;
+  END;
+
+  PROCEDURE p_limpiar_historial IS
+  BEGIN
+    UPDATE t_servicios
+       SET cantidad_ejecuciones = NULL, fecha_ultima_ejecucion = NULL;
   END;
 
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
