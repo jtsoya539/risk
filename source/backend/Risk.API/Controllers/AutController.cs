@@ -194,7 +194,7 @@ namespace Risk.API.Controllers
             var accessToken = GenerarAccessToken(requestBody.Usuario);
             var refreshToken = GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, Request.Headers["Risk-App-Key"], accessToken, refreshToken);
+            var respIniciarSesion = _autService.IniciarSesion(Request.Headers["Risk-App-Key"], requestBody.Usuario, accessToken, refreshToken);
             return ProcesarRespuesta(respIniciarSesion);
         }
 
@@ -214,7 +214,7 @@ namespace Risk.API.Controllers
             var accessTokenNuevo = GenerarAccessToken(usuario);
             var refreshTokenNuevo = GenerarRefreshToken();
 
-            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
+            var respuesta = _autService.RefrescarSesion(Request.Headers["Risk-App-Key"], requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
             return ProcesarRespuesta(respuesta);
         }
 

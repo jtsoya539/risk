@@ -36,6 +36,11 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -112,6 +117,76 @@ Program units
 </TD></TR>
 </TABLE>
 <BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_CLAVE_ACCESO">c_clave_acceso</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_CLAVE_TRANSACCIONAL">c_clave_transaccional</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ACCESS_TOKEN">c_access_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_REFRESH_TOKEN">c_refresh_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_CLAVE_ACCESO"></A>
+<P CLASS="TYPE_TITLE">
+c_clave_acceso
+</P>
+<PRE CLASS="DECL_TEXT">
+c_clave_acceso        CONSTANT CHAR(1) := 'A';
+</PRE>
+<HR>
+<A NAME="C_CLAVE_TRANSACCIONAL"></A>
+<P CLASS="TYPE_TITLE">
+c_clave_transaccional
+</P>
+<PRE CLASS="DECL_TEXT">
+c_clave_transaccional CONSTANT CHAR(1) := 'T';
+</PRE>
+<HR>
+<A NAME="C_ACCESS_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+c_access_token
+</P>
+<PRE CLASS="DECL_TEXT">
+c_access_token  CONSTANT CHAR(1) := 'A';
+</PRE>
+<HR>
+<A NAME="C_REFRESH_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+c_refresh_token
+</P>
+<PRE CLASS="DECL_TEXT">
+c_refresh_token CONSTANT CHAR(1) := 'R';
+</PRE>
+<HR>
+<A NAME="F_TIEMPO_EXPIRACION_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+f_tiempo_expiracion_token
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
+                                   i_tipo_token    IN VARCHAR2)
+  RETURN NUMBER
+
+</PRE>
 <HR>
 <A NAME="P_VALIDAR_CLAVE"></A>
 <P CLASS="TYPE_TITLE">
@@ -217,8 +292,8 @@ PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
 f_iniciar_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_iniciar_sesion(i_usuario          IN VARCHAR2,
-                          i_clave_aplicacion IN VARCHAR2,
+FUNCTION f_iniciar_sesion(i_clave_aplicacion IN VARCHAR2,
+                          i_usuario          IN VARCHAR2,
                           i_access_token     IN VARCHAR2,
                           i_refresh_token    IN VARCHAR2) RETURN NUMBER
 
@@ -229,7 +304,8 @@ FUNCTION f_iniciar_sesion(i_usuario          IN VARCHAR2,
 f_refrescar_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_refrescar_sesion(i_access_token_antiguo  IN VARCHAR2,
+FUNCTION f_refrescar_sesion(i_clave_aplicacion      IN VARCHAR2,
+                            i_access_token_antiguo  IN VARCHAR2,
                             i_refresh_token_antiguo IN VARCHAR2,
                             i_access_token_nuevo    IN VARCHAR2,
                             i_refresh_token_nuevo   IN VARCHAR2)

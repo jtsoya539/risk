@@ -76,11 +76,11 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken)
+        public Respuesta<Sesion> IniciarSesion(string claveAplicacion, string usuario, string accessToken, string refreshToken)
         {
             JObject prms = new JObject();
-            prms.Add("usuario", usuario);
             prms.Add("clave_aplicacion", claveAplicacion);
+            prms.Add("usuario", usuario);
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
 
@@ -90,9 +90,10 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetSesionFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
+        public Respuesta<Sesion> RefrescarSesion(string claveAplicacion, string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
         {
             JObject prms = new JObject();
+            prms.Add("clave_aplicacion", claveAplicacion);
             prms.Add("access_token_antiguo", accessTokenAntiguo);
             prms.Add("refresh_token_antiguo", refreshTokenAntiguo);
             prms.Add("access_token_nuevo", accessTokenNuevo);

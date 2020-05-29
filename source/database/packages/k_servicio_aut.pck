@@ -329,18 +329,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'usuario')) IS NULL THEN
+                                                           'clave_aplicacion')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0001',
-                                   'Debe ingresar usuario');
+                                   'Debe ingresar clave_aplicacion');
       RAISE k_servicio.ex_error_parametro;
     END IF;
   
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'clave_aplicacion')) IS NULL THEN
+                                                           'usuario')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0002',
-                                   'Debe ingresar clave_aplicacion');
+                                   'Debe ingresar usuario');
       RAISE k_servicio.ex_error_parametro;
     END IF;
   
@@ -362,9 +362,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Iniciando sesion';
     l_id_sesion := k_autenticacion.f_iniciar_sesion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'usuario')),
-                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                         'clave_aplicacion')),
+                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                        'usuario')),
                                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                         'access_token')),
                                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
@@ -376,7 +376,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              estado,
              access_token,
              refresh_token,
-             to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_access_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
@@ -423,6 +424,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'clave_aplicacion')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0001',
+                                   'Debe ingresar clave_aplicacion');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                            'access_token_antiguo')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0001',
@@ -456,6 +465,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Refrescando sesion';
     l_id_sesion := k_autenticacion.f_refrescar_sesion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                          'clave_aplicacion')),
+                                                      anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                           'access_token_antiguo')),
                                                       anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                           'refresh_token_antiguo')),
@@ -470,7 +481,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              estado,
              access_token,
              refresh_token,
-             to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_access_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
