@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_APLICACIONES">
  <META name="description" content="Aplicaciones">
- <META name="columns" content="ID_APLICACION NOMBRE TIPO ACTIVO CLAVE DETALLE VERSION_ACTUAL">
+ <META name="columns" content="ID_APLICACION NOMBRE TIPO ACTIVO CLAVE DETALLE VERSION_ACTUAL TIEMPO_EXPIRACION_ACCESS_TOKEN TIEMPO_EXPIRACION_REFRESH_TOKEN">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -162,6 +162,40 @@ Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Version actual de la aplicacion
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+TIEMPO_EXPIRACION_ACCESS_TOKEN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER(6)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Tiempo de expiraci&#243;n del Access Token en segundos
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+TIEMPO_EXPIRACION_REFRESH_TOKEN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER(6)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Tiempo de expiraci&#243;n del Refresh Token en horas
 </TD>
 </TR>
 </TABLE>

@@ -25,7 +25,7 @@ Agregar los metadatos del paquete NuGet en Risk.API.Client.csproj
 ```
   <PropertyGroup>
     <PackageId>Risk.API.Client</PackageId>
-    <Version>0.1</Version>
+    <Version>x.x.x</Version>
     <Authors>jtsoya539</Authors>
     <Company>RamaPy</Company>
     <Title>Risk.API.Client</Title>
