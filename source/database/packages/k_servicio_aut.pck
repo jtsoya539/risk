@@ -58,6 +58,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
   FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
@@ -329,18 +332,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'usuario')) IS NULL THEN
+                                                           'clave_aplicacion')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0001',
-                                   'Debe ingresar usuario');
+                                   'Debe ingresar clave_aplicacion');
       RAISE k_servicio.ex_error_parametro;
     END IF;
   
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'clave_aplicacion')) IS NULL THEN
+                                                           'usuario')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0002',
-                                   'Debe ingresar clave_aplicacion');
+                                   'Debe ingresar usuario');
       RAISE k_servicio.ex_error_parametro;
     END IF;
   
@@ -362,9 +365,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Iniciando sesion';
     l_id_sesion := k_autenticacion.f_iniciar_sesion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'usuario')),
-                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                         'clave_aplicacion')),
+                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                        'usuario')),
                                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                         'access_token')),
                                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
@@ -376,7 +379,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              estado,
              access_token,
              refresh_token,
-             to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_access_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
@@ -423,6 +427,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parametros';
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'clave_aplicacion')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0001',
+                                   'Debe ingresar clave_aplicacion');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                            'access_token_antiguo')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0001',
@@ -456,6 +468,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Refrescando sesion';
     l_id_sesion := k_autenticacion.f_refrescar_sesion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                          'clave_aplicacion')),
+                                                      anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                           'access_token_antiguo')),
                                                       anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                                           'refresh_token_antiguo')),
@@ -470,7 +484,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              estado,
              access_token,
              refresh_token,
-             to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_access_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
@@ -743,6 +758,63 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp           y_respuesta;
+    l_dato          y_dato;
+    l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'clave_aplicacion')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0001',
+                                   'Debe ingresar clave_aplicacion');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar     := 'Buscando aplicación';
+    l_id_aplicacion := k_autenticacion.f_id_aplicacion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                           'clave_aplicacion')),
+                                                       'S');
+    IF l_id_aplicacion IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0002',
+                                   'Aplicacion inexistente o inactiva');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    l_rsp.lugar      := 'Obteniendo tiempo de expiración';
+    l_dato.contenido := to_char(k_autenticacion.f_tiempo_expiracion_token(l_id_aplicacion,
+                                                                          anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                                              'tipo_token'))));
+  
+    IF l_dato.contenido IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'aut0003',
+                                   'Error al obtener tiempo de expiración');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN

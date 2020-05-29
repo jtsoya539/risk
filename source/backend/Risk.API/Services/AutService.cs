@@ -45,6 +45,7 @@ namespace Risk.API.Services
         private const int ID_VALIDAR_CLAVE_APLICACION = 12;
         private const int ID_REGISTRAR_DISPOSITIVO = 14;
         private const int ID_AVATAR_USUARIO = 15;
+        private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -76,11 +77,11 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> IniciarSesion(string usuario, string claveAplicacion, string accessToken, string refreshToken)
+        public Respuesta<Sesion> IniciarSesion(string claveAplicacion, string usuario, string accessToken, string refreshToken)
         {
             JObject prms = new JObject();
-            prms.Add("usuario", usuario);
             prms.Add("clave_aplicacion", claveAplicacion);
+            prms.Add("usuario", usuario);
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
 
@@ -90,9 +91,10 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetSesionFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
+        public Respuesta<Sesion> RefrescarSesion(string claveAplicacion, string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
         {
             JObject prms = new JObject();
+            prms.Add("clave_aplicacion", claveAplicacion);
             prms.Add("access_token_antiguo", accessTokenAntiguo);
             prms.Add("refresh_token_antiguo", refreshTokenAntiguo);
             prms.Add("access_token_nuevo", accessTokenNuevo);
@@ -201,6 +203,17 @@ namespace Risk.API.Services
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
-    }
 
+        public Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken)
+        {
+            JObject prms = new JObject();
+            prms.Add("clave_aplicacion", claveAplicacion);
+            prms.Add("tipo_token", tipoToken);
+
+            string rsp = base.ApiProcesarServicio(ID_TIEMPO_EXPIRACION_TOKEN, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+    }
 }

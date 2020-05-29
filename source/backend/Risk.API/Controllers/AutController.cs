@@ -58,7 +58,7 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
-        private string GenerarAccessToken(string usuario)
+        private string GenerarAccessToken(string usuario, string claveAplicacion)
         {
             var respDatosUsuario = _autService.DatosUsuario(usuario);
             if (!respDatosUsuario.Codigo.Equals(RiskDbConstants.CODIGO_OK))
@@ -83,19 +83,19 @@ namespace Risk.API.Controllers
                 claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
             }
 
-            var respValorParametro = _genService.ValorParametro("TIEMPO_EXPIRACION_ACCESS_TOKEN");
+            var respTiempoExpiracionToken = _autService.TiempoExpiracionToken(claveAplicacion, "A");
+            if (!respTiempoExpiracionToken.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            {
+                return string.Empty;
+            }
+            int tiempoExpiracion = int.Parse(respTiempoExpiracionToken.Datos.Contenido);
+
+            var respValorParametro = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
             if (!respValorParametro.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
-            int tiempoExpiracion = int.Parse(respValorParametro.Datos.Contenido);
-
-            var respValorParametro2 = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro2.Codigo.Equals(RiskDbConstants.CODIGO_OK))
-            {
-                return string.Empty;
-            }
-            var signingKey = Encoding.ASCII.GetBytes(respValorParametro2.Datos.Contenido);
+            var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -191,10 +191,10 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respValidarCredenciales);
             }
 
-            var accessToken = GenerarAccessToken(requestBody.Usuario);
+            var accessToken = GenerarAccessToken(requestBody.Usuario, Request.Headers["Risk-App-Key"]);
             var refreshToken = GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, Request.Headers["Risk-App-Key"], accessToken, refreshToken);
+            var respIniciarSesion = _autService.IniciarSesion(Request.Headers["Risk-App-Key"], requestBody.Usuario, accessToken, refreshToken);
             return ProcesarRespuesta(respIniciarSesion);
         }
 
@@ -211,10 +211,10 @@ namespace Risk.API.Controllers
         {
             string usuario = ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
 
-            var accessTokenNuevo = GenerarAccessToken(usuario);
+            var accessTokenNuevo = GenerarAccessToken(usuario, Request.Headers["Risk-App-Key"]);
             var refreshTokenNuevo = GenerarRefreshToken();
 
-            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
+            var respuesta = _autService.RefrescarSesion(Request.Headers["Risk-App-Key"], requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
             return ProcesarRespuesta(respuesta);
         }
 

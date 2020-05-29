@@ -1,7 +1,6 @@
 prompt Importing table t_servicios...
 set feedback off
 set define off
-
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (1, 'VALIDAR_CREDENCIALES', 'R', 'S', 'AUT', null, null, null, null);
 
@@ -49,5 +48,8 @@ values (15, 'AVATAR_USUARIO', 'R', 'S', 'AUT', null, null, null, null);
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (16, 'LISTAR_PAISES', 'R', 'S', 'GEN', null, null, null, null);
+
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (17, 'TIEMPO_EXPIRACION_TOKEN', 'R', 'S', 'AUT', null, null, null, null);
 
 prompt Done.
