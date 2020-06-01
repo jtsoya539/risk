@@ -32,5 +32,7 @@ namespace Risk.API.Services
         Respuesta<Dato> ValorParametro(string parametro);
         Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
         Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null);
+        Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia);
+        Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo);
     }
 }

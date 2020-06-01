@@ -53,5 +53,26 @@ namespace Risk.API.Helpers
             }
             return entity;
         }
+
+        public static YArchivo GetYArchivoFromModel(Archivo model)
+        {
+            YArchivo entity;
+            if (model == null)
+            {
+                entity = null;
+            }
+            else
+            {
+                entity = new YArchivo
+                {
+                    Contenido = model.Contenido,
+                    Checksum = model.Checksum,
+                    Tamano = model.Tamano,
+                    Nombre = model.Nombre,
+                    Extension = model.Extension
+                };
+            }
+            return entity;
+        }
     }
 }

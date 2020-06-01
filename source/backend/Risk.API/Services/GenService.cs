@@ -37,6 +37,8 @@ namespace Risk.API.Services
         private const int ID_SIGNIFICADO_CODIGO = 9;
         private const int ID_VERSION_SISTEMA = 13;
         private const int ID_LISTAR_PAISES = 16;
+        private const int ID_RECUPERAR_ARCHIVO = 18;
+        private const int ID_GUARDAR_ARCHIVO = 19;
 
         public GenService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -90,6 +92,33 @@ namespace Risk.API.Services
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Pais>, YPagina<YPais>>(entityRsp, datos);
+        }
+
+        public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia)
+        {
+            JObject prms = new JObject();
+            prms.Add("tabla", tabla);
+            prms.Add("campo", campo);
+            prms.Add("referencia", referencia);
+
+            string rsp = base.ApiProcesarServicio(ID_RECUPERAR_ARCHIVO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo)
+        {
+            JObject prms = new JObject();
+            prms.Add("tabla", tabla);
+            prms.Add("campo", campo);
+            prms.Add("referencia", referencia);
+            prms.Add("archivo", JToken.FromObject(ModelsMapper.GetYArchivoFromModel(archivo)));
+
+            string rsp = base.ApiProcesarServicio(ID_GUARDAR_ARCHIVO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
     }
 }
