@@ -1,0 +1,27 @@
+create table T_ARCHIVO_DEFINICIONES
+(
+  tabla             VARCHAR2(30) not null,
+  campo             VARCHAR2(30) not null,
+  descripcion       VARCHAR2(500),
+  tamano_maximo     NUMBER(10),
+  orden             NUMBER(3) not null,
+  nombre_referencia VARCHAR2(30) not null
+)
+;
+comment on table T_ARCHIVO_DEFINICIONES
+  is 'Definiciones de Archivos';
+comment on column T_ARCHIVO_DEFINICIONES.tabla
+  is 'Nombre de la tabla relacionada';
+comment on column T_ARCHIVO_DEFINICIONES.campo
+  is 'Nombre del campo';
+comment on column T_ARCHIVO_DEFINICIONES.descripcion
+  is 'Descripción del archivo';
+comment on column T_ARCHIVO_DEFINICIONES.tamano_maximo
+  is 'Tamaño máximo del archivo en bytes';
+comment on column T_ARCHIVO_DEFINICIONES.orden
+  is 'Número de orden del campo';
+comment on column T_ARCHIVO_DEFINICIONES.nombre_referencia
+  is 'Nombre del campo de referencia';
+alter table T_ARCHIVO_DEFINICIONES
+  add constraint PK_ARCHIVO_DEFINICIONES primary key (TABLA, CAMPO);
+

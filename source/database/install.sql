@@ -89,6 +89,8 @@ prompt
 @@tables/t_correos.tab
 @@tables/t_correo_adjuntos.tab
 @@tables/t_mensajes.tab
+@@tables/t_archivo_definiciones.tab
+@@tables/t_archivos.tab
 
 prompt
 prompt Creando types...
@@ -123,6 +125,7 @@ prompt
 @@packages/k_servicio_aut.pck
 @@packages/k_servicio_gen.pck
 @@packages/k_mensajeria.pck
+@@packages/k_archivo.pck
 
 prompt
 prompt Creando triggers...
@@ -143,6 +146,7 @@ prompt
 @@triggers/gb_usuarios.trg
 @@triggers/gb_sesiones.trg
 @@triggers/gb_personas.trg
+@@triggers/gb_archivos.trg
 
 prompt
 prompt Ejecutando scripts...
@@ -159,6 +163,7 @@ prompt
 @@scripts/ins_t_servicio_parametros.sql
 @@scripts/ins_t_roles.sql
 @@scripts/ins_t_paises.sql
+@@scripts/ins_t_archivo_definiciones.sql
 commit;
 /
 
