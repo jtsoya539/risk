@@ -118,4 +118,25 @@ values (17, 'CLAVE_APLICACION', 'I', 'S', null, 'S', null, 'S', 1);
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (17, 'TIPO_TOKEN', 'I', 'S', null, 'N', 'A', 'S', 2);
 
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (18, 'TABLA', 'I', 'S', null, 'S', null, 'S', 1);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (18, 'CAMPO', 'I', 'S', null, 'S', null, 'S', 2);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (18, 'REFERENCIA', 'I', 'S', null, 'S', null, 'S', 3);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (19, 'TABLA', 'I', 'S', null, 'S', null, 'S', 1);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (19, 'CAMPO', 'I', 'S', null, 'S', null, 'S', 2);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (19, 'REFERENCIA', 'I', 'S', null, 'S', null, 'S', 3);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (19, 'ARCHIVO', 'I', 'O', 'Y_ARCHIVO', 'S', null, 'S', 4);
+
 prompt Done.

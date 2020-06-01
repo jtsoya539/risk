@@ -39,6 +39,10 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
 
   FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION recuperar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
+
+  FUNCTION guardar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
@@ -211,6 +215,127 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     k_servicio.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION recuperar_archivo(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp     y_respuesta;
+    l_archivo y_archivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp     := NEW y_respuesta();
+    l_archivo := NEW y_archivo();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'tabla')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Debe ingresar tabla');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'campo')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp, 'gen0002', 'Debe ingresar campo');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'referencia')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'gen0003',
+                                   'Debe ingresar referencia');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar := 'Recuperando archivo';
+    l_archivo   := k_archivo.f_recuperar_archivo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                     'tabla')),
+                                                 anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                     'campo')),
+                                                 anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                     'referencia')));
+  
+    IF l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+      k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Archivo inexistente');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_archivo);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION guardar_archivo(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp     y_respuesta;
+    l_retorno PLS_INTEGER;
+    l_anydata anydata;
+    l_archivo y_archivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'tabla')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Debe ingresar tabla');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'campo')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp, 'gen0002', 'Debe ingresar campo');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'referencia')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'gen0003',
+                                   'Debe ingresar referencia');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    l_anydata := k_servicio.f_valor_parametro(i_parametros, 'archivo');
+    l_retorno := l_anydata.getobject(l_archivo);
+    IF l_archivo IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'gen0004',
+                                   'Debe ingresar archivo');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    l_rsp.lugar := 'Guardando archivo';
+    k_archivo.p_guardar_archivo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                    'tabla')),
+                                anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                    'campo')),
+                                anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                    'referencia')),
+                                l_archivo);
+  
+    k_servicio.p_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
