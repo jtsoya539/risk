@@ -46,7 +46,8 @@ namespace Risk.API.Helpers
                     Checksum = entity.Checksum,
                     Tamano = entity.Tamano,
                     Nombre = entity.Nombre,
-                    Extension = entity.Extension
+                    Extension = entity.Extension,
+                    TipoMime = entity.TipoMime
                 };
             }
             return model;

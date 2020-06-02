@@ -38,5 +38,7 @@ namespace Risk.API.Entities
         public string Nombre { get; set; }
         [JsonProperty("extension")]
         public string Extension { get; set; }
+        [JsonProperty("tipo_mime")]
+        public string TipoMime { get; set; }
     }
 }

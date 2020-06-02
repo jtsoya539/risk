@@ -31,5 +31,6 @@ namespace Risk.API.Models
         public int Tamano { get; set; }
         public string Nombre { get; set; }
         public string Extension { get; set; }
+        public string TipoMime { get; set; }
     }
 }

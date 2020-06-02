@@ -72,14 +72,22 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
     l_archivo := NEW y_archivo();
   
     BEGIN
-      SELECT a.contenido, a.checksum, a.tamano, a.nombre, a.extension
+      SELECT a.contenido,
+             a.checksum,
+             a.tamano,
+             a.nombre,
+             a.extension,
+             f_tipo_mime(d.extensiones_permitidas, a.extension)
         INTO l_archivo.contenido,
              l_archivo.checksum,
              l_archivo.tamano,
              l_archivo.nombre,
-             l_archivo.extension
-        FROM t_archivos a
-       WHERE upper(a.tabla) = upper(i_tabla)
+             l_archivo.extension,
+             l_archivo.tipo_mime
+        FROM t_archivos a, t_archivo_definiciones d
+       WHERE d.tabla = a.tabla
+         AND d.campo = a.campo
+         AND upper(a.tabla) = upper(i_tabla)
          AND upper(a.campo) = upper(i_campo)
          AND a.referencia = i_referencia;
     EXCEPTION

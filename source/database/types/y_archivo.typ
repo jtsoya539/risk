@@ -40,6 +40,8 @@ SOFTWARE.
   nombre VARCHAR2(4000),
 /** Extensión del archivo */
   extension VARCHAR2(100),
+/** Tipo MIME del archivo */
+  tipo_mime VARCHAR2(100),
 
 /**
 Constructor del objeto sin parámetros.
@@ -70,6 +72,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
     self.tamano    := NULL;
     self.nombre    := NULL;
     self.extension := NULL;
+    self.tipo_mime := NULL;
     RETURN;
   END;
 
@@ -92,6 +95,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
     l_archivo.tamano    := l_json_object.get_number('tamano');
     l_archivo.nombre    := l_json_object.get_string('nombre');
     l_archivo.extension := l_json_object.get_string('extension');
+    l_archivo.tipo_mime := l_json_object.get_string('tipo_mime');
   
     RETURN l_archivo;
   END;
@@ -114,6 +118,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
     l_json_object.put('tamano', self.tamano);
     l_json_object.put('nombre', self.nombre);
     l_json_object.put('extension', self.extension);
+    l_json_object.put('tipo_mime', self.tipo_mime);
     RETURN l_json_object.to_clob;
   END;
 

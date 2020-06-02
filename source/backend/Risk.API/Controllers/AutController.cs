@@ -322,8 +322,7 @@ namespace Risk.API.Controllers
             var archivo = respuesta.Datos;
             byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
 
-            string contentType = "application/octet-stream";
-            return File(contenido, contentType, string.Concat(archivo.Nombre, ".", archivo.Extension));
+            return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
         }
 
         [HttpPost("GuardarAvatarUsuario")]
