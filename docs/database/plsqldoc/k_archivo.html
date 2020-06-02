@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_archivo</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_archivo">
+ <META name="description" content="Agrupa operaciones relacionadas con archivos">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_archivo</P>
+Agrupa operaciones relacionadas con archivos<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:22:16
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_TIPO_MIME">f_tipo_mime</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_RECUPERAR_ARCHIVO">f_recuperar_archivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_ARCHIVO">p_guardar_archivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_TIPO_MIME"></A>
+<P CLASS="TYPE_TITLE">
+f_tipo_mime
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_tipo_mime(i_dominio   IN VARCHAR2,
+                     i_extension IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_RECUPERAR_ARCHIVO"></A>
+<P CLASS="TYPE_TITLE">
+f_recuperar_archivo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
+                             i_campo      IN VARCHAR2,
+                             i_referencia IN VARCHAR2) RETURN y_archivo
+
+</PRE>
+<HR>
+<A NAME="P_GUARDAR_ARCHIVO"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_archivo
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_archivo(i_tabla      IN VARCHAR2,
+                            i_campo      IN VARCHAR2,
+                            i_referencia IN VARCHAR2,
+                            i_archivo    IN y_archivo)
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

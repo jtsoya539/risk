@@ -30,6 +30,9 @@ CREATE OR REPLACE PACKAGE k_archivo IS
   -------------------------------------------------------------------------------
   */
 
+  FUNCTION f_tipo_mime(i_dominio   IN VARCHAR2,
+                       i_extension IN VARCHAR2) RETURN VARCHAR2;
+
   FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                                i_campo      IN VARCHAR2,
                                i_referencia IN VARCHAR2) RETURN y_archivo;
@@ -42,6 +45,24 @@ CREATE OR REPLACE PACKAGE k_archivo IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_archivo IS
+
+  FUNCTION f_tipo_mime(i_dominio   IN VARCHAR2,
+                       i_extension IN VARCHAR2) RETURN VARCHAR2 IS
+    l_referencia t_significados.referencia%TYPE;
+  BEGIN
+    BEGIN
+      SELECT a.referencia
+        INTO l_referencia
+        FROM t_significados a
+       WHERE a.activo = 'S'
+         AND a.dominio = i_dominio
+         AND upper(a.codigo) = upper(i_extension);
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_referencia := NULL;
+    END;
+    RETURN l_referencia;
+  END;
 
   FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                                i_campo      IN VARCHAR2,

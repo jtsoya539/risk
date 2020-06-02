@@ -107,6 +107,7 @@ prompt
 prompt Generando docs de paquetes...
 prompt -----------------------------------
 prompt
+plugin plsqldoc generate k_archivo;
 plugin plsqldoc generate k_auditoria;
 plugin plsqldoc generate k_autenticacion;
 plugin plsqldoc generate k_error;

@@ -2,9 +2,10 @@ CREATE OR REPLACE TRIGGER gb_archivos
   BEFORE INSERT OR UPDATE OR DELETE ON t_archivos
   FOR EACH ROW
 DECLARE
-  l_existe_registro   VARCHAR2(1);
-  l_nombre_referencia t_archivo_definiciones.nombre_referencia%TYPE;
-  l_tamano_maximo     t_archivo_definiciones.tamano_maximo%TYPE;
+  l_existe_registro        VARCHAR2(1);
+  l_nombre_referencia      t_archivo_definiciones.nombre_referencia%TYPE;
+  l_tamano_maximo          t_archivo_definiciones.tamano_maximo%TYPE;
+  l_extensiones_permitidas t_archivo_definiciones.extensiones_permitidas%TYPE;
 BEGIN
   /*
   --------------------------------- MIT License ---------------------------------
@@ -34,8 +35,8 @@ BEGIN
   
     -- Valida definición de archivo
     BEGIN
-      SELECT d.nombre_referencia, d.tamano_maximo
-        INTO l_nombre_referencia, l_tamano_maximo
+      SELECT d.nombre_referencia, d.tamano_maximo, d.extensiones_permitidas
+        INTO l_nombre_referencia, l_tamano_maximo, l_extensiones_permitidas
         FROM t_archivo_definiciones d
        WHERE upper(d.tabla) = upper(:new.tabla)
          AND upper(d.campo) = upper(:new.campo);
@@ -87,6 +88,13 @@ END;'
                                 'Extensión del archivo obligatorio');
       END IF;
     
+      IF l_extensiones_permitidas IS NOT NULL THEN
+        IF k_archivo.f_tipo_mime(l_extensiones_permitidas, :new.extension) IS NULL THEN
+          raise_application_error(-20000,
+                                  'Extensión de archivo no permitida');
+        END IF;
+      END IF;
+    
       -- Calcula propiedades del archivo
       IF :old.contenido IS NULL OR
          to_char(rawtohex(dbms_crypto.hash(:new.contenido,
@@ -100,7 +108,10 @@ END;'
     
       -- Valida tamaño del archivo
       IF nvl(:new.tamano, 0) > nvl(l_tamano_maximo, 0) THEN
-        raise_application_error(-20000, 'Archivo supera el tamaño máximo');
+        raise_application_error(-20000,
+                                'Archivo supera el tamaño máximo (' ||
+                                TRIM(to_char(l_tamano_maximo / 1000000,
+                                             '999G999G999D99')) || ' MB)');
       END IF;
     END IF;
   
