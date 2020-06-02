@@ -2,11 +2,11 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Table T_USUARIOS</TITLE>
+ <TITLE>Table T_ARCHIVOS</TITLE>
  <META name="object" content="TABLE">
- <META name="name" content="T_USUARIOS">
- <META name="description" content="Usuarios">
- <META name="columns" content="ID_USUARIO ALIAS ID_PERSONA ESTADO DIRECCION_CORREO NUMERO_TELEFONO">
+ <META name="name" content="T_ARCHIVOS">
+ <META name="description" content="Archivos">
+ <META name="columns" content="TABLA CAMPO REFERENCIA CONTENIDO CHECKSUM TAMANO NOMBRE EXTENSION">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,8 +14,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Table T_USUARIOS</P>
-Usuarios
+<P CLASS="MAIN_TITLE">Table T_ARCHIVOS</P>
+Archivos
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -47,27 +47,61 @@ Comments
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ID_USUARIO
+TABLA
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-NUMBER(10)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+VARCHAR2(30)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Identificador del usuario
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Nombre de la tabla relacionada
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ALIAS
+CAMPO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(300)
+VARCHAR2(30)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Nombre del campo
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+REFERENCIA
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(500)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Identificador del registro relacionado
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+CONTENIDO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+BLOB
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -76,15 +110,15 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Alias del usuario (identificador para autenticacion)
+Contenido del archivo
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ID_PERSONA
+CHECKSUM
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-NUMBER(10)
+VARCHAR2(100)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -93,15 +127,15 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Persona relacionada al usuario
+Hash del archivo calculado con el algoritmo SHA-1
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ESTADO
+TAMANO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(1)
+NUMBER
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -110,15 +144,15 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Estado del usuario
+Tama&#241;o del archivo en bytes
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-DIRECCION_CORREO
+NOMBRE
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(320)
+VARCHAR2(4000)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -127,15 +161,15 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Direccion de correo electronico principal del usuario
+Nombre del archivo
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-NUMERO_TELEFONO
+EXTENSION
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(160)
+VARCHAR2(100)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -144,7 +178,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Numero de telefono principal del usuario
+Extensi&#243;n del archivo
 </TD>
 </TR>
 </TABLE>
@@ -166,35 +200,10 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_USUARIOS
+PK_ARCHIVOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_USUARIO
-</TD>
-</TR>
-</TABLE>
-<HR>
-<A NAME="Unique Keys"></A>
-<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
-Unique Keys
-</TD></TR></TABLE>
-<TABLE CLASS="SIMPLE_TABLE">
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
-Name
-</U>
-</TD>
-<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
-Columns
-</U>
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-UK_USUARIOS_ALIAS
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-ALIAS
+TABLA,CAMPO,REFERENCIA
 </TD>
 </TR>
 </TABLE>
@@ -224,16 +233,16 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-FK_USUARIOS_PERSONAS
+FK_ARC_ARCHIVO_DEFINICIONES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_PERSONA
+TABLA,CAMPO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-T_PERSONAS
+T_ARCHIVO_DEFINICIONES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_PERSONA
+TABLA,CAMPO
 </TD>
 </TR>
 </TABLE>
@@ -259,21 +268,10 @@ Type
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_USUARIOS
+PK_ARCHIVOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_USUARIO
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Unique
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-UK_USUARIOS_ALIAS
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-ALIAS
+TABLA,CAMPO,REFERENCIA
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

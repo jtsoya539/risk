@@ -59,6 +59,8 @@ prompt Generando docs de tablas...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate t_aplicaciones;
+plugin plsqldoc generate t_archivo_definiciones;
+plugin plsqldoc generate t_archivos;
 plugin plsqldoc generate t_ciudades;
 plugin plsqldoc generate t_correo_adjuntos;
 plugin plsqldoc generate t_correos;
