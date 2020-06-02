@@ -37,7 +37,6 @@ namespace Risk.API.Services
         Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave);
         Respuesta<Dato> ValidarSesion(string accessToken);
         Respuesta<Usuario> DatosUsuario(string usuario);
-        Respuesta<Archivo> AvatarUsuario(string usuario);
         Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion);
         Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo);
         Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken);

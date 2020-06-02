@@ -1,6 +1,7 @@
 prompt Importing table t_servicio_parametros...
 set feedback off
 set define off
+
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (1, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1);
 
@@ -105,9 +106,6 @@ values (14, 'CLAVE_APLICACION', 'I', 'S', null, 'S', null, 'S', 1);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (14, 'DISPOSITIVO', 'I', 'O', 'Y_DISPOSITIVO', 'S', null, 'S', 2);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (15, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (16, 'ID_PAIS', 'I', 'N', null, 'N', null, 'S', 1);

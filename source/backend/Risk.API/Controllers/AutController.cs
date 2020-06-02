@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Net.Mime;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -302,6 +303,7 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [AllowAnonymous]
         [HttpGet("AvatarUsuario")]
         [SwaggerOperation(OperationId = "AvatarUsuario", Summary = "AvatarUsuario", Description = "Obtiene el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "image/gif", "image/jpeg", "image/png" })]
@@ -311,7 +313,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
         {
-            var respuesta = _autService.AvatarUsuario(usuario);
+            var respuesta = _genService.RecuperarArchivo("T_USUARIOS", "AVATAR", usuario);
 
             if (!respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
             {
@@ -321,6 +323,38 @@ namespace Risk.API.Controllers
             var archivo = respuesta.Datos;
             byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
             return File(contenido, string.Concat("image/", archivo.Extension), string.Concat(archivo.Nombre, ".", archivo.Extension));
+        }
+
+        [AllowAnonymous]
+        [HttpPost("AvatarUsuario")]
+        [SwaggerOperation(OperationId = "AvatarUsuario2", Summary = "AvatarUsuario2", Description = "Obtiene el avatar de un usuario")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] AvatarUsuarioRequestBody requestBody)
+        {
+            string contenido = string.Empty;
+
+            if (requestBody.Archivo.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    requestBody.Archivo.CopyTo(ms);
+                    contenido = Convert.ToBase64String(GZipHelper.Compress(ms.ToArray()));
+                }
+            }
+
+            Archivo archivo = new Archivo
+            {
+                Contenido = contenido,
+                Nombre = requestBody.Nombre,
+                Extension = requestBody.Extension
+            };
+
+            var respuesta = _genService.GuardarArchivo("T_USUARIOS", "AVATAR", usuario, archivo);
+            return ProcesarRespuesta(respuesta);
         }
     }
 }

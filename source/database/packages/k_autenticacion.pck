@@ -459,19 +459,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Inserta usuario
     INSERT INTO t_usuarios
-      (alias,
-       id_persona,
-       estado,
-       avatar,
-       direccion_correo,
-       numero_telefono)
+      (alias, id_persona, estado, direccion_correo, numero_telefono)
     VALUES
-      (i_usuario,
-       l_id_persona,
-       'A',
-       NULL,
-       i_direccion_correo,
-       i_numero_telefono)
+      (i_usuario, l_id_persona, 'A', i_direccion_correo, i_numero_telefono)
     RETURNING id_usuario INTO l_id_usuario;
   
     INSERT INTO t_rol_usuarios

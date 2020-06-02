@@ -4,7 +4,6 @@ create table T_USUARIOS
   alias            VARCHAR2(300),
   id_persona       NUMBER(10),
   estado           VARCHAR2(1),
-  avatar           BLOB,
   direccion_correo VARCHAR2(320),
   numero_telefono  VARCHAR2(160)
 )
@@ -19,8 +18,6 @@ comment on column T_USUARIOS.id_persona
   is 'Persona relacionada al usuario';
 comment on column T_USUARIOS.estado
   is 'Estado del usuario';
-comment on column T_USUARIOS.avatar
-  is 'Avatar del usuario (imagen de perfil)';
 comment on column T_USUARIOS.direccion_correo
   is 'Direccion de correo electronico principal del usuario';
 comment on column T_USUARIOS.numero_telefono

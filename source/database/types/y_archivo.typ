@@ -49,13 +49,6 @@ Constructor del objeto sin parámetros.
 */
   CONSTRUCTOR FUNCTION y_archivo RETURN SELF AS RESULT,
 
-/**
-Calcula las propiedades del archivo.
-
-%author jtsoya539 1/4/2020 10:10:10
-*/
-  MEMBER PROCEDURE calcular_propiedades,
-
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
 
 /**
@@ -78,18 +71,6 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
     self.nombre    := NULL;
     self.extension := NULL;
     RETURN;
-  END;
-
-  MEMBER PROCEDURE calcular_propiedades IS
-  BEGIN
-    IF self.contenido IS NULL OR dbms_lob.getlength(self.contenido) = 0 THEN
-      self.checksum := NULL;
-      self.tamano   := 0;
-    ELSE
-      self.checksum := to_char(rawtohex(dbms_crypto.hash(self.contenido,
-                                                         dbms_crypto.hash_sh1)));
-      self.tamano   := dbms_lob.getlength(self.contenido);
-    END IF;
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS

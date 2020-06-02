@@ -22,20 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-set define on
+using Microsoft.AspNetCore.Http;
 
-accept v_user     char default 'api' prompt 'Ingrese usuario (por defecto ''api''):'
-accept v_password char default 'api' prompt 'Ingrese clave (por defecto ''api''):' hide
-
--- Create user
-CREATE USER &v_user IDENTIFIED BY &v_password;
--- Grant system privileges
-GRANT CREATE SESSION TO &v_user;
--- Grant object privileges
-GRANT SELECT ON sys.v_$session  TO &v_user;
-GRANT SELECT ON sys.v_$sesstat  TO &v_user;
-GRANT SELECT ON sys.v_$statname TO &v_user;
--- GRANT EXECUTE ON risk.k_servicio TO api;
--- CREATE OR REPLACE SYNONYM api.k_servicio FOR risk.k_servicio;
-
-set define off
+namespace Risk.API.Models
+{
+    public class AvatarUsuarioRequestBody
+    {
+        public IFormFile Archivo { get; set; }
+        public string Nombre { get; set; }
+        public string Extension { get; set; }
+    }
+}
