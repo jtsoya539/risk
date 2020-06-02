@@ -303,15 +303,14 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
-        [AllowAnonymous]
-        [HttpGet("AvatarUsuario")]
-        [SwaggerOperation(OperationId = "AvatarUsuario", Summary = "AvatarUsuario", Description = "Obtiene el avatar de un usuario")]
+        [HttpGet("RecuperarAvatarUsuario")]
+        [SwaggerOperation(OperationId = "RecuperarAvatarUsuario", Summary = "RecuperarAvatarUsuario", Description = "Permite recuperar el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "image/gif", "image/jpeg", "image/png" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
+        public IActionResult RecuperarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
         {
             var respuesta = _genService.RecuperarArchivo("T_USUARIOS", "AVATAR", usuario);
 
@@ -325,15 +324,14 @@ namespace Risk.API.Controllers
             return File(contenido, string.Concat("image/", archivo.Extension), string.Concat(archivo.Nombre, ".", archivo.Extension));
         }
 
-        [AllowAnonymous]
-        [HttpPost("AvatarUsuario")]
-        [SwaggerOperation(OperationId = "AvatarUsuario2", Summary = "AvatarUsuario2", Description = "Obtiene el avatar de un usuario")]
+        [HttpPost("GuardarAvatarUsuario")]
+        [SwaggerOperation(OperationId = "GuardarAvatarUsuario", Summary = "GuardarAvatarUsuario", Description = "Permite guardar el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult AvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] AvatarUsuarioRequestBody requestBody)
+        public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] AvatarUsuarioRequestBody requestBody)
         {
             string contenido = string.Empty;
 
