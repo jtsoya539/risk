@@ -305,7 +305,7 @@ namespace Risk.API.Controllers
 
         [HttpGet("RecuperarAvatarUsuario")]
         [SwaggerOperation(OperationId = "RecuperarAvatarUsuario", Summary = "RecuperarAvatarUsuario", Description = "Permite recuperar el avatar de un usuario")]
-        [Produces(MediaTypeNames.Application.Json, new[] { "image/gif", "image/jpeg", "image/png" })]
+        [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
@@ -321,17 +321,20 @@ namespace Risk.API.Controllers
 
             var archivo = respuesta.Datos;
             byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
-            return File(contenido, string.Concat("image/", archivo.Extension), string.Concat(archivo.Nombre, ".", archivo.Extension));
+
+            string contentType = "application/octet-stream";
+            return File(contenido, contentType, string.Concat(archivo.Nombre, ".", archivo.Extension));
         }
 
         [HttpPost("GuardarAvatarUsuario")]
         [SwaggerOperation(OperationId = "GuardarAvatarUsuario", Summary = "GuardarAvatarUsuario", Description = "Permite guardar el avatar de un usuario")]
+        [Consumes("multipart/form-data")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] AvatarUsuarioRequestBody requestBody)
+        public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] GuardarAvatarUsuarioRequestBody requestBody)
         {
             string contenido = string.Empty;
 

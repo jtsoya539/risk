@@ -23,13 +23,18 @@ SOFTWARE.
 */
 
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
-    public class AvatarUsuarioRequestBody
+    [SwaggerSchema("Request Body del servicio GuardarAvatarUsuario")]
+    public class GuardarAvatarUsuarioRequestBody
     {
+        [SwaggerSchema("Contenido del archivo")]
         public IFormFile Archivo { get; set; }
+        [SwaggerSchema("Nombre del archivo")]
         public string Nombre { get; set; }
+        [SwaggerSchema("Extensión del archivo")]
         public string Extension { get; set; }
     }
 }
