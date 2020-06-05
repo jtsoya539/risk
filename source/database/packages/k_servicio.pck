@@ -67,6 +67,11 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,
                              i_nombre     IN VARCHAR2) RETURN anydata;
 
+  FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
+                               i_numero_pagina       IN INTEGER DEFAULT NULL,
+                               i_cantidad_por_pagina IN INTEGER DEFAULT NULL)
+    RETURN y_pagina;
+
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
                                i_parametros  IN CLOB) RETURN CLOB;
 
@@ -390,6 +395,109 @@ END;'
       i := i_parametros.next(i);
     END LOOP;
     RETURN l_valor;
+  END;
+
+  FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
+                               i_numero_pagina       IN INTEGER DEFAULT NULL,
+                               i_cantidad_por_pagina IN INTEGER DEFAULT NULL)
+    RETURN y_pagina IS
+    l_pagina              y_pagina;
+    l_objetos             y_objetos;
+    l_numero_pagina       INTEGER;
+    l_cantidad_por_pagina INTEGER;
+    l_rango_i             INTEGER;
+    l_rango_j             INTEGER;
+  BEGIN
+    -- Inicializa respuesta
+    l_pagina                    := NEW y_pagina();
+    l_pagina.numero_actual      := 0;
+    l_pagina.numero_siguiente   := 0;
+    l_pagina.numero_ultima      := 0;
+    l_pagina.numero_primera     := 0;
+    l_pagina.numero_anterior    := 0;
+    l_pagina.cantidad_elementos := 0;
+  
+    -- Carga la cantidad total de elementos
+    l_pagina.cantidad_elementos := i_elementos.count;
+    --  
+  
+    -- Valida parámetro de cantidad por página
+    l_cantidad_por_pagina := nvl(i_cantidad_por_pagina,
+                                 to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA')));
+  
+    IF l_cantidad_por_pagina <= 0 THEN
+      l_cantidad_por_pagina := to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA'));
+    END IF;
+  
+    IF l_cantidad_por_pagina >
+       to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA')) THEN
+      l_cantidad_por_pagina := to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA'));
+    END IF;
+    --
+  
+    -- Calcula primera página y última página
+    l_pagina.numero_ultima := ceil(l_pagina.cantidad_elementos /
+                                   l_cantidad_por_pagina);
+  
+    IF l_pagina.numero_ultima > 0 THEN
+      l_pagina.numero_primera := 1;
+    END IF;
+    --
+  
+    -- Valida parámetro de número de página
+    l_numero_pagina := nvl(i_numero_pagina, 1);
+  
+    IF l_numero_pagina < l_pagina.numero_primera THEN
+      l_numero_pagina := l_pagina.numero_primera;
+    END IF;
+  
+    IF l_numero_pagina > l_pagina.numero_ultima THEN
+      l_numero_pagina := l_pagina.numero_ultima;
+    END IF;
+    --
+  
+    -- Carga página actual
+    l_pagina.numero_actual := l_numero_pagina;
+    --
+  
+    -- Calcula página anterior y página siguiente
+    l_pagina.numero_anterior  := l_pagina.numero_actual - 1;
+    l_pagina.numero_siguiente := l_pagina.numero_actual + 1;
+  
+    IF l_pagina.numero_anterior < l_pagina.numero_primera THEN
+      l_pagina.numero_anterior := l_pagina.numero_primera;
+    END IF;
+  
+    IF l_pagina.numero_siguiente > l_pagina.numero_ultima THEN
+      l_pagina.numero_siguiente := l_pagina.numero_ultima;
+    END IF;
+    --
+  
+    -- Calcula el rango de elementos
+    l_rango_i := ((l_pagina.numero_actual - 1) * l_cantidad_por_pagina) + 1;
+    l_rango_j := l_pagina.numero_actual * l_cantidad_por_pagina;
+  
+    IF l_rango_i < 0 THEN
+      l_rango_i := 0;
+    END IF;
+  
+    IF l_rango_j > l_pagina.cantidad_elementos THEN
+      l_rango_j := l_pagina.cantidad_elementos;
+    END IF;
+    --
+  
+    -- Carga elementos dentro del rango
+    l_objetos := NEW y_objetos();
+    IF l_pagina.cantidad_elementos > 0 THEN
+      FOR i IN l_rango_i .. l_rango_j LOOP
+        l_objetos.extend;
+        l_objetos(l_objetos.count) := i_elementos(i);
+      END LOOP;
+    END IF;
+    l_pagina.elementos := l_objetos;
+    --
+  
+    RETURN l_pagina;
   END;
 
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,

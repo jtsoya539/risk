@@ -176,41 +176,40 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   END;
 
   FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta IS
-    l_rsp    y_respuesta;
-    l_pagina y_pagina;
-    l_paises y_objetos;
-    l_pais   y_pais;
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_pais;
   
-    CURSOR cr_paises(i_id_pais IN NUMBER) IS
+    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
       SELECT p.id_pais,
              p.nombre,
              p.iso_alpha_2,
              p.iso_alpha_3,
              p.iso_numeric
         FROM t_paises p
-       WHERE p.id_pais = nvl(i_id_pais, p.id_pais);
+       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
+       ORDER BY p.nombre;
   BEGIN
     -- Inicializa respuesta
-    l_rsp    := NEW y_respuesta();
-    l_pagina := NEW y_pagina();
-    l_paises := NEW y_objetos();
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
   
-    FOR pai IN cr_paises(anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                                           'id_pais'))) LOOP
-      l_pais         := NEW y_pais();
-      l_pais.id_pais := pai.id_pais;
-      l_pais.nombre  := pai.nombre;
+    FOR ele IN cr_elementos(anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                                              'id_pais'))) LOOP
+      l_elemento         := NEW y_pais();
+      l_elemento.id_pais := ele.id_pais;
+      l_elemento.nombre  := ele.nombre;
     
-      l_paises.extend;
-      l_paises(l_paises.count) := l_pais;
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
     END LOOP;
-    l_pagina.numero_actual      := 0;
-    l_pagina.numero_siguiente   := 0;
-    l_pagina.numero_ultima      := 0;
-    l_pagina.numero_primera     := 0;
-    l_pagina.numero_anterior    := 0;
-    l_pagina.cantidad_elementos := l_paises.count;
-    l_pagina.elementos          := l_paises;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                 'pagina')),
+                                               anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                                                                 'por_pagina')));
   
     k_servicio.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;

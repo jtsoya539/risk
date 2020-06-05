@@ -1,7 +1,6 @@
 prompt Importing table t_parametros...
 set feedback off
 set define off
-
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('BASE_DATOS_PRODUCCION', 'Nombre de la Base de Datos del entorno de Producción', 'RISK');
 
@@ -34,5 +33,11 @@ values ('TIEMPO_EXPIRACION_REFRESH_TOKEN', 'Tiempo de expiración del Refresh Tok
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('URL_SERVICIOS_PRODUCCION', 'URL base de los Servicios Web del entorno de Producción', 'http://localhost:5000');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA', 'Cantidad por defecto de elementos por página en paginación de listas', '30');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA', 'Cantidad máxima permitida de elementos por página en paginación de listas', '100');
 
 prompt Done.
