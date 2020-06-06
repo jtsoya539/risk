@@ -76,6 +76,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PAGINAR_ELEMENTOS">f_paginar_elementos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_SERVICIO">f_procesar_servicio</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -254,6 +259,18 @@ f_valor_parametro
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro(i_parametros IN y_parametros,
                            i_nombre     IN VARCHAR2) RETURN anydata
+
+</PRE>
+<HR>
+<A NAME="F_PAGINAR_ELEMENTOS"></A>
+<P CLASS="TYPE_TITLE">
+f_paginar_elementos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
+                             i_numero_pagina       IN INTEGER DEFAULT NULL,
+                             i_cantidad_por_pagina IN INTEGER DEFAULT NULL)
+  RETURN y_pagina
 
 </PRE>
 <HR>

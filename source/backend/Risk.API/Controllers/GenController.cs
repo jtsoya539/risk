@@ -98,9 +98,13 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult ListarPaises()
+        public IActionResult ListarPaises([FromQuery, SwaggerParameter(Description = "Número de página", Required = false)] int pagina,
+        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina)
         {
-            var respuesta = _genService.ListarPaises();
+            var respuesta = _genService.ListarPaises(null, pagina, porPagina);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
             return ProcesarRespuesta(respuesta);
         }
 
@@ -115,6 +119,9 @@ namespace Risk.API.Controllers
         public IActionResult ListarPaises([FromRoute, SwaggerParameter(Description = "Identificador del país", Required = true)] int idPais)
         {
             var respuesta = _genService.ListarPaises(idPais);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
             return ProcesarRespuesta(respuesta);
         }
     }

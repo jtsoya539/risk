@@ -22,6 +22,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
+using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Risk.API.Helpers;
@@ -46,6 +48,43 @@ namespace Risk.API.Controllers
                 else
                     return BadRequest(respuesta); // 400 Bad Request
             }
+        }
+
+        public Pagina<T> ProcesarPagina<T>(Pagina<T> pagina)
+        {
+            Pagina<T> resp;
+            if (pagina == null)
+            {
+                resp = null;
+            }
+            else
+            {
+                resp = pagina;
+
+                var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port.Value, Request.Path.ToString(), Request.QueryString.ToString());
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+                query["pagina"] = resp.PaginaActual;
+                uriBuilder.Query = query.ToString();
+                resp.PaginaActual = uriBuilder.ToString();
+
+                query["pagina"] = resp.PaginaSiguiente;
+                uriBuilder.Query = query.ToString();
+                resp.PaginaSiguiente = uriBuilder.ToString();
+
+                query["pagina"] = resp.PaginaUltima;
+                uriBuilder.Query = query.ToString();
+                resp.PaginaUltima = uriBuilder.ToString();
+
+                query["pagina"] = resp.PaginaPrimera;
+                uriBuilder.Query = query.ToString();
+                resp.PaginaPrimera = uriBuilder.ToString();
+
+                query["pagina"] = resp.PaginaAnterior;
+                uriBuilder.Query = query.ToString();
+                resp.PaginaAnterior = uriBuilder.ToString();
+            }
+            return resp;
         }
     }
 }
