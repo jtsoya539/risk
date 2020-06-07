@@ -61,7 +61,13 @@ namespace Risk.API.Controllers
             {
                 resp = pagina;
 
-                var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port.Value, Request.Path.ToString(), Request.QueryString.ToString());
+                int port = -1;
+                if (Request.Host.Port.HasValue)
+                {
+                    port = Request.Host.Port.Value;
+                }
+
+                var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, port, Request.Path.ToString(), Request.QueryString.ToString());
                 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
 
                 query["pagina"] = resp.PaginaActual;
