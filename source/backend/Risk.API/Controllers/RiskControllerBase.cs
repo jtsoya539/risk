@@ -41,12 +41,15 @@ namespace Risk.API.Controllers
             }
             else
             {
+                return Ok(respuesta); // 200 OK
+                /*
                 if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_ERROR_INESPERADO))
                     return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
                 else if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
                     return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
                 else
                     return BadRequest(respuesta); // 400 Bad Request
+                */
             }
         }
 
