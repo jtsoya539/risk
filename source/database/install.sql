@@ -164,6 +164,10 @@ prompt
 @@scripts/ins_t_roles.sql
 @@scripts/ins_t_paises.sql
 @@scripts/ins_t_archivo_definiciones.sql
+@@scripts/ins_t_personas.sql
+@@scripts/ins_t_usuarios.sql
+@@scripts/ins_t_usuario_claves.sql
+@@scripts/ins_t_rol_usuarios.sql
 commit;
 /
 
