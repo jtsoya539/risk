@@ -84,7 +84,9 @@ namespace Risk.API.Services
                     cmd.CommandText = SQL_PROCESAR_SERVICIO;
                     cmd.BindByName = true;
 
-                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, ParameterDirection.ReturnValue);
+                    OracleClob clob = new OracleClob(con);
+
+                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, clob, ParameterDirection.ReturnValue);
                     cmd.Parameters.Add(return_value);
                     OracleParameter i_id_servicio = new OracleParameter("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
                     cmd.Parameters.Add(i_id_servicio);
@@ -93,11 +95,13 @@ namespace Risk.API.Services
 
                     cmd.ExecuteNonQuery();
 
-                    respuesta = ((OracleClob)cmd.Parameters["return_value"].Value).Value;
+                    clob = (OracleClob)cmd.Parameters["return_value"].Value;
+                    respuesta = clob.Value;
 
                     return_value.Dispose();
                     i_id_servicio.Dispose();
                     i_parametros.Dispose();
+                    clob.Dispose();
                 }
 
                 con.Close();
