@@ -95,13 +95,14 @@ namespace Risk.API
 
             // Connection Pooling Configuration
             connStrBuilder.Pooling = true; // Connection pooling.
-            connStrBuilder.MinPoolSize = 6; // Minimum number of connections in a pool.
+            connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
             connStrBuilder.MaxPoolSize = 6; // Maximum number of connections in a pool.
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
             connStrBuilder.ConnectionTimeout = 60; // Maximum time (in seconds) to wait for a free connection from the pool.
+            connStrBuilder.ValidateConnection = true;
 
             oracleConnection = new OracleConnection(connStrBuilder.ToString());
-            oracleConnection.KeepAlive = true;
+            //oracleConnection.KeepAlive = true;
 
             services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection), ServiceLifetime.Singleton);
             //services.AddScoped<IGenService, GenService>();
