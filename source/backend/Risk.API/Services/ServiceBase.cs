@@ -23,10 +23,10 @@ SOFTWARE.
 */
 
 using System.Data;
-using System.Reflection;
+using System.IO;
+using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
@@ -52,23 +52,19 @@ namespace Risk.API.Services
             return (OracleConnection)_dbContext.Database.GetDbConnection();
         }
 
-        public void SetApplicationContext(string moduleName, string actionName)
+        public void SetApplicationContext(ref OracleConnection oracleConnection, string moduleName, string actionName)
         {
-            OracleConnection con = GetOracleConnection();
-            if (con.State != ConnectionState.Open)
+            if (oracleConnection.State == ConnectionState.Open)
             {
-                con.Open();
+                oracleConnection.ClientId = "Risk.API";
+                oracleConnection.ClientInfo = "Risk Web API";
+                oracleConnection.ModuleName = moduleName;
+                oracleConnection.ActionName = actionName;
             }
-            con.ClientId = "Risk.API";
-            con.ClientInfo = "Risk Web API";
-            con.ModuleName = moduleName;
-            con.ActionName = actionName;
-            con.Close();
         }
 
-        public string ApiProcesarServicio(int idServicio, string parametros)
+        public string ApiProcesarServicio(int idServicio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
         {
-            //SetApplicationContext(MethodBase.GetCurrentMethod().DeclaringType.Name, MethodBase.GetCurrentMethod().Name);
             string respuesta = null;
             if (idServicio > 0)
             {
@@ -77,6 +73,8 @@ namespace Risk.API.Services
                 {
                     con.Open();
                 }
+
+                SetApplicationContext(ref con, Path.GetFileNameWithoutExtension(callerFilePath), callerMemberName);
 
                 using (OracleCommand cmd = con.CreateCommand())
                 {
