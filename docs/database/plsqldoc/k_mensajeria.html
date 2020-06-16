@@ -60,6 +60,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ENVIAR_MENSAJE">p_enviar_mensaje</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -98,6 +103,17 @@ f_numero_telefono_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="P_ENVIAR_MENSAJE"></A>
+<P CLASS="TYPE_TITLE">
+p_enviar_mensaje
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_enviar_mensaje(i_id_usuario      IN NUMBER,
+                           i_mensaje         IN VARCHAR2,
+                           i_numero_telefono IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <P>&nbsp;</P>

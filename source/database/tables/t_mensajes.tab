@@ -1,12 +1,33 @@
 create table T_MENSAJES
 (
-  id_mensaje NUMBER not null
+  id_mensaje      NUMBER not null,
+  id_usuario      NUMBER(10) not null,
+  numero_telefono VARCHAR2(160) not null,
+  mensaje         VARCHAR2(160) not null,
+  estado          VARCHAR2(1) not null,
+  fecha           DATE not null,
+  hora            VARCHAR2(8) not null
 )
 ;
 comment on table T_MENSAJES
   is 'Mensajes de texto (SMS)';
 comment on column T_MENSAJES.id_mensaje
   is 'Identificador del mensaje de texto';
+comment on column T_MENSAJES.id_usuario
+  is 'Usuario destino del mensaje de texto';
+comment on column T_MENSAJES.numero_telefono
+  is 'Número de teléfono destino del mensaje de texto';
+comment on column T_MENSAJES.mensaje
+  is 'Contenido del mensaje de texto';
+comment on column T_MENSAJES.estado
+  is 'Estado del mensaje de texto';
+comment on column T_MENSAJES.fecha
+  is 'Fecha de envío del mensaje de texto';
+comment on column T_MENSAJES.hora
+  is 'Hora de envío del mensaje de texto';
 alter table T_MENSAJES
   add constraint PK_MENSAJES primary key (ID_MENSAJE);
+alter table T_MENSAJES
+  add constraint FK_MENSAJES_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);
 
