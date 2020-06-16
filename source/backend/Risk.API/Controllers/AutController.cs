@@ -333,7 +333,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
         [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] GuardarAvatarUsuarioRequestBody requestBody)
+        public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] GuardarArchivoRequestBody requestBody)
         {
             string contenido = string.Empty;
 

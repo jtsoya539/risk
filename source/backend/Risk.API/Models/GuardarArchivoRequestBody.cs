@@ -27,8 +27,8 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
-    [SwaggerSchema("Request Body del servicio GuardarAvatarUsuario")]
-    public class GuardarAvatarUsuarioRequestBody
+    [SwaggerSchema("Request Body para guardar un archivo")]
+    public class GuardarArchivoRequestBody
     {
         [SwaggerSchema("Contenido del archivo")]
         public IFormFile Archivo { get; set; }
