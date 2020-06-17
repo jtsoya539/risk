@@ -54,6 +54,9 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
 
+  g_direccion_correo_pruebas t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_PRUEBAS');
+  g_numero_telefono_pruebas  t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_PRUEBAS');
+
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN IS
   BEGIN
@@ -113,6 +116,10 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
   
     IF i_mensaje IS NULL THEN
       raise_application_error(-20000, 'Contenido del mensaje obligatorio');
+    END IF;
+  
+    IF NOT k_sistema.f_es_produccion THEN
+      l_numero_telefono := g_numero_telefono_pruebas;
     END IF;
   
     INSERT INTO t_mensajes

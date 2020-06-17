@@ -40,4 +40,10 @@ values ('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA', 'Cantidad por defecto de eleme
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA', 'Cantidad máxima permitida de elementos por página en paginación de listas', '100');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('DIRECCION_CORREO_PRUEBAS', 'Dirección de correo electrónico para pruebas', 'javier.meza.py@gmail.com');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('NUMERO_TELEFONO_PRUEBAS', 'Número de teléfono para pruebas', '0991384113');
+
 prompt Done.

@@ -45,29 +45,53 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'access_token')) IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp, 'aut0001', 'Debe ingresar token');
+    IF anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                         'id_mensaje')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'msj0001',
+                                   'Debe ingresar id_mensaje');
       RAISE k_servicio.ex_error_general;
     END IF;
   
     IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                            'estado')) IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
-                                   'aut0002',
+                                   'msj0002',
                                    'Debe ingresar estado');
       RAISE k_servicio.ex_error_general;
     END IF;
   
-    l_rsp.lugar := 'Cambiando estado de sesion';
-    k_autenticacion.p_cambiar_estado_sesion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                'access_token')),
-                                            anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                'estado')));
+    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                           'respuesta_envio')) IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'msj0003',
+                                   'Debe ingresar respuesta_envio');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    l_rsp.lugar := 'Cambiando estado de mensaje';
+    UPDATE t_mensajes m
+       SET m.estado          = anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                   'estado')),
+           m.respuesta_envio = anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                   'respuesta_envio')),
+           m.fecha_envio = CASE
+                             WHEN anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                      'estado')) IN
+                                  ('E', 'R') THEN
+                              SYSDATE
+                             ELSE
+                              NULL
+                           END
+     WHERE m.id_mensaje =
+           anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                             'id_mensaje'));
   
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
