@@ -1,0 +1,10 @@
+﻿{
+  "profiles": {
+    "Risk.SMS": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
