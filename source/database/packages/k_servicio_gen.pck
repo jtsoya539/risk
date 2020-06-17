@@ -181,6 +181,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_pais;
   
+    l_retorno           PLS_INTEGER;
+    l_anydata           anydata;
+    l_pagina_parametros y_pagina_parametros;
+  
     CURSOR cr_elementos(i_id_pais IN NUMBER) IS
       SELECT p.id_pais,
              p.nombre,
@@ -195,6 +199,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
   
+    l_rsp.lugar := 'Validando parametros';
+    l_anydata   := k_servicio.f_valor_parametro(i_parametros,
+                                                'pagina_parametros');
+    IF l_anydata IS NOT NULL THEN
+      l_retorno := l_anydata.getobject(l_pagina_parametros);
+    END IF;
+    IF l_pagina_parametros IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'gen0001',
+                                   'Debe ingresar pagina_parametros');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
     FOR ele IN cr_elementos(anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
                                                                               'id_pais'))) LOOP
       l_elemento         := NEW y_pais();
@@ -206,10 +223,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                 'pagina')),
-                                               anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                 'por_pagina')));
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
   
     k_servicio.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -313,7 +329,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END IF;
   
     l_anydata := k_servicio.f_valor_parametro(i_parametros, 'archivo');
-    l_retorno := l_anydata.getobject(l_archivo);
+    IF l_anydata IS NOT NULL THEN
+      l_retorno := l_anydata.getobject(l_archivo);
+    END IF;
     IF l_archivo IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'gen0004',

@@ -67,6 +67,7 @@ prompt Borrando types...
 prompt -----------------------------------
 prompt
 drop type y_pais force;
+drop type y_pagina_parametros force;
 drop type y_pagina force;
 drop type y_dispositivo force;
 drop type y_sesion force;

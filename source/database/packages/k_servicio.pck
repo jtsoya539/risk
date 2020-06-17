@@ -69,7 +69,8 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                                i_numero_pagina       IN INTEGER DEFAULT NULL,
-                               i_cantidad_por_pagina IN INTEGER DEFAULT NULL)
+                               i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
+                               i_no_paginar          IN VARCHAR2 DEFAULT NULL)
     RETURN y_pagina;
 
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
@@ -365,9 +366,12 @@ END;'
           END IF;
         WHEN 'O' THEN
           -- Object
-          l_parametro.valor := f_objeto_parse_json(l_json_object.get(par.nombre)
-                                                   .to_clob,
-                                                   par.formato);
+          IF l_json_object.get(par.nombre) IS NOT NULL THEN
+            l_parametro.valor := f_objeto_parse_json(l_json_object.get(par.nombre)
+                                                     .to_clob,
+                                                     par.formato);
+          END IF;
+        
           IF l_parametro.valor IS NULL AND par.valor_defecto IS NOT NULL THEN
             l_parametro.valor := f_objeto_parse_json(par.valor_defecto,
                                                      par.formato);
@@ -399,7 +403,8 @@ END;'
 
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                                i_numero_pagina       IN INTEGER DEFAULT NULL,
-                               i_cantidad_por_pagina IN INTEGER DEFAULT NULL)
+                               i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
+                               i_no_paginar          IN VARCHAR2 DEFAULT NULL)
     RETURN y_pagina IS
     l_pagina              y_pagina;
     l_objetos             y_objetos;
@@ -407,6 +412,7 @@ END;'
     l_cantidad_por_pagina INTEGER;
     l_rango_i             INTEGER;
     l_rango_j             INTEGER;
+    l_no_paginar          BOOLEAN;
   BEGIN
     -- Inicializa respuesta
     l_pagina                    := NEW y_pagina();
@@ -417,19 +423,26 @@ END;'
     l_pagina.numero_anterior    := 0;
     l_pagina.cantidad_elementos := 0;
   
+    l_no_paginar := nvl(i_no_paginar, 'N') = 'S';
+  
     -- Carga la cantidad total de elementos
     l_pagina.cantidad_elementos := i_elementos.count;
-    --  
+    --
   
     -- Valida parámetro de cantidad por página
-    l_cantidad_por_pagina := nvl(i_cantidad_por_pagina,
-                                 to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA')));
+    IF l_no_paginar THEN
+      l_cantidad_por_pagina := l_pagina.cantidad_elementos;
+    ELSE
+      l_cantidad_por_pagina := nvl(i_cantidad_por_pagina,
+                                   to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA')));
+    END IF;
   
     IF l_cantidad_por_pagina <= 0 THEN
       l_cantidad_por_pagina := to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_DEFECTO_POR_PAGINA'));
     END IF;
   
-    IF l_cantidad_por_pagina >
+    IF NOT l_no_paginar AND
+       l_cantidad_por_pagina >
        to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA')) THEN
       l_cantidad_por_pagina := to_number(k_util.f_valor_parametro('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA'));
     END IF;

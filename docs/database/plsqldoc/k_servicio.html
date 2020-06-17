@@ -269,7 +269,8 @@ f_paginar_elementos
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                              i_numero_pagina       IN INTEGER DEFAULT NULL,
-                             i_cantidad_por_pagina IN INTEGER DEFAULT NULL)
+                             i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
+                             i_no_paginar          IN VARCHAR2 DEFAULT NULL)
   RETURN y_pagina
 
 </PRE>

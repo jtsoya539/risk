@@ -77,12 +77,18 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, int? pagina = null, int? porPagina = null)
+        public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
         {
             JObject prms = new JObject();
             prms.Add("id_pais", idPais);
-            prms.Add("pagina", pagina);
-            prms.Add("por_pagina", porPagina);
+
+            YPaginaParametros paginaParametros = new YPaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
 
             string rsp = base.ApiProcesarServicio(ID_LISTAR_PAISES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
