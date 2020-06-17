@@ -125,6 +125,7 @@ prompt
 @@packages/k_servicio_aut.pck
 @@packages/k_servicio_gen.pck
 @@packages/k_mensajeria.pck
+@@packages/k_servicio_msj.pck
 @@packages/k_archivo.pck
 
 prompt

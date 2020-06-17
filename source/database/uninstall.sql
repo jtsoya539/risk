@@ -49,6 +49,8 @@ prompt
 prompt Borrando paquetes...
 prompt -----------------------------------
 prompt
+drop package k_archivo;
+drop package k_servicio_msj;
 drop package k_mensajeria;
 drop package k_servicio_gen;
 drop package k_servicio_aut;

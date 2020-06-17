@@ -5,8 +5,8 @@ create table T_MENSAJES
   numero_telefono VARCHAR2(160) not null,
   mensaje         VARCHAR2(160) not null,
   estado          VARCHAR2(1) not null,
-  fecha           DATE not null,
-  hora            VARCHAR2(8) not null
+  fecha_envio     DATE,
+  respuesta_envio VARCHAR2(1000)
 )
 ;
 comment on table T_MENSAJES
@@ -21,10 +21,10 @@ comment on column T_MENSAJES.mensaje
   is 'Contenido del mensaje de texto';
 comment on column T_MENSAJES.estado
   is 'Estado del mensaje de texto';
-comment on column T_MENSAJES.fecha
+comment on column T_MENSAJES.fecha_envio
   is 'Fecha de envío del mensaje de texto';
-comment on column T_MENSAJES.hora
-  is 'Hora de envío del mensaje de texto';
+comment on column T_MENSAJES.respuesta_envio
+  is 'Respuesta del proceso de envío';
 alter table T_MENSAJES
   add constraint PK_MENSAJES primary key (ID_MENSAJE);
 alter table T_MENSAJES

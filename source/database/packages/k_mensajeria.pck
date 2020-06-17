@@ -116,14 +116,9 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     INSERT INTO t_mensajes
-      (id_usuario, numero_telefono, mensaje, estado, fecha, hora)
+      (id_usuario, numero_telefono, mensaje, estado)
     VALUES
-      (i_id_usuario,
-       l_numero_telefono,
-       substr(i_mensaje, 1, 160),
-       'P',
-       trunc(SYSDATE),
-       to_char(SYSDATE, 'HH24:MI:SS'));
+      (i_id_usuario, l_numero_telefono, substr(i_mensaje, 1, 160), 'P');
   END;
 
 END;
