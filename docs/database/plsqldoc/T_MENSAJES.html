@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_MENSAJES">
  <META name="description" content="Mensajes de texto (SMS)">
- <META name="columns" content="ID_MENSAJE ID_USUARIO NUMERO_TELEFONO MENSAJE ESTADO FECHA HORA">
+ <META name="columns" content="ID_MENSAJE ID_USUARIO NUMERO_TELEFONO MENSAJE ESTADO FECHA_ENVIO RESPUESTA_ENVIO">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -132,13 +132,13 @@ Estado del mensaje de texto
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-FECHA
+FECHA_ENVIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 DATE
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
@@ -149,19 +149,19 @@ Fecha de env&#237;o del mensaje de texto
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-HORA
+RESPUESTA_ENVIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(8)
+VARCHAR2(1000)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Hora de env&#237;o del mensaje de texto
+Respuesta del proceso de env&#237;o
 </TD>
 </TR>
 </TABLE>

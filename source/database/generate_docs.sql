@@ -116,6 +116,7 @@ plugin plsqldoc generate k_mensajeria;
 plugin plsqldoc generate k_servicio;
 plugin plsqldoc generate k_servicio_aut;
 plugin plsqldoc generate k_servicio_gen;
+plugin plsqldoc generate k_servicio_msj;
 plugin plsqldoc generate k_sistema;
 plugin plsqldoc generate k_util;
 
