@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Risk.API.Client.Api;
 using Risk.API.Client.Client;
+using Risk.API.Client.Model;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace Risk.SMS
 {
@@ -17,25 +20,72 @@ namespace Risk.SMS
     {
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration _configuration;
-        private readonly IAutApi _autApi;
-        private string accountSid;
-        private string authToken;
+
+        private Configuration apiConfiguration;
+        private IAutApi autApi;
+        private IMsjApi msjApi;
+        private string accessToken;
+        private string refreshToken;
+
         private string phoneNumberFrom;
-        private string AccessToken;
-        private string RefreshToken;
 
         public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
 
-            Configuration config = new Configuration();
-            config.BasePath = _configuration["RiskConfiguration:RiskAPIBasePath"];
-            _autApi = new AutApi(config);
+            // Risk Configuration
+            apiConfiguration = new Configuration();
+            apiConfiguration.BasePath = _configuration["RiskConfiguration:RiskAPIBasePath"];
+            apiConfiguration.AddApiKeyPrefix("Authorization", "Bearer");
 
-            accountSid = _configuration["TwilioConfiguration:AccountSid"];
-            authToken = _configuration["TwilioConfiguration:AuthToken"];
+            autApi = new AutApi(apiConfiguration);
+            msjApi = new MsjApi(apiConfiguration);
+
+            IniciarSesion();
+
+            // Twilio Configuration
             phoneNumberFrom = _configuration["TwilioConfiguration:PhoneNumberFrom"];
+
+            TwilioClient.Init(_configuration["TwilioConfiguration:AccountSid"], _configuration["TwilioConfiguration:AuthToken"]);
+        }
+
+        private void IniciarSesion()
+        {
+            SesionRespuesta sesionRespuesta = autApi.IniciarSesion(_configuration["RiskConfiguration:RiskAppKey"], new IniciarSesionRequestBody
+            {
+                Usuario = _configuration["RiskConfiguration:Usuario"],
+                Clave = _configuration["RiskConfiguration:Clave"]
+            });
+
+            if (sesionRespuesta.Codigo.Equals("0"))
+            {
+                accessToken = sesionRespuesta.Datos.AccessToken;
+                refreshToken = sesionRespuesta.Datos.RefreshToken;
+            }
+
+            apiConfiguration.AddApiKey("Authorization", accessToken);
+
+            msjApi.Configuration = apiConfiguration;
+        }
+
+        private void RefrescarSesion()
+        {
+            SesionRespuesta sesionRespuesta = autApi.RefrescarSesion(_configuration["RiskConfiguration:RiskAppKey"], new RefrescarSesionRequestBody
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            });
+
+            if (sesionRespuesta.Codigo.Equals("0"))
+            {
+                accessToken = sesionRespuesta.Datos.AccessToken;
+                refreshToken = sesionRespuesta.Datos.RefreshToken;
+            }
+
+            apiConfiguration.AddApiKey("Authorization", accessToken);
+
+            msjApi.Configuration = apiConfiguration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,17 +94,73 @@ namespace Risk.SMS
             {
                 _logger.LogInformation($"Worker running at: {DateTimeOffset.Now}");
 
-                TwilioClient.Init(accountSid, authToken);
+                MensajePaginaRespuesta mensajesPendientes = new MensajePaginaRespuesta();
+                try
+                {
+                    mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                }
+                catch (ApiException e)
+                {
+                    if (e.ErrorCode == 401)
+                    {
+                        RefrescarSesion();
 
-                var message = MessageResource.Create(
-                    body: $"Message sending at: {DateTimeOffset.Now}",
-                    from: new Twilio.Types.PhoneNumber(phoneNumberFrom),
-                    to: new Twilio.Types.PhoneNumber("+595991384113")
-                );
+                        try
+                        {
+                            mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                        }
+                        catch (ApiException ex)
+                        {
+                            _logger.LogError($"Error al obtener lista de mensajes pendientes: {ex.Message}");
+                        }
+                    }
+                }
 
-                _logger.LogInformation(message.Sid);
+                if (mensajesPendientes.Codigo.Equals("0") && mensajesPendientes.Datos.CantidadElementos > 0)
+                {
+                    foreach (var item in mensajesPendientes.Datos.Elementos)
+                    {
+                        var message = MessageResource.Create(
+                            from: new PhoneNumber(phoneNumberFrom),
+                            to: new PhoneNumber(item.NumeroTelefono),
+                            body: item.Contenido
+                        );
 
-                await Task.Delay(10000, stoppingToken);
+                        DatoRespuesta datoRespuesta = new DatoRespuesta();
+                        try
+                        {
+                            datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                            {
+                                IdMensaje = item.IdMensaje,
+                                Estado = "E",
+                                RespuestaEnvio = JsonConvert.SerializeObject(message)
+                            });
+                        }
+                        catch (ApiException e)
+                        {
+                            if (e.ErrorCode == 401)
+                            {
+                                RefrescarSesion();
+
+                                try
+                                {
+                                    datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                                    {
+                                        IdMensaje = item.IdMensaje,
+                                        Estado = "E",
+                                        RespuestaEnvio = JsonConvert.SerializeObject(message)
+                                    });
+                                }
+                                catch (ApiException ex)
+                                {
+                                    _logger.LogError($"Error al cambiar estado del mensaje: {ex.Message}");
+                                }
+                            }
+                        }
+                    }
+                }
+
+                await Task.Delay(30000, stoppingToken);
             }
         }
     }
