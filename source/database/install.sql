@@ -150,6 +150,7 @@ prompt
 @@triggers/gb_sesiones.trg
 @@triggers/gb_personas.trg
 @@triggers/gb_archivos.trg
+@@triggers/gb_mensajes.trg
 
 prompt
 prompt Ejecutando scripts...
