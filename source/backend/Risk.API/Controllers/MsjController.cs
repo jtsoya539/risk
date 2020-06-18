@@ -49,6 +49,24 @@ namespace Risk.API.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet("ListarMensajesPendientes")]
+        [SwaggerOperation(OperationId = "ListarMensajesPendientes", Summary = "ListarMensajesPendientes", Description = "Obtiene una lista de mensajes de texto (SMS) pendientes de envío")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Mensaje>>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult ListarPaises([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            var respuesta = _msjService.ListarMensajesPendientes(pagina, porPagina, noPaginar);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
         [HttpPost("CambiarEstadoMensaje")]
         [SwaggerOperation(OperationId = "CambiarEstadoMensaje", Summary = "CambiarEstadoMensaje", Description = "Permite cambiar el estado de un mensaje de texto (SMS)")]
         [Consumes(MediaTypeNames.Application.Json)]

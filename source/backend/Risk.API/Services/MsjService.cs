@@ -42,7 +42,26 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
         {
-            throw new System.NotImplementedException();
+            JObject prms = new JObject();
+
+            YPaginaParametros paginaParametros = new YPaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
+
+            string rsp = base.ApiProcesarServicio(ID_LISTAR_MENSAJES_PENDIENTES, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YMensaje>>>(rsp);
+
+            Pagina<Mensaje> datos = null;
+            if (entityRsp.Datos != null)
+            {
+                datos = EntitiesMapper.GetPaginaFromEntity<Mensaje, YMensaje>(entityRsp.Datos, EntitiesMapper.GetMensajeListFromEntity(entityRsp.Datos.Elementos));
+            }
+
+            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Mensaje>, YPagina<YMensaje>>(entityRsp, datos);
         }
 
         public Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio)

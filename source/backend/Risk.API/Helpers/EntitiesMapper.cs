@@ -184,6 +184,35 @@ namespace Risk.API.Helpers
             return modelList;
         }
 
+        public static Mensaje GetMensajeFromEntity(YMensaje entity)
+        {
+            Mensaje model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Mensaje
+                {
+                    IdMensaje = entity.IdMensaje,
+                    NumeroTelefono = entity.NumeroTelefono,
+                    Contenido = entity.Contenido
+                };
+            }
+            return model;
+        }
+
+        public static List<Mensaje> GetMensajeListFromEntity(List<YMensaje> entityList)
+        {
+            List<Mensaje> modelList = new List<Mensaje>();
+            foreach (var item in entityList)
+            {
+                modelList.Add(GetMensajeFromEntity(item));
+            }
+            return modelList;
+        }
+
         public static Pagina<T> GetPaginaFromEntity<T, YT>(YPagina<YT> entity, List<T> elementos)
         {
             return new Pagina<T>
