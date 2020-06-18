@@ -610,7 +610,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              l_usuario.direccion_correo,
              l_usuario.numero_telefono
         FROM t_usuarios u, t_personas p
-       WHERE p.id_persona = u.id_persona
+       WHERE p.id_persona(+) = u.id_persona
          AND u.alias = i_usuario;
     EXCEPTION
       WHEN no_data_found THEN

@@ -147,8 +147,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     UPDATE t_mensajes m
        SET m.estado          = anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                    'estado')),
-           m.respuesta_envio = anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                   'respuesta_envio')),
+           m.respuesta_envio = substr(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                          'respuesta_envio')),
+                                      1,
+                                      1000),
            m.fecha_envio = CASE
                              WHEN anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                       'estado')) IN
