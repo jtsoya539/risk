@@ -88,37 +88,86 @@ namespace Risk.SMS
             msjApi.Configuration = apiConfiguration;
         }
 
+        private List<Mensaje> ListarMensajesPendientes()
+        {
+            List<Mensaje> mensajes = new List<Mensaje>();
+
+            MensajePaginaRespuesta mensajesPendientes = new MensajePaginaRespuesta();
+            try
+            {
+                mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+            }
+            catch (ApiException e)
+            {
+                if (e.ErrorCode == 401)
+                {
+                    RefrescarSesion();
+
+                    try
+                    {
+                        mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                    }
+                    catch (ApiException ex)
+                    {
+                        _logger.LogError($"Error al obtener lista de mensajes pendientes: {ex.Message}");
+                    }
+                }
+            }
+
+            if (mensajesPendientes.Codigo.Equals("0") && mensajesPendientes.Datos.CantidadElementos > 0)
+            {
+                mensajes = mensajesPendientes.Datos.Elementos;
+            }
+
+            return mensajes;
+        }
+
+        private void CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio)
+        {
+            DatoRespuesta datoRespuesta = new DatoRespuesta();
+            try
+            {
+                datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                {
+                    IdMensaje = idMensaje,
+                    Estado = estado,
+                    RespuestaEnvio = respuestaEnvio
+                });
+            }
+            catch (ApiException e)
+            {
+                if (e.ErrorCode == 401)
+                {
+                    RefrescarSesion();
+
+                    try
+                    {
+                        datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                        {
+                            IdMensaje = idMensaje,
+                            Estado = estado,
+                            RespuestaEnvio = respuestaEnvio
+                        });
+                    }
+                    catch (ApiException ex)
+                    {
+                        _logger.LogError($"Error al cambiar estado del mensaje: {ex.Message}");
+                    }
+                }
+            }
+        }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation($"Worker running at: {DateTimeOffset.Now}");
 
-                MensajePaginaRespuesta mensajesPendientes = new MensajePaginaRespuesta();
-                try
-                {
-                    mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
-                }
-                catch (ApiException e)
-                {
-                    if (e.ErrorCode == 401)
-                    {
-                        RefrescarSesion();
+                List<Mensaje> mensajes = ListarMensajesPendientes();
 
-                        try
-                        {
-                            mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
-                        }
-                        catch (ApiException ex)
-                        {
-                            _logger.LogError($"Error al obtener lista de mensajes pendientes: {ex.Message}");
-                        }
-                    }
-                }
-
-                if (mensajesPendientes.Codigo.Equals("0") && mensajesPendientes.Datos.CantidadElementos > 0)
+                foreach (var item in mensajes)
                 {
-                    foreach (var item in mensajesPendientes.Datos.Elementos)
+                    try
                     {
                         var message = MessageResource.Create(
                             from: new PhoneNumber(phoneNumberFrom),
@@ -126,37 +175,13 @@ namespace Risk.SMS
                             body: item.Contenido
                         );
 
-                        DatoRespuesta datoRespuesta = new DatoRespuesta();
-                        try
-                        {
-                            datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
-                            {
-                                IdMensaje = item.IdMensaje,
-                                Estado = "E",
-                                RespuestaEnvio = JsonConvert.SerializeObject(message)
-                            });
-                        }
-                        catch (ApiException e)
-                        {
-                            if (e.ErrorCode == 401)
-                            {
-                                RefrescarSesion();
-
-                                try
-                                {
-                                    datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
-                                    {
-                                        IdMensaje = item.IdMensaje,
-                                        Estado = "E",
-                                        RespuestaEnvio = JsonConvert.SerializeObject(message)
-                                    });
-                                }
-                                catch (ApiException ex)
-                                {
-                                    _logger.LogError($"Error al cambiar estado del mensaje: {ex.Message}");
-                                }
-                            }
-                        }
+                        // Cambia estado del mensaje a E-ENVIADO
+                        CambiarEstadoMensaje(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
+                    }
+                    catch (Twilio.Exceptions.ApiException e)
+                    {
+                        // Cambia estado del mensaje a R-PROCESADO CON ERROR
+                        CambiarEstadoMensaje(item.IdMensaje, "R", e.Message);
                     }
                 }
 
