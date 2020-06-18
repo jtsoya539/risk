@@ -30,12 +30,86 @@ CREATE OR REPLACE PACKAGE k_servicio_msj IS
   -------------------------------------------------------------------------------
   */
 
+  FUNCTION listar_mensajes_pendientes(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION cambiar_estado_mensaje(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
+
+  FUNCTION listar_mensajes_pendientes(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_mensaje;
+  
+    l_retorno           PLS_INTEGER;
+    l_anydata           anydata;
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos IS
+      SELECT id_mensaje, numero_telefono, mensaje, estado
+        FROM t_mensajes
+       WHERE estado IN ('P', 'R')
+      -- P-PENDIENTE DE ENVÍO
+      -- R-PROCESADO CON ERROR
+       ORDER BY id_mensaje
+         FOR UPDATE OF estado;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    l_anydata   := k_servicio.f_valor_parametro(i_parametros,
+                                                'pagina_parametros');
+    IF l_anydata IS NOT NULL THEN
+      l_retorno := l_anydata.getobject(l_pagina_parametros);
+    END IF;
+    IF l_pagina_parametros IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   'msj0001',
+                                   'Debe ingresar pagina_parametros');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    FOR ele IN cr_elementos LOOP
+      l_elemento                 := NEW y_mensaje();
+      l_elemento.id_mensaje      := ele.id_mensaje;
+      l_elemento.numero_telefono := ele.numero_telefono;
+      l_elemento.contenido       := ele.mensaje;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    
+      UPDATE t_mensajes
+         SET estado = 'N' -- N-EN PROCESO DE ENVÍO
+       WHERE CURRENT OF cr_elementos;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
 
   FUNCTION cambiar_estado_mensaje(i_parametros IN y_parametros)
     RETURN y_respuesta IS

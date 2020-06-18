@@ -33,10 +33,16 @@ namespace Risk.API.Services
 {
     public class MsjService : ServiceBase, IMsjService
     {
-        private const int ID_CAMBIAR_ESTADO_MENSAJE = 15;
+        private const int ID_LISTAR_MENSAJES_PENDIENTES = 30;
+        private const int ID_CAMBIAR_ESTADO_MENSAJE = 31;
 
         public MsjService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
+        }
+
+        public Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio)

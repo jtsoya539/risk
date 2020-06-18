@@ -22,13 +22,12 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
-
-namespace Risk.API.Services
+namespace Risk.API.Models
 {
-    public interface IMsjService
+    public class Mensaje
     {
-        Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio);
+        public int IdMensaje { get; set; }
+        public string NumeroTelefono { get; set; }
+        public string Contenido { get; set; }
     }
 }

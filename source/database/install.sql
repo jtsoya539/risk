@@ -111,6 +111,7 @@ prompt
 @@types/y_pagina.typ
 @@types/y_pagina_parametros.typ
 @@types/y_pais.typ
+@@types/y_mensaje.typ
 
 prompt
 prompt Creando paquetes...
