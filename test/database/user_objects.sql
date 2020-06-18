@@ -1,4 +1,5 @@
-SELECT o.*
+SELECT 'plugin plsqldoc generate ' || lower(o.object_name) || ';' plsqldoc,
+       o.*
   FROM user_objects o
  WHERE ((o.object_type = 'TYPE' AND lower(o.object_name) LIKE 'y\_%' ESCAPE '\') OR
        (o.object_type = 'TABLE' AND lower(o.object_name) LIKE 't\_%' ESCAPE '\') OR
