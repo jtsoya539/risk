@@ -1,7 +1,6 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
-
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_IMAGEN', 'WEBP', 'IMAGEN WEBP', 'image/webp', 'S');
 
@@ -145,5 +144,23 @@ values ('ESTADO_MENSAJE', 'R', 'PROCESADO CON ERROR', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('DOMINIO_SERVICIO', 'MSJ', 'MENSAJERÍA', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_MENSAJE', 'A', 'ANULADO', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_CORREO', 'E', 'ENVIADO', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_CORREO', 'N', 'EN PROCESO DE ENVÍO', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_CORREO', 'P', 'PENDIENTE DE ENVÍO', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_CORREO', 'R', 'PROCESADO CON ERROR', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_CORREO', 'A', 'ANULADO', null, 'S');
 
 prompt Done.

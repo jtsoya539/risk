@@ -47,7 +47,7 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
   PROCEDURE p_enviar_mensaje(i_id_usuario      IN NUMBER,
-                             i_mensaje         IN VARCHAR2,
+                             i_contenido       IN VARCHAR2,
                              i_numero_telefono IN VARCHAR2 DEFAULT NULL);
 
 END;
@@ -102,7 +102,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
   END;
 
   PROCEDURE p_enviar_mensaje(i_id_usuario      IN NUMBER,
-                             i_mensaje         IN VARCHAR2,
+                             i_contenido       IN VARCHAR2,
                              i_numero_telefono IN VARCHAR2 DEFAULT NULL) IS
     l_numero_telefono t_usuarios.numero_telefono%TYPE;
   BEGIN
@@ -114,7 +114,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                               'Número de teléfono destino obligatorio');
     END IF;
   
-    IF i_mensaje IS NULL THEN
+    IF i_contenido IS NULL THEN
       raise_application_error(-20000, 'Contenido del mensaje obligatorio');
     END IF;
   
@@ -123,9 +123,9 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     INSERT INTO t_mensajes
-      (id_usuario, numero_telefono, mensaje, estado)
+      (id_usuario, numero_telefono, contenido, estado)
     VALUES
-      (i_id_usuario, l_numero_telefono, substr(i_mensaje, 1, 160), 'P');
+      (i_id_usuario, l_numero_telefono, substr(i_contenido, 1, 160), 'P');
   END;
 
 END;

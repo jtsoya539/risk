@@ -52,7 +52,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_pagina_parametros y_pagina_parametros;
   
     CURSOR cr_elementos IS
-      SELECT id_mensaje, numero_telefono, mensaje, estado
+      SELECT id_mensaje, numero_telefono, contenido, estado
         FROM t_mensajes
        WHERE estado IN ('P', 'R')
       -- P-PENDIENTE DE ENVÍO
@@ -81,7 +81,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
       l_elemento                 := NEW y_mensaje();
       l_elemento.id_mensaje      := ele.id_mensaje;
       l_elemento.numero_telefono := ele.numero_telefono;
-      l_elemento.contenido       := ele.mensaje;
+      l_elemento.contenido       := ele.contenido;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;

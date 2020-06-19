@@ -1,10 +1,10 @@
 create table T_MENSAJES
 (
   id_mensaje      NUMBER not null,
-  id_usuario      NUMBER(10) not null,
+  id_usuario      NUMBER(10),
   numero_telefono VARCHAR2(160) not null,
-  mensaje         VARCHAR2(160) not null,
-  estado          VARCHAR2(1) not null,
+  contenido       VARCHAR2(160) not null,
+  estado          VARCHAR2(1) default 'P' not null,
   fecha_envio     DATE,
   respuesta_envio VARCHAR2(1000)
 )
@@ -17,12 +17,12 @@ comment on column T_MENSAJES.id_usuario
   is 'Usuario destino del mensaje de texto';
 comment on column T_MENSAJES.numero_telefono
   is 'Número de teléfono destino del mensaje de texto';
-comment on column T_MENSAJES.mensaje
-  is 'Contenido del mensaje de texto';
+comment on column T_MENSAJES.contenido
+  is 'Contenido del mensaje';
 comment on column T_MENSAJES.estado
-  is 'Estado del mensaje de texto';
+  is 'Estado de envío';
 comment on column T_MENSAJES.fecha_envio
-  is 'Fecha de envío del mensaje de texto';
+  is 'Fecha de envío';
 comment on column T_MENSAJES.respuesta_envio
   is 'Respuesta del proceso de envío';
 alter table T_MENSAJES
