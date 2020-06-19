@@ -5,7 +5,7 @@
  <TITLE>Package k_mensajeria</TITLE>
  <META name="object" content="PACKAGE">
  <META name="name" content="k_mensajeria">
- <META name="description" content="Agrupa operaciones relacionadas con el envio de mensajes a los usuarios">
+ <META name="description" content="Agrupa operaciones relacionadas con el env&#237;o de mensajes a los usuarios">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,10 +14,10 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Package k_mensajeria</P>
-Agrupa operaciones relacionadas con el envio de mensajes a los usuarios<br>
+Agrupa operaciones relacionadas con el env&#237;o de mensajes a los usuarios<br>
 &nbsp;<br>
-El envio de mensajes se puede realizar a traves de: <ul>
-<li>Correo electronico (E-mail)</li>
+El env&#237;o de mensajes se puede realizar a trav&#233;s de: <ul>
+<li>Correo electr&#243;nico (E-mail)</li>
 <li>Mensaje de texto (SMS)</li>
 </ul>
 
@@ -57,6 +57,11 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_NUMERO_TELEFONO_USUARIO">f_numero_telefono_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ENVIAR_CORREO">p_enviar_correo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -106,13 +111,28 @@ FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
 
 </PRE>
 <HR>
+<A NAME="P_ENVIAR_CORREO"></A>
+<P CLASS="TYPE_TITLE">
+p_enviar_correo
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
+                          i_body       IN CLOB,
+                          i_id_usuario IN NUMBER DEFAULT NULL,
+                          i_to         IN VARCHAR2 DEFAULT NULL,
+                          i_reply_to   IN VARCHAR2 DEFAULT NULL,
+                          i_cc         IN VARCHAR2 DEFAULT NULL,
+                          i_bcc        IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
 <A NAME="P_ENVIAR_MENSAJE"></A>
 <P CLASS="TYPE_TITLE">
 p_enviar_mensaje
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_enviar_mensaje(i_id_usuario      IN NUMBER,
-                           i_contenido       IN VARCHAR2,
+PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
+                           i_id_usuario      IN NUMBER DEFAULT NULL,
                            i_numero_telefono IN VARCHAR2 DEFAULT NULL)
 
 </PRE>

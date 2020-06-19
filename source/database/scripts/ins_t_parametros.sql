@@ -41,9 +41,15 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('PAGINACION_CANTIDAD_MAXIMA_POR_PAGINA', 'Cantidad máxima permitida de elementos por página en paginación de listas', '100');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
-values ('DIRECCION_CORREO_PRUEBAS', 'Dirección de correo electrónico para pruebas', 'javier.meza.py@gmail.com');
+values ('DIRECCION_CORREO_PRUEBAS', 'Dirección de correo electrónico para pruebas', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
-values ('NUMERO_TELEFONO_PRUEBAS', 'Número de teléfono para pruebas', '+595991384113');
+values ('NUMERO_TELEFONO_PRUEBAS', 'Número de teléfono para pruebas', null);
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('DIRECCION_CORREO_REMITENTE', 'Dirección de correo del remitente para mensajería', null);
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('NUMERO_TELEFONO_REMITENTE', 'Número de teléfono del remitente para mensajería', null);
 
 prompt Done.

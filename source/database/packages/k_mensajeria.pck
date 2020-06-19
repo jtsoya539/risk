@@ -1,11 +1,11 @@
 CREATE OR REPLACE PACKAGE k_mensajeria IS
 
   /**
-  Agrupa operaciones relacionadas con el envio de mensajes a los usuarios
+  Agrupa operaciones relacionadas con el envío de mensajes a los usuarios
   
-  El envio de mensajes se puede realizar a traves de:
+  El envío de mensajes se puede realizar a través de:
   <ul>
-  <li>Correo electronico (E-mail)</li>
+  <li>Correo electrónico (E-mail)</li>
   <li>Mensaje de texto (SMS)</li>
   </ul>
   
@@ -46,16 +46,26 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
 
   FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
-  PROCEDURE p_enviar_mensaje(i_id_usuario      IN NUMBER,
-                             i_contenido       IN VARCHAR2,
+  PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
+                            i_body       IN CLOB,
+                            i_id_usuario IN NUMBER DEFAULT NULL,
+                            i_to         IN VARCHAR2 DEFAULT NULL,
+                            i_reply_to   IN VARCHAR2 DEFAULT NULL,
+                            i_cc         IN VARCHAR2 DEFAULT NULL,
+                            i_bcc        IN VARCHAR2 DEFAULT NULL);
+
+  PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
+                             i_id_usuario      IN NUMBER DEFAULT NULL,
                              i_numero_telefono IN VARCHAR2 DEFAULT NULL);
 
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
 
-  g_direccion_correo_pruebas t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_PRUEBAS');
-  g_numero_telefono_pruebas  t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_PRUEBAS');
+  g_direccion_correo_remitente t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_REMITENTE');
+  g_numero_telefono_remitente  t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_REMITENTE');
+  g_direccion_correo_pruebas   t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_PRUEBAS');
+  g_numero_telefono_pruebas    t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_PRUEBAS');
 
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN IS
@@ -101,13 +111,70 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     RETURN l_numero_telefono;
   END;
 
-  PROCEDURE p_enviar_mensaje(i_id_usuario      IN NUMBER,
-                             i_contenido       IN VARCHAR2,
-                             i_numero_telefono IN VARCHAR2 DEFAULT NULL) IS
-    l_numero_telefono t_usuarios.numero_telefono%TYPE;
+  PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
+                            i_body       IN CLOB,
+                            i_id_usuario IN NUMBER DEFAULT NULL,
+                            i_to         IN VARCHAR2 DEFAULT NULL,
+                            i_reply_to   IN VARCHAR2 DEFAULT NULL,
+                            i_cc         IN VARCHAR2 DEFAULT NULL,
+                            i_bcc        IN VARCHAR2 DEFAULT NULL) IS
+    l_mensaje_to t_correos.mensaje_to%TYPE;
   BEGIN
-    l_numero_telefono := nvl(i_numero_telefono,
-                             f_numero_telefono_usuario(i_id_usuario));
+    l_mensaje_to := i_to;
+  
+    IF i_id_usuario IS NOT NULL AND l_mensaje_to IS NULL THEN
+      l_mensaje_to := f_direccion_correo_usuario(i_id_usuario);
+    END IF;
+  
+    IF l_mensaje_to IS NULL THEN
+      raise_application_error(-20000,
+                              'Dirección de correo destino obligatorio');
+    END IF;
+  
+    IF i_subject IS NULL THEN
+      raise_application_error(-20000, 'Asunto del mensaje obligatorio');
+    END IF;
+  
+    IF i_body IS NULL THEN
+      raise_application_error(-20000, 'Cuerpo del mensaje obligatorio');
+    END IF;
+  
+    IF NOT k_sistema.f_es_produccion THEN
+      l_mensaje_to := g_direccion_correo_pruebas;
+    END IF;
+  
+    INSERT INTO t_correos
+      (id_usuario,
+       mensaje_to,
+       mensaje_subject,
+       mensaje_body,
+       mensaje_from,
+       mensaje_reply_to,
+       mensaje_cc,
+       mensaje_bcc,
+       estado)
+    VALUES
+      (i_id_usuario,
+       l_mensaje_to,
+       i_subject,
+       i_body,
+       g_direccion_correo_remitente,
+       i_reply_to,
+       i_cc,
+       i_bcc,
+       'P');
+  END;
+
+  PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
+                             i_id_usuario      IN NUMBER DEFAULT NULL,
+                             i_numero_telefono IN VARCHAR2 DEFAULT NULL) IS
+    l_numero_telefono t_mensajes.numero_telefono%TYPE;
+  BEGIN
+    l_numero_telefono := i_numero_telefono;
+  
+    IF i_id_usuario IS NOT NULL AND l_numero_telefono IS NULL THEN
+      l_numero_telefono := f_numero_telefono_usuario(i_id_usuario);
+    END IF;
   
     IF l_numero_telefono IS NULL THEN
       raise_application_error(-20000,
