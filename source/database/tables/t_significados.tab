@@ -21,4 +21,7 @@ comment on column T_SIGNIFICADOS.activo
   is 'El significado esta activo? (S/N)';
 alter table T_SIGNIFICADOS
   add constraint PK_SIGNIFICADOS primary key (DOMINIO, CODIGO);
+alter table T_SIGNIFICADOS
+  add constraint CK_SIGNIFICADOS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
 

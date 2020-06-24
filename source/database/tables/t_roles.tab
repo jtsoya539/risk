@@ -20,4 +20,7 @@ alter table T_ROLES
   add constraint PK_ROLES primary key (ID_ROL);
 alter table T_ROLES
   add constraint UK_ROLES_NOMBRE unique (NOMBRE);
+alter table T_ROLES
+  add constraint CK_ROLES_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
 

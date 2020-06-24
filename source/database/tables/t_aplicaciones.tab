@@ -33,4 +33,7 @@ comment on column T_APLICACIONES.tiempo_expiracion_refresh_token
   is 'Tiempo de expiración del Refresh Token en horas';
 alter table T_APLICACIONES
   add constraint PK_APLICACIONES primary key (ID_APLICACION);
+alter table T_APLICACIONES
+  add constraint CK_APLICACIONES_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
 

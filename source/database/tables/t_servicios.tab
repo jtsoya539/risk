@@ -33,4 +33,7 @@ comment on column T_SERVICIOS.fecha_ultima_ejecucion
   is 'Fecha de la ultima ejecucion del servicio';
 alter table T_SERVICIOS
   add constraint PK_SERVICIOS primary key (ID_SERVICIO);
+alter table T_SERVICIOS
+  add constraint CK_SERVICIOS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
 

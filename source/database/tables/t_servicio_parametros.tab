@@ -38,4 +38,10 @@ alter table T_SERVICIO_PARAMETROS
 alter table T_SERVICIO_PARAMETROS
   add constraint FK_SERVICIO_PARAMETROS_SERVICIOS foreign key (ID_SERVICIO)
   references T_SERVICIOS (ID_SERVICIO);
+alter table T_SERVICIO_PARAMETROS
+  add constraint CK_SERVICIO_PARAMETROS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+alter table T_SERVICIO_PARAMETROS
+  add constraint CK_SERVICIO_PARAMETROS_OBLIGATORIO
+  check (OBLIGATORIO IN ('S', 'N'));
 

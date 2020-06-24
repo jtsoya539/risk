@@ -30,4 +30,16 @@ alter table T_ROL_PARAMETROS
 alter table T_ROL_PARAMETROS
   add constraint FK_ROL_PARAMETROS_ROLES foreign key (ID_ROL)
   references T_ROLES (ID_ROL);
+alter table T_ROL_PARAMETROS
+  add constraint CK_ROL_PARAMETROS_ACTUALIZAR
+  check (ACTUALIZAR IN ('S', 'N'));
+alter table T_ROL_PARAMETROS
+  add constraint CK_ROL_PARAMETROS_CONSULTAR
+  check (CONSULTAR IN ('S', 'N'));
+alter table T_ROL_PARAMETROS
+  add constraint CK_ROL_PARAMETROS_ELIMINAR
+  check (ELIMINAR IN ('S', 'N'));
+alter table T_ROL_PARAMETROS
+  add constraint CK_ROL_PARAMETROS_INSERTAR
+  check (INSERTAR IN ('S', 'N'));
 

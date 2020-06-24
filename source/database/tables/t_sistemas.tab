@@ -24,4 +24,7 @@ comment on column T_SISTEMAS.version_actual
   is 'Version actual del sistema';
 alter table T_SISTEMAS
   add constraint PK_SISTEMAS primary key (ID_SISTEMA);
+alter table T_SISTEMAS
+  add constraint CK_SISTEMAS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
 

@@ -30,4 +30,16 @@ alter table T_ROL_PERMISOS
 alter table T_ROL_PERMISOS
   add constraint FK_ROL_PERMISOS_ROLES foreign key (ID_ROL)
   references T_ROLES (ID_ROL);
+alter table T_ROL_PERMISOS
+  add constraint CK_ROL_PERMISOS_ACTUALIZAR
+  check (ACTUALIZAR IN ('S', 'N'));
+alter table T_ROL_PERMISOS
+  add constraint CK_ROL_PERMISOS_CONSULTAR
+  check (CONSULTAR IN ('S', 'N'));
+alter table T_ROL_PERMISOS
+  add constraint CK_ROL_PERMISOS_ELIMINAR
+  check (ELIMINAR IN ('S', 'N'));
+alter table T_ROL_PERMISOS
+  add constraint CK_ROL_PERMISOS_INSERTAR
+  check (INSERTAR IN ('S', 'N'));
 
