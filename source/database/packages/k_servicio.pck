@@ -43,6 +43,10 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   PROCEDURE p_limpiar_historial;
 
+  PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
+                                i_expresion  IN BOOLEAN,
+                                i_mensaje    IN VARCHAR2);
+
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
                            i_datos      IN y_objeto DEFAULT NULL);
 
@@ -202,6 +206,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   BEGIN
     UPDATE t_servicios
        SET cantidad_ejecuciones = NULL, fecha_ultima_ejecucion = NULL;
+  END;
+
+  PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
+                                i_expresion  IN BOOLEAN,
+                                i_mensaje    IN VARCHAR2) IS
+  BEGIN
+    IF NOT nvl(i_expresion, FALSE) THEN
+      p_respuesta_error(io_respuesta, 'api0002', i_mensaje);
+      RAISE ex_error_parametro;
+    END IF;
   END;
 
   PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
