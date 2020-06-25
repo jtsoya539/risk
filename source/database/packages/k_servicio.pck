@@ -405,6 +405,7 @@ END;'
     l_valor anydata;
     i       INTEGER;
   BEGIN
+    -- Busca el parámetro en la lista
     i := i_parametros.first;
     WHILE i IS NOT NULL AND l_valor IS NULL LOOP
       IF lower(i_parametros(i).nombre) = lower(i_nombre) THEN
@@ -412,6 +413,14 @@ END;'
       END IF;
       i := i_parametros.next(i);
     END LOOP;
+  
+    -- Si el parámetro no se encuentra en la lista carga un valor nulo de tipo
+    -- VARCHAR2 para evitar el error ORA-30625 al acceder al valor a través de
+    -- AnyData.Access*
+    IF l_valor IS NULL THEN
+      l_valor := anydata.convertvarchar2(NULL);
+    END IF;
+  
     RETURN l_valor;
   END;
 

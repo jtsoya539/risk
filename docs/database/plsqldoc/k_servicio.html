@@ -41,6 +41,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_VALIDAR_PARAMETRO">p_validar_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_RESPUESTA_OK">p_respuesta_ok</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -186,6 +191,17 @@ p_limpiar_historial
 </P>
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_limpiar_historial
+
+</PRE>
+<HR>
+<A NAME="P_VALIDAR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+p_validar_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
+                              i_expresion  IN BOOLEAN,
+                              i_mensaje    IN VARCHAR2)
 
 </PRE>
 <HR>
