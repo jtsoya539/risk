@@ -108,6 +108,14 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                     i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
                                     i_version_navegador         IN VARCHAR2 DEFAULT NULL);
 
+  PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
+                             i_usuario_nuevo    IN VARCHAR2,
+                             i_clave            IN VARCHAR2,
+                             i_nombre           IN VARCHAR2,
+                             i_apellido         IN VARCHAR2,
+                             i_direccion_correo IN VARCHAR2,
+                             i_numero_telefono  IN VARCHAR2 DEFAULT NULL);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
@@ -898,7 +906,43 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       IF SQL%NOTFOUND THEN
         raise_application_error(-20000, 'Dispositivo inexistente');
       END IF;
-    
+
+  END;
+
+  PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
+                             i_usuario_nuevo    IN VARCHAR2,
+                             i_clave            IN VARCHAR2,
+                             i_nombre           IN VARCHAR2,
+                             i_apellido         IN VARCHAR2,
+                             i_direccion_correo IN VARCHAR2,
+                             i_numero_telefono  IN VARCHAR2 DEFAULT NULL) IS
+    l_id_persona t_personas.id_persona%TYPE;
+  BEGIN
+    -- Valida clave
+    p_validar_clave(i_usuario_antiguo, i_clave, c_clave_acceso);
+
+    -- Actualiza usuario
+    UPDATE t_usuarios
+       SET alias            = nvl(i_usuario_nuevo, alias),
+           direccion_correo = nvl(i_direccion_correo, direccion_correo),
+           numero_telefono  = nvl(i_numero_telefono, numero_telefono)
+     WHERE alias = i_usuario_antiguo
+    RETURNING id_persona INTO l_id_persona;
+
+    IF SQL%NOTFOUND THEN
+      raise_application_error(-20000, 'Usuario inexistente');
+    END IF;
+
+    -- Actualiza persona
+    UPDATE t_personas
+       SET nombre          = nvl(i_nombre, nombre),
+           apellido        = nvl(i_apellido, apellido),
+           nombre_completo = nvl(i_nombre || ' ' || i_apellido, nombre_completo)
+     WHERE id_persona = l_id_persona;
+
+    IF SQL%NOTFOUND THEN
+      raise_application_error(-20000, 'Persona inexistente');
+    END IF;
   END;
 
 END;
