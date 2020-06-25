@@ -32,13 +32,15 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   -- Códigos de respuesta
   c_ok                       CONSTANT VARCHAR2(10) := '0';
-  c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
   c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
+  c_error_parametro          CONSTANT VARCHAR2(10) := 'api0002';
+  c_error_general            CONSTANT VARCHAR2(10) := 'api0099';
+  c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
 
   -- Excepciones
-  ex_error_general            EXCEPTION;
-  ex_error_parametro          EXCEPTION;
   ex_servicio_no_implementado EXCEPTION;
+  ex_error_parametro          EXCEPTION;
+  ex_error_general            EXCEPTION;
   PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
 
   PROCEDURE p_limpiar_historial;
@@ -47,15 +49,15 @@ CREATE OR REPLACE PACKAGE k_servicio IS
                                 i_expresion  IN BOOLEAN,
                                 i_mensaje    IN VARCHAR2);
 
-  PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
+  PROCEDURE p_respuesta_ok(io_respuesta IN OUT NOCOPY y_respuesta,
                            i_datos      IN y_objeto DEFAULT NULL);
 
-  PROCEDURE p_respuesta_error(io_respuesta IN OUT y_respuesta,
+  PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_codigo     IN VARCHAR2,
                               i_mensaje    IN VARCHAR2,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL);
 
-  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT y_respuesta,
+  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
                                   i_error_number IN NUMBER,
                                   i_error_msg    IN VARCHAR2,
                                   i_error_stack  IN VARCHAR2);
@@ -143,13 +145,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     EXCEPTION
       WHEN OTHERS THEN
         p_respuesta_error(l_rsp,
-                          'api0002',
+                          c_error_parametro,
                           CASE
                           k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                           k_error.c_user_defined_error THEN
                           utl_call_stack.error_msg(1) WHEN
                           k_error.c_oracle_predefined_error THEN
-                          'Error al procesar parametros del servicio' END,
+                          k_error.f_mensaje_error(c_error_parametro) END,
                           dbms_utility.format_error_stack);
         RAISE ex_error_parametro;
     END;
@@ -213,21 +215,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                 i_mensaje    IN VARCHAR2) IS
   BEGIN
     IF NOT nvl(i_expresion, FALSE) THEN
-      p_respuesta_error(io_respuesta, 'api0002', i_mensaje);
+      p_respuesta_error(io_respuesta,
+                        c_error_parametro,
+                        nvl(i_mensaje,
+                            k_error.f_mensaje_error(c_error_parametro)));
       RAISE ex_error_parametro;
     END IF;
   END;
 
-  PROCEDURE p_respuesta_ok(io_respuesta IN OUT y_respuesta,
+  PROCEDURE p_respuesta_ok(io_respuesta IN OUT NOCOPY y_respuesta,
                            i_datos      IN y_objeto DEFAULT NULL) IS
   BEGIN
     io_respuesta.codigo     := c_ok;
     io_respuesta.mensaje    := 'OK';
     io_respuesta.mensaje_bd := NULL;
+    io_respuesta.lugar      := NULL;
     io_respuesta.datos      := i_datos;
   END;
 
-  PROCEDURE p_respuesta_error(io_respuesta IN OUT y_respuesta,
+  PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_codigo     IN VARCHAR2,
                               i_mensaje    IN VARCHAR2,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL) IS
@@ -243,7 +249,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     io_respuesta.datos      := NULL;
   END;
 
-  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT y_respuesta,
+  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
                                   i_error_number IN NUMBER,
                                   i_error_msg    IN VARCHAR2,
                                   i_error_stack  IN VARCHAR2) IS
@@ -251,7 +257,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     IF k_error.f_tipo_excepcion(i_error_number) =
        k_error.c_user_defined_error THEN
       p_respuesta_error(io_respuesta,
-                        'api0099',
+                        c_error_general,
                         i_error_msg,
                         i_error_stack);
     ELSIF k_error.f_tipo_excepcion(i_error_number) =

@@ -70,12 +70,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     IF l_anydata IS NOT NULL THEN
       l_retorno := l_anydata.getobject(l_pagina_parametros);
     END IF;
-    IF l_pagina_parametros IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'msj0001',
+    k_servicio.p_validar_parametro(l_rsp,
+                                   l_pagina_parametros IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-      RAISE k_servicio.ex_error_general;
-    END IF;
   
     FOR ele IN cr_elementos LOOP
       l_elemento                 := NEW y_mensaje();
@@ -119,29 +116,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    IF anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                         'id_mensaje')) IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'msj0001',
+    k_servicio.p_validar_parametro(l_rsp,
+                                   anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
+                                                                                     'id_mensaje')) IS NOT NULL,
                                    'Debe ingresar id_mensaje');
-      RAISE k_servicio.ex_error_general;
-    END IF;
   
-    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'estado')) IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'msj0002',
+    k_servicio.p_validar_parametro(l_rsp,
+                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                       'estado')) IS NOT NULL,
                                    'Debe ingresar estado');
-      RAISE k_servicio.ex_error_general;
-    END IF;
   
-    IF anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                           'respuesta_envio')) IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'msj0003',
+    k_servicio.p_validar_parametro(l_rsp,
+                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                       'respuesta_envio')) IS NOT NULL,
                                    'Debe ingresar respuesta_envio');
-      RAISE k_servicio.ex_error_general;
-    END IF;
   
     l_rsp.lugar := 'Cambiando estado de mensaje';
     UPDATE t_mensajes m
