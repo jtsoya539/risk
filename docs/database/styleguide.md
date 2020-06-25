@@ -77,29 +77,64 @@ CANTIDAD,
 ORDEN
 
 ## Claves
-Los nombres de las claves de tablas deben usar prefijos y construirse de la siguiente manera:
+Los nombres de las claves deben usar prefijos y construirse de la siguiente manera:
 
 Tipo de clave|Prefijo|Nombre
 -------------|-------|------
-Clave primaria|pk_|Prefijo _ Tabla 1
-Clave foránea|fk_|Prefijo _ Tabla principal _ Tabla referenciada 2
-Clave única|uk_|Prefijo _ Tabla _ Campo(s) 2
+Clave primaria|pk_|Prefijo _ Tabla<sup>1</sup> <sup>2</sup>
+Clave foránea|fk_|Prefijo _ Tabla principal<sup>1</sup> _ Tabla referenciada<sup>1</sup> <sup>2</sup>
+Clave única|uk_|Prefijo _ Tabla<sup>1</sup> _ Campo(s) <sup>2</sup>
 
-1. Nombre de la tabla sin el prefijo *t_*
-2. En caso de superar el límite de 31 caracteres se recomienda abreviar el nombre de la tabla principal con los primeros tres caracteres de cada palabra, empezando por la primera (si existe más de una), hasta sortear dicho límite.
+<sup>1</sup> Nombre de la tabla sin el prefijo *t_*
+
+<sup>2</sup> En caso de superar el límite de 31 caracteres se recomienda abreviar el nombre de la tabla principal con los primeros tres caracteres de cada palabra, empezando por la primera (si existe más de una), hasta sortear dicho límite.
+
+**Ejemplos:**
+```
+PK_PAISES
+PK_PERSONAS
+PK_SERVICIO_PARAMETROS
+FK_USUARIOS_PERSONAS
+FK_USUARIO_CLAVES_USUARIOS
+UK_USUARIOS_ALIAS
+UK_SER_PAR_ID_SERVICIO_ORDEN
+```
+
+## Check Constraints
+Los nombres de los check constraints deben usar prefijos y construirse de la siguiente manera:
+
+Prefijo|Nombre
+-------|------
+ck_|Prefijo _ Tabla<sup>1</sup> _ Campo(s) relacionado(s) <sup>2</sup>
+
+<sup>1</sup> Nombre de la tabla sin el prefijo *t_*
+
+<sup>2</sup> En caso de superar el límite de 31 caracteres se recomienda abreviar el nombre de la tabla principal con los primeros tres caracteres de cada palabra, empezando por la primera (si existe más de una), hasta sortear dicho límite.
+
+**Ejemplos:**
+```
+CK_APLICACIONES_ACTIVO
+CK_SISTEMAS_ACTIVO
+```
 
 ## Triggers
-Los nombres de los triggers de tablas deben usar prefijos y construirse de la siguiente manera:
+Los nombres de los triggers deben usar prefijos y construirse de la siguiente manera:
 
 Tipo de trigger|Prefijo|Nombre
 ---------------|-------|------
-Trigger de auditoría|ga_|Prefijo _ Tabla 1
-Trigger de secuencia|gs_|Prefijo _ Tabla 1
-Trigger Before|gb_|Prefijo _ Tabla 1
-Trigger After|gf_|Prefijo _ Tabla 1
-Trigger Compound|gc_|Prefijo _ Tabla 1
+Trigger de auditoría|ga_|Prefijo _ Tabla<sup>1</sup>
+Trigger de secuencia|gs_|Prefijo _ Tabla<sup>1</sup>
+Trigger Before|gb_|Prefijo _ Tabla<sup>1</sup>
+Trigger After|gf_|Prefijo _ Tabla<sup>1</sup>
+Trigger Compound|gc_|Prefijo _ Tabla<sup>1</sup>
 
-1. Nombre de la tabla sin el prefijo *t_*
+<sup>1</sup> Nombre de la tabla sin el prefijo *t_*
+
+**Ejemplos:**
+```
+GS_USUARIOS
+GB_ARCHIVOS
+```
 
 ## Constantes y Variables
 * Las constantes deben usar el prefijo *c_*.
