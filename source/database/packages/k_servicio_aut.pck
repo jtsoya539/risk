@@ -59,6 +59,8 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
   FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION editar_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
@@ -749,6 +751,57 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
       RAISE k_servicio.ex_error_general;
     END IF;
   
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION editar_usuario(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp  y_respuesta;
+    l_dato y_dato;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+
+    l_rsp.lugar := 'Validando parámetros';
+    /* TODO: text="Implementar validación de parámetros" */
+    k_servicio.p_validar_parametro(l_rsp,
+                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                       'usuario_antiguo')) IS NOT NULL,
+                                   'Debe ingresar usuario_antiguo');
+
+    k_servicio.p_validar_parametro(l_rsp,
+                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                       'clave')) IS NOT NULL,
+                                   'Debe ingresar clave');
+
+    l_rsp.lugar := 'Editando usuario';
+    k_autenticacion.p_editar_usuario(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'usuario_antiguo')),
+                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'usuario_nuevo')),
+                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'clave')),
+                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'nombre')),
+                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'apellido')),
+                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'direccion_correo')),
+                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
+                                                                                         'numero_telefono')));
+
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
