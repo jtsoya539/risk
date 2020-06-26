@@ -781,18 +781,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                                        'usuario_antiguo')) IS NOT NULL,
                                    'Debe ingresar usuario_antiguo');
 
-    k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'clave')) IS NOT NULL,
-                                   'Debe ingresar clave');
-
     l_rsp.lugar := 'Editando usuario';
     k_autenticacion.p_editar_usuario(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                          'usuario_antiguo')),
                                      anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                          'usuario_nuevo')),
-                                     anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                         'clave')),
                                      anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                          'nombre')),
                                      anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,

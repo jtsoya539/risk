@@ -110,7 +110,6 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
                              i_usuario_nuevo    IN VARCHAR2,
-                             i_clave            IN VARCHAR2,
                              i_nombre           IN VARCHAR2,
                              i_apellido         IN VARCHAR2,
                              i_direccion_correo IN VARCHAR2,
@@ -911,16 +910,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
                              i_usuario_nuevo    IN VARCHAR2,
-                             i_clave            IN VARCHAR2,
                              i_nombre           IN VARCHAR2,
                              i_apellido         IN VARCHAR2,
                              i_direccion_correo IN VARCHAR2,
                              i_numero_telefono  IN VARCHAR2 DEFAULT NULL) IS
     l_id_persona t_personas.id_persona%TYPE;
   BEGIN
-    -- Valida clave
-    p_validar_clave(i_usuario_antiguo, i_clave, c_clave_acceso);
-
     -- Actualiza usuario
     UPDATE t_usuarios
        SET alias            = nvl(i_usuario_nuevo, alias),

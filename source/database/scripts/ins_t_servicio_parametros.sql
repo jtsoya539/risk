@@ -159,18 +159,15 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (42, 'USUARIO_NUEVO', 'I', 'S', null, 'N', null, 'S', 2);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (42, 'CLAVE', 'I', 'S', null, 'S', null, 'S', 3);
+values (42, 'NOMBRE', 'I', 'S', null, 'N', null, 'S', 3);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (42, 'NOMBRE', 'I', 'S', null, 'N', null, 'S', 4);
+values (42, 'APELLIDO', 'I', 'S', null, 'N', null, 'S', 4);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (42, 'APELLIDO', 'I', 'S', null, 'N', null, 'S', 5);
+values (42, 'DIRECCION_CORREO', 'I', 'S', null, 'N', null, 'S', 5);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (42, 'DIRECCION_CORREO', 'I', 'S', null, 'N', null, 'S', 6);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (42, 'NUMERO_TELEFONO', 'I', 'S', null, 'N', null, 'S', 7);
+values (42, 'NUMERO_TELEFONO', 'I', 'S', null, 'N', null, 'S', 6);
 
 prompt Done.
