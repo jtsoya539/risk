@@ -67,9 +67,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_rsp.lugar := 'Validando parametros';
     l_anydata   := k_servicio.f_valor_parametro(i_parametros,
                                                 'pagina_parametros');
-    IF l_anydata IS NOT NULL THEN
-      l_retorno := l_anydata.getobject(l_pagina_parametros);
-    END IF;
+    l_retorno   := l_anydata.getobject(l_pagina_parametros);
     k_servicio.p_validar_parametro(l_rsp,
                                    l_pagina_parametros IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
