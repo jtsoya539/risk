@@ -356,5 +356,19 @@ namespace Risk.API.Controllers
             var respuesta = _genService.GuardarArchivo("T_USUARIOS", "AVATAR", usuario, archivo);
             return ProcesarRespuesta(respuesta);
         }
+
+        [HttpPost("EditarUsuario")]
+        [SwaggerOperation(OperationId = "EditarUsuario", Summary = "EditarUsuario", Description = "Permite editar un usuario")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
+        public IActionResult EditarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromBody] EditarUsuarioRequestBody requestBody)
+        {
+            var respuesta = _autService.EditarUsuario(usuario, requestBody.UsuarioNuevo, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }

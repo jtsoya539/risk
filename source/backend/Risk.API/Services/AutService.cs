@@ -45,6 +45,7 @@ namespace Risk.API.Services
         private const int ID_VALIDAR_CLAVE_APLICACION = 12;
         private const int ID_REGISTRAR_DISPOSITIVO = 14;
         private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
+        private const int ID_EDITAR_USUARIO = 42;
 
         public AutService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
         {
@@ -199,6 +200,22 @@ namespace Risk.API.Services
             prms.Add("tipo_token", tipoToken);
 
             string rsp = base.ApiProcesarServicio(ID_TIEMPO_EXPIRACION_TOKEN, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> EditarUsuario(string usuarioAntiguo, string usuarioNuevo, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario_antiguo", usuarioAntiguo);
+            prms.Add("usuario_nuevo", usuarioNuevo);
+            prms.Add("nombre", nombre);
+            prms.Add("apellido", apellido);
+            prms.Add("direccion_correo", direccionCorreo);
+            prms.Add("numero_telefono", numeroTelefono);
+
+            string rsp = base.ApiProcesarServicio(ID_EDITAR_USUARIO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
