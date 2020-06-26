@@ -81,6 +81,31 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_STRING">f_valor_parametro_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_NUMBER">f_valor_parametro_number</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_BOOLEAN">f_valor_parametro_boolean</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_DATE">f_valor_parametro_date</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_OBJECT">f_valor_parametro_object</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PAGINAR_ELEMENTOS">f_paginar_elementos</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -301,6 +326,56 @@ f_valor_parametro
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro(i_parametros IN y_parametros,
                            i_nombre     IN VARCHAR2) RETURN anydata
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_string
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_string(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_NUMBER"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_number
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_number(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_BOOLEAN"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_boolean
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_boolean(i_parametros IN y_parametros,
+                                   i_nombre     IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_DATE"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_date
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_date(i_parametros IN y_parametros,
+                                i_nombre     IN VARCHAR2) RETURN DATE
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_OBJECT"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_object
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN y_objeto
 
 </PRE>
 <HR>

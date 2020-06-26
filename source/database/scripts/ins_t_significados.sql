@@ -163,4 +163,7 @@ values ('ESTADO_CORREO', 'R', 'PROCESADO CON ERROR', null, 'S');
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_CORREO', 'A', 'ANULADO', null, 'S');
 
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_DATO_PARAMETRO', 'O', 'OBJECT', null, 'S');
+
 prompt Done.

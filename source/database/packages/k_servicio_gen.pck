@@ -72,6 +72,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
@@ -92,13 +94,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'parametro')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'parametro') IS NOT NULL,
                                    'Debe ingresar parametro');
   
     l_rsp.lugar      := 'Obteniendo valor del parametro';
-    l_dato.contenido := k_util.f_valor_parametro(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                     'parametro')));
+    l_dato.contenido := k_util.f_valor_parametro(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                     'parametro'));
   
     IF l_dato.contenido IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
@@ -110,6 +112,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
@@ -131,20 +135,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'dominio')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'dominio') IS NOT NULL,
                                    'Debe ingresar dominio');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'codigo')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'codigo') IS NOT NULL,
                                    'Debe ingresar codigo');
   
     l_rsp.lugar      := 'Obteniendo significado';
-    l_dato.contenido := k_util.f_significado_codigo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'dominio')),
-                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'codigo')));
+    l_dato.contenido := k_util.f_significado_codigo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'dominio'),
+                                                    k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'codigo'));
   
     IF l_dato.contenido IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
@@ -156,6 +160,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
@@ -172,8 +178,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_pais;
   
-    l_retorno           PLS_INTEGER;
-    l_anydata           anydata;
     l_pagina_parametros y_pagina_parametros;
   
     CURSOR cr_elementos(i_id_pais IN NUMBER) IS
@@ -191,15 +195,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    l_anydata   := k_servicio.f_valor_parametro(i_parametros,
-                                                'pagina_parametros');
-    l_retorno   := l_anydata.getobject(l_pagina_parametros);
     k_servicio.p_validar_parametro(l_rsp,
-                                   l_pagina_parametros IS NOT NULL,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
   
-    FOR ele IN cr_elementos(anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                                              'id_pais'))) LOOP
+    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_pais')) LOOP
       l_elemento         := NEW y_pais();
       l_elemento.id_pais := ele.id_pais;
       l_elemento.nombre  := ele.nombre;
@@ -216,6 +221,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     k_servicio.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
     WHEN k_servicio.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
@@ -236,27 +243,27 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'tabla')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'tabla') IS NOT NULL,
                                    'Debe ingresar tabla');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'campo')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'campo') IS NOT NULL,
                                    'Debe ingresar campo');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'referencia')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'referencia') IS NOT NULL,
                                    'Debe ingresar referencia');
   
     l_rsp.lugar := 'Recuperando archivo';
-    l_archivo   := k_archivo.f_recuperar_archivo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                     'tabla')),
-                                                 anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                     'campo')),
-                                                 anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                     'referencia')));
+    l_archivo   := k_archivo.f_recuperar_archivo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                     'tabla'),
+                                                 k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                     'campo'),
+                                                 k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                     'referencia'));
   
     IF l_archivo.contenido IS NULL OR
        dbms_lob.getlength(l_archivo.contenido) = 0 THEN
@@ -281,8 +288,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
 
   FUNCTION guardar_archivo(i_parametros IN y_parametros) RETURN y_respuesta IS
     l_rsp     y_respuesta;
-    l_retorno PLS_INTEGER;
-    l_anydata anydata;
     l_archivo y_archivo;
   BEGIN
     -- Inicializa respuesta
@@ -290,33 +295,35 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'tabla')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'tabla') IS NOT NULL,
                                    'Debe ingresar tabla');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'campo')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'campo') IS NOT NULL,
                                    'Debe ingresar campo');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'referencia')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'referencia') IS NOT NULL,
                                    'Debe ingresar referencia');
   
-    l_anydata := k_servicio.f_valor_parametro(i_parametros, 'archivo');
-    l_retorno := l_anydata.getobject(l_archivo);
     k_servicio.p_validar_parametro(l_rsp,
-                                   l_archivo IS NOT NULL,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'archivo') IS NOT NULL,
                                    'Debe ingresar archivo');
+    l_archivo := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                           'archivo') AS
+                       y_archivo);
   
     l_rsp.lugar := 'Guardando archivo';
-    k_archivo.p_guardar_archivo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                    'tabla')),
-                                anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                    'campo')),
-                                anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                    'referencia')),
+    k_archivo.p_guardar_archivo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                    'tabla'),
+                                k_servicio.f_valor_parametro_string(i_parametros,
+                                                                    'campo'),
+                                k_servicio.f_valor_parametro_string(i_parametros,
+                                                                    'referencia'),
                                 l_archivo);
   
     k_servicio.p_respuesta_ok(l_rsp);

@@ -47,8 +47,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos y_objetos;
     l_elemento  y_mensaje;
   
-    l_retorno           PLS_INTEGER;
-    l_anydata           anydata;
     l_pagina_parametros y_pagina_parametros;
   
     CURSOR cr_elementos IS
@@ -65,12 +63,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    l_anydata   := k_servicio.f_valor_parametro(i_parametros,
-                                                'pagina_parametros');
-    l_retorno   := l_anydata.getobject(l_pagina_parametros);
     k_servicio.p_validar_parametro(l_rsp,
-                                   l_pagina_parametros IS NOT NULL,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos LOOP
       l_elemento                 := NEW y_mensaje();
@@ -115,39 +114,38 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                                                     'id_mensaje')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_number(i_parametros,
+                                                                       'id_mensaje') IS NOT NULL,
                                    'Debe ingresar id_mensaje');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'estado')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'estado') IS NOT NULL,
                                    'Debe ingresar estado');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'respuesta_envio')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'respuesta_envio') IS NOT NULL,
                                    'Debe ingresar respuesta_envio');
   
     l_rsp.lugar := 'Cambiando estado de mensaje';
     UPDATE t_mensajes m
-       SET m.estado          = anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                   'estado')),
-           m.respuesta_envio = substr(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                          'respuesta_envio')),
+       SET m.estado          = k_servicio.f_valor_parametro_string(i_parametros,
+                                                                   'estado'),
+           m.respuesta_envio = substr(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                          'respuesta_envio'),
                                       1,
                                       1000),
            m.fecha_envio = CASE
-                             WHEN anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                      'estado')) IN
+                             WHEN k_servicio.f_valor_parametro_string(i_parametros,
+                                                                      'estado') IN
                                   ('E', 'R') THEN
                               SYSDATE
                              ELSE
                               NULL
                            END
      WHERE m.id_mensaje =
-           anydata.accessnumber(k_servicio.f_valor_parametro(i_parametros,
-                                                             'id_mensaje'));
+           k_servicio.f_valor_parametro_number(i_parametros, 'id_mensaje');
   
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;

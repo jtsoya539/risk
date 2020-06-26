@@ -73,6 +73,21 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,
                              i_nombre     IN VARCHAR2) RETURN anydata;
 
+  FUNCTION f_valor_parametro_string(i_parametros IN y_parametros,
+                                    i_nombre     IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_valor_parametro_number(i_parametros IN y_parametros,
+                                    i_nombre     IN VARCHAR2) RETURN NUMBER;
+
+  FUNCTION f_valor_parametro_boolean(i_parametros IN y_parametros,
+                                     i_nombre     IN VARCHAR2) RETURN BOOLEAN;
+
+  FUNCTION f_valor_parametro_date(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN DATE;
+
+  FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
+                                    i_nombre     IN VARCHAR2) RETURN y_objeto;
+
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                                i_numero_pagina       IN INTEGER DEFAULT NULL,
                                i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
@@ -411,14 +426,16 @@ END;'
     l_valor anydata;
     i       INTEGER;
   BEGIN
-    -- Busca el parámetro en la lista
-    i := i_parametros.first;
-    WHILE i IS NOT NULL AND l_valor IS NULL LOOP
-      IF lower(i_parametros(i).nombre) = lower(i_nombre) THEN
-        l_valor := i_parametros(i).valor;
-      END IF;
-      i := i_parametros.next(i);
-    END LOOP;
+    IF i_parametros IS NOT NULL THEN
+      -- Busca el parámetro en la lista
+      i := i_parametros.first;
+      WHILE i IS NOT NULL AND l_valor IS NULL LOOP
+        IF lower(i_parametros(i).nombre) = lower(i_nombre) THEN
+          l_valor := i_parametros(i).valor;
+        END IF;
+        i := i_parametros.next(i);
+      END LOOP;
+    END IF;
   
     -- Si el parámetro no se encuentra en la lista carga un valor nulo de tipo
     -- VARCHAR2 para evitar el error ORA-30625 al acceder al valor a través de
@@ -428,6 +445,49 @@ END;'
     END IF;
   
     RETURN l_valor;
+  END;
+
+  FUNCTION f_valor_parametro_string(i_parametros IN y_parametros,
+                                    i_nombre     IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN anydata.accessvarchar2(f_valor_parametro(i_parametros, i_nombre));
+  END;
+
+  FUNCTION f_valor_parametro_number(i_parametros IN y_parametros,
+                                    i_nombre     IN VARCHAR2) RETURN NUMBER IS
+  BEGIN
+    RETURN anydata.accessnumber(f_valor_parametro(i_parametros, i_nombre));
+  END;
+
+  FUNCTION f_valor_parametro_boolean(i_parametros IN y_parametros,
+                                     i_nombre     IN VARCHAR2) RETURN BOOLEAN IS
+  BEGIN
+    RETURN sys.diutil.int_to_bool(anydata.accessnumber(f_valor_parametro(i_parametros,
+                                                                         i_nombre)));
+  END;
+
+  FUNCTION f_valor_parametro_date(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN DATE IS
+  BEGIN
+    RETURN anydata.accessdate(f_valor_parametro(i_parametros, i_nombre));
+  END;
+
+  FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
+                                    i_nombre     IN VARCHAR2) RETURN y_objeto IS
+    l_objeto   y_objeto;
+    l_anydata  anydata;
+    l_result   PLS_INTEGER;
+    l_typeinfo anytype;
+    l_typecode PLS_INTEGER;
+  BEGIN
+    l_anydata := f_valor_parametro(i_parametros, i_nombre);
+  
+    l_typecode := l_anydata.gettype(l_typeinfo);
+    IF l_typecode = dbms_types.typecode_object THEN
+      l_result := l_anydata.getobject(l_objeto);
+    END IF;
+  
+    RETURN l_objeto;
   END;
 
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
