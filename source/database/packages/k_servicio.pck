@@ -328,7 +328,7 @@ END;'
     l_json_object  json_object_t;
     l_json_element json_element_t;
   
-    CURSOR c_servicio_parametros IS
+    CURSOR cr_servicio_parametros IS
       SELECT id_servicio,
              lower(nombre) nombre,
              direccion,
@@ -350,24 +350,25 @@ END;'
       l_json_object := json_object_t.parse(i_parametros);
     END IF;
   
-    FOR par IN c_servicio_parametros LOOP
+    FOR par IN cr_servicio_parametros LOOP
+      l_parametro        := NEW y_parametro();
+      l_parametro.nombre := par.nombre;
+    
+      l_json_element := l_json_object.get(par.nombre);
+    
       IF par.obligatorio = 'S' THEN
         IF NOT l_json_object.has(par.nombre) THEN
           raise_application_error(-20000,
-                                  'Parametro ' || par.nombre ||
+                                  'Parámetro ' || par.nombre ||
                                   ' obligatorio');
         ELSE
-          l_json_element := l_json_object.get(par.nombre);
           IF l_json_element.is_null THEN
             raise_application_error(-20000,
-                                    'Parametro ' || par.nombre ||
+                                    'Parámetro ' || par.nombre ||
                                     ' debe tener valor');
           END IF;
         END IF;
       END IF;
-    
-      l_parametro        := NEW y_parametro();
-      l_parametro.nombre := par.nombre;
     
       CASE par.tipo_dato
         WHEN 'S' THEN
@@ -401,9 +402,8 @@ END;'
           END IF;
         WHEN 'O' THEN
           -- Object
-          IF l_json_object.get(par.nombre) IS NOT NULL THEN
-            l_parametro.valor := f_objeto_parse_json(l_json_object.get(par.nombre)
-                                                     .to_clob,
+          IF l_json_element IS NOT NULL THEN
+            l_parametro.valor := f_objeto_parse_json(l_json_element.to_clob,
                                                      par.formato);
           END IF;
         
