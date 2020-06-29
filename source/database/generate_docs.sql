@@ -89,6 +89,7 @@ prompt Generando docs de types...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate y_archivo;
+plugin plsqldoc generate y_correo;
 plugin plsqldoc generate y_dato;
 plugin plsqldoc generate y_dispositivo;
 plugin plsqldoc generate y_mensaje;

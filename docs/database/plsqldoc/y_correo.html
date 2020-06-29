@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_correo</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_correo">
+ <META name="description" content="Agrupa datos de un correo electr&#243;nico (E-mail).">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_correo</P>
+Agrupa datos de un correo electr&#243;nico (E-mail).<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 11:13:53
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_CORREO">id_correo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Identificador del correo electr&#243;nico
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_TO">mensaje_to</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo To del mensaje
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_SUBJECT">mensaje_subject</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo Subject del mensaje
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_BODY">mensaje_body</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Cuerpo del mensaje
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_FROM">mensaje_from</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo From del mensaje
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_REPLY_TO">mensaje_reply_to</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo Reply-To del mensaje
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_CC">mensaje_cc</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo Cc del mensaje
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#MENSAJE_BCC">mensaje_bcc</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo Bcc del mensaje
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_CORREO">y_correo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Constructor del objeto sin par&#225;metros.
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#PARSE_JSON">parse_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el objeto serializado en formato JSON.
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="ID_CORREO"></A>
+<P CLASS="TYPE_TITLE">
+id_correo
+</P>
+<PRE CLASS="DECL_TEXT">
+id_correo NUMBER
+</PRE>
+<P CLASS="DESC_TEXT">
+Identificador del correo electr&#243;nico<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_TO"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_to
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_to VARCHAR2(4000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Campo To del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_SUBJECT"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_subject
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_subject VARCHAR2(2000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Campo Subject del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_BODY"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_body
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_body CLOB
+</PRE>
+<P CLASS="DESC_TEXT">
+Cuerpo del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_FROM"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_from
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_from VARCHAR2(2000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Campo From del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_REPLY_TO"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_reply_to
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_reply_to VARCHAR2(2000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Campo Reply-To del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_CC"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_cc
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_cc VARCHAR2(4000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Campo Cc del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="MENSAJE_BCC"></A>
+<P CLASS="TYPE_TITLE">
+mensaje_bcc
+</P>
+<PRE CLASS="DECL_TEXT">
+mensaje_bcc VARCHAR2(4000)
+</PRE>
+<P CLASS="DESC_TEXT">
+Campo Bcc del mensaje<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="Y_CORREO"></A>
+<P CLASS="TYPE_TITLE">
+y_correo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_correo RETURN SELF AS RESULT
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Constructor del objeto sin par&#225;metros.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:08:08<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Objeto del tipo y_correo.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="PARSE_JSON"></A>
+<P CLASS="TYPE_TITLE">
+parse_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el objeto serializado en formato JSON.<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 09:42:09<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+JSON con los atributos del objeto.<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

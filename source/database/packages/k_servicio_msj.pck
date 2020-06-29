@@ -30,7 +30,13 @@ CREATE OR REPLACE PACKAGE k_servicio_msj IS
   -------------------------------------------------------------------------------
   */
 
+  FUNCTION listar_correos_pendientes(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION listar_mensajes_pendientes(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION cambiar_estado_correo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
   FUNCTION cambiar_estado_mensaje(i_parametros IN y_parametros)
@@ -39,6 +45,87 @@ CREATE OR REPLACE PACKAGE k_servicio_msj IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
+
+  FUNCTION listar_correos_pendientes(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_correo;
+  
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos IS
+      SELECT id_correo,
+             id_usuario,
+             mensaje_to,
+             mensaje_subject,
+             mensaje_body,
+             mensaje_from,
+             mensaje_reply_to,
+             mensaje_cc,
+             mensaje_bcc,
+             estado,
+             fecha_envio,
+             respuesta_envio
+        FROM t_correos
+       WHERE estado IN ('P', 'R')
+      -- P-PENDIENTE DE ENVÍO
+      -- R-PROCESADO CON ERROR
+       ORDER BY id_correo
+         FOR UPDATE OF estado;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
+                                   'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
+  
+    FOR ele IN cr_elementos LOOP
+      l_elemento                  := NEW y_correo();
+      l_elemento.id_correo        := ele.id_correo;
+      l_elemento.mensaje_to       := ele.mensaje_to;
+      l_elemento.mensaje_subject  := ele.mensaje_subject;
+      l_elemento.mensaje_body     := ele.mensaje_body;
+      l_elemento.mensaje_from     := ele.mensaje_from;
+      l_elemento.mensaje_reply_to := ele.mensaje_reply_to;
+      l_elemento.mensaje_cc       := ele.mensaje_cc;
+      l_elemento.mensaje_bcc      := ele.mensaje_bcc;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    
+      UPDATE t_correos
+         SET estado = 'N' -- N-EN PROCESO DE ENVÍO
+       WHERE CURRENT OF cr_elementos;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
 
   FUNCTION listar_mensajes_pendientes(i_parametros IN y_parametros)
     RETURN y_respuesta IS
@@ -91,6 +178,63 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                l_pagina_parametros.no_paginar);
   
     k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION cambiar_estado_correo(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_number(i_parametros,
+                                                                       'id_correo') IS NOT NULL,
+                                   'Debe ingresar id_mensaje');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'estado') IS NOT NULL,
+                                   'Debe ingresar estado');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'respuesta_envio') IS NOT NULL,
+                                   'Debe ingresar respuesta_envio');
+  
+    l_rsp.lugar := 'Cambiando estado de correo';
+    UPDATE t_correos m
+       SET m.estado          = k_servicio.f_valor_parametro_string(i_parametros,
+                                                                   'estado'),
+           m.respuesta_envio = substr(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                          'respuesta_envio'),
+                                      1,
+                                      1000),
+           m.fecha_envio = CASE
+                             WHEN k_servicio.f_valor_parametro_string(i_parametros,
+                                                                      'estado') IN
+                                  ('E', 'R') THEN
+                              SYSDATE
+                             ELSE
+                              NULL
+                           END
+     WHERE m.id_correo =
+           k_servicio.f_valor_parametro_number(i_parametros, 'id_correo');
+  
+    k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN

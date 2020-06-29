@@ -371,37 +371,95 @@ END;'
       END IF;
     
       CASE par.tipo_dato
+      
         WHEN 'S' THEN
           -- String
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_string THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' de tipo incorrecto');
+          END IF;
+        
           l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
           IF l_parametro.valor.accessvarchar2 IS NULL AND
              par.valor_defecto IS NOT NULL THEN
             l_parametro.valor := anydata.convertvarchar2(par.valor_defecto);
           END IF;
+          IF l_parametro.valor.accessvarchar2 IS NULL AND
+             par.obligatorio = 'S' THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' debe tener valor');
+          END IF;
+        
         WHEN 'N' THEN
           -- Number
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_number THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' de tipo incorrecto');
+          END IF;
+        
           l_parametro.valor := anydata.convertnumber(l_json_object.get_number(par.nombre));
           IF l_parametro.valor.accessnumber IS NULL AND
              par.valor_defecto IS NOT NULL THEN
             l_parametro.valor := anydata.convertnumber(to_number(par.valor_defecto));
           END IF;
+          IF l_parametro.valor.accessnumber IS NULL AND
+             par.obligatorio = 'S' THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' debe tener valor');
+          END IF;
+        
         WHEN 'B' THEN
           -- Boolean
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_boolean THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' de tipo incorrecto');
+          END IF;
+        
           l_parametro.valor := anydata.convertnumber(sys.diutil.bool_to_int(l_json_object.get_boolean(par.nombre)));
           IF l_parametro.valor.accessnumber IS NULL AND
              par.valor_defecto IS NOT NULL THEN
             l_parametro.valor := anydata.convertnumber(to_number(par.valor_defecto));
           END IF;
+          IF l_parametro.valor.accessnumber IS NULL AND
+             par.obligatorio = 'S' THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' debe tener valor');
+          END IF;
+        
         WHEN 'D' THEN
           -- Date
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_date THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' de tipo incorrecto');
+          END IF;
+        
           l_parametro.valor := anydata.convertdate(l_json_object.get_date(par.nombre));
           IF l_parametro.valor.accessdate IS NULL AND
              par.valor_defecto IS NOT NULL THEN
             l_parametro.valor := anydata.convertdate(to_date(par.valor_defecto,
-                                                             'YYYY-MM-DD'));
+                                                             par.formato));
           END IF;
+          IF l_parametro.valor.accessdate IS NULL AND par.obligatorio = 'S' THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' debe tener valor');
+          END IF;
+        
         WHEN 'O' THEN
           -- Object
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_object THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' de tipo incorrecto');
+          END IF;
+        
           IF l_json_element IS NOT NULL THEN
             l_parametro.valor := f_objeto_parse_json(l_json_element.to_clob,
                                                      par.formato);
@@ -411,8 +469,15 @@ END;'
             l_parametro.valor := f_objeto_parse_json(par.valor_defecto,
                                                      par.formato);
           END IF;
+          IF l_parametro.valor IS NULL AND par.obligatorio = 'S' THEN
+            raise_application_error(-20000,
+                                    'Parámetro ' || par.nombre ||
+                                    ' debe tener valor');
+          END IF;
+        
         ELSE
           raise_application_error(-20000, 'Tipo de dato no soportado');
+        
       END CASE;
     
       l_parametros.extend;
