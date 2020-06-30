@@ -50,13 +50,11 @@ namespace Risk.API.Controllers
     {
         private readonly IAutService _autService;
         private readonly IGenService _genService;
-        private readonly IConfiguration _configuration;
 
-        public AutController(IAutService autService, IGenService genService, IConfiguration configuration)
+        public AutController(IAutService autService, IGenService genService, IConfiguration configuration) : base(configuration)
         {
             _autService = autService;
             _genService = genService;
-            _configuration = configuration;
         }
 
         private string GenerarAccessToken(string usuario, string claveAplicacion)

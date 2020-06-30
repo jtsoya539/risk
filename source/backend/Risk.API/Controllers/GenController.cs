@@ -41,12 +41,10 @@ namespace Risk.API.Controllers
     public class GenController : RiskControllerBase
     {
         private readonly IGenService _genService;
-        private readonly IConfiguration _configuration;
 
-        public GenController(IGenService genService, IConfiguration configuration)
+        public GenController(IGenService genService, IConfiguration configuration) : base(configuration)
         {
             _genService = genService;
-            _configuration = configuration;
         }
 
         [AllowAnyClient]

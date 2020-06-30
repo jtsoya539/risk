@@ -26,6 +26,7 @@ using System;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Risk.API.Helpers;
 using Risk.API.Models;
 
@@ -33,6 +34,15 @@ namespace Risk.API.Controllers
 {
     public class RiskControllerBase : ControllerBase
     {
+        protected readonly IConfiguration _configuration;
+        private readonly bool _enableHttpStatusCodes;
+
+        public RiskControllerBase(IConfiguration configuration)
+        {
+            _configuration = configuration;
+            _enableHttpStatusCodes = _configuration.GetValue<bool>("EnableHttpStatusCodes");
+        }
+
         public IActionResult ProcesarRespuesta<T>(Respuesta<T> respuesta)
         {
             if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
@@ -41,15 +51,19 @@ namespace Risk.API.Controllers
             }
             else
             {
-                return Ok(respuesta); // 200 OK
-                /*
-                if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_ERROR_INESPERADO))
-                    return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
-                else if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
-                    return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
+                if (_enableHttpStatusCodes)
+                {
+                    if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_ERROR_INESPERADO))
+                        return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
+                    else if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
+                        return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
+                    else
+                        return BadRequest(respuesta); // 400 Bad Request
+                }
                 else
-                    return BadRequest(respuesta); // 400 Bad Request
-                */
+                {
+                    return Ok(respuesta); // 200 OK
+                }
             }
         }
 

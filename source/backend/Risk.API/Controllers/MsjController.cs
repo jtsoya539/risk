@@ -41,12 +41,10 @@ namespace Risk.API.Controllers
     public class MsjController : RiskControllerBase
     {
         private readonly IMsjService _msjService;
-        private readonly IConfiguration _configuration;
 
-        public MsjController(IMsjService msjService, IConfiguration configuration)
+        public MsjController(IMsjService msjService, IConfiguration configuration) : base(configuration)
         {
             _msjService = msjService;
-            _configuration = configuration;
         }
 
         [HttpGet("ListarMensajesPendientes")]
