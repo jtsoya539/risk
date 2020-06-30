@@ -31,7 +31,7 @@ using Risk.API.Models;
 
 namespace Risk.API.Services
 {
-    public class MsjService : ServiceBase, IMsjService
+    public class MsjService : RiskServiceBase, IMsjService
     {
         private const int ID_LISTAR_MENSAJES_PENDIENTES = 30;
         private const int ID_CAMBIAR_ESTADO_MENSAJE = 31;
@@ -54,7 +54,7 @@ namespace Risk.API.Services
             };
             prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
 
-            string rsp = base.ApiProcesarServicio(ID_LISTAR_MENSAJES_PENDIENTES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarServicio(ID_LISTAR_MENSAJES_PENDIENTES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YMensaje>>>(rsp);
 
             Pagina<Mensaje> datos = null;
@@ -73,7 +73,7 @@ namespace Risk.API.Services
             prms.Add("estado", estado);
             prms.Add("respuesta_envio", respuestaEnvio);
 
-            string rsp = base.ApiProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJE, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJE, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
@@ -91,7 +91,7 @@ namespace Risk.API.Services
             };
             prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
 
-            string rsp = base.ApiProcesarServicio(ID_LISTAR_CORREOS_PENDIENTES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarServicio(ID_LISTAR_CORREOS_PENDIENTES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCorreo>>>(rsp);
 
             Pagina<Correo> datos = null;
@@ -110,7 +110,7 @@ namespace Risk.API.Services
             prms.Add("estado", estado);
             prms.Add("respuesta_envio", respuestaEnvio);
 
-            string rsp = base.ApiProcesarServicio(ID_CAMBIAR_ESTADO_CORREO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_CORREO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));

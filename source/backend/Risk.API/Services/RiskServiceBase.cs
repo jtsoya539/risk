@@ -33,14 +33,14 @@ using Risk.API.Entities;
 
 namespace Risk.API.Services
 {
-    public class ServiceBase
+    public class RiskServiceBase
     {
         public RiskDbContext _dbContext { get; private set; }
         public IConfiguration _configuration { get; private set; }
 
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
 
-        public ServiceBase(RiskDbContext dbContext, IConfiguration configuration)
+        public RiskServiceBase(RiskDbContext dbContext, IConfiguration configuration)
         {
             dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _dbContext = dbContext;
@@ -63,7 +63,7 @@ namespace Risk.API.Services
             }
         }
 
-        public string ApiProcesarServicio(int idServicio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
+        public string ProcesarServicio(int idServicio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
         {
             string respuesta = null;
             if (idServicio > 0)
@@ -106,7 +106,5 @@ namespace Risk.API.Services
             }
             return respuesta;
         }
-
     }
-
 }
