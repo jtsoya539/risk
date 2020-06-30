@@ -374,7 +374,8 @@ END;'
       
         WHEN 'S' THEN
           -- String
-          IF l_json_element IS NOT NULL AND NOT l_json_element.is_string THEN
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
+             NOT l_json_element.is_string THEN
             raise_application_error(-20000,
                                     'Parámetro ' || par.nombre ||
                                     ' de tipo incorrecto');
@@ -394,7 +395,8 @@ END;'
         
         WHEN 'N' THEN
           -- Number
-          IF l_json_element IS NOT NULL AND NOT l_json_element.is_number THEN
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
+             NOT l_json_element.is_number THEN
             raise_application_error(-20000,
                                     'Parámetro ' || par.nombre ||
                                     ' de tipo incorrecto');
@@ -414,7 +416,8 @@ END;'
         
         WHEN 'B' THEN
           -- Boolean
-          IF l_json_element IS NOT NULL AND NOT l_json_element.is_boolean THEN
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
+             NOT l_json_element.is_boolean THEN
             raise_application_error(-20000,
                                     'Parámetro ' || par.nombre ||
                                     ' de tipo incorrecto');
@@ -434,7 +437,8 @@ END;'
         
         WHEN 'D' THEN
           -- Date
-          IF l_json_element IS NOT NULL AND NOT l_json_element.is_date THEN
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
+             NOT l_json_element.is_date THEN
             raise_application_error(-20000,
                                     'Parámetro ' || par.nombre ||
                                     ' de tipo incorrecto');
@@ -454,7 +458,8 @@ END;'
         
         WHEN 'O' THEN
           -- Object
-          IF l_json_element IS NOT NULL AND NOT l_json_element.is_object THEN
+          IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
+             NOT l_json_element.is_object THEN
             raise_application_error(-20000,
                                     'Parámetro ' || par.nombre ||
                                     ' de tipo incorrecto');
