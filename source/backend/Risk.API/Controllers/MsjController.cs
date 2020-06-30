@@ -53,10 +53,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "ListarMensajesPendientes", Summary = "ListarMensajesPendientes", Description = "Obtiene una lista de mensajes de texto (SMS) pendientes de envío")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Mensaje>>))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
-        public IActionResult ListarPaises([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+        public IActionResult ListarMensajesPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
         [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
         [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
@@ -72,12 +69,35 @@ namespace Risk.API.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "Operación con error", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error inesperado", typeof(Respuesta<Dato>))]
-        [SwaggerResponse(StatusCodes.Status501NotImplemented, "Servicio no implementado o inactivo", typeof(Respuesta<Dato>))]
         public IActionResult CambiarEstadoMensaje([FromBody] CambiarEstadoMensajeRequestBody requestBody)
         {
             var respuesta = _msjService.CambiarEstadoMensaje(requestBody.IdMensaje, requestBody.Estado, requestBody.RespuestaEnvio);
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [HttpGet("ListarCorreosPendientes")]
+        [SwaggerOperation(OperationId = "ListarCorreosPendientes", Summary = "ListarCorreosPendientes", Description = "Obtiene una lista de correos electrónicos (E-mail) pendientes de envío")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Correo>>))]
+        public IActionResult ListarCorreosPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            var respuesta = _msjService.ListarCorreosPendientes(pagina, porPagina, noPaginar);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [HttpPost("CambiarEstadoCorreo")]
+        [SwaggerOperation(OperationId = "CambiarEstadoCorreo", Summary = "CambiarEstadoCorreo", Description = "Permite cambiar el estado de un correo electrónico (E-mail)")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult CambiarEstadoCorreo([FromBody] CambiarEstadoCorreoRequestBody requestBody)
+        {
+            var respuesta = _msjService.CambiarEstadoCorreo(requestBody.IdCorreo, requestBody.Estado, requestBody.RespuestaEnvio);
             return ProcesarRespuesta(respuesta);
         }
     }

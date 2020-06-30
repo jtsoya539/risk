@@ -174,6 +174,7 @@ namespace Risk.API
                 });
                 c.DocumentFilter<ServersDocumentFilter>();
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
+                c.OperationFilter<ServiceErrorsOperationFilter>();
                 c.SchemaFilter<NotNullableSchemaFilter>();
             });
         }

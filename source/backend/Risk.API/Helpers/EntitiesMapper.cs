@@ -213,6 +213,40 @@ namespace Risk.API.Helpers
             return modelList;
         }
 
+        public static Correo GetCorreoFromEntity(YCorreo entity)
+        {
+            Correo model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Correo
+                {
+                    IdCorreo = entity.IdCorreo,
+                    MensajeTo = entity.MensajeTo,
+                    MensajeSubject = entity.MensajeSubject,
+                    MensajeBody = entity.MensajeBody,
+                    MensajeFrom = entity.MensajeFrom,
+                    MensajeReplyTo = entity.MensajeReplyTo,
+                    MensajeCc = entity.MensajeCc,
+                    MensajeBcc = entity.MensajeBcc
+                };
+            }
+            return model;
+        }
+
+        public static List<Correo> GetCorreoListFromEntity(List<YCorreo> entityList)
+        {
+            List<Correo> modelList = new List<Correo>();
+            foreach (var item in entityList)
+            {
+                modelList.Add(GetCorreoFromEntity(item));
+            }
+            return modelList;
+        }
+
         public static Pagina<T> GetPaginaFromEntity<T, YT>(YPagina<YT> entity, List<T> elementos)
         {
             return new Pagina<T>

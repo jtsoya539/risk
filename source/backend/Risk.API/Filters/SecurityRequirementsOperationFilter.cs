@@ -88,10 +88,6 @@ namespace Risk.API.Filters
                     operation.Responses.Add("401", new OpenApiResponse { Description = "Operación no autorizada" });
                 }
             }
-
-
-
-
         }
     }
 }
