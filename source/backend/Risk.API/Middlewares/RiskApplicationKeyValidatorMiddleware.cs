@@ -32,15 +32,13 @@ namespace Risk.API.Middlewares
     public class RiskApplicationKeyValidatorMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IAutService _autService;
 
-        public RiskApplicationKeyValidatorMiddleware(RequestDelegate next, IAutService autService)
+        public RiskApplicationKeyValidatorMiddleware(RequestDelegate next)
         {
             _next = next;
-            _autService = autService;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IAutService autService)
         {
             if (context.Request.Path.StartsWithSegments(new PathString("/Api")) &&
                 !context.Request.Path.StartsWithSegments(new PathString("/Api/Gen/VersionSistema")))
@@ -53,7 +51,7 @@ namespace Risk.API.Middlewares
                 }
                 else
                 {
-                    var respValidarClaveAplicacion = _autService.ValidarClaveAplicacion(context.Request.Headers["Risk-App-Key"]);
+                    var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(context.Request.Headers["Risk-App-Key"]);
 
                     if (!respValidarClaveAplicacion.Codigo.Equals(RiskDbConstants.CODIGO_OK))
                     {

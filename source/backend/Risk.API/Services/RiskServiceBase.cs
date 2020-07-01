@@ -35,21 +35,17 @@ namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
-        public RiskDbContext _dbContext { get; private set; }
-        public IConfiguration _configuration { get; private set; }
-
+        private readonly RiskDbContext _dbContext;
+        private readonly OracleConnection _oracleConnection;
+        protected readonly IConfiguration _configuration;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
 
         public RiskServiceBase(RiskDbContext dbContext, IConfiguration configuration)
         {
-            dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _dbContext = dbContext;
+            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             _configuration = configuration;
-        }
-
-        public OracleConnection GetOracleConnection()
-        {
-            return (OracleConnection)_dbContext.Database.GetDbConnection();
+            _oracleConnection = (OracleConnection)_dbContext.Database.GetDbConnection();
         }
 
         public void SetApplicationContext(ref OracleConnection oracleConnection, string moduleName, string actionName)
@@ -68,7 +64,7 @@ namespace Risk.API.Services
             string respuesta = null;
             if (idServicio > 0)
             {
-                OracleConnection con = GetOracleConnection();
+                OracleConnection con = _oracleConnection;
                 if (con.State != ConnectionState.Open)
                 {
                     con.Open();

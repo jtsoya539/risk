@@ -94,23 +94,20 @@ namespace Risk.API
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
 
             // Connection Pooling Configuration
-            connStrBuilder.Pooling = true; // Connection pooling.
-            connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
-            connStrBuilder.MaxPoolSize = 6; // Maximum number of connections in a pool.
+            connStrBuilder.Pooling = false; // Connection pooling.
+            //connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
+            //connStrBuilder.MaxPoolSize = 6; // Maximum number of connections in a pool.
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
-            connStrBuilder.ConnectionTimeout = 60; // Maximum time (in seconds) to wait for a free connection from the pool.
-            connStrBuilder.ValidateConnection = true;
+            //connStrBuilder.ConnectionTimeout = 60; // Maximum time (in seconds) to wait for a free connection from the pool.
+            //connStrBuilder.ValidateConnection = true;
 
             oracleConnection = new OracleConnection(connStrBuilder.ToString());
             //oracleConnection.KeepAlive = true;
 
-            services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection), ServiceLifetime.Singleton);
-            //services.AddScoped<IGenService, GenService>();
-            //services.AddScoped<IAutService, AutService>();
-            services.AddSingleton<IGenService, GenService>();
-            services.AddSingleton<IAutService, AutService>();
-            services.AddSingleton<IMsjService, MsjService>();
-
+            services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
+            services.AddScoped<IAutService, AutService>();
+            services.AddScoped<IGenService, GenService>();
+            services.AddScoped<IMsjService, MsjService>();
 
             var serviceProvider = services.BuildServiceProvider();
             IGenService genService = serviceProvider.GetService<IGenService>();
