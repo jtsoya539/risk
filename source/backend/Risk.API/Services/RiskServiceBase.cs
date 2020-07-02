@@ -25,8 +25,6 @@ SOFTWARE.
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
@@ -35,70 +33,58 @@ namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
-        private readonly RiskDbContext _dbContext;
-        private readonly OracleConnection _oracleConnection;
-        protected readonly IConfiguration _configuration;
+        private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
 
-        public RiskServiceBase(RiskDbContext dbContext, IConfiguration configuration)
+        public RiskServiceBase(IDbConnectionFactory dbConnectionFactory)
         {
-            _dbContext = dbContext;
-            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-            _configuration = configuration;
-            _oracleConnection = (OracleConnection)_dbContext.Database.GetDbConnection();
-        }
-
-        public void SetApplicationContext(ref OracleConnection oracleConnection, string moduleName, string actionName)
-        {
-            if (oracleConnection.State == ConnectionState.Open)
-            {
-                oracleConnection.ClientId = "Risk.API";
-                oracleConnection.ClientInfo = "Risk Web API";
-                oracleConnection.ModuleName = moduleName;
-                oracleConnection.ActionName = actionName;
-            }
+            _dbConnectionFactory = dbConnectionFactory;
         }
 
         public string ProcesarServicio(int idServicio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
         {
-            string respuesta = null;
+            string respuesta = string.Empty;
             if (idServicio > 0)
             {
-                OracleConnection con = _oracleConnection;
-                if (con.State != ConnectionState.Open)
+                using (OracleConnection con = (OracleConnection)_dbConnectionFactory.CreateConnection())
                 {
-                    con.Open();
+                    if (con.State != ConnectionState.Open)
+                    {
+                        con.Open();
+                    }
+
+                    // SetApplicationContext
+                    con.ClientId = "Risk.API";
+                    con.ClientInfo = "Risk Web API";
+                    con.ModuleName = Path.GetFileNameWithoutExtension(callerFilePath);
+                    con.ActionName = callerMemberName;
+
+                    using (OracleCommand cmd = con.CreateCommand())
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandText = SQL_PROCESAR_SERVICIO;
+                        cmd.BindByName = true;
+
+                        OracleClob result = new OracleClob(con);
+                        OracleClob iParametros = new OracleClob(con);
+
+                        iParametros.Write(parametros.ToCharArray(), 0, parametros.Length);
+
+                        cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
+                        cmd.Parameters.Add("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
+                        cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
+
+                        cmd.ExecuteNonQuery();
+
+                        result = (OracleClob)cmd.Parameters["result"].Value;
+                        respuesta = result.Value;
+
+                        result.Dispose();
+                        iParametros.Dispose();
+                    }
+
+                    con.Close();
                 }
-
-                SetApplicationContext(ref con, Path.GetFileNameWithoutExtension(callerFilePath), callerMemberName);
-
-                using (OracleCommand cmd = con.CreateCommand())
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = SQL_PROCESAR_SERVICIO;
-                    cmd.BindByName = true;
-
-                    OracleClob clob = new OracleClob(con);
-
-                    OracleParameter return_value = new OracleParameter("return_value", OracleDbType.Clob, clob, ParameterDirection.ReturnValue);
-                    cmd.Parameters.Add(return_value);
-                    OracleParameter i_id_servicio = new OracleParameter("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_id_servicio);
-                    OracleParameter i_parametros = new OracleParameter("i_parametros", OracleDbType.Clob, parametros, ParameterDirection.Input);
-                    cmd.Parameters.Add(i_parametros);
-
-                    cmd.ExecuteNonQuery();
-
-                    clob = (OracleClob)cmd.Parameters["return_value"].Value;
-                    respuesta = clob.Value;
-
-                    return_value.Dispose();
-                    i_id_servicio.Dispose();
-                    i_parametros.Dispose();
-                    clob.Dispose();
-                }
-
-                con.Close();
             }
             return respuesta;
         }

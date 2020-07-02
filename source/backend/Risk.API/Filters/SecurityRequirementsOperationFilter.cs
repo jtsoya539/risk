@@ -24,7 +24,6 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Risk.API.Attributes;

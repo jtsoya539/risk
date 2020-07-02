@@ -23,12 +23,8 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
-using Risk.API.Attributes;
 using Risk.API.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

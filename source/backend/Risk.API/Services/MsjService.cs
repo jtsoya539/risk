@@ -22,7 +22,6 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Risk.API.Entities;
@@ -38,7 +37,7 @@ namespace Risk.API.Services
         private const int ID_LISTAR_CORREOS_PENDIENTES = 32;
         private const int ID_CAMBIAR_ESTADO_CORREO = 33;
 
-        public MsjService(RiskDbContext dbContext, IConfiguration configuration) : base(dbContext, configuration)
+        public MsjService(IDbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory)
         {
         }
 

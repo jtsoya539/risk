@@ -29,7 +29,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -48,7 +47,6 @@ namespace Risk.API
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        private OracleConnection oracleConnection;
 
         public Startup(IConfiguration configuration)
         {
@@ -58,7 +56,7 @@ namespace Risk.API
         // This method gets called when the application host is performing a graceful shutdown.
         private void OnShutdown()
         {
-            OracleConnection.ClearPool(oracleConnection);
+            //OracleConnection.ClearPool(oracleConnection);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -94,24 +92,25 @@ namespace Risk.API
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
 
             // Connection Pooling Configuration
-            connStrBuilder.Pooling = false; // Connection pooling.
-            //connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
-            //connStrBuilder.MaxPoolSize = 6; // Maximum number of connections in a pool.
+            connStrBuilder.Pooling = true; // Connection pooling.
+            connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
+            connStrBuilder.MaxPoolSize = 10; // Maximum number of connections in a pool.
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
-            //connStrBuilder.ConnectionTimeout = 60; // Maximum time (in seconds) to wait for a free connection from the pool.
+            connStrBuilder.ConnectionTimeout = 60; // Maximum time (in seconds) to wait for a free connection from the pool.
             //connStrBuilder.ValidateConnection = true;
 
-            oracleConnection = new OracleConnection(connStrBuilder.ToString());
+            //oracleConnection = new OracleConnection(connStrBuilder.ToString());
             //oracleConnection.KeepAlive = true;
 
-            services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
+            //services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
+            services.AddScoped<IDbConnectionFactory>(sp => new RiskDbConnectionFactory(connStrBuilder.ToString()));
             services.AddScoped<IAutService, AutService>();
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IMsjService, MsjService>();
 
             var serviceProvider = services.BuildServiceProvider();
-            IGenService genService = serviceProvider.GetService<IGenService>();
             IAutService autService = serviceProvider.GetService<IAutService>();
+            IGenService genService = serviceProvider.GetService<IGenService>();
 
             //var respValorParametro = genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
             //var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
