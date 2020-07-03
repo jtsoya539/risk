@@ -21,13 +21,15 @@ namespace Risk.SMS
         private readonly ILogger<Worker> _logger;
         private readonly IConfiguration _configuration;
 
-        private Configuration apiConfiguration;
-        private IAutApi autApi;
-        private IMsjApi msjApi;
+        // Risk Configuration
+        private readonly Configuration apiConfiguration;
+        private readonly IAutApi autApi;
+        private readonly IMsjApi msjApi;
         private string accessToken;
         private string refreshToken;
 
-        private string phoneNumberFrom;
+        // Twilio Configuration
+        private readonly string phoneNumberFrom;
 
         public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
@@ -92,7 +94,7 @@ namespace Risk.SMS
         {
             List<Mensaje> mensajes = new List<Mensaje>();
 
-            MensajePaginaRespuesta mensajesPendientes = new MensajePaginaRespuesta();
+            MensajePaginaRespuesta mensajesPendientes = null;
             try
             {
                 mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
@@ -114,7 +116,7 @@ namespace Risk.SMS
                 }
             }
 
-            if (mensajesPendientes.Codigo.Equals("0") && mensajesPendientes.Datos.CantidadElementos > 0)
+            if (mensajesPendientes != null && mensajesPendientes.Codigo.Equals("0") && mensajesPendientes.Datos.CantidadElementos > 0)
             {
                 mensajes = mensajesPendientes.Datos.Elementos;
             }
@@ -185,7 +187,7 @@ namespace Risk.SMS
                     }
                 }
 
-                await Task.Delay(30000, stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
             }
         }
     }
