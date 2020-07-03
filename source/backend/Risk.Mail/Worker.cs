@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MimeKit;
 using Newtonsoft.Json;
 using Risk.API.Client.Api;
 using Risk.API.Client.Client;
 using Risk.API.Client.Model;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
 
-namespace Risk.SMS
+namespace Risk.Mail
 {
     public class Worker : BackgroundService
     {
@@ -28,8 +27,10 @@ namespace Risk.SMS
         private string accessToken;
         private string refreshToken;
 
-        // Twilio Configuration
-        private readonly string phoneNumberFrom;
+        // Mail Configuration
+        private readonly SmtpClient _smtpClient;
+        private readonly string _mailboxFromName;
+        private readonly string _mailboxFromAddress;
 
         public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
@@ -46,10 +47,13 @@ namespace Risk.SMS
 
             IniciarSesion();
 
-            // Twilio Configuration
-            phoneNumberFrom = _configuration["TwilioConfiguration:PhoneNumberFrom"];
+            // Mail Configuration
+            _mailboxFromName = _configuration["MailConfiguration:MailboxFromName"];
+            _mailboxFromAddress = _configuration["MailConfiguration:MailboxFromAddress"];
 
-            TwilioClient.Init(_configuration["TwilioConfiguration:AccountSid"], _configuration["TwilioConfiguration:AuthToken"]);
+            _smtpClient = new SmtpClient();
+            _smtpClient.Connect("smtp.gmail.com", 465, true);
+            _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
         }
 
         private void IniciarSesion()
@@ -90,14 +94,14 @@ namespace Risk.SMS
             msjApi.Configuration = apiConfiguration;
         }
 
-        private List<Mensaje> ListarMensajesPendientes()
+        private List<Correo> ListarCorreosPendientes()
         {
-            List<Mensaje> mensajes = new List<Mensaje>();
+            List<Correo> mensajes = new List<Correo>();
 
-            MensajePaginaRespuesta mensajesPendientes = null;
+            CorreoPaginaRespuesta mensajesPendientes = null;
             try
             {
-                mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                mensajesPendientes = msjApi.ListarCorreosPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
             }
             catch (ApiException e)
             {
@@ -107,11 +111,11 @@ namespace Risk.SMS
 
                     try
                     {
-                        mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                        mensajesPendientes = msjApi.ListarCorreosPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
                     }
                     catch (ApiException ex)
                     {
-                        _logger.LogError($"Error al obtener lista de mensajes pendientes: {ex.Message}");
+                        _logger.LogError($"Error al obtener lista de correos pendientes: {ex.Message}");
                     }
                 }
             }
@@ -124,14 +128,14 @@ namespace Risk.SMS
             return mensajes;
         }
 
-        private void CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio)
+        private void CambiarEstadoCorreo(int idCorreo, string estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
             {
-                datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                datoRespuesta = msjApi.CambiarEstadoCorreo(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoCorreoRequestBody
                 {
-                    IdMensaje = idMensaje,
+                    IdCorreo = idCorreo,
                     Estado = estado,
                     RespuestaEnvio = respuestaEnvio
                 });
@@ -144,16 +148,16 @@ namespace Risk.SMS
 
                     try
                     {
-                        datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                        datoRespuesta = msjApi.CambiarEstadoCorreo(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoCorreoRequestBody
                         {
-                            IdMensaje = idMensaje,
+                            IdCorreo = idCorreo,
                             Estado = estado,
                             RespuestaEnvio = respuestaEnvio
                         });
                     }
                     catch (ApiException ex)
                     {
-                        _logger.LogError($"Error al cambiar estado del mensaje: {ex.Message}");
+                        _logger.LogError($"Error al cambiar estado del correo: {ex.Message}");
                     }
                 }
             }
@@ -165,25 +169,46 @@ namespace Risk.SMS
             {
                 _logger.LogInformation($"Worker running at: {DateTimeOffset.Now}");
 
-                var mensajes = ListarMensajesPendientes();
+                var mensajes = ListarCorreosPendientes();
 
                 foreach (var item in mensajes)
                 {
                     try
                     {
-                        var message = MessageResource.Create(
-                            from: new PhoneNumber(phoneNumberFrom),
-                            to: new PhoneNumber(item.NumeroTelefono),
-                            body: item.Contenido
-                        );
+                        var message = new MimeMessage();
+                        message.From.Add(new MailboxAddress(_mailboxFromName, _mailboxFromAddress));
+                        message.To.Add(new MailboxAddress(item.MensajeTo, item.MensajeTo));
+
+                        if (item.MensajeReplyTo != null)
+                        {
+                            message.ReplyTo.Add(new MailboxAddress(item.MensajeReplyTo, item.MensajeReplyTo));
+                        }
+
+                        if (item.MensajeCc != null)
+                        {
+                            message.Cc.Add(new MailboxAddress(item.MensajeCc, item.MensajeCc));
+                        }
+
+                        if (item.MensajeBcc != null)
+                        {
+                            message.Bcc.Add(new MailboxAddress(item.MensajeBcc, item.MensajeBcc));
+                        }
+
+                        message.Subject = item.MensajeSubject;
+                        message.Body = new TextPart("plain")
+                        {
+                            Text = item.MensajeBody
+                        };
+
+                        _smtpClient.Send(message);
 
                         // Cambia estado del mensaje a E-ENVIADO
-                        CambiarEstadoMensaje(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
+                        CambiarEstadoCorreo(item.IdCorreo, "E", "OK");
                     }
-                    catch (Twilio.Exceptions.ApiException e)
+                    catch (Exception e)
                     {
                         // Cambia estado del mensaje a R-PROCESADO CON ERROR
-                        CambiarEstadoMensaje(item.IdMensaje, "R", e.Message);
+                        CambiarEstadoCorreo(item.IdCorreo, "R", e.Message);
                     }
                 }
 

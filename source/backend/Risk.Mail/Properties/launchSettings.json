@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:19071",
-      "sslPort": 44384
+      "applicationUrl": "http://localhost:8086",
+      "sslPort": 44348
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Risk.SMS": {
+    "Risk.Mail": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
