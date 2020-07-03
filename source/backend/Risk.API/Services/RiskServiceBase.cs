@@ -35,6 +35,7 @@ namespace Risk.API.Services
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
+        private const string RESPUESTA_ERROR_BASE_DATOS = "{\"codigo\":\"api9999\",\"mensaje\":\"Servicio no disponible\",\"mensaje_bd\":null,\"lugar\":null,\"datos\":null}";
 
         public RiskServiceBase(IDbConnectionFactory dbConnectionFactory)
         {
@@ -48,42 +49,49 @@ namespace Risk.API.Services
             {
                 using (OracleConnection con = (OracleConnection)_dbConnectionFactory.CreateConnection())
                 {
-                    if (con.State != ConnectionState.Open)
+                    try
                     {
-                        con.Open();
+                        if (con.State != ConnectionState.Open)
+                        {
+                            con.Open();
+                        }
+
+                        // SetApplicationContext
+                        con.ClientId = "Risk.API";
+                        con.ClientInfo = "Risk Web API";
+                        con.ModuleName = Path.GetFileNameWithoutExtension(callerFilePath);
+                        con.ActionName = callerMemberName;
+
+                        using (OracleCommand cmd = con.CreateCommand())
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.CommandText = SQL_PROCESAR_SERVICIO;
+                            cmd.BindByName = true;
+
+                            OracleClob result = new OracleClob(con);
+                            OracleClob iParametros = new OracleClob(con);
+
+                            iParametros.Write(parametros.ToCharArray(), 0, parametros.Length);
+
+                            cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
+                            cmd.Parameters.Add("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
+                            cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
+
+                            cmd.ExecuteNonQuery();
+
+                            result = (OracleClob)cmd.Parameters["result"].Value;
+                            respuesta = result.Value;
+
+                            result.Dispose();
+                            iParametros.Dispose();
+                        }
+
+                        con.Close();
                     }
-
-                    // SetApplicationContext
-                    con.ClientId = "Risk.API";
-                    con.ClientInfo = "Risk Web API";
-                    con.ModuleName = Path.GetFileNameWithoutExtension(callerFilePath);
-                    con.ActionName = callerMemberName;
-
-                    using (OracleCommand cmd = con.CreateCommand())
+                    catch (OracleException)
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.CommandText = SQL_PROCESAR_SERVICIO;
-                        cmd.BindByName = true;
-
-                        OracleClob result = new OracleClob(con);
-                        OracleClob iParametros = new OracleClob(con);
-
-                        iParametros.Write(parametros.ToCharArray(), 0, parametros.Length);
-
-                        cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
-                        cmd.Parameters.Add("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
-                        cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
-
-                        cmd.ExecuteNonQuery();
-
-                        result = (OracleClob)cmd.Parameters["result"].Value;
-                        respuesta = result.Value;
-
-                        result.Dispose();
-                        iParametros.Dispose();
+                        respuesta = RESPUESTA_ERROR_BASE_DATOS;
                     }
-
-                    con.Close();
                 }
             }
             return respuesta;
