@@ -52,8 +52,6 @@ namespace Risk.Mail
             _mailboxFromAddress = _configuration["MailConfiguration:MailboxFromAddress"];
 
             _smtpClient = new SmtpClient();
-            _smtpClient.Connect("smtp.gmail.com", 465, true);
-            _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
         }
 
         private void IniciarSesion()
@@ -171,6 +169,9 @@ namespace Risk.Mail
 
                 var mensajes = ListarCorreosPendientes();
 
+                _smtpClient.Connect("smtp.gmail.com", 465, true);
+                _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
+
                 foreach (var item in mensajes)
                 {
                     try
@@ -211,6 +212,8 @@ namespace Risk.Mail
                         CambiarEstadoCorreo(item.IdCorreo, "R", e.Message);
                     }
                 }
+
+                _smtpClient.Disconnect(true);
 
                 await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
             }
