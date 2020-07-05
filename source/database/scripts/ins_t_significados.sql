@@ -1,6 +1,10 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_APLICACION', 'S', 'SERVICIO', null, 'S');
+
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_IMAGEN', 'WEBP', 'IMAGEN WEBP', 'image/webp', 'S');
 

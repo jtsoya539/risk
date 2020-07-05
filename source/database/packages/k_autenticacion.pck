@@ -675,6 +675,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_id_usuario                     t_usuarios.id_usuario%TYPE;
     l_id_aplicacion                  t_aplicaciones.id_aplicacion%TYPE;
+    l_tipo_aplicacion                t_aplicaciones.tipo%TYPE;
     l_cantidad                       NUMBER(3);
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
@@ -693,17 +694,33 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RAISE ex_usuario_inexistente;
     END IF;
   
-    -- Obtiene cantidad de sesiones activas del usuario
-    SELECT COUNT(id_sesion)
-      INTO l_cantidad
-      FROM t_sesiones
-     WHERE estado = 'A'
-       AND id_usuario = l_id_usuario;
+    -- Obtiene tipo de aplicacion
+    BEGIN
+      SELECT tipo
+        INTO l_tipo_aplicacion
+        FROM t_aplicaciones
+       WHERE id_aplicacion = l_id_aplicacion;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_tipo_aplicacion := NULL;
+    END;
   
-    IF l_cantidad >=
-       to_number(k_util.f_valor_parametro('CANTIDAD_MAXIMA_SESIONES_USUARIO')) THEN
-      raise_application_error(-20000,
-                              'Usuario ha alcanzado la cantidad máxima de sesiones activas');
+    IF l_tipo_aplicacion <> 'S' THEN
+      -- Si es de tipo S-SERVICIO no valida cantidad de sesiones activas
+    
+      -- Obtiene cantidad de sesiones activas del usuario
+      SELECT COUNT(id_sesion)
+        INTO l_cantidad
+        FROM t_sesiones
+       WHERE estado = 'A'
+         AND id_usuario = l_id_usuario;
+    
+      IF l_cantidad >=
+         to_number(k_util.f_valor_parametro('CANTIDAD_MAXIMA_SESIONES_USUARIO')) THEN
+        raise_application_error(-20000,
+                                'Usuario ha alcanzado la cantidad máxima de sesiones activas');
+      END IF;
+    
     END IF;
   
     -- Obtiene la fecha de expiracion del Access Token y Refresh Token
@@ -905,7 +922,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       IF SQL%NOTFOUND THEN
         raise_application_error(-20000, 'Dispositivo inexistente');
       END IF;
-
+    
   END;
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
@@ -923,18 +940,19 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
            numero_telefono  = nvl(i_numero_telefono, numero_telefono)
      WHERE alias = i_usuario_antiguo
     RETURNING id_persona INTO l_id_persona;
-
+  
     IF SQL%NOTFOUND THEN
       raise_application_error(-20000, 'Usuario inexistente');
     END IF;
-
+  
     -- Actualiza persona
     UPDATE t_personas
        SET nombre          = nvl(i_nombre, nombre),
            apellido        = nvl(i_apellido, apellido),
-           nombre_completo = nvl(i_nombre || ' ' || i_apellido, nombre_completo)
+           nombre_completo = nvl(i_nombre || ' ' || i_apellido,
+                                 nombre_completo)
      WHERE id_persona = l_id_persona;
-
+  
     IF SQL%NOTFOUND THEN
       raise_application_error(-20000, 'Persona inexistente');
     END IF;
