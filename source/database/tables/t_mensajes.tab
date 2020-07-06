@@ -1,12 +1,13 @@
 create table T_MENSAJES
 (
-  id_mensaje      NUMBER not null,
-  id_usuario      NUMBER(10),
-  numero_telefono VARCHAR2(160) not null,
-  contenido       VARCHAR2(160) not null,
-  estado          VARCHAR2(1) default 'P' not null,
-  fecha_envio     DATE,
-  respuesta_envio VARCHAR2(1000)
+  id_mensaje              NUMBER not null,
+  id_usuario              NUMBER(10),
+  numero_telefono         VARCHAR2(160) not null,
+  contenido               VARCHAR2(160) not null,
+  estado                  VARCHAR2(1) default 'P' not null,
+  fecha_envio             DATE,
+  respuesta_envio         VARCHAR2(1000),
+  cantidad_intentos_envio NUMBER(3)
 )
 ;
 comment on table T_MENSAJES
@@ -25,6 +26,8 @@ comment on column T_MENSAJES.fecha_envio
   is 'Fecha de envío';
 comment on column T_MENSAJES.respuesta_envio
   is 'Respuesta del proceso de envío';
+comment on column T_MENSAJES.cantidad_intentos_envio
+  is 'Cantidad de intentos de envío';
 alter table T_MENSAJES
   add constraint PK_MENSAJES primary key (ID_MENSAJE);
 alter table T_MENSAJES

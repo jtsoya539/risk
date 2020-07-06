@@ -217,12 +217,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Cambiando estado de correo';
     UPDATE t_correos m
-       SET m.estado          = k_servicio.f_valor_parametro_string(i_parametros,
-                                                                   'estado'),
-           m.respuesta_envio = substr(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                          'respuesta_envio'),
-                                      1,
-                                      1000),
+       SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
+           m.estado = CASE
+                        WHEN k_servicio.f_valor_parametro_string(i_parametros,
+                                                                 'estado') IN
+                             ('R') AND
+                             nvl(m.cantidad_intentos_envio, 0) >=
+                             k_mensajeria.c_cantidad_intentos_permitidos THEN
+                         'A' -- ANULADO
+                        ELSE
+                         k_servicio.f_valor_parametro_string(i_parametros,
+                                                             'estado')
+                      END,
+           m.respuesta_envio         = substr(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                  'respuesta_envio'),
+                                              1,
+                                              1000),
            m.fecha_envio = CASE
                              WHEN k_servicio.f_valor_parametro_string(i_parametros,
                                                                       'estado') IN
@@ -274,12 +284,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Cambiando estado de mensaje';
     UPDATE t_mensajes m
-       SET m.estado          = k_servicio.f_valor_parametro_string(i_parametros,
-                                                                   'estado'),
-           m.respuesta_envio = substr(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                          'respuesta_envio'),
-                                      1,
-                                      1000),
+       SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
+           m.estado = CASE
+                        WHEN k_servicio.f_valor_parametro_string(i_parametros,
+                                                                 'estado') IN
+                             ('R') AND
+                             nvl(m.cantidad_intentos_envio, 0) >=
+                             k_mensajeria.c_cantidad_intentos_permitidos THEN
+                         'A' -- ANULADO
+                        ELSE
+                         k_servicio.f_valor_parametro_string(i_parametros,
+                                                             'estado')
+                      END,
+           m.respuesta_envio         = substr(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                  'respuesta_envio'),
+                                              1,
+                                              1000),
            m.fecha_envio = CASE
                              WHEN k_servicio.f_valor_parametro_string(i_parametros,
                                                                       'estado') IN

@@ -36,6 +36,8 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   -------------------------------------------------------------------------------
   */
 
+  c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
+
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN;
 

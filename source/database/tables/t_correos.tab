@@ -1,17 +1,18 @@
 create table T_CORREOS
 (
-  id_correo        NUMBER not null,
-  id_usuario       NUMBER(10),
-  mensaje_to       VARCHAR2(4000) not null,
-  mensaje_subject  VARCHAR2(2000) not null,
-  mensaje_body     CLOB not null,
-  mensaje_from     VARCHAR2(2000),
-  mensaje_reply_to VARCHAR2(2000),
-  mensaje_cc       VARCHAR2(4000),
-  mensaje_bcc      VARCHAR2(4000),
-  estado           VARCHAR2(1) default 'P' not null,
-  fecha_envio      DATE,
-  respuesta_envio  VARCHAR2(1000)
+  id_correo               NUMBER not null,
+  id_usuario              NUMBER(10),
+  mensaje_to              VARCHAR2(4000) not null,
+  mensaje_subject         VARCHAR2(2000) not null,
+  mensaje_body            CLOB not null,
+  mensaje_from            VARCHAR2(2000),
+  mensaje_reply_to        VARCHAR2(2000),
+  mensaje_cc              VARCHAR2(4000),
+  mensaje_bcc             VARCHAR2(4000),
+  estado                  VARCHAR2(1) default 'P' not null,
+  fecha_envio             DATE,
+  respuesta_envio         VARCHAR2(1000),
+  cantidad_intentos_envio NUMBER(3)
 )
 ;
 comment on table T_CORREOS
@@ -40,6 +41,8 @@ comment on column T_CORREOS.fecha_envio
   is 'Fecha de envío';
 comment on column T_CORREOS.respuesta_envio
   is 'Respuesta del proceso de envío';
+comment on column T_CORREOS.cantidad_intentos_envio
+  is 'Cantidad de intentos de envío';
 alter table T_CORREOS
   add constraint PK_CORREOS primary key (ID_CORREO);
 alter table T_CORREOS
