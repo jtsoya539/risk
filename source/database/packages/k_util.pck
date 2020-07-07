@@ -70,6 +70,9 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
                                 i_codigo  IN VARCHAR2) RETURN VARCHAR2;
 
+  FUNCTION f_referencia_codigo(i_dominio IN VARCHAR2,
+                               i_codigo  IN VARCHAR2) RETURN VARCHAR2;
+
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
@@ -205,6 +208,23 @@ END;';
         l_significado := NULL;
     END;
     RETURN l_significado;
+  END;
+
+  FUNCTION f_referencia_codigo(i_dominio IN VARCHAR2,
+                               i_codigo  IN VARCHAR2) RETURN VARCHAR2 IS
+    l_referencia t_significados.referencia%TYPE;
+  BEGIN
+    BEGIN
+      SELECT a.referencia
+        INTO l_referencia
+        FROM t_significados a
+       WHERE a.dominio = i_dominio
+         AND a.codigo = i_codigo;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_referencia := NULL;
+    END;
+    RETURN l_referencia;
   END;
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2 IS

@@ -97,13 +97,10 @@ END;'
     
       -- Calcula propiedades del archivo
       IF :old.contenido IS NULL OR
-         to_char(rawtohex(dbms_crypto.hash(:new.contenido,
-                                           dbms_crypto.hash_sh1))) <>
-         to_char(rawtohex(dbms_crypto.hash(:old.contenido,
-                                           dbms_crypto.hash_sh1))) THEN
-        :new.checksum := to_char(rawtohex(dbms_crypto.hash(:new.contenido,
-                                                           dbms_crypto.hash_sh1)));
-        :new.tamano   := dbms_lob.getlength(:new.contenido);
+         dbms_lob.compare(:old.contenido, :new.contenido) <> 0 THEN
+        k_archivo.p_calcular_propiedades(:new.contenido,
+                                         :new.checksum,
+                                         :new.tamano);
       END IF;
     
       -- Valida tamaño del archivo

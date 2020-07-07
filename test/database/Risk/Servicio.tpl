@@ -9,13 +9,13 @@ BEGIN
   l_rsp.lugar := 'Validando parámetros';
   /* TODO: text="Implementar validación de parámetros" */
   k_servicio.p_validar_parametro(l_rsp,
-                                 anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                     'nombre_parametro')) IS NOT NULL,
+                                 k_servicio.f_valor_parametro_string(i_parametros,
+                                                                     'nombre_parametro') IS NOT NULL,
                                  'Debe ingresar nombre_parametro');
 
   l_rsp.lugar := 'Procesando servicio';
   /* TODO: text="Implementar proceso del servicio" */
-  [ # ]
+  [#]
   
   k_servicio.p_respuesta_ok(l_rsp, l_dato);
   RETURN l_rsp;

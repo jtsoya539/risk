@@ -42,6 +42,10 @@ CREATE OR REPLACE PACKAGE k_archivo IS
                               i_referencia IN VARCHAR2,
                               i_archivo    IN y_archivo);
 
+  PROCEDURE p_calcular_propiedades(i_contenido IN BLOB,
+                                   o_checksum  OUT VARCHAR2,
+                                   o_tamano    OUT NUMBER);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_archivo IS
@@ -123,6 +127,17 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          i_archivo.contenido,
          i_archivo.nombre,
          i_archivo.extension);
+    END IF;
+  END;
+
+  PROCEDURE p_calcular_propiedades(i_contenido IN BLOB,
+                                   o_checksum  OUT VARCHAR2,
+                                   o_tamano    OUT NUMBER) IS
+  BEGIN
+    IF i_contenido IS NOT NULL THEN
+      o_checksum := to_char(rawtohex(dbms_crypto.hash(i_contenido,
+                                                      dbms_crypto.hash_sh1)));
+      o_tamano   := dbms_lob.getlength(i_contenido);
     END IF;
   END;
 

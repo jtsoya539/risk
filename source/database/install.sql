@@ -130,6 +130,7 @@ prompt
 @@packages/k_mensajeria.pck
 @@packages/k_servicio_msj.pck
 @@packages/k_archivo.pck
+@@packages/k_reporte_gen.pck
 
 prompt
 prompt Creando triggers...

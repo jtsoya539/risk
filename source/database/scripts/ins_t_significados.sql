@@ -1,7 +1,6 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
-
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_APLICACION', 'S', 'SERVICIO', null, 'S');
 
@@ -87,10 +86,10 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_USUARIO', 'B', 'BLOQUEADO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'S', 'SOAP', null, 'S');
+values ('TIPO_SERVICIO', 'T', 'TRANSACCIÓN', 'K_SERVICIO', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'R', 'REST', null, 'S');
+values ('TIPO_SERVICIO', 'P', 'PROCESO', 'K_SERVICIO', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_CLAVE', 'N', 'NUEVO', null, 'S');
@@ -169,5 +168,11 @@ values ('ESTADO_CORREO', 'A', 'ANULADO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DATO_PARAMETRO', 'O', 'OBJECT', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_SERVICIO', 'R', 'REPORTE', 'K_REPORTE', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_SERVICIO', 'C', 'CONSULTA', 'K_SERVICIO', 'S');
 
 prompt Done.
