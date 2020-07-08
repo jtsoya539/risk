@@ -1,13 +1,13 @@
 create table T_SERVICIOS
 (
-  id_servicio            NUMBER(3) not null,
+  id_servicio            NUMBER(15) not null,
   nombre                 VARCHAR2(100),
   tipo                   VARCHAR2(1),
   activo                 VARCHAR2(1) default 'N' not null,
   dominio                VARCHAR2(30),
   detalle                VARCHAR2(2000),
   version_actual         VARCHAR2(10),
-  cantidad_ejecuciones   NUMBER(15),
+  cantidad_ejecuciones   NUMBER,
   fecha_ultima_ejecucion DATE
 )
 ;
@@ -34,7 +34,7 @@ comment on column T_SERVICIOS.fecha_ultima_ejecucion
 alter table T_SERVICIOS
   add constraint PK_SERVICIOS primary key (ID_SERVICIO);
 alter table T_SERVICIOS
-  add constraint UK_SERVICIOS_NOMBRE unique (NOMBRE);
+  add constraint UK_SER_NOMBRE_TIPO_DOMINIO unique (NOMBRE, TIPO, DOMINIO);
 alter table T_SERVICIOS
   add constraint CK_SERVICIOS_ACTIVO
   check (ACTIVO IN ('S', 'N'));

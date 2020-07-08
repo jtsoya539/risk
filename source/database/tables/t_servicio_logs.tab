@@ -1,7 +1,7 @@
 create table T_SERVICIO_LOGS
 (
   id_servicio_log NUMBER not null,
-  id_servicio     NUMBER(3),
+  id_servicio     NUMBER(15),
   parametros      CLOB,
   respuesta       CLOB
 )

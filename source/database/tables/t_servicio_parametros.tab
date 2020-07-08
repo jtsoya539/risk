@@ -1,6 +1,6 @@
 create table T_SERVICIO_PARAMETROS
 (
-  id_servicio   NUMBER(3) not null,
+  id_servicio   NUMBER(15) not null,
   nombre        VARCHAR2(100) not null,
   direccion     VARCHAR2(1) not null,
   tipo_dato     VARCHAR2(1) not null,
