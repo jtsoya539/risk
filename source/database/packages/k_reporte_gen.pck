@@ -60,7 +60,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
   
     as_pdf3_v5.init;
     as_pdf3_v5.set_page_format('A4');
-    as_pdf3_v5.set_page_orientation('P');
+    as_pdf3_v5.set_page_orientation('PORTRAIT');
+    as_pdf3_v5.set_margins(25, 30, 25, 30, 'mm');
+  
     as_pdf3_v5.write(l_version_actual);
   
     l_contenido := as_pdf3_v5.get_pdf;

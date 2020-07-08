@@ -181,4 +181,7 @@ values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TTF', null, 'S');
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_FUENTE', 'OTF', 'FUENTE OTF', null, 'S');
 
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_IMAGEN', 'JPG', 'IMAGEN JPG', 'image/jpeg', 'S');
+
 prompt Done.

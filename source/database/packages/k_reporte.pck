@@ -57,8 +57,21 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_archivo := NEW y_archivo();
   
     as_pdf3_v5.init;
-    as_pdf3_v5.write('Código: ' || i_respuesta.codigo);
-    as_pdf3_v5.write('Mensaje: ' || i_respuesta.mensaje);
+    as_pdf3_v5.set_page_format('A4');
+    as_pdf3_v5.set_page_orientation('PORTRAIT');
+    as_pdf3_v5.set_margins(25, 30, 25, 30, 'mm');
+  
+    as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo('T_IMAGENES','ARCHIVO','x-mark-5-256.jpg')
+                                     .contenido,
+                         p_x      => 30,
+                         p_y      => 272,
+                         p_width  => 10,
+                         p_height => 10,
+                         p_um     => 'mm');
+  
+    as_pdf3_v5.write('Código: ' || i_respuesta.codigo, 'mm', 45);
+    as_pdf3_v5.write(utl_tcp.crlf);
+    as_pdf3_v5.write('Mensaje: ' || i_respuesta.mensaje, 'mm', 45);
     l_archivo.contenido := as_pdf3_v5.get_pdf;
   
     RETURN l_archivo;
