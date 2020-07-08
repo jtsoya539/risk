@@ -47,7 +47,8 @@ BEGIN
     END;
   
     -- Valida registro relacionado
-    EXECUTE IMMEDIATE 'DECLARE
+    IF l_nombre_referencia IS NOT NULL THEN
+      EXECUTE IMMEDIATE 'DECLARE
   l_existe VARCHAR2(1) := ''N'';
 BEGIN
   BEGIN
@@ -65,10 +66,11 @@ BEGIN
   END;
   :2 := l_existe;
 END;'
-      USING IN :new.referencia, OUT l_existe_registro;
-  
-    IF l_existe_registro = 'N' THEN
-      raise_application_error(-20000, 'Registro relacionado inexistente');
+        USING IN :new.referencia, OUT l_existe_registro;
+    
+      IF l_existe_registro = 'N' THEN
+        raise_application_error(-20000, 'Registro relacionado inexistente');
+      END IF;
     END IF;
   
     IF :new.contenido IS NULL OR dbms_lob.getlength(:new.contenido) = 0 THEN

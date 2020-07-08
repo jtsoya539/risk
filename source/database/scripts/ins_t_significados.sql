@@ -175,4 +175,10 @@ values ('TIPO_SERVICIO', 'R', 'REPORTE', 'K_REPORTE', 'S');
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_SERVICIO', 'C', 'CONSULTA', 'K_SERVICIO', 'S');
 
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TTF', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_FUENTE', 'OTF', 'FUENTE OTF', null, 'S');
+
 prompt Done.

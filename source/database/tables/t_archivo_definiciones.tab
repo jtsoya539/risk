@@ -5,7 +5,7 @@ create table T_ARCHIVO_DEFINICIONES
   descripcion            VARCHAR2(500),
   tamano_maximo          NUMBER(10),
   orden                  NUMBER(3) not null,
-  nombre_referencia      VARCHAR2(30) not null,
+  nombre_referencia      VARCHAR2(30),
   extensiones_permitidas VARCHAR2(50)
 )
 ;
