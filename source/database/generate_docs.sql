@@ -116,6 +116,8 @@ plugin plsqldoc generate k_autenticacion;
 plugin plsqldoc generate k_error;
 plugin plsqldoc generate k_html;
 plugin plsqldoc generate k_mensajeria;
+plugin plsqldoc generate k_reporte;
+plugin plsqldoc generate k_reporte_gen;
 plugin plsqldoc generate k_servicio;
 plugin plsqldoc generate k_servicio_aut;
 plugin plsqldoc generate k_servicio_gen;

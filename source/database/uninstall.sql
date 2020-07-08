@@ -50,6 +50,7 @@ prompt Borrando paquetes...
 prompt -----------------------------------
 prompt
 drop package k_reporte_gen;
+drop package k_reporte;
 drop package k_archivo;
 drop package k_servicio_msj;
 drop package k_mensajeria;
@@ -131,6 +132,12 @@ drop sequence s_id_dispositivo;
 drop sequence s_id_correo;
 drop sequence s_id_correo_adjunto;
 drop sequence s_id_mensaje;
+
+prompt
+prompt Desinstalando dependencias...
+prompt -----------------------------------
+prompt
+@@uninstall_dependencies.sql
 
 prompt
 prompt Vaciando papelera de reciclaje...

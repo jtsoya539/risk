@@ -37,10 +37,45 @@ END;
 CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
 
   FUNCTION version_sistema(i_parametros IN y_parametros) RETURN y_archivo IS
-    l_archivo y_archivo;
+    l_rsp            y_respuesta;
+    l_contenido      BLOB;
+    l_version_actual t_sistemas.version_actual%TYPE;
   BEGIN
-    l_archivo := NEW y_archivo();
-    RETURN l_archivo;
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Obteniendo versión del sistema';
+    BEGIN
+      SELECT version_actual
+        INTO l_version_actual
+        FROM t_sistemas
+       WHERE id_sistema = 'RISK';
+    EXCEPTION
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'gen0001',
+                                     'Error al obtener versión del sistema');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    as_pdf3_v5.init;
+    as_pdf3_v5.set_page_format('A4');
+    as_pdf3_v5.set_page_orientation('P');
+    as_pdf3_v5.write(l_version_actual);
+  
+    l_contenido := as_pdf3_v5.get_pdf;
+    RETURN k_reporte.f_archivo_ok(l_contenido);
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN k_reporte.f_archivo_error(l_rsp);
+    WHEN k_servicio.ex_error_general THEN
+      RETURN k_reporte.f_archivo_error(l_rsp);
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN k_reporte.f_archivo_error(l_rsp);
   END;
 
 END;

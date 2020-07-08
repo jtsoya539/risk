@@ -46,6 +46,12 @@ prompt ===================================
 prompt
 
 prompt
+prompt Instalando dependencias...
+prompt -----------------------------------
+prompt
+@@install_dependencies.sql
+
+prompt
 prompt Creando secuencias...
 prompt -----------------------------------
 prompt
@@ -130,6 +136,7 @@ prompt
 @@packages/k_mensajeria.pck
 @@packages/k_servicio_msj.pck
 @@packages/k_archivo.pck
+@@packages/k_reporte.pck
 @@packages/k_reporte_gen.pck
 
 prompt
