@@ -176,12 +176,21 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_SERVICIO', 'C', 'CONSULTA', 'K_SERVICIO', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TTF', null, 'S');
+values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TRUETYPE', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_FUENTE', 'OTF', 'FUENTE OTF', null, 'S');
+values ('EXTENSION_FUENTE', 'OTF', 'FUENTE OPENTYPE', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_IMAGEN', 'JPG', 'IMAGEN JPG', 'image/jpeg', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_REPORTE', 'DOCX', 'REPORTE DOCX', 'application/octet-stream', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_REPORTE', 'PDF', 'REPORTE PDF', 'application/pdf', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_REPORTE', 'XLSX', 'REPORTE XLSX', 'application/octet-stream', 'S');
 
 prompt Done.

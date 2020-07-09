@@ -5,7 +5,7 @@
  <TITLE>Package k_sistema</TITLE>
  <META name="object" content="PACKAGE">
  <META name="name" content="k_sistema">
- <META name="description" content="Agrupa operaciones relacionadas con los parametros de sistema">
+ <META name="description" content="Agrupa operaciones relacionadas con par&#225;metros de la sesi&#243;n">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,7 +14,7 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Package k_sistema</P>
-Agrupa operaciones relacionadas con los parametros de sistema<br>
+Agrupa operaciones relacionadas con par&#225;metros de la sesi&#243;n<br>
 
 <BR>
 <A NAME="Author"></A>
@@ -48,27 +48,27 @@ Program units
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO">f_valor_parametro</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Retorna el valor de un parametro de sistema, si no existe retorna null
+Retorna el valor de un par&#225;metro en la sesi&#243;n, si no existe retorna null
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO">p_definir_parametro</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Define el valor de un parametro de sistema
+Define el valor de un par&#225;metro en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_LIMPIAR_PARAMETROS">p_limpiar_parametros</A>&nbsp;&nbsp;
+<A HREF="#P_INICIALIZAR_PARAMETROS">p_inicializar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Define el valor de todos los parametros de sistema a null
+Define el valor de todos los par&#225;metros de la sesi&#243;n a null
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_ELIMINAR_PARAMETROS">p_eliminar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Elimina todos los parametros de sistema definidos
+Elimina todos los par&#225;metros definidos en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_IMPRIMIR_PARAMETROS">p_imprimir_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Imprime todos los parametros de sistema definidos
+Imprime todos los par&#225;metros definidos en la sesi&#243;n
 </TD></TR>
 </TABLE>
 <BR>
@@ -100,7 +100,7 @@ FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Retorna el valor de un parametro de sistema, si no existe retorna null<br>
+Retorna el valor de un par&#225;metro en la sesi&#243;n, si no existe retorna null<br>
 
 <BR>
 </P>
@@ -125,7 +125,7 @@ Parameters
 </TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 i_parametro&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Nombre del parametro de sistema<br>
+Nombre del par&#225;metro<br>
 
 </TD></TR>
 </TABLE>
@@ -150,7 +150,7 @@ Returns
 <TABLE CLASS="LIST_TABLE">
 <TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Valor del parametro de sistema<br>
+Valor del par&#225;metro<br>
 
 </TD></TR>
 </TABLE>
@@ -166,7 +166,7 @@ PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Define el valor de un parametro de sistema<br>
+Define el valor de un par&#225;metro en la sesi&#243;n<br>
 
 <BR>
 </P>
@@ -191,14 +191,14 @@ Parameters
 </TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 i_parametro&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Nombre del parametro de sistema<br>
+Nombre del par&#225;metro<br>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 </TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 i_valor&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Valor del parametro de sistema<br>
+Valor del par&#225;metro<br>
 
 </TD></TR>
 </TABLE>
@@ -217,16 +217,16 @@ Raises
 </TABLE>
 <BR>
 <HR>
-<A NAME="P_LIMPIAR_PARAMETROS"></A>
+<A NAME="P_INICIALIZAR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">
-p_limpiar_parametros
+p_inicializar_parametros
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_limpiar_parametros
+PROCEDURE p_inicializar_parametros
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Define el valor de todos los parametros de sistema a null<br>
+Define el valor de todos los par&#225;metros de la sesi&#243;n a null<br>
 
 <BR>
 </P>
@@ -265,7 +265,7 @@ PROCEDURE p_eliminar_parametros
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Elimina todos los parametros de sistema definidos<br>
+Elimina todos los par&#225;metros definidos en la sesi&#243;n<br>
 
 <BR>
 </P>
@@ -304,7 +304,7 @@ PROCEDURE p_imprimir_parametros
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Imprime todos los parametros de sistema definidos<br>
+Imprime todos los par&#225;metros definidos en la sesi&#243;n<br>
 
 <BR>
 </P>

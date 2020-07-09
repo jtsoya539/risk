@@ -52,4 +52,7 @@ values ('DIRECCION_CORREO_REMITENTE', 'Dirección de correo del remitente para me
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('NUMERO_TELEFONO_REMITENTE', 'Número de teléfono del remitente para mensajería', null);
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('REPORTE_FORMATO_SALIDA_DEFECTO', 'Formato de salida por defecto para reportes', 'PDF');
+
 prompt Done.

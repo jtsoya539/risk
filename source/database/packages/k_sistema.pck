@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE k_sistema IS
 
   /**
-  Agrupa operaciones relacionadas con los parametros de sistema
+  Agrupa operaciones relacionadas con parámetros de la sesión
   
   %author jtsoya539 27/3/2020 16:58:36
   */
@@ -35,36 +35,36 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   FUNCTION f_fecha_actual RETURN DATE;
 
   /**
-  Retorna el valor de un parametro de sistema, si no existe retorna null
+  Retorna el valor de un parámetro en la sesión, si no existe retorna null
   
   %author jtsoya539 27/3/2020 16:59:44
-  %param i_parametro Nombre del parametro de sistema
-  %return Valor del parametro de sistema
+  %param i_parametro Nombre del parámetro
+  %return Valor del parámetro
   %raises <exception>
   */
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2;
 
   /**
-  Define el valor de un parametro de sistema
+  Define el valor de un parámetro en la sesión
   
   %author jtsoya539 27/3/2020 17:00:28
-  %param i_parametro Nombre del parametro de sistema
-  %param i_valor Valor del parametro de sistema
+  %param i_parametro Nombre del parámetro
+  %param i_valor Valor del parámetro
   %raises <exception>
   */
   PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
                                 i_valor     IN VARCHAR2);
 
   /**
-  Define el valor de todos los parametros de sistema a null
+  Define el valor de todos los parámetros de la sesión a null
   
   %author jtsoya539 27/3/2020 17:01:24
   %raises <exception>
   */
-  PROCEDURE p_limpiar_parametros;
+  PROCEDURE p_inicializar_parametros;
 
   /**
-  Elimina todos los parametros de sistema definidos
+  Elimina todos los parámetros definidos en la sesión
   
   %author jtsoya539 27/3/2020 17:02:14
   %raises <exception>
@@ -72,7 +72,7 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   PROCEDURE p_eliminar_parametros;
 
   /**
-  Imprime todos los parametros de sistema definidos
+  Imprime todos los parámetros definidos en la sesión
   
   %author jtsoya539 27/3/2020 17:02:58
   %raises <exception>
@@ -83,10 +83,10 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
-  TYPE ly_parametros IS TABLE OF VARCHAR2(50) INDEX BY VARCHAR2(30);
+  TYPE ly_parametros IS TABLE OF VARCHAR2(500) INDEX BY VARCHAR2(50);
 
   g_parametros ly_parametros;
-  g_indice     VARCHAR2(30);
+  g_indice     VARCHAR2(50);
 
   FUNCTION f_es_produccion RETURN BOOLEAN IS
   BEGIN
@@ -112,10 +112,10 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
                                 i_valor     IN VARCHAR2) IS
   BEGIN
-    g_parametros(i_parametro) := substr(i_valor, 1, 50);
+    g_parametros(i_parametro) := substr(i_valor, 1, 500);
   END;
 
-  PROCEDURE p_limpiar_parametros IS
+  PROCEDURE p_inicializar_parametros IS
   BEGIN
     g_indice := g_parametros.first;
     WHILE g_indice IS NOT NULL LOOP
@@ -139,7 +139,8 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   END;
 
 BEGIN
-  -- Inicializar parametros
+  -- Inicializa parámetros
+  p_definir_parametro('USUARIO', USER);
   DECLARE
     l_nombre         t_sistemas.nombre%TYPE;
     l_version_actual t_sistemas.version_actual%TYPE;
@@ -156,6 +157,5 @@ BEGIN
     WHEN OTHERS THEN
       NULL;
   END;
-  p_definir_parametro('USUARIO', USER);
 END;
 /

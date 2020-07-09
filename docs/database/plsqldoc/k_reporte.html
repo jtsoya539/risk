@@ -5,7 +5,7 @@
  <TITLE>Package k_reporte</TITLE>
  <META name="object" content="PACKAGE">
  <META name="name" content="k_reporte">
- <META name="description" content="Agrupa operaciones relacionadas con reportes del sistema">
+ <META name="description" content="Agrupa operaciones relacionadas con los reportes del sistema">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,7 +14,7 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Package k_reporte</P>
-Agrupa operaciones relacionadas con reportes del sistema<br>
+Agrupa operaciones relacionadas con los reportes del sistema<br>
 
 <BR>
 <A NAME="Author"></A>
@@ -47,13 +47,61 @@ Program units
 </TD></TR>
 </TABLE>
 <BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_FORMATO_PDF">c_formato_pdf</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_FORMATO_DOCX">c_formato_docx</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_FORMATO_XLSX">c_formato_xlsx</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_FORMATO_PDF"></A>
+<P CLASS="TYPE_TITLE">
+c_formato_pdf
+</P>
+<PRE CLASS="DECL_TEXT">
+c_formato_pdf  CONSTANT VARCHAR2(10) := 'PDF';
+</PRE>
+<HR>
+<A NAME="C_FORMATO_DOCX"></A>
+<P CLASS="TYPE_TITLE">
+c_formato_docx
+</P>
+<PRE CLASS="DECL_TEXT">
+c_formato_docx CONSTANT VARCHAR2(10) := 'DOCX';
+</PRE>
+<HR>
+<A NAME="C_FORMATO_XLSX"></A>
+<P CLASS="TYPE_TITLE">
+c_formato_xlsx
+</P>
+<PRE CLASS="DECL_TEXT">
+c_formato_xlsx CONSTANT VARCHAR2(10) := 'XLSX';
+</PRE>
 <HR>
 <A NAME="F_ARCHIVO_OK"></A>
 <P CLASS="TYPE_TITLE">
 f_archivo_ok
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_archivo_ok(i_contenido IN BLOB) RETURN y_archivo
+FUNCTION f_archivo_ok(i_contenido IN BLOB,
+                      i_formato   IN VARCHAR2 DEFAULT NULL)
+  RETURN y_archivo
 
 </PRE>
 <HR>
@@ -62,7 +110,9 @@ FUNCTION f_archivo_ok(i_contenido IN BLOB) RETURN y_archivo
 f_archivo_error
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_archivo_error(i_respuesta IN y_respuesta) RETURN y_archivo
+FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
+                         i_formato   IN VARCHAR2 DEFAULT NULL)
+  RETURN y_archivo
 
 </PRE>
 <P>&nbsp;</P>

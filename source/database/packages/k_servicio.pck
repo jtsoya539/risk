@@ -164,6 +164,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         RAISE ex_error_parametro;
     END;
   
+    l_rsp.lugar := 'Definiendo parámetros en la sesión';
+    k_sistema.p_definir_parametro('ID_SERVICIO', to_char(i_id_servicio));
+    k_sistema.p_definir_parametro('NOMBRE_SERVICIO', l_nombre_servicio);
+  
     l_rsp.lugar := 'Procesando parámetros del servicio';
     BEGIN
       l_prms := f_procesar_parametros(i_id_servicio, i_parametros);
