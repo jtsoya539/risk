@@ -51,7 +51,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
                                                                        'formato') IN
                                    (k_reporte.c_formato_pdf,
                                     k_reporte.c_formato_docx,
-                                    k_reporte.c_formato_xlsx),
+                                    k_reporte.c_formato_xlsx,
+                                    k_reporte.c_formato_txt),
                                    'Formato de salida no soportado');
   
     l_formato := k_servicio.f_valor_parametro_string(i_parametros,

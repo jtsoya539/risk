@@ -34,6 +34,7 @@ CREATE OR REPLACE PACKAGE k_reporte IS
   c_formato_pdf  CONSTANT VARCHAR2(10) := 'PDF';
   c_formato_docx CONSTANT VARCHAR2(10) := 'DOCX';
   c_formato_xlsx CONSTANT VARCHAR2(10) := 'XLSX';
+  c_formato_txt  CONSTANT VARCHAR2(10) := 'TXT';
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
                         i_formato   IN VARCHAR2 DEFAULT NULL)
