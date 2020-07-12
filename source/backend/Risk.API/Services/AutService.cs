@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Risk.API.Entities;
@@ -46,7 +47,7 @@ namespace Risk.API.Services
         private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
         private const int ID_EDITAR_USUARIO = 42;
 
-        public AutService(IDbConnectionFactory dbConnectionFactory) : base(dbConnectionFactory)
+        public AutService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
         {
         }
 

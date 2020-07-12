@@ -88,7 +88,7 @@ namespace Risk.API
                 OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{oracleLocation}\")))";
             }
 
-            string connectionString = Configuration.GetConnectionString(Configuration.GetValue<string>("Database"));
+            string connectionString = Configuration.GetConnectionString(Configuration["Database"]);
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
 
             // Connection Pooling Configuration
@@ -141,21 +141,21 @@ namespace Risk.API
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                c.SwaggerDoc(Configuration["SwaggerConfiguration:Version"], new OpenApiInfo
                 {
-                    Title = "Risk.API",
-                    Description = "Risk Web API",
-                    Version = "v1",
+                    Title = Configuration["SwaggerConfiguration:Title"],
+                    Description = Configuration["SwaggerConfiguration:Description"],
+                    Version = Configuration["SwaggerConfiguration:Version"],
                     Contact = new OpenApiContact
                     {
-                        Name = "jtsoya539",
-                        Url = new Uri("https://github.com/jtsoya539"),
-                        Email = "javier.meza.py@gmail.com"
+                        Name = Configuration["SwaggerConfiguration:Contact:Name"],
+                        Url = new Uri(Configuration["SwaggerConfiguration:Contact:Url"]),
+                        Email = Configuration["SwaggerConfiguration:Contact:Email"]
                     },
                     License = new OpenApiLicense
                     {
-                        Name = "MIT",
-                        Url = new Uri("https://github.com/jtsoya539/risk/blob/master/LICENSE")
+                        Name = Configuration["SwaggerConfiguration:License:Name"],
+                        Url = new Uri(Configuration["SwaggerConfiguration:License:Url"])
                     }
                 });
                 c.EnableAnnotations();
@@ -187,9 +187,10 @@ namespace Risk.API
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.DocumentTitle = "Risk.API";
+                c.DocumentTitle = Configuration["SwaggerConfiguration:Title"];
                 c.RoutePrefix = string.Empty;
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Risk.API v1");
+                c.SwaggerEndpoint($"/swagger/{Configuration["SwaggerConfiguration:Version"]}/swagger.json",
+                                  $"{Configuration["SwaggerConfiguration:Title"]} {Configuration["SwaggerConfiguration:Version"]}");
                 c.DocExpansion(DocExpansion.None);
                 c.InjectStylesheet("/swagger-ui/custom.css");
             });

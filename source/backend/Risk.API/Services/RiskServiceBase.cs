@@ -25,6 +25,7 @@ SOFTWARE.
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
@@ -33,12 +34,14 @@ namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
+        protected readonly IConfiguration _configuration;
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
         private const string RESPUESTA_ERROR_BASE_DATOS = "{\"codigo\":\"api9999\",\"mensaje\":\"Servicio no disponible\",\"mensaje_bd\":null,\"lugar\":null,\"datos\":null}";
 
-        public RiskServiceBase(IDbConnectionFactory dbConnectionFactory)
+        public RiskServiceBase(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory)
         {
+            _configuration = configuration;
             _dbConnectionFactory = dbConnectionFactory;
         }
 
@@ -57,8 +60,8 @@ namespace Risk.API.Services
                         }
 
                         // SetApplicationContext
-                        con.ClientId = "Risk.API";
-                        con.ClientInfo = "Risk Web API";
+                        con.ClientId = _configuration["SwaggerConfiguration:Title"];
+                        con.ClientInfo = _configuration["SwaggerConfiguration:Description"];
                         con.ModuleName = Path.GetFileNameWithoutExtension(callerFilePath);
                         con.ActionName = callerMemberName;
 
