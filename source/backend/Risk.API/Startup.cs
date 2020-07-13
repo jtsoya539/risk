@@ -97,7 +97,7 @@ namespace Risk.API
                 OracleConfiguration.TnsAdmin = oracleLocation;
 
                 //Enter directory where wallet is stored locally
-                OracleConfiguration.WalletLocation = $"(SOURCE = (METHOD = file) (METHOD_DATA = (DIRECTORY=\"{oracleLocation}\")))";
+                OracleConfiguration.WalletLocation = oracleLocation;
             }
 
             string connectionString = Configuration.GetConnectionString(Configuration["Database"]);
