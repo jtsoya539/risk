@@ -13,7 +13,7 @@ Bienvenido/a a la documentación del Proyecto RISK.
 * [Oracle Database 12c o superior](https://www.oracle.com/database/technologies/xe-downloads.html)
 
 ### Back-End
-* [.NET Core 2.1](https://dotnet.microsoft.com/download/dotnet-core/2.1)
+* [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 ## Instalación
 ### Base de Datos
