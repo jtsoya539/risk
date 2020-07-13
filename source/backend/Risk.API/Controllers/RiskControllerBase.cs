@@ -45,7 +45,7 @@ namespace Risk.API.Controllers
 
         public IActionResult ProcesarRespuesta<T>(Respuesta<T> respuesta)
         {
-            if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return Ok(respuesta); // 200 OK
             }
@@ -53,9 +53,9 @@ namespace Risk.API.Controllers
             {
                 if (_enableHttpStatusCodes)
                 {
-                    if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_ERROR_INESPERADO))
+                    if (respuesta.Codigo.Equals(RiskConstants.CODIGO_ERROR_INESPERADO))
                         return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
-                    else if (respuesta.Codigo.Equals(RiskDbConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
+                    else if (respuesta.Codigo.Equals(RiskConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
                         return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
                     else
                         return BadRequest(respuesta); // 400 Bad Request

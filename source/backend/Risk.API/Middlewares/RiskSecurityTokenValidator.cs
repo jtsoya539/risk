@@ -90,7 +90,7 @@ namespace Risk.API.Middlewares
 
             respuesta = _autService.ValidarSesion(securityToken);
 
-            if (!respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 throw new SecurityTokenValidationException(respuesta.Mensaje);
             }

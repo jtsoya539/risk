@@ -27,6 +27,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Risk.API.Attributes;
+using Risk.API.Helpers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters
@@ -46,14 +47,14 @@ namespace Risk.API.Filters
 
                 operation.Parameters.Add(new OpenApiParameter
                 {
-                    Name = "Risk-App-Key",
+                    Name = RiskConstants.RISK_APP_KEY,
                     Description = "Clave de la aplicación habilitada para consumir servicios",
                     In = ParameterLocation.Header,
                     Required = true,
                     Schema = new OpenApiSchema
                     {
                         Type = "string",
-                        Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, "{{Risk-App-Key}}")
+                        Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, $"{{{{{RiskConstants.RISK_APP_KEY}}}}}")
                     }
                 });
 

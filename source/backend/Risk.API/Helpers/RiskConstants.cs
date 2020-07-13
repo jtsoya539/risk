@@ -24,10 +24,11 @@ SOFTWARE.
 
 namespace Risk.API.Helpers
 {
-    public static class RiskDbConstants
+    public static class RiskConstants
     {
         public const string CODIGO_OK = "0";
         public const string CODIGO_ERROR_INESPERADO = "api9999";
         public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
+        public const string RISK_APP_KEY = "Risk-App-Key";
     }
 }

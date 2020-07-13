@@ -60,7 +60,7 @@ namespace Risk.API.Controllers
         private string GenerarAccessToken(string usuario, string claveAplicacion)
         {
             var respDatosUsuario = _autService.DatosUsuario(usuario);
-            if (!respDatosUsuario.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respDatosUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
@@ -83,14 +83,14 @@ namespace Risk.API.Controllers
             }
 
             var respTiempoExpiracionToken = _autService.TiempoExpiracionToken(claveAplicacion, "A");
-            if (!respTiempoExpiracionToken.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respTiempoExpiracionToken.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
             int tiempoExpiracion = int.Parse(respTiempoExpiracionToken.Datos.Contenido);
 
             var respValorParametro = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
@@ -126,7 +126,7 @@ namespace Risk.API.Controllers
             SecurityToken validatedToken;
 
             var respValorParametro2 = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro2.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respValorParametro2.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return string.Empty;
             }
@@ -179,15 +179,15 @@ namespace Risk.API.Controllers
         {
             var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
 
-            if (!respValidarCredenciales.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respValidarCredenciales.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return ProcesarRespuesta(respValidarCredenciales);
             }
 
-            var accessToken = GenerarAccessToken(requestBody.Usuario, Request.Headers["Risk-App-Key"]);
+            var accessToken = GenerarAccessToken(requestBody.Usuario, Request.Headers[RiskConstants.RISK_APP_KEY]);
             var refreshToken = GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(Request.Headers["Risk-App-Key"], requestBody.Usuario, accessToken, refreshToken);
+            var respIniciarSesion = _autService.IniciarSesion(Request.Headers[RiskConstants.RISK_APP_KEY], requestBody.Usuario, accessToken, refreshToken);
             return ProcesarRespuesta(respIniciarSesion);
         }
 
@@ -201,10 +201,10 @@ namespace Risk.API.Controllers
         {
             string usuario = ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
 
-            var accessTokenNuevo = GenerarAccessToken(usuario, Request.Headers["Risk-App-Key"]);
+            var accessTokenNuevo = GenerarAccessToken(usuario, Request.Headers[RiskConstants.RISK_APP_KEY]);
             var refreshTokenNuevo = GenerarRefreshToken();
 
-            var respuesta = _autService.RefrescarSesion(Request.Headers["Risk-App-Key"], requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
+            var respuesta = _autService.RefrescarSesion(Request.Headers[RiskConstants.RISK_APP_KEY], requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
             return ProcesarRespuesta(respuesta);
         }
 
@@ -270,7 +270,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
         {
-            var respuesta = _autService.RegistrarDispositivo(Request.Headers["Risk-App-Key"], requestBody.Dispositivo);
+            var respuesta = _autService.RegistrarDispositivo(Request.Headers[RiskConstants.RISK_APP_KEY], requestBody.Dispositivo);
             return ProcesarRespuesta(respuesta);
         }
 
@@ -282,7 +282,7 @@ namespace Risk.API.Controllers
         {
             var respuesta = _genService.RecuperarArchivo("T_USUARIOS", "AVATAR", usuario);
 
-            if (!respuesta.Codigo.Equals(RiskDbConstants.CODIGO_OK))
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return ProcesarRespuesta(respuesta);
             }
