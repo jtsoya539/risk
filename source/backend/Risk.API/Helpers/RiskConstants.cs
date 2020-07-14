@@ -26,9 +26,16 @@ namespace Risk.API.Helpers
 {
     public static class RiskConstants
     {
+        // Códigos de respuesta de Base de Datos
         public const string CODIGO_OK = "0";
         public const string CODIGO_ERROR_INESPERADO = "api9999";
         public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
+
+        // OpenApi Security Schemes
+        public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";
+        public const string SECURITY_SCHEME_ACCESS_TOKEN = "AccessToken";
+
+        // Http Headers
         public const string RISK_APP_KEY = "Risk-App-Key";
     }
 }

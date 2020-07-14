@@ -44,6 +44,7 @@ using Newtonsoft.Json.Serialization;
 using Oracle.ManagedDataAccess.Client;
 using Risk.API.Entities;
 using Risk.API.Filters;
+using Risk.API.Helpers;
 using Risk.API.Middlewares;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -170,21 +171,29 @@ namespace Risk.API
                         Url = new Uri(Configuration["SwaggerConfiguration:License:Url"])
                     }
                 });
-                c.EnableAnnotations();
-                c.AddSecurityDefinition("AccessToken", new OpenApiSecurityScheme
+                c.AddSecurityDefinition(RiskConstants.SECURITY_SCHEME_RISK_APP_KEY, new OpenApiSecurityScheme
                 {
-                    Type = SecuritySchemeType.ApiKey, // SecuritySchemeType.Http
-                    Name = "Authorization",
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                    Description = "Clave de la aplicación habilitada para consumir servicios",
+                    Type = SecuritySchemeType.ApiKey,
                     In = ParameterLocation.Header,
-                    Scheme = JwtBearerDefaults.AuthenticationScheme,
-                    BearerFormat = "xxxxx.yyyyy.zzzzz"
+                    Name = RiskConstants.RISK_APP_KEY
                 });
+                c.AddSecurityDefinition(RiskConstants.SECURITY_SCHEME_ACCESS_TOKEN, new OpenApiSecurityScheme
+                {
+                    Description = "Access Token de la sesión (Token Bearer en formato JWT)",
+                    Type = SecuritySchemeType.Http,
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Scheme = "bearer", // JwtBearerDefaults.AuthenticationScheme
+                    BearerFormat = "JWT"
+                });
+                c.EnableAnnotations();
                 c.DocumentFilter<ServersDocumentFilter>();
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
                 c.OperationFilter<ServiceErrorsOperationFilter>();
                 c.SchemaFilter<NotNullableSchemaFilter>();
             });
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

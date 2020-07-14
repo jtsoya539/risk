@@ -40,24 +40,24 @@ namespace Risk.API.Filters
 
             if (!allowAnyClientAttributes.Any())
             {
-                if (operation.Parameters == null)
+                // Add OpenApi Security Requirement
+                if (operation.Security == null)
                 {
-                    operation.Parameters = new List<OpenApiParameter>();
+                    operation.Security = new List<OpenApiSecurityRequirement>();
                 }
 
-                operation.Parameters.Add(new OpenApiParameter
+                operation.Security.Add(new OpenApiSecurityRequirement
                 {
-                    Name = RiskConstants.RISK_APP_KEY,
-                    Description = "Clave de la aplicación habilitada para consumir servicios",
-                    In = ParameterLocation.Header,
-                    Required = true,
-                    Schema = new OpenApiSchema
                     {
-                        Type = "string",
-                        Default = OpenApiAnyFactory.CreateFor(new OpenApiSchema { Type = "string" }, $"{{{{{RiskConstants.RISK_APP_KEY}}}}}")
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = RiskConstants.SECURITY_SCHEME_RISK_APP_KEY }
+                        },
+                        new string[] { }
                     }
                 });
 
+                // Add Http Response
                 if (!operation.Responses.ContainsKey("403"))
                 {
                     operation.Responses.Add("403", new OpenApiResponse { Description = "Aplicación no autorizada" });
@@ -69,20 +69,24 @@ namespace Risk.API.Filters
 
             if (authorizeAttributes.Any() && !allowAnonymousAttributes.Any())
             {
-                operation.Security = new List<OpenApiSecurityRequirement>
+                // Add OpenApi Security Requirement
+                if (operation.Security == null)
                 {
-                    new OpenApiSecurityRequirement
-                    {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = "AccessToken" }
-                            },
-                            new string[] { }
-                        }
-                    }
-                };
+                    operation.Security = new List<OpenApiSecurityRequirement>();
+                }
 
+                operation.Security.Add(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = RiskConstants.SECURITY_SCHEME_ACCESS_TOKEN }
+                        },
+                        new string[] { }
+                    }
+                });
+
+                // Add Http Response
                 if (!operation.Responses.ContainsKey("401"))
                 {
                     operation.Responses.Add("401", new OpenApiResponse { Description = "Operación no autorizada" });
