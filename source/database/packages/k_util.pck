@@ -42,6 +42,9 @@ CREATE OR REPLACE PACKAGE k_util IS
                                         i_campo   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL);
 
+  PROCEDURE p_generar_type_objeto(i_tabla       IN VARCHAR2,
+                                  i_nombre_type IN VARCHAR2 DEFAULT NULL);
+
   /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
   Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
@@ -139,6 +142,22 @@ BEGIN
                    lower(i_campo) || '.nextval;
   END IF;
 END;';
+    EXECUTE IMMEDIATE l_sentencia;
+  END;
+
+  PROCEDURE p_generar_type_objeto(i_tabla       IN VARCHAR2,
+                                  i_nombre_type IN VARCHAR2 DEFAULT NULL) IS
+    l_sentencia   VARCHAR2(4000);
+    l_nombre_type VARCHAR2(30);
+  BEGIN
+    l_nombre_type := lower(nvl(i_nombre_type, 'y_' || substr(i_tabla, 3)));
+  
+    -- Genera spec
+    l_sentencia := 'BEGIN NULL; END;';
+    EXECUTE IMMEDIATE l_sentencia;
+  
+    -- Genera body
+    l_sentencia := 'BEGIN NULL; END;';
     EXECUTE IMMEDIATE l_sentencia;
   END;
 
