@@ -41,6 +41,11 @@ Program units
 Genera trigger de secuencia para un campo de una tabla
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GENERAR_TYPE_OBJETO">p_generar_type_objeto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_POSICION">f_valor_posicion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
@@ -158,6 +163,16 @@ Trigger<br>
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="P_GENERAR_TYPE_OBJETO"></A>
+<P CLASS="TYPE_TITLE">
+p_generar_type_objeto
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_generar_type_objeto(i_tabla IN VARCHAR2,
+                                i_type  IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
 <HR>
 <A NAME="F_VALOR_POSICION"></A>
 <P CLASS="TYPE_TITLE">

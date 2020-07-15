@@ -42,8 +42,8 @@ CREATE OR REPLACE PACKAGE k_util IS
                                         i_campo   IN VARCHAR2,
                                         i_trigger IN VARCHAR2 DEFAULT NULL);
 
-  PROCEDURE p_generar_type_objeto(i_tabla       IN VARCHAR2,
-                                  i_nombre_type IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_generar_type_objeto(i_tabla IN VARCHAR2,
+                                  i_type  IN VARCHAR2 DEFAULT NULL);
 
   /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
@@ -145,19 +145,175 @@ END;';
     EXECUTE IMMEDIATE l_sentencia;
   END;
 
-  PROCEDURE p_generar_type_objeto(i_tabla       IN VARCHAR2,
-                                  i_nombre_type IN VARCHAR2 DEFAULT NULL) IS
-    l_sentencia   VARCHAR2(4000);
-    l_nombre_type VARCHAR2(30);
-  BEGIN
-    l_nombre_type := lower(nvl(i_nombre_type, 'y_' || substr(i_tabla, 3)));
+  PROCEDURE p_generar_type_objeto(i_tabla IN VARCHAR2,
+                                  i_type  IN VARCHAR2 DEFAULT NULL) IS
+    l_sentencia VARCHAR2(4000);
+    l_type      VARCHAR2(30);
+    l_comments  VARCHAR2(4000);
+    l_campos1   VARCHAR2(4000);
+    l_campos2   VARCHAR2(4000);
+    l_campos3   VARCHAR2(4000);
+    l_data_type VARCHAR2(100);
   
-    -- Genera spec
-    l_sentencia := 'BEGIN NULL; END;';
+    CURSOR cr_campos IS
+      SELECT m.comments,
+             c.column_name,
+             c.data_type,
+             c.data_length,
+             c.data_precision,
+             c.data_scale
+        FROM user_tab_columns c, user_col_comments m
+       WHERE m.table_name = c.table_name
+         AND m.column_name = c.column_name
+         AND lower(c.table_name) LIKE 't\_%' ESCAPE
+       '\'
+         AND lower(c.table_name) = lower(i_tabla)
+         AND lower(c.column_name) NOT IN
+             ('usuario_insercion',
+              'fecha_insercion',
+              'usuario_modificacion',
+              'fecha_modificacion')
+       ORDER BY c.column_id;
+  BEGIN
+    l_type := lower(nvl(i_type,
+                        'y_' || substr(i_tabla, 3, length(i_tabla) - 3)));
+  
+    -- Genera type spec
+    SELECT c.comments
+      INTO l_comments
+      FROM user_tab_comments c
+     WHERE lower(c.table_name) LIKE 't\_%' ESCAPE
+     '\'
+       AND lower(c.table_name) = lower(i_tabla);
+  
+    l_campos1 := '';
+    FOR c IN cr_campos LOOP
+      l_campos1 := l_campos1 || '/** ' || c.comments || ' */' ||
+                   utl_tcp.crlf;
+      l_campos1 := l_campos1 || lower(c.column_name) || ' ';
+    
+      CASE c.data_type
+        WHEN 'NUMBER' THEN
+          IF c.data_precision IS NOT NULL THEN
+            IF c.data_scale > 0 THEN
+              l_data_type := c.data_type || '(' ||
+                             to_char(c.data_precision) || ',' ||
+                             to_char(c.data_scale) || ')';
+            ELSE
+              l_data_type := c.data_type || '(' ||
+                             to_char(c.data_precision) || ')';
+            END IF;
+          ELSE
+            l_data_type := c.data_type;
+          END IF;
+        WHEN 'VARCHAR2' THEN
+          l_data_type := c.data_type || '(' || to_char(c.data_length) || ')';
+        ELSE
+          l_data_type := c.data_type;
+      END CASE;
+      l_campos1 := l_campos1 || l_data_type || ',' || utl_tcp.crlf;
+    END LOOP;
+  
+    l_sentencia := 'CREATE OR REPLACE TYPE ' || l_type || ' UNDER y_objeto
+(
+/**
+Agrupa datos de ' || l_comments || '.
+
+%author jtsoya539 30/3/2020 10:54:26
+*/
+
+/*
+--------------------------------- MIT License ---------------------------------
+Copyright (c) 2019 jtsoya539
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-------------------------------------------------------------------------------
+*/
+
+' || l_campos1 || '
+
+  CONSTRUCTOR FUNCTION ' || l_type || ' RETURN SELF AS RESULT,
+
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto,
+
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
+)';
+    dbms_output.put_line(l_sentencia);
     EXECUTE IMMEDIATE l_sentencia;
   
-    -- Genera body
-    l_sentencia := 'BEGIN NULL; END;';
+    -- Genera type body
+    l_campos1 := '';
+    FOR c IN cr_campos LOOP
+      l_campos1 := l_campos1 || 'self.' || lower(c.column_name) ||
+                   ' := NULL;' || utl_tcp.crlf;
+    END LOOP;
+  
+    l_campos2 := '';
+    FOR c IN cr_campos LOOP
+      CASE c.data_type
+        WHEN 'VARCHAR2' THEN
+          l_data_type := 'string';
+        ELSE
+          l_data_type := lower(c.data_type);
+      END CASE;
+    
+      l_campos2 := l_campos2 || 'l_objeto.' || lower(c.column_name) ||
+                   ' := l_json_object.get_' || l_data_type || '(''' ||
+                   lower(c.column_name) || ''');' || utl_tcp.crlf;
+    END LOOP;
+  
+    l_campos3 := '';
+    FOR c IN cr_campos LOOP
+      l_campos3 := l_campos3 || 'l_json_object.put(''' ||
+                   lower(c.column_name) || ''', self.' ||
+                   lower(c.column_name) || ');' || utl_tcp.crlf;
+    END LOOP;
+  
+    l_sentencia := 'CREATE OR REPLACE TYPE BODY ' || l_type || ' IS
+
+  CONSTRUCTOR FUNCTION ' || l_type || ' RETURN SELF AS RESULT AS
+  BEGIN
+' || l_campos1 || '
+    RETURN;
+  END;
+
+  STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
+    l_objeto      y_objeto;
+    l_json_object json_object_t;
+  BEGIN
+    l_json_object := json_object_t.parse(i_json);
+  
+    l_objeto := NEW ' || l_type || '();
+' || l_campos2 || '
+    RETURN l_objeto;
+  END;
+
+  OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
+    l_json_object json_object_t;
+  BEGIN
+    l_json_object := NEW json_object_t();
+' || l_campos3 || '
+    RETURN l_json_object.to_clob;
+  END;
+
+END;';
+    dbms_output.put_line(l_sentencia);
     EXECUTE IMMEDIATE l_sentencia;
   END;
 
