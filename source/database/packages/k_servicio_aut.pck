@@ -323,34 +323,36 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'clave_aplicacion')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'clave_aplicacion') IS NOT NULL,
                                    'Debe ingresar clave_aplicacion');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'usuario')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'usuario') IS NOT NULL,
                                    'Debe ingresar usuario');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'access_token')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'access_token') IS NOT NULL,
                                    'Debe ingresar access_token');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'refresh_token')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'refresh_token') IS NOT NULL,
                                    'Debe ingresar refresh_token');
   
     l_rsp.lugar := 'Iniciando sesion';
-    l_id_sesion := k_autenticacion.f_iniciar_sesion(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'clave_aplicacion')),
-                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'usuario')),
-                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'access_token')),
-                                                    anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                        'refresh_token')));
+    l_id_sesion := k_autenticacion.f_iniciar_sesion(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'clave_aplicacion'),
+                                                    k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'usuario'),
+                                                    k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'access_token'),
+                                                    k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'refresh_token'),
+                                                    k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                        'token_dispositivo'));
   
     l_rsp.lugar := 'Buscando datos de la sesion';
     BEGIN
@@ -370,13 +372,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     EXCEPTION
       WHEN no_data_found THEN
         k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0005',
-                                     'Sesion inexistente');
+                                     'aut0001',
+                                     'Sesión inexistente');
         RAISE k_servicio.ex_error_general;
       WHEN OTHERS THEN
         k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0006',
-                                     'Error al buscar datos de la sesion');
+                                     'aut0002',
+                                     'Error al buscar datos de la sesión');
         RAISE k_servicio.ex_error_general;
     END;
   
