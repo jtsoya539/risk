@@ -131,6 +131,30 @@ namespace Risk.API.Helpers
             return model;
         }
 
+        public static Dispositivo GetDispositivoFromEntity(YDispositivo entity)
+        {
+            Dispositivo model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Dispositivo
+                {
+                    IdDispositivo = entity.IdDispositivo,
+                    TokenDispositivo = entity.TokenDispositivo,
+                    NombreSistemaOperativo = entity.NombreSistemaOperativo,
+                    VersionSistemaOperativo = entity.VersionSistemaOperativo,
+                    Tipo = entity.Tipo,
+                    NombreNavegador = entity.NombreNavegador,
+                    VersionNavegador = entity.VersionNavegador,
+                    TokenNotificacion = entity.TokenNotificacion
+                };
+            }
+            return model;
+        }
+
         public static Usuario GetUsuarioFromEntity(YUsuario entity)
         {
             Usuario model;

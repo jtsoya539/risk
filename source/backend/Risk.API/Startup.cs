@@ -204,13 +204,14 @@ namespace Risk.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = Configuration["SwaggerConfiguration:Title"];
@@ -220,8 +221,6 @@ namespace Risk.API
                 c.DocExpansion(DocExpansion.None);
                 c.InjectStylesheet("/swagger-ui/custom.css");
             });
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

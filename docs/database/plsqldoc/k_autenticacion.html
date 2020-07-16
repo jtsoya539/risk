@@ -116,7 +116,7 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_REGISTRAR_DISPOSITIVO">p_registrar_dispositivo</A>&nbsp;&nbsp;
+<A HREF="#F_REGISTRAR_DISPOSITIVO">f_registrar_dispositivo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -313,10 +313,12 @@ PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
 f_iniciar_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_iniciar_sesion(i_clave_aplicacion IN VARCHAR2,
-                          i_usuario          IN VARCHAR2,
-                          i_access_token     IN VARCHAR2,
-                          i_refresh_token    IN VARCHAR2) RETURN NUMBER
+FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
+                          i_usuario           IN VARCHAR2,
+                          i_access_token      IN VARCHAR2,
+                          i_refresh_token     IN VARCHAR2,
+                          i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
+  RETURN NUMBER
 
 </PRE>
 <HR>
@@ -362,19 +364,20 @@ PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2)
 
 </PRE>
 <HR>
-<A NAME="P_REGISTRAR_DISPOSITIVO"></A>
+<A NAME="F_REGISTRAR_DISPOSITIVO"></A>
 <P CLASS="TYPE_TITLE">
-p_registrar_dispositivo
+f_registrar_dispositivo
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
-                                  i_token_dispositivo         IN VARCHAR2,
-                                  i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
-                                  i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
-                                  i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
-                                  i_tipo                      IN VARCHAR2 DEFAULT NULL,
-                                  i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
-                                  i_version_navegador         IN VARCHAR2 DEFAULT NULL)
+FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
+                                 i_token_dispositivo         IN VARCHAR2,
+                                 i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
+                                 i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
+                                 i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
+                                 i_tipo                      IN VARCHAR2 DEFAULT NULL,
+                                 i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
+                                 i_version_navegador         IN VARCHAR2 DEFAULT NULL)
+  RETURN NUMBER
 
 </PRE>
 <HR>

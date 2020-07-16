@@ -617,38 +617,75 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
 
   FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
     RETURN y_respuesta IS
-    l_rsp         y_respuesta;
-    l_retorno     PLS_INTEGER;
-    l_anydata     anydata;
-    l_dispositivo y_dispositivo;
+    l_rsp            y_respuesta;
+    l_dispositivo    y_dispositivo;
+    l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
   BEGIN
     -- Inicializa respuesta
-    l_rsp := NEW y_respuesta();
+    l_rsp         := NEW y_respuesta();
+    l_dispositivo := NEW y_dispositivo();
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                       'clave_aplicacion')) IS NOT NULL,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'clave_aplicacion') IS NOT NULL,
                                    'Debe ingresar clave_aplicacion');
   
-    l_anydata := k_servicio.f_valor_parametro(i_parametros, 'dispositivo');
-    l_retorno := l_anydata.getobject(l_dispositivo);
     k_servicio.p_validar_parametro(l_rsp,
-                                   l_dispositivo IS NOT NULL,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'dispositivo') IS NOT NULL,
                                    'Debe ingresar dispositivo');
+    l_dispositivo := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                               'dispositivo') AS
+                           y_dispositivo);
   
-    l_rsp.lugar := 'Registrando dispositivo';
-    k_autenticacion.p_registrar_dispositivo(anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
-                                                                                                'clave_aplicacion')),
-                                            l_dispositivo.token_dispositivo,
-                                            l_dispositivo.token_notificacion,
-                                            l_dispositivo.nombre_sistema_operativo,
-                                            l_dispositivo.version_sistema_operativo,
-                                            l_dispositivo.tipo,
-                                            l_dispositivo.nombre_navegador,
-                                            l_dispositivo.version_navegador);
+    l_rsp.lugar      := 'Registrando dispositivo';
+    l_id_dispositivo := k_autenticacion.f_registrar_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                    'clave_aplicacion'),
+                                                                l_dispositivo.token_dispositivo,
+                                                                l_dispositivo.token_notificacion,
+                                                                l_dispositivo.nombre_sistema_operativo,
+                                                                l_dispositivo.version_sistema_operativo,
+                                                                l_dispositivo.tipo,
+                                                                l_dispositivo.nombre_navegador,
+                                                                l_dispositivo.version_navegador);
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    l_dispositivo := NEW y_dispositivo();
+  
+    l_rsp.lugar := 'Buscando datos del dispositivo';
+    BEGIN
+      SELECT d.id_dispositivo,
+             d.token_dispositivo,
+             d.nombre_sistema_operativo,
+             d.version_sistema_operativo,
+             d.tipo,
+             d.nombre_navegador,
+             d.version_navegador,
+             d.token_notificacion
+        INTO l_dispositivo.id_dispositivo,
+             l_dispositivo.token_dispositivo,
+             l_dispositivo.nombre_sistema_operativo,
+             l_dispositivo.version_sistema_operativo,
+             l_dispositivo.tipo,
+             l_dispositivo.nombre_navegador,
+             l_dispositivo.version_navegador,
+             l_dispositivo.token_notificacion
+        FROM t_dispositivos d
+       WHERE d.id_dispositivo = l_id_dispositivo;
+    EXCEPTION
+      WHEN no_data_found THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'aut0001',
+                                     'Dispositivo inexistente');
+        RAISE k_servicio.ex_error_general;
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'aut0002',
+                                     'Error al buscar datos del dispositivo');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dispositivo);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN

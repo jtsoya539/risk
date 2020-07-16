@@ -89,9 +89,9 @@ prompt
 @@tables/t_servicios.tab
 @@tables/t_servicio_parametros.tab
 @@tables/t_servicio_logs.tab
+@@tables/t_dispositivos.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
-@@tables/t_dispositivos.tab
 @@tables/t_correos.tab
 @@tables/t_correo_adjuntos.tab
 @@tables/t_mensajes.tab

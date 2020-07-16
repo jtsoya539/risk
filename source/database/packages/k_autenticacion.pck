@@ -101,14 +101,15 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2);
 
-  PROCEDURE p_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
-                                    i_token_dispositivo         IN VARCHAR2,
-                                    i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
-                                    i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
-                                    i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
-                                    i_tipo                      IN VARCHAR2 DEFAULT NULL,
-                                    i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
-                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL);
+  FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
+                                   i_token_dispositivo         IN VARCHAR2,
+                                   i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
+                                   i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
+                                   i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
+                                   i_tipo                      IN VARCHAR2 DEFAULT NULL,
+                                   i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
+                                   i_version_navegador         IN VARCHAR2 DEFAULT NULL)
+    RETURN NUMBER;
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
                              i_usuario_nuevo    IN VARCHAR2,
@@ -885,17 +886,19 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  PROCEDURE p_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
-                                    i_token_dispositivo         IN VARCHAR2,
-                                    i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
-                                    i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
-                                    i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
-                                    i_tipo                      IN VARCHAR2 DEFAULT NULL,
-                                    i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
-                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL) IS
-    l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
+  FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
+                                   i_token_dispositivo         IN VARCHAR2,
+                                   i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
+                                   i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
+                                   i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
+                                   i_tipo                      IN VARCHAR2 DEFAULT NULL,
+                                   i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
+                                   i_version_navegador         IN VARCHAR2 DEFAULT NULL)
+    RETURN NUMBER IS
+    l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
+    l_id_aplicacion  t_aplicaciones.id_aplicacion%TYPE;
   BEGIN
-    -- Busca aplicacion
+    -- Busca aplicación
     l_id_aplicacion := f_id_aplicacion(i_clave_aplicacion, 'S');
   
     IF l_id_aplicacion IS NULL THEN
@@ -906,30 +909,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Parámetro Token es requerido');
     END IF;
   
-    -- Inserta dispositivo
-    INSERT INTO t_dispositivos
-      (token_dispositivo,
-       fecha_ultimo_acceso,
-       id_aplicacion,
-       nombre_sistema_operativo,
-       version_sistema_operativo,
-       tipo,
-       nombre_navegador,
-       version_navegador,
-       token_notificacion)
-    VALUES
-      (i_token_dispositivo,
-       SYSDATE,
-       l_id_aplicacion,
-       i_nombre_sistema_operativo,
-       i_version_sistema_operativo,
-       i_tipo,
-       i_nombre_navegador,
-       i_version_navegador,
-       i_token_notificacion);
-  EXCEPTION
-    WHEN dup_val_on_index THEN
-    
+    -- Busca dispositivo
+    l_id_dispositivo := lf_id_dispositivo(i_token_dispositivo);
+  
+    IF l_id_dispositivo IS NOT NULL THEN
       -- Actualiza dispositivo
       UPDATE t_dispositivos
          SET fecha_ultimo_acceso       = SYSDATE,
@@ -945,11 +928,33 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                              version_navegador),
              token_notificacion        = nvl(i_token_notificacion,
                                              token_notificacion)
-       WHERE token_dispositivo = i_token_dispositivo;
-      IF SQL%NOTFOUND THEN
-        raise_application_error(-20000, 'Dispositivo inexistente');
-      END IF;
-    
+       WHERE id_dispositivo = l_id_dispositivo;
+    ELSE
+      -- Inserta dispositivo
+      INSERT INTO t_dispositivos
+        (token_dispositivo,
+         fecha_ultimo_acceso,
+         id_aplicacion,
+         nombre_sistema_operativo,
+         version_sistema_operativo,
+         tipo,
+         nombre_navegador,
+         version_navegador,
+         token_notificacion)
+      VALUES
+        (i_token_dispositivo,
+         SYSDATE,
+         l_id_aplicacion,
+         i_nombre_sistema_operativo,
+         i_version_sistema_operativo,
+         i_tipo,
+         i_nombre_navegador,
+         i_version_navegador,
+         i_token_notificacion)
+      RETURNING id_dispositivo INTO l_id_dispositivo;
+    END IF;
+  
+    RETURN l_id_dispositivo;
   END;
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,

@@ -118,6 +118,11 @@ namespace Risk.API.Controllers
             }
         }
 
+        private string GenerarTokenDispositivo()
+        {
+            return DateTime.Now.Ticks.ToString() + "-" + Guid.NewGuid().ToString();
+        }
+
         private string ObtenerUsuarioDeAccessToken(string accessToken)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -267,9 +272,14 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RegistrarDispositivo", Summary = "RegistrarDispositivo", Description = "Permite registrar un dispositivo")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dispositivo>))]
         public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
         {
+            if (requestBody.Dispositivo.TokenDispositivo == null || requestBody.Dispositivo.TokenDispositivo.Equals(string.Empty))
+            {
+                requestBody.Dispositivo.TokenDispositivo = GenerarTokenDispositivo();
+            }
+
             var respuesta = _autService.RegistrarDispositivo(Request.Headers[RiskConstants.RISK_APP_KEY], requestBody.Dispositivo);
             return ProcesarRespuesta(respuesta);
         }
