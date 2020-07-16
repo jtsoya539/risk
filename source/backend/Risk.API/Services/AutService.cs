@@ -77,13 +77,14 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> IniciarSesion(string claveAplicacion, string usuario, string accessToken, string refreshToken)
+        public Respuesta<Sesion> IniciarSesion(string claveAplicacion, string usuario, string accessToken, string refreshToken, string tokenDispositivo)
         {
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
             prms.Add("usuario", usuario);
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
+            prms.Add("token_dispositivo", tokenDispositivo);
 
             string rsp = base.ProcesarServicio(ID_INICIAR_SESION, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);

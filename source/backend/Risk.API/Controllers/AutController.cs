@@ -192,7 +192,7 @@ namespace Risk.API.Controllers
             var accessToken = GenerarAccessToken(requestBody.Usuario, Request.Headers[RiskConstants.RISK_APP_KEY]);
             var refreshToken = GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(Request.Headers[RiskConstants.RISK_APP_KEY], requestBody.Usuario, accessToken, refreshToken);
+            var respIniciarSesion = _autService.IniciarSesion(Request.Headers[RiskConstants.RISK_APP_KEY], requestBody.Usuario, accessToken, refreshToken, requestBody.TokenDispositivo);
             return ProcesarRespuesta(respIniciarSesion);
         }
 
