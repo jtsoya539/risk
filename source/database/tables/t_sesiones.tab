@@ -12,7 +12,8 @@ create table T_SESIONES
   fecha_expiracion_refresh_token DATE,
   direccion_ip                   VARCHAR2(50),
   host                           VARCHAR2(50),
-  terminal                       VARCHAR2(50)
+  terminal                       VARCHAR2(50),
+  id_dispositivo                 NUMBER(15)
 )
 ;
 comment on table T_SESIONES
@@ -43,6 +44,8 @@ comment on column T_SESIONES.host
   is 'Host de la sesion';
 comment on column T_SESIONES.terminal
   is 'Terminal de la sesion';
+comment on column T_SESIONES.id_dispositivo
+  is 'Dispositivo relacionado a la sesion';
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES
@@ -50,6 +53,9 @@ alter table T_SESIONES
 alter table T_SESIONES
   add constraint FK_SESIONES_APLICACIONES foreign key (ID_APLICACION)
   references T_APLICACIONES (ID_APLICACION);
+alter table T_SESIONES
+  add constraint FK_SESIONES_DISPOSITIVOS foreign key (ID_DISPOSITIVO)
+  references T_DISPOSITIVOS (ID_DISPOSITIVO);
 alter table T_SESIONES
   add constraint FK_SESIONES_USUARIOS foreign key (ID_USUARIO)
   references T_USUARIOS (ID_USUARIO);

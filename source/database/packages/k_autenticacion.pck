@@ -80,10 +80,12 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2);
 
-  FUNCTION f_iniciar_sesion(i_clave_aplicacion IN VARCHAR2,
-                            i_usuario          IN VARCHAR2,
-                            i_access_token     IN VARCHAR2,
-                            i_refresh_token    IN VARCHAR2) RETURN NUMBER;
+  FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
+                            i_usuario           IN VARCHAR2,
+                            i_access_token      IN VARCHAR2,
+                            i_refresh_token     IN VARCHAR2,
+                            i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
+    RETURN NUMBER;
 
   FUNCTION f_refrescar_sesion(i_clave_aplicacion      IN VARCHAR2,
                               i_access_token_antiguo  IN VARCHAR2,
@@ -197,6 +199,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         l_id_sesion := NULL;
     END;
     RETURN l_id_sesion;
+  END;
+
+  FUNCTION lf_id_dispositivo(i_token_dispositivo IN VARCHAR2) RETURN NUMBER IS
+    l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_dispositivo
+        INTO l_id_dispositivo
+        FROM t_dispositivos
+       WHERE token_dispositivo = i_token_dispositivo;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_dispositivo := NULL;
+      WHEN OTHERS THEN
+        l_id_dispositivo := NULL;
+    END;
+    RETURN l_id_dispositivo;
   END;
 
   PROCEDURE lp_registrar_intento_fallido(i_id_usuario IN NUMBER,
@@ -668,14 +687,17 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  FUNCTION f_iniciar_sesion(i_clave_aplicacion IN VARCHAR2,
-                            i_usuario          IN VARCHAR2,
-                            i_access_token     IN VARCHAR2,
-                            i_refresh_token    IN VARCHAR2) RETURN NUMBER IS
+  FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
+                            i_usuario           IN VARCHAR2,
+                            i_access_token      IN VARCHAR2,
+                            i_refresh_token     IN VARCHAR2,
+                            i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
+    RETURN NUMBER IS
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_id_usuario                     t_usuarios.id_usuario%TYPE;
     l_id_aplicacion                  t_aplicaciones.id_aplicacion%TYPE;
     l_tipo_aplicacion                t_aplicaciones.tipo%TYPE;
+    l_id_dispositivo                 t_dispositivos.id_dispositivo%TYPE;
     l_cantidad                       NUMBER(3);
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
@@ -693,6 +715,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     IF l_id_usuario IS NULL THEN
       RAISE ex_usuario_inexistente;
     END IF;
+  
+    -- Busca dispositivo
+    l_id_dispositivo := lf_id_dispositivo(i_token_dispositivo);
   
     -- Obtiene tipo de aplicacion
     BEGIN
@@ -739,7 +764,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        fecha_expiracion_refresh_token,
        direccion_ip,
        host,
-       terminal)
+       terminal,
+       id_dispositivo)
     VALUES
       (l_id_usuario,
        l_id_aplicacion,
@@ -751,7 +777,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        l_fecha_expiracion_refresh_token,
        k_util.f_direccion_ip,
        k_util.f_host,
-       k_util.f_terminal)
+       k_util.f_terminal,
+       l_id_dispositivo)
     RETURNING id_sesion INTO l_id_sesion;
   
     RETURN l_id_sesion;
