@@ -46,12 +46,22 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#LISTAR_NOTIFICACIONES_PENDIENTES">listar_notificaciones_pendientes</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#CAMBIAR_ESTADO_CORREO">cambiar_estado_correo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#CAMBIAR_ESTADO_MENSAJE">cambiar_estado_mensaje</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CAMBIAR_ESTADO_NOTIFICACION">cambiar_estado_notificacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -78,6 +88,16 @@ FUNCTION listar_mensajes_pendientes(i_parametros IN y_parametros)
 
 </PRE>
 <HR>
+<A NAME="LISTAR_NOTIFICACIONES_PENDIENTES"></A>
+<P CLASS="TYPE_TITLE">
+listar_notificaciones_pendientes
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION listar_notificaciones_pendientes(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
 <A NAME="CAMBIAR_ESTADO_CORREO"></A>
 <P CLASS="TYPE_TITLE">
 cambiar_estado_correo
@@ -94,6 +114,16 @@ cambiar_estado_mensaje
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION cambiar_estado_mensaje(i_parametros IN y_parametros)
+  RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="CAMBIAR_ESTADO_NOTIFICACION"></A>
+<P CLASS="TYPE_TITLE">
+cambiar_estado_notificacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION cambiar_estado_notificacion(i_parametros IN y_parametros)
   RETURN y_respuesta
 
 </PRE>
