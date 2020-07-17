@@ -60,6 +60,11 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                              i_id_usuario      IN NUMBER DEFAULT NULL,
                              i_numero_telefono IN VARCHAR2 DEFAULT NULL);
 
+  PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
+                                  i_contenido   IN VARCHAR2,
+                                  i_id_usuario  IN NUMBER DEFAULT NULL,
+                                  i_suscripcion IN VARCHAR2 DEFAULT NULL);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
@@ -68,6 +73,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
   g_numero_telefono_remitente  t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_REMITENTE');
   g_direccion_correo_pruebas   t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_PRUEBAS');
   g_numero_telefono_pruebas    t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_PRUEBAS');
+  g_suscripcion_pruebas        t_parametros.valor%TYPE := k_util.f_valor_parametro('SUSCRIPCION_PRUEBAS');
 
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN IS
@@ -195,6 +201,48 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
       (id_usuario, numero_telefono, contenido, estado)
     VALUES
       (i_id_usuario, l_numero_telefono, substr(i_contenido, 1, 160), 'P');
+  END;
+
+  PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
+                                  i_contenido   IN VARCHAR2,
+                                  i_id_usuario  IN NUMBER DEFAULT NULL,
+                                  i_suscripcion IN VARCHAR2 DEFAULT NULL) IS
+    l_suscripcion t_notificaciones.suscripcion%TYPE;
+  BEGIN
+    l_suscripcion := i_suscripcion;
+  
+    IF i_id_usuario IS NOT NULL AND l_suscripcion IS NULL THEN
+      l_suscripcion := k_dispositivo.c_suscripcion_usuario || '_' ||
+                       to_char(i_id_usuario);
+    END IF;
+  
+    IF l_suscripcion IS NULL THEN
+      raise_application_error(-20000,
+                              'Tag o expresión destino obligatorio');
+    END IF;
+  
+    IF i_titulo IS NULL THEN
+      raise_application_error(-20000,
+                              'Título de la notificación obligatorio');
+    END IF;
+  
+    IF i_contenido IS NULL THEN
+      raise_application_error(-20000,
+                              'Contenido de la notificación obligatorio');
+    END IF;
+  
+    IF NOT k_sistema.f_es_produccion THEN
+      l_suscripcion := g_suscripcion_pruebas;
+    END IF;
+  
+    INSERT INTO t_notificaciones
+      (id_usuario, suscripcion, titulo, contenido, estado)
+    VALUES
+      (i_id_usuario,
+       l_suscripcion,
+       substr(i_titulo, 1, 160),
+       substr(i_contenido, 1, 500),
+       'P');
   END;
 
 END;

@@ -55,4 +55,7 @@ values ('NUMERO_TELEFONO_REMITENTE', 'Número de teléfono del remitente para mens
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('REPORTE_FORMATO_SALIDA_DEFECTO', 'Formato de salida por defecto para reportes', 'PDF');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('SUSCRIPCION_PRUEBAS', 'Tag o expresión destino para pruebas de notificaciones push', null);
+
 prompt Done.

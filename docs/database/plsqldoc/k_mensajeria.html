@@ -70,6 +70,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ENVIAR_NOTIFICACION">p_enviar_notificacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Constants"></A>
@@ -154,6 +159,18 @@ p_enviar_mensaje
 PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
                            i_id_usuario      IN NUMBER DEFAULT NULL,
                            i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_ENVIAR_NOTIFICACION"></A>
+<P CLASS="TYPE_TITLE">
+p_enviar_notificacion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
+                                i_contenido   IN VARCHAR2,
+                                i_id_usuario  IN NUMBER DEFAULT NULL,
+                                i_suscripcion IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <P>&nbsp;</P>
