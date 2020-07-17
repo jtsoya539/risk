@@ -272,7 +272,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RegistrarDispositivo", Summary = "RegistrarDispositivo", Description = "Permite registrar un dispositivo")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dispositivo>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
         {
             if (requestBody.Dispositivo.TokenDispositivo == null || requestBody.Dispositivo.TokenDispositivo.Equals(string.Empty))

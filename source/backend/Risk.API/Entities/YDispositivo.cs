@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Risk.API.Entities
@@ -44,5 +45,7 @@ namespace Risk.API.Entities
         public string VersionNavegador { get; set; }
         [JsonProperty("token_notificacion")]
         public string TokenNotificacion { get; set; }
+        [JsonProperty("suscripciones")]
+        public List<YDato> Suscripciones { get; set; }
     }
 }

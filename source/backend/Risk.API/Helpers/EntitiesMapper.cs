@@ -70,6 +70,16 @@ namespace Risk.API.Helpers
             return model;
         }
 
+        public static List<Dato> GetDatoListFromEntity(List<YDato> entityList)
+        {
+            List<Dato> modelList = new List<Dato>();
+            foreach (var item in entityList)
+            {
+                modelList.Add(GetDatoFromEntity(item));
+            }
+            return modelList;
+        }
+
         public static Respuesta<T> GetRespuestaFromEntity<T, YT>(YRespuesta<YT> entity, T datos)
         {
             return new Respuesta<T>
@@ -149,7 +159,8 @@ namespace Risk.API.Helpers
                     Tipo = entity.Tipo,
                     NombreNavegador = entity.NombreNavegador,
                     VersionNavegador = entity.VersionNavegador,
-                    TokenNotificacion = entity.TokenNotificacion
+                    TokenNotificacion = entity.TokenNotificacion,
+                    Suscripciones = GetDatoListFromEntity(entity.Suscripciones)
                 };
             }
             return model;

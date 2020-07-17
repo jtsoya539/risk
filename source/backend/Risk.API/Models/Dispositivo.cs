@@ -22,6 +22,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System.Collections.Generic;
+
 namespace Risk.API.Models
 {
     public class Dispositivo
@@ -34,5 +36,6 @@ namespace Risk.API.Models
         public string NombreNavegador { get; set; }
         public string VersionNavegador { get; set; }
         public string TokenNotificacion { get; set; }
+        public List<Dato> Suscripciones { get; set; }
     }
 }

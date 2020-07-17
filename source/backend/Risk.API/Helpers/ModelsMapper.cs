@@ -30,6 +30,33 @@ namespace Risk.API.Helpers
 {
     public class ModelsMapper
     {
+        public static YDato GetYDatoFromModel(Dato model)
+        {
+            YDato entity;
+            if (model == null)
+            {
+                entity = null;
+            }
+            else
+            {
+                entity = new YDato
+                {
+                    Contenido = model.Contenido
+                };
+            }
+            return entity;
+        }
+
+        public static List<YDato> GetYDatoListFromModel(List<Dato> modelList)
+        {
+            List<YDato> entityList = new List<YDato>();
+            foreach (var item in modelList)
+            {
+                entityList.Add(GetYDatoFromModel(item));
+            }
+            return entityList;
+        }
+
         public static YDispositivo GetYDispositivoFromModel(Dispositivo model)
         {
             YDispositivo entity;
@@ -48,7 +75,8 @@ namespace Risk.API.Helpers
                     Tipo = model.Tipo,
                     NombreNavegador = model.NombreNavegador,
                     VersionNavegador = model.VersionNavegador,
-                    TokenNotificacion = model.TokenNotificacion
+                    TokenNotificacion = model.TokenNotificacion,
+                    Suscripciones = GetYDatoListFromModel(model.Suscripciones)
                 };
             }
             return entity;

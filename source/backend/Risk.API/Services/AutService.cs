@@ -45,6 +45,7 @@ namespace Risk.API.Services
         private const int ID_VALIDAR_CLAVE_APLICACION = 12;
         private const int ID_REGISTRAR_DISPOSITIVO = 14;
         private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
+        private const int ID_DATOS_DISPOSITIVO = 21;
         private const int ID_EDITAR_USUARIO = 42;
 
         public AutService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
@@ -182,13 +183,24 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dispositivo> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo)
+        public Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo)
         {
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
             prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetYDispositivoFromModel(dispositivo)));
 
             string rsp = base.ProcesarServicio(ID_REGISTRAR_DISPOSITIVO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dispositivo> DatosDispositivo(string tokenDispositivo)
+        {
+            JObject prms = new JObject();
+            prms.Add("token_dispositivo", tokenDispositivo);
+
+            string rsp = base.ProcesarServicio(ID_DATOS_DISPOSITIVO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDispositivo>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetDispositivoFromEntity(entityRsp.Datos));
