@@ -135,6 +135,7 @@ drop sequence s_id_dispositivo;
 drop sequence s_id_correo;
 drop sequence s_id_correo_adjunto;
 drop sequence s_id_mensaje;
+drop sequence s_id_notificacion;
 
 prompt
 prompt Desinstalando dependencias...
