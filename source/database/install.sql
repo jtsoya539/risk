@@ -90,11 +90,13 @@ prompt
 @@tables/t_servicio_parametros.tab
 @@tables/t_servicio_logs.tab
 @@tables/t_dispositivos.tab
+@@tables/t_dispositivo_suscripciones.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
 @@tables/t_correos.tab
 @@tables/t_correo_adjuntos.tab
 @@tables/t_mensajes.tab
+@@tables/t_notificaciones.tab
 @@tables/t_archivo_definiciones.tab
 @@tables/t_archivos.tab
 
@@ -128,6 +130,7 @@ prompt
 @@packages/k_html.pck
 @@packages/k_util.pck
 @@packages/k_auditoria.pck
+@@packages/k_dispositivo.pck
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_servicio.pck

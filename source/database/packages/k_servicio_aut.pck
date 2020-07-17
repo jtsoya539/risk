@@ -642,15 +642,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                            y_dispositivo);
   
     l_rsp.lugar      := 'Registrando dispositivo';
-    l_id_dispositivo := k_autenticacion.f_registrar_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                                    'clave_aplicacion'),
-                                                                l_dispositivo.token_dispositivo,
-                                                                l_dispositivo.token_notificacion,
-                                                                l_dispositivo.nombre_sistema_operativo,
-                                                                l_dispositivo.version_sistema_operativo,
-                                                                l_dispositivo.tipo,
-                                                                l_dispositivo.nombre_navegador,
-                                                                l_dispositivo.version_navegador);
+    l_id_dispositivo := k_dispositivo.f_registrar_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                  'clave_aplicacion'),
+                                                              l_dispositivo.token_dispositivo,
+                                                              l_dispositivo.token_notificacion,
+                                                              l_dispositivo.nombre_sistema_operativo,
+                                                              l_dispositivo.version_sistema_operativo,
+                                                              l_dispositivo.tipo,
+                                                              l_dispositivo.nombre_navegador,
+                                                              l_dispositivo.version_navegador);
   
     l_dispositivo := NEW y_dispositivo();
   

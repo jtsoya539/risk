@@ -65,8 +65,10 @@ plugin plsqldoc generate t_ciudades;
 plugin plsqldoc generate t_correo_adjuntos;
 plugin plsqldoc generate t_correos;
 plugin plsqldoc generate t_dispositivos;
+plugin plsqldoc generate t_dispositivo_suscripciones;
 plugin plsqldoc generate t_errores;
 plugin plsqldoc generate t_mensajes;
+plugin plsqldoc generate t_notificaciones;
 plugin plsqldoc generate t_paises;
 plugin plsqldoc generate t_parametros;
 plugin plsqldoc generate t_permisos;
@@ -113,6 +115,7 @@ prompt
 plugin plsqldoc generate k_archivo;
 plugin plsqldoc generate k_auditoria;
 plugin plsqldoc generate k_autenticacion;
+plugin plsqldoc generate k_dispositivo;
 plugin plsqldoc generate k_error;
 plugin plsqldoc generate k_html;
 plugin plsqldoc generate k_mensajeria;

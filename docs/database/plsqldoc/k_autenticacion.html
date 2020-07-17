@@ -116,11 +116,6 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_REGISTRAR_DISPOSITIVO">f_registrar_dispositivo</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_EDITAR_USUARIO">p_editar_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -361,23 +356,6 @@ p_sesion_activa
 </P>
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2)
-
-</PRE>
-<HR>
-<A NAME="F_REGISTRAR_DISPOSITIVO"></A>
-<P CLASS="TYPE_TITLE">
-f_registrar_dispositivo
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
-                                 i_token_dispositivo         IN VARCHAR2,
-                                 i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
-                                 i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
-                                 i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
-                                 i_tipo                      IN VARCHAR2 DEFAULT NULL,
-                                 i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
-                                 i_version_navegador         IN VARCHAR2 DEFAULT NULL)
-  RETURN NUMBER
 
 </PRE>
 <HR>

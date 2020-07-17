@@ -1,0 +1,39 @@
+create table T_NOTIFICACIONES
+(
+  id_notificacion         NUMBER not null,
+  id_usuario              NUMBER(10),
+  suscripcion             VARCHAR2(500) not null,
+  titulo                  VARCHAR2(160) not null,
+  contenido               VARCHAR2(500) not null,
+  estado                  VARCHAR2(1) default 'P' not null,
+  fecha_envio             DATE,
+  respuesta_envio         VARCHAR2(1000),
+  cantidad_intentos_envio NUMBER(3)
+)
+;
+comment on table T_NOTIFICACIONES
+  is 'Notificaciones push';
+comment on column T_NOTIFICACIONES.id_notificacion
+  is 'Identificador de la notificación push';
+comment on column T_NOTIFICACIONES.id_usuario
+  is 'Usuario destino de la notificación push';
+comment on column T_NOTIFICACIONES.suscripcion
+  is 'Tag o expresión destino de la notificación push';
+comment on column T_NOTIFICACIONES.titulo
+  is 'Título de la notificación push';
+comment on column T_NOTIFICACIONES.contenido
+  is 'Contenido de la notificación push';
+comment on column T_NOTIFICACIONES.estado
+  is 'Estado de envío';
+comment on column T_NOTIFICACIONES.fecha_envio
+  is 'Fecha de envío';
+comment on column T_NOTIFICACIONES.respuesta_envio
+  is 'Respuesta del proceso de envío';
+comment on column T_NOTIFICACIONES.cantidad_intentos_envio
+  is 'Cantidad de intentos de envío';
+alter table T_NOTIFICACIONES
+  add constraint PK_NOTIFICACIONES primary key (ID_NOTIFICACION);
+alter table T_NOTIFICACIONES
+  add constraint FK_NOTIFICACIONES_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);
+

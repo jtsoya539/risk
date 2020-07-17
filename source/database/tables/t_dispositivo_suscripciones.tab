@@ -1,0 +1,21 @@
+create table T_DISPOSITIVO_SUSCRIPCIONES
+(
+  id_dispositivo   NUMBER(15) not null,
+  suscripcion      VARCHAR2(120) not null,
+  fecha_expiracion DATE
+)
+;
+comment on table T_DISPOSITIVO_SUSCRIPCIONES
+  is 'Suscripciones de Dispositivos para notificaciones push';
+comment on column T_DISPOSITIVO_SUSCRIPCIONES.id_dispositivo
+  is 'Identificador del dispositivo';
+comment on column T_DISPOSITIVO_SUSCRIPCIONES.suscripcion
+  is 'Tag de la suscripción';
+comment on column T_DISPOSITIVO_SUSCRIPCIONES.fecha_expiracion
+  is 'Fecha de expiración de la suscripción';
+alter table T_DISPOSITIVO_SUSCRIPCIONES
+  add constraint PK_DISPOSITIVO_SUSCRIPCIONES primary key (ID_DISPOSITIVO, SUSCRIPCION);
+alter table T_DISPOSITIVO_SUSCRIPCIONES
+  add constraint FK_DIS_SUS_DISPOSITIVOS foreign key (ID_DISPOSITIVO)
+  references T_DISPOSITIVOS (ID_DISPOSITIVO);
+

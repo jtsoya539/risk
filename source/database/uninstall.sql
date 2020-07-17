@@ -59,6 +59,7 @@ drop package k_servicio_aut;
 drop package k_servicio;
 drop package k_error;
 drop package k_autenticacion;
+drop package k_dispositivo;
 drop package k_auditoria;
 drop package k_util;
 drop package k_html;
@@ -92,11 +93,13 @@ prompt -----------------------------------
 prompt
 drop table t_archivos cascade constraints;
 drop table t_archivo_definiciones cascade constraints;
+drop table t_notificaciones cascade constraints;
 drop table t_mensajes cascade constraints;
 drop table t_correo_adjuntos cascade constraints;
 drop table t_correos cascade constraints;
 drop table t_usuario_claves cascade constraints;
 drop table t_sesiones cascade constraints;
+drop table t_dispositivo_suscripciones cascade constraints;
 drop table t_dispositivos cascade constraints;
 drop table t_servicio_logs cascade constraints;
 drop table t_servicio_parametros cascade constraints;
