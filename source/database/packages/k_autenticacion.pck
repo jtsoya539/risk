@@ -755,6 +755,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        l_id_dispositivo)
     RETURNING id_sesion INTO l_id_sesion;
   
+    IF l_id_dispositivo IS NOT NULL THEN
+      -- Inserta o actualiza una suscripción por el usuario en el dispositivo
+      k_dispositivo.p_agregar_suscripcion(l_id_dispositivo,
+                                          k_dispositivo.c_suscripcion_usuario || '_' ||
+                                          to_char(l_id_usuario));
+    END IF;
+  
     RETURN l_id_sesion;
   EXCEPTION
     WHEN ex_usuario_inexistente THEN

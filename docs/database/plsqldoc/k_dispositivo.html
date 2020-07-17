@@ -45,8 +45,51 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR_SUSCRIPCION">p_agregar_suscripcion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ELIMINAR_SUSCRIPCION">p_eliminar_suscripcion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_SUSCRIPCION_DEFECTO">c_suscripcion_defecto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_SUSCRIPCION_USUARIO">c_suscripcion_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_SUSCRIPCION_DEFECTO"></A>
+<P CLASS="TYPE_TITLE">
+c_suscripcion_defecto
+</P>
+<PRE CLASS="DECL_TEXT">
+c_suscripcion_defecto CONSTANT VARCHAR2(120) := 'default';
+</PRE>
+<HR>
+<A NAME="C_SUSCRIPCION_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+c_suscripcion_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+c_suscripcion_usuario CONSTANT VARCHAR2(120) := 'user';
+</PRE>
 <HR>
 <A NAME="F_ID_DISPOSITIVO"></A>
 <P CLASS="TYPE_TITLE">
@@ -71,6 +114,26 @@ FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
                                  i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
                                  i_version_navegador         IN VARCHAR2 DEFAULT NULL)
   RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="P_AGREGAR_SUSCRIPCION"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar_suscripcion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar_suscripcion(i_id_dispositivo IN NUMBER,
+                                i_suscripcion    IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_ELIMINAR_SUSCRIPCION"></A>
+<P CLASS="TYPE_TITLE">
+p_eliminar_suscripcion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_eliminar_suscripcion(i_id_dispositivo IN NUMBER,
+                                 i_suscripcion    IN VARCHAR2)
 
 </PRE>
 <P>&nbsp;</P>

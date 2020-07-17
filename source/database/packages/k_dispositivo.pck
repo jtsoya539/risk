@@ -30,6 +30,9 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   -------------------------------------------------------------------------------
   */
 
+  c_suscripcion_defecto CONSTANT VARCHAR2(120) := 'default';
+  c_suscripcion_usuario CONSTANT VARCHAR2(120) := 'user';
+
   FUNCTION f_id_dispositivo(i_token_dispositivo IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
@@ -42,9 +45,18 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
+  PROCEDURE p_agregar_suscripcion(i_id_dispositivo IN NUMBER,
+                                  i_suscripcion    IN VARCHAR2);
+
+  PROCEDURE p_eliminar_suscripcion(i_id_dispositivo IN NUMBER,
+                                   i_suscripcion    IN VARCHAR2);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
+
+  -- Tiempo de expiración de la suscripción en días
+  c_tiempo_expiracion_suscripcion CONSTANT PLS_INTEGER := 30;
 
   FUNCTION f_id_dispositivo(i_token_dispositivo IN VARCHAR2) RETURN NUMBER IS
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
@@ -132,7 +144,41 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
       RETURNING id_dispositivo INTO l_id_dispositivo;
     END IF;
   
+    IF l_id_dispositivo IS NOT NULL THEN
+      -- Inserta o actualiza una suscripción por defecto en el dispositivo
+      p_agregar_suscripcion(l_id_dispositivo, c_suscripcion_defecto);
+    END IF;
+  
     RETURN l_id_dispositivo;
+  END;
+
+  PROCEDURE p_agregar_suscripcion(i_id_dispositivo IN NUMBER,
+                                  i_suscripcion    IN VARCHAR2) IS
+  BEGIN
+    -- Actualiza suscripción
+    UPDATE t_dispositivo_suscripciones s
+       SET s.suscripcion      = lower(i_suscripcion),
+           s.fecha_expiracion = SYSDATE + c_tiempo_expiracion_suscripcion
+     WHERE s.id_dispositivo = i_id_dispositivo
+       AND lower(s.suscripcion) = lower(i_suscripcion);
+  
+    IF SQL%NOTFOUND THEN
+      -- Inserta suscripción
+      INSERT INTO t_dispositivo_suscripciones
+        (id_dispositivo, suscripcion, fecha_expiracion)
+      VALUES
+        (i_id_dispositivo,
+         lower(i_suscripcion),
+         SYSDATE + c_tiempo_expiracion_suscripcion);
+    END IF;
+  END;
+
+  PROCEDURE p_eliminar_suscripcion(i_id_dispositivo IN NUMBER,
+                                   i_suscripcion    IN VARCHAR2) IS
+  BEGIN
+    DELETE t_dispositivo_suscripciones s
+     WHERE s.id_dispositivo = i_id_dispositivo
+       AND lower(s.suscripcion) = lower(i_suscripcion);
   END;
 
 END;

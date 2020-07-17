@@ -56,6 +56,8 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
   FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION datos_dispositivo(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -620,12 +622,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   FUNCTION registrar_dispositivo(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     l_rsp            y_respuesta;
+    l_dato           y_dato;
     l_dispositivo    y_dispositivo;
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
   BEGIN
     -- Inicializa respuesta
-    l_rsp         := NEW y_respuesta();
-    l_dispositivo := NEW y_dispositivo();
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -652,7 +655,62 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                               l_dispositivo.nombre_navegador,
                                                               l_dispositivo.version_navegador);
   
-    l_dispositivo := NEW y_dispositivo();
+    l_rsp.lugar := 'Buscando token del dispositivo';
+    BEGIN
+      SELECT token_dispositivo
+        INTO l_dato.contenido
+        FROM t_dispositivos
+       WHERE id_dispositivo = l_id_dispositivo;
+    EXCEPTION
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'aut0001',
+                                     'Error al obtener token del dispositivo');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION datos_dispositivo(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp           y_respuesta;
+    l_dispositivo   y_dispositivo;
+    l_suscripciones y_objetos;
+    l_suscripcion   y_dato;
+  
+    l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
+  
+    CURSOR cr_suscripciones(i_id_dispositivo IN NUMBER) IS
+      SELECT s.suscripcion
+        FROM t_dispositivo_suscripciones s
+       WHERE (s.fecha_expiracion IS NULL OR s.fecha_expiracion > SYSDATE)
+         AND s.id_dispositivo = i_id_dispositivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp           := NEW y_respuesta();
+    l_dispositivo   := NEW y_dispositivo();
+    l_suscripciones := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parámetros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'token_dispositivo') IS NOT NULL,
+                                   'Debe ingresar token_dispositivo');
+  
+    l_id_dispositivo := k_dispositivo.f_id_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                           'token_dispositivo'));
   
     l_rsp.lugar := 'Buscando datos del dispositivo';
     BEGIN
@@ -686,6 +744,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                      'Error al buscar datos del dispositivo');
         RAISE k_servicio.ex_error_general;
     END;
+  
+    l_rsp.lugar := 'Buscando suscripciones del dispositivo';
+    FOR c IN cr_suscripciones(l_id_dispositivo) LOOP
+      l_suscripcion           := NEW y_dato();
+      l_suscripcion.contenido := c.suscripcion;
+    
+      l_suscripciones.extend;
+      l_suscripciones(l_suscripciones.count) := l_suscripcion;
+    END LOOP;
+    l_dispositivo.suscripciones := l_suscripciones;
   
     k_servicio.p_respuesta_ok(l_rsp, l_dispositivo);
     RETURN l_rsp;

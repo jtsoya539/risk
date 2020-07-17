@@ -146,6 +146,9 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (20, 'FORMATO', 'I', 'S', null, 'S', 'PDF', 'S', 10);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
+values (21, 'TOKEN_DISPOSITIVO', 'I', 'S', null, 'S', null, 'S', 1);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (30, 'PAGINA_PARAMETROS', 'I', 'O', 'Y_PAGINA_PARAMETROS', 'N', null, 'S', 10);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)

@@ -32,20 +32,22 @@ SOFTWARE.
 
 /** Identificador del dispositivo */
   id_dispositivo NUMBER(15),
-/* Token del dispositivo */
+/** Token del dispositivo */
   token_dispositivo VARCHAR2(500),
-/* Nombre del sistema operativo */
+/** Nombre del sistema operativo */
   nombre_sistema_operativo VARCHAR2(100),
-/* Version del sistema operativo */
+/** Version del sistema operativo */
   version_sistema_operativo VARCHAR2(100),
-/* Tipo del dispositivo */
+/** Tipo del dispositivo */
   tipo VARCHAR2(100),
-/* Nombre del navegador */
+/** Nombre del navegador */
   nombre_navegador VARCHAR2(100),
-/* Version del navegador */
+/** Version del navegador */
   version_navegador VARCHAR2(100),
-/* Token de notificacion del dispositivo */
+/** Token de notificacion del dispositivo */
   token_notificacion VARCHAR2(500),
+/** Suscripciones para notificaciones push del dispositivo */
+  suscripciones y_objetos,
 
 /**
 Constructor del objeto sin parámetros.
@@ -66,7 +68,6 @@ Retorna el objeto serializado en formato JSON.
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /
-
 CREATE OR REPLACE TYPE BODY y_dispositivo IS
 
   CONSTRUCTOR FUNCTION y_dispositivo RETURN SELF AS RESULT AS
@@ -79,6 +80,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     self.nombre_navegador          := NULL;
     self.version_navegador         := NULL;
     self.token_notificacion        := NULL;
+    self.suscripciones             := NEW y_objetos();
     RETURN;
   END;
 
@@ -97,12 +99,15 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_dispositivo.nombre_navegador          := l_json_object.get_string('nombre_navegador');
     l_dispositivo.version_navegador         := l_json_object.get_string('version_navegador');
     l_dispositivo.token_notificacion        := l_json_object.get_string('token_notificacion');
+    l_dispositivo.suscripciones             := NULL; -- TODO
   
     RETURN l_dispositivo;
   END;
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB IS
     l_json_object json_object_t;
+    l_json_array  json_array_t;
+    i             INTEGER;
   BEGIN
     l_json_object := NEW json_object_t();
     l_json_object.put('id_dispositivo', self.id_dispositivo);
@@ -115,9 +120,22 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_json_object.put('nombre_navegador', self.nombre_navegador);
     l_json_object.put('version_navegador', self.version_navegador);
     l_json_object.put('token_notificacion', self.token_notificacion);
+  
+    IF self.suscripciones IS NULL THEN
+      l_json_object.put_null('suscripciones');
+    ELSE
+      l_json_array := NEW json_array_t();
+      i            := self.suscripciones.first;
+      WHILE i IS NOT NULL LOOP
+        l_json_array.append(json_object_t.parse(self.suscripciones(i)
+                                                .to_json));
+        i := self.suscripciones.next(i);
+      END LOOP;
+      l_json_object.put('suscripciones', l_json_array);
+    END IF;
+  
     RETURN l_json_object.to_clob;
   END;
 
 END;
 /
-
