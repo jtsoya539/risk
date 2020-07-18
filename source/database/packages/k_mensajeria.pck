@@ -69,12 +69,6 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
 
-  g_direccion_correo_remitente t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_REMITENTE');
-  g_numero_telefono_remitente  t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_REMITENTE');
-  g_direccion_correo_pruebas   t_parametros.valor%TYPE := k_util.f_valor_parametro('DIRECCION_CORREO_PRUEBAS');
-  g_numero_telefono_pruebas    t_parametros.valor%TYPE := k_util.f_valor_parametro('NUMERO_TELEFONO_PRUEBAS');
-  g_suscripcion_pruebas        t_parametros.valor%TYPE := k_util.f_valor_parametro('SUSCRIPCION_PRUEBAS');
-
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN IS
   BEGIN
@@ -148,7 +142,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     IF NOT k_sistema.f_es_produccion THEN
-      l_mensaje_to := g_direccion_correo_pruebas;
+      l_mensaje_to := k_util.f_valor_parametro('DIRECCION_CORREO_PRUEBAS');
     END IF;
   
     INSERT INTO t_correos
@@ -166,7 +160,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
        l_mensaje_to,
        i_subject,
        i_body,
-       g_direccion_correo_remitente,
+       k_util.f_valor_parametro('DIRECCION_CORREO_REMITENTE'),
        i_reply_to,
        i_cc,
        i_bcc,
@@ -194,7 +188,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     IF NOT k_sistema.f_es_produccion THEN
-      l_numero_telefono := g_numero_telefono_pruebas;
+      l_numero_telefono := k_util.f_valor_parametro('NUMERO_TELEFONO_PRUEBAS');
     END IF;
   
     INSERT INTO t_mensajes
@@ -232,7 +226,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     IF NOT k_sistema.f_es_produccion THEN
-      l_suscripcion := g_suscripcion_pruebas;
+      l_suscripcion := k_util.f_valor_parametro('SUSCRIPCION_PRUEBAS');
     END IF;
   
     INSERT INTO t_notificaciones
