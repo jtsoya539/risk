@@ -40,7 +40,7 @@ namespace Risk.Mail
             // Risk Configuration
             apiConfiguration = new Configuration();
             apiConfiguration.BasePath = _configuration["RiskConfiguration:RiskAPIBasePath"];
-            apiConfiguration.AddApiKeyPrefix("Authorization", "Bearer");
+            apiConfiguration.ApiKey.Add("Risk-App-Key", _configuration["RiskConfiguration:RiskAppKey"]);
 
             autApi = new AutApi(apiConfiguration);
             msjApi = new MsjApi(apiConfiguration);
@@ -56,7 +56,7 @@ namespace Risk.Mail
 
         private void IniciarSesion()
         {
-            SesionRespuesta sesionRespuesta = autApi.IniciarSesion(_configuration["RiskConfiguration:RiskAppKey"], new IniciarSesionRequestBody
+            SesionRespuesta sesionRespuesta = autApi.IniciarSesion(new IniciarSesionRequestBody
             {
                 Usuario = _configuration["RiskConfiguration:Usuario"],
                 Clave = _configuration["RiskConfiguration:Clave"]
@@ -68,14 +68,14 @@ namespace Risk.Mail
                 refreshToken = sesionRespuesta.Datos.RefreshToken;
             }
 
-            apiConfiguration.AddApiKey("Authorization", accessToken);
+            apiConfiguration.AccessToken = accessToken;
 
             msjApi.Configuration = apiConfiguration;
         }
 
         private void RefrescarSesion()
         {
-            SesionRespuesta sesionRespuesta = autApi.RefrescarSesion(_configuration["RiskConfiguration:RiskAppKey"], new RefrescarSesionRequestBody
+            SesionRespuesta sesionRespuesta = autApi.RefrescarSesion(new RefrescarSesionRequestBody
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
@@ -87,7 +87,7 @@ namespace Risk.Mail
                 refreshToken = sesionRespuesta.Datos.RefreshToken;
             }
 
-            apiConfiguration.AddApiKey("Authorization", accessToken);
+            apiConfiguration.AccessToken = accessToken;
 
             msjApi.Configuration = apiConfiguration;
         }
@@ -99,7 +99,7 @@ namespace Risk.Mail
             CorreoPaginaRespuesta mensajesPendientes = null;
             try
             {
-                mensajesPendientes = msjApi.ListarCorreosPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                mensajesPendientes = msjApi.ListarCorreosPendientes(null, null, "S");
             }
             catch (ApiException e)
             {
@@ -109,7 +109,7 @@ namespace Risk.Mail
 
                     try
                     {
-                        mensajesPendientes = msjApi.ListarCorreosPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                        mensajesPendientes = msjApi.ListarCorreosPendientes(null, null, "S");
                     }
                     catch (ApiException ex)
                     {
@@ -131,7 +131,7 @@ namespace Risk.Mail
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
             {
-                datoRespuesta = msjApi.CambiarEstadoCorreo(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoCorreoRequestBody
+                datoRespuesta = msjApi.CambiarEstadoCorreo(new CambiarEstadoCorreoRequestBody
                 {
                     IdCorreo = idCorreo,
                     Estado = estado,
@@ -146,7 +146,7 @@ namespace Risk.Mail
 
                     try
                     {
-                        datoRespuesta = msjApi.CambiarEstadoCorreo(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoCorreoRequestBody
+                        datoRespuesta = msjApi.CambiarEstadoCorreo(new CambiarEstadoCorreoRequestBody
                         {
                             IdCorreo = idCorreo,
                             Estado = estado,
@@ -215,7 +215,7 @@ namespace Risk.Mail
 
                 _smtpClient.Disconnect(true);
 
-                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(_configuration.GetValue<double>("ExecuteDelaySeconds")), stoppingToken);
             }
         }
     }

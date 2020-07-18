@@ -39,7 +39,7 @@ namespace Risk.SMS
             // Risk Configuration
             apiConfiguration = new Configuration();
             apiConfiguration.BasePath = _configuration["RiskConfiguration:RiskAPIBasePath"];
-            apiConfiguration.AddApiKeyPrefix("Authorization", "Bearer");
+            apiConfiguration.ApiKey.Add("Risk-App-Key", _configuration["RiskConfiguration:RiskAppKey"]);
 
             autApi = new AutApi(apiConfiguration);
             msjApi = new MsjApi(apiConfiguration);
@@ -54,7 +54,7 @@ namespace Risk.SMS
 
         private void IniciarSesion()
         {
-            SesionRespuesta sesionRespuesta = autApi.IniciarSesion(_configuration["RiskConfiguration:RiskAppKey"], new IniciarSesionRequestBody
+            SesionRespuesta sesionRespuesta = autApi.IniciarSesion(new IniciarSesionRequestBody
             {
                 Usuario = _configuration["RiskConfiguration:Usuario"],
                 Clave = _configuration["RiskConfiguration:Clave"]
@@ -66,14 +66,14 @@ namespace Risk.SMS
                 refreshToken = sesionRespuesta.Datos.RefreshToken;
             }
 
-            apiConfiguration.AddApiKey("Authorization", accessToken);
+            apiConfiguration.AccessToken = accessToken;
 
             msjApi.Configuration = apiConfiguration;
         }
 
         private void RefrescarSesion()
         {
-            SesionRespuesta sesionRespuesta = autApi.RefrescarSesion(_configuration["RiskConfiguration:RiskAppKey"], new RefrescarSesionRequestBody
+            SesionRespuesta sesionRespuesta = autApi.RefrescarSesion(new RefrescarSesionRequestBody
             {
                 AccessToken = accessToken,
                 RefreshToken = refreshToken
@@ -85,7 +85,7 @@ namespace Risk.SMS
                 refreshToken = sesionRespuesta.Datos.RefreshToken;
             }
 
-            apiConfiguration.AddApiKey("Authorization", accessToken);
+            apiConfiguration.AccessToken = accessToken;
 
             msjApi.Configuration = apiConfiguration;
         }
@@ -97,7 +97,7 @@ namespace Risk.SMS
             MensajePaginaRespuesta mensajesPendientes = null;
             try
             {
-                mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                mensajesPendientes = msjApi.ListarMensajesPendientes(null, null, "S");
             }
             catch (ApiException e)
             {
@@ -107,7 +107,7 @@ namespace Risk.SMS
 
                     try
                     {
-                        mensajesPendientes = msjApi.ListarMensajesPendientes(_configuration["RiskConfiguration:RiskAppKey"], null, null, "S");
+                        mensajesPendientes = msjApi.ListarMensajesPendientes(null, null, "S");
                     }
                     catch (ApiException ex)
                     {
@@ -129,7 +129,7 @@ namespace Risk.SMS
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
             {
-                datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                datoRespuesta = msjApi.CambiarEstadoMensaje(new CambiarEstadoMensajeRequestBody
                 {
                     IdMensaje = idMensaje,
                     Estado = estado,
@@ -144,7 +144,7 @@ namespace Risk.SMS
 
                     try
                     {
-                        datoRespuesta = msjApi.CambiarEstadoMensaje(_configuration["RiskConfiguration:RiskAppKey"], new CambiarEstadoMensajeRequestBody
+                        datoRespuesta = msjApi.CambiarEstadoMensaje(new CambiarEstadoMensajeRequestBody
                         {
                             IdMensaje = idMensaje,
                             Estado = estado,
@@ -187,7 +187,7 @@ namespace Risk.SMS
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(_configuration.GetValue<double>("ExecuteDelaySeconds")), stoppingToken);
             }
         }
     }
