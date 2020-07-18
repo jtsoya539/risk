@@ -50,9 +50,12 @@ namespace Risk.API.Helpers
         public static List<YDato> GetYDatoListFromModel(List<Dato> modelList)
         {
             List<YDato> entityList = new List<YDato>();
-            foreach (var item in modelList)
+            if (modelList != null)
             {
-                entityList.Add(GetYDatoFromModel(item));
+                foreach (var item in modelList)
+                {
+                    entityList.Add(GetYDatoFromModel(item));
+                }
             }
             return entityList;
         }

@@ -73,9 +73,12 @@ namespace Risk.API.Helpers
         public static List<Dato> GetDatoListFromEntity(List<YDato> entityList)
         {
             List<Dato> modelList = new List<Dato>();
-            foreach (var item in entityList)
+            if (entityList != null)
             {
-                modelList.Add(GetDatoFromEntity(item));
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetDatoFromEntity(item));
+                }
             }
             return modelList;
         }
@@ -113,9 +116,12 @@ namespace Risk.API.Helpers
         public static List<Rol> GetRolListFromEntity(List<YRol> entityList)
         {
             List<Rol> modelList = new List<Rol>();
-            foreach (var item in entityList)
+            if (entityList != null)
             {
-                modelList.Add(GetRolFromEntity(item));
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetRolFromEntity(item));
+                }
             }
             return modelList;
         }
@@ -212,9 +218,12 @@ namespace Risk.API.Helpers
         public static List<Pais> GetPaisListFromEntity(List<YPais> entityList)
         {
             List<Pais> modelList = new List<Pais>();
-            foreach (var item in entityList)
+            if (entityList != null)
             {
-                modelList.Add(GetPaisFromEntity(item));
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetPaisFromEntity(item));
+                }
             }
             return modelList;
         }
@@ -241,9 +250,12 @@ namespace Risk.API.Helpers
         public static List<Mensaje> GetMensajeListFromEntity(List<YMensaje> entityList)
         {
             List<Mensaje> modelList = new List<Mensaje>();
-            foreach (var item in entityList)
+            if (entityList != null)
             {
-                modelList.Add(GetMensajeFromEntity(item));
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetMensajeFromEntity(item));
+                }
             }
             return modelList;
         }
@@ -275,9 +287,12 @@ namespace Risk.API.Helpers
         public static List<Correo> GetCorreoListFromEntity(List<YCorreo> entityList)
         {
             List<Correo> modelList = new List<Correo>();
-            foreach (var item in entityList)
+            if (entityList != null)
             {
-                modelList.Add(GetCorreoFromEntity(item));
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetCorreoFromEntity(item));
+                }
             }
             return modelList;
         }

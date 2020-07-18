@@ -106,7 +106,7 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
     l_json_array := l_json_object.get_array('roles');
   
     IF l_json_array IS NULL THEN
-      l_usuario.roles := NULL;
+      l_usuario.roles := NEW y_roles();
     ELSE
       l_roles := NEW y_roles();
       FOR i IN 0 .. l_json_array.get_size - 1 LOOP

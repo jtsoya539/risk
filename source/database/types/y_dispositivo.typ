@@ -85,8 +85,11 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
-    l_dispositivo y_dispositivo;
-    l_json_object json_object_t;
+    l_dispositivo   y_dispositivo;
+    l_json_object   json_object_t;
+    l_dato          y_dato;
+    l_suscripciones y_objetos;
+    l_json_array    json_array_t;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
@@ -99,7 +102,22 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_dispositivo.nombre_navegador          := l_json_object.get_string('nombre_navegador');
     l_dispositivo.version_navegador         := l_json_object.get_string('version_navegador');
     l_dispositivo.token_notificacion        := l_json_object.get_string('token_notificacion');
-    l_dispositivo.suscripciones             := NULL; -- TODO
+  
+    l_json_array := l_json_object.get_array('suscripciones');
+  
+    IF l_json_array IS NULL THEN
+      l_dispositivo.suscripciones := NEW y_objetos();
+    ELSE
+      l_suscripciones := NEW y_objetos();
+      FOR i IN 0 .. l_json_array.get_size - 1 LOOP
+        l_dato := NEW y_dato();
+        l_dato := treat(y_dato.parse_json(l_json_array.get(i).to_clob) AS
+                        y_dato);
+        l_suscripciones.extend;
+        l_suscripciones(l_suscripciones.count) := l_dato;
+      END LOOP;
+      l_dispositivo.suscripciones := l_suscripciones;
+    END IF;
   
     RETURN l_dispositivo;
   END;
@@ -127,8 +145,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
       l_json_array := NEW json_array_t();
       i            := self.suscripciones.first;
       WHILE i IS NOT NULL LOOP
-        l_json_array.append(json_object_t.parse(self.suscripciones(i)
-                                                .to_json));
+        l_json_array.append(json_object_t.parse(self.suscripciones(i).to_json));
         i := self.suscripciones.next(i);
       END LOOP;
       l_json_object.put('suscripciones', l_json_array);

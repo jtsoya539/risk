@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -91,8 +92,9 @@ namespace Risk.API.Services
 
                         con.Close();
                     }
-                    catch (OracleException)
+                    catch (OracleException oe)
                     {
+                        Console.WriteLine(oe);
                         respuesta = RESPUESTA_ERROR_BASE_DATOS;
                     }
                 }

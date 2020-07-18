@@ -625,6 +625,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_dato           y_dato;
     l_dispositivo    y_dispositivo;
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
+    i                INTEGER;
   BEGIN
     -- Inicializa respuesta
     l_rsp  := NEW y_respuesta();
@@ -654,6 +655,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                               l_dispositivo.tipo,
                                                               l_dispositivo.nombre_navegador,
                                                               l_dispositivo.version_navegador);
+  
+    l_rsp.lugar := 'Agregando suscripciones';
+    i           := l_dispositivo.suscripciones.first;
+    WHILE i IS NOT NULL LOOP
+      l_dato := treat(l_dispositivo.suscripciones(i) AS y_dato);
+      k_dispositivo.p_agregar_suscripcion(l_id_dispositivo,
+                                          l_dato.contenido);
+      i := l_dispositivo.suscripciones.next(i);
+    END LOOP;
   
     l_rsp.lugar := 'Buscando token del dispositivo';
     BEGIN
