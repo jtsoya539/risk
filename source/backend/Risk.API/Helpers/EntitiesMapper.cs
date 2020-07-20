@@ -299,6 +299,39 @@ namespace Risk.API.Helpers
             return modelList;
         }
 
+        public static Notificacion GetNotificacionFromEntity(YNotificacion entity)
+        {
+            Notificacion model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Notificacion
+                {
+                    IdNotificacion = entity.IdNotificacion,
+                    Suscripcion = entity.Suscripcion,
+                    Titulo = entity.Titulo,
+                    Contenido = entity.Contenido
+                };
+            }
+            return model;
+        }
+
+        public static List<Notificacion> GetNotificacionListFromEntity(List<YNotificacion> entityList)
+        {
+            List<Notificacion> modelList = new List<Notificacion>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetNotificacionFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
         public static Pagina<T> GetPaginaFromEntity<T, YT>(YPagina<YT> entity, List<T> elementos)
         {
             return new Pagina<T>

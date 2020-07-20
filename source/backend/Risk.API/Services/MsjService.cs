@@ -37,6 +37,8 @@ namespace Risk.API.Services
         private const int ID_CAMBIAR_ESTADO_MENSAJE = 31;
         private const int ID_LISTAR_CORREOS_PENDIENTES = 32;
         private const int ID_CAMBIAR_ESTADO_CORREO = 33;
+        private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 34;
+        private const int ID_CAMBIAR_ESTADO_NOTIFICACION = 35;
 
         public MsjService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
         {
@@ -111,6 +113,43 @@ namespace Risk.API.Services
             prms.Add("respuesta_envio", respuestaEnvio);
 
             string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_CORREO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
+        {
+            JObject prms = new JObject();
+
+            YPaginaParametros paginaParametros = new YPaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
+
+            string rsp = base.ProcesarServicio(ID_LISTAR_NOTIFICACIONES_PENDIENTES, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YNotificacion>>>(rsp);
+
+            Pagina<Notificacion> datos = null;
+            if (entityRsp.Datos != null)
+            {
+                datos = EntitiesMapper.GetPaginaFromEntity<Notificacion, YNotificacion>(entityRsp.Datos, EntitiesMapper.GetNotificacionListFromEntity(entityRsp.Datos.Elementos));
+            }
+
+            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Notificacion>, YPagina<YNotificacion>>(entityRsp, datos);
+        }
+
+        public Respuesta<Dato> CambiarEstadoNotificacion(int idNotificacion, string estado, string respuestaEnvio)
+        {
+            JObject prms = new JObject();
+            prms.Add("id_notificacion", idNotificacion);
+            prms.Add("estado", estado);
+            prms.Add("respuesta_envio", respuestaEnvio);
+
+            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_NOTIFICACION, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));

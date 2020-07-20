@@ -203,17 +203,17 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_rsp       y_respuesta;
     l_pagina    y_pagina;
     l_elementos y_objetos;
-    l_elemento  y_mensaje;
+    l_elemento  y_notificacion;
   
     l_pagina_parametros y_pagina_parametros;
   
     CURSOR cr_elementos IS
-      SELECT id_mensaje, numero_telefono, contenido, estado
-        FROM t_mensajes
+      SELECT id_notificacion, suscripcion, titulo, contenido, estado
+        FROM t_notificaciones
        WHERE estado IN ('P', 'R')
       -- P-PENDIENTE DE ENVÍO
       -- R-PROCESADO CON ERROR
-       ORDER BY id_mensaje
+       ORDER BY id_notificacion
          FOR UPDATE OF estado;
   BEGIN
     -- Inicializa respuesta
@@ -230,15 +230,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos LOOP
-      l_elemento                 := NEW y_mensaje();
-      l_elemento.id_mensaje      := ele.id_mensaje;
-      l_elemento.numero_telefono := ele.numero_telefono;
+      l_elemento                 := NEW y_notificacion();
+      l_elemento.id_notificacion := ele.id_notificacion;
+      l_elemento.suscripcion     := ele.suscripcion;
+      l_elemento.titulo          := ele.titulo;
       l_elemento.contenido       := ele.contenido;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;
     
-      UPDATE t_mensajes
+      UPDATE t_notificaciones
          SET estado = 'N' -- N-EN PROCESO DE ENVÍO
        WHERE CURRENT OF cr_elementos;
     END LOOP;

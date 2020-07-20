@@ -95,6 +95,7 @@ plugin plsqldoc generate y_correo;
 plugin plsqldoc generate y_dato;
 plugin plsqldoc generate y_dispositivo;
 plugin plsqldoc generate y_mensaje;
+plugin plsqldoc generate y_notificacion;
 plugin plsqldoc generate y_objeto;
 plugin plsqldoc generate y_objetos;
 plugin plsqldoc generate y_pagina;

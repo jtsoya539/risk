@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_notificacion</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_notificacion">
+ <META name="description" content="Agrupa datos de Notificaciones push.">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_notificacion</P>
+Agrupa datos de Notificaciones push.<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:54:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_NOTIFICACION">id_notificacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Identificador de la notificaci&#243;n push
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#SUSCRIPCION">suscripcion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tag o expresi&#243;n destino de la notificaci&#243;n push
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TITULO">titulo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+T&#237;tulo de la notificaci&#243;n push
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CONTENIDO">contenido</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Contenido de la notificaci&#243;n push
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_NOTIFICACION">y_notificacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#PARSE_JSON">parse_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="ID_NOTIFICACION"></A>
+<P CLASS="TYPE_TITLE">
+id_notificacion
+</P>
+<PRE CLASS="DECL_TEXT">
+id_notificacion NUMBER
+</PRE>
+<P CLASS="DESC_TEXT">
+Identificador de la notificaci&#243;n push<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="SUSCRIPCION"></A>
+<P CLASS="TYPE_TITLE">
+suscripcion
+</P>
+<PRE CLASS="DECL_TEXT">
+suscripcion VARCHAR2(500)
+</PRE>
+<P CLASS="DESC_TEXT">
+Tag o expresi&#243;n destino de la notificaci&#243;n push<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="TITULO"></A>
+<P CLASS="TYPE_TITLE">
+titulo
+</P>
+<PRE CLASS="DECL_TEXT">
+titulo VARCHAR2(160)
+</PRE>
+<P CLASS="DESC_TEXT">
+T&#237;tulo de la notificaci&#243;n push<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="CONTENIDO"></A>
+<P CLASS="TYPE_TITLE">
+contenido
+</P>
+<PRE CLASS="DECL_TEXT">
+contenido VARCHAR2(500)
+</PRE>
+<P CLASS="DESC_TEXT">
+Contenido de la notificaci&#243;n push<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="Y_NOTIFICACION"></A>
+<P CLASS="TYPE_TITLE">
+y_notificacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_notificacion RETURN SELF AS RESULT
+
+</PRE>
+<HR>
+<A NAME="PARSE_JSON"></A>
+<P CLASS="TYPE_TITLE">
+parse_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

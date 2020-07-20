@@ -22,17 +22,19 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
+using Newtonsoft.Json;
 
-namespace Risk.API.Services
+namespace Risk.API.Entities
 {
-    public interface IMsjService
+    public class YNotificacion
     {
-        Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio);
-        Respuesta<Pagina<Correo>> ListarCorreosPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoCorreo(int idCorreo, string estado, string respuestaEnvio);
-        Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoNotificacion(int idNotificacion, string estado, string respuestaEnvio);
+        [JsonProperty("id_notificacion")]
+        public int IdNotificacion { get; set; }
+        [JsonProperty("suscripcion")]
+        public string Suscripcion { get; set; }
+        [JsonProperty("titulo")]
+        public string Titulo { get; set; }
+        [JsonProperty("contenido")]
+        public string Contenido { get; set; }
     }
 }

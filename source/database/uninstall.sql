@@ -69,6 +69,7 @@ prompt
 prompt Borrando types...
 prompt -----------------------------------
 prompt
+drop type y_notificacion force;
 drop type y_mensaje force;
 drop type y_correo force;
 drop type y_pais force;

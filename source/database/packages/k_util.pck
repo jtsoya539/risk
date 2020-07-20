@@ -294,7 +294,7 @@ SOFTWARE.
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
-    l_objeto      y_objeto;
+    l_objeto      ' || l_type || ';
     l_json_object json_object_t;
   BEGIN
     l_json_object := json_object_t.parse(i_json);

@@ -98,5 +98,31 @@ namespace Risk.API.Controllers
             var respuesta = _msjService.CambiarEstadoCorreo(requestBody.IdCorreo, requestBody.Estado, requestBody.RespuestaEnvio);
             return ProcesarRespuesta(respuesta);
         }
+
+        [HttpGet("ListarNotificacionesPendientes")]
+        [SwaggerOperation(OperationId = "ListarNotificacionesPendientes", Summary = "ListarNotificacionesPendientes", Description = "Obtiene una lista de notificaciones push pendientes de envío")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Notificacion>>))]
+        public IActionResult ListarNotificacionesPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            var respuesta = _msjService.ListarNotificacionesPendientes(pagina, porPagina, noPaginar);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [HttpPost("CambiarEstadoNotificacion")]
+        [SwaggerOperation(OperationId = "CambiarEstadoNotificacion", Summary = "CambiarEstadoNotificacion", Description = "Permite cambiar el estado de una notificación push")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult CambiarEstadoNotificacion([FromBody] CambiarEstadoNotificacionRequestBody requestBody)
+        {
+            var respuesta = _msjService.CambiarEstadoNotificacion(requestBody.IdNotificacion, requestBody.Estado, requestBody.RespuestaEnvio);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }

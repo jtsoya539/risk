@@ -122,6 +122,7 @@ prompt
 @@types/y_pais.typ
 @@types/y_correo.typ
 @@types/y_mensaje.typ
+@@types/y_notificacion.typ
 
 prompt
 prompt Creando paquetes...

@@ -22,17 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
-
-namespace Risk.API.Services
+namespace Risk.API.Models
 {
-    public interface IMsjService
+    public class Notificacion
     {
-        Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio);
-        Respuesta<Pagina<Correo>> ListarCorreosPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoCorreo(int idCorreo, string estado, string respuestaEnvio);
-        Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoNotificacion(int idNotificacion, string estado, string respuestaEnvio);
+        public int IdNotificacion { get; set; }
+        public string Suscripcion { get; set; }
+        public string Titulo { get; set; }
+        public string Contenido { get; set; }
     }
 }
