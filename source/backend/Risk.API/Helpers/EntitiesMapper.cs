@@ -166,6 +166,8 @@ namespace Risk.API.Helpers
                     NombreNavegador = entity.NombreNavegador,
                     VersionNavegador = entity.VersionNavegador,
                     TokenNotificacion = entity.TokenNotificacion,
+                    TemplateNotificacion = entity.TemplateNotificacion,
+                    PlataformaNotificacion = entity.PlataformaNotificacion,
                     Suscripciones = GetDatoListFromEntity(entity.Suscripciones)
                 };
             }

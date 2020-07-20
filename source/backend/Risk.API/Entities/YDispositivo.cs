@@ -45,6 +45,10 @@ namespace Risk.API.Entities
         public string VersionNavegador { get; set; }
         [JsonProperty("token_notificacion")]
         public string TokenNotificacion { get; set; }
+        [JsonProperty("template_notificacion")]
+        public string TemplateNotificacion { get; set; }
+        [JsonProperty("plataforma_notificacion")]
+        public string PlataformaNotificacion { get; set; }
         [JsonProperty("suscripciones")]
         public List<YDato> Suscripciones { get; set; }
     }

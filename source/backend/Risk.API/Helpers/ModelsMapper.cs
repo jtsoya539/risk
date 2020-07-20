@@ -79,6 +79,8 @@ namespace Risk.API.Helpers
                     NombreNavegador = model.NombreNavegador,
                     VersionNavegador = model.VersionNavegador,
                     TokenNotificacion = model.TokenNotificacion,
+                    TemplateNotificacion = model.TemplateNotificacion,
+                    PlataformaNotificacion = model.PlataformaNotificacion,
                     Suscripciones = GetYDatoListFromModel(model.Suscripciones)
                 };
             }

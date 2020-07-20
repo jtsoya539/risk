@@ -180,6 +180,32 @@ namespace Risk.API.Controllers
                 return;
             }
 
+            NotificationPlatform platform;
+            switch (dispositivo.PlataformaNotificacion)
+            {
+                case "wns":
+                    platform = NotificationPlatform.Wns;
+                    break;
+                case "apns":
+                    platform = NotificationPlatform.Apns;
+                    break;
+                case "mpns":
+                    platform = NotificationPlatform.Mpns;
+                    break;
+                case "fcm":
+                    platform = NotificationPlatform.Fcm;
+                    break;
+                case "adm":
+                    platform = NotificationPlatform.Adm;
+                    break;
+                case "baidu":
+                    platform = NotificationPlatform.Baidu;
+                    break;
+                default:
+                    platform = NotificationPlatform.Fcm;
+                    break;
+            }
+
             List<string> tags = new List<string>();
             if (dispositivo.Suscripciones != null)
             {
@@ -189,13 +215,19 @@ namespace Risk.API.Controllers
                 }
             }
 
+            var templates = new Dictionary<string, InstallationTemplate>()
+            {
+                {"default_template", new InstallationTemplate { Body = dispositivo.TemplateNotificacion }}
+            };
+
             Installation installation = new Installation
             {
                 InstallationId = dispositivo.TokenDispositivo,
-                Platform = NotificationPlatform.Fcm,
+                Platform = platform,
                 PushChannel = dispositivo.TokenNotificacion,
                 PushChannelExpired = false,
-                Tags = tags
+                Tags = tags,
+                Templates = templates
             };
 
             _notificationHubClientConnection.Hub.CreateOrUpdateInstallation(installation);
