@@ -46,6 +46,10 @@ SOFTWARE.
   version_navegador VARCHAR2(100),
 /** Token de notificacion del dispositivo */
   token_notificacion VARCHAR2(500),
+/** Template para las notificaciones push de la aplicación */
+  template_notificacion CLOB,
+/** Plataforma para las notificaciones push de la aplicación */
+  plataforma_notificacion VARCHAR2(10),
 /** Suscripciones para notificaciones push del dispositivo */
   suscripciones y_objetos,
 
@@ -80,6 +84,8 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     self.nombre_navegador          := NULL;
     self.version_navegador         := NULL;
     self.token_notificacion        := NULL;
+    self.template_notificacion     := NULL;
+    self.plataforma_notificacion   := NULL;
     self.suscripciones             := NEW y_objetos();
     RETURN;
   END;
@@ -102,6 +108,8 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_dispositivo.nombre_navegador          := l_json_object.get_string('nombre_navegador');
     l_dispositivo.version_navegador         := l_json_object.get_string('version_navegador');
     l_dispositivo.token_notificacion        := l_json_object.get_string('token_notificacion');
+    l_dispositivo.template_notificacion     := l_json_object.get_string('template_notificacion');
+    l_dispositivo.plataforma_notificacion   := l_json_object.get_string('plataforma_notificacion');
   
     l_json_array := l_json_object.get_array('suscripciones');
   
@@ -138,6 +146,9 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_json_object.put('nombre_navegador', self.nombre_navegador);
     l_json_object.put('version_navegador', self.version_navegador);
     l_json_object.put('token_notificacion', self.token_notificacion);
+    l_json_object.put('template_notificacion', self.template_notificacion);
+    l_json_object.put('plataforma_notificacion',
+                      self.plataforma_notificacion);
   
     IF self.suscripciones IS NULL THEN
       l_json_object.put_null('suscripciones');
@@ -145,7 +156,8 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
       l_json_array := NEW json_array_t();
       i            := self.suscripciones.first;
       WHILE i IS NOT NULL LOOP
-        l_json_array.append(json_object_t.parse(self.suscripciones(i).to_json));
+        l_json_array.append(json_object_t.parse(self.suscripciones(i)
+                                                .to_json));
         i := self.suscripciones.next(i);
       END LOOP;
       l_json_object.put('suscripciones', l_json_array);

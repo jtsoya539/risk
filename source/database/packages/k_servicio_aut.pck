@@ -731,7 +731,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              d.tipo,
              d.nombre_navegador,
              d.version_navegador,
-             d.token_notificacion
+             d.token_notificacion,
+             a.template_notificacion,
+             a.plataforma_notificacion
         INTO l_dispositivo.id_dispositivo,
              l_dispositivo.token_dispositivo,
              l_dispositivo.nombre_sistema_operativo,
@@ -739,9 +741,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              l_dispositivo.tipo,
              l_dispositivo.nombre_navegador,
              l_dispositivo.version_navegador,
-             l_dispositivo.token_notificacion
-        FROM t_dispositivos d
-       WHERE d.id_dispositivo = l_id_dispositivo;
+             l_dispositivo.token_notificacion,
+             l_dispositivo.template_notificacion,
+             l_dispositivo.plataforma_notificacion
+        FROM t_dispositivos d, t_aplicaciones a
+       WHERE a.id_aplicacion(+) = d.id_aplicacion
+         AND d.id_dispositivo = l_id_dispositivo;
     EXCEPTION
       WHEN no_data_found THEN
         k_servicio.p_respuesta_error(l_rsp,

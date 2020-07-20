@@ -9,7 +9,8 @@ create table T_APLICACIONES
   version_actual                  VARCHAR2(10),
   tiempo_expiracion_access_token  NUMBER(6),
   tiempo_expiracion_refresh_token NUMBER(6),
-  template_notificacion           CLOB
+  template_notificacion           CLOB,
+  plataforma_notificacion         VARCHAR2(10)
 )
 ;
 comment on table T_APLICACIONES
@@ -34,6 +35,8 @@ comment on column T_APLICACIONES.tiempo_expiracion_refresh_token
   is 'Tiempo de expiración del Refresh Token en horas';
 comment on column T_APLICACIONES.template_notificacion
   is 'Template para las notificaciones push de la aplicación';
+comment on column T_APLICACIONES.plataforma_notificacion
+  is 'Plataforma para las notificaciones push de la aplicación';
 alter table T_APLICACIONES
   add constraint PK_APLICACIONES primary key (ID_APLICACION);
 alter table T_APLICACIONES

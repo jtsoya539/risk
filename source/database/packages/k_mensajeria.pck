@@ -65,6 +65,26 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                                   i_id_usuario  IN NUMBER DEFAULT NULL,
                                   i_suscripcion IN VARCHAR2 DEFAULT NULL);
 
+  FUNCTION f_enviar_correo(i_subject    IN VARCHAR2,
+                           i_body       IN CLOB,
+                           i_id_usuario IN NUMBER DEFAULT NULL,
+                           i_to         IN VARCHAR2 DEFAULT NULL,
+                           i_reply_to   IN VARCHAR2 DEFAULT NULL,
+                           i_cc         IN VARCHAR2 DEFAULT NULL,
+                           i_bcc        IN VARCHAR2 DEFAULT NULL)
+    RETURN PLS_INTEGER;
+
+  FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
+                            i_id_usuario      IN NUMBER DEFAULT NULL,
+                            i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+    RETURN PLS_INTEGER;
+
+  FUNCTION f_enviar_notificacion(i_titulo      IN VARCHAR2,
+                                 i_contenido   IN VARCHAR2,
+                                 i_id_usuario  IN NUMBER DEFAULT NULL,
+                                 i_suscripcion IN VARCHAR2 DEFAULT NULL)
+    RETURN PLS_INTEGER;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
@@ -237,6 +257,83 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
        substr(i_titulo, 1, 160),
        substr(i_contenido, 1, 500),
        'P');
+  END;
+
+  FUNCTION f_enviar_correo(i_subject    IN VARCHAR2,
+                           i_body       IN CLOB,
+                           i_id_usuario IN NUMBER DEFAULT NULL,
+                           i_to         IN VARCHAR2 DEFAULT NULL,
+                           i_reply_to   IN VARCHAR2 DEFAULT NULL,
+                           i_cc         IN VARCHAR2 DEFAULT NULL,
+                           i_bcc        IN VARCHAR2 DEFAULT NULL)
+    RETURN PLS_INTEGER IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+    l_rsp PLS_INTEGER;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := 0;
+  
+    p_enviar_correo(i_subject,
+                    i_body,
+                    i_id_usuario,
+                    i_to,
+                    i_reply_to,
+                    i_cc,
+                    i_bcc);
+  
+    COMMIT;
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN OTHERS THEN
+      l_rsp := utl_call_stack.error_number(1);
+      ROLLBACK;
+      RETURN l_rsp;
+  END;
+
+  FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
+                            i_id_usuario      IN NUMBER DEFAULT NULL,
+                            i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+    RETURN PLS_INTEGER IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+    l_rsp PLS_INTEGER;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := 0;
+  
+    p_enviar_mensaje(i_contenido, i_id_usuario, i_numero_telefono);
+  
+    COMMIT;
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN OTHERS THEN
+      l_rsp := utl_call_stack.error_number(1);
+      ROLLBACK;
+      RETURN l_rsp;
+  END;
+
+  FUNCTION f_enviar_notificacion(i_titulo      IN VARCHAR2,
+                                 i_contenido   IN VARCHAR2,
+                                 i_id_usuario  IN NUMBER DEFAULT NULL,
+                                 i_suscripcion IN VARCHAR2 DEFAULT NULL)
+    RETURN PLS_INTEGER IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+    l_rsp PLS_INTEGER;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := 0;
+  
+    p_enviar_notificacion(i_titulo,
+                          i_contenido,
+                          i_id_usuario,
+                          i_suscripcion);
+  
+    COMMIT;
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN OTHERS THEN
+      l_rsp := utl_call_stack.error_number(1);
+      ROLLBACK;
+      RETURN l_rsp;
   END;
 
 END;

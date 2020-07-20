@@ -75,6 +75,21 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ENVIAR_CORREO">f_enviar_correo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ENVIAR_MENSAJE">f_enviar_mensaje</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ENVIAR_NOTIFICACION">f_enviar_notificacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Constants"></A>
@@ -171,6 +186,47 @@ PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
                                 i_contenido   IN VARCHAR2,
                                 i_id_usuario  IN NUMBER DEFAULT NULL,
                                 i_suscripcion IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="F_ENVIAR_CORREO"></A>
+<P CLASS="TYPE_TITLE">
+f_enviar_correo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_enviar_correo(i_subject    IN VARCHAR2,
+                         i_body       IN CLOB,
+                         i_id_usuario IN NUMBER DEFAULT NULL,
+                         i_to         IN VARCHAR2 DEFAULT NULL,
+                         i_reply_to   IN VARCHAR2 DEFAULT NULL,
+                         i_cc         IN VARCHAR2 DEFAULT NULL,
+                         i_bcc        IN VARCHAR2 DEFAULT NULL)
+  RETURN PLS_INTEGER
+
+</PRE>
+<HR>
+<A NAME="F_ENVIAR_MENSAJE"></A>
+<P CLASS="TYPE_TITLE">
+f_enviar_mensaje
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
+                          i_id_usuario      IN NUMBER DEFAULT NULL,
+                          i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+  RETURN PLS_INTEGER
+
+</PRE>
+<HR>
+<A NAME="F_ENVIAR_NOTIFICACION"></A>
+<P CLASS="TYPE_TITLE">
+f_enviar_notificacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_enviar_notificacion(i_titulo      IN VARCHAR2,
+                               i_contenido   IN VARCHAR2,
+                               i_id_usuario  IN NUMBER DEFAULT NULL,
+                               i_suscripcion IN VARCHAR2 DEFAULT NULL)
+  RETURN PLS_INTEGER
 
 </PRE>
 <P>&nbsp;</P>
