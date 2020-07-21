@@ -44,6 +44,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                      i_tipo_token    IN VARCHAR2)
     RETURN NUMBER;
 
+  FUNCTION f_validar_alias_usuario(i_alias VARCHAR2) RETURN BOOLEAN;
+
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A');
@@ -328,6 +330,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     RETURN l_tiempo_expiracion_token;
+  END;
+
+  FUNCTION f_validar_alias_usuario(i_alias VARCHAR2) RETURN BOOLEAN IS
+  BEGIN
+    RETURN nvl(regexp_like(i_alias,
+                           k_util.f_valor_parametro('REGEXP_VALIDAR_ALIAS_USUARIO')),
+               TRUE);
   END;
 
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
@@ -757,9 +766,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     IF l_id_dispositivo IS NOT NULL THEN
       -- Inserta o actualiza una suscripción por el usuario en el dispositivo
-      k_dispositivo.p_agregar_suscripcion(l_id_dispositivo,
-                                          k_dispositivo.c_suscripcion_usuario || '_' ||
-                                          to_char(l_id_usuario));
+      k_dispositivo.p_suscribir_notificacion(l_id_dispositivo,
+                                             k_dispositivo.c_suscripcion_usuario || '_' ||
+                                             to_char(l_id_usuario));
     END IF;
   
     RETURN l_id_sesion;

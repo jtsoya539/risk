@@ -1,0 +1,22 @@
+create table T_DISPOSITIVO_UBICACIONES
+(
+  id_dispositivo NUMBER(15) not null,
+  fecha          DATE not null,
+  latitud        NUMBER not null,
+  longitud       NUMBER not null
+)
+;
+comment on table T_DISPOSITIVO_UBICACIONES
+  is 'Ubicaciones de Dispositivos';
+comment on column T_DISPOSITIVO_UBICACIONES.id_dispositivo
+  is 'Identificador del dispositivo';
+comment on column T_DISPOSITIVO_UBICACIONES.fecha
+  is 'Fecha de la ubicación';
+comment on column T_DISPOSITIVO_UBICACIONES.latitud
+  is 'Latitud de la ubicación';
+comment on column T_DISPOSITIVO_UBICACIONES.longitud
+  is 'Longitud de la ubicación';
+alter table T_DISPOSITIVO_UBICACIONES
+  add constraint FK_DIS_UBI_DISPOSITIVOS foreign key (ID_DISPOSITIVO)
+  references T_DISPOSITIVOS (ID_DISPOSITIVO);
+

@@ -92,6 +92,7 @@ prompt
 @@tables/t_servicio_logs.tab
 @@tables/t_dispositivos.tab
 @@tables/t_dispositivo_suscripciones.tab
+@@tables/t_dispositivo_ubicaciones.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
 @@tables/t_correos.tab

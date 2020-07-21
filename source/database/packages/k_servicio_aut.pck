@@ -660,8 +660,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     i           := l_dispositivo.suscripciones.first;
     WHILE i IS NOT NULL LOOP
       l_dato := treat(l_dispositivo.suscripciones(i) AS y_dato);
-      k_dispositivo.p_agregar_suscripcion(l_id_dispositivo,
-                                          l_dato.contenido);
+      k_dispositivo.p_suscribir_notificacion(l_id_dispositivo,
+                                             l_dato.contenido);
       i := l_dispositivo.suscripciones.next(i);
     END LOOP;
   

@@ -58,4 +58,7 @@ values ('REPORTE_FORMATO_SALIDA_DEFECTO', 'Formato de salida por defecto para re
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('SUSCRIPCION_PRUEBAS', 'Tag o expresión destino para pruebas de notificaciones push', null);
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('REGEXP_VALIDAR_ALIAS_USUARIO', 'Expresión Regular para validación de alias de usuario', null);
+
 prompt Done.

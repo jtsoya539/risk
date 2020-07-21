@@ -45,11 +45,15 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
-  PROCEDURE p_agregar_suscripcion(i_id_dispositivo IN NUMBER,
-                                  i_suscripcion    IN VARCHAR2);
+  PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
+                                     i_suscripcion    IN VARCHAR2);
 
-  PROCEDURE p_eliminar_suscripcion(i_id_dispositivo IN NUMBER,
-                                   i_suscripcion    IN VARCHAR2);
+  PROCEDURE p_desuscribir_notificacion(i_id_dispositivo IN NUMBER,
+                                       i_suscripcion    IN VARCHAR2);
+
+  PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
+                                  i_latitud        IN NUMBER,
+                                  i_longitud       IN NUMBER);
 
 END;
 /
@@ -146,14 +150,14 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
   
     IF l_id_dispositivo IS NOT NULL THEN
       -- Inserta o actualiza una suscripción por defecto en el dispositivo
-      p_agregar_suscripcion(l_id_dispositivo, c_suscripcion_defecto);
+      p_suscribir_notificacion(l_id_dispositivo, c_suscripcion_defecto);
     END IF;
   
     RETURN l_id_dispositivo;
   END;
 
-  PROCEDURE p_agregar_suscripcion(i_id_dispositivo IN NUMBER,
-                                  i_suscripcion    IN VARCHAR2) IS
+  PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
+                                     i_suscripcion    IN VARCHAR2) IS
   BEGIN
     -- Actualiza suscripción
     UPDATE t_dispositivo_suscripciones s
@@ -173,12 +177,23 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     END IF;
   END;
 
-  PROCEDURE p_eliminar_suscripcion(i_id_dispositivo IN NUMBER,
-                                   i_suscripcion    IN VARCHAR2) IS
+  PROCEDURE p_desuscribir_notificacion(i_id_dispositivo IN NUMBER,
+                                       i_suscripcion    IN VARCHAR2) IS
   BEGIN
     DELETE t_dispositivo_suscripciones s
      WHERE s.id_dispositivo = i_id_dispositivo
        AND lower(s.suscripcion) = lower(i_suscripcion);
+  END;
+
+  PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
+                                  i_latitud        IN NUMBER,
+                                  i_longitud       IN NUMBER) IS
+  BEGIN
+    -- Inserta ubicación
+    INSERT INTO t_dispositivo_ubicaciones
+      (id_dispositivo, fecha, latitud, longitud)
+    VALUES
+      (i_id_dispositivo, SYSDATE, i_latitud, i_longitud);
   END;
 
 END;

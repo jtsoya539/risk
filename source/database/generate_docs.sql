@@ -66,6 +66,7 @@ plugin plsqldoc generate t_correo_adjuntos;
 plugin plsqldoc generate t_correos;
 plugin plsqldoc generate t_dispositivos;
 plugin plsqldoc generate t_dispositivo_suscripciones;
+plugin plsqldoc generate t_dispositivo_ubicaciones;
 plugin plsqldoc generate t_errores;
 plugin plsqldoc generate t_mensajes;
 plugin plsqldoc generate t_notificaciones;

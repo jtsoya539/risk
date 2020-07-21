@@ -26,20 +26,28 @@ BEGIN
   -------------------------------------------------------------------------------
   */
 
-  -- Valida direccion de correo
+  -- Valida alias de usuario
+  IF inserting OR
+     (updating AND nvl(:new.alias, 'X') <> nvl(:old.alias, 'X')) THEN
+    IF NOT k_autenticacion.f_validar_alias_usuario(:new.alias) THEN
+      raise_application_error(-20000, 'Alias de usuario inválido');
+    END IF;
+  END IF;
+
+  -- Valida dirección de correo
   IF inserting OR (updating AND nvl(:new.direccion_correo, 'X') <>
      nvl(:old.direccion_correo, 'X')) THEN
     IF NOT k_mensajeria.f_validar_direccion_correo(:new.direccion_correo) THEN
       raise_application_error(-20000,
-                              'Direccion de correo electronico invalida');
+                              'Dirección de correo electrónico inválida');
     END IF;
   END IF;
 
-  -- Valida numero de telefono
+  -- Valida número de teléfono
   IF inserting OR (updating AND nvl(:new.numero_telefono, 'X') <>
      nvl(:old.numero_telefono, 'X')) THEN
     IF NOT k_mensajeria.f_validar_numero_telefono(:new.numero_telefono) THEN
-      raise_application_error(-20000, 'Numero de telefono invalido');
+      raise_application_error(-20000, 'Número de teléfono inválido');
     END IF;
   END IF;
 END;

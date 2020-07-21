@@ -46,6 +46,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_ALIAS_USUARIO">f_validar_alias_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -201,6 +206,15 @@ f_tiempo_expiracion_token
 FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                    i_tipo_token    IN VARCHAR2)
   RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_ALIAS_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_alias_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_alias_usuario(i_alias VARCHAR2) RETURN BOOLEAN
 
 </PRE>
 <HR>

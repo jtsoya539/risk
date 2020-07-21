@@ -46,12 +46,17 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_AGREGAR_SUSCRIPCION">p_agregar_suscripcion</A>&nbsp;&nbsp;
+<A HREF="#P_SUSCRIBIR_NOTIFICACION">p_suscribir_notificacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_ELIMINAR_SUSCRIPCION">p_eliminar_suscripcion</A>&nbsp;&nbsp;
+<A HREF="#P_DESUSCRIBIR_NOTIFICACION">p_desuscribir_notificacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_REGISTRAR_UBICACION">p_registrar_ubicacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -117,23 +122,34 @@ FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
 
 </PRE>
 <HR>
-<A NAME="P_AGREGAR_SUSCRIPCION"></A>
+<A NAME="P_SUSCRIBIR_NOTIFICACION"></A>
 <P CLASS="TYPE_TITLE">
-p_agregar_suscripcion
+p_suscribir_notificacion
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_agregar_suscripcion(i_id_dispositivo IN NUMBER,
-                                i_suscripcion    IN VARCHAR2)
+PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
+                                   i_suscripcion    IN VARCHAR2)
 
 </PRE>
 <HR>
-<A NAME="P_ELIMINAR_SUSCRIPCION"></A>
+<A NAME="P_DESUSCRIBIR_NOTIFICACION"></A>
 <P CLASS="TYPE_TITLE">
-p_eliminar_suscripcion
+p_desuscribir_notificacion
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_eliminar_suscripcion(i_id_dispositivo IN NUMBER,
-                                 i_suscripcion    IN VARCHAR2)
+PROCEDURE p_desuscribir_notificacion(i_id_dispositivo IN NUMBER,
+                                     i_suscripcion    IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_REGISTRAR_UBICACION"></A>
+<P CLASS="TYPE_TITLE">
+p_registrar_ubicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
+                                i_latitud        IN NUMBER,
+                                i_longitud       IN NUMBER)
 
 </PRE>
 <P>&nbsp;</P>
