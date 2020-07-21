@@ -35,7 +35,12 @@ namespace Risk.API.Helpers
         public NotificationHubClientConnection(IConfiguration configuration)
         {
             _configuration = configuration;
-            Hub = NotificationHubClient.CreateClientFromConnectionString(_configuration["NotificationHubConfiguration:ConnectionString"], _configuration["NotificationHubConfiguration:NotificationHubPath"]);
+            string connectionString = _configuration["NotificationHubConfiguration:ConnectionString"];
+            string notificationHubPath = _configuration["NotificationHubConfiguration:NotificationHubPath"];
+            if (!connectionString.Equals(string.Empty) && !notificationHubPath.Equals(string.Empty))
+            {
+                Hub = NotificationHubClient.CreateClientFromConnectionString(connectionString, notificationHubPath);
+            }
         }
     }
 }

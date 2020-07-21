@@ -167,6 +167,11 @@ namespace Risk.API.Controllers
 
         private void RegistrarDispositivoNotificationHub(string tokenDispositivo)
         {
+            if (_notificationHubClientConnection.Hub == null)
+            {
+                return;
+            }
+
             var respDatosDispositivo = _autService.DatosDispositivo(tokenDispositivo);
             if (!respDatosDispositivo.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
