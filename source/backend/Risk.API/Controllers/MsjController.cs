@@ -62,17 +62,6 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
-        [HttpPost("CambiarEstadoMensaje")]
-        [SwaggerOperation(OperationId = "CambiarEstadoMensaje", Summary = "CambiarEstadoMensaje", Description = "Permite cambiar el estado de un mensaje de texto (SMS)")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
-        public IActionResult CambiarEstadoMensaje([FromBody] CambiarEstadoMensajeRequestBody requestBody)
-        {
-            var respuesta = _msjService.CambiarEstadoMensaje(requestBody.IdMensaje, requestBody.Estado, requestBody.RespuestaEnvio);
-            return ProcesarRespuesta(respuesta);
-        }
-
         [HttpGet("ListarCorreosPendientes")]
         [SwaggerOperation(OperationId = "ListarCorreosPendientes", Summary = "ListarCorreosPendientes", Description = "Obtiene una lista de correos electrónicos (E-mail) pendientes de envío")]
         [Produces(MediaTypeNames.Application.Json)]
@@ -85,17 +74,6 @@ namespace Risk.API.Controllers
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 
-            return ProcesarRespuesta(respuesta);
-        }
-
-        [HttpPost("CambiarEstadoCorreo")]
-        [SwaggerOperation(OperationId = "CambiarEstadoCorreo", Summary = "CambiarEstadoCorreo", Description = "Permite cambiar el estado de un correo electrónico (E-mail)")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
-        public IActionResult CambiarEstadoCorreo([FromBody] CambiarEstadoCorreoRequestBody requestBody)
-        {
-            var respuesta = _msjService.CambiarEstadoCorreo(requestBody.IdCorreo, requestBody.Estado, requestBody.RespuestaEnvio);
             return ProcesarRespuesta(respuesta);
         }
 
@@ -114,14 +92,14 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
-        [HttpPost("CambiarEstadoNotificacion")]
-        [SwaggerOperation(OperationId = "CambiarEstadoNotificacion", Summary = "CambiarEstadoNotificacion", Description = "Permite cambiar el estado de una notificación push")]
+        [HttpPost("CambiarEstadoMensajeria")]
+        [SwaggerOperation(OperationId = "CambiarEstadoMensajeria", Summary = "CambiarEstadoMensajeria", Description = "Permite cambiar el estado de envío de un mensaje de texto (SMS), correo electrónico (E-mail) o notificación push")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
-        public IActionResult CambiarEstadoNotificacion([FromBody] CambiarEstadoNotificacionRequestBody requestBody)
+        public IActionResult CambiarEstadoMensajeria([FromBody] CambiarEstadoMensajeriaRequestBody requestBody)
         {
-            var respuesta = _msjService.CambiarEstadoNotificacion(requestBody.IdNotificacion, requestBody.Estado, requestBody.RespuestaEnvio);
+            var respuesta = _msjService.CambiarEstadoMensajeria(requestBody.TipoMensajeria, requestBody.IdMensajeria, requestBody.Estado, requestBody.RespuestaEnvio);
             return ProcesarRespuesta(respuesta);
         }
     }

@@ -34,11 +34,9 @@ namespace Risk.API.Services
     public class MsjService : RiskServiceBase, IMsjService
     {
         private const int ID_LISTAR_MENSAJES_PENDIENTES = 30;
-        private const int ID_CAMBIAR_ESTADO_MENSAJE = 31;
-        private const int ID_LISTAR_CORREOS_PENDIENTES = 32;
-        private const int ID_CAMBIAR_ESTADO_CORREO = 33;
-        private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 34;
-        private const int ID_CAMBIAR_ESTADO_NOTIFICACION = 35;
+        private const int ID_LISTAR_CORREOS_PENDIENTES = 31;
+        private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 32;
+        private const int ID_CAMBIAR_ESTADO_MENSAJERIA = 33;
 
         public MsjService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
         {
@@ -68,19 +66,6 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Mensaje>, YPagina<YMensaje>>(entityRsp, datos);
         }
 
-        public Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio)
-        {
-            JObject prms = new JObject();
-            prms.Add("id_mensaje", idMensaje);
-            prms.Add("estado", estado);
-            prms.Add("respuesta_envio", respuestaEnvio);
-
-            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJE, prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
-
-            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
-        }
-
         public Respuesta<Pagina<Correo>> ListarCorreosPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
         {
             JObject prms = new JObject();
@@ -103,19 +88,6 @@ namespace Risk.API.Services
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Correo>, YPagina<YCorreo>>(entityRsp, datos);
-        }
-
-        public Respuesta<Dato> CambiarEstadoCorreo(int idCorreo, string estado, string respuestaEnvio)
-        {
-            JObject prms = new JObject();
-            prms.Add("id_correo", idCorreo);
-            prms.Add("estado", estado);
-            prms.Add("respuesta_envio", respuestaEnvio);
-
-            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_CORREO, prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
-
-            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
@@ -142,14 +114,15 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Notificacion>, YPagina<YNotificacion>>(entityRsp, datos);
         }
 
-        public Respuesta<Dato> CambiarEstadoNotificacion(int idNotificacion, string estado, string respuestaEnvio)
+        public Respuesta<Dato> CambiarEstadoMensajeria(string tipoMensajeria, int idMensajeria, string estado, string respuestaEnvio)
         {
             JObject prms = new JObject();
-            prms.Add("id_notificacion", idNotificacion);
+            prms.Add("tipo_mensajeria", tipoMensajeria);
+            prms.Add("id_mensajeria", idMensajeria);
             prms.Add("estado", estado);
             prms.Add("respuesta_envio", respuestaEnvio);
 
-            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_NOTIFICACION, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJERIA, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));

@@ -29,10 +29,8 @@ namespace Risk.API.Services
     public interface IMsjService
     {
         Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio);
         Respuesta<Pagina<Correo>> ListarCorreosPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoCorreo(int idCorreo, string estado, string respuestaEnvio);
         Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null);
-        Respuesta<Dato> CambiarEstadoNotificacion(int idNotificacion, string estado, string respuestaEnvio);
+        Respuesta<Dato> CambiarEstadoMensajeria(string tipoMensajeria, int idMensajeria, string estado, string respuestaEnvio);
     }
 }

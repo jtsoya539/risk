@@ -153,37 +153,22 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (30, 'PAGINA_PARAMETROS', 'I', 'O', 'Y_PAGINA_PARAMETROS', 'N', null, 'S', 10);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (31, 'ID_MENSAJE', 'I', 'N', null, 'S', null, 'S', 1);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (31, 'ESTADO', 'I', 'S', null, 'S', null, 'S', 2);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (31, 'RESPUESTA_ENVIO', 'I', 'S', null, 'S', null, 'S', 3);
+values (31, 'PAGINA_PARAMETROS', 'I', 'O', 'Y_PAGINA_PARAMETROS', 'N', null, 'S', 10);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (32, 'PAGINA_PARAMETROS', 'I', 'O', 'Y_PAGINA_PARAMETROS', 'N', null, 'S', 10);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (33, 'ID_CORREO', 'I', 'N', null, 'S', null, 'S', 1);
+values (33, 'TIPO_MENSAJERIA', 'I', 'S', null, 'S', null, 'S', 1);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (33, 'ESTADO', 'I', 'S', null, 'S', null, 'S', 2);
+values (33, 'ID_MENSAJERIA', 'I', 'N', null, 'S', null, 'S', 2);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (33, 'RESPUESTA_ENVIO', 'I', 'S', null, 'S', null, 'S', 3);
+values (33, 'ESTADO', 'I', 'S', null, 'S', null, 'S', 3);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (34, 'PAGINA_PARAMETROS', 'I', 'O', 'Y_PAGINA_PARAMETROS', 'N', null, 'S', 10);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (35, 'ID_NOTIFICACION', 'I', 'N', null, 'S', null, 'S', 1);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (35, 'ESTADO', 'I', 'S', null, 'S', null, 'S', 2);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
-values (35, 'RESPUESTA_ENVIO', 'I', 'S', null, 'S', null, 'S', 3);
+values (33, 'RESPUESTA_ENVIO', 'I', 'S', null, 'S', null, 'S', 4);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN)
 values (42, 'USUARIO_ANTIGUO', 'I', 'S', null, 'S', null, 'S', 1);

@@ -24,9 +24,10 @@ SOFTWARE.
 
 namespace Risk.API.Models
 {
-    public class CambiarEstadoCorreoRequestBody
+    public class CambiarEstadoMensajeriaRequestBody
     {
-        public int IdCorreo { get; set; }
+        public string TipoMensajeria { get; set; }
+        public int IdMensajeria { get; set; }
         public string Estado { get; set; }
         public string RespuestaEnvio { get; set; }
     }
