@@ -124,14 +124,15 @@ namespace Risk.SMS
             return mensajes;
         }
 
-        private void CambiarEstadoMensaje(int idMensaje, string estado, string respuestaEnvio)
+        private void CambiarEstadoMensajeria(int idMensajeria, string estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
             {
-                datoRespuesta = msjApi.CambiarEstadoMensaje(new CambiarEstadoMensajeRequestBody
+                datoRespuesta = msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                 {
-                    IdMensaje = idMensaje,
+                    TipoMensajeria = "S", // SMS
+                    IdMensajeria = idMensajeria,
                     Estado = estado,
                     RespuestaEnvio = respuestaEnvio
                 });
@@ -144,16 +145,17 @@ namespace Risk.SMS
 
                     try
                     {
-                        datoRespuesta = msjApi.CambiarEstadoMensaje(new CambiarEstadoMensajeRequestBody
+                        datoRespuesta = msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                         {
-                            IdMensaje = idMensaje,
+                            TipoMensajeria = "S", // SMS
+                            IdMensajeria = idMensajeria,
                             Estado = estado,
                             RespuestaEnvio = respuestaEnvio
                         });
                     }
                     catch (ApiException ex)
                     {
-                        _logger.LogError($"Error al cambiar estado del mensaje: {ex.Message}");
+                        _logger.LogError($"Error al cambiar estado de envío de la mensajería: {ex.Message}");
                     }
                 }
             }
@@ -177,13 +179,13 @@ namespace Risk.SMS
                             body: item.Contenido
                         );
 
-                        // Cambia estado del mensaje a E-ENVIADO
-                        CambiarEstadoMensaje(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
+                        // Cambia estado de la mensajería a E-ENVIADO
+                        CambiarEstadoMensajeria(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
                     }
                     catch (Twilio.Exceptions.ApiException e)
                     {
-                        // Cambia estado del mensaje a R-PROCESADO CON ERROR
-                        CambiarEstadoMensaje(item.IdMensaje, "R", e.Message);
+                        // Cambia estado de la mensajería a R-PROCESADO CON ERROR
+                        CambiarEstadoMensajeria(item.IdMensaje, "R", e.Message);
                     }
                 }
 

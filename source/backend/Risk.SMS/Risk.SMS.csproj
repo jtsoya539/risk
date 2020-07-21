@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Risk.API.Client" Version="0.9.0" />
+    <PackageReference Include="Risk.API.Client" Version="0.10.0" />
     <PackageReference Include="Twilio" Version="5.45.0" />
   </ItemGroup>
 

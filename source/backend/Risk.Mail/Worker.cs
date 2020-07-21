@@ -126,14 +126,15 @@ namespace Risk.Mail
             return mensajes;
         }
 
-        private void CambiarEstadoCorreo(int idCorreo, string estado, string respuestaEnvio)
+        private void CambiarEstadoMensajeria(int idMensajeria, string estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
             {
-                datoRespuesta = msjApi.CambiarEstadoCorreo(new CambiarEstadoCorreoRequestBody
+                datoRespuesta = msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                 {
-                    IdCorreo = idCorreo,
+                    TipoMensajeria = "M", // Mail
+                    IdMensajeria = idMensajeria,
                     Estado = estado,
                     RespuestaEnvio = respuestaEnvio
                 });
@@ -146,16 +147,17 @@ namespace Risk.Mail
 
                     try
                     {
-                        datoRespuesta = msjApi.CambiarEstadoCorreo(new CambiarEstadoCorreoRequestBody
+                        datoRespuesta = msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                         {
-                            IdCorreo = idCorreo,
+                            TipoMensajeria = "M", // Mail
+                            IdMensajeria = idMensajeria,
                             Estado = estado,
                             RespuestaEnvio = respuestaEnvio
                         });
                     }
                     catch (ApiException ex)
                     {
-                        _logger.LogError($"Error al cambiar estado del correo: {ex.Message}");
+                        _logger.LogError($"Error al cambiar estado de envío de la mensajería: {ex.Message}");
                     }
                 }
             }
@@ -203,13 +205,13 @@ namespace Risk.Mail
 
                         _smtpClient.Send(message);
 
-                        // Cambia estado del mensaje a E-ENVIADO
-                        CambiarEstadoCorreo(item.IdCorreo, "E", "OK");
+                        // Cambia estado de la mensajería a E-ENVIADO
+                        CambiarEstadoMensajeria(item.IdCorreo, "E", "OK");
                     }
                     catch (Exception e)
                     {
-                        // Cambia estado del mensaje a R-PROCESADO CON ERROR
-                        CambiarEstadoCorreo(item.IdCorreo, "R", e.Message);
+                        // Cambia estado de la mensajería a R-PROCESADO CON ERROR
+                        CambiarEstadoMensajeria(item.IdCorreo, "R", e.Message);
                     }
                 }
 
