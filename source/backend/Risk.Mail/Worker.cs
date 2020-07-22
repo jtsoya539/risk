@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -171,7 +172,7 @@ namespace Risk.Mail
 
                 var mensajes = ListarCorreosPendientes();
 
-                _smtpClient.Connect("smtp.gmail.com", 465, true);
+                _smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
                 _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
 
                 foreach (var item in mensajes)
