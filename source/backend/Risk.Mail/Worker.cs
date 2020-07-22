@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Util.Store;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +35,7 @@ namespace Risk.Mail
         private readonly SmtpClient _smtpClient;
         private readonly string _mailboxFromName;
         private readonly string _mailboxFromAddress;
+        private SaslMechanismOAuth2 oAuth2;
 
         public Worker(ILogger<Worker> logger, IConfiguration configuration)
         {
@@ -164,6 +168,31 @@ namespace Risk.Mail
             }
         }
 
+        private async Task ConfigurarOAuth2Async()
+        {
+            var clientSecrets = new ClientSecrets
+            {
+                ClientId = _configuration["MailConfiguration:ClientId"],
+                ClientSecret = _configuration["MailConfiguration:ClientSecret"]
+            };
+
+            var codeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
+            {
+                DataStore = new FileDataStore(_configuration["MailConfiguration:CredentialLocation"], true),
+                Scopes = new[] { "https://mail.google.com/" },
+                ClientSecrets = clientSecrets
+            });
+            var codeReceiver = new LocalServerCodeReceiver();
+
+            var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
+            var credential = await authCode.AuthorizeAsync(_configuration["MailConfiguration:UserId"], CancellationToken.None);
+
+            if (authCode.ShouldRequestAuthorizationCode(credential.Token))
+                await credential.RefreshTokenAsync(CancellationToken.None);
+
+            oAuth2 = new SaslMechanismOAuth2(credential.UserId, credential.Token.AccessToken);
+        }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
@@ -172,51 +201,57 @@ namespace Risk.Mail
 
                 var mensajes = ListarCorreosPendientes();
 
-                _smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-                _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
-
-                foreach (var item in mensajes)
+                if (mensajes.Any())
                 {
-                    try
+                    await ConfigurarOAuth2Async();
+
+                    _smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                    _smtpClient.Authenticate(oAuth2);
+                    // _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
+
+                    foreach (var item in mensajes)
                     {
-                        var message = new MimeMessage();
-                        message.From.Add(new MailboxAddress(_mailboxFromName, _mailboxFromAddress));
-                        message.To.Add(new MailboxAddress(item.MensajeTo, item.MensajeTo));
-
-                        if (item.MensajeReplyTo != null)
+                        try
                         {
-                            message.ReplyTo.Add(new MailboxAddress(item.MensajeReplyTo, item.MensajeReplyTo));
+                            var message = new MimeMessage();
+                            message.From.Add(new MailboxAddress(_mailboxFromName, _mailboxFromAddress));
+                            message.To.Add(new MailboxAddress(item.MensajeTo, item.MensajeTo));
+
+                            if (item.MensajeReplyTo != null)
+                            {
+                                message.ReplyTo.Add(new MailboxAddress(item.MensajeReplyTo, item.MensajeReplyTo));
+                            }
+
+                            if (item.MensajeCc != null)
+                            {
+                                message.Cc.Add(new MailboxAddress(item.MensajeCc, item.MensajeCc));
+                            }
+
+                            if (item.MensajeBcc != null)
+                            {
+                                message.Bcc.Add(new MailboxAddress(item.MensajeBcc, item.MensajeBcc));
+                            }
+
+                            message.Subject = item.MensajeSubject;
+                            message.Body = new TextPart("plain")
+                            {
+                                Text = item.MensajeBody
+                            };
+
+                            _smtpClient.Send(message);
+
+                            // Cambia estado de la mensajería a E-ENVIADO
+                            CambiarEstadoMensajeria(item.IdCorreo, "E", "OK");
                         }
-
-                        if (item.MensajeCc != null)
+                        catch (Exception e)
                         {
-                            message.Cc.Add(new MailboxAddress(item.MensajeCc, item.MensajeCc));
+                            // Cambia estado de la mensajería a R-PROCESADO CON ERROR
+                            CambiarEstadoMensajeria(item.IdCorreo, "R", e.Message);
                         }
-
-                        if (item.MensajeBcc != null)
-                        {
-                            message.Bcc.Add(new MailboxAddress(item.MensajeBcc, item.MensajeBcc));
-                        }
-
-                        message.Subject = item.MensajeSubject;
-                        message.Body = new TextPart("plain")
-                        {
-                            Text = item.MensajeBody
-                        };
-
-                        _smtpClient.Send(message);
-
-                        // Cambia estado de la mensajería a E-ENVIADO
-                        CambiarEstadoMensajeria(item.IdCorreo, "E", "OK");
                     }
-                    catch (Exception e)
-                    {
-                        // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                        CambiarEstadoMensajeria(item.IdCorreo, "R", e.Message);
-                    }
+
+                    _smtpClient.Disconnect(true);
                 }
-
-                _smtpClient.Disconnect(true);
 
                 await Task.Delay(TimeSpan.FromSeconds(_configuration.GetValue<double>("ExecuteDelaySeconds")), stoppingToken);
             }

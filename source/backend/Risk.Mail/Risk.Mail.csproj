@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth" Version="1.48.0" />
     <PackageReference Include="MailKit" Version="2.7.0" />
     <PackageReference Include="Risk.API.Client" Version="0.10.0" />
   </ItemGroup>
