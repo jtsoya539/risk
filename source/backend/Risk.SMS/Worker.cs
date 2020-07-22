@@ -169,23 +169,26 @@ namespace Risk.SMS
 
                 var mensajes = ListarMensajesPendientes();
 
-                foreach (var item in mensajes)
+                if (mensajes.Any())
                 {
-                    try
+                    foreach (var item in mensajes)
                     {
-                        var message = MessageResource.Create(
-                            from: new PhoneNumber(phoneNumberFrom),
-                            to: new PhoneNumber(item.NumeroTelefono),
-                            body: item.Contenido
-                        );
+                        try
+                        {
+                            var message = MessageResource.Create(
+                                from: new PhoneNumber(phoneNumberFrom),
+                                to: new PhoneNumber(item.NumeroTelefono),
+                                body: item.Contenido
+                            );
 
-                        // Cambia estado de la mensajería a E-ENVIADO
-                        CambiarEstadoMensajeria(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
-                    }
-                    catch (Twilio.Exceptions.ApiException e)
-                    {
-                        // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                        CambiarEstadoMensajeria(item.IdMensaje, "R", e.Message);
+                            // Cambia estado de la mensajería a E-ENVIADO
+                            CambiarEstadoMensajeria(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
+                        }
+                        catch (Twilio.Exceptions.ApiException e)
+                        {
+                            // Cambia estado de la mensajería a R-PROCESADO CON ERROR
+                            CambiarEstadoMensajeria(item.IdMensaje, "R", e.Message);
+                        }
                     }
                 }
 
