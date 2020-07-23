@@ -46,6 +46,7 @@ namespace Risk.API.Services
         private const int ID_REGISTRAR_DISPOSITIVO = 14;
         private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
         private const int ID_DATOS_DISPOSITIVO = 21;
+        private const int ID_CAMBIAR_ESTADO_USUARIO = 22;
         private const int ID_EDITAR_USUARIO = 42;
 
         public AutService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
@@ -229,6 +230,18 @@ namespace Risk.API.Services
             prms.Add("numero_telefono", numeroTelefono);
 
             string rsp = base.ProcesarServicio(ID_EDITAR_USUARIO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> CambiarEstadoUsuario(string usuario, string estado)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("estado", estado);
+
+            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_USUARIO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));

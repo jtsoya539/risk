@@ -430,5 +430,30 @@ namespace Risk.API.Controllers
             var respuesta = _autService.EditarUsuario(usuario, requestBody.UsuarioNuevo, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
             return ProcesarRespuesta(respuesta);
         }
+
+        [HttpPost("EliminarUsuario")]
+        [SwaggerOperation(OperationId = "EliminarUsuario", Summary = "EliminarUsuario", Description = "Permite eliminar un usuario")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult EliminarUsuario([FromBody] EliminarUsuarioRequestBody requestBody)
+        {
+            var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, "A");
+
+            if (!respValidarCredenciales.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respValidarCredenciales);
+            }
+
+            var respCambiarEstadoSesion = _autService.CambiarEstadoSesion(requestBody.AccessToken, "F");
+
+            if (!respCambiarEstadoSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respCambiarEstadoSesion);
+            }
+
+            var respCambiarEstadoUsuario = _autService.CambiarEstadoUsuario(requestBody.Usuario, "I");
+            return ProcesarRespuesta(respCambiarEstadoUsuario);
+        }
     }
 }

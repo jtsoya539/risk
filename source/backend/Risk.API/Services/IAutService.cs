@@ -42,5 +42,6 @@ namespace Risk.API.Services
         Respuesta<Dispositivo> DatosDispositivo(string tokenDispositivo);
         Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken);
         Respuesta<Dato> EditarUsuario(string usuarioAntiguo, string usuarioNuevo, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
+        Respuesta<Dato> CambiarEstadoUsuario(string usuario, string estado);
     }
 }
