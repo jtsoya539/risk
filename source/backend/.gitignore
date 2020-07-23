@@ -438,4 +438,17 @@ $RECYCLE.BIN/
 Risk.API.Client/
 !Risk.API.Client/config-csharp-netcore.json
 !Risk.API.Client/config-java.json
-!Risk.API.Client/README.txt
+!Risk.API.Client/config-kotlin.json
+!Risk.API.Client/README.md
+
+##
+## Risk.API
+##
+Risk.API/wwwroot/oracle
+!Risk.API/wwwroot/oracle/README.md
+
+##
+## Risk.Mail
+##
+Risk.Mail/wwwroot/gmail
+!Risk.Mail/wwwroot/gmail/README.md
