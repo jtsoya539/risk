@@ -61,6 +61,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_CAMBIAR_ESTADO_USUARIO">p_cambiar_estado_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_REGISTRAR_CLAVE">p_registrar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -240,6 +245,16 @@ PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
                               i_apellido         IN VARCHAR2,
                               i_direccion_correo IN VARCHAR2,
                               i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_CAMBIAR_ESTADO_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+p_cambiar_estado_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_cambiar_estado_usuario(i_usuario IN VARCHAR2,
+                                   i_estado  IN VARCHAR2)
 
 </PRE>
 <HR>

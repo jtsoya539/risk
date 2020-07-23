@@ -32,6 +32,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION registrar_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION cambiar_estado_usuario(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION registrar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION cambiar_clave(i_parametros IN y_parametros) RETURN y_respuesta;
@@ -112,6 +115,45 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                                             'direccion_correo')),
                                         anydata.accessvarchar2(k_servicio.f_valor_parametro(i_parametros,
                                                                                             'numero_telefono')));
+  
+    k_servicio.p_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION cambiar_estado_usuario(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'usuario') IS NOT NULL,
+                                   'Debe ingresar usuario');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'estado') IS NOT NULL,
+                                   'Debe ingresar estado');
+  
+    l_rsp.lugar := 'Cambiando estado de usuario';
+    k_autenticacion.p_cambiar_estado_usuario(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                 'usuario'),
+                                             k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                 'estado'));
   
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;

@@ -57,6 +57,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                 i_direccion_correo IN VARCHAR2,
                                 i_numero_telefono  IN VARCHAR2 DEFAULT NULL);
 
+  PROCEDURE p_cambiar_estado_usuario(i_usuario IN VARCHAR2,
+                                     i_estado  IN VARCHAR2);
+
   PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
                               i_clave      IN VARCHAR2,
                               i_tipo_clave IN CHAR DEFAULT 'A');
@@ -483,6 +486,27 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   EXCEPTION
     WHEN dup_val_on_index THEN
       raise_application_error(-20000, 'Usuario ya existe');
+  END;
+
+  PROCEDURE p_cambiar_estado_usuario(i_usuario IN VARCHAR2,
+                                     i_estado  IN VARCHAR2) IS
+    l_id_usuario t_usuarios.id_usuario%TYPE;
+  BEGIN
+    -- Busca usuario
+    l_id_usuario := lf_id_usuario(i_usuario);
+  
+    IF l_id_usuario IS NULL THEN
+      RAISE ex_usuario_inexistente;
+    END IF;
+  
+    -- Actualiza usuario
+    UPDATE t_usuarios
+       SET estado = i_estado
+     WHERE id_usuario = l_id_usuario
+       AND estado <> i_estado;
+  EXCEPTION
+    WHEN ex_usuario_inexistente THEN
+      raise_application_error(-20000, 'Usuario inexistente');
   END;
 
   PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
