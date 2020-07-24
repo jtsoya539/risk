@@ -15,6 +15,13 @@ Bienvenido/a a la documentación del Proyecto RISK.
 ### Back-End
 * [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
+Los servicios de mensajería tienen requerimientos especiales de terceros:
+Servicio|Requerimiento
+--------|-------------
+Risk.Mail|Cuenta de Gmail configurada con autenticación [OAuth](https://github.com/jstedfast/MailKit/blob/master/GMailOAuth2.md).
+Risk.Push|Cuenta de Twilio configurada con el servicio [SMS](https://www.twilio.com/sms).
+Risk.SMS|Cuenta de Azure configurada con el servicio [Notification Hubs](https://azure.microsoft.com/es-es/services/notification-hubs/).
+
 ## Instalación
 ### Base de Datos
 
@@ -26,6 +33,8 @@ create_code_user.sql|Crea usuario y otorga permisos necesarios para instalar los
 generate_docs.sql|Genera archivos de documentación de objetos de Base de Datos con la herramienta *plsqldoc*. Se debe ejecutar desde un Command Window de PL/SQL Developer con el plug-in *plsqldoc* instalado.
 install.sql|Instala en el esquema actual los objetos de Base de Datos del Proyecto RISK.
 install_audit.sql|Genera campos y triggers de auditoría.
+install_dependencies.sql|Instala en el esquema actual las dependencias de terceros.
 uninstall.sql|Desinstala del esquema actual los objetos de Base de Datos del Proyecto RISK.
+uninstall_dependencies.sql|Desinstala del esquema actual las dependencias de terceros.
 
 ### Back-End
