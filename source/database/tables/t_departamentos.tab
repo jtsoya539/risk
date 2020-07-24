@@ -1,0 +1,21 @@
+create table T_DEPARTAMENTOS
+(
+  id_departamento NUMBER(3) not null,
+  nombre          VARCHAR2(100),
+  id_pais         NUMBER(3)
+)
+;
+comment on table T_DEPARTAMENTOS
+  is 'Departamentos';
+comment on column T_DEPARTAMENTOS.id_departamento
+  is 'Identificador del departamento';
+comment on column T_DEPARTAMENTOS.nombre
+  is 'Nombre del departamento';
+comment on column T_DEPARTAMENTOS.id_pais
+  is 'País del departamento';
+alter table T_DEPARTAMENTOS
+  add constraint PK_DEPARTAMENTOS primary key (ID_DEPARTAMENTO);
+alter table T_DEPARTAMENTOS
+  add constraint FK_DEPARTAMENTOS_PAISES foreign key (ID_PAIS)
+  references T_PAISES (ID_PAIS);
+

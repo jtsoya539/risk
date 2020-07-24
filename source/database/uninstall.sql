@@ -114,7 +114,9 @@ drop table t_parametros cascade constraints;
 drop table t_roles cascade constraints;
 drop table t_usuarios cascade constraints;
 drop table t_personas cascade constraints;
+drop table t_barrios cascade constraints;
 drop table t_ciudades cascade constraints;
+drop table t_departamentos cascade constraints;
 drop table t_paises cascade constraints;
 drop table t_significados cascade constraints;
 drop table t_errores cascade constraints;
@@ -125,8 +127,10 @@ prompt
 prompt Borrando secuencias...
 prompt -----------------------------------
 prompt
-drop sequence s_id_ciudad;
 drop sequence s_id_pais;
+drop sequence s_id_departamento;
+drop sequence s_id_ciudad;
+drop sequence s_id_barrio;
 drop sequence s_id_persona;
 drop sequence s_id_rol;
 drop sequence s_id_servicio;

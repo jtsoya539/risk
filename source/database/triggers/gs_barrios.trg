@@ -1,5 +1,5 @@
-CREATE OR REPLACE TRIGGER gs_ciudades
-  BEFORE INSERT ON t_ciudades
+CREATE OR REPLACE TRIGGER gs_barrios
+  BEFORE INSERT ON t_barrios
   FOR EACH ROW
 BEGIN
   /*
@@ -26,8 +26,8 @@ BEGIN
   -------------------------------------------------------------------------------
   */
 
-  IF :new.id_ciudad IS NULL THEN
-    :new.id_ciudad := s_id_ciudad.nextval;
+  IF :new.id_barrio IS NULL THEN
+    :new.id_barrio := s_id_barrio.nextval;
   END IF;
 END;
 /

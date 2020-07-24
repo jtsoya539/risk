@@ -2,11 +2,11 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Table T_CIUDADES</TITLE>
+ <TITLE>Table T_BARRIOS</TITLE>
  <META name="object" content="TABLE">
- <META name="name" content="T_CIUDADES">
- <META name="description" content="Ciudades">
- <META name="columns" content="ID_CIUDAD NOMBRE ID_PAIS ID_DEPARTAMENTO">
+ <META name="name" content="T_BARRIOS">
+ <META name="description" content="Barrios">
+ <META name="columns" content="ID_BARRIO NOMBRE ID_PAIS ID_DEPARTAMENTO ID_CIUDAD">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,8 +14,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Table T_CIUDADES</P>
-Ciudades
+<P CLASS="MAIN_TITLE">Table T_BARRIOS</P>
+Barrios
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -47,7 +47,7 @@ Comments
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ID_CIUDAD
+ID_BARRIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 NUMBER(3)
@@ -59,7 +59,7 @@ NUMBER(3)
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Identificador de la ciudad
+Identificador del barrio
 </TD>
 </TR>
 <TR>
@@ -76,7 +76,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Nombre de la ciudad
+Nombre del barrio
 </TD>
 </TR>
 <TR>
@@ -93,7 +93,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Pa&#237;s de la ciudad
+Pa&#237;s del barrio
 </TD>
 </TR>
 <TR>
@@ -110,7 +110,24 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Departamento de la ciudad
+Departamento del barrio
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ID_CIUDAD
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Ciudad del barrio
 </TD>
 </TR>
 </TABLE>
@@ -132,10 +149,10 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_CIUDADES
+PK_BARRIOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_CIUDAD
+ID_BARRIO
 </TD>
 </TR>
 </TABLE>
@@ -165,7 +182,21 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-FK_CIUDADES_DEPARTAMENTOS
+FK_BARRIOS_CIUDADES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_CIUDAD
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+T_CIUDADES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_CIUDAD
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+FK_BARRIOS_DEPARTAMENTOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ID_DEPARTAMENTO
@@ -179,7 +210,7 @@ ID_DEPARTAMENTO
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-FK_CIUDADES_PAISES
+FK_BARRIOS_PAISES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ID_PAIS
@@ -214,10 +245,10 @@ Type
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_CIUDADES
+PK_BARRIOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_CIUDAD
+ID_BARRIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

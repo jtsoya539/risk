@@ -55,8 +55,10 @@ prompt
 prompt Creando secuencias...
 prompt -----------------------------------
 prompt
-@@sequences/s_id_ciudad.seq
 @@sequences/s_id_pais.seq
+@@sequences/s_id_departamento.seq
+@@sequences/s_id_ciudad.seq
+@@sequences/s_id_barrio.seq
 @@sequences/s_id_persona.seq
 @@sequences/s_id_rol.seq
 @@sequences/s_id_servicio.seq
@@ -78,7 +80,9 @@ prompt
 @@tables/t_errores.tab
 @@tables/t_significados.tab
 @@tables/t_paises.tab
+@@tables/t_departamentos.tab
 @@tables/t_ciudades.tab
+@@tables/t_barrios.tab
 @@tables/t_personas.tab
 @@tables/t_usuarios.tab
 @@tables/t_roles.tab
@@ -149,8 +153,10 @@ prompt
 prompt Creando triggers...
 prompt -----------------------------------
 prompt
-@@triggers/gs_ciudades.trg
 @@triggers/gs_paises.trg
+@@triggers/gs_departamentos.trg
+@@triggers/gs_ciudades.trg
+@@triggers/gs_barrios.trg
 @@triggers/gs_personas.trg
 @@triggers/gs_roles.trg
 @@triggers/gs_servicios.trg

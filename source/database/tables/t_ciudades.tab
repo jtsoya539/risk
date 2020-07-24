@@ -1,18 +1,27 @@
 create table T_CIUDADES
 (
-  id_pais   NUMBER(3) not null,
-  id_ciudad NUMBER(3) not null,
-  nombre    VARCHAR2(100)
+  id_ciudad       NUMBER(3) not null,
+  nombre          VARCHAR2(100),
+  id_pais         NUMBER(3),
+  id_departamento NUMBER(3)
 )
 ;
 comment on table T_CIUDADES
   is 'Ciudades';
-comment on column T_CIUDADES.id_pais
-  is 'Pais de la ciudad';
 comment on column T_CIUDADES.id_ciudad
   is 'Identificador de la ciudad';
 comment on column T_CIUDADES.nombre
   is 'Nombre de la ciudad';
+comment on column T_CIUDADES.id_pais
+  is 'País de la ciudad';
+comment on column T_CIUDADES.id_departamento
+  is 'Departamento de la ciudad';
 alter table T_CIUDADES
-  add constraint PK_CIUDADES primary key (ID_PAIS, ID_CIUDAD);
+  add constraint PK_CIUDADES primary key (ID_CIUDAD);
+alter table T_CIUDADES
+  add constraint FK_CIUDADES_DEPARTAMENTOS foreign key (ID_DEPARTAMENTO)
+  references T_DEPARTAMENTOS (ID_DEPARTAMENTO);
+alter table T_CIUDADES
+  add constraint FK_CIUDADES_PAISES foreign key (ID_PAIS)
+  references T_PAISES (ID_PAIS);
 
