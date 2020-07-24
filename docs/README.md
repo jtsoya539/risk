@@ -16,6 +16,7 @@ Bienvenido/a a la documentación del Proyecto RISK.
 * [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 Los servicios de mensajería tienen requerimientos especiales de terceros:
+
 Servicio|Requerimiento
 --------|-------------
 Risk.Mail|Cuenta de Gmail configurada con autenticación [OAuth](https://github.com/jstedfast/MailKit/blob/master/GMailOAuth2.md).
