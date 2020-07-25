@@ -189,6 +189,7 @@ prompt
 @@scripts/ins_t_servicio_parametros.sql
 @@scripts/ins_t_roles.sql
 @@scripts/ins_t_paises.sql
+@@scripts/ins_t_departamentos.sql
 @@scripts/ins_t_archivo_definiciones.sql
 @@scripts/ins_t_personas.sql
 @@scripts/ins_t_usuarios.sql
