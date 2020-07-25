@@ -1,6 +1,0 @@
-https://github.com/jstedfast/MailKit
-https://www.nuget.org/packages/MailKit
-http://www.mimekit.net/docs
-
-https://support.google.com/accounts/answer/6010255
-https://support.google.com/a/answer/176600
