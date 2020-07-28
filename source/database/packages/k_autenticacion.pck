@@ -40,6 +40,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                            i_activo           IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2;
 
+  FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER;
+
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                      i_tipo_token    IN VARCHAR2)
     RETURN NUMBER;
@@ -163,40 +165,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     RETURN rawtohex(utl_raw.substr(l_result, 1, p_key_length));
   END;
 
-  FUNCTION lf_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER IS
-    l_id_usuario t_usuarios.id_usuario%TYPE;
-  BEGIN
-    BEGIN
-      SELECT id_usuario
-        INTO l_id_usuario
-        FROM t_usuarios
-       WHERE alias = i_alias;
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_id_usuario := NULL;
-      WHEN OTHERS THEN
-        l_id_usuario := NULL;
-    END;
-    RETURN l_id_usuario;
-  END;
-
-  FUNCTION lf_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
-    l_id_sesion t_sesiones.id_sesion%TYPE;
-  BEGIN
-    BEGIN
-      SELECT id_sesion
-        INTO l_id_sesion
-        FROM t_sesiones
-       WHERE access_token = i_access_token;
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_id_sesion := NULL;
-      WHEN OTHERS THEN
-        l_id_sesion := NULL;
-    END;
-    RETURN l_id_sesion;
-  END;
-
   PROCEDURE lp_registrar_intento_fallido(i_id_usuario IN NUMBER,
                                          i_tipo       IN CHAR) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
@@ -275,6 +243,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RETURN NULL;
   END;
 
+  FUNCTION lf_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
+    l_id_sesion t_sesiones.id_sesion%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_sesion
+        INTO l_id_sesion
+        FROM t_sesiones
+       WHERE access_token = i_access_token;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_sesion := NULL;
+      WHEN OTHERS THEN
+        l_id_sesion := NULL;
+    END;
+    RETURN l_id_sesion;
+  END;
+
   FUNCTION f_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
                            i_activo           IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2 IS
@@ -293,6 +278,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         l_id_aplicacion := NULL;
     END;
     RETURN l_id_aplicacion;
+  END;
+
+  FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER IS
+    l_id_usuario t_usuarios.id_usuario%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_usuario
+        INTO l_id_usuario
+        FROM t_usuarios
+       WHERE alias = i_alias;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_usuario := NULL;
+      WHEN OTHERS THEN
+        l_id_usuario := NULL;
+    END;
+    RETURN l_id_usuario;
   END;
 
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
@@ -493,7 +495,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
   BEGIN
     -- Busca usuario
-    l_id_usuario := lf_id_usuario(i_usuario);
+    l_id_usuario := f_id_usuario(i_usuario);
   
     IF l_id_usuario IS NULL THEN
       RAISE ex_usuario_inexistente;
@@ -520,7 +522,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     p_validar_clave(i_usuario, i_clave, i_tipo_clave);
   
     -- Busca usuario
-    l_id_usuario := lf_id_usuario(i_usuario);
+    l_id_usuario := f_id_usuario(i_usuario);
   
     IF l_id_usuario IS NULL THEN
       RAISE ex_usuario_inexistente;
@@ -572,7 +574,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     p_validar_clave(i_usuario, i_clave_nueva, i_tipo_clave);
   
     -- Busca usuario
-    l_id_usuario := lf_id_usuario(i_usuario);
+    l_id_usuario := f_id_usuario(i_usuario);
   
     IF l_id_usuario IS NULL THEN
       RAISE ex_usuario_inexistente;
@@ -622,7 +624,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_iteraciones t_usuario_claves.iteraciones%TYPE;
   BEGIN
     -- Busca usuario
-    l_id_usuario := lf_id_usuario(i_usuario);
+    l_id_usuario := f_id_usuario(i_usuario);
   
     IF l_id_usuario IS NULL THEN
       RAISE ex_usuario_inexistente;
@@ -717,7 +719,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Busca usuario
-    l_id_usuario := lf_id_usuario(i_usuario);
+    l_id_usuario := f_id_usuario(i_usuario);
   
     IF l_id_usuario IS NULL THEN
       RAISE ex_usuario_inexistente;

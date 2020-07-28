@@ -41,6 +41,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_USUARIO">f_id_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -200,6 +205,15 @@ f_id_aplicacion
 FUNCTION f_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
                          i_activo           IN VARCHAR2 DEFAULT NULL)
   RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_ID_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_id_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER
 
 </PRE>
 <HR>
