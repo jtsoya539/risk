@@ -364,7 +364,8 @@ END;'
              tipo_dato,
              formato,
              obligatorio,
-             valor_defecto
+             valor_defecto,
+             etiqueta
         FROM t_servicio_parametros
        WHERE activo = 'S'
          AND id_servicio = i_id_servicio
@@ -388,12 +389,14 @@ END;'
       IF par.obligatorio = 'S' THEN
         IF NOT l_json_object.has(par.nombre) THEN
           raise_application_error(-20000,
-                                  'Parámetro ' || par.nombre ||
+                                  'Parámetro ' ||
+                                  nvl(par.etiqueta, par.nombre) ||
                                   ' obligatorio');
         ELSE
           IF l_json_element.is_null THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
         END IF;
@@ -406,7 +409,8 @@ END;'
           IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
              NOT l_json_element.is_string THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' de tipo incorrecto');
           END IF;
         
@@ -418,7 +422,8 @@ END;'
           IF l_parametro.valor.accessvarchar2 IS NULL AND
              par.obligatorio = 'S' THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
         
@@ -427,7 +432,8 @@ END;'
           IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
              NOT l_json_element.is_number THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' de tipo incorrecto');
           END IF;
         
@@ -439,7 +445,8 @@ END;'
           IF l_parametro.valor.accessnumber IS NULL AND
              par.obligatorio = 'S' THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
         
@@ -448,7 +455,8 @@ END;'
           IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
              NOT l_json_element.is_boolean THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' de tipo incorrecto');
           END IF;
         
@@ -460,7 +468,8 @@ END;'
           IF l_parametro.valor.accessnumber IS NULL AND
              par.obligatorio = 'S' THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
         
@@ -469,7 +478,8 @@ END;'
           IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
              NOT l_json_element.is_date THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' de tipo incorrecto');
           END IF;
         
@@ -481,7 +491,8 @@ END;'
           END IF;
           IF l_parametro.valor.accessdate IS NULL AND par.obligatorio = 'S' THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
         
@@ -490,7 +501,8 @@ END;'
           IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
              NOT l_json_element.is_object THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' de tipo incorrecto');
           END IF;
         
@@ -505,12 +517,16 @@ END;'
           END IF;
           IF l_parametro.valor IS NULL AND par.obligatorio = 'S' THEN
             raise_application_error(-20000,
-                                    'Parámetro ' || par.nombre ||
+                                    'Parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
         
         ELSE
-          raise_application_error(-20000, 'Tipo de dato no soportado');
+          raise_application_error(-20000,
+                                  'Tipo de dato de parámetro ' ||
+                                  nvl(par.etiqueta, par.nombre) ||
+                                  ' no soportado');
         
       END CASE;
     
