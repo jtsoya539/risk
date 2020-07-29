@@ -77,18 +77,15 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
+        public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null)
         {
             JObject prms = new JObject();
             prms.Add("id_pais", idPais);
 
-            YPaginaParametros paginaParametros = new YPaginaParametros
+            if (paginaParametros != null)
             {
-                Pagina = pagina,
-                PorPagina = porPagina,
-                NoPaginar = noPaginar
-            };
-            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
+            }
 
             string rsp = base.ProcesarServicio(ID_LISTAR_PAISES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
@@ -121,7 +118,11 @@ namespace Risk.API.Services
             prms.Add("tabla", tabla);
             prms.Add("campo", campo);
             prms.Add("referencia", referencia);
-            prms.Add("archivo", JToken.FromObject(ModelsMapper.GetYArchivoFromModel(archivo)));
+
+            if (archivo != null)
+            {
+                prms.Add("archivo", JToken.FromObject(ModelsMapper.GetYArchivoFromModel(archivo)));
+            }
 
             string rsp = base.ProcesarServicio(ID_GUARDAR_ARCHIVO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

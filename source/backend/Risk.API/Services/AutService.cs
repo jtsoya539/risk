@@ -188,7 +188,11 @@ namespace Risk.API.Services
         {
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
-            prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetYDispositivoFromModel(dispositivo)));
+
+            if (dispositivo != null)
+            {
+                prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetYDispositivoFromModel(dispositivo)));
+            }
 
             string rsp = base.ProcesarServicio(ID_REGISTRAR_DISPOSITIVO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

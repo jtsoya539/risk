@@ -88,7 +88,13 @@ namespace Risk.API.Controllers
         [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
         [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
-            var respuesta = _genService.ListarPaises(null, pagina, porPagina, noPaginar);
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _genService.ListarPaises(null, paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 
@@ -102,7 +108,13 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
         public IActionResult ListarPaises([FromRoute, SwaggerParameter(Description = "Identificador del país", Required = true)] int idPais)
         {
-            var respuesta = _genService.ListarPaises(idPais);
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = null,
+                PorPagina = null,
+                NoPaginar = null
+            };
+            var respuesta = _genService.ListarPaises(idPais, paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 

@@ -108,5 +108,24 @@ namespace Risk.API.Helpers
             }
             return entity;
         }
+
+        public static YPaginaParametros GetYPaginaParametrosFromModel(PaginaParametros model)
+        {
+            YPaginaParametros entity;
+            if (model == null)
+            {
+                entity = null;
+            }
+            else
+            {
+                entity = new YPaginaParametros
+                {
+                    Pagina = model.Pagina,
+                    PorPagina = model.PorPagina,
+                    NoPaginar = model.NoPaginar
+                };
+            }
+            return entity;
+        }
     }
 }

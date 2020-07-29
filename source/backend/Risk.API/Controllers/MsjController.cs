@@ -55,7 +55,13 @@ namespace Risk.API.Controllers
         [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
         [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
-            var respuesta = _msjService.ListarMensajesPendientes(pagina, porPagina, noPaginar);
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _msjService.ListarMensajesPendientes(paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 
@@ -70,7 +76,13 @@ namespace Risk.API.Controllers
         [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
         [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
-            var respuesta = _msjService.ListarCorreosPendientes(pagina, porPagina, noPaginar);
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _msjService.ListarCorreosPendientes(paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 
@@ -85,7 +97,13 @@ namespace Risk.API.Controllers
         [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
         [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
-            var respuesta = _msjService.ListarNotificacionesPendientes(pagina, porPagina, noPaginar);
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _msjService.ListarNotificacionesPendientes(paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 

@@ -42,17 +42,13 @@ namespace Risk.API.Services
         {
         }
 
-        public Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
+        public Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(PaginaParametros paginaParametros = null)
         {
             JObject prms = new JObject();
-
-            YPaginaParametros paginaParametros = new YPaginaParametros
+            if (paginaParametros != null)
             {
-                Pagina = pagina,
-                PorPagina = porPagina,
-                NoPaginar = noPaginar
-            };
-            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
+            }
 
             string rsp = base.ProcesarServicio(ID_LISTAR_MENSAJES_PENDIENTES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YMensaje>>>(rsp);
@@ -66,17 +62,13 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Mensaje>, YPagina<YMensaje>>(entityRsp, datos);
         }
 
-        public Respuesta<Pagina<Correo>> ListarCorreosPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
+        public Respuesta<Pagina<Correo>> ListarCorreosPendientes(PaginaParametros paginaParametros = null)
         {
             JObject prms = new JObject();
-
-            YPaginaParametros paginaParametros = new YPaginaParametros
+            if (paginaParametros != null)
             {
-                Pagina = pagina,
-                PorPagina = porPagina,
-                NoPaginar = noPaginar
-            };
-            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
+            }
 
             string rsp = base.ProcesarServicio(ID_LISTAR_CORREOS_PENDIENTES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCorreo>>>(rsp);
@@ -90,17 +82,13 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Correo>, YPagina<YCorreo>>(entityRsp, datos);
         }
 
-        public Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(int? pagina = null, int? porPagina = null, string noPaginar = null)
+        public Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(PaginaParametros paginaParametros = null)
         {
             JObject prms = new JObject();
-
-            YPaginaParametros paginaParametros = new YPaginaParametros
+            if (paginaParametros != null)
             {
-                Pagina = pagina,
-                PorPagina = porPagina,
-                NoPaginar = noPaginar
-            };
-            prms.Add("pagina_parametros", JToken.FromObject(paginaParametros));
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
+            }
 
             string rsp = base.ProcesarServicio(ID_LISTAR_NOTIFICACIONES_PENDIENTES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YNotificacion>>>(rsp);
