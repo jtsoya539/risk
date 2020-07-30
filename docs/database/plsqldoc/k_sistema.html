@@ -61,6 +61,11 @@ Define el valor de un par&#225;metro en la sesi&#243;n
 Define el valor de todos los par&#225;metros de la sesi&#243;n a null
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_LIMPIAR_PARAMETROS">p_limpiar_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_ELIMINAR_PARAMETROS">p_eliminar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Elimina todos los par&#225;metros definidos en la sesi&#243;n
@@ -72,6 +77,130 @@ Imprime todos los par&#225;metros definidos en la sesi&#243;n
 </TD></TR>
 </TABLE>
 <BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_SISTEMA">c_sistema</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_VERSION">c_version</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_FECHA">c_fecha</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_USUARIO">c_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_SERVICIO">c_id_servicio</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_NOMBRE_SERVICIO">c_nombre_servicio</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_APLICACION">c_id_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_SESION">c_id_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_USUARIO">c_id_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_SISTEMA"></A>
+<P CLASS="TYPE_TITLE">
+c_sistema
+</P>
+<PRE CLASS="DECL_TEXT">
+c_sistema         CONSTANT VARCHAR2(50) := 'SISTEMA';
+</PRE>
+<HR>
+<A NAME="C_VERSION"></A>
+<P CLASS="TYPE_TITLE">
+c_version
+</P>
+<PRE CLASS="DECL_TEXT">
+c_version         CONSTANT VARCHAR2(50) := 'VERSION';
+</PRE>
+<HR>
+<A NAME="C_FECHA"></A>
+<P CLASS="TYPE_TITLE">
+c_fecha
+</P>
+<PRE CLASS="DECL_TEXT">
+c_fecha           CONSTANT VARCHAR2(50) := 'FECHA';
+</PRE>
+<HR>
+<A NAME="C_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+c_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+c_usuario         CONSTANT VARCHAR2(50) := 'USUARIO';
+</PRE>
+<HR>
+<A NAME="C_ID_SERVICIO"></A>
+<P CLASS="TYPE_TITLE">
+c_id_servicio
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_servicio     CONSTANT VARCHAR2(50) := 'ID_SERVICIO';
+</PRE>
+<HR>
+<A NAME="C_NOMBRE_SERVICIO"></A>
+<P CLASS="TYPE_TITLE">
+c_nombre_servicio
+</P>
+<PRE CLASS="DECL_TEXT">
+c_nombre_servicio CONSTANT VARCHAR2(50) := 'NOMBRE_SERVICIO';
+</PRE>
+<HR>
+<A NAME="C_ID_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+c_id_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_aplicacion   CONSTANT VARCHAR2(50) := 'ID_APLICACION';
+</PRE>
+<HR>
+<A NAME="C_ID_SESION"></A>
+<P CLASS="TYPE_TITLE">
+c_id_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_sesion       CONSTANT VARCHAR2(50) := 'ID_SESION';
+</PRE>
+<HR>
+<A NAME="C_ID_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+c_id_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_usuario      CONSTANT VARCHAR2(50) := 'ID_USUARIO';
+</PRE>
 <HR>
 <A NAME="F_ES_PRODUCCION"></A>
 <P CLASS="TYPE_TITLE">
@@ -255,6 +384,15 @@ Raises
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="P_LIMPIAR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+p_limpiar_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_limpiar_parametros
+
+</PRE>
 <HR>
 <A NAME="P_ELIMINAR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">

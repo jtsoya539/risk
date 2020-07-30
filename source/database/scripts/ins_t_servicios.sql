@@ -3,7 +3,7 @@ set feedback off
 set define off
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
-values (0, 'CONTEXTO', 'T', 'S', null, null, null, null, null);
+values (0, 'CONTEXTO', 'M', 'S', null, null, null, null, null);
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (1, 'VALIDAR_CREDENCIALES', 'T', 'S', 'AUT', null, null, null, null);

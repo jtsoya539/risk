@@ -1,6 +1,7 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
+
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_APLICACION', 'S', 'SERVICIO', null, 'S');
 
@@ -195,5 +196,8 @@ values ('EXTENSION_REPORTE', 'XLSX', 'REPORTE XLSX', 'application/octet-stream',
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_REPORTE', 'TXT', 'REPORTE TXT', 'text/plain', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_SERVICIO', 'M', 'PARÁMETROS', null, 'S');
 
 prompt Done.
