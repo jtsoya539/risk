@@ -28,7 +28,7 @@ using Risk.API.Models;
 
 namespace Risk.API.Helpers
 {
-    public class ModelsMapper
+    public static class ModelsMapper
     {
         public static YDato GetYDatoFromModel(Dato model)
         {

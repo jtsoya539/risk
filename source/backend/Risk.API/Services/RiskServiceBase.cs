@@ -56,6 +56,9 @@ namespace Risk.API.Services
         {
             JObject ctx = new JObject();
 
+            // direccion_ip
+            string direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+
             // clave_aplicacion
             string claveAplicacion = string.Empty;
             string riskAppKey = _httpContextAccessor.HttpContext.Request.Headers[RiskConstants.RISK_APP_KEY];
@@ -72,8 +75,13 @@ namespace Risk.API.Services
                 accessToken = authHeader.Substring("Bearer ".Length).Trim();
             }
 
+            // usuario
+            string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
+
+            ctx.Add("direccion_ip", direccionIp);
             ctx.Add("clave_aplicacion", claveAplicacion);
             ctx.Add("access_token", accessToken);
+            ctx.Add("usuario", usuario);
 
             return ctx.ToString(Formatting.None);
         }

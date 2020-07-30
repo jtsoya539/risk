@@ -30,6 +30,17 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   -------------------------------------------------------------------------------
   */
 
+  -- Parámetros
+  c_sistema         CONSTANT VARCHAR2(50) := 'SISTEMA';
+  c_version         CONSTANT VARCHAR2(50) := 'VERSION';
+  c_fecha           CONSTANT VARCHAR2(50) := 'FECHA';
+  c_usuario         CONSTANT VARCHAR2(50) := 'USUARIO';
+  c_id_servicio     CONSTANT VARCHAR2(50) := 'ID_SERVICIO';
+  c_nombre_servicio CONSTANT VARCHAR2(50) := 'NOMBRE_SERVICIO';
+  c_id_aplicacion   CONSTANT VARCHAR2(50) := 'ID_APLICACION';
+  c_id_sesion       CONSTANT VARCHAR2(50) := 'ID_SESION';
+  c_id_usuario      CONSTANT VARCHAR2(50) := 'ID_USUARIO';
+
   FUNCTION f_es_produccion RETURN BOOLEAN;
 
   FUNCTION f_fecha_actual RETURN DATE;
@@ -62,6 +73,8 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   %raises <exception>
   */
   PROCEDURE p_inicializar_parametros;
+
+  PROCEDURE p_limpiar_parametros;
 
   /**
   Elimina todos los parámetros definidos en la sesión
@@ -117,6 +130,31 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
   PROCEDURE p_inicializar_parametros IS
   BEGIN
+    -- Elimina parámetros
+    p_eliminar_parametros;
+  
+    -- Define parámetros por defecto
+    DECLARE
+      l_nombre         t_sistemas.nombre%TYPE;
+      l_version_actual t_sistemas.version_actual%TYPE;
+      l_fecha_actual   t_sistemas.fecha_actual%TYPE;
+    BEGIN
+      SELECT nombre, version_actual, fecha_actual
+        INTO l_nombre, l_version_actual, l_fecha_actual
+        FROM t_sistemas
+       WHERE id_sistema = 'RISK';
+      p_definir_parametro(c_sistema, l_nombre);
+      p_definir_parametro(c_version, l_version_actual);
+      p_definir_parametro(c_fecha, to_char(l_fecha_actual, 'YYYY-MM-DD'));
+    EXCEPTION
+      WHEN OTHERS THEN
+        NULL;
+    END;
+    p_definir_parametro(c_usuario, USER);
+  END;
+
+  PROCEDURE p_limpiar_parametros IS
+  BEGIN
     g_indice := g_parametros.first;
     WHILE g_indice IS NOT NULL LOOP
       g_parametros(g_indice) := NULL;
@@ -138,24 +176,5 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
     END LOOP;
   END;
 
-BEGIN
-  -- Inicializa parámetros
-  p_definir_parametro('USUARIO', USER);
-  DECLARE
-    l_nombre         t_sistemas.nombre%TYPE;
-    l_version_actual t_sistemas.version_actual%TYPE;
-    l_fecha_actual   t_sistemas.fecha_actual%TYPE;
-  BEGIN
-    SELECT nombre, version_actual, fecha_actual
-      INTO l_nombre, l_version_actual, l_fecha_actual
-      FROM t_sistemas
-     WHERE id_sistema = 'RISK';
-    p_definir_parametro('SISTEMA', l_nombre);
-    p_definir_parametro('VERSION', l_version_actual);
-    p_definir_parametro('FECHA', to_char(l_fecha_actual, 'YYYY-MM-DD'));
-  EXCEPTION
-    WHEN OTHERS THEN
-      NULL;
-  END;
 END;
 /

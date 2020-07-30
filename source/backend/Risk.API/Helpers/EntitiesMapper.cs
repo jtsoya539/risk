@@ -29,7 +29,7 @@ using Risk.API.Models;
 
 namespace Risk.API.Helpers
 {
-    public class EntitiesMapper
+    public static class EntitiesMapper
     {
         public static Archivo GetArchivoFromEntity(YArchivo entity)
         {

@@ -40,6 +40,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                            i_activo           IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2;
 
+  FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER;
+
   FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
@@ -243,23 +245,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RETURN NULL;
   END;
 
-  FUNCTION lf_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
-    l_id_sesion t_sesiones.id_sesion%TYPE;
-  BEGIN
-    BEGIN
-      SELECT id_sesion
-        INTO l_id_sesion
-        FROM t_sesiones
-       WHERE access_token = i_access_token;
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_id_sesion := NULL;
-      WHEN OTHERS THEN
-        l_id_sesion := NULL;
-    END;
-    RETURN l_id_sesion;
-  END;
-
   FUNCTION f_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
                            i_activo           IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2 IS
@@ -278,6 +263,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         l_id_aplicacion := NULL;
     END;
     RETURN l_id_aplicacion;
+  END;
+
+  FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
+    l_id_sesion t_sesiones.id_sesion%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_sesion
+        INTO l_id_sesion
+        FROM t_sesiones
+       WHERE access_token = i_access_token;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_sesion := NULL;
+      WHEN OTHERS THEN
+        l_id_sesion := NULL;
+    END;
+    RETURN l_id_sesion;
   END;
 
   FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER IS
@@ -822,7 +824,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Busca sesion
-    l_id_sesion := lf_id_sesion(i_access_token_antiguo);
+    l_id_sesion := f_id_sesion(i_access_token_antiguo);
   
     IF l_id_sesion IS NULL THEN
       RAISE ex_tokens_invalidos;
@@ -860,7 +862,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     -- Busca sesion
-    l_id_sesion := lf_id_sesion(i_access_token);
+    l_id_sesion := f_id_sesion(i_access_token);
   
     IF l_id_sesion IS NULL THEN
       RAISE ex_sesion_inexistente;

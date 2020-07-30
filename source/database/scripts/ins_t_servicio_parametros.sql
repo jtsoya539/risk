@@ -3,10 +3,16 @@ set feedback off
 set define off
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
-values (0, 'CLAVE_APLICACION', 'I', 'S', null, 'N', null, 'S', 1, null);
+values (0, 'DIRECCION_IP', 'I', 'S', null, 'N', null, 'S', 1, null);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
-values (0, 'ACCESS_TOKEN', 'I', 'S', null, 'N', null, 'S', 2, null);
+values (0, 'CLAVE_APLICACION', 'I', 'S', null, 'N', null, 'S', 2, null);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
+values (0, 'ACCESS_TOKEN', 'I', 'S', null, 'N', null, 'S', 3, null);
+
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
+values (0, 'USUARIO', 'I', 'S', null, 'N', null, 'S', 4, null);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
 values (1, 'USUARIO', 'I', 'S', null, 'S', null, 'S', 1, null);
