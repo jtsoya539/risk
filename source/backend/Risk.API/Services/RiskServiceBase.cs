@@ -26,24 +26,56 @@ using System;
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
+using Risk.API.Helpers;
 
 namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
         protected readonly IConfiguration _configuration;
+        protected readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
         private const string RESPUESTA_ERROR_BASE_DATOS = "{\"codigo\":\"api9999\",\"mensaje\":\"Servicio no disponible\",\"mensaje_bd\":null,\"lugar\":null,\"datos\":null}";
 
-        public RiskServiceBase(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory)
+        public RiskServiceBase(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
         {
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
             _dbConnectionFactory = dbConnectionFactory;
+        }
+
+        private string ObtenerContexto()
+        {
+            JObject ctx = new JObject();
+
+            // clave_aplicacion
+            string claveAplicacion = string.Empty;
+            string riskAppKey = _httpContextAccessor.HttpContext.Request.Headers[RiskConstants.RISK_APP_KEY];
+            if (!string.IsNullOrEmpty(riskAppKey))
+            {
+                claveAplicacion = riskAppKey;
+            }
+
+            // access_token
+            string accessToken = string.Empty;
+            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
+            if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))
+            {
+                accessToken = authHeader.Substring("Bearer ".Length).Trim();
+            }
+
+            ctx.Add("clave_aplicacion", claveAplicacion);
+            ctx.Add("access_token", accessToken);
+
+            return ctx.ToString(Formatting.None);
         }
 
         public string ProcesarServicio(int idServicio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
@@ -74,12 +106,17 @@ namespace Risk.API.Services
 
                             OracleClob result = new OracleClob(con);
                             OracleClob iParametros = new OracleClob(con);
+                            OracleClob iContexto = new OracleClob(con);
 
                             iParametros.Write(parametros.ToCharArray(), 0, parametros.Length);
+
+                            string contexto = ObtenerContexto();
+                            iContexto.Write(contexto.ToCharArray(), 0, contexto.Length);
 
                             cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
                             cmd.Parameters.Add("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
                             cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
+                            cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
 
                             cmd.ExecuteNonQuery();
 
@@ -88,6 +125,7 @@ namespace Risk.API.Services
 
                             result.Dispose();
                             iParametros.Dispose();
+                            iContexto.Dispose();
                         }
 
                         con.Close();

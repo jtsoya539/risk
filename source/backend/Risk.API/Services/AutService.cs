@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -49,7 +50,8 @@ namespace Risk.API.Services
         private const int ID_CAMBIAR_ESTADO_USUARIO = 22;
         private const int ID_EDITAR_USUARIO = 42;
 
-        public AutService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
+        public AutService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(configuration, httpContextAccessor, dbConnectionFactory)
         {
         }
 

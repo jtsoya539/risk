@@ -86,6 +86,8 @@ namespace Risk.API
                 });
             });
 
+            services.AddHttpContextAccessor();
+
             string oracleLocation = Configuration["OracleConfiguration:OracleLocation"];
             if (!oracleLocation.Equals(string.Empty))
             {

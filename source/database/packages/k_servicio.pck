@@ -95,7 +95,9 @@ CREATE OR REPLACE PACKAGE k_servicio IS
     RETURN y_pagina;
 
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
-                               i_parametros  IN CLOB) RETURN CLOB;
+                               i_parametros  IN CLOB,
+                               i_contexto    IN CLOB DEFAULT NULL)
+    RETURN CLOB;
 
 END;
 /
@@ -116,13 +118,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   PROCEDURE lp_registrar_log(i_id_servicio IN NUMBER,
                              i_parametros  IN CLOB,
-                             i_respuesta   IN CLOB) IS
+                             i_respuesta   IN CLOB,
+                             i_contexto    IN CLOB DEFAULT NULL) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
   BEGIN
     INSERT INTO t_servicio_logs
-      (id_servicio, parametros, respuesta)
+      (id_servicio, parametros, respuesta, contexto)
     VALUES
-      (i_id_servicio, i_parametros, i_respuesta);
+      (i_id_servicio, i_parametros, i_respuesta, i_contexto);
     COMMIT;
   EXCEPTION
     WHEN OTHERS THEN
@@ -130,9 +133,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   END;
 
   FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
-                                i_parametros  IN CLOB) RETURN y_respuesta IS
+                                i_parametros  IN CLOB,
+                                i_contexto    IN CLOB DEFAULT NULL)
+    RETURN y_respuesta IS
     l_rsp                 y_respuesta;
     l_prms                y_parametros;
+    l_ctx                 y_parametros;
     l_archivo             y_archivo;
     l_tipo_servicio       t_servicios.tipo%TYPE;
     l_nombre_servicio     t_servicios.nombre%TYPE;
@@ -164,10 +170,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         RAISE ex_error_parametro;
     END;
   
-    l_rsp.lugar := 'Definiendo parámetros en la sesión';
-    k_sistema.p_definir_parametro('ID_SERVICIO', to_char(i_id_servicio));
-    k_sistema.p_definir_parametro('NOMBRE_SERVICIO', l_nombre_servicio);
-  
     l_rsp.lugar := 'Procesando parámetros del servicio';
     BEGIN
       l_prms := f_procesar_parametros(i_id_servicio, i_parametros);
@@ -184,6 +186,33 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                           dbms_utility.format_error_stack);
         RAISE ex_error_parametro;
     END;
+  
+    l_rsp.lugar := 'Procesando contexto';
+    BEGIN
+      l_ctx := f_procesar_parametros(0, i_contexto);
+    EXCEPTION
+      WHEN OTHERS THEN
+        p_respuesta_error(l_rsp,
+                          c_error_parametro,
+                          CASE
+                          k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                          k_error.c_user_defined_error THEN
+                          utl_call_stack.error_msg(1) WHEN
+                          k_error.c_oracle_predefined_error THEN
+                          k_error.f_mensaje_error(c_error_parametro) END,
+                          dbms_utility.format_error_stack);
+        RAISE ex_error_parametro;
+    END;
+  
+    l_rsp.lugar := 'Definiendo parámetros en la sesión';
+    k_sistema.p_definir_parametro('ID_SERVICIO', to_char(i_id_servicio));
+    k_sistema.p_definir_parametro('NOMBRE_SERVICIO', l_nombre_servicio);
+    k_sistema.p_definir_parametro('CLAVE_APLICACION',
+                                  f_valor_parametro_string(l_ctx,
+                                                           'clave_aplicacion'));
+    k_sistema.p_definir_parametro('ACCESS_TOKEN',
+                                  f_valor_parametro_string(l_ctx,
+                                                           'access_token'));
   
     l_rsp.lugar := 'Construyendo sentencia';
     l_sentencia := 'BEGIN :1 := ' || l_referencia_servicio || '_' ||
@@ -718,15 +747,17 @@ END;'
   END;
 
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
-                               i_parametros  IN CLOB) RETURN CLOB IS
+                               i_parametros  IN CLOB,
+                               i_contexto    IN CLOB DEFAULT NULL)
+    RETURN CLOB IS
     l_rsp CLOB;
   BEGIN
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros).to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
-    lp_registrar_log(i_id_servicio, i_parametros, l_rsp);
+    lp_registrar_log(i_id_servicio, i_parametros, l_rsp, i_contexto);
     RETURN l_rsp;
   END;
 

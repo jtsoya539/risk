@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -38,7 +39,8 @@ namespace Risk.API.Services
         private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 32;
         private const int ID_CAMBIAR_ESTADO_MENSAJERIA = 33;
 
-        public MsjService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
+        public MsjService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(configuration, httpContextAccessor, dbConnectionFactory)
         {
         }
 

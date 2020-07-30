@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -40,7 +41,8 @@ namespace Risk.API.Services
         private const int ID_RECUPERAR_ARCHIVO = 18;
         private const int ID_GUARDAR_ARCHIVO = 19;
 
-        public GenService(IConfiguration configuration, IDbConnectionFactory dbConnectionFactory) : base(configuration, dbConnectionFactory)
+        public GenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(configuration, httpContextAccessor, dbConnectionFactory)
         {
         }
 

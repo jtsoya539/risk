@@ -3,7 +3,8 @@ create table T_SERVICIO_LOGS
   id_servicio_log NUMBER not null,
   id_servicio     NUMBER(15),
   parametros      CLOB,
-  respuesta       CLOB
+  respuesta       CLOB,
+  contexto        CLOB
 )
 ;
 comment on table T_SERVICIO_LOGS
@@ -16,6 +17,8 @@ comment on column T_SERVICIO_LOGS.parametros
   is 'Parametros recibidos';
 comment on column T_SERVICIO_LOGS.respuesta
   is 'Respuesta enviada';
+comment on column T_SERVICIO_LOGS.contexto
+  is 'Contexto de la peticion';
 alter table T_SERVICIO_LOGS
   add constraint PK_SERVICIO_LOGS primary key (ID_SERVICIO_LOG);
 alter table T_SERVICIO_LOGS
