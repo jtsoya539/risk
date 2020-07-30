@@ -36,6 +36,7 @@ namespace Risk.API.Helpers
         public const string SECURITY_SCHEME_ACCESS_TOKEN = "AccessToken";
 
         // Http Headers
-        public const string RISK_APP_KEY = "Risk-App-Key";
+        public const string HEADER_RISK_APP_KEY = "Risk-App-Key";
+        public const string HEADER_AUTHORIZATION = "Authorization";
     }
 }

@@ -26,6 +26,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.Http;
 
 namespace Risk.API.Helpers
 {
@@ -58,6 +59,32 @@ namespace Risk.API.Helpers
             }
 
             return usuario;
+        }
+
+        public static string ObtenerClaveAplicacionDeHeaders(IHeaderDictionary headers)
+        {
+            string claveAplicacion = string.Empty;
+
+            string riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY];
+            if (!string.IsNullOrEmpty(riskAppKeyHeader))
+            {
+                claveAplicacion = riskAppKeyHeader;
+            }
+
+            return claveAplicacion;
+        }
+
+        public static string ObtenerAccessTokenDeHeaders(IHeaderDictionary headers)
+        {
+            string accessToken = string.Empty;
+
+            string authHeader = headers[RiskConstants.HEADER_AUTHORIZATION];
+            if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))
+            {
+                accessToken = authHeader.Substring("Bearer ".Length).Trim();
+            }
+
+            return accessToken;
         }
     }
 }

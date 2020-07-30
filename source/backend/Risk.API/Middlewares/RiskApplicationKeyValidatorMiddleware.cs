@@ -43,20 +43,20 @@ namespace Risk.API.Middlewares
             if (context.Request.Path.StartsWithSegments(new PathString("/Api")) &&
                 !context.Request.Path.StartsWithSegments(new PathString("/Api/Gen/VersionSistema")))
             {
-                if (!context.Request.Headers.Keys.Contains(RiskConstants.RISK_APP_KEY))
+                if (!context.Request.Headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY))
                 {
                     context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                    await context.Response.WriteAsync($"{RiskConstants.RISK_APP_KEY} missing");
+                    await context.Response.WriteAsync($"{RiskConstants.HEADER_RISK_APP_KEY} missing");
                     return;
                 }
                 else
                 {
-                    var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(context.Request.Headers[RiskConstants.RISK_APP_KEY]);
+                    var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(TokenHelper.ObtenerClaveAplicacionDeHeaders(context.Request.Headers));
 
                     if (!respValidarClaveAplicacion.Codigo.Equals(RiskConstants.CODIGO_OK))
                     {
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                        await context.Response.WriteAsync($"Invalid {RiskConstants.RISK_APP_KEY}");
+                        await context.Response.WriteAsync($"Invalid {RiskConstants.HEADER_RISK_APP_KEY}");
                         return;
                     }
                 }

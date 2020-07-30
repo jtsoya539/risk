@@ -60,20 +60,10 @@ namespace Risk.API.Services
             string direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
 
             // clave_aplicacion
-            string claveAplicacion = string.Empty;
-            string riskAppKey = _httpContextAccessor.HttpContext.Request.Headers[RiskConstants.RISK_APP_KEY];
-            if (!string.IsNullOrEmpty(riskAppKey))
-            {
-                claveAplicacion = riskAppKey;
-            }
+            string claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
 
             // access_token
-            string accessToken = string.Empty;
-            string authHeader = _httpContextAccessor.HttpContext.Request.Headers["Authorization"];
-            if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))
-            {
-                accessToken = authHeader.Substring("Bearer ".Length).Trim();
-            }
+            string accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
 
             // usuario
             string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);

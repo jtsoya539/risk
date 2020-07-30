@@ -179,14 +179,14 @@ namespace Risk.API
                     Description = "Clave de la aplicación habilitada para consumir servicios",
                     Type = SecuritySchemeType.ApiKey,
                     In = ParameterLocation.Header,
-                    Name = RiskConstants.RISK_APP_KEY
+                    Name = RiskConstants.HEADER_RISK_APP_KEY
                 });
                 c.AddSecurityDefinition(RiskConstants.SECURITY_SCHEME_ACCESS_TOKEN, new OpenApiSecurityScheme
                 {
                     Description = "Access Token de la sesión (Token Bearer en formato JWT)",
                     Type = SecuritySchemeType.Http,
                     In = ParameterLocation.Header,
-                    Name = "Authorization",
+                    Name = RiskConstants.HEADER_AUTHORIZATION,
                     Scheme = "bearer", // JwtBearerDefaults.AuthenticationScheme
                     BearerFormat = "JWT"
                 });
