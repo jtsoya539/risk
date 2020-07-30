@@ -31,10 +31,12 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   */
 
   -- Parámetros
-  c_sistema         CONSTANT VARCHAR2(50) := 'SISTEMA';
-  c_version         CONSTANT VARCHAR2(50) := 'VERSION';
-  c_fecha           CONSTANT VARCHAR2(50) := 'FECHA';
-  c_usuario         CONSTANT VARCHAR2(50) := 'USUARIO';
+  c_sistema CONSTANT VARCHAR2(50) := 'SISTEMA';
+  c_version CONSTANT VARCHAR2(50) := 'VERSION';
+  c_fecha   CONSTANT VARCHAR2(50) := 'FECHA';
+  c_usuario CONSTANT VARCHAR2(50) := 'USUARIO';
+  --
+  c_direccion_ip    CONSTANT VARCHAR2(50) := 'DIRECCION_IP';
   c_id_servicio     CONSTANT VARCHAR2(50) := 'ID_SERVICIO';
   c_nombre_servicio CONSTANT VARCHAR2(50) := 'NOMBRE_SERVICIO';
   c_id_aplicacion   CONSTANT VARCHAR2(50) := 'ID_APLICACION';

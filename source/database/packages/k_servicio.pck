@@ -208,6 +208,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
     k_sistema.p_inicializar_parametros;
+    k_sistema.p_definir_parametro(k_sistema.c_direccion_ip,
+                                  f_valor_parametro_string(l_ctx,
+                                                           'direccion_ip'));
     k_sistema.p_definir_parametro(k_sistema.c_id_servicio,
                                   to_char(i_id_servicio));
     k_sistema.p_definir_parametro(k_sistema.c_nombre_servicio,
