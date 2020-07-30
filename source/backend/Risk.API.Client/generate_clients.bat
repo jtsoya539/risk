@@ -34,7 +34,7 @@ setlocal EnableDelayedExpansion
 cls
 echo ************************************************************
 echo.
-echo Seleccione una opcion en !server[%SERVER%]!:
+echo Seleccione una opcion:
 echo.
 echo ************************************************************
 echo.
@@ -295,7 +295,11 @@ cls
 echo Generando cliente !client[%1]!...
 cd %RISK_HOME%\source\backend\Risk.API.Client
 rd /s /q !client[%1].dir!
-set client_cmd=java -jar !generator[%generator%]! generate -i %SWAGGER_SPEC_URL% -o !client[%1].dir! -g !client[%1]! -c config-!client[%1]!.json
+if %generator%==1 (
+  set client_cmd=java -jar !generator[%generator%]! generate -i %SWAGGER_SPEC_URL% -o !client[%1].dir! -g !client[%1]! -c config-!client[%1]!.json
+) else if %generator%==2 (
+  set client_cmd=java -jar !generator[%generator%]! generate -i %SWAGGER_SPEC_URL% -o !client[%1].dir! -l !client[%1]! -c config-!client[%1]!.json
+)
 call %client_cmd%
 if %2==1 Pause
 goto :eof
