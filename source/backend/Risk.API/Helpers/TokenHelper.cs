@@ -81,7 +81,7 @@ namespace Risk.API.Helpers
             string authHeader = headers[RiskConstants.HEADER_AUTHORIZATION];
             if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))
             {
-                accessToken = authHeader.Substring("Bearer ".Length).Trim();
+                accessToken = authHeader.Substring("Bearer".Length).Trim();
             }
 
             return accessToken;
