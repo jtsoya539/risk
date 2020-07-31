@@ -23,3 +23,4 @@ SOFTWARE.
 */
 
 drop package as_pdf3_v5;
+drop package oos_util_totp;
