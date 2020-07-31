@@ -7,6 +7,7 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   <ul>
   <li>Correo electrónico (E-mail)</li>
   <li>Mensaje de texto (SMS)</li>
+  <li>Notificación push</li>
   </ul>
   
   %author jtsoya539 27/3/2020 16:38:22

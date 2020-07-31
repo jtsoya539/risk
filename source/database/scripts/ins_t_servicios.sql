@@ -1,7 +1,6 @@
 prompt Importing table t_servicios...
 set feedback off
 set define off
-
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (0, 'CONTEXTO', 'M', 'S', null, null, null, null, null);
 
@@ -67,6 +66,12 @@ values (21, 'DATOS_DISPOSITIVO', 'T', 'S', 'AUT', null, null, null, null);
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (22, 'CAMBIAR_ESTADO_USUARIO', 'T', 'S', 'AUT', null, null, null, null);
+
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (23, 'GENERAR_OTP', 'T', 'S', 'AUT', null, null, null, null);
+
+insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (24, 'VALIDAR_OTP', 'T', 'S', 'AUT', null, null, null, null);
 
 insert into t_servicios (ID_SERVICIO, NOMBRE, TIPO, ACTIVO, DOMINIO, DETALLE, VERSION_ACTUAL, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (30, 'LISTAR_MENSAJES_PENDIENTES', 'T', 'S', 'MSJ', null, null, null, null);

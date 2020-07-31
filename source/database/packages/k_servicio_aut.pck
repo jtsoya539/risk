@@ -66,6 +66,10 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION editar_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION generar_otp(i_parametros IN y_parametros) RETURN y_respuesta;
+
+  FUNCTION validar_otp(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
@@ -911,6 +915,105 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                                          'numero_telefono')));
   
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION generar_otp(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp    y_respuesta;
+    l_dato   y_dato;
+    l_secret VARCHAR2(100);
+    l_otp    VARCHAR2(100);
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'tipo_mensajeria') IS NOT NULL,
+                                   'Debe ingresar tipo_mensajeria');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'tipo_mensajeria') IN
+                                   ('M', 'S', 'P'),
+                                   'Valor no válido para tipo_mensajeria');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'destino') IS NOT NULL,
+                                   'Debe ingresar destino');
+  
+    l_rsp.lugar := 'Generando secret';
+    l_secret    := oos_util_totp.generate_secret;
+  
+    l_rsp.lugar := 'Generando OTP';
+    l_otp       := oos_util_totp.generate_otp(l_secret);
+  
+    -- TODO: enviar la mensajería
+  
+    l_dato.contenido := l_secret;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION validar_otp(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'secret') IS NOT NULL,
+                                   'Debe ingresar secret');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_number(i_parametros,
+                                                                       'otp') IS NOT NULL,
+                                   'Debe ingresar otp');
+  
+    l_rsp.lugar := 'Validando OTP';
+    BEGIN
+      IF oos_util_totp.validate_otp(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                        'secret'),
+                                    k_servicio.f_valor_parametro_number(i_parametros,
+                                                                        'otp')) <> 1 THEN
+        k_servicio.p_respuesta_error(l_rsp, 'aut0001', 'OTP inválido');
+        RAISE k_servicio.ex_error_general;
+      END IF;
+    EXCEPTION
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp, 'aut0002', 'OTP inválido');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN
