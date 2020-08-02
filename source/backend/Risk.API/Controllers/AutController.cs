@@ -400,5 +400,31 @@ namespace Risk.API.Controllers
             var respCambiarEstadoUsuario = _autService.CambiarEstadoUsuario(requestBody.Usuario, "I");
             return ProcesarRespuesta(respCambiarEstadoUsuario);
         }
+
+        [AllowAnonymous]
+        [HttpPost("GenerarOtp")]
+        [SwaggerOperation(OperationId = "GenerarOtp", Summary = "GenerarOtp", Description = "Permite generar un código OTP")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult GenerarOtp([FromQuery, SwaggerParameter(Description = "Tipo de mensajería (Mail/SMS/Push)", Required = true)] TipoMensajeria tipoMensajeria,
+            [FromQuery, SwaggerParameter(Description = "Destino de la mensajería", Required = true)] string destino)
+        {
+            var respuesta = _autService.GenerarOtp(tipoMensajeria, destino);
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("ValidarOtp")]
+        [SwaggerOperation(OperationId = "ValidarOtp", Summary = "ValidarOtp", Description = "Permite validar un código OTP")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult ValidarOtp([FromQuery, SwaggerParameter(Description = "Secret recibido al generar el código OTP", Required = true)] string secret,
+            [FromQuery, SwaggerParameter(Description = "Código OTP a validar", Required = true)] int otp)
+        {
+            var respuesta = _autService.ValidarOtp(secret, otp);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }

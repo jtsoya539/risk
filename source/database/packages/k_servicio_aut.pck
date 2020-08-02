@@ -962,7 +962,32 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp.lugar := 'Generando OTP';
     l_otp       := oos_util_totp.generate_otp(l_secret);
   
-    -- TODO: enviar la mensajería
+    l_rsp.lugar := 'Enviando mensajería';
+    CASE
+     k_servicio.f_valor_parametro_string(i_parametros, 'tipo_mensajeria')
+    
+      WHEN 'M' THEN
+        -- Mail
+        NULL;
+      
+      WHEN 'S' THEN
+        -- SMS
+        IF k_mensajeria.f_enviar_mensaje(l_otp,
+                                         NULL,
+                                         k_servicio.f_valor_parametro_string(i_parametros,
+                                                                             'destino')) <>
+           k_mensajeria.c_ok THEN
+          k_servicio.p_respuesta_error(l_rsp,
+                                       'aut0001',
+                                       'Error al enviar SMS');
+          RAISE k_servicio.ex_error_general;
+        END IF;
+      
+      WHEN 'P' THEN
+        -- Push
+        NULL;
+      
+    END CASE;
   
     l_dato.contenido := l_secret;
   

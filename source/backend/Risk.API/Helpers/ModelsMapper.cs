@@ -127,5 +127,20 @@ namespace Risk.API.Helpers
             }
             return entity;
         }
+
+        public static string GetValueFromTipoMensajeriaEnum(TipoMensajeria enumeration)
+        {
+            switch (enumeration)
+            {
+                case TipoMensajeria.Mail:
+                    return "M";
+                case TipoMensajeria.SMS:
+                    return "S";
+                case TipoMensajeria.Push:
+                    return "P";
+                default:
+                    return "";
+            }
+        }
     }
 }

@@ -48,6 +48,8 @@ namespace Risk.API.Services
         private const int ID_TIEMPO_EXPIRACION_TOKEN = 17;
         private const int ID_DATOS_DISPOSITIVO = 21;
         private const int ID_CAMBIAR_ESTADO_USUARIO = 22;
+        private const int ID_GENERAR_OTP = 23;
+        private const int ID_VALIDAR_OTP = 24;
         private const int ID_EDITAR_USUARIO = 42;
 
         public AutService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
@@ -248,6 +250,30 @@ namespace Risk.API.Services
             prms.Add("estado", estado);
 
             string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_USUARIO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> GenerarOtp(TipoMensajeria tipoMensajeria, string destino)
+        {
+            JObject prms = new JObject();
+            prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
+            prms.Add("destino", destino);
+
+            string rsp = base.ProcesarServicio(ID_GENERAR_OTP, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> ValidarOtp(string secret, int otp)
+        {
+            JObject prms = new JObject();
+            prms.Add("secret", secret);
+            prms.Add("otp", otp);
+
+            string rsp = base.ProcesarServicio(ID_VALIDAR_OTP, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));

@@ -40,6 +40,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Oracle.ManagedDataAccess.Client;
 using Risk.API.Entities;
@@ -76,6 +77,7 @@ namespace Risk.API
                     NamingStrategy = null
                 };
                 opt.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
+                opt.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
 
             services.AddCors(options =>
