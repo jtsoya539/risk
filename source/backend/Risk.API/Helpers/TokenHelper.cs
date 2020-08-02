@@ -65,7 +65,20 @@ namespace Risk.API.Helpers
         {
             string claveAplicacion = string.Empty;
 
-            string riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY];
+            string riskAppKeyHeader = null;
+            if (headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY))
+            {
+                riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY];
+            }
+            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY.ToLower()))
+            {
+                riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY.ToLower()];
+            }
+            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY.ToUpper()))
+            {
+                riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY.ToUpper()];
+            }
+
             if (!string.IsNullOrEmpty(riskAppKeyHeader))
             {
                 claveAplicacion = riskAppKeyHeader;
