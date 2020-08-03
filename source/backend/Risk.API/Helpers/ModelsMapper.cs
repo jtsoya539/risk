@@ -128,6 +128,21 @@ namespace Risk.API.Helpers
             return entity;
         }
 
+        public static string GetValueFromEstadoUsuarioEnum(EstadoUsuario enumeration)
+        {
+            switch (enumeration)
+            {
+                case EstadoUsuario.Activo:
+                    return "A";
+                case EstadoUsuario.Inactivo:
+                    return "I";
+                case EstadoUsuario.Bloqueado:
+                    return "B";
+                default:
+                    return string.Empty;
+            }
+        }
+
         public static string GetValueFromTipoClaveEnum(TipoClave enumeration)
         {
             switch (enumeration)

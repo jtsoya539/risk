@@ -397,7 +397,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respCambiarEstadoSesion);
             }
 
-            var respCambiarEstadoUsuario = _autService.CambiarEstadoUsuario(requestBody.Usuario, "I");
+            var respCambiarEstadoUsuario = _autService.CambiarEstadoUsuario(requestBody.Usuario, EstadoUsuario.Inactivo);
             return ProcesarRespuesta(respCambiarEstadoUsuario);
         }
 

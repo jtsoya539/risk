@@ -243,11 +243,11 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> CambiarEstadoUsuario(string usuario, string estado)
+        public Respuesta<Dato> CambiarEstadoUsuario(string usuario, EstadoUsuario estado)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
-            prms.Add("estado", estado);
+            prms.Add("estado", ModelsMapper.GetValueFromEstadoUsuarioEnum(estado));
 
             string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_USUARIO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
