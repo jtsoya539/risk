@@ -247,7 +247,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
-            var respuesta = _autService.CambiarEstadoSesion(requestBody.AccessToken, "F");
+            var respuesta = _autService.CambiarEstadoSesion(requestBody.AccessToken, EstadoSesion.Finalizado);
             return ProcesarRespuesta(respuesta);
         }
 
@@ -390,7 +390,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respValidarCredenciales);
             }
 
-            var respCambiarEstadoSesion = _autService.CambiarEstadoSesion(requestBody.AccessToken, "F");
+            var respCambiarEstadoSesion = _autService.CambiarEstadoSesion(requestBody.AccessToken, EstadoSesion.Finalizado);
 
             if (!respCambiarEstadoSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {

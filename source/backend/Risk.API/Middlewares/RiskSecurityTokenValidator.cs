@@ -79,12 +79,12 @@ namespace Risk.API.Middlewares
             }
             catch (SecurityTokenExpiredException)
             {
-                respuesta = _autService.CambiarEstadoSesion(securityToken, "X");
+                respuesta = _autService.CambiarEstadoSesion(securityToken, EstadoSesion.Expirado);
                 throw;
             }
             catch (SecurityTokenValidationException)
             {
-                respuesta = _autService.CambiarEstadoSesion(securityToken, "I");
+                respuesta = _autService.CambiarEstadoSesion(securityToken, EstadoSesion.Invalido);
                 throw;
             }
 

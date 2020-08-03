@@ -31,7 +31,7 @@ namespace Risk.API.Services
         Respuesta<Dato> ValidarCredenciales(string usuario, string clave, TipoClave tipoClave);
         Respuesta<Sesion> IniciarSesion(string claveAplicacion, string usuario, string accessToken, string refreshToken, string tokenDispositivo);
         Respuesta<Sesion> RefrescarSesion(string claveAplicacion, string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo);
-        Respuesta<Dato> CambiarEstadoSesion(string accessToken, string estado);
+        Respuesta<Dato> CambiarEstadoSesion(string accessToken, EstadoSesion estado);
         Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
         Respuesta<Dato> RegistrarClave(string usuario, string clave, TipoClave tipoClave);
         Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, TipoClave tipoClave);

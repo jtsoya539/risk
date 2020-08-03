@@ -143,6 +143,23 @@ namespace Risk.API.Helpers
             }
         }
 
+        public static string GetValueFromEstadoSesionEnum(EstadoSesion enumeration)
+        {
+            switch (enumeration)
+            {
+                case EstadoSesion.Activo:
+                    return "A";
+                case EstadoSesion.Expirado:
+                    return "X";
+                case EstadoSesion.Finalizado:
+                    return "F";
+                case EstadoSesion.Invalido:
+                    return "I";
+                default:
+                    return string.Empty;
+            }
+        }
+
         public static string GetValueFromTipoClaveEnum(TipoClave enumeration)
         {
             switch (enumeration)

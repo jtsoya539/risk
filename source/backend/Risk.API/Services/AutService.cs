@@ -71,11 +71,11 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> CambiarEstadoSesion(string accessToken, string estado)
+        public Respuesta<Dato> CambiarEstadoSesion(string accessToken, EstadoSesion estado)
         {
             JObject prms = new JObject();
             prms.Add("access_token", accessToken);
-            prms.Add("estado", estado);
+            prms.Add("estado", ModelsMapper.GetValueFromEstadoSesionEnum(estado));
 
             string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_SESION, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
