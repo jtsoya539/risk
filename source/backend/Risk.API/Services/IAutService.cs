@@ -28,19 +28,19 @@ namespace Risk.API.Services
 {
     public interface IAutService
     {
-        Respuesta<Dato> ValidarCredenciales(string usuario, string clave, string tipoClave);
+        Respuesta<Dato> ValidarCredenciales(string usuario, string clave, TipoClave tipoClave);
         Respuesta<Sesion> IniciarSesion(string claveAplicacion, string usuario, string accessToken, string refreshToken, string tokenDispositivo);
         Respuesta<Sesion> RefrescarSesion(string claveAplicacion, string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo);
         Respuesta<Dato> CambiarEstadoSesion(string accessToken, string estado);
         Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
-        Respuesta<Dato> RegistrarClave(string usuario, string clave, string tipoClave);
-        Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave);
+        Respuesta<Dato> RegistrarClave(string usuario, string clave, TipoClave tipoClave);
+        Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, TipoClave tipoClave);
         Respuesta<Dato> ValidarSesion(string accessToken);
         Respuesta<Usuario> DatosUsuario(string usuario);
         Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion);
         Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo);
         Respuesta<Dispositivo> DatosDispositivo(string tokenDispositivo);
-        Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken);
+        Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, TipoToken tipoToken);
         Respuesta<Dato> EditarUsuario(string usuarioAntiguo, string usuarioNuevo, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
         Respuesta<Dato> CambiarEstadoUsuario(string usuario, string estado);
         Respuesta<Dato> GenerarOtp(TipoMensajeria tipoMensajeria, string destino);

@@ -57,13 +57,13 @@ namespace Risk.API.Services
         {
         }
 
-        public Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, string tipoClave)
+        public Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, TipoClave tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave_antigua", claveAntigua);
             prms.Add("clave_nueva", claveNueva);
-            prms.Add("tipo_clave", tipoClave);
+            prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
 
             string rsp = base.ProcesarServicio(ID_CAMBIAR_CLAVE, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
@@ -113,12 +113,12 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetSesionFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> RegistrarClave(string usuario, string clave, string tipoClave)
+        public Respuesta<Dato> RegistrarClave(string usuario, string clave, TipoClave tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
-            prms.Add("tipo_clave", tipoClave);
+            prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
 
             string rsp = base.ProcesarServicio(ID_REGISTRAR_CLAVE, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
@@ -142,12 +142,12 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> ValidarCredenciales(string usuario, string clave, string tipoClave)
+        public Respuesta<Dato> ValidarCredenciales(string usuario, string clave, TipoClave tipoClave)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
-            prms.Add("tipo_clave", tipoClave);
+            prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
 
             string rsp = base.ProcesarServicio(ID_VALIDAR_CREDENCIALES, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
@@ -215,11 +215,11 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetDispositivoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, string tipoToken)
+        public Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, TipoToken tipoToken)
         {
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
-            prms.Add("tipo_token", tipoToken);
+            prms.Add("tipo_token", ModelsMapper.GetValueFromTipoTokenEnum(tipoToken));
 
             string rsp = base.ProcesarServicio(ID_TIEMPO_EXPIRACION_TOKEN, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

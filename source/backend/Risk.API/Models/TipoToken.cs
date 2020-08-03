@@ -24,11 +24,9 @@ SOFTWARE.
 
 namespace Risk.API.Models
 {
-    public class CambiarEstadoMensajeriaRequestBody
+    public enum TipoToken
     {
-        public TipoMensajeria TipoMensajeria { get; set; }
-        public int IdMensajeria { get; set; }
-        public EstadoMensajeria Estado { get; set; }
-        public string RespuestaEnvio { get; set; }
+        AccessToken,
+        RefreshToken
     }
 }

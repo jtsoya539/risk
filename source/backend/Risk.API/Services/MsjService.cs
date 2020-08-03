@@ -104,12 +104,12 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Notificacion>, YPagina<YNotificacion>>(entityRsp, datos);
         }
 
-        public Respuesta<Dato> CambiarEstadoMensajeria(TipoMensajeria tipoMensajeria, int idMensajeria, string estado, string respuestaEnvio)
+        public Respuesta<Dato> CambiarEstadoMensajeria(TipoMensajeria tipoMensajeria, int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
             JObject prms = new JObject();
             prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
             prms.Add("id_mensajeria", idMensajeria);
-            prms.Add("estado", estado);
+            prms.Add("estado", ModelsMapper.GetValueFromEstadoMensajeriaEnum(estado));
             prms.Add("respuesta_envio", respuestaEnvio);
 
             string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJERIA, prms.ToString(Formatting.None));
