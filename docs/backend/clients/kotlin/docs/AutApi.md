@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**editarUsuario**](AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**eliminarUsuario**](AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**finalizarSesion**](AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
+[**generarOtp**](AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**guardarAvatarUsuario**](AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**iniciarSesion**](AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
 [**recuperarAvatarUsuario**](AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
@@ -16,6 +17,7 @@ Method | HTTP request | Description
 [**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 [**registrarUsuario**](AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
+[**validarOtp**](AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 [**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
 
@@ -279,6 +281,58 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="generarOtp"></a>
+# **generarOtp**
+> DatoRespuesta generarOtp(tipoMensajeria, destino)
+
+GenerarOtp
+
+Permite generar un código OTP
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val tipoMensajeria : TipoMensajeria =  // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
+val destino : kotlin.String = destino_example // kotlin.String | Destino de la mensajería
+try {
+    val result : DatoRespuesta = apiInstance.generarOtp(tipoMensajeria, destino)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#generarOtp")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#generarOtp")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería (Mail/SMS/Push) | [enum: Mail, SMS, Push]
+ **destino** | **kotlin.String**| Destino de la mensajería |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 <a name="guardarAvatarUsuario"></a>
@@ -641,6 +695,58 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="validarOtp"></a>
+# **validarOtp**
+> DatoRespuesta validarOtp(secret, otp)
+
+ValidarOtp
+
+Permite validar un código OTP
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val secret : kotlin.String = secret_example // kotlin.String | Secret recibido al generar el código OTP
+val otp : kotlin.Int = 56 // kotlin.Int | Código OTP a validar
+try {
+    val result : DatoRespuesta = apiInstance.validarOtp(secret, otp)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#validarOtp")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#validarOtp")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **secret** | **kotlin.String**| Secret recibido al generar el código OTP |
+ **otp** | **kotlin.Int**| Código OTP a validar |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 <a name="validarSesion"></a>

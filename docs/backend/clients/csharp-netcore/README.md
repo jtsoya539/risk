@@ -102,6 +102,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**EditarUsuario**](docs/AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**EliminarUsuario**](docs/AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**FinalizarSesion**](docs/AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
+*AutApi* | [**GenerarOtp**](docs/AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 *AutApi* | [**GuardarAvatarUsuario**](docs/AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 *AutApi* | [**IniciarSesion**](docs/AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
 *AutApi* | [**RecuperarAvatarUsuario**](docs/AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
@@ -109,6 +110,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**RegistrarClaveTransaccional**](docs/AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**RegistrarDispositivo**](docs/AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 *AutApi* | [**RegistrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
+*AutApi* | [**ValidarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**ValidarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**ListarPais**](docs/GenApi.md#listarpais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
 *GenApi* | [**ListarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
@@ -153,6 +155,7 @@ Class | Method | HTTP request | Description
  - [Model.RegistrarUsuarioRequestBody](docs/RegistrarUsuarioRequestBody.md)
  - [Model.Sesion](docs/Sesion.md)
  - [Model.SesionRespuesta](docs/SesionRespuesta.md)
+ - [Model.TipoMensajeria](docs/TipoMensajeria.md)
 
 
 <a name="documentation-for-authorization"></a>

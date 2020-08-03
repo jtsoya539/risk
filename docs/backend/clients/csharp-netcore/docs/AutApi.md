@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**EditarUsuario**](AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**EliminarUsuario**](AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**FinalizarSesion**](AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
+[**GenerarOtp**](AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**GuardarAvatarUsuario**](AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**IniciarSesion**](AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
 [**RecuperarAvatarUsuario**](AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
@@ -16,6 +17,7 @@ Method | HTTP request | Description
 [**RegistrarClaveTransaccional**](AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**RegistrarDispositivo**](AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 [**RegistrarUsuario**](AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
+[**ValidarOtp**](AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 [**ValidarSesion**](AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
 
@@ -425,6 +427,87 @@ Name | Type | Description  | Notes
 | **200** | Operación exitosa |  -  |
 | **403** | Aplicación no autorizada |  -  |
 | **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="generarotp"></a>
+# **GenerarOtp**
+> DatoRespuesta GenerarOtp (TipoMensajeria tipoMensajeria, string destino)
+
+GenerarOtp
+
+Permite generar un código OTP
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class GenerarOtpExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
+            var destino = destino_example;  // string | Destino de la mensajería
+
+            try
+            {
+                // GenerarOtp
+                DatoRespuesta result = apiInstance.GenerarOtp(tipoMensajeria, destino);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.GenerarOtp: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería (Mail/SMS/Push) | 
+ **destino** | **string**| Destino de la mensajería | 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
 | **400** | Operación con error |  -  |
 | **500** | Error inesperado |  -  |
 | **501** | Servicio no implementado o inactivo |  -  |
@@ -986,6 +1069,87 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="validarotp"></a>
+# **ValidarOtp**
+> DatoRespuesta ValidarOtp (string secret, int otp)
+
+ValidarOtp
+
+Permite validar un código OTP
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ValidarOtpExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var secret = secret_example;  // string | Secret recibido al generar el código OTP
+            var otp = 56;  // int | Código OTP a validar
+
+            try
+            {
+                // ValidarOtp
+                DatoRespuesta result = apiInstance.ValidarOtp(secret, otp);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.ValidarOtp: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **secret** | **string**| Secret recibido al generar el código OTP | 
+ **otp** | **int**| Código OTP a validar | 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details

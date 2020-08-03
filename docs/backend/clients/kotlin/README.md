@@ -40,6 +40,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**editarUsuario**](docs/AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**eliminarUsuario**](docs/AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**finalizarSesion**](docs/AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
+*AutApi* | [**generarOtp**](docs/AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 *AutApi* | [**guardarAvatarUsuario**](docs/AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 *AutApi* | [**iniciarSesion**](docs/AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
 *AutApi* | [**recuperarAvatarUsuario**](docs/AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
@@ -47,6 +48,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**registrarClaveTransaccional**](docs/AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**registrarDispositivo**](docs/AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
+*AutApi* | [**validarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**listarPais**](docs/GenApi.md#listarpais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
 *GenApi* | [**listarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
@@ -91,6 +93,7 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.RegistrarUsuarioRequestBody](docs/RegistrarUsuarioRequestBody.md)
  - [py.com.risk.client.models.Sesion](docs/Sesion.md)
  - [py.com.risk.client.models.SesionRespuesta](docs/SesionRespuesta.md)
+ - [py.com.risk.client.models.TipoMensajeria](docs/TipoMensajeria.md)
 
 
 <a name="documentation-for-authorization"></a>
