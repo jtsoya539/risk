@@ -131,7 +131,7 @@ namespace Risk.SMS
             {
                 datoRespuesta = msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                 {
-                    TipoMensajeria = "S", // SMS
+                    TipoMensajeria = TipoMensajeria.SMS,
                     IdMensajeria = idMensajeria,
                     Estado = estado,
                     RespuestaEnvio = respuestaEnvio
@@ -147,7 +147,7 @@ namespace Risk.SMS
                     {
                         datoRespuesta = msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                         {
-                            TipoMensajeria = "S", // SMS
+                            TipoMensajeria = TipoMensajeria.SMS,
                             IdMensajeria = idMensajeria,
                             Estado = estado,
                             RespuestaEnvio = respuestaEnvio
