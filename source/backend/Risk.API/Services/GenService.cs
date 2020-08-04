@@ -38,6 +38,9 @@ namespace Risk.API.Services
         private const int ID_SIGNIFICADO_CODIGO = 9;
         private const int ID_VERSION_SISTEMA = 13;
         private const int ID_LISTAR_PAISES = 16;
+        private const int ID_LISTAR_DEPARTAMENTOS = 25;
+        private const int ID_LISTAR_CIUDADES = 26;
+        private const int ID_LISTAR_BARRIOS = 27;
         private const int ID_RECUPERAR_ARCHIVO = 18;
         private const int ID_GUARDAR_ARCHIVO = 19;
 
@@ -99,6 +102,21 @@ namespace Risk.API.Services
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Pais>, YPagina<YPais>>(entityRsp, datos);
+        }
+
+        public Respuesta<Pagina<Departamento>> ListarDepartamentos(int? idDepartamento = null, int? idPais = null, PaginaParametros paginaParametros = null)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Respuesta<Pagina<Ciudad>> ListarCiudades(int? idCiudad = null, int? idPais = null, int? idDepartamento = null, PaginaParametros paginaParametros = null)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Respuesta<Pagina<Barrio>> ListarBarrios(int? idBarrio = null, int? idPais = null, int? idDepartamento = null, int? idCiudad = null, PaginaParametros paginaParametros = null)
+        {
+            throw new System.NotImplementedException();
         }
 
         public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia)

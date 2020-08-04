@@ -32,5 +32,11 @@ namespace Risk.API.Entities
         public int IdPais { get; set; }
         [JsonProperty("nombre")]
         public string Nombre { get; set; }
+        [JsonProperty("iso_alpha_2")]
+        public string IsoAlpha2 { get; set; }
+        [JsonProperty("iso_alpha_3")]
+        public string IsoAlpha3 { get; set; }
+        [JsonProperty("iso_numeric")]
+        public int IsoNumeric { get; set; }
     }
 }

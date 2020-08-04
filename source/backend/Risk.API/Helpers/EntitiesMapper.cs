@@ -211,7 +211,10 @@ namespace Risk.API.Helpers
                 model = new Pais
                 {
                     IdPais = entity.IdPais,
-                    Nombre = entity.Nombre
+                    Nombre = entity.Nombre,
+                    IsoAlpha2 = entity.IsoAlpha2,
+                    IsoAlpha3 = entity.IsoAlpha3,
+                    IsoNumeric = entity.IsoNumeric
                 };
             }
             return model;
