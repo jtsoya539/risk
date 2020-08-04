@@ -121,7 +121,7 @@ namespace Risk.Push
             return mensajes;
         }
 
-        private void CambiarEstadoMensajeria(int idMensajeria, string estado, string respuestaEnvio)
+        private void CambiarEstadoMensajeria(int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
@@ -176,12 +176,12 @@ namespace Risk.Push
                             await _hubClient.SendTemplateNotificationAsync(properties, item.Suscripcion);
 
                             // Cambia estado de la mensajería a E-ENVIADO
-                            CambiarEstadoMensajeria(item.IdNotificacion, "E", "OK");
+                            CambiarEstadoMensajeria(item.IdNotificacion, EstadoMensajeria.Enviado, "OK");
                         }
                         catch (Exception e)
                         {
                             // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                            CambiarEstadoMensajeria(item.IdNotificacion, "R", e.Message);
+                            CambiarEstadoMensajeria(item.IdNotificacion, EstadoMensajeria.ProcesadoError, e.Message);
                         }
                     }
                 }

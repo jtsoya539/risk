@@ -124,7 +124,7 @@ namespace Risk.SMS
             return mensajes;
         }
 
-        private void CambiarEstadoMensajeria(int idMensajeria, string estado, string respuestaEnvio)
+        private void CambiarEstadoMensajeria(int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
@@ -182,12 +182,12 @@ namespace Risk.SMS
                             );
 
                             // Cambia estado de la mensajería a E-ENVIADO
-                            CambiarEstadoMensajeria(item.IdMensaje, "E", JsonConvert.SerializeObject(message));
+                            CambiarEstadoMensajeria(item.IdMensaje, EstadoMensajeria.Enviado, JsonConvert.SerializeObject(message));
                         }
                         catch (Twilio.Exceptions.ApiException e)
                         {
                             // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                            CambiarEstadoMensajeria(item.IdMensaje, "R", e.Message);
+                            CambiarEstadoMensajeria(item.IdMensaje, EstadoMensajeria.ProcesadoError, e.Message);
                         }
                     }
                 }

@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="3.3.0" />
-    <PackageReference Include="Risk.API.Client" Version="0.12.0" />
+    <PackageReference Include="Risk.API.Client" Version="0.13.0" />
   </ItemGroup>
 
 

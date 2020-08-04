@@ -131,7 +131,7 @@ namespace Risk.Mail
             return mensajes;
         }
 
-        private void CambiarEstadoMensajeria(int idMensajeria, string estado, string respuestaEnvio)
+        private void CambiarEstadoMensajeria(int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
@@ -241,12 +241,12 @@ namespace Risk.Mail
                             _smtpClient.Send(message);
 
                             // Cambia estado de la mensajería a E-ENVIADO
-                            CambiarEstadoMensajeria(item.IdCorreo, "E", "OK");
+                            CambiarEstadoMensajeria(item.IdCorreo, EstadoMensajeria.Enviado, "OK");
                         }
                         catch (Exception e)
                         {
                             // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                            CambiarEstadoMensajeria(item.IdCorreo, "R", e.Message);
+                            CambiarEstadoMensajeria(item.IdCorreo, EstadoMensajeria.ProcesadoError, e.Message);
                         }
                     }
 
