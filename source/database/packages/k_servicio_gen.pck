@@ -212,9 +212,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
                                                                 'id_pais')) LOOP
-      l_elemento         := NEW y_pais();
-      l_elemento.id_pais := ele.id_pais;
-      l_elemento.nombre  := ele.nombre;
+      l_elemento             := NEW y_pais();
+      l_elemento.id_pais     := ele.id_pais;
+      l_elemento.nombre      := ele.nombre;
+      l_elemento.iso_alpha_2 := ele.iso_alpha_2;
+      l_elemento.iso_alpha_3 := ele.iso_alpha_3;
+      l_elemento.iso_numeric := ele.iso_numeric;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;
