@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_ciudad</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_ciudad">
+ <META name="description" content="Agrupa datos de Ciudades.">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_ciudad</P>
+Agrupa datos de Ciudades.<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:54:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_CIUDAD">id_ciudad</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Identificador de la ciudad
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NOMBRE">nombre</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre de la ciudad
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_PAIS">id_pais</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Pa&#237;s de la ciudad
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ID_DEPARTAMENTO">id_departamento</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Departamento de la ciudad
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_CIUDAD">y_ciudad</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#PARSE_JSON">parse_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="ID_CIUDAD"></A>
+<P CLASS="TYPE_TITLE">
+id_ciudad
+</P>
+<PRE CLASS="DECL_TEXT">
+id_ciudad NUMBER(3)
+</PRE>
+<P CLASS="DESC_TEXT">
+Identificador de la ciudad<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="NOMBRE"></A>
+<P CLASS="TYPE_TITLE">
+nombre
+</P>
+<PRE CLASS="DECL_TEXT">
+nombre VARCHAR2(100)
+</PRE>
+<P CLASS="DESC_TEXT">
+Nombre de la ciudad<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="ID_PAIS"></A>
+<P CLASS="TYPE_TITLE">
+id_pais
+</P>
+<PRE CLASS="DECL_TEXT">
+id_pais NUMBER(3)
+</PRE>
+<P CLASS="DESC_TEXT">
+Pa&#237;s de la ciudad<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="ID_DEPARTAMENTO"></A>
+<P CLASS="TYPE_TITLE">
+id_departamento
+</P>
+<PRE CLASS="DECL_TEXT">
+id_departamento NUMBER(3)
+</PRE>
+<P CLASS="DESC_TEXT">
+Departamento de la ciudad<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="Y_CIUDAD"></A>
+<P CLASS="TYPE_TITLE">
+y_ciudad
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_ciudad RETURN SELF AS RESULT
+
+</PRE>
+<HR>
+<A NAME="PARSE_JSON"></A>
+<P CLASS="TYPE_TITLE">
+parse_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

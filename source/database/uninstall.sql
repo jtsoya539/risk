@@ -72,6 +72,9 @@ prompt
 drop type y_notificacion force;
 drop type y_mensaje force;
 drop type y_correo force;
+drop type y_barrio force;
+drop type y_ciudad force;
+drop type y_departamento force;
 drop type y_pais force;
 drop type y_pagina_parametros force;
 drop type y_pagina force;
