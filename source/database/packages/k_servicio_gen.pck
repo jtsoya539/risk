@@ -39,6 +39,13 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
 
   FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION listar_departamentos(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
+  FUNCTION listar_ciudades(i_parametros IN y_parametros) RETURN y_respuesta;
+
+  FUNCTION listar_barrios(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION recuperar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION guardar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
@@ -173,6 +180,190 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   END;
 
   FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_pais;
+  
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
+      SELECT p.id_pais,
+             p.nombre,
+             p.iso_alpha_2,
+             p.iso_alpha_3,
+             p.iso_numeric
+        FROM t_paises p
+       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
+       ORDER BY p.nombre;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
+                                   'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
+  
+    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_pais')) LOOP
+      l_elemento         := NEW y_pais();
+      l_elemento.id_pais := ele.id_pais;
+      l_elemento.nombre  := ele.nombre;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION listar_departamentos(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_pais;
+  
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
+      SELECT p.id_pais,
+             p.nombre,
+             p.iso_alpha_2,
+             p.iso_alpha_3,
+             p.iso_numeric
+        FROM t_paises p
+       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
+       ORDER BY p.nombre;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
+                                   'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
+  
+    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_pais')) LOOP
+      l_elemento         := NEW y_pais();
+      l_elemento.id_pais := ele.id_pais;
+      l_elemento.nombre  := ele.nombre;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION listar_ciudades(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_pais;
+  
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
+      SELECT p.id_pais,
+             p.nombre,
+             p.iso_alpha_2,
+             p.iso_alpha_3,
+             p.iso_numeric
+        FROM t_paises p
+       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
+       ORDER BY p.nombre;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
+                                   'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
+  
+    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_pais')) LOOP
+      l_elemento         := NEW y_pais();
+      l_elemento.id_pais := ele.id_pais;
+      l_elemento.nombre  := ele.nombre;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION listar_barrios(i_parametros IN y_parametros) RETURN y_respuesta IS
     l_rsp       y_respuesta;
     l_pagina    y_pagina;
     l_elementos y_objetos;
