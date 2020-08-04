@@ -4,20 +4,22 @@ All URIs are relative to *https://risk-project-api.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ListarPais**](GenApi.md#listarpais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
+[**ListarBarrios**](GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
+[**ListarCiudades**](GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
+[**ListarDepartamentos**](GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 [**ListarPaises**](GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 [**SignificadoCodigo**](GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 [**ValorParametro**](GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
 [**VersionSistema**](GenApi.md#versionsistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
 
 
-<a name="listarpais"></a>
-# **ListarPais**
-> PaisPaginaRespuesta ListarPais (int idPais)
+<a name="listarbarrios"></a>
+# **ListarBarrios**
+> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
 
-ListarPais
+ListarBarrios
 
-Obtiene los datos de un país
+Obtiene una lista de barrios
 
 ### Example
 ```csharp
@@ -29,7 +31,7 @@ using Risk.API.Client.Model;
 
 namespace Example
 {
-    public class ListarPaisExample
+    public class ListarBarriosExample
     {
         public static void Main()
         {
@@ -41,17 +43,22 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var idPais = 56;  // int | Identificador del país
+            var idPais = 56;  // int? | Identificador del país (optional) 
+            var idDepartamento = 56;  // int? | Identificador del departamento (optional) 
+            var idCiudad = 56;  // int? | Identificador de la ciudad (optional) 
+            var pagina = 56;  // int? | Número de la página (optional) 
+            var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
+            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
 
             try
             {
-                // ListarPais
-                PaisPaginaRespuesta result = apiInstance.ListarPais(idPais);
+                // ListarBarrios
+                BarrioPaginaRespuesta result = apiInstance.ListarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ListarPais: " + e.Message );
+                Debug.Print("Exception when calling GenApi.ListarBarrios: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -64,11 +71,188 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idPais** | **int**| Identificador del país | 
+ **idPais** | **int?**| Identificador del país | [optional] 
+ **idDepartamento** | **int?**| Identificador del departamento | [optional] 
+ **idCiudad** | **int?**| Identificador de la ciudad | [optional] 
+ **pagina** | **int?**| Número de la página | [optional] 
+ **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
+ **noPaginar** | **string**| No paginar? (S/N) | [optional] 
 
 ### Return type
 
-[**PaisPaginaRespuesta**](PaisPaginaRespuesta.md)
+[**BarrioPaginaRespuesta**](BarrioPaginaRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="listarciudades"></a>
+# **ListarCiudades**
+> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
+
+ListarCiudades
+
+Obtiene una lista de ciudades
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ListarCiudadesExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var idPais = 56;  // int? | Identificador del país (optional) 
+            var idDepartamento = 56;  // int? | Identificador del departamento (optional) 
+            var pagina = 56;  // int? | Número de la página (optional) 
+            var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
+            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+
+            try
+            {
+                // ListarCiudades
+                CiudadPaginaRespuesta result = apiInstance.ListarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.ListarCiudades: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPais** | **int?**| Identificador del país | [optional] 
+ **idDepartamento** | **int?**| Identificador del departamento | [optional] 
+ **pagina** | **int?**| Número de la página | [optional] 
+ **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
+ **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+
+### Return type
+
+[**CiudadPaginaRespuesta**](CiudadPaginaRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="listardepartamentos"></a>
+# **ListarDepartamentos**
+> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
+
+ListarDepartamentos
+
+Obtiene una lista de departamentos
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ListarDepartamentosExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var idPais = 56;  // int? | Identificador del país (optional) 
+            var pagina = 56;  // int? | Número de la página (optional) 
+            var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
+            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+
+            try
+            {
+                // ListarDepartamentos
+                DepartamentoPaginaRespuesta result = apiInstance.ListarDepartamentos(idPais, pagina, porPagina, noPaginar);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.ListarDepartamentos: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPais** | **int?**| Identificador del país | [optional] 
+ **pagina** | **int?**| Número de la página | [optional] 
+ **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
+ **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+
+### Return type
+
+[**DepartamentoPaginaRespuesta**](DepartamentoPaginaRespuesta.md)
 
 ### Authorization
 

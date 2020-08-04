@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v1
 
-- Build date: 2020-08-02T20:10:08.885-04:00[America/Asuncion]
+- Build date: 2020-08-04T16:05:09.045-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -134,7 +134,9 @@ Class | Method | HTTP request | Description
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
-*GenApi* | [**listarPais**](docs/GenApi.md#listarPais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
+*GenApi* | [**listarBarrios**](docs/GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
+*GenApi* | [**listarCiudades**](docs/GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
+*GenApi* | [**listarDepartamentos**](docs/GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**listarPaises**](docs/GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 *GenApi* | [**significadoCodigo**](docs/GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**valorParametro**](docs/GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
@@ -147,17 +149,27 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [Barrio](docs/Barrio.md)
+ - [BarrioPagina](docs/BarrioPagina.md)
+ - [BarrioPaginaRespuesta](docs/BarrioPaginaRespuesta.md)
  - [CambiarClaveAccesoRequestBody](docs/CambiarClaveAccesoRequestBody.md)
  - [CambiarClaveTransaccionalRequestBody](docs/CambiarClaveTransaccionalRequestBody.md)
  - [CambiarEstadoMensajeriaRequestBody](docs/CambiarEstadoMensajeriaRequestBody.md)
+ - [Ciudad](docs/Ciudad.md)
+ - [CiudadPagina](docs/CiudadPagina.md)
+ - [CiudadPaginaRespuesta](docs/CiudadPaginaRespuesta.md)
  - [Correo](docs/Correo.md)
  - [CorreoPagina](docs/CorreoPagina.md)
  - [CorreoPaginaRespuesta](docs/CorreoPaginaRespuesta.md)
  - [Dato](docs/Dato.md)
  - [DatoRespuesta](docs/DatoRespuesta.md)
+ - [Departamento](docs/Departamento.md)
+ - [DepartamentoPagina](docs/DepartamentoPagina.md)
+ - [DepartamentoPaginaRespuesta](docs/DepartamentoPaginaRespuesta.md)
  - [Dispositivo](docs/Dispositivo.md)
  - [EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
+ - [EstadoMensajeria](docs/EstadoMensajeria.md)
  - [FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [InlineObject](docs/InlineObject.md)

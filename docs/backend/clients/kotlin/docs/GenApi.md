@@ -4,20 +4,22 @@ All URIs are relative to *https://risk-project-api.azurewebsites.net*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**listarPais**](GenApi.md#listarPais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
+[**listarBarrios**](GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
+[**listarCiudades**](GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
+[**listarDepartamentos**](GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 [**listarPaises**](GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 [**significadoCodigo**](GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 [**valorParametro**](GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
 [**versionSistema**](GenApi.md#versionSistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
 
 
-<a name="listarPais"></a>
-# **listarPais**
-> PaisPaginaRespuesta listarPais(idPais)
+<a name="listarBarrios"></a>
+# **listarBarrios**
+> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar)
 
-ListarPais
+ListarBarrios
 
-Obtiene los datos de un país
+Obtiene una lista de barrios
 
 ### Example
 ```kotlin
@@ -27,14 +29,19 @@ Obtiene los datos de un país
 
 val apiInstance = GenApi()
 val idPais : kotlin.Int = 56 // kotlin.Int | Identificador del país
+val idDepartamento : kotlin.Int = 56 // kotlin.Int | Identificador del departamento
+val idCiudad : kotlin.Int = 56 // kotlin.Int | Identificador de la ciudad
+val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
+val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
+val noPaginar : kotlin.String = noPaginar_example // kotlin.String | No paginar? (S/N)
 try {
-    val result : PaisPaginaRespuesta = apiInstance.listarPais(idPais)
+    val result : BarrioPaginaRespuesta = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar)
     println(result)
 } catch (e: ClientException) {
-    println("4xx response calling GenApi#listarPais")
+    println("4xx response calling GenApi#listarBarrios")
     e.printStackTrace()
 } catch (e: ServerException) {
-    println("5xx response calling GenApi#listarPais")
+    println("5xx response calling GenApi#listarBarrios")
     e.printStackTrace()
 }
 ```
@@ -43,11 +50,130 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **idPais** | **kotlin.Int**| Identificador del país |
+ **idPais** | **kotlin.Int**| Identificador del país | [optional]
+ **idDepartamento** | **kotlin.Int**| Identificador del departamento | [optional]
+ **idCiudad** | **kotlin.Int**| Identificador de la ciudad | [optional]
+ **pagina** | **kotlin.Int**| Número de la página | [optional]
+ **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **kotlin.String**| No paginar? (S/N) | [optional]
 
 ### Return type
 
-[**PaisPaginaRespuesta**](PaisPaginaRespuesta.md)
+[**BarrioPaginaRespuesta**](BarrioPaginaRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+<a name="listarCiudades"></a>
+# **listarCiudades**
+> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar)
+
+ListarCiudades
+
+Obtiene una lista de ciudades
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = GenApi()
+val idPais : kotlin.Int = 56 // kotlin.Int | Identificador del país
+val idDepartamento : kotlin.Int = 56 // kotlin.Int | Identificador del departamento
+val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
+val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
+val noPaginar : kotlin.String = noPaginar_example // kotlin.String | No paginar? (S/N)
+try {
+    val result : CiudadPaginaRespuesta = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GenApi#listarCiudades")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GenApi#listarCiudades")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPais** | **kotlin.Int**| Identificador del país | [optional]
+ **idDepartamento** | **kotlin.Int**| Identificador del departamento | [optional]
+ **pagina** | **kotlin.Int**| Número de la página | [optional]
+ **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **kotlin.String**| No paginar? (S/N) | [optional]
+
+### Return type
+
+[**CiudadPaginaRespuesta**](CiudadPaginaRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+<a name="listarDepartamentos"></a>
+# **listarDepartamentos**
+> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar)
+
+ListarDepartamentos
+
+Obtiene una lista de departamentos
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = GenApi()
+val idPais : kotlin.Int = 56 // kotlin.Int | Identificador del país
+val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
+val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
+val noPaginar : kotlin.String = noPaginar_example // kotlin.String | No paginar? (S/N)
+try {
+    val result : DepartamentoPaginaRespuesta = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GenApi#listarDepartamentos")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GenApi#listarDepartamentos")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPais** | **kotlin.Int**| Identificador del país | [optional]
+ **pagina** | **kotlin.Int**| Número de la página | [optional]
+ **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **kotlin.String**| No paginar? (S/N) | [optional]
+
+### Return type
+
+[**DepartamentoPaginaRespuesta**](DepartamentoPaginaRespuesta.md)
 
 ### Authorization
 

@@ -112,7 +112,9 @@ Class | Method | HTTP request | Description
 *AutApi* | [**RegistrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**ValidarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**ValidarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
-*GenApi* | [**ListarPais**](docs/GenApi.md#listarpais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
+*GenApi* | [**ListarBarrios**](docs/GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
+*GenApi* | [**ListarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
+*GenApi* | [**ListarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**ListarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 *GenApi* | [**SignificadoCodigo**](docs/GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**ValorParametro**](docs/GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
@@ -126,17 +128,27 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.Barrio](docs/Barrio.md)
+ - [Model.BarrioPagina](docs/BarrioPagina.md)
+ - [Model.BarrioPaginaRespuesta](docs/BarrioPaginaRespuesta.md)
  - [Model.CambiarClaveAccesoRequestBody](docs/CambiarClaveAccesoRequestBody.md)
  - [Model.CambiarClaveTransaccionalRequestBody](docs/CambiarClaveTransaccionalRequestBody.md)
  - [Model.CambiarEstadoMensajeriaRequestBody](docs/CambiarEstadoMensajeriaRequestBody.md)
+ - [Model.Ciudad](docs/Ciudad.md)
+ - [Model.CiudadPagina](docs/CiudadPagina.md)
+ - [Model.CiudadPaginaRespuesta](docs/CiudadPaginaRespuesta.md)
  - [Model.Correo](docs/Correo.md)
  - [Model.CorreoPagina](docs/CorreoPagina.md)
  - [Model.CorreoPaginaRespuesta](docs/CorreoPaginaRespuesta.md)
  - [Model.Dato](docs/Dato.md)
  - [Model.DatoRespuesta](docs/DatoRespuesta.md)
+ - [Model.Departamento](docs/Departamento.md)
+ - [Model.DepartamentoPagina](docs/DepartamentoPagina.md)
+ - [Model.DepartamentoPaginaRespuesta](docs/DepartamentoPaginaRespuesta.md)
  - [Model.Dispositivo](docs/Dispositivo.md)
  - [Model.EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [Model.EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
+ - [Model.EstadoMensajeria](docs/EstadoMensajeria.md)
  - [Model.FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [Model.IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [Model.InlineObject](docs/InlineObject.md)

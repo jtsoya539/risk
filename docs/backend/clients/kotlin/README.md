@@ -50,7 +50,9 @@ Class | Method | HTTP request | Description
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
-*GenApi* | [**listarPais**](docs/GenApi.md#listarpais) | **GET** /Api/Gen/ListarPaises/{idPais} | ListarPais
+*GenApi* | [**listarBarrios**](docs/GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
+*GenApi* | [**listarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
+*GenApi* | [**listarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**listarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 *GenApi* | [**significadoCodigo**](docs/GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**valorParametro**](docs/GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
@@ -64,17 +66,27 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [py.com.risk.client.models.Barrio](docs/Barrio.md)
+ - [py.com.risk.client.models.BarrioPagina](docs/BarrioPagina.md)
+ - [py.com.risk.client.models.BarrioPaginaRespuesta](docs/BarrioPaginaRespuesta.md)
  - [py.com.risk.client.models.CambiarClaveAccesoRequestBody](docs/CambiarClaveAccesoRequestBody.md)
  - [py.com.risk.client.models.CambiarClaveTransaccionalRequestBody](docs/CambiarClaveTransaccionalRequestBody.md)
  - [py.com.risk.client.models.CambiarEstadoMensajeriaRequestBody](docs/CambiarEstadoMensajeriaRequestBody.md)
+ - [py.com.risk.client.models.Ciudad](docs/Ciudad.md)
+ - [py.com.risk.client.models.CiudadPagina](docs/CiudadPagina.md)
+ - [py.com.risk.client.models.CiudadPaginaRespuesta](docs/CiudadPaginaRespuesta.md)
  - [py.com.risk.client.models.Correo](docs/Correo.md)
  - [py.com.risk.client.models.CorreoPagina](docs/CorreoPagina.md)
  - [py.com.risk.client.models.CorreoPaginaRespuesta](docs/CorreoPaginaRespuesta.md)
  - [py.com.risk.client.models.Dato](docs/Dato.md)
  - [py.com.risk.client.models.DatoRespuesta](docs/DatoRespuesta.md)
+ - [py.com.risk.client.models.Departamento](docs/Departamento.md)
+ - [py.com.risk.client.models.DepartamentoPagina](docs/DepartamentoPagina.md)
+ - [py.com.risk.client.models.DepartamentoPaginaRespuesta](docs/DepartamentoPaginaRespuesta.md)
  - [py.com.risk.client.models.Dispositivo](docs/Dispositivo.md)
  - [py.com.risk.client.models.EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [py.com.risk.client.models.EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
+ - [py.com.risk.client.models.EstadoMensajeria](docs/EstadoMensajeria.md)
  - [py.com.risk.client.models.FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [py.com.risk.client.models.IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [py.com.risk.client.models.InlineObject](docs/InlineObject.md)

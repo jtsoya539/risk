@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **tipoMensajeria** | [**TipoMensajeria**](TipoMensajeria.md) |  |  [optional]
 **idMensajeria** | **Integer** |  |  [optional]
-**estado** | **String** |  |  [optional]
+**estado** | [**EstadoMensajeria**](EstadoMensajeria.md) |  |  [optional]
 **respuestaEnvio** | **String** |  |  [optional]
 
 
