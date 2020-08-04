@@ -1,6 +1,7 @@
 prompt Importing table t_parametros...
 set feedback off
 set define off
+
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('BASE_DATOS_PRODUCCION', 'Nombre de la Base de Datos del entorno de Producción', 'RISK');
 
@@ -60,5 +61,8 @@ values ('SUSCRIPCION_PRUEBAS', 'Tag o expresión destino para pruebas de notifica
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('REGEXP_VALIDAR_ALIAS_USUARIO', 'Expresión Regular para validación de alias de usuario', null);
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('TIEMPO_TOLERANCIA_VALIDAR_OTP', 'Tiempo de tolerancia para validación de OTP en segundos', '120');
 
 prompt Done.

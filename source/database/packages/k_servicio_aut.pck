@@ -968,17 +968,29 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     
       WHEN 'M' THEN
         -- Mail
-        NULL;
+        IF k_mensajeria.f_enviar_correo('Clave de validación',
+                                        'Tu clave de validación es ' ||
+                                        l_otp,
+                                        NULL,
+                                        k_servicio.f_valor_parametro_string(i_parametros,
+                                                                            'destino')) <>
+           k_mensajeria.c_ok THEN
+          k_servicio.p_respuesta_error(l_rsp,
+                                       'aut0001',
+                                       'Error al enviar Mail');
+          RAISE k_servicio.ex_error_general;
+        END IF;
       
       WHEN 'S' THEN
         -- SMS
-        IF k_mensajeria.f_enviar_mensaje(l_otp,
+        IF k_mensajeria.f_enviar_mensaje('Tu clave de validación es ' ||
+                                         l_otp,
                                          NULL,
                                          k_servicio.f_valor_parametro_string(i_parametros,
                                                                              'destino')) <>
            k_mensajeria.c_ok THEN
           k_servicio.p_respuesta_error(l_rsp,
-                                       'aut0001',
+                                       'aut0002',
                                        'Error al enviar SMS');
           RAISE k_servicio.ex_error_general;
         END IF;
@@ -1028,7 +1040,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
       IF oos_util_totp.validate_otp(k_servicio.f_valor_parametro_string(i_parametros,
                                                                         'secret'),
                                     k_servicio.f_valor_parametro_number(i_parametros,
-                                                                        'otp')) <> 1 THEN
+                                                                        'otp'),
+                                    to_number(k_util.f_valor_parametro('TIEMPO_TOLERANCIA_VALIDAR_OTP'))) <> 1 THEN
         k_servicio.p_respuesta_error(l_rsp, 'aut0001', 'OTP inválido');
         RAISE k_servicio.ex_error_general;
       END IF;
