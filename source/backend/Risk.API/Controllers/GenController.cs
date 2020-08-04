@@ -85,8 +85,8 @@ namespace Risk.API.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
         public IActionResult ListarPaises([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
-        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -102,19 +102,71 @@ namespace Risk.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("ListarPaises/{idPais}")]
-        [SwaggerOperation(OperationId = "ListarPais", Summary = "ListarPais", Description = "Obtiene los datos de un país")]
+        [HttpGet("ListarDepartamentos")]
+        [SwaggerOperation(OperationId = "ListarDepartamentos", Summary = "ListarDepartamentos", Description = "Obtiene una lista de departamentos")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
-        public IActionResult ListarPaises([FromRoute, SwaggerParameter(Description = "Identificador del país", Required = true)] int idPais)
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Departamento>>))]
+        public IActionResult ListarDepartamentos([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
+            [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
-                Pagina = null,
-                PorPagina = null,
-                NoPaginar = null
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
             };
-            var respuesta = _genService.ListarPaises(idPais, paginaParametros);
+            var respuesta = _genService.ListarDepartamentos(null, idPais, paginaParametros);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("ListarCiudades")]
+        [SwaggerOperation(OperationId = "ListarCiudades", Summary = "ListarCiudades", Description = "Obtiene una lista de ciudades")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Ciudad>>))]
+        public IActionResult ListarCiudades([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
+            [FromQuery, SwaggerParameter(Description = "Identificador del departamento", Required = false)] int? idDepartamento,
+            [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _genService.ListarCiudades(null, idPais, idDepartamento, paginaParametros);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("ListarBarrios")]
+        [SwaggerOperation(OperationId = "ListarBarrios", Summary = "ListarBarrios", Description = "Obtiene una lista de barrios")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Barrio>>))]
+        public IActionResult ListarBarrios([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
+            [FromQuery, SwaggerParameter(Description = "Identificador del departamento", Required = false)] int? idDepartamento,
+            [FromQuery, SwaggerParameter(Description = "Identificador de la ciudad", Required = false)] int? idCiudad,
+            [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _genService.ListarBarrios(null, idPais, idDepartamento, idCiudad, paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 

@@ -233,6 +233,105 @@ namespace Risk.API.Helpers
             return modelList;
         }
 
+        public static Departamento GetDepartamentoFromEntity(YDepartamento entity)
+        {
+            Departamento model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Departamento
+                {
+                    IdDepartamento = entity.IdDepartamento,
+                    Nombre = entity.Nombre,
+                    IdPais = entity.IdPais
+                };
+            }
+            return model;
+        }
+
+        public static List<Departamento> GetDepartamentoListFromEntity(List<YDepartamento> entityList)
+        {
+            List<Departamento> modelList = new List<Departamento>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetDepartamentoFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
+        public static Ciudad GetCiudadFromEntity(YCiudad entity)
+        {
+            Ciudad model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Ciudad
+                {
+                    IdCiudad = entity.IdCiudad,
+                    Nombre = entity.Nombre,
+                    IdPais = entity.IdPais,
+                    IdDepartamento = entity.IdDepartamento
+                };
+            }
+            return model;
+        }
+
+        public static List<Ciudad> GetCiudadListFromEntity(List<YCiudad> entityList)
+        {
+            List<Ciudad> modelList = new List<Ciudad>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetCiudadFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
+        public static Barrio GetBarrioFromEntity(YBarrio entity)
+        {
+            Barrio model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Barrio
+                {
+                    IdBarrio = entity.IdBarrio,
+                    Nombre = entity.Nombre,
+                    IdPais = entity.IdPais,
+                    IdDepartamento = entity.IdDepartamento,
+                    IdCiudad = entity.IdCiudad,
+                };
+            }
+            return model;
+        }
+
+        public static List<Barrio> GetBarrioListFromEntity(List<YBarrio> entityList)
+        {
+            List<Barrio> modelList = new List<Barrio>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetBarrioFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
         public static Mensaje GetMensajeFromEntity(YMensaje entity)
         {
             Mensaje model;
