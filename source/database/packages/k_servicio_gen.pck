@@ -245,19 +245,17 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp       y_respuesta;
     l_pagina    y_pagina;
     l_elementos y_objetos;
-    l_elemento  y_pais;
+    l_elemento  y_departamento;
   
     l_pagina_parametros y_pagina_parametros;
   
-    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
-      SELECT p.id_pais,
-             p.nombre,
-             p.iso_alpha_2,
-             p.iso_alpha_3,
-             p.iso_numeric
-        FROM t_paises p
-       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
-       ORDER BY p.nombre;
+    CURSOR cr_elementos(i_id_departamento IN NUMBER,
+                        i_id_pais         IN NUMBER) IS
+      SELECT a.id_departamento, a.nombre, a.id_pais
+        FROM t_departamentos a
+       WHERE a.id_departamento = nvl(i_id_departamento, a.id_departamento)
+         AND a.id_pais = nvl(i_id_pais, a.id_pais)
+       ORDER BY a.nombre;
   BEGIN
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
@@ -273,10 +271,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_departamento'),
+                            k_servicio.f_valor_parametro_number(i_parametros,
                                                                 'id_pais')) LOOP
-      l_elemento         := NEW y_pais();
-      l_elemento.id_pais := ele.id_pais;
-      l_elemento.nombre  := ele.nombre;
+      l_elemento                 := NEW y_departamento();
+      l_elemento.id_departamento := ele.id_departamento;
+      l_elemento.nombre          := ele.nombre;
+      l_elemento.id_pais         := ele.id_pais;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;
@@ -306,19 +307,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp       y_respuesta;
     l_pagina    y_pagina;
     l_elementos y_objetos;
-    l_elemento  y_pais;
+    l_elemento  y_ciudad;
   
     l_pagina_parametros y_pagina_parametros;
   
-    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
-      SELECT p.id_pais,
-             p.nombre,
-             p.iso_alpha_2,
-             p.iso_alpha_3,
-             p.iso_numeric
-        FROM t_paises p
-       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
-       ORDER BY p.nombre;
+    CURSOR cr_elementos(i_id_ciudad       IN NUMBER,
+                        i_id_pais         IN NUMBER,
+                        i_id_departamento IN NUMBER) IS
+      SELECT a.id_ciudad, a.nombre, a.id_pais, a.id_departamento
+        FROM t_ciudades a
+       WHERE a.id_ciudad = nvl(i_id_ciudad, a.id_ciudad)
+         AND a.id_pais = nvl(i_id_pais, a.id_pais)
+         AND a.id_departamento = nvl(i_id_departamento, a.id_departamento)
+       ORDER BY a.nombre;
   BEGIN
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
@@ -334,10 +335,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_pais')) LOOP
-      l_elemento         := NEW y_pais();
-      l_elemento.id_pais := ele.id_pais;
-      l_elemento.nombre  := ele.nombre;
+                                                                'id_ciudad'),
+                            k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_pais'),
+                            k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_departamento')) LOOP
+      l_elemento                 := NEW y_ciudad();
+      l_elemento.id_ciudad       := ele.id_ciudad;
+      l_elemento.nombre          := ele.nombre;
+      l_elemento.id_pais         := ele.id_pais;
+      l_elemento.id_departamento := ele.id_departamento;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;
@@ -367,19 +374,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp       y_respuesta;
     l_pagina    y_pagina;
     l_elementos y_objetos;
-    l_elemento  y_pais;
+    l_elemento  y_barrio;
   
     l_pagina_parametros y_pagina_parametros;
   
-    CURSOR cr_elementos(i_id_pais IN NUMBER) IS
-      SELECT p.id_pais,
-             p.nombre,
-             p.iso_alpha_2,
-             p.iso_alpha_3,
-             p.iso_numeric
-        FROM t_paises p
-       WHERE p.id_pais = nvl(i_id_pais, p.id_pais)
-       ORDER BY p.nombre;
+    CURSOR cr_elementos(i_id_barrio       IN NUMBER,
+                        i_id_pais         IN NUMBER,
+                        i_id_departamento IN NUMBER,
+                        i_id_ciudad       IN NUMBER) IS
+      SELECT a.id_barrio,
+             a.nombre,
+             a.id_pais,
+             a.id_departamento,
+             a.id_ciudad
+        FROM t_barrios a
+       WHERE a.id_barrio = nvl(i_id_barrio, a.id_barrio)
+         AND a.id_pais = nvl(i_id_pais, a.id_pais)
+         AND a.id_departamento = nvl(i_id_departamento, a.id_departamento)
+         AND a.id_ciudad = nvl(i_id_ciudad, a.id_ciudad)
+       ORDER BY a.nombre;
   BEGIN
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
@@ -395,10 +408,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_pais')) LOOP
-      l_elemento         := NEW y_pais();
-      l_elemento.id_pais := ele.id_pais;
-      l_elemento.nombre  := ele.nombre;
+                                                                'id_barrio'),
+                            k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_pais'),
+                            k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_departamento'),
+                            k_servicio.f_valor_parametro_number(i_parametros,
+                                                                'id_ciudad')) LOOP
+      l_elemento                 := NEW y_barrio();
+      l_elemento.id_barrio       := ele.id_barrio;
+      l_elemento.nombre          := ele.nombre;
+      l_elemento.id_pais         := ele.id_pais;
+      l_elemento.id_departamento := ele.id_departamento;
+      l_elemento.id_ciudad       := ele.id_ciudad;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;
