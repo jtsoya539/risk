@@ -20,7 +20,7 @@ namespace Risk.Msj
         private readonly IRiskAPIClientConnection _riskAPIClientConnection;
 
         // Notification Hub Configuration
-        private readonly NotificationHubClient _hubClient;
+        private NotificationHubClient hubClient;
 
         public WorkerPush(ILogger<WorkerPush> logger, IConfiguration configuration, IRiskAPIClientConnection riskAPIClientConnection)
         {
@@ -29,14 +29,15 @@ namespace Risk.Msj
 
             // Risk Configuration
             _riskAPIClientConnection = riskAPIClientConnection;
+        }
 
-            // Notification Hub Configuration
-            if (_configuration.GetValue<bool>("EnablePush"))
-            {
-                string connectionString = _configuration["NotificationHubConfiguration:ConnectionString"];
-                string notificationHubPath = _configuration["NotificationHubConfiguration:NotificationHubPath"];
-                _hubClient = NotificationHubClient.CreateClientFromConnectionString(connectionString, notificationHubPath);
-            }
+        // Notification Hub Configuration
+        private void Configurar()
+        {
+            hubClient = NotificationHubClient.CreateClientFromConnectionString(
+                _configuration["NotificationHubConfiguration:ConnectionString"],
+                _configuration["NotificationHubConfiguration:NotificationHubPath"]
+            );
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -51,12 +52,15 @@ namespace Risk.Msj
 
                     if (mensajes.Any())
                     {
+                        // Notification Hub Configuration
+                        Configurar();
+
                         foreach (var item in mensajes)
                         {
                             try
                             {
                                 var properties = new Dictionary<string, string> { { "titulo", item.Titulo }, { "contenido", item.Contenido } };
-                                await _hubClient.SendTemplateNotificationAsync(properties, item.Suscripcion);
+                                await hubClient.SendTemplateNotificationAsync(properties, item.Suscripcion);
 
                                 // Cambia estado de la mensajería a E-ENVIADO
                                 _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdNotificacion, EstadoMensajeria.Enviado, "OK");

@@ -24,9 +24,9 @@ namespace Risk.Msj
         private readonly IRiskAPIClientConnection _riskAPIClientConnection;
 
         // Mail Configuration
-        private readonly SmtpClient _smtpClient;
-        private readonly string _mailboxFromName;
-        private readonly string _mailboxFromAddress;
+        private string mailboxFromName;
+        private string mailboxFromAddress;
+        private SmtpClient smtpClient;
         private SaslMechanismOAuth2 oAuth2;
 
         public WorkerMail(ILogger<WorkerMail> logger, IConfiguration configuration, IRiskAPIClientConnection riskAPIClientConnection)
@@ -36,15 +36,15 @@ namespace Risk.Msj
 
             // Risk Configuration
             _riskAPIClientConnection = riskAPIClientConnection;
+        }
 
-            // Mail Configuration
-            if (_configuration.GetValue<bool>("EnableMail"))
-            {
-                _mailboxFromName = _configuration["MailConfiguration:MailboxFromName"];
-                _mailboxFromAddress = _configuration["MailConfiguration:MailboxFromAddress"];
+        // Mail Configuration
+        private void Configurar()
+        {
+            mailboxFromName = _configuration["MailConfiguration:MailboxFromName"];
+            mailboxFromAddress = _configuration["MailConfiguration:MailboxFromAddress"];
 
-                _smtpClient = new SmtpClient();
-            }
+            smtpClient = new SmtpClient();
         }
 
         private async Task ConfigurarOAuth2Async()
@@ -84,10 +84,13 @@ namespace Risk.Msj
 
                     if (mensajes.Any())
                     {
+                        // Mail Configuration
+                        Configurar();
+
                         await ConfigurarOAuth2Async();
 
-                        _smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-                        _smtpClient.Authenticate(oAuth2);
+                        smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+                        smtpClient.Authenticate(oAuth2);
                         // _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
 
                         foreach (var item in mensajes)
@@ -95,7 +98,7 @@ namespace Risk.Msj
                             try
                             {
                                 var message = new MimeMessage();
-                                message.From.Add(new MailboxAddress(_mailboxFromName, _mailboxFromAddress));
+                                message.From.Add(new MailboxAddress(mailboxFromName, mailboxFromAddress));
                                 message.To.Add(new MailboxAddress(item.MensajeTo, item.MensajeTo));
 
                                 if (item.MensajeReplyTo != null)
@@ -119,7 +122,7 @@ namespace Risk.Msj
                                     Text = item.MensajeBody
                                 };
 
-                                _smtpClient.Send(message);
+                                smtpClient.Send(message);
 
                                 // Cambia estado de la mensajería a E-ENVIADO
                                 _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdCorreo, EstadoMensajeria.Enviado, "OK");
@@ -131,7 +134,7 @@ namespace Risk.Msj
                             }
                         }
 
-                        _smtpClient.Disconnect(true);
+                        smtpClient.Disconnect(true);
                     }
                 }
 

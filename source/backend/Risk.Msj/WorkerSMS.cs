@@ -22,7 +22,7 @@ namespace Risk.Msj
         private readonly IRiskAPIClientConnection _riskAPIClientConnection;
 
         // Twilio Configuration
-        private readonly string phoneNumberFrom;
+        private string phoneNumberFrom;
 
         public WorkerSMS(ILogger<WorkerSMS> logger, IConfiguration configuration, IRiskAPIClientConnection riskAPIClientConnection)
         {
@@ -31,14 +31,14 @@ namespace Risk.Msj
 
             // Risk Configuration
             _riskAPIClientConnection = riskAPIClientConnection;
+        }
 
-            // Twilio Configuration
-            if (_configuration.GetValue<bool>("EnableSMS"))
-            {
-                phoneNumberFrom = _configuration["TwilioConfiguration:PhoneNumberFrom"];
+        // Twilio Configuration
+        private void Configurar()
+        {
+            phoneNumberFrom = _configuration["TwilioConfiguration:PhoneNumberFrom"];
 
-                TwilioClient.Init(_configuration["TwilioConfiguration:AccountSid"], _configuration["TwilioConfiguration:AuthToken"]);
-            }
+            TwilioClient.Init(_configuration["TwilioConfiguration:AccountSid"], _configuration["TwilioConfiguration:AuthToken"]);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -53,6 +53,9 @@ namespace Risk.Msj
 
                     if (mensajes.Any())
                     {
+                        // Twilio Configuration
+                        Configurar();
+
                         foreach (var item in mensajes)
                         {
                             try
