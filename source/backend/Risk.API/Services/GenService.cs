@@ -43,6 +43,7 @@ namespace Risk.API.Services
         private const int ID_LISTAR_BARRIOS = 27;
         private const int ID_RECUPERAR_ARCHIVO = 18;
         private const int ID_GUARDAR_ARCHIVO = 19;
+        private const int ID_RECUPERAR_TEXTO = 28;
 
         public GenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(configuration, httpContextAccessor, dbConnectionFactory)
@@ -202,6 +203,17 @@ namespace Risk.API.Services
             }
 
             string rsp = base.ProcesarServicio(ID_GUARDAR_ARCHIVO, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> RecuperarTexto(string referencia)
+        {
+            JObject prms = new JObject();
+            prms.Add("referencia", referencia);
+
+            string rsp = base.ProcesarServicio(ID_RECUPERAR_TEXTO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));

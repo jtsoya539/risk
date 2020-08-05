@@ -37,5 +37,6 @@ namespace Risk.API.Services
         Respuesta<Pagina<Barrio>> ListarBarrios(int? idBarrio = null, int? idPais = null, int? idDepartamento = null, int? idCiudad = null, PaginaParametros paginaParametros = null);
         Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia);
         Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo);
+        Respuesta<Dato> RecuperarTexto(string referencia);
     }
 }

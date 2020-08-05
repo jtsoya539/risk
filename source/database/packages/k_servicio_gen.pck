@@ -50,6 +50,8 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
 
   FUNCTION guardar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION recuperar_texto(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
@@ -454,8 +456,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_archivo y_archivo;
   BEGIN
     -- Inicializa respuesta
-    l_rsp     := NEW y_respuesta();
-    l_archivo := NEW y_archivo();
+    l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -543,6 +544,50 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                 l_archivo);
   
     k_servicio.p_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION recuperar_texto(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp     y_respuesta;
+    l_dato    y_dato;
+    l_archivo y_archivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                       'referencia') IS NOT NULL,
+                                   'Debe ingresar referencia');
+  
+    l_rsp.lugar := 'Recuperando texto';
+    l_archivo   := k_archivo.f_recuperar_archivo('T_TEXTOS',
+                                                 'ARCHIVO',
+                                                 k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                     'referencia'));
+  
+    IF l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+      k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Texto inexistente');
+      RAISE k_servicio.ex_error_general;
+    END IF;
+  
+    l_dato.contenido := k_util.blob_to_clob(l_archivo.contenido);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN

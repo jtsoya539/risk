@@ -172,5 +172,16 @@ namespace Risk.API.Controllers
 
             return ProcesarRespuesta(respuesta);
         }
+
+        [AllowAnonymous]
+        [HttpGet("RecuperarTexto")]
+        [SwaggerOperation(OperationId = "RecuperarTexto", Summary = "RecuperarTexto", Description = "Obtiene un texto definido en el sistema")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult RecuperarTexto([FromQuery, SwaggerParameter(Description = "Referencia del texto", Required = true)] string referencia)
+        {
+            var respuesta = _genService.RecuperarTexto(referencia);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }
