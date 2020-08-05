@@ -16,13 +16,13 @@ Bienvenido/a a la documentación del Proyecto RISK.
 ### Back-End
 * [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
-Los servicios de mensajería tienen requerimientos especiales de terceros:
+Los servicios de mensajería del proyecto Risk.Msj tienen requerimientos especiales de terceros:
 
 Servicio|Requerimiento
 --------|-------------
-Risk.Mail|Cuenta de Gmail configurada con autenticación [OAuth](https://github.com/jstedfast/MailKit/blob/master/GMailOAuth2.md).
-Risk.Push|Cuenta de Twilio configurada con el servicio [SMS](https://www.twilio.com/sms).
-Risk.SMS|Cuenta de Azure configurada con el servicio [Notification Hubs](https://azure.microsoft.com/es-es/services/notification-hubs/).
+Mail|Cuenta de Gmail configurada con autenticación [OAuth](https://github.com/jstedfast/MailKit/blob/master/GMailOAuth2.md).
+Push|Cuenta de Twilio configurada con el servicio [SMS](https://www.twilio.com/sms).
+SMS|Cuenta de Azure configurada con el servicio [Notification Hubs](https://azure.microsoft.com/es-es/services/notification-hubs/).
 
 ## Instalación
 ### Base de Datos
