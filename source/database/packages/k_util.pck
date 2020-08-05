@@ -78,6 +78,10 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
+  FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB;
+
+  FUNCTION clob_to_blob(p_data IN CLOB) RETURN BLOB;
+
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
 
   FUNCTION base64decode(i_clob CLOB) RETURN BLOB;
@@ -415,6 +419,60 @@ END;';
         l_valor := NULL;
     END;
     RETURN l_valor;
+  END;
+
+  FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB IS
+    -- -----------------------------------------------------------------------------------
+    -- File Name    : https://oracle-base.com/dba/miscellaneous/blob_to_clob.sql
+    -- Author       : Tim Hall
+    -- Description  : Converts a BLOB to a CLOB.
+    -- Last Modified: 26/12/2016
+    -- -----------------------------------------------------------------------------------
+    l_clob         CLOB;
+    l_dest_offset  PLS_INTEGER := 1;
+    l_src_offset   PLS_INTEGER := 1;
+    l_lang_context PLS_INTEGER := dbms_lob.default_lang_ctx;
+    l_warning      PLS_INTEGER;
+  BEGIN
+    dbms_lob.createtemporary(lob_loc => l_clob, cache => TRUE);
+  
+    dbms_lob.converttoclob(dest_lob     => l_clob,
+                           src_blob     => p_data,
+                           amount       => dbms_lob.lobmaxsize,
+                           dest_offset  => l_dest_offset,
+                           src_offset   => l_src_offset,
+                           blob_csid    => dbms_lob.default_csid,
+                           lang_context => l_lang_context,
+                           warning      => l_warning);
+  
+    RETURN l_clob;
+  END;
+
+  FUNCTION clob_to_blob(p_data IN CLOB) RETURN BLOB IS
+    -- -----------------------------------------------------------------------------------
+    -- File Name    : https://oracle-base.com/dba/miscellaneous/clob_to_blob.sql
+    -- Author       : Tim Hall
+    -- Description  : Converts a CLOB to a BLOB.
+    -- Last Modified: 26/12/2016
+    -- -----------------------------------------------------------------------------------
+    l_blob         BLOB;
+    l_dest_offset  PLS_INTEGER := 1;
+    l_src_offset   PLS_INTEGER := 1;
+    l_lang_context PLS_INTEGER := dbms_lob.default_lang_ctx;
+    l_warning      PLS_INTEGER := dbms_lob.warn_inconvertible_char;
+  BEGIN
+    dbms_lob.createtemporary(lob_loc => l_blob, cache => TRUE);
+  
+    dbms_lob.converttoblob(dest_lob     => l_blob,
+                           src_clob     => p_data,
+                           amount       => dbms_lob.lobmaxsize,
+                           dest_offset  => l_dest_offset,
+                           src_offset   => l_src_offset,
+                           blob_csid    => dbms_lob.default_csid,
+                           lang_context => l_lang_context,
+                           warning      => l_warning);
+  
+    RETURN l_blob;
   END;
 
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB IS

@@ -71,6 +71,16 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#BLOB_TO_CLOB">blob_to_clob</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CLOB_TO_BLOB">clob_to_blob</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#BASE64ENCODE">base64encode</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -328,6 +338,24 @@ f_valor_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="BLOB_TO_CLOB"></A>
+<P CLASS="TYPE_TITLE">
+blob_to_clob
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="CLOB_TO_BLOB"></A>
+<P CLASS="TYPE_TITLE">
+clob_to_blob
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION clob_to_blob(p_data IN CLOB) RETURN BLOB
 
 </PRE>
 <HR>

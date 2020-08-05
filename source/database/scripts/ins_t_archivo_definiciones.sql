@@ -13,4 +13,7 @@ values ('T_FUENTES', 'ARCHIVO', 'Archivo de fuente', 10000000, 1, null, 'EXTENSI
 insert into t_archivo_definiciones (TABLA, CAMPO, DESCRIPCION, TAMANO_MAXIMO, ORDEN, NOMBRE_REFERENCIA, EXTENSIONES_PERMITIDAS)
 values ('T_IMAGENES', 'ARCHIVO', 'Archivo de imagen', 10000000, 1, null, 'EXTENSION_IMAGEN');
 
+insert into t_archivo_definiciones (TABLA, CAMPO, DESCRIPCION, TAMANO_MAXIMO, ORDEN, NOMBRE_REFERENCIA, EXTENSIONES_PERMITIDAS)
+values ('T_TEXTOS', 'ARCHIVO', 'Archivo de texto', 10000000, 1, null, null);
+
 prompt Done.
