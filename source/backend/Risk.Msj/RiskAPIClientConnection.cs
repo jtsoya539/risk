@@ -97,15 +97,15 @@ namespace Risk.Msj
             _msjApi.Configuration = _apiConfiguration;
         }
 
-        public void CambiarEstadoMensajeria(int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
+        public void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio)
         {
             DatoRespuesta datoRespuesta = new DatoRespuesta();
             try
             {
                 datoRespuesta = _msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                 {
-                    TipoMensajeria = TipoMensajeria.SMS,
-                    IdMensajeria = idMensajeria,
+                    TipoMensajeria = tipo,
+                    IdMensajeria = id,
                     Estado = estado,
                     RespuestaEnvio = respuestaEnvio
                 });
@@ -120,8 +120,8 @@ namespace Risk.Msj
                     {
                         datoRespuesta = _msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
                         {
-                            TipoMensajeria = TipoMensajeria.SMS,
-                            IdMensajeria = idMensajeria,
+                            TipoMensajeria = tipo,
+                            IdMensajeria = id,
                             Estado = estado,
                             RespuestaEnvio = respuestaEnvio
                         });

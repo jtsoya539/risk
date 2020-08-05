@@ -31,7 +31,7 @@ namespace Risk.Msj
     {
         void IniciarSesion();
         void RefrescarSesion();
-        void CambiarEstadoMensajeria(int idMensajeria, EstadoMensajeria estado, string respuestaEnvio);
+        void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio);
         List<Correo> ListarCorreosPendientes();
         List<Notificacion> ListarNotificacionesPendientes();
         List<Mensaje> ListarMensajesPendientes();

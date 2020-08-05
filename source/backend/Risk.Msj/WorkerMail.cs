@@ -125,12 +125,12 @@ namespace Risk.Msj
                                 smtpClient.Send(message);
 
                                 // Cambia estado de la mensajería a E-ENVIADO
-                                _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdCorreo, EstadoMensajeria.Enviado, "OK");
+                                _riskAPIClientConnection.CambiarEstadoMensajeria(TipoMensajeria.Mail, item.IdCorreo, EstadoMensajeria.Enviado, "OK");
                             }
                             catch (Exception e)
                             {
                                 // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                                _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdCorreo, EstadoMensajeria.ProcesadoError, e.Message);
+                                _riskAPIClientConnection.CambiarEstadoMensajeria(TipoMensajeria.Mail, item.IdCorreo, EstadoMensajeria.ProcesadoError, e.Message);
                             }
                         }
 

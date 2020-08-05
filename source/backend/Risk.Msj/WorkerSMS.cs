@@ -67,12 +67,12 @@ namespace Risk.Msj
                                 );
 
                                 // Cambia estado de la mensajería a E-ENVIADO
-                                _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdMensaje, EstadoMensajeria.Enviado, JsonConvert.SerializeObject(message));
+                                _riskAPIClientConnection.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.Enviado, JsonConvert.SerializeObject(message));
                             }
                             catch (Twilio.Exceptions.ApiException e)
                             {
                                 // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                                _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdMensaje, EstadoMensajeria.ProcesadoError, e.Message);
+                                _riskAPIClientConnection.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.ProcesadoError, e.Message);
                             }
                         }
                     }

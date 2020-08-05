@@ -63,12 +63,12 @@ namespace Risk.Msj
                                 await hubClient.SendTemplateNotificationAsync(properties, item.Suscripcion);
 
                                 // Cambia estado de la mensajería a E-ENVIADO
-                                _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdNotificacion, EstadoMensajeria.Enviado, "OK");
+                                _riskAPIClientConnection.CambiarEstadoMensajeria(TipoMensajeria.Push, item.IdNotificacion, EstadoMensajeria.Enviado, "OK");
                             }
                             catch (Exception e)
                             {
                                 // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                                _riskAPIClientConnection.CambiarEstadoMensajeria(item.IdNotificacion, EstadoMensajeria.ProcesadoError, e.Message);
+                                _riskAPIClientConnection.CambiarEstadoMensajeria(TipoMensajeria.Push, item.IdNotificacion, EstadoMensajeria.ProcesadoError, e.Message);
                             }
                         }
                     }

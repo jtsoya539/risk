@@ -433,6 +433,12 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 ##
+## Risk.API
+##
+Risk.API/wwwroot/oracle
+!Risk.API/wwwroot/oracle/README.md
+
+##
 ## Risk.API.Client
 ##
 Risk.API.Client/
@@ -441,10 +447,10 @@ Risk.API.Client/
 !Risk.API.Client/README.md
 
 ##
-## Risk.API
+## Risk.Msj
 ##
-Risk.API/wwwroot/oracle
-!Risk.API/wwwroot/oracle/README.md
+Risk.Msj/wwwroot/gmail
+!Risk.Msj/wwwroot/gmail/README.md
 
 ##
 ## Risk.Mail
