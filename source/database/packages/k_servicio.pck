@@ -407,7 +407,8 @@ END;'
              formato,
              obligatorio,
              valor_defecto,
-             etiqueta
+             etiqueta,
+             longitud_maxima
         FROM t_servicio_parametros
        WHERE activo = 'S'
          AND id_servicio = i_id_servicio
@@ -468,6 +469,15 @@ END;'
                                     nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
           END IF;
+          IF par.longitud_maxima IS NOT NULL AND
+             nvl(length(l_parametro.valor.accessvarchar2), 0) >
+             par.longitud_maxima THEN
+            raise_application_error(-20000,
+                                    'Longitud del parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
+                                    ' no debe ser superior a ' ||
+                                    to_char(par.longitud_maxima));
+          END IF;
         
         WHEN 'N' THEN
           -- Number
@@ -490,6 +500,15 @@ END;'
                                     'Parámetro ' ||
                                     nvl(par.etiqueta, par.nombre) ||
                                     ' debe tener valor');
+          END IF;
+          IF par.longitud_maxima IS NOT NULL AND
+             nvl(length(to_char(abs(trunc(l_parametro.valor.accessnumber)))),
+                 0) > par.longitud_maxima THEN
+            raise_application_error(-20000,
+                                    'Longitud del parámetro ' ||
+                                    nvl(par.etiqueta, par.nombre) ||
+                                    ' no debe ser superior a ' ||
+                                    to_char(par.longitud_maxima));
           END IF;
         
         WHEN 'B' THEN
@@ -768,7 +787,8 @@ END;'
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     lp_registrar_log(i_id_servicio, i_parametros, l_rsp, i_contexto);
     RETURN l_rsp;

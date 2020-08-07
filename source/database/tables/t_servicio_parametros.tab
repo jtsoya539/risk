@@ -1,15 +1,16 @@
 create table T_SERVICIO_PARAMETROS
 (
-  id_servicio   NUMBER(15) not null,
-  nombre        VARCHAR2(100) not null,
-  direccion     VARCHAR2(1) not null,
-  tipo_dato     VARCHAR2(1) not null,
-  formato       VARCHAR2(100),
-  obligatorio   VARCHAR2(1),
-  valor_defecto VARCHAR2(1000),
-  activo        VARCHAR2(1) default 'N' not null,
-  orden         NUMBER(3) not null,
-  etiqueta      VARCHAR2(2000)
+  id_servicio     NUMBER(15) not null,
+  nombre          VARCHAR2(100) not null,
+  direccion       VARCHAR2(1) not null,
+  tipo_dato       VARCHAR2(1) not null,
+  formato         VARCHAR2(100),
+  obligatorio     VARCHAR2(1),
+  valor_defecto   VARCHAR2(1000),
+  activo          VARCHAR2(1) default 'N' not null,
+  orden           NUMBER(3) not null,
+  etiqueta        VARCHAR2(2000),
+  longitud_maxima NUMBER(15)
 )
 ;
 comment on table T_SERVICIO_PARAMETROS
@@ -34,6 +35,8 @@ comment on column T_SERVICIO_PARAMETROS.orden
   is 'Numero de orden del parametro';
 comment on column T_SERVICIO_PARAMETROS.etiqueta
   is 'Etiqueta del parametro';
+comment on column T_SERVICIO_PARAMETROS.longitud_maxima
+  is 'Longitud maxima del parametro';
 alter table T_SERVICIO_PARAMETROS
   add constraint PK_SERVICIO_PARAMETROS primary key (ID_SERVICIO, NOMBRE);
 alter table T_SERVICIO_PARAMETROS
