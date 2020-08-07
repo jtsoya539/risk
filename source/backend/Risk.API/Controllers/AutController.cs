@@ -317,6 +317,16 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [HttpGet("DatosUsuario")]
+        [SwaggerOperation(OperationId = "DatosUsuario", Summary = "DatosUsuario", Description = "Permite obtener los datos de un usuario")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Usuario>))]
+        public IActionResult DatosUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
+        {
+            var respuesta = _autService.DatosUsuario(usuario);
+            return ProcesarRespuesta(respuesta);
+        }
+
         [HttpGet("RecuperarAvatarUsuario")]
         [SwaggerOperation(OperationId = "RecuperarAvatarUsuario", Summary = "RecuperarAvatarUsuario", Description = "Permite recuperar el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
