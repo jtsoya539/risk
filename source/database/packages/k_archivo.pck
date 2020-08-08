@@ -48,6 +48,10 @@ CREATE OR REPLACE PACKAGE k_archivo IS
                                    o_checksum  OUT VARCHAR2,
                                    o_tamano    OUT NUMBER);
 
+  FUNCTION f_version_archivo(i_tabla      IN VARCHAR2,
+                             i_campo      IN VARCHAR2,
+                             i_referencia IN VARCHAR2) RETURN NUMBER;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_archivo IS
@@ -146,6 +150,27 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
                                                       dbms_crypto.hash_sh1)));
       o_tamano   := dbms_lob.getlength(i_contenido);
     END IF;
+  END;
+
+  FUNCTION f_version_archivo(i_tabla      IN VARCHAR2,
+                             i_campo      IN VARCHAR2,
+                             i_referencia IN VARCHAR2) RETURN NUMBER IS
+    l_version t_archivos.version_actual%TYPE;
+  BEGIN
+  
+      SELECT a.version_actual
+        INTO l_version
+        FROM t_archivos a, t_archivo_definiciones d
+       WHERE d.tabla = a.tabla
+         AND d.campo = a.campo
+         AND upper(a.tabla) = upper(i_tabla)
+         AND upper(a.campo) = upper(i_campo)
+         AND a.referencia = i_referencia;
+  
+    RETURN l_version;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
 END;
