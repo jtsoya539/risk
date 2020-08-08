@@ -29,6 +29,7 @@ namespace Risk.API.Services
     public interface IGenService
     {
         Respuesta<Dato> VersionSistema();
+        Respuesta<Dato> VersionServicio(string servicio);
         Respuesta<Dato> ValorParametro(string parametro);
         Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
         Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null);

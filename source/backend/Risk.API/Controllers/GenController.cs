@@ -59,6 +59,17 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [AllowAnonymous]
+        [HttpGet("VersionServicio")]
+        [SwaggerOperation(OperationId = "VersionServicio", Summary = "VersionServicio", Description = "Obtiene la versión actual del servicio")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult VersionServicio([FromQuery, SwaggerParameter(Description = "Nombre del servicio", Required = true)] string servicio)
+        {
+            var respuesta = _genService.VersionServicio(servicio);
+            return ProcesarRespuesta(respuesta);
+        }
+
         [HttpGet("ValorParametro")]
         [SwaggerOperation(OperationId = "ValorParametro", Summary = "ValorParametro", Description = "Obtiene el valor de un parámetro")]
         [Produces(MediaTypeNames.Application.Json)]

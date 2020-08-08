@@ -37,6 +37,7 @@ namespace Risk.API.Services
         private const int ID_VALOR_PARAMETRO = 8;
         private const int ID_SIGNIFICADO_CODIGO = 9;
         private const int ID_VERSION_SISTEMA = 13;
+        private const int ID_VERSION_SERVICIO = 50;
         private const int ID_LISTAR_PAISES = 16;
         private const int ID_LISTAR_DEPARTAMENTOS = 25;
         private const int ID_LISTAR_CIUDADES = 26;
@@ -55,6 +56,17 @@ namespace Risk.API.Services
             JObject prms = new JObject();
 
             string rsp = base.ProcesarServicio(ID_VERSION_SISTEMA, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> VersionServicio(string servicio)
+        {
+            JObject prms = new JObject();
+            prms.Add("servicio", servicio);
+
+            string rsp = base.ProcesarServicio(ID_VERSION_SERVICIO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
