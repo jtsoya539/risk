@@ -64,7 +64,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_archivo.p_calcular_propiedades(l_archivo.contenido,
                                      l_archivo.checksum,
                                      l_archivo.tamano);
-    l_archivo.nombre    := lower(k_sistema.f_valor_parametro('NOMBRE_SERVICIO') ||
+    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_servicio) ||
                                  to_char(SYSDATE, '_YYYYMMDD_HH24MISS'));
     l_archivo.extension := lower(l_formato);
     l_archivo.tipo_mime := k_archivo.f_tipo_mime('EXTENSION_REPORTE',
@@ -93,8 +93,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_pdf3_v5.set_page_orientation('PORTRAIT');
         as_pdf3_v5.set_margins(25, 30, 25, 30, 'mm');
       
-        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo('T_IMAGENES','ARCHIVO','x-mark-5-256.jpg')
-                                         .contenido,
+        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo('T_IMAGENES','ARCHIVO','x-mark-5-256.jpg').contenido,
                              p_x      => 30,
                              p_y      => 272,
                              p_width  => 10,
@@ -113,7 +112,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_archivo.p_calcular_propiedades(l_archivo.contenido,
                                      l_archivo.checksum,
                                      l_archivo.tamano);
-    l_archivo.nombre    := lower(k_sistema.f_valor_parametro('NOMBRE_SERVICIO') ||
+    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_servicio) ||
                                  to_char(SYSDATE, '_YYYYMMDD_HH24MISS'));
     l_archivo.extension := lower(l_formato);
     l_archivo.tipo_mime := k_archivo.f_tipo_mime('EXTENSION_REPORTE',

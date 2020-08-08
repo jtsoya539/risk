@@ -786,7 +786,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        l_fecha_expiracion_access_token,
        i_refresh_token,
        l_fecha_expiracion_refresh_token,
-       k_sistema.f_valor_parametro(k_sistema.c_direccion_ip),
+       k_sistema.f_valor_parametro_string(k_sistema.c_direccion_ip),
        k_util.f_host,
        k_util.f_terminal,
        l_id_dispositivo)

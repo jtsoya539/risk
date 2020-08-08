@@ -208,24 +208,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
     k_sistema.p_inicializar_parametros;
-    k_sistema.p_definir_parametro(k_sistema.c_direccion_ip,
-                                  f_valor_parametro_string(l_ctx,
-                                                           'direccion_ip'));
-    k_sistema.p_definir_parametro(k_sistema.c_id_servicio,
-                                  to_char(i_id_servicio));
-    k_sistema.p_definir_parametro(k_sistema.c_nombre_servicio,
-                                  l_nombre_servicio);
-    k_sistema.p_definir_parametro(k_sistema.c_id_aplicacion,
-                                  k_autenticacion.f_id_aplicacion(f_valor_parametro_string(l_ctx,
-                                                                                           'clave_aplicacion')));
-    k_sistema.p_definir_parametro(k_sistema.c_id_sesion,
-                                  to_char(k_autenticacion.f_id_sesion(f_valor_parametro_string(l_ctx,
-                                                                                               'access_token'))));
-    k_sistema.p_definir_parametro(k_sistema.c_id_usuario,
-                                  to_char(k_autenticacion.f_id_usuario(f_valor_parametro_string(l_ctx,
-                                                                                                'usuario'))));
-    k_sistema.p_definir_parametro(k_sistema.c_usuario,
-                                  f_valor_parametro_string(l_ctx, 'usuario'));
+    k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
+                                         f_valor_parametro_string(l_ctx,
+                                                                  'direccion_ip'));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_servicio,
+                                         i_id_servicio);
+    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_servicio,
+                                         l_nombre_servicio);
+    k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
+                                         k_autenticacion.f_id_aplicacion(f_valor_parametro_string(l_ctx,
+                                                                                                  'clave_aplicacion')));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
+                                         k_autenticacion.f_id_sesion(f_valor_parametro_string(l_ctx,
+                                                                                              'access_token')));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
+                                         k_autenticacion.f_id_usuario(f_valor_parametro_string(l_ctx,
+                                                                                               'usuario')));
+    k_sistema.p_definir_parametro_string(k_sistema.c_usuario,
+                                         f_valor_parametro_string(l_ctx,
+                                                                  'usuario'));
   
     l_rsp.lugar := 'Construyendo sentencia';
     l_sentencia := 'BEGIN :1 := ' || l_referencia_servicio || '_' ||
@@ -787,8 +788,7 @@ END;'
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     lp_registrar_log(i_id_servicio, i_parametros, l_rsp, i_contexto);
     RETURN l_rsp;

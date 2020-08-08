@@ -55,7 +55,15 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   %return Valor del parámetro
   %raises <exception>
   */
-  FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2;
+  FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata;
+
+  FUNCTION f_valor_parametro_string(i_parametro IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_valor_parametro_number(i_parametro IN VARCHAR2) RETURN NUMBER;
+
+  FUNCTION f_valor_parametro_boolean(i_parametro IN VARCHAR2) RETURN BOOLEAN;
+
+  FUNCTION f_valor_parametro_date(i_parametro IN VARCHAR2) RETURN DATE;
 
   /**
   Define el valor de un parámetro en la sesión
@@ -66,7 +74,19 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   %raises <exception>
   */
   PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
-                                i_valor     IN VARCHAR2);
+                                i_valor     IN anydata);
+
+  PROCEDURE p_definir_parametro_string(i_parametro IN VARCHAR2,
+                                       i_valor     IN VARCHAR2);
+
+  PROCEDURE p_definir_parametro_number(i_parametro IN VARCHAR2,
+                                       i_valor     IN NUMBER);
+
+  PROCEDURE p_definir_parametro_boolean(i_parametro IN VARCHAR2,
+                                        i_valor     IN BOOLEAN);
+
+  PROCEDURE p_definir_parametro_date(i_parametro IN VARCHAR2,
+                                     i_valor     IN DATE);
 
   /**
   Define el valor de todos los parámetros de la sesión a null
@@ -98,7 +118,7 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
-  TYPE ly_parametros IS TABLE OF VARCHAR2(500) INDEX BY VARCHAR2(50);
+  TYPE ly_parametros IS TABLE OF anydata INDEX BY VARCHAR2(50);
 
   g_parametros ly_parametros;
   g_indice     VARCHAR2(50);
@@ -110,12 +130,10 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
   FUNCTION f_fecha_actual RETURN DATE IS
   BEGIN
-    RETURN to_date(f_valor_parametro('FECHA') || ' ' ||
-                   to_char(SYSDATE, 'HH24:MI:SS'),
-                   'YYYY-MM-DD HH24:MI:SS');
+    RETURN f_valor_parametro_date(c_fecha);
   END;
 
-  FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2 IS
+  FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata IS
   BEGIN
     IF g_parametros.exists(i_parametro) THEN
       RETURN g_parametros(i_parametro);
@@ -124,10 +142,55 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
     END IF;
   END;
 
-  PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
-                                i_valor     IN VARCHAR2) IS
+  FUNCTION f_valor_parametro_string(i_parametro IN VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
-    g_parametros(i_parametro) := substr(i_valor, 1, 500);
+    RETURN anydata.accessvarchar2(f_valor_parametro(i_parametro));
+  END;
+
+  FUNCTION f_valor_parametro_number(i_parametro IN VARCHAR2) RETURN NUMBER IS
+  BEGIN
+    RETURN anydata.accessnumber(f_valor_parametro(i_parametro));
+  END;
+
+  FUNCTION f_valor_parametro_boolean(i_parametro IN VARCHAR2) RETURN BOOLEAN IS
+  BEGIN
+    RETURN sys.diutil.int_to_bool(anydata.accessnumber(f_valor_parametro(i_parametro)));
+  END;
+
+  FUNCTION f_valor_parametro_date(i_parametro IN VARCHAR2) RETURN DATE IS
+  BEGIN
+    RETURN anydata.accessdate(f_valor_parametro(i_parametro));
+  END;
+
+  PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
+                                i_valor     IN anydata) IS
+  BEGIN
+    g_parametros(i_parametro) := i_valor;
+  END;
+
+  PROCEDURE p_definir_parametro_string(i_parametro IN VARCHAR2,
+                                       i_valor     IN VARCHAR2) IS
+  BEGIN
+    p_definir_parametro(i_parametro, anydata.convertvarchar2(i_valor));
+  END;
+
+  PROCEDURE p_definir_parametro_number(i_parametro IN VARCHAR2,
+                                       i_valor     IN NUMBER) IS
+  BEGIN
+    p_definir_parametro(i_parametro, anydata.convertnumber(i_valor));
+  END;
+
+  PROCEDURE p_definir_parametro_boolean(i_parametro IN VARCHAR2,
+                                        i_valor     IN BOOLEAN) IS
+  BEGIN
+    p_definir_parametro(i_parametro,
+                        anydata.convertnumber(sys.diutil.bool_to_int(i_valor)));
+  END;
+
+  PROCEDURE p_definir_parametro_date(i_parametro IN VARCHAR2,
+                                     i_valor     IN DATE) IS
+  BEGIN
+    p_definir_parametro(i_parametro, anydata.convertdate(i_valor));
   END;
 
   PROCEDURE p_inicializar_parametros IS
@@ -145,14 +208,14 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
         INTO l_nombre, l_version_actual, l_fecha_actual
         FROM t_sistemas
        WHERE id_sistema = 'RISK';
-      p_definir_parametro(c_sistema, l_nombre);
-      p_definir_parametro(c_version, l_version_actual);
-      p_definir_parametro(c_fecha, to_char(l_fecha_actual, 'YYYY-MM-DD'));
+      p_definir_parametro_string(c_sistema, l_nombre);
+      p_definir_parametro_string(c_version, l_version_actual);
+      p_definir_parametro_date(c_fecha, l_fecha_actual);
     EXCEPTION
       WHEN OTHERS THEN
         NULL;
     END;
-    p_definir_parametro(c_usuario, USER);
+    p_definir_parametro_string(c_usuario, USER);
   END;
 
   PROCEDURE p_limpiar_parametros IS
@@ -173,7 +236,8 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   BEGIN
     g_indice := g_parametros.first;
     WHILE g_indice IS NOT NULL LOOP
-      dbms_output.put_line(g_indice || ': ' || g_parametros(g_indice));
+      dbms_output.put_line(g_indice || ': ' ||
+                           anydata.accessvarchar2(g_parametros(g_indice)));
       g_indice := g_parametros.next(g_indice);
     END LOOP;
   END;

@@ -51,9 +51,49 @@ Program units
 Retorna el valor de un par&#225;metro en la sesi&#243;n, si no existe retorna null
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_STRING">f_valor_parametro_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_NUMBER">f_valor_parametro_number</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_BOOLEAN">f_valor_parametro_boolean</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_DATE">f_valor_parametro_date</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO">p_definir_parametro</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Define el valor de un par&#225;metro en la sesi&#243;n
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DEFINIR_PARAMETRO_STRING">p_definir_parametro_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DEFINIR_PARAMETRO_NUMBER">p_definir_parametro_number</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DEFINIR_PARAMETRO_BOOLEAN">p_definir_parametro_boolean</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DEFINIR_PARAMETRO_DATE">p_definir_parametro_date</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_INICIALIZAR_PARAMETROS">p_inicializar_parametros</A>&nbsp;&nbsp;
@@ -238,7 +278,7 @@ FUNCTION f_fecha_actual RETURN DATE
 f_valor_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN VARCHAR2
+FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata
 
 </PRE>
 <P CLASS="DESC_TEXT">
@@ -298,13 +338,49 @@ Valor del par&#225;metro<br>
 </TABLE>
 <BR>
 <HR>
+<A NAME="F_VALOR_PARAMETRO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_string
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_string(i_parametro IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_NUMBER"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_number
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_number(i_parametro IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_BOOLEAN"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_boolean
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_boolean(i_parametro IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_DATE"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_date
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_date(i_parametro IN VARCHAR2) RETURN DATE
+
+</PRE>
+<HR>
 <A NAME="P_DEFINIR_PARAMETRO"></A>
 <P CLASS="TYPE_TITLE">
 p_definir_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
-                              i_valor     IN VARCHAR2)
+                              i_valor     IN anydata)
 
 </PRE>
 <P CLASS="DESC_TEXT">
@@ -358,6 +434,46 @@ Raises
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="P_DEFINIR_PARAMETRO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+p_definir_parametro_string
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_definir_parametro_string(i_parametro IN VARCHAR2,
+                                     i_valor     IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_DEFINIR_PARAMETRO_NUMBER"></A>
+<P CLASS="TYPE_TITLE">
+p_definir_parametro_number
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_definir_parametro_number(i_parametro IN VARCHAR2,
+                                     i_valor     IN NUMBER)
+
+</PRE>
+<HR>
+<A NAME="P_DEFINIR_PARAMETRO_BOOLEAN"></A>
+<P CLASS="TYPE_TITLE">
+p_definir_parametro_boolean
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_definir_parametro_boolean(i_parametro IN VARCHAR2,
+                                      i_valor     IN BOOLEAN)
+
+</PRE>
+<HR>
+<A NAME="P_DEFINIR_PARAMETRO_DATE"></A>
+<P CLASS="TYPE_TITLE">
+p_definir_parametro_date
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_definir_parametro_date(i_parametro IN VARCHAR2,
+                                   i_valor     IN DATE)
+
+</PRE>
 <HR>
 <A NAME="P_INICIALIZAR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">
