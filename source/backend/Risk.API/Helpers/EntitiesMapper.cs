@@ -193,6 +193,7 @@ namespace Risk.API.Helpers
                     Estado = entity.Estado,
                     DireccionCorreo = entity.DireccionCorreo,
                     NumeroTelefono = entity.NumeroTelefono,
+                    VersionAvatar = entity.VersionAvatar,
                     Roles = GetRolListFromEntity(entity.Roles)
                 };
             }

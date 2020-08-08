@@ -612,7 +612,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              p.tipo_persona,
              u.estado,
              u.direccion_correo,
-             u.numero_telefono
+             u.numero_telefono,
+             k_archivo.f_version_archivo('T_USUARIOS', 'AVATAR', u.alias)
         INTO l_usuario.id_usuario,
              l_usuario.alias,
              l_usuario.nombre,
@@ -620,7 +621,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              l_usuario.tipo_persona,
              l_usuario.estado,
              l_usuario.direccion_correo,
-             l_usuario.numero_telefono
+             l_usuario.numero_telefono,
+             l_usuario.version_avatar
         FROM t_usuarios u, t_personas p
        WHERE p.id_persona(+) = u.id_persona
          AND u.alias = i_usuario;

@@ -177,12 +177,13 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Barrio>, YPagina<YBarrio>>(entityRsp, datos);
         }
 
-        public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia)
+        public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version)
         {
             JObject prms = new JObject();
             prms.Add("tabla", tabla);
             prms.Add("campo", campo);
             prms.Add("referencia", referencia);
+            prms.Add("version", version);
 
             string rsp = base.ProcesarServicio(ID_RECUPERAR_ARCHIVO, prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);

@@ -1,13 +1,14 @@
 create table T_ARCHIVOS
 (
-  tabla      VARCHAR2(30) not null,
-  campo      VARCHAR2(30) not null,
-  referencia VARCHAR2(500) not null,
-  contenido  BLOB,
-  checksum   VARCHAR2(100),
-  tamano     NUMBER,
-  nombre     VARCHAR2(4000),
-  extension  VARCHAR2(100)
+  tabla          VARCHAR2(30) not null,
+  campo          VARCHAR2(30) not null,
+  referencia     VARCHAR2(500) not null,
+  contenido      BLOB,
+  checksum       VARCHAR2(100),
+  tamano         NUMBER,
+  nombre         VARCHAR2(4000),
+  extension      VARCHAR2(100),
+  version_actual NUMBER(10)
 )
 ;
 comment on table T_ARCHIVOS
@@ -28,9 +29,10 @@ comment on column T_ARCHIVOS.nombre
   is 'Nombre del archivo';
 comment on column T_ARCHIVOS.extension
   is 'Extensión del archivo';
+comment on column T_ARCHIVOS.version_actual
+  is 'Versión del archivo';
 alter table T_ARCHIVOS
   add constraint PK_ARCHIVOS primary key (TABLA, CAMPO, REFERENCIA);
 alter table T_ARCHIVOS
   add constraint FK_ARC_ARCHIVO_DEFINICIONES foreign key (TABLA, CAMPO)
   references T_ARCHIVO_DEFINICIONES (TABLA, CAMPO);
-

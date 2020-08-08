@@ -46,6 +46,8 @@ SOFTWARE.
   direccion_correo VARCHAR2(320),
 /** Numero de telefono principal del usuario */
   numero_telefono VARCHAR2(160),
+/** Version del avatar del usuario */
+  version_avatar NUMBER(10),
 /** Roles del usuario */
   roles y_roles,
 
@@ -80,6 +82,7 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
     self.estado           := NULL;
     self.direccion_correo := NULL;
     self.numero_telefono  := NULL;
+    self.version_avatar   := NULL;
     self.roles            := NEW y_roles();
     RETURN;
   END;
@@ -102,6 +105,7 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
     l_usuario.estado           := l_json_object.get_string('estado');
     l_usuario.direccion_correo := l_json_object.get_string('direccion_correo');
     l_usuario.numero_telefono  := l_json_object.get_string('numero_telefono');
+    l_usuario.version_avatar   := l_json_object.get_string('version_avatar');
   
     l_json_array := l_json_object.get_array('roles');
   
@@ -136,6 +140,7 @@ CREATE OR REPLACE TYPE BODY y_usuario IS
     l_json_object.put('estado', self.estado);
     l_json_object.put('direccion_correo', self.direccion_correo);
     l_json_object.put('numero_telefono', self.numero_telefono);
+    l_json_object.put('version_avatar', self.version_avatar);
   
     IF self.roles IS NULL THEN
       l_json_object.put_null('roles');

@@ -480,7 +480,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                  k_servicio.f_valor_parametro_string(i_parametros,
                                                                                      'campo'),
                                                  k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                     'referencia'));
+                                                                                     'referencia'),
+                                                 k_servicio.f_valor_parametro_number(i_parametros,
+                                                                                     'version'));
   
     IF l_archivo.contenido IS NULL OR
        dbms_lob.getlength(l_archivo.contenido) = 0 THEN

@@ -35,7 +35,9 @@ CREATE OR REPLACE PACKAGE k_archivo IS
 
   FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                                i_campo      IN VARCHAR2,
-                               i_referencia IN VARCHAR2) RETURN y_archivo;
+                               i_referencia IN VARCHAR2,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN y_archivo;
 
   PROCEDURE p_guardar_archivo(i_tabla      IN VARCHAR2,
                               i_campo      IN VARCHAR2,
@@ -45,6 +47,10 @@ CREATE OR REPLACE PACKAGE k_archivo IS
   PROCEDURE p_calcular_propiedades(i_contenido IN BLOB,
                                    o_checksum  OUT VARCHAR2,
                                    o_tamano    OUT NUMBER);
+
+  FUNCTION f_version_archivo(i_tabla      IN VARCHAR2,
+                             i_campo      IN VARCHAR2,
+                             i_referencia IN VARCHAR2) RETURN NUMBER;
 
 END;
 /
@@ -70,7 +76,9 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
 
   FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                                i_campo      IN VARCHAR2,
-                               i_referencia IN VARCHAR2) RETURN y_archivo IS
+                               i_referencia IN VARCHAR2,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN y_archivo IS
     l_archivo y_archivo;
   BEGIN
     l_archivo := NEW y_archivo();
@@ -93,7 +101,8 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          AND d.campo = a.campo
          AND upper(a.tabla) = upper(i_tabla)
          AND upper(a.campo) = upper(i_campo)
-         AND a.referencia = i_referencia;
+         AND a.referencia = i_referencia
+         AND a.version_actual = nvl(i_version, a.version_actual);
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000, 'Archivo inexistente');
@@ -110,23 +119,25 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
                               i_archivo    IN y_archivo) IS
   BEGIN
     UPDATE t_archivos a
-       SET a.contenido = i_archivo.contenido,
-           a.nombre    = i_archivo.nombre,
-           a.extension = i_archivo.extension
+       SET a.contenido      = i_archivo.contenido,
+           a.nombre         = i_archivo.nombre,
+           a.extension      = i_archivo.extension,
+           a.version_actual = nvl(a.version_actual, 0) + 1
      WHERE upper(a.tabla) = upper(i_tabla)
        AND upper(a.campo) = upper(i_campo)
        AND a.referencia = i_referencia;
   
     IF SQL%NOTFOUND THEN
       INSERT INTO t_archivos
-        (tabla, campo, referencia, contenido, nombre, extension)
+        (tabla, campo, referencia, contenido, nombre, extension, version_actual)
       VALUES
         (upper(i_tabla),
          upper(i_campo),
          i_referencia,
          i_archivo.contenido,
          i_archivo.nombre,
-         i_archivo.extension);
+         i_archivo.extension,
+         1);
     END IF;
   END;
 
@@ -139,6 +150,27 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
                                                       dbms_crypto.hash_sh1)));
       o_tamano   := dbms_lob.getlength(i_contenido);
     END IF;
+  END;
+
+  FUNCTION f_version_archivo(i_tabla      IN VARCHAR2,
+                             i_campo      IN VARCHAR2,
+                             i_referencia IN VARCHAR2) RETURN NUMBER IS
+    l_version t_archivos.version_actual%TYPE;
+  BEGIN
+  
+      SELECT a.version_actual
+        INTO l_version
+        FROM t_archivos a, t_archivo_definiciones d
+       WHERE d.tabla = a.tabla
+         AND d.campo = a.campo
+         AND upper(a.tabla) = upper(i_tabla)
+         AND upper(a.campo) = upper(i_campo)
+         AND a.referencia = i_referencia;
+  
+    RETURN l_version;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
 END;
