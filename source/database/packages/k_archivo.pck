@@ -35,7 +35,9 @@ CREATE OR REPLACE PACKAGE k_archivo IS
 
   FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                                i_campo      IN VARCHAR2,
-                               i_referencia IN VARCHAR2) RETURN y_archivo;
+                               i_referencia IN VARCHAR2,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN y_archivo;
 
   PROCEDURE p_guardar_archivo(i_tabla      IN VARCHAR2,
                               i_campo      IN VARCHAR2,
@@ -70,7 +72,9 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
 
   FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                                i_campo      IN VARCHAR2,
-                               i_referencia IN VARCHAR2) RETURN y_archivo IS
+                               i_referencia IN VARCHAR2,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN y_archivo IS
     l_archivo y_archivo;
   BEGIN
     l_archivo := NEW y_archivo();
@@ -93,7 +97,8 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          AND d.campo = a.campo
          AND upper(a.tabla) = upper(i_tabla)
          AND upper(a.campo) = upper(i_campo)
-         AND a.referencia = i_referencia;
+         AND a.referencia = i_referencia
+         AND a.version_actual = nvl(i_version, a.version_actual);
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000, 'Archivo inexistente');
