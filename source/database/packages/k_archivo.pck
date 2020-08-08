@@ -110,23 +110,25 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
                               i_archivo    IN y_archivo) IS
   BEGIN
     UPDATE t_archivos a
-       SET a.contenido = i_archivo.contenido,
-           a.nombre    = i_archivo.nombre,
-           a.extension = i_archivo.extension
+       SET a.contenido      = i_archivo.contenido,
+           a.nombre         = i_archivo.nombre,
+           a.extension      = i_archivo.extension,
+           a.version_actual = nvl(a.version_actual, 0) + 1
      WHERE upper(a.tabla) = upper(i_tabla)
        AND upper(a.campo) = upper(i_campo)
        AND a.referencia = i_referencia;
   
     IF SQL%NOTFOUND THEN
       INSERT INTO t_archivos
-        (tabla, campo, referencia, contenido, nombre, extension)
+        (tabla, campo, referencia, contenido, nombre, extension, version_actual)
       VALUES
         (upper(i_tabla),
          upper(i_campo),
          i_referencia,
          i_archivo.contenido,
          i_archivo.nombre,
-         i_archivo.extension);
+         i_archivo.extension,
+         1);
     END IF;
   END;
 
