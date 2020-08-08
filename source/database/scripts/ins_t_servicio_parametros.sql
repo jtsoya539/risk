@@ -260,4 +260,7 @@ values (42, 'DIRECCION_CORREO', 'I', 'S', null, 'N', null, 'S', 5, null);
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
 values (42, 'NUMERO_TELEFONO', 'I', 'S', null, 'N', null, 'S', 6, null);
 
+insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA)
+values (50, 'SERVICIO', 'I', 'S', null, 'S', null, 'S', 1, null);
+
 prompt Done.

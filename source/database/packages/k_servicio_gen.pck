@@ -32,6 +32,8 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
 
   FUNCTION version_sistema(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION version_servicio(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION valor_parametro(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION significado_codigo(i_parametros IN y_parametros)
@@ -75,6 +77,54 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
         k_servicio.p_respuesta_error(l_rsp,
                                      'gen0001',
                                      'Error al obtener versión del sistema');
+        RAISE k_servicio.ex_error_general;
+    END;
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION version_servicio(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp  y_respuesta;
+    l_dato y_dato;
+    --
+    l_servicio t_servicios.nombre%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Obteniendo parámetros';
+    l_servicio  := k_servicio.f_valor_parametro_string(i_parametros,
+                                                       'servicio');
+
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   l_servicio IS NOT NULL,
+                                   'Debe ingresar servicio');
+  
+    l_rsp.lugar := 'Obteniendo versión del servicio ' || l_servicio;
+    BEGIN
+      SELECT version_actual
+        INTO l_dato.contenido
+        FROM t_servicios
+       WHERE nombre = upper(l_servicio);
+    EXCEPTION
+      WHEN OTHERS THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'gen0001',
+                                     'Error al obtener versión del servicio ' || l_servicio);
         RAISE k_servicio.ex_error_general;
     END;
   
