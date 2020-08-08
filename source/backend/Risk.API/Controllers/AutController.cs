@@ -331,9 +331,10 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RecuperarAvatarUsuario", Summary = "RecuperarAvatarUsuario", Description = "Permite recuperar el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
-        public IActionResult RecuperarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
+        public IActionResult RecuperarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario,
+            [FromQuery, SwaggerParameter(Description = "Version", Required = false)] int? version)
         {
-            var respuesta = _genService.RecuperarArchivo("T_USUARIOS", "AVATAR", usuario);
+            var respuesta = _genService.RecuperarArchivo("T_USUARIOS", "AVATAR", usuario, version);
 
             if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
