@@ -233,11 +233,26 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   END;
 
   PROCEDURE p_imprimir_parametros IS
+    l_typeinfo anytype;
+    l_typecode PLS_INTEGER;
   BEGIN
     g_indice := g_parametros.first;
     WHILE g_indice IS NOT NULL LOOP
-      dbms_output.put_line(g_indice || ': ' ||
-                           anydata.accessvarchar2(g_parametros(g_indice)));
+      dbms_output.put(g_indice || ': ');
+      IF g_parametros(g_indice) IS NOT NULL THEN
+        l_typecode := g_parametros(g_indice).gettype(l_typeinfo);
+        IF l_typecode = dbms_types.typecode_varchar2 THEN
+          dbms_output.put(anydata.accessvarchar2(g_parametros(g_indice)));
+        ELSIF l_typecode = dbms_types.typecode_number THEN
+          dbms_output.put(to_char(anydata.accessnumber(g_parametros(g_indice))));
+        ELSIF l_typecode = dbms_types.typecode_date THEN
+          dbms_output.put(to_char(anydata.accessdate(g_parametros(g_indice)),
+                                  'YYYY-MM-DD'));
+        ELSE
+          dbms_output.put('Tipo de dato no soportado');
+        END IF;
+      END IF;
+      dbms_output.new_line;
       g_indice := g_parametros.next(g_indice);
     END LOOP;
   END;
