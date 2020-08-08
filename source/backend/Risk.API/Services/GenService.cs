@@ -177,7 +177,7 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Barrio>, YPagina<YBarrio>>(entityRsp, datos);
         }
 
-        public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version)
+        public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version = null)
         {
             JObject prms = new JObject();
             prms.Add("tabla", tabla);

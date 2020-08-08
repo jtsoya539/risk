@@ -102,7 +102,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          AND upper(a.tabla) = upper(i_tabla)
          AND upper(a.campo) = upper(i_campo)
          AND a.referencia = i_referencia
-         AND a.version_actual = nvl(i_version, a.version_actual);
+         AND nvl(a.version_actual, 0) = nvl(i_version, nvl(a.version_actual, 0));
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000, 'Archivo inexistente');
