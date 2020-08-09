@@ -55,6 +55,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VERSION_ARCHIVO">f_version_archivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -75,7 +80,9 @@ f_recuperar_archivo
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_recuperar_archivo(i_tabla      IN VARCHAR2,
                              i_campo      IN VARCHAR2,
-                             i_referencia IN VARCHAR2) RETURN y_archivo
+                             i_referencia IN VARCHAR2,
+                             i_version    IN VARCHAR2 DEFAULT NULL)
+  RETURN y_archivo
 
 </PRE>
 <HR>
@@ -99,6 +106,17 @@ p_calcular_propiedades
 PROCEDURE p_calcular_propiedades(i_contenido IN BLOB,
                                  o_checksum  OUT VARCHAR2,
                                  o_tamano    OUT NUMBER)
+
+</PRE>
+<HR>
+<A NAME="F_VERSION_ARCHIVO"></A>
+<P CLASS="TYPE_TITLE">
+f_version_archivo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_version_archivo(i_tabla      IN VARCHAR2,
+                           i_campo      IN VARCHAR2,
+                           i_referencia IN VARCHAR2) RETURN NUMBER
 
 </PRE>
 <P>&nbsp;</P>
