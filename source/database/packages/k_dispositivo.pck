@@ -35,7 +35,7 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
 
   FUNCTION f_id_dispositivo(i_token_dispositivo IN VARCHAR2) RETURN NUMBER;
 
-  FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
+  FUNCTION f_registrar_dispositivo(i_id_aplicacion             IN VARCHAR2,
                                    i_token_dispositivo         IN VARCHAR2,
                                    i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
                                    i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
@@ -79,7 +79,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     RETURN l_id_dispositivo;
   END;
 
-  FUNCTION f_registrar_dispositivo(i_clave_aplicacion          IN VARCHAR2,
+  FUNCTION f_registrar_dispositivo(i_id_aplicacion             IN VARCHAR2,
                                    i_token_dispositivo         IN VARCHAR2,
                                    i_token_notificacion        IN VARCHAR2 DEFAULT NULL,
                                    i_nombre_sistema_operativo  IN VARCHAR2 DEFAULT NULL,
@@ -89,13 +89,9 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER IS
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
-    l_id_aplicacion  t_aplicaciones.id_aplicacion%TYPE;
   BEGIN
-    -- Busca aplicación
-    l_id_aplicacion := k_autenticacion.f_id_aplicacion(i_clave_aplicacion,
-                                                       'S');
-  
-    IF l_id_aplicacion IS NULL THEN
+    -- Valida aplicación
+    IF i_id_aplicacion IS NULL THEN
       raise_application_error(-20000, 'Aplicación inexistente o inactiva');
     END IF;
   
@@ -110,7 +106,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
       -- Actualiza dispositivo
       UPDATE t_dispositivos
          SET fecha_ultimo_acceso       = SYSDATE,
-             id_aplicacion             = l_id_aplicacion,
+             id_aplicacion             = i_id_aplicacion,
              nombre_sistema_operativo  = nvl(i_nombre_sistema_operativo,
                                              nombre_sistema_operativo),
              version_sistema_operativo = nvl(i_version_sistema_operativo,
@@ -138,7 +134,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
       VALUES
         (i_token_dispositivo,
          SYSDATE,
-         l_id_aplicacion,
+         i_id_aplicacion,
          i_nombre_sistema_operativo,
          i_version_sistema_operativo,
          i_tipo,

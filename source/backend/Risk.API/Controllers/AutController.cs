@@ -307,7 +307,7 @@ namespace Risk.API.Controllers
                 requestBody.Dispositivo.TokenDispositivo = TokenHelper.GenerarTokenDispositivo();
             }
 
-            var respuesta = _autService.RegistrarDispositivo(TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers), requestBody.Dispositivo);
+            var respuesta = _autService.RegistrarDispositivo(requestBody.Dispositivo);
 
             if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {

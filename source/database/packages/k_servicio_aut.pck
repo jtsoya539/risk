@@ -675,11 +675,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'clave_aplicacion') IS NOT NULL,
-                                   'Debe ingresar clave_aplicacion');
-  
-    k_servicio.p_validar_parametro(l_rsp,
                                    k_servicio.f_valor_parametro_object(i_parametros,
                                                                        'dispositivo') IS NOT NULL,
                                    'Debe ingresar dispositivo');
@@ -688,8 +683,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                            y_dispositivo);
   
     l_rsp.lugar      := 'Registrando dispositivo';
-    l_id_dispositivo := k_dispositivo.f_registrar_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                                  'clave_aplicacion'),
+    l_id_dispositivo := k_dispositivo.f_registrar_dispositivo(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
                                                               l_dispositivo.token_dispositivo,
                                                               l_dispositivo.token_notificacion,
                                                               l_dispositivo.nombre_sistema_operativo,

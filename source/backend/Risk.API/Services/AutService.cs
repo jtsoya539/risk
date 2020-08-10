@@ -186,10 +186,9 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> RegistrarDispositivo(string claveAplicacion, Dispositivo dispositivo)
+        public Respuesta<Dato> RegistrarDispositivo(Dispositivo dispositivo)
         {
             JObject prms = new JObject();
-            prms.Add("clave_aplicacion", claveAplicacion);
 
             if (dispositivo != null)
             {
