@@ -213,10 +213,9 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetDispositivoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> TiempoExpiracionToken(string claveAplicacion, TipoToken tipoToken)
+        public Respuesta<Dato> TiempoExpiracionToken(TipoToken tipoToken)
         {
             JObject prms = new JObject();
-            prms.Add("clave_aplicacion", claveAplicacion);
             prms.Add("tipo_token", ModelsMapper.GetValueFromTipoTokenEnum(tipoToken));
 
             string rsp = base.ProcesarServicio(ID_TIEMPO_EXPIRACION_TOKEN, prms.ToString(Formatting.None));

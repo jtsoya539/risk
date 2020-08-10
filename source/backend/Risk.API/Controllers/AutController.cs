@@ -59,7 +59,7 @@ namespace Risk.API.Controllers
             _notificationHubClientConnection = notificationHubClientConnection;
         }
 
-        private string GenerarAccessToken(string usuario, string claveAplicacion)
+        private string GenerarAccessToken(string usuario)
         {
             var respDatosUsuario = _autService.DatosUsuario(usuario);
             if (!respDatosUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
@@ -84,7 +84,7 @@ namespace Risk.API.Controllers
                 claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
             }
 
-            var respTiempoExpiracionToken = _autService.TiempoExpiracionToken(claveAplicacion, TipoToken.AccessToken);
+            var respTiempoExpiracionToken = _autService.TiempoExpiracionToken(TipoToken.AccessToken);
             if (!respTiempoExpiracionToken.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 return string.Empty;
@@ -210,7 +210,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respValidarCredenciales);
             }
 
-            var accessToken = GenerarAccessToken(requestBody.Usuario, TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers));
+            var accessToken = GenerarAccessToken(requestBody.Usuario);
             var refreshToken = TokenHelper.GenerarRefreshToken();
 
             var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken, requestBody.TokenDispositivo);
@@ -233,7 +233,7 @@ namespace Risk.API.Controllers
         {
             string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
 
-            var accessTokenNuevo = GenerarAccessToken(usuario, TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers));
+            var accessTokenNuevo = GenerarAccessToken(usuario);
             var refreshTokenNuevo = TokenHelper.GenerarRefreshToken();
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);

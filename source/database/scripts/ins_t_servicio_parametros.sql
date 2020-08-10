@@ -123,10 +123,7 @@ insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FO
 values (16, 'PAGINA_PARAMETROS', 'I', 'O', 'Y_PAGINA_PARAMETROS', 'N', null, 'S', 10, null, null);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA, LONGITUD_MAXIMA)
-values (17, 'CLAVE_APLICACION', 'I', 'S', null, 'S', null, 'S', 1, null, null);
-
-insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA, LONGITUD_MAXIMA)
-values (17, 'TIPO_TOKEN', 'I', 'S', null, 'N', 'A', 'S', 2, null, null);
+values (17, 'TIPO_TOKEN', 'I', 'S', null, 'N', 'A', 'S', 1, null, null);
 
 insert into t_servicio_parametros (ID_SERVICIO, NOMBRE, DIRECCION, TIPO_DATO, FORMATO, OBLIGATORIO, VALOR_DEFECTO, ACTIVO, ORDEN, ETIQUETA, LONGITUD_MAXIMA)
 values (18, 'TABLA', 'I', 'S', null, 'S', null, 'S', 1, null, null);
