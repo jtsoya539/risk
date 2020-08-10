@@ -403,12 +403,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              access_token,
              refresh_token,
              k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_access_token)
+                                                       k_autenticacion.c_access_token),
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_refresh_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
              l_sesion.refresh_token,
-             l_sesion.tiempo_expiracion
+             l_sesion.tiempo_expiracion_access_token,
+             l_sesion.tiempo_expiracion_refresh_token
         FROM t_sesiones
        WHERE id_sesion = l_id_sesion;
     EXCEPTION
@@ -487,12 +490,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
              access_token,
              refresh_token,
              k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_access_token)
+                                                       k_autenticacion.c_access_token),
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_refresh_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
              l_sesion.refresh_token,
-             l_sesion.tiempo_expiracion
+             l_sesion.tiempo_expiracion_access_token,
+             l_sesion.tiempo_expiracion_refresh_token
         FROM t_sesiones
        WHERE id_sesion = l_id_sesion;
     EXCEPTION

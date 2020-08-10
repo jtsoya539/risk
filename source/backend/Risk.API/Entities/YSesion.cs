@@ -36,7 +36,9 @@ namespace Risk.API.Entities
         public string AccessToken { get; set; }
         [JsonProperty("refresh_token")]
         public string RefreshToken { get; set; }
-        [JsonProperty("tiempo_expiracion")]
-        public int TiempoExpiracion { get; set; }
+        [JsonProperty("tiempo_expiracion_access_token")]
+        public int TiempoExpiracionAccessToken { get; set; }
+        [JsonProperty("tiempo_expiracion_refresh_token")]
+        public int TiempoExpiracionRefreshToken { get; set; }
     }
 }

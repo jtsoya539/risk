@@ -141,7 +141,8 @@ namespace Risk.API.Helpers
                     Estado = entity.Estado,
                     AccessToken = entity.AccessToken,
                     RefreshToken = entity.RefreshToken,
-                    TiempoExpiracion = entity.TiempoExpiracion
+                    TiempoExpiracionAccessToken = entity.TiempoExpiracionAccessToken,
+                    TiempoExpiracionRefreshToken = entity.TiempoExpiracionRefreshToken
                 };
             }
             return model;

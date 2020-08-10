@@ -56,9 +56,14 @@ Access Token de la sesion
 Refresh Token de la sesion
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#TIEMPO_EXPIRACION">tiempo_expiracion</A>&nbsp;&nbsp;
+<A HREF="#TIEMPO_EXPIRACION_ACCESS_TOKEN">tiempo_expiracion_access_token</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Tiempo de expiraci&#243;n del Access Token en segundos
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TIEMPO_EXPIRACION_REFRESH_TOKEN">tiempo_expiracion_refresh_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tiempo de expiraci&#243;n del Refresh Token en horas
 </TD></TR>
 </TABLE>
 <BR>
@@ -137,15 +142,28 @@ Refresh Token de la sesion<br>
 <BR>
 </P>
 <HR>
-<A NAME="TIEMPO_EXPIRACION"></A>
+<A NAME="TIEMPO_EXPIRACION_ACCESS_TOKEN"></A>
 <P CLASS="TYPE_TITLE">
-tiempo_expiracion
+tiempo_expiracion_access_token
 </P>
 <PRE CLASS="DECL_TEXT">
-tiempo_expiracion NUMBER
+tiempo_expiracion_access_token NUMBER(6)
 </PRE>
 <P CLASS="DESC_TEXT">
 Tiempo de expiraci&#243;n del Access Token en segundos<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="TIEMPO_EXPIRACION_REFRESH_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+tiempo_expiracion_refresh_token
+</P>
+<PRE CLASS="DECL_TEXT">
+tiempo_expiracion_refresh_token NUMBER(6)
+</PRE>
+<P CLASS="DESC_TEXT">
+Tiempo de expiraci&#243;n del Refresh Token en horas<br>
 
 <BR>
 </P>

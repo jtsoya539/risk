@@ -30,6 +30,7 @@ namespace Risk.API.Models
         public string Estado { get; set; }
         public string AccessToken { get; set; }
         public string RefreshToken { get; set; }
-        public int TiempoExpiracion { get; set; }
+        public int TiempoExpiracionAccessToken { get; set; }
+        public int TiempoExpiracionRefreshToken { get; set; }
     }
 }
