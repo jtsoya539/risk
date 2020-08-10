@@ -372,11 +372,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
                                    k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'clave_aplicacion') IS NOT NULL,
-                                   'Debe ingresar clave_aplicacion');
-  
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
                                                                        'usuario') IS NOT NULL,
                                    'Debe ingresar usuario');
   
@@ -391,8 +386,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar refresh_token');
   
     l_rsp.lugar := 'Iniciando sesion';
-    l_id_sesion := k_autenticacion.f_iniciar_sesion(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                        'clave_aplicacion'),
+    l_id_sesion := k_autenticacion.f_iniciar_sesion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
                                                     k_servicio.f_valor_parametro_string(i_parametros,
                                                                                         'usuario'),
                                                     k_servicio.f_valor_parametro_string(i_parametros,
@@ -457,11 +451,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
                                    k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'clave_aplicacion') IS NOT NULL,
-                                   'Debe ingresar clave_aplicacion');
-  
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
                                                                        'access_token_antiguo') IS NOT NULL,
                                    'Debe ingresar antiguo Access Token');
   
@@ -481,8 +470,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar nuevo Refresh Token');
   
     l_rsp.lugar := 'Refrescando sesion';
-    l_id_sesion := k_autenticacion.f_refrescar_sesion(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                          'clave_aplicacion'),
+    l_id_sesion := k_autenticacion.f_refrescar_sesion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
                                                       k_servicio.f_valor_parametro_string(i_parametros,
                                                                                           'access_token_antiguo'),
                                                       k_servicio.f_valor_parametro_string(i_parametros,

@@ -213,7 +213,7 @@ namespace Risk.API.Controllers
             var accessToken = GenerarAccessToken(requestBody.Usuario, TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers));
             var refreshToken = TokenHelper.GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers), requestBody.Usuario, accessToken, refreshToken, requestBody.TokenDispositivo);
+            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken, requestBody.TokenDispositivo);
 
             if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
@@ -236,7 +236,7 @@ namespace Risk.API.Controllers
             var accessTokenNuevo = GenerarAccessToken(usuario, TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers));
             var refreshTokenNuevo = TokenHelper.GenerarRefreshToken();
 
-            var respuesta = _autService.RefrescarSesion(TokenHelper.ObtenerClaveAplicacionDeHeaders(Request.Headers), requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
             return ProcesarRespuesta(respuesta);
         }
 

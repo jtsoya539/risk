@@ -89,14 +89,14 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2);
 
-  FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
+  FUNCTION f_iniciar_sesion(i_id_aplicacion     IN VARCHAR2,
                             i_usuario           IN VARCHAR2,
                             i_access_token      IN VARCHAR2,
                             i_refresh_token     IN VARCHAR2,
                             i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
-  FUNCTION f_refrescar_sesion(i_clave_aplicacion      IN VARCHAR2,
+  FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                               i_access_token_antiguo  IN VARCHAR2,
                               i_refresh_token_antiguo IN VARCHAR2,
                               i_access_token_nuevo    IN VARCHAR2,
@@ -698,7 +698,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   END;
 
-  FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
+  FUNCTION f_iniciar_sesion(i_id_aplicacion     IN VARCHAR2,
                             i_usuario           IN VARCHAR2,
                             i_access_token      IN VARCHAR2,
                             i_refresh_token     IN VARCHAR2,
@@ -706,17 +706,14 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     RETURN NUMBER IS
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_id_usuario                     t_usuarios.id_usuario%TYPE;
-    l_id_aplicacion                  t_aplicaciones.id_aplicacion%TYPE;
     l_tipo_aplicacion                t_aplicaciones.tipo%TYPE;
     l_id_dispositivo                 t_dispositivos.id_dispositivo%TYPE;
     l_cantidad                       NUMBER(3);
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
   BEGIN
-    -- Busca aplicacion
-    l_id_aplicacion := f_id_aplicacion(i_clave_aplicacion, 'S');
-  
-    IF l_id_aplicacion IS NULL THEN
+    -- Valida aplicacion
+    IF i_id_aplicacion IS NULL THEN
       raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
     END IF;
   
@@ -735,7 +732,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       SELECT tipo
         INTO l_tipo_aplicacion
         FROM t_aplicaciones
-       WHERE id_aplicacion = l_id_aplicacion;
+       WHERE id_aplicacion = i_id_aplicacion;
     EXCEPTION
       WHEN OTHERS THEN
         l_tipo_aplicacion := NULL;
@@ -761,7 +758,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Obtiene la fecha de expiracion del Access Token y Refresh Token
     l_fecha_expiracion_access_token  := lf_fecha_expiracion_access_token(i_access_token);
-    l_fecha_expiracion_refresh_token := lf_fecha_expiracion_refresh_token(l_id_aplicacion);
+    l_fecha_expiracion_refresh_token := lf_fecha_expiracion_refresh_token(i_id_aplicacion);
   
     -- Inserta sesion
     INSERT INTO t_sesiones
@@ -779,7 +776,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        id_dispositivo)
     VALUES
       (l_id_usuario,
-       l_id_aplicacion,
+       i_id_aplicacion,
        'A',
        SYSDATE,
        i_access_token,
@@ -805,21 +802,18 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       raise_application_error(-20000, 'Usuario inexistente');
   END;
 
-  FUNCTION f_refrescar_sesion(i_clave_aplicacion      IN VARCHAR2,
+  FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                               i_access_token_antiguo  IN VARCHAR2,
                               i_refresh_token_antiguo IN VARCHAR2,
                               i_access_token_nuevo    IN VARCHAR2,
                               i_refresh_token_nuevo   IN VARCHAR2)
     RETURN NUMBER IS
-    l_id_aplicacion                  t_aplicaciones.id_aplicacion%TYPE;
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
   BEGIN
-    -- Busca aplicacion
-    l_id_aplicacion := f_id_aplicacion(i_clave_aplicacion, 'S');
-  
-    IF l_id_aplicacion IS NULL THEN
+    -- Valida aplicacion
+    IF i_id_aplicacion IS NULL THEN
       raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
     END IF;
   
@@ -832,7 +826,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Obtiene la fecha de expiracion del Access Token y Refresh Token
     l_fecha_expiracion_access_token  := lf_fecha_expiracion_access_token(i_access_token_nuevo);
-    l_fecha_expiracion_refresh_token := lf_fecha_expiracion_refresh_token(l_id_aplicacion);
+    l_fecha_expiracion_refresh_token := lf_fecha_expiracion_refresh_token(i_id_aplicacion);
   
     -- Actualiza sesion
     UPDATE t_sesiones

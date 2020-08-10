@@ -365,7 +365,7 @@ PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
 f_iniciar_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
+FUNCTION f_iniciar_sesion(i_id_aplicacion     IN VARCHAR2,
                           i_usuario           IN VARCHAR2,
                           i_access_token      IN VARCHAR2,
                           i_refresh_token     IN VARCHAR2,
@@ -379,7 +379,7 @@ FUNCTION f_iniciar_sesion(i_clave_aplicacion  IN VARCHAR2,
 f_refrescar_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_refrescar_sesion(i_clave_aplicacion      IN VARCHAR2,
+FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                             i_access_token_antiguo  IN VARCHAR2,
                             i_refresh_token_antiguo IN VARCHAR2,
                             i_access_token_nuevo    IN VARCHAR2,
