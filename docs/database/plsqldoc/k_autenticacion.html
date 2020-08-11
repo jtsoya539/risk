@@ -51,6 +51,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ALIAS_USUARIO">f_alias_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -228,6 +233,15 @@ f_id_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_ALIAS_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_alias_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_alias_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
 
 </PRE>
 <HR>

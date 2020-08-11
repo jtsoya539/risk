@@ -44,6 +44,8 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER;
 
+  FUNCTION f_alias_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                      i_tipo_token    IN VARCHAR2)
     RETURN NUMBER;
@@ -297,6 +299,23 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         l_id_usuario := NULL;
     END;
     RETURN l_id_usuario;
+  END;
+
+  FUNCTION f_alias_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS
+    l_alias t_usuarios.alias%TYPE;
+  BEGIN
+    BEGIN
+      SELECT u.alias
+        INTO l_alias
+        FROM t_usuarios u
+       WHERE u.id_usuario = i_id_usuario;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_alias := NULL;
+      WHEN OTHERS THEN
+        l_alias := NULL;
+    END;
+    RETURN l_alias;
   END;
 
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
