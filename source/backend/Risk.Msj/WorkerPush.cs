@@ -44,7 +44,7 @@ namespace Risk.Msj
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_configuration.GetValue<bool>("EnablePush"))
+                if (_configuration.GetValue<bool>("EnablePush") && _riskAPIClientConnection.MensajeriaActiva)
                 {
                     _logger.LogInformation($"WorkerPush running at: {DateTimeOffset.Now}");
 

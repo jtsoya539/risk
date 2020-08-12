@@ -45,7 +45,7 @@ namespace Risk.Msj
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_configuration.GetValue<bool>("EnableSMS"))
+                if (_configuration.GetValue<bool>("EnableSMS") && _riskAPIClientConnection.MensajeriaActiva)
                 {
                     _logger.LogInformation($"WorkerSMS running at: {DateTimeOffset.Now}");
 

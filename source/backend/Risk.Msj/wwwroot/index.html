@@ -7,7 +7,16 @@
 </head>
 
 <body>
-    <p>Risk.Msj</p>
+    <h1>Risk.Msj</h1>
+    <form method="POST" target="resultado">
+        <div>
+            <button formaction="/Api/Msj/ActivarMensajeria">Activar</button>
+            <button formaction="/Api/Msj/DesactivarMensajeria">Desactivar</button>
+        </div>
+    </form>
+    <p>Resultado:</p>
+    <iframe name="resultado">
+    </iframe>
 </body>
 
 </html>

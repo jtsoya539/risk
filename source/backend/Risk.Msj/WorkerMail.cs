@@ -76,7 +76,7 @@ namespace Risk.Msj
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_configuration.GetValue<bool>("EnableMail"))
+                if (_configuration.GetValue<bool>("EnableMail") && _riskAPIClientConnection.MensajeriaActiva)
                 {
                     _logger.LogInformation($"WorkerMail running at: {DateTimeOffset.Now}");
 

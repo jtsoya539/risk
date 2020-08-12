@@ -42,6 +42,7 @@ namespace Risk.Msj
         private readonly IMsjApi _msjApi;
         private string accessToken;
         private string refreshToken;
+        public bool MensajeriaActiva { get; set; }
 
         public RiskAPIClientConnection(ILogger<RiskAPIClientConnection> logger, IConfiguration configuration)
         {
@@ -56,7 +57,7 @@ namespace Risk.Msj
             _autApi = new AutApi(_apiConfiguration);
             _msjApi = new MsjApi(_apiConfiguration);
 
-            IniciarSesion();
+            MensajeriaActiva = false;
         }
 
         public void IniciarSesion()
@@ -75,6 +76,7 @@ namespace Risk.Msj
 
             _apiConfiguration.AccessToken = accessToken;
 
+            _autApi.Configuration = _apiConfiguration;
             _msjApi.Configuration = _apiConfiguration;
         }
 
@@ -94,21 +96,43 @@ namespace Risk.Msj
 
             _apiConfiguration.AccessToken = accessToken;
 
+            _autApi.Configuration = _apiConfiguration;
+            _msjApi.Configuration = _apiConfiguration;
+        }
+
+        public void FinalizarSesion()
+        {
+            DatoRespuesta datoRespuesta = _autApi.FinalizarSesion(new FinalizarSesionRequestBody
+            {
+                AccessToken = accessToken
+            });
+
+            if (datoRespuesta.Codigo.Equals("0"))
+            {
+                accessToken = string.Empty;
+                refreshToken = string.Empty;
+            }
+
+            _apiConfiguration.AccessToken = accessToken;
+
+            _autApi.Configuration = _apiConfiguration;
             _msjApi.Configuration = _apiConfiguration;
         }
 
         public void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio)
         {
-            DatoRespuesta datoRespuesta = new DatoRespuesta();
+            var respuesta = new DatoRespuesta();
+            var requestBody = new CambiarEstadoMensajeriaRequestBody
+            {
+                TipoMensajeria = tipo,
+                IdMensajeria = id,
+                Estado = estado,
+                RespuestaEnvio = respuestaEnvio
+            };
+
             try
             {
-                datoRespuesta = _msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
-                {
-                    TipoMensajeria = tipo,
-                    IdMensajeria = id,
-                    Estado = estado,
-                    RespuestaEnvio = respuestaEnvio
-                });
+                respuesta = _msjApi.CambiarEstadoMensajeria(requestBody);
             }
             catch (ApiException e)
             {
@@ -118,13 +142,7 @@ namespace Risk.Msj
 
                     try
                     {
-                        datoRespuesta = _msjApi.CambiarEstadoMensajeria(new CambiarEstadoMensajeriaRequestBody
-                        {
-                            TipoMensajeria = tipo,
-                            IdMensajeria = id,
-                            Estado = estado,
-                            RespuestaEnvio = respuestaEnvio
-                        });
+                        respuesta = _msjApi.CambiarEstadoMensajeria(requestBody);
                     }
                     catch (ApiException ex)
                     {

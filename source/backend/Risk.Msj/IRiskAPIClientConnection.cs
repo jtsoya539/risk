@@ -29,8 +29,10 @@ namespace Risk.Msj
 {
     public interface IRiskAPIClientConnection
     {
+        bool MensajeriaActiva { get; set; }
         void IniciarSesion();
         void RefrescarSesion();
+        void FinalizarSesion();
         void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio);
         List<Correo> ListarCorreosPendientes();
         List<Notificacion> ListarNotificacionesPendientes();
