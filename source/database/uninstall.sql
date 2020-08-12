@@ -51,19 +51,19 @@ prompt -----------------------------------
 prompt
 drop package k_reporte_gen;
 drop package k_reporte;
-drop package k_archivo;
 drop package k_servicio_msj;
-drop package k_mensajeria;
 drop package k_servicio_gen;
 drop package k_servicio_aut;
 drop package k_servicio;
+drop package k_mensajeria;
+drop package k_archivo;
 drop package k_error;
 drop package k_autenticacion;
 drop package k_dispositivo;
 drop package k_auditoria;
-drop package k_util;
 drop package k_html;
 drop package k_sistema;
+drop package k_util;
 
 prompt
 prompt Borrando types...

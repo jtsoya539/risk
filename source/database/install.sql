@@ -136,19 +136,19 @@ prompt
 prompt Creando paquetes...
 prompt -----------------------------------
 prompt
+@@packages/k_util.pck
 @@packages/k_sistema.pck
 @@packages/k_html.pck
-@@packages/k_util.pck
 @@packages/k_auditoria.pck
 @@packages/k_dispositivo.pck
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
+@@packages/k_archivo.pck
+@@packages/k_mensajeria.pck
 @@packages/k_servicio.pck
 @@packages/k_servicio_aut.pck
 @@packages/k_servicio_gen.pck
-@@packages/k_mensajeria.pck
 @@packages/k_servicio_msj.pck
-@@packages/k_archivo.pck
 @@packages/k_reporte.pck
 @@packages/k_reporte_gen.pck
 
