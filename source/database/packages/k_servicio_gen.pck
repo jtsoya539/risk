@@ -39,6 +39,9 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
   FUNCTION significado_codigo(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION listar_significados(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION listar_paises(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION listar_departamentos(i_parametros IN y_parametros)
@@ -108,7 +111,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp.lugar := 'Obteniendo parámetros';
     l_servicio  := k_servicio.f_valor_parametro_string(i_parametros,
                                                        'servicio');
-
+  
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
                                    l_servicio IS NOT NULL,
@@ -124,7 +127,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
       WHEN OTHERS THEN
         k_servicio.p_respuesta_error(l_rsp,
                                      'gen0001',
-                                     'Error al obtener versión del servicio ' || l_servicio);
+                                     'Error al obtener versión del servicio ' ||
+                                     l_servicio);
         RAISE k_servicio.ex_error_general;
     END;
   
@@ -217,6 +221,67 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END IF;
   
     k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION listar_significados(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_significado;
+  
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos(i_dominio IN VARCHAR2) IS
+      SELECT a.dominio, a.codigo, a.significado, a.referencia, a.activo
+        FROM t_significados a
+       WHERE a.dominio = i_dominio
+       ORDER BY a.significado;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_servicio.f_valor_parametro_object(i_parametros,
+                                                                       'pagina_parametros') IS NOT NULL,
+                                   'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
+                                                                     'pagina_parametros') AS
+                                 y_pagina_parametros);
+  
+    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                'dominio')) LOOP
+      l_elemento             := NEW y_significado();
+      l_elemento.dominio     := ele.dominio;
+      l_elemento.codigo      := ele.codigo;
+      l_elemento.significado := ele.significado;
+      l_elemento.referencia  := ele.referencia;
+      l_elemento.activo      := ele.activo;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN

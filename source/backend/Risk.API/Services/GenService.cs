@@ -45,6 +45,7 @@ namespace Risk.API.Services
         private const int ID_RECUPERAR_ARCHIVO = 18;
         private const int ID_GUARDAR_ARCHIVO = 19;
         private const int ID_RECUPERAR_TEXTO = 28;
+        private const int ID_LISTAR_SIGNIFICADOS = 29;
 
         public GenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(configuration, httpContextAccessor, dbConnectionFactory)
@@ -93,6 +94,28 @@ namespace Risk.API.Services
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Pagina<Significado>> ListarSignificados(string dominio, PaginaParametros paginaParametros = null)
+        {
+            JObject prms = new JObject();
+            prms.Add("dominio", dominio);
+
+            if (paginaParametros != null)
+            {
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
+            }
+
+            string rsp = base.ProcesarServicio(ID_LISTAR_SIGNIFICADOS, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YSignificado>>>(rsp);
+
+            Pagina<Significado> datos = null;
+            if (entityRsp.Datos != null)
+            {
+                datos = EntitiesMapper.GetPaginaFromEntity<Significado, YSignificado>(entityRsp.Datos, EntitiesMapper.GetSignificadoListFromEntity(entityRsp.Datos.Elementos));
+            }
+
+            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Significado>, YPagina<YSignificado>>(entityRsp, datos);
         }
 
         public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null)
@@ -231,5 +254,7 @@ namespace Risk.API.Services
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
+
+
     }
 }

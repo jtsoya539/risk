@@ -201,6 +201,39 @@ namespace Risk.API.Helpers
             return model;
         }
 
+        public static Significado GetSignificadoFromEntity(YSignificado entity)
+        {
+            Significado model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Significado
+                {
+                    Codigo = entity.Codigo,
+                    Descripcion = entity.Significado,
+                    Referencia = entity.Referencia,
+                    Activo = entity.Activo
+                };
+            }
+            return model;
+        }
+
+        public static List<Significado> GetSignificadoListFromEntity(List<YSignificado> entityList)
+        {
+            List<Significado> modelList = new List<Significado>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetSignificadoFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
         public static Pais GetPaisFromEntity(YPais entity)
         {
             Pais model;

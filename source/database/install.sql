@@ -124,6 +124,7 @@ prompt
 @@types/y_dispositivo.typ
 @@types/y_pagina.typ
 @@types/y_pagina_parametros.typ
+@@types/y_significado.typ
 @@types/y_pais.typ
 @@types/y_departamento.typ
 @@types/y_ciudad.typ

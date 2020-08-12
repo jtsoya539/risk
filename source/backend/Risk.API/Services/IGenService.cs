@@ -32,6 +32,7 @@ namespace Risk.API.Services
         Respuesta<Dato> VersionServicio(string servicio);
         Respuesta<Dato> ValorParametro(string parametro);
         Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
+        Respuesta<Pagina<Significado>> ListarSignificados(string dominio, PaginaParametros paginaParametros = null);
         Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null);
         Respuesta<Pagina<Departamento>> ListarDepartamentos(int? idDepartamento = null, int? idPais = null, PaginaParametros paginaParametros = null);
         Respuesta<Pagina<Ciudad>> ListarCiudades(int? idCiudad = null, int? idPais = null, int? idDepartamento = null, PaginaParametros paginaParametros = null);

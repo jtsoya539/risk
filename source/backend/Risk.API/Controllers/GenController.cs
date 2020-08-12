@@ -90,6 +90,28 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [HttpGet("ListarSignificados")]
+        [SwaggerOperation(OperationId = "ListarSignificados", Summary = "ListarSignificados", Description = "Obtiene una lista de significados dentro de un dominio")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Significado>>))]
+        public IActionResult ListarSignificados([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio,
+            [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _genService.ListarSignificados(dominio, paginaParametros);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
         [AllowAnonymous]
         [HttpGet("ListarPaises")]
         [SwaggerOperation(OperationId = "ListarPaises", Summary = "ListarPaises", Description = "Obtiene una lista de países")]

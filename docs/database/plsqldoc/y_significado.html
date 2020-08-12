@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Type y_significado</TITLE>
+ <META name="object" content="TYPE">
+ <META name="name" content="y_significado">
+ <META name="description" content="Agrupa datos de Significados.">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Type y_significado</P>
+Agrupa datos de Significados.<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 30/3/2020 10:54:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Attributes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Attributes
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#DOMINIO">dominio</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Dominio
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#CODIGO">codigo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Codigo
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#SIGNIFICADO">significado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Significado
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#REFERENCIA">referencia</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Referencia adicional
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ACTIVO">activo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+El significado esta activo? (S/N)
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#Y_SIGNIFICADO">y_significado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#PARSE_JSON">parse_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#TO_JSON">to_json</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="DOMINIO"></A>
+<P CLASS="TYPE_TITLE">
+dominio
+</P>
+<PRE CLASS="DECL_TEXT">
+dominio VARCHAR2(50)
+</PRE>
+<P CLASS="DESC_TEXT">
+Dominio<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="CODIGO"></A>
+<P CLASS="TYPE_TITLE">
+codigo
+</P>
+<PRE CLASS="DECL_TEXT">
+codigo VARCHAR2(30)
+</PRE>
+<P CLASS="DESC_TEXT">
+Codigo<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="SIGNIFICADO"></A>
+<P CLASS="TYPE_TITLE">
+significado
+</P>
+<PRE CLASS="DECL_TEXT">
+significado VARCHAR2(300)
+</PRE>
+<P CLASS="DESC_TEXT">
+Significado<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="REFERENCIA"></A>
+<P CLASS="TYPE_TITLE">
+referencia
+</P>
+<PRE CLASS="DECL_TEXT">
+referencia VARCHAR2(50)
+</PRE>
+<P CLASS="DESC_TEXT">
+Referencia adicional<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="ACTIVO"></A>
+<P CLASS="TYPE_TITLE">
+activo
+</P>
+<PRE CLASS="DECL_TEXT">
+activo VARCHAR2(1)
+</PRE>
+<P CLASS="DESC_TEXT">
+El significado esta activo? (S/N)<br>
+
+<BR>
+</P>
+<HR>
+<A NAME="Y_SIGNIFICADO"></A>
+<P CLASS="TYPE_TITLE">
+y_significado
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION y_significado RETURN SELF AS RESULT
+
+</PRE>
+<HR>
+<A NAME="PARSE_JSON"></A>
+<P CLASS="TYPE_TITLE">
+parse_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION to_json RETURN CLOB
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

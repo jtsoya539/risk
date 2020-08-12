@@ -76,6 +76,7 @@ drop type y_barrio force;
 drop type y_ciudad force;
 drop type y_departamento force;
 drop type y_pais force;
+drop type y_significado force;
 drop type y_pagina_parametros force;
 drop type y_pagina force;
 drop type y_dispositivo force;
