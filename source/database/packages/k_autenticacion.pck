@@ -36,10 +36,6 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   c_access_token  CONSTANT CHAR(1) := 'A';
   c_refresh_token CONSTANT CHAR(1) := 'R';
 
-  FUNCTION f_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
-                           i_activo           IN VARCHAR2 DEFAULT NULL)
-    RETURN VARCHAR2;
-
   FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
@@ -74,13 +70,6 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
                                    i_clave      IN VARCHAR2,
                                    i_tipo_clave IN CHAR DEFAULT 'A');
-
-  FUNCTION f_generar_clave_aplicacion RETURN VARCHAR2;
-
-  FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
-    RETURN BOOLEAN;
-
-  PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2);
 
   FUNCTION f_iniciar_sesion(i_id_aplicacion     IN VARCHAR2,
                             i_usuario           IN VARCHAR2,
@@ -235,26 +224,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   EXCEPTION
     WHEN OTHERS THEN
       RETURN NULL;
-  END;
-
-  FUNCTION f_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
-                           i_activo           IN VARCHAR2 DEFAULT NULL)
-    RETURN VARCHAR2 IS
-    l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
-  BEGIN
-    BEGIN
-      SELECT id_aplicacion
-        INTO l_id_aplicacion
-        FROM t_aplicaciones
-       WHERE clave = i_clave_aplicacion
-         AND activo = nvl(i_activo, activo);
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_id_aplicacion := NULL;
-      WHEN OTHERS THEN
-        l_id_aplicacion := NULL;
-    END;
-    RETURN l_id_aplicacion;
   END;
 
   FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
@@ -617,31 +586,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   BEGIN
     IF NOT f_validar_credenciales(i_usuario, i_clave, i_tipo_clave) THEN
       raise_application_error(-20000, 'Credenciales invalidas');
-    END IF;
-  END;
-
-  FUNCTION f_generar_clave_aplicacion RETURN VARCHAR2 IS
-  BEGIN
-    RETURN utl_raw.cast_to_varchar2(utl_encode.base64_encode(dbms_crypto.randombytes(number_bytes => 32)));
-  END;
-
-  FUNCTION f_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2)
-    RETURN BOOLEAN IS
-  BEGIN
-    IF f_id_aplicacion(i_clave_aplicacion, 'S') IS NULL THEN
-      RETURN FALSE;
-    ELSE
-      RETURN TRUE;
-    END IF;
-  EXCEPTION
-    WHEN OTHERS THEN
-      RETURN FALSE;
-  END;
-
-  PROCEDURE p_validar_clave_aplicacion(i_clave_aplicacion IN VARCHAR2) IS
-  BEGIN
-    IF NOT f_validar_clave_aplicacion(i_clave_aplicacion) THEN
-      raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
     END IF;
   END;
 

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_aplicacion</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_aplicacion">
+ <META name="description" content="Agrupa operaciones relacionadas con las aplicaciones">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_aplicacion</P>
+Agrupa operaciones relacionadas con las aplicaciones<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:16:59
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_APLICACION">f_id_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_GENERAR_CLAVE">f_generar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_CLAVE">f_validar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_ID_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+f_id_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_aplicacion(i_clave_aplicacion IN VARCHAR2,
+                         i_activo           IN VARCHAR2 DEFAULT NULL)
+  RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_GENERAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+f_generar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_generar_clave RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_clave(i_clave_aplicacion IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="P_VALIDAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+p_validar_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_validar_clave(i_clave_aplicacion IN VARCHAR2)
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -216,9 +216,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     k_sistema.p_definir_parametro_string(k_sistema.c_nombre_servicio,
                                          l_nombre_servicio);
     k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
-                                         k_autenticacion.f_id_aplicacion(f_valor_parametro_string(l_ctx,
-                                                                                                  'clave_aplicacion'),
-                                                                         'S'));
+                                         k_aplicacion.f_id_aplicacion(f_valor_parametro_string(l_ctx,
+                                                                                               'clave_aplicacion'),
+                                                                      'S'));
     k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
                                          k_autenticacion.f_id_sesion(f_valor_parametro_string(l_ctx,
                                                                                               'access_token')));
