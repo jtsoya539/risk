@@ -59,6 +59,7 @@ drop package k_mensajeria;
 drop package k_archivo;
 drop package k_error;
 drop package k_autenticacion;
+drop package k_sesion;
 drop package k_dispositivo;
 drop package k_usuario;
 drop package k_aplicacion;

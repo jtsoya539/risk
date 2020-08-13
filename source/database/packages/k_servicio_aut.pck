@@ -337,8 +337,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando sesion';
     IF NOT
-        k_autenticacion.f_sesion_activa(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                            'access_token')) THEN
+        k_sesion.f_validar_sesion(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                      'access_token')) THEN
       k_servicio.p_respuesta_error(l_rsp,
                                    'aut0002',
                                    'Sesion finalizada o expirada');
@@ -548,10 +548,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar estado');
   
     l_rsp.lugar := 'Cambiando estado de sesion';
-    k_autenticacion.p_cambiar_estado_sesion(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                'access_token'),
-                                            k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                'estado'));
+    k_sesion.p_cambiar_estado(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                  'access_token'),
+                              k_servicio.f_valor_parametro_string(i_parametros,
+                                                                  'estado'));
   
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;

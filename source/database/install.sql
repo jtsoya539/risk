@@ -144,6 +144,7 @@ prompt
 @@packages/k_aplicacion.pck
 @@packages/k_usuario.pck
 @@packages/k_dispositivo.pck
+@@packages/k_sesion.pck
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck
 @@packages/k_archivo.pck

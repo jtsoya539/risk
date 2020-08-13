@@ -220,8 +220,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                                                                'clave_aplicacion'),
                                                                       'S'));
     k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
-                                         k_autenticacion.f_id_sesion(f_valor_parametro_string(l_ctx,
-                                                                                              'access_token')));
+                                         k_sesion.f_id_sesion(f_valor_parametro_string(l_ctx,
+                                                                                       'access_token')));
     k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
                                          k_usuario.f_id_usuario(f_valor_parametro_string(l_ctx,
                                                                                          'usuario')));
@@ -789,8 +789,7 @@ END;'
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     lp_registrar_log(i_id_servicio, i_parametros, l_rsp, i_contexto);
     RETURN l_rsp;

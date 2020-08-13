@@ -36,8 +36,6 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   c_access_token  CONSTANT CHAR(1) := 'A';
   c_refresh_token CONSTANT CHAR(1) := 'R';
 
-  FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER;
-
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                      i_tipo_token    IN VARCHAR2)
     RETURN NUMBER;
@@ -85,13 +83,6 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                               i_refresh_token_nuevo   IN VARCHAR2)
     RETURN NUMBER;
 
-  PROCEDURE p_cambiar_estado_sesion(i_access_token IN VARCHAR2,
-                                    i_estado       IN VARCHAR2);
-
-  FUNCTION f_sesion_activa(i_access_token IN VARCHAR2) RETURN BOOLEAN;
-
-  PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2);
-
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
                              i_usuario_nuevo    IN VARCHAR2,
                              i_nombre           IN VARCHAR2,
@@ -112,7 +103,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   -- Excepciones
   ex_credenciales_invalidas EXCEPTION;
   ex_tokens_invalidos       EXCEPTION;
-  ex_sesion_inexistente     EXCEPTION;
 
   -- https://mikepargeter.wordpress.com/2012/11/26/pbkdf2-in-oracle
   -- https://www.ietf.org/rfc/rfc6070.txt
@@ -224,23 +214,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   EXCEPTION
     WHEN OTHERS THEN
       RETURN NULL;
-  END;
-
-  FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER IS
-    l_id_sesion t_sesiones.id_sesion%TYPE;
-  BEGIN
-    BEGIN
-      SELECT id_sesion
-        INTO l_id_sesion
-        FROM t_sesiones
-       WHERE access_token = i_access_token;
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_id_sesion := NULL;
-      WHEN OTHERS THEN
-        l_id_sesion := NULL;
-    END;
-    RETURN l_id_sesion;
   END;
 
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
@@ -709,7 +682,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Busca sesion
-    l_id_sesion := f_id_sesion(i_access_token_antiguo);
+    l_id_sesion := k_sesion.f_id_sesion(i_access_token_antiguo);
   
     IF l_id_sesion IS NULL THEN
       RAISE ex_tokens_invalidos;
@@ -740,52 +713,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   EXCEPTION
     WHEN ex_tokens_invalidos THEN
       raise_application_error(-20000, 'Tokens invalidos');
-  END;
-
-  PROCEDURE p_cambiar_estado_sesion(i_access_token IN VARCHAR2,
-                                    i_estado       IN VARCHAR2) IS
-    l_id_sesion t_sesiones.id_sesion%TYPE;
-  BEGIN
-    -- Busca sesion
-    l_id_sesion := f_id_sesion(i_access_token);
-  
-    IF l_id_sesion IS NULL THEN
-      RAISE ex_sesion_inexistente;
-    END IF;
-  
-    -- Actualiza sesion
-    UPDATE t_sesiones
-       SET estado = i_estado
-     WHERE id_sesion = l_id_sesion
-       AND estado <> i_estado;
-  
-    -- Elimina sesion
-    /*DELETE t_sesiones WHERE id_sesion = l_id_sesion;*/
-  EXCEPTION
-    WHEN ex_sesion_inexistente THEN
-      /*raise_application_error(-20000, 'Sesion inexistente');*/
-      NULL;
-  END;
-
-  FUNCTION f_sesion_activa(i_access_token IN VARCHAR2) RETURN BOOLEAN IS
-    l_id_sesion t_sesiones.id_sesion%TYPE;
-  BEGIN
-    SELECT id_sesion
-      INTO l_id_sesion
-      FROM t_sesiones
-     WHERE estado = 'A'
-       AND access_token = i_access_token;
-    RETURN TRUE;
-  EXCEPTION
-    WHEN no_data_found THEN
-      RETURN FALSE;
-  END;
-
-  PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2) IS
-  BEGIN
-    IF NOT f_sesion_activa(i_access_token) THEN
-      raise_application_error(-20000, 'Sesion finalizada o expirada');
-    END IF;
   END;
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,

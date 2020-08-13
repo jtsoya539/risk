@@ -36,11 +36,6 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_ID_SESION">f_id_sesion</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -82,21 +77,6 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REFRESCAR_SESION">f_refrescar_sesion</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_CAMBIAR_ESTADO_SESION">p_cambiar_estado_sesion</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_SESION_ACTIVA">f_sesion_activa</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_SESION_ACTIVA">p_sesion_activa</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -165,15 +145,6 @@ c_refresh_token
 </P>
 <PRE CLASS="DECL_TEXT">
 c_refresh_token CONSTANT CHAR(1) := 'R';
-</PRE>
-<HR>
-<A NAME="F_ID_SESION"></A>
-<P CLASS="TYPE_TITLE">
-f_id_sesion
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER
-
 </PRE>
 <HR>
 <A NAME="F_TIEMPO_EXPIRACION_TOKEN"></A>
@@ -283,34 +254,6 @@ FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                             i_access_token_nuevo    IN VARCHAR2,
                             i_refresh_token_nuevo   IN VARCHAR2)
   RETURN NUMBER
-
-</PRE>
-<HR>
-<A NAME="P_CAMBIAR_ESTADO_SESION"></A>
-<P CLASS="TYPE_TITLE">
-p_cambiar_estado_sesion
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_cambiar_estado_sesion(i_access_token IN VARCHAR2,
-                                  i_estado       IN VARCHAR2)
-
-</PRE>
-<HR>
-<A NAME="F_SESION_ACTIVA"></A>
-<P CLASS="TYPE_TITLE">
-f_sesion_activa
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_sesion_activa(i_access_token IN VARCHAR2) RETURN BOOLEAN
-
-</PRE>
-<HR>
-<A NAME="P_SESION_ACTIVA"></A>
-<P CLASS="TYPE_TITLE">
-p_sesion_activa
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_sesion_activa(i_access_token IN VARCHAR2)
 
 </PRE>
 <HR>
