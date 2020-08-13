@@ -46,22 +46,7 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_ID_USUARIO">f_id_usuario</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_ALIAS_USUARIO">f_alias_usuario</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_VALIDAR_ALIAS_USUARIO">f_validar_alias_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -72,11 +57,6 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_REGISTRAR_USUARIO">p_registrar_usuario</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_CAMBIAR_ESTADO_USUARIO">p_cambiar_estado_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -227,24 +207,6 @@ FUNCTION f_id_sesion(i_access_token IN VARCHAR2) RETURN NUMBER
 
 </PRE>
 <HR>
-<A NAME="F_ID_USUARIO"></A>
-<P CLASS="TYPE_TITLE">
-f_id_usuario
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER
-
-</PRE>
-<HR>
-<A NAME="F_ALIAS_USUARIO"></A>
-<P CLASS="TYPE_TITLE">
-f_alias_usuario
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_alias_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
-
-</PRE>
-<HR>
 <A NAME="F_TIEMPO_EXPIRACION_TOKEN"></A>
 <P CLASS="TYPE_TITLE">
 f_tiempo_expiracion_token
@@ -253,15 +215,6 @@ f_tiempo_expiracion_token
 FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                    i_tipo_token    IN VARCHAR2)
   RETURN NUMBER
-
-</PRE>
-<HR>
-<A NAME="F_VALIDAR_ALIAS_USUARIO"></A>
-<P CLASS="TYPE_TITLE">
-f_validar_alias_usuario
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_validar_alias_usuario(i_alias VARCHAR2) RETURN BOOLEAN
 
 </PRE>
 <HR>
@@ -287,16 +240,6 @@ PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
                               i_apellido         IN VARCHAR2,
                               i_direccion_correo IN VARCHAR2,
                               i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
-
-</PRE>
-<HR>
-<A NAME="P_CAMBIAR_ESTADO_USUARIO"></A>
-<P CLASS="TYPE_TITLE">
-p_cambiar_estado_usuario
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_cambiar_estado_usuario(i_usuario IN VARCHAR2,
-                                   i_estado  IN VARCHAR2)
 
 </PRE>
 <HR>

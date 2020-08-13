@@ -141,6 +141,7 @@ prompt
 @@packages/k_sistema.pck
 @@packages/k_html.pck
 @@packages/k_auditoria.pck
+@@packages/k_usuario.pck
 @@packages/k_dispositivo.pck
 @@packages/k_autenticacion.pck
 @@packages/k_error.pck

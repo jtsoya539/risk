@@ -154,10 +154,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar estado');
   
     l_rsp.lugar := 'Cambiando estado de usuario';
-    k_autenticacion.p_cambiar_estado_usuario(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                 'usuario'),
-                                             k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                 'estado'));
+    k_usuario.p_cambiar_estado(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                   'usuario'),
+                               k_servicio.f_valor_parametro_string(i_parametros,
+                                                                   'estado'));
   
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;

@@ -29,7 +29,7 @@ BEGIN
   -- Valida alias de usuario
   IF inserting OR
      (updating AND nvl(:new.alias, 'X') <> nvl(:old.alias, 'X')) THEN
-    IF NOT k_autenticacion.f_validar_alias_usuario(:new.alias) THEN
+    IF NOT k_usuario.f_validar_alias(:new.alias) THEN
       raise_application_error(-20000, 'Alias de usuario inválido');
     END IF;
   END IF;

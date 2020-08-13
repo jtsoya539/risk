@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_usuario</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_usuario">
+ <META name="description" content="Agrupa operaciones relacionadas con los usuarios">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_usuario</P>
+Agrupa operaciones relacionadas con los usuarios<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:16:59
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_USUARIO">f_id_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ALIAS">f_alias</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_ALIAS">f_validar_alias</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_CAMBIAR_ESTADO">p_cambiar_estado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Exceptions"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Exceptions
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_USUARIO_INEXISTENTE">ex_usuario_inexistente</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="EX_USUARIO_INEXISTENTE"></A>
+<P CLASS="TYPE_TITLE">
+ex_usuario_inexistente
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_usuario_inexistente EXCEPTION;
+</PRE>
+<HR>
+<A NAME="F_ID_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_id_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_ALIAS"></A>
+<P CLASS="TYPE_TITLE">
+f_alias
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_alias(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_ALIAS"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_alias
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="P_CAMBIAR_ESTADO"></A>
+<P CLASS="TYPE_TITLE">
+p_cambiar_estado
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_cambiar_estado(i_usuario IN VARCHAR2,
+                           i_estado  IN VARCHAR2)
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>
