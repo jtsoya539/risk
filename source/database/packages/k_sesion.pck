@@ -38,6 +38,8 @@ CREATE OR REPLACE PACKAGE k_sesion IS
 
   FUNCTION f_validar_sesion(i_access_token IN VARCHAR2) RETURN BOOLEAN;
 
+  FUNCTION f_datos_sesion(i_id_sesion IN NUMBER) RETURN y_sesion;
+
   PROCEDURE p_validar_sesion(i_access_token IN VARCHAR2);
 
   PROCEDURE p_cambiar_estado(i_access_token IN VARCHAR2,
@@ -76,6 +78,41 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
   EXCEPTION
     WHEN OTHERS THEN
       RETURN FALSE;
+  END;
+
+  FUNCTION f_datos_sesion(i_id_sesion IN NUMBER) RETURN y_sesion IS
+    l_sesion y_sesion;
+  BEGIN
+    -- Inicializa respuesta
+    l_sesion := NEW y_sesion();
+  
+    -- Buscando datos de la sesion
+    BEGIN
+      SELECT id_sesion,
+             estado,
+             access_token,
+             refresh_token,
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_access_token),
+             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
+                                                       k_autenticacion.c_refresh_token)
+        INTO l_sesion.id_sesion,
+             l_sesion.estado,
+             l_sesion.access_token,
+             l_sesion.refresh_token,
+             l_sesion.tiempo_expiracion_access_token,
+             l_sesion.tiempo_expiracion_refresh_token
+        FROM t_sesiones
+       WHERE id_sesion = i_id_sesion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        raise_application_error(-20000, 'Sesión inexistente');
+      WHEN OTHERS THEN
+        raise_application_error(-20000,
+                                'Error al buscar datos de la sesión');
+    END;
+  
+    RETURN l_sesion;
   END;
 
   PROCEDURE p_validar_sesion(i_access_token IN VARCHAR2) IS

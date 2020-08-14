@@ -39,7 +39,7 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN;
 
-  FUNCTION f_datos_usuario(i_usuario IN VARCHAR2) RETURN y_usuario;
+  FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario;
 
   PROCEDURE p_cambiar_estado(i_usuario IN VARCHAR2,
                              i_estado  IN VARCHAR2);
@@ -89,7 +89,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
                TRUE);
   END;
 
-  FUNCTION f_datos_usuario(i_usuario IN VARCHAR2) RETURN y_usuario IS
+  FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario IS
     l_usuario y_usuario;
     l_roles   y_roles;
     l_rol     y_rol;
@@ -127,7 +127,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
              l_usuario.version_avatar
         FROM t_usuarios u, t_personas p
        WHERE p.id_persona(+) = u.id_persona
-         AND u.alias = i_usuario;
+         AND u.id_usuario = i_id_usuario;
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000, 'Usuario inexistente');

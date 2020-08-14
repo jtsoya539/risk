@@ -46,6 +46,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DATOS_SESION">f_datos_sesion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_VALIDAR_SESION">p_validar_sesion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -94,6 +99,15 @@ f_validar_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_validar_sesion(i_access_token IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_DATOS_SESION"></A>
+<P CLASS="TYPE_TITLE">
+f_datos_sesion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_datos_sesion(i_id_sesion IN NUMBER) RETURN y_sesion
 
 </PRE>
 <HR>
