@@ -421,12 +421,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;*/
   EXCEPTION
     WHEN k_usuario.ex_usuario_inexistente THEN
-      raise_application_error(-20000, 'Credenciales invalidas');
+      raise_application_error(-20000, 'Credenciales inválidas');
     WHEN ex_credenciales_invalidas THEN
-      raise_application_error(-20000, 'Credenciales invalidas');
+      raise_application_error(-20000, 'Credenciales inválidas');
     WHEN OTHERS THEN
       lp_registrar_intento_fallido(l_id_usuario, i_tipo_clave);
-      raise_application_error(-20000, 'Credenciales invalidas');
+      raise_application_error(-20000, 'Credenciales inválidas');
   END;
 
   FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
@@ -482,7 +482,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                    i_tipo_clave IN CHAR DEFAULT 'A') IS
   BEGIN
     IF NOT f_validar_credenciales(i_usuario, i_clave, i_tipo_clave) THEN
-      raise_application_error(-20000, 'Credenciales invalidas');
+      raise_application_error(-20000, 'Credenciales inválidas');
     END IF;
   END;
 
@@ -502,7 +502,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   BEGIN
     -- Valida aplicacion
     IF i_id_aplicacion IS NULL THEN
-      raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
+      raise_application_error(-20000, 'Aplicación inexistente o inactiva');
     END IF;
   
     -- Busca usuario
@@ -602,7 +602,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   BEGIN
     -- Valida aplicacion
     IF i_id_aplicacion IS NULL THEN
-      raise_application_error(-20000, 'Aplicacion inexistente o inactiva');
+      raise_application_error(-20000, 'Aplicación inexistente o inactiva');
     END IF;
   
     -- Busca sesion
@@ -636,7 +636,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     RETURN l_id_sesion;
   EXCEPTION
     WHEN ex_tokens_invalidos THEN
-      raise_application_error(-20000, 'Tokens invalidos');
+      raise_application_error(-20000, 'Tokens inválidos');
   END;
 
   PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
