@@ -30,6 +30,10 @@ CREATE OR REPLACE PACKAGE k_sesion IS
   -------------------------------------------------------------------------------
   */
 
+  -- Tipos de token
+  c_access_token  CONSTANT CHAR(1) := 'A';
+  c_refresh_token CONSTANT CHAR(1) := 'R';
+
   -- Excepciones
   ex_sesion_inexistente EXCEPTION;
 
@@ -39,6 +43,16 @@ CREATE OR REPLACE PACKAGE k_sesion IS
   FUNCTION f_validar_sesion(i_access_token IN VARCHAR2) RETURN BOOLEAN;
 
   FUNCTION f_datos_sesion(i_id_sesion IN NUMBER) RETURN y_sesion;
+
+  FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
+                                     i_tipo_token    IN VARCHAR2)
+    RETURN NUMBER;
+
+  FUNCTION f_fecha_expiracion_access_token(i_access_token IN VARCHAR2)
+    RETURN DATE;
+
+  FUNCTION f_fecha_expiracion_refresh_token(i_id_aplicacion IN VARCHAR2)
+    RETURN DATE;
 
   PROCEDURE p_validar_sesion(i_access_token IN VARCHAR2);
 
@@ -92,10 +106,8 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
              estado,
              access_token,
              refresh_token,
-             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_access_token),
-             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_refresh_token)
+             f_tiempo_expiracion_token(id_aplicacion, c_access_token),
+             f_tiempo_expiracion_token(id_aplicacion, c_refresh_token)
         INTO l_sesion.id_sesion,
              l_sesion.estado,
              l_sesion.access_token,
@@ -113,6 +125,75 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
     END;
   
     RETURN l_sesion;
+  END;
+
+  FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
+                                     i_tipo_token    IN VARCHAR2)
+    RETURN NUMBER IS
+    l_tiempo_expiracion_token t_aplicaciones.tiempo_expiracion_access_token%TYPE;
+  BEGIN
+    -- Busca el tiempo de expiración configurado para la aplicación
+    BEGIN
+      SELECT CASE i_tipo_token
+               WHEN c_refresh_token THEN -- Refresh Token
+                tiempo_expiracion_refresh_token
+               WHEN c_access_token THEN -- Access Token
+                tiempo_expiracion_access_token
+               ELSE
+                NULL
+             END
+        INTO l_tiempo_expiracion_token
+        FROM t_aplicaciones
+       WHERE id_aplicacion = i_id_aplicacion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_tiempo_expiracion_token := NULL;
+      WHEN OTHERS THEN
+        l_tiempo_expiracion_token := NULL;
+    END;
+  
+    -- Si no encuentra, busca el tiempo de expiración configurado a nivel general
+    IF l_tiempo_expiracion_token IS NULL THEN
+      l_tiempo_expiracion_token := CASE i_tipo_token
+                                     WHEN c_refresh_token THEN -- Refresh Token
+                                      to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_REFRESH_TOKEN'))
+                                     WHEN c_access_token THEN -- Access Token
+                                      to_number(k_util.f_valor_parametro('TIEMPO_EXPIRACION_ACCESS_TOKEN'))
+                                     ELSE
+                                      NULL
+                                   END;
+    END IF;
+  
+    RETURN l_tiempo_expiracion_token;
+  END;
+
+  FUNCTION f_fecha_expiracion_access_token(i_access_token IN VARCHAR2)
+    RETURN DATE IS
+    l_exp          NUMBER;
+    l_payload_json json_object_t;
+  BEGIN
+    l_payload_json := json_object_t.parse(utl_raw.cast_to_varchar2(utl_encode.base64_decode(utl_raw.cast_to_raw(k_util.f_valor_posicion(i_access_token,
+                                                                                                                                        2,
+                                                                                                                                        '.')))));
+    l_exp          := l_payload_json.get_number('exp');
+    RETURN to_date('19700101', 'YYYYMMDD') +((l_exp +
+                                             ((to_number(substr(tz_offset(sessiontimezone),
+                                                                 1,
+                                                                 3)) + 0) * 3600)) /
+                                             86400);
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
+  END;
+
+  FUNCTION f_fecha_expiracion_refresh_token(i_id_aplicacion IN VARCHAR2)
+    RETURN DATE IS
+  BEGIN
+    RETURN SYSDATE +(f_tiempo_expiracion_token(i_id_aplicacion,
+                                               c_refresh_token) / 24);
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
   PROCEDURE p_validar_sesion(i_access_token IN VARCHAR2) IS

@@ -366,8 +366,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     -- Inicializa respuesta
-    l_rsp    := NEW y_respuesta();
-    l_sesion := NEW y_sesion();
+    l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -396,36 +395,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                     k_servicio.f_valor_parametro_string(i_parametros,
                                                                                         'token_dispositivo'));
   
-    l_rsp.lugar := 'Buscando datos de la sesion';
-    BEGIN
-      SELECT id_sesion,
-             estado,
-             access_token,
-             refresh_token,
-             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_access_token),
-             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_refresh_token)
-        INTO l_sesion.id_sesion,
-             l_sesion.estado,
-             l_sesion.access_token,
-             l_sesion.refresh_token,
-             l_sesion.tiempo_expiracion_access_token,
-             l_sesion.tiempo_expiracion_refresh_token
-        FROM t_sesiones
-       WHERE id_sesion = l_id_sesion;
-    EXCEPTION
-      WHEN no_data_found THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0001',
-                                     'Sesión inexistente');
-        RAISE k_servicio.ex_error_general;
-      WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0002',
-                                     'Error al buscar datos de la sesión');
-        RAISE k_servicio.ex_error_general;
-    END;
+    l_rsp.lugar := 'Cargando datos de la sesion';
+    l_sesion    := k_sesion.f_datos_sesion(l_id_sesion);
   
     k_servicio.p_respuesta_ok(l_rsp, l_sesion);
     RETURN l_rsp;
@@ -448,8 +419,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_id_sesion t_sesiones.id_sesion%TYPE;
   BEGIN
     -- Inicializa respuesta
-    l_rsp    := NEW y_respuesta();
-    l_sesion := NEW y_sesion();
+    l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -483,36 +453,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                       k_servicio.f_valor_parametro_string(i_parametros,
                                                                                           'refresh_token_nuevo'));
   
-    l_rsp.lugar := 'Buscando datos de la sesion';
-    BEGIN
-      SELECT id_sesion,
-             estado,
-             access_token,
-             refresh_token,
-             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_access_token),
-             k_autenticacion.f_tiempo_expiracion_token(id_aplicacion,
-                                                       k_autenticacion.c_refresh_token)
-        INTO l_sesion.id_sesion,
-             l_sesion.estado,
-             l_sesion.access_token,
-             l_sesion.refresh_token,
-             l_sesion.tiempo_expiracion_access_token,
-             l_sesion.tiempo_expiracion_refresh_token
-        FROM t_sesiones
-       WHERE id_sesion = l_id_sesion;
-    EXCEPTION
-      WHEN no_data_found THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0005',
-                                     'Sesion inexistente');
-        RAISE k_servicio.ex_error_general;
-      WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0006',
-                                     'Error al buscar datos de la sesion');
-        RAISE k_servicio.ex_error_general;
-    END;
+    l_rsp.lugar := 'Cargando datos de la sesion';
+    l_sesion    := k_sesion.f_datos_sesion(l_id_sesion);
   
     k_servicio.p_respuesta_ok(l_rsp, l_sesion);
     RETURN l_rsp;
@@ -571,22 +513,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   FUNCTION datos_usuario(i_parametros IN y_parametros) RETURN y_respuesta IS
     l_rsp     y_respuesta;
     l_usuario y_usuario;
-    l_roles   y_roles;
-    l_rol     y_rol;
-  
-    i_usuario VARCHAR2(4000);
-  
-    CURSOR cr_roles(i_id_usuario IN NUMBER) IS
-      SELECT r.id_rol, r.nombre, r.activo, r.detalle
-        FROM t_rol_usuarios ru, t_roles r
-       WHERE r.id_rol = ru.id_rol
-         AND r.activo = 'S'
-         AND ru.id_usuario = i_id_usuario;
   BEGIN
     -- Inicializa respuesta
-    l_rsp     := NEW y_respuesta();
-    l_usuario := NEW y_usuario();
-    l_roles   := NEW y_roles();
+    l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -594,57 +523,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                        'usuario') IS NOT NULL,
                                    'Debe ingresar usuario');
   
-    i_usuario := k_servicio.f_valor_parametro_string(i_parametros,
-                                                     'usuario');
-  
-    l_rsp.lugar := 'Buscando datos del usuario';
-    BEGIN
-      SELECT u.id_usuario,
-             u.alias,
-             p.nombre,
-             p.apellido,
-             p.tipo_persona,
-             u.estado,
-             u.direccion_correo,
-             u.numero_telefono,
-             k_archivo.f_version_archivo('T_USUARIOS', 'AVATAR', u.alias)
-        INTO l_usuario.id_usuario,
-             l_usuario.alias,
-             l_usuario.nombre,
-             l_usuario.apellido,
-             l_usuario.tipo_persona,
-             l_usuario.estado,
-             l_usuario.direccion_correo,
-             l_usuario.numero_telefono,
-             l_usuario.version_avatar
-        FROM t_usuarios u, t_personas p
-       WHERE p.id_persona(+) = u.id_persona
-         AND u.alias = i_usuario;
-    EXCEPTION
-      WHEN no_data_found THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0002',
-                                     'Usuario inexistente');
-        RAISE k_servicio.ex_error_general;
-      WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0003',
-                                     'Error al buscar datos del usuario');
-        RAISE k_servicio.ex_error_general;
-    END;
-  
-    l_rsp.lugar := 'Buscando roles del usuario';
-    FOR c IN cr_roles(l_usuario.id_usuario) LOOP
-      l_rol         := NEW y_rol();
-      l_rol.id_rol  := c.id_rol;
-      l_rol.nombre  := c.nombre;
-      l_rol.activo  := c.activo;
-      l_rol.detalle := c.detalle;
-    
-      l_roles.extend;
-      l_roles(l_roles.count) := l_rol;
-    END LOOP;
-    l_usuario.roles := l_roles;
+    l_rsp.lugar := 'Cargando datos del usuario';
+    l_usuario   := k_usuario.f_datos_usuario(k_usuario.f_id_usuario(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                        'usuario')));
   
     k_servicio.p_respuesta_ok(l_rsp, l_usuario);
     RETURN l_rsp;
@@ -731,23 +612,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   END;
 
   FUNCTION datos_dispositivo(i_parametros IN y_parametros) RETURN y_respuesta IS
-    l_rsp           y_respuesta;
-    l_dispositivo   y_dispositivo;
-    l_suscripciones y_objetos;
-    l_suscripcion   y_dato;
-  
-    l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
-  
-    CURSOR cr_suscripciones(i_id_dispositivo IN NUMBER) IS
-      SELECT s.suscripcion
-        FROM t_dispositivo_suscripciones s
-       WHERE (s.fecha_expiracion IS NULL OR s.fecha_expiracion > SYSDATE)
-         AND s.id_dispositivo = i_id_dispositivo;
+    l_rsp         y_respuesta;
+    l_dispositivo y_dispositivo;
   BEGIN
     -- Inicializa respuesta
-    l_rsp           := NEW y_respuesta();
-    l_dispositivo   := NEW y_dispositivo();
-    l_suscripciones := NEW y_objetos();
+    l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parámetros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -755,56 +624,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                        'token_dispositivo') IS NOT NULL,
                                    'Debe ingresar token_dispositivo');
   
-    l_id_dispositivo := k_dispositivo.f_id_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                           'token_dispositivo'));
-  
-    l_rsp.lugar := 'Buscando datos del dispositivo';
-    BEGIN
-      SELECT d.id_dispositivo,
-             d.token_dispositivo,
-             d.nombre_sistema_operativo,
-             d.version_sistema_operativo,
-             d.tipo,
-             d.nombre_navegador,
-             d.version_navegador,
-             d.token_notificacion,
-             a.template_notificacion,
-             a.plataforma_notificacion
-        INTO l_dispositivo.id_dispositivo,
-             l_dispositivo.token_dispositivo,
-             l_dispositivo.nombre_sistema_operativo,
-             l_dispositivo.version_sistema_operativo,
-             l_dispositivo.tipo,
-             l_dispositivo.nombre_navegador,
-             l_dispositivo.version_navegador,
-             l_dispositivo.token_notificacion,
-             l_dispositivo.template_notificacion,
-             l_dispositivo.plataforma_notificacion
-        FROM t_dispositivos d, t_aplicaciones a
-       WHERE a.id_aplicacion(+) = d.id_aplicacion
-         AND d.id_dispositivo = l_id_dispositivo;
-    EXCEPTION
-      WHEN no_data_found THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0001',
-                                     'Dispositivo inexistente');
-        RAISE k_servicio.ex_error_general;
-      WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0002',
-                                     'Error al buscar datos del dispositivo');
-        RAISE k_servicio.ex_error_general;
-    END;
-  
-    l_rsp.lugar := 'Buscando suscripciones del dispositivo';
-    FOR c IN cr_suscripciones(l_id_dispositivo) LOOP
-      l_suscripcion           := NEW y_dato();
-      l_suscripcion.contenido := c.suscripcion;
-    
-      l_suscripciones.extend;
-      l_suscripciones(l_suscripciones.count) := l_suscripcion;
-    END LOOP;
-    l_dispositivo.suscripciones := l_suscripciones;
+    l_rsp.lugar   := 'Cargando datos del dispositivo';
+    l_dispositivo := k_dispositivo.f_datos_dispositivo(k_dispositivo.f_id_dispositivo(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                                          'token_dispositivo')));
   
     k_servicio.p_respuesta_ok(l_rsp, l_dispositivo);
     RETURN l_rsp;
@@ -837,9 +659,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar tipo_token');
   
     l_rsp.lugar      := 'Obteniendo tiempo de expiración';
-    l_dato.contenido := to_char(k_autenticacion.f_tiempo_expiracion_token(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
-                                                                          k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                                              'tipo_token')));
+    l_dato.contenido := to_char(k_sesion.f_tiempo_expiracion_token(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
+                                                                   k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                       'tipo_token')));
   
     IF l_dato.contenido IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,

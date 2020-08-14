@@ -36,11 +36,6 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -102,16 +97,6 @@ Constants
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#C_ACCESS_TOKEN">c_access_token</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#C_REFRESH_TOKEN">c_refresh_token</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -129,33 +114,6 @@ c_clave_transaccional
 </P>
 <PRE CLASS="DECL_TEXT">
 c_clave_transaccional CONSTANT CHAR(1) := 'T';
-</PRE>
-<HR>
-<A NAME="C_ACCESS_TOKEN"></A>
-<P CLASS="TYPE_TITLE">
-c_access_token
-</P>
-<PRE CLASS="DECL_TEXT">
-c_access_token  CONSTANT CHAR(1) := 'A';
-</PRE>
-<HR>
-<A NAME="C_REFRESH_TOKEN"></A>
-<P CLASS="TYPE_TITLE">
-c_refresh_token
-</P>
-<PRE CLASS="DECL_TEXT">
-c_refresh_token CONSTANT CHAR(1) := 'R';
-</PRE>
-<HR>
-<A NAME="F_TIEMPO_EXPIRACION_TOKEN"></A>
-<P CLASS="TYPE_TITLE">
-f_tiempo_expiracion_token
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
-                                   i_tipo_token    IN VARCHAR2)
-  RETURN NUMBER
-
 </PRE>
 <HR>
 <A NAME="P_VALIDAR_CLAVE"></A>

@@ -51,6 +51,21 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_TIEMPO_EXPIRACION_TOKEN">f_tiempo_expiracion_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_FECHA_EXPIRACION_ACCESS_TOKEN">f_fecha_expiracion_access_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_FECHA_EXPIRACION_REFRESH_TOKEN">f_fecha_expiracion_refresh_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_VALIDAR_SESION">p_validar_sesion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -74,6 +89,39 @@ Exceptions
 </TD></TR>
 </TABLE>
 <BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ACCESS_TOKEN">c_access_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_REFRESH_TOKEN">c_refresh_token</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_ACCESS_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+c_access_token
+</P>
+<PRE CLASS="DECL_TEXT">
+c_access_token  CONSTANT CHAR(1) := 'A';
+</PRE>
+<HR>
+<A NAME="C_REFRESH_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+c_refresh_token
+</P>
+<PRE CLASS="DECL_TEXT">
+c_refresh_token CONSTANT CHAR(1) := 'R';
+</PRE>
 <HR>
 <A NAME="EX_SESION_INEXISTENTE"></A>
 <P CLASS="TYPE_TITLE">
@@ -108,6 +156,37 @@ f_datos_sesion
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_datos_sesion(i_id_sesion IN NUMBER) RETURN y_sesion
+
+</PRE>
+<HR>
+<A NAME="F_TIEMPO_EXPIRACION_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+f_tiempo_expiracion_token
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
+                                   i_tipo_token    IN VARCHAR2)
+  RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_FECHA_EXPIRACION_ACCESS_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+f_fecha_expiracion_access_token
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_fecha_expiracion_access_token(i_access_token IN VARCHAR2)
+  RETURN DATE
+
+</PRE>
+<HR>
+<A NAME="F_FECHA_EXPIRACION_REFRESH_TOKEN"></A>
+<P CLASS="TYPE_TITLE">
+f_fecha_expiracion_refresh_token
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_fecha_expiracion_refresh_token(i_id_aplicacion IN VARCHAR2)
+  RETURN DATE
 
 </PRE>
 <HR>
