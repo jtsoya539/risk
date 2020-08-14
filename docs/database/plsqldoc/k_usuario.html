@@ -51,6 +51,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DATOS_USUARIO">f_datos_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_CAMBIAR_ESTADO">p_cambiar_estado</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -102,6 +107,15 @@ f_validar_alias
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_DATOS_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_datos_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_datos_usuario(i_usuario IN VARCHAR2) RETURN y_usuario
 
 </PRE>
 <HR>

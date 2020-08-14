@@ -46,6 +46,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DATOS_DISPOSITIVO">f_datos_dispositivo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_SUSCRIBIR_NOTIFICACION">p_suscribir_notificacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -119,6 +124,16 @@ FUNCTION f_registrar_dispositivo(i_id_aplicacion             IN VARCHAR2,
                                  i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
                                  i_version_navegador         IN VARCHAR2 DEFAULT NULL)
   RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_DATOS_DISPOSITIVO"></A>
+<P CLASS="TYPE_TITLE">
+f_datos_dispositivo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
+  RETURN y_dispositivo
 
 </PRE>
 <HR>

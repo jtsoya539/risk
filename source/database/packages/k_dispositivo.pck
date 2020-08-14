@@ -45,6 +45,9 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
+  FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
+    RETURN y_dispositivo;
+
   PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
                                      i_suscripcion    IN VARCHAR2);
 
@@ -150,6 +153,68 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     END IF;
   
     RETURN l_id_dispositivo;
+  END;
+
+  FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
+    RETURN y_dispositivo IS
+    l_dispositivo   y_dispositivo;
+    l_suscripciones y_objetos;
+    l_suscripcion   y_dato;
+  
+    CURSOR cr_suscripciones(i_id_dispositivo IN NUMBER) IS
+      SELECT s.suscripcion
+        FROM t_dispositivo_suscripciones s
+       WHERE (s.fecha_expiracion IS NULL OR s.fecha_expiracion > SYSDATE)
+         AND s.id_dispositivo = i_id_dispositivo;
+  BEGIN
+    -- Inicializa respuesta
+    l_dispositivo   := NEW y_dispositivo();
+    l_suscripciones := NEW y_objetos();
+  
+    -- Buscando datos del dispositivo
+    BEGIN
+      SELECT d.id_dispositivo,
+             d.token_dispositivo,
+             d.nombre_sistema_operativo,
+             d.version_sistema_operativo,
+             d.tipo,
+             d.nombre_navegador,
+             d.version_navegador,
+             d.token_notificacion,
+             a.template_notificacion,
+             a.plataforma_notificacion
+        INTO l_dispositivo.id_dispositivo,
+             l_dispositivo.token_dispositivo,
+             l_dispositivo.nombre_sistema_operativo,
+             l_dispositivo.version_sistema_operativo,
+             l_dispositivo.tipo,
+             l_dispositivo.nombre_navegador,
+             l_dispositivo.version_navegador,
+             l_dispositivo.token_notificacion,
+             l_dispositivo.template_notificacion,
+             l_dispositivo.plataforma_notificacion
+        FROM t_dispositivos d, t_aplicaciones a
+       WHERE a.id_aplicacion(+) = d.id_aplicacion
+         AND d.id_dispositivo = i_id_dispositivo;
+    EXCEPTION
+      WHEN no_data_found THEN
+        raise_application_error(-20000, 'Dispositivo inexistente');
+      WHEN OTHERS THEN
+        raise_application_error(-20000,
+                                'Error al buscar datos del dispositivo');
+    END;
+  
+    -- Buscando suscripciones del dispositivo
+    FOR c IN cr_suscripciones(l_dispositivo.id_dispositivo) LOOP
+      l_suscripcion           := NEW y_dato();
+      l_suscripcion.contenido := c.suscripcion;
+    
+      l_suscripciones.extend;
+      l_suscripciones(l_suscripciones.count) := l_suscripcion;
+    END LOOP;
+    l_dispositivo.suscripciones := l_suscripciones;
+  
+    RETURN l_dispositivo;
   END;
 
   PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
