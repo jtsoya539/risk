@@ -526,6 +526,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         l_tipo_aplicacion := NULL;
     END;
   
+    -- Cambia estado de las sesiones expiradas
+    k_sesion.p_expirar_sesiones(l_id_usuario);
+  
     IF l_tipo_aplicacion <> 'S' THEN
       -- Si es de tipo S-SERVICIO no valida cantidad de sesiones activas
     

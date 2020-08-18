@@ -75,6 +75,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_EXPIRAR_SESIONES">p_expirar_sesiones</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Exceptions"></A>
@@ -206,6 +211,15 @@ p_cambiar_estado
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_cambiar_estado(i_access_token IN VARCHAR2,
                            i_estado       IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_EXPIRAR_SESIONES"></A>
+<P CLASS="TYPE_TITLE">
+p_expirar_sesiones
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_expirar_sesiones(i_id_usuario IN NUMBER)
 
 </PRE>
 <P>&nbsp;</P>

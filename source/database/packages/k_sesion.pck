@@ -59,6 +59,8 @@ CREATE OR REPLACE PACKAGE k_sesion IS
   PROCEDURE p_cambiar_estado(i_access_token IN VARCHAR2,
                              i_estado       IN VARCHAR2);
 
+  PROCEDURE p_expirar_sesiones(i_id_usuario IN NUMBER);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_sesion IS
@@ -219,13 +221,19 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
        SET estado = i_estado
      WHERE id_sesion = l_id_sesion
        AND estado <> i_estado;
-  
-    -- Elimina sesion
-    /*DELETE t_sesiones WHERE id_sesion = l_id_sesion;*/
   EXCEPTION
     WHEN ex_sesion_inexistente THEN
       /*raise_application_error(-20000, 'Sesion inexistente');*/
       NULL;
+  END;
+
+  PROCEDURE p_expirar_sesiones(i_id_usuario IN NUMBER) IS
+  BEGIN
+    UPDATE t_sesiones a
+       SET a.estado = 'X' -- EXPIRADO
+     WHERE a.estado = 'A' -- ACTIVO
+       AND a.fecha_expiracion_access_token < SYSDATE
+       AND a.id_usuario = nvl(i_id_usuario, a.id_usuario);
   END;
 
 END;
