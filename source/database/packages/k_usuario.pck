@@ -39,6 +39,8 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN;
 
+  FUNCTION f_version_avatar(i_alias IN VARCHAR2) RETURN NUMBER;
+
   FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario;
 
   PROCEDURE p_cambiar_estado(i_usuario IN VARCHAR2,
@@ -87,6 +89,23 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
     RETURN nvl(regexp_like(i_alias,
                            k_util.f_valor_parametro('REGEXP_VALIDAR_ALIAS_USUARIO')),
                TRUE);
+  END;
+
+  FUNCTION f_version_avatar(i_alias IN VARCHAR2) RETURN NUMBER IS
+    l_version t_archivos.version_actual%TYPE;
+  BEGIN
+    BEGIN
+      SELECT k_archivo.f_version_archivo('T_USUARIOS', 'AVATAR', alias)
+        INTO l_version
+        FROM t_usuarios
+       WHERE alias = i_alias;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_version := NULL;
+      WHEN OTHERS THEN
+        l_version := NULL;
+    END;
+    RETURN l_version;
   END;
 
   FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario IS
