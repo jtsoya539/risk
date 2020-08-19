@@ -158,7 +158,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
     l_version t_archivos.version_actual%TYPE;
   BEGIN
   
-      SELECT a.version_actual
+      SELECT nvl(a.version_actual, 0)
         INTO l_version
         FROM t_archivos a, t_archivo_definiciones d
        WHERE d.tabla = a.tabla
