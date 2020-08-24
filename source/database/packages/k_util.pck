@@ -62,6 +62,9 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2;
 
+  FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
+    DETERMINISTIC;
+
   /**
   Retorna el significado de un codigo dentro de un dominio
   
@@ -77,6 +80,8 @@ CREATE OR REPLACE PACKAGE k_util IS
                                i_codigo  IN VARCHAR2) RETURN VARCHAR2;
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC;
 
   FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB;
 
@@ -372,6 +377,95 @@ END;';
                      'aeiouaeiouaeiouaeioucaoAEIOUAEIOUAEIOUAEIOUCAO');
   END;
 
+  FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
+    DETERMINISTIC IS
+    v_palabra  VARCHAR2(4000);
+    v_longitud NUMBER;
+    v_inicial  NUMBER;
+    v_final    NUMBER;
+    v_pinicial NUMBER;
+    v_pfinal   NUMBER;
+    v_einicial NUMBER;
+    v_efinal   NUMBER;
+    v_letras   VARCHAR2(20);
+  BEGIN
+    -- Hace el InitCap para iniciar
+    v_palabra := initcap(i_titulo);
+    -- Reemplaza los casos mas necesarios  p/, c/, s/, 's
+    v_palabra := REPLACE(v_palabra, 'P/', 'p/');
+    v_palabra := REPLACE(v_palabra, 'C/', 'c/');
+    v_palabra := REPLACE(v_palabra, 'S/', 's/');
+    v_palabra := REPLACE(v_palabra, chr(39) || 'S', chr(39) || 's');
+    --
+    v_inicial  := 1;
+    v_final    := 1;
+    v_longitud := nvl(length(v_palabra), 0);
+    LOOP
+      IF v_inicial = 0 OR v_inicial >= v_longitud THEN
+        EXIT;
+      END IF;
+      IF v_final - v_inicial BETWEEN 1 AND 5 THEN
+        v_letras := substr(v_palabra, v_inicial, v_final - v_inicial + 1);
+        IF lower(ltrim(rtrim(v_letras))) IN
+           ('srl', 'sa', 'sacic', 'saeca', 'saci', 'eca') THEN
+          -- Pone las letras en mayusculas
+          v_palabra := substr(v_palabra, 1, v_inicial - 1) ||
+                       upper(v_letras) ||
+                       substr(v_palabra, v_final + 1, v_longitud);
+        ELSIF lower(ltrim(rtrim(v_letras))) IN
+              ('del',
+               'a',
+               'de',
+               'la',
+               'el',
+               'en',
+               'por',
+               'para',
+               'y',
+               'e',
+               'con',
+               'entre',
+               'los',
+               'las',
+               'contra',
+               'sin') THEN
+          -- Pone las letras en minusculas
+          v_palabra := substr(v_palabra, 1, v_inicial - 1) ||
+                       lower(v_letras) ||
+                       substr(v_palabra, v_final + 1, v_longitud);
+        END IF;
+      END IF;
+      -- Inicial
+      v_pinicial := instr(v_palabra, '.', v_final);
+      v_einicial := instr(v_palabra, ' ', v_final);
+      IF v_pinicial != 0 AND v_einicial != 0 THEN
+        v_inicial := least(v_pinicial, v_einicial);
+      ELSE
+        v_inicial := greatest(v_pinicial, v_einicial);
+      END IF;
+      -- Final
+      IF v_inicial != 0 THEN
+        v_pfinal := instr(v_palabra, '.', v_inicial + 1);
+        v_efinal := instr(v_palabra, ' ', v_inicial + 1);
+        IF v_pfinal != 0 AND v_efinal != 0 THEN
+          v_final := least(v_pfinal, v_efinal);
+        ELSE
+          v_final := greatest(v_pfinal, v_efinal);
+        END IF;
+      ELSE
+        v_final := 0;
+      END IF;
+      IF v_final = 0 THEN
+        v_final := v_longitud;
+      END IF;
+      IF v_inicial != 0 THEN
+        v_inicial := v_inicial + 1;
+      END IF;
+    END LOOP;
+    -- Retorna el titulo modificado
+    RETURN v_palabra;
+  END;
+
   FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
                                 i_codigo  IN VARCHAR2) RETURN VARCHAR2 IS
     l_significado t_significados.significado%TYPE;
@@ -419,6 +513,12 @@ END;';
         l_valor := NULL;
     END;
     RETURN l_valor;
+  END;
+
+  FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC IS
+  BEGIN
+    RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
+                                             dbms_crypto.hash_sh1)));
   END;
 
   FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB IS

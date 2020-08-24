@@ -1,7 +1,6 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
-
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_MENSAJERIA', 'M', 'MAIL', null, 'S');
 
@@ -193,5 +192,8 @@ values ('EXTENSION_REPORTE', 'TXT', 'REPORTE TXT', 'text/plain', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_SERVICIO', 'M', 'PARÁMETROS', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ESTADO_USUARIO', 'P', 'PENDIENTE DE ACTIVACIÓN', null, 'S');
 
 prompt Done.

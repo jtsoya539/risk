@@ -37,6 +37,8 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_alias(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
+  FUNCTION f_estado(i_id_usuario IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN;
 
   FUNCTION f_version_avatar(i_alias IN VARCHAR2) RETURN NUMBER;
@@ -82,6 +84,23 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
         l_alias := NULL;
     END;
     RETURN l_alias;
+  END;
+
+  FUNCTION f_estado(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS
+    l_estado t_usuarios.estado%TYPE;
+  BEGIN
+    BEGIN
+      SELECT u.estado
+        INTO l_estado
+        FROM t_usuarios u
+       WHERE u.id_usuario = i_id_usuario;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_estado := NULL;
+      WHEN OTHERS THEN
+        l_estado := NULL;
+    END;
+    RETURN l_estado;
   END;
 
   FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN IS

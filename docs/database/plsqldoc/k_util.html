@@ -56,6 +56,11 @@ Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_FORMATEAR_TITULO">f_formatear_titulo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_SIGNIFICADO_CODIGO">f_significado_codigo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Retorna el significado de un codigo dentro de un dominio
@@ -67,6 +72,11 @@ Retorna el significado de un codigo dentro de un dominio
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO">f_valor_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_HASH_SHA1">f_hash_sha1</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -262,6 +272,15 @@ FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <HR>
+<A NAME="F_FORMATEAR_TITULO"></A>
+<P CLASS="TYPE_TITLE">
+f_formatear_titulo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
 <A NAME="F_SIGNIFICADO_CODIGO"></A>
 <P CLASS="TYPE_TITLE">
 f_significado_codigo
@@ -338,6 +357,15 @@ f_valor_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_HASH_SHA1"></A>
+<P CLASS="TYPE_TITLE">
+f_hash_sha1
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <HR>
