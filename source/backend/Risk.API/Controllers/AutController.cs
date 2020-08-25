@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Risk.API.Attributes;
 using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
@@ -384,6 +385,19 @@ namespace Risk.API.Controllers
         public IActionResult EditarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromBody] EditarUsuarioRequestBody requestBody)
         {
             var respuesta = _autService.EditarUsuario(usuario, requestBody.UsuarioNuevo, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [AllowAnyClient]
+        [AllowAnonymous]
+        [HttpGet("/[controller]/ActivarUsuario")]
+        [SwaggerOperation(OperationId = "ActivarUsuario", Summary = "ActivarUsuario", Description = "Permite activar un usuario")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult ActivarUsuario([FromQuery, SwaggerParameter(Description = "Clave de activación", Required = true)] string key)
+        {
+            string usuario = Encoding.Default.GetString(Convert.FromBase64String(key));
+            var respuesta = _autService.CambiarEstadoUsuario(usuario, EstadoUsuario.Activo);
             return ProcesarRespuesta(respuesta);
         }
 

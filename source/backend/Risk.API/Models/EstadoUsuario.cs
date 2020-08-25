@@ -28,6 +28,7 @@ namespace Risk.API.Models
     {
         Activo,
         Inactivo,
-        Bloqueado
+        Bloqueado,
+        PendienteActivacion
     }
 }

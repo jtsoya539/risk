@@ -40,8 +40,7 @@ namespace Risk.API.Middlewares
 
         public async Task InvokeAsync(HttpContext context, IAutService autService)
         {
-            if (context.Request.Path.StartsWithSegments(new PathString("/Api")) &&
-                !context.Request.Path.StartsWithSegments(new PathString("/Api/Gen/VersionSistema")))
+            if (context.Request.Path.StartsWithSegments(new PathString("/Api")))
             {
                 string claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(context.Request.Headers);
 

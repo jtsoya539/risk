@@ -49,7 +49,7 @@ namespace Risk.API.Controllers
 
         [AllowAnyClient]
         [AllowAnonymous]
-        [HttpGet("VersionSistema")]
+        [HttpGet("/[controller]/VersionSistema")]
         [SwaggerOperation(OperationId = "VersionSistema", Summary = "VersionSistema", Description = "Obtiene la versión actual del sistema")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]

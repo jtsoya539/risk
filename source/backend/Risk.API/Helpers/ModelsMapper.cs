@@ -138,6 +138,8 @@ namespace Risk.API.Helpers
                     return "I";
                 case EstadoUsuario.Bloqueado:
                     return "B";
+                case EstadoUsuario.PendienteActivacion:
+                    return "P";
                 default:
                     return string.Empty;
             }
