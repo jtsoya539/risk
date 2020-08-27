@@ -47,8 +47,8 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario;
 
-  PROCEDURE p_cambiar_estado(i_usuario IN VARCHAR2,
-                             i_estado  IN VARCHAR2);
+  PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,
+                             i_estado     IN VARCHAR2);
 
 END;
 /
@@ -209,25 +209,14 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
     RETURN l_usuario;
   END;
 
-  PROCEDURE p_cambiar_estado(i_usuario IN VARCHAR2,
-                             i_estado  IN VARCHAR2) IS
-    l_id_usuario t_usuarios.id_usuario%TYPE;
+  PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,
+                             i_estado     IN VARCHAR2) IS
   BEGIN
-    -- Busca usuario
-    l_id_usuario := f_id_usuario(i_usuario);
-  
-    IF l_id_usuario IS NULL THEN
-      RAISE ex_usuario_inexistente;
-    END IF;
-  
     -- Actualiza usuario
     UPDATE t_usuarios
        SET estado = i_estado
-     WHERE id_usuario = l_id_usuario
+     WHERE id_usuario = i_id_usuario
        AND estado <> i_estado;
-  EXCEPTION
-    WHEN ex_usuario_inexistente THEN
-      raise_application_error(-20000, 'Usuario inexistente');
   END;
 
 END;

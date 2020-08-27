@@ -177,8 +177,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar estado');
   
     l_rsp.lugar := 'Cambiando estado de usuario';
-    k_usuario.p_cambiar_estado(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                   'usuario'),
+    k_usuario.p_cambiar_estado(k_usuario.f_buscar_id(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                         'usuario')),
                                k_servicio.f_valor_parametro_string(i_parametros,
                                                                    'estado'));
   
