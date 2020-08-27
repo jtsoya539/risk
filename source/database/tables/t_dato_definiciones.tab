@@ -1,0 +1,27 @@
+create table T_DATO_DEFINICIONES
+(
+  tabla             VARCHAR2(30) not null,
+  campo             VARCHAR2(30) not null,
+  descripcion       VARCHAR2(500),
+  orden             NUMBER(3) not null,
+  nombre_referencia VARCHAR2(30),
+  tipo_dato         VARCHAR2(1) not null
+)
+;
+comment on table T_DATO_DEFINICIONES
+  is 'Definiciones de Datos adicionales';
+comment on column T_DATO_DEFINICIONES.tabla
+  is 'Nombre de la tabla relacionada';
+comment on column T_DATO_DEFINICIONES.campo
+  is 'Nombre del campo';
+comment on column T_DATO_DEFINICIONES.descripcion
+  is 'Descripción del dato adicional';
+comment on column T_DATO_DEFINICIONES.orden
+  is 'Número de orden del campo';
+comment on column T_DATO_DEFINICIONES.nombre_referencia
+  is 'Nombre del campo de referencia';
+comment on column T_DATO_DEFINICIONES.tipo_dato
+  is 'Tipo de dato';
+alter table T_DATO_DEFINICIONES
+  add constraint PK_DATO_DEFINICIONES primary key (TABLA, CAMPO);
+

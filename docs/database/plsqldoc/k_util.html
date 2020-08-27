@@ -81,6 +81,16 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#BOOL_TO_STRING">bool_to_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#STRING_TO_BOOL">string_to_bool</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#BLOB_TO_CLOB">blob_to_clob</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -366,6 +376,24 @@ f_hash_sha1
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="BOOL_TO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+bool_to_string
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="STRING_TO_BOOL"></A>
+<P CLASS="TYPE_TITLE">
+string_to_bool
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION string_to_bool(i_string IN VARCHAR2) RETURN BOOLEAN
 
 </PRE>
 <HR>

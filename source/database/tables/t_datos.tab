@@ -1,0 +1,24 @@
+create table T_DATOS
+(
+  tabla      VARCHAR2(30) not null,
+  campo      VARCHAR2(30) not null,
+  referencia VARCHAR2(500) not null,
+  contenido  ANYDATA
+)
+;
+comment on table T_DATOS
+  is 'Datos adicionales';
+comment on column T_DATOS.tabla
+  is 'Nombre de la tabla relacionada';
+comment on column T_DATOS.campo
+  is 'Nombre del campo';
+comment on column T_DATOS.referencia
+  is 'Identificador del registro relacionado';
+comment on column T_DATOS.contenido
+  is 'Contenido del dato adicional';
+alter table T_DATOS
+  add constraint PK_DATOS primary key (TABLA, CAMPO, REFERENCIA);
+alter table T_DATOS
+  add constraint FK_DATOS_DATO_DEFINICIONES foreign key (TABLA, CAMPO)
+  references T_DATO_DEFINICIONES (TABLA, CAMPO);
+

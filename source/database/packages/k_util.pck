@@ -83,6 +83,10 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC;
 
+  FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2;
+
+  FUNCTION string_to_bool(i_string IN VARCHAR2) RETURN BOOLEAN;
+
   FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB;
 
   FUNCTION clob_to_blob(p_data IN CLOB) RETURN BLOB;
@@ -519,6 +523,30 @@ END;';
   BEGIN
     RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
                                              dbms_crypto.hash_sh1)));
+  END;
+
+  FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2 IS
+  BEGIN
+    IF i_bool IS NULL THEN
+      RETURN NULL;
+    ELSIF i_bool THEN
+      RETURN 'S';
+    ELSE
+      RETURN 'N';
+    END IF;
+  END;
+
+  FUNCTION string_to_bool(i_string IN VARCHAR2) RETURN BOOLEAN IS
+  BEGIN
+    IF i_string IS NULL THEN
+      RETURN NULL;
+    ELSIF lower(i_string) IN ('1', 'true', 't', 'yes', 'y', 'si', 's') THEN
+      RETURN TRUE;
+    ELSIF lower(i_string) IN ('0', 'false', 'f', 'no', 'n') THEN
+      RETURN FALSE;
+    ELSE
+      RETURN NULL;
+    END IF;
   END;
 
   FUNCTION blob_to_clob(p_data IN BLOB) RETURN CLOB IS

@@ -65,6 +65,8 @@ plugin plsqldoc generate t_barrios;
 plugin plsqldoc generate t_ciudades;
 plugin plsqldoc generate t_correo_adjuntos;
 plugin plsqldoc generate t_correos;
+plugin plsqldoc generate t_dato_definiciones;
+plugin plsqldoc generate t_datos;
 plugin plsqldoc generate t_departamentos;
 plugin plsqldoc generate t_dispositivos;
 plugin plsqldoc generate t_dispositivo_suscripciones;

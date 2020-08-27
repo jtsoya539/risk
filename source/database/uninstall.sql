@@ -101,6 +101,8 @@ prompt -----------------------------------
 prompt
 drop table t_archivos cascade constraints;
 drop table t_archivo_definiciones cascade constraints;
+drop table t_datos cascade constraints;
+drop table t_dato_definiciones cascade constraints;
 drop table t_notificaciones cascade constraints;
 drop table t_mensajes cascade constraints;
 drop table t_correo_adjuntos cascade constraints;

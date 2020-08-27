@@ -103,6 +103,8 @@ prompt
 @@tables/t_correo_adjuntos.tab
 @@tables/t_mensajes.tab
 @@tables/t_notificaciones.tab
+@@tables/t_dato_definiciones.tab
+@@tables/t_datos.tab
 @@tables/t_archivo_definiciones.tab
 @@tables/t_archivos.tab
 
