@@ -27,6 +27,8 @@ alter table T_USUARIOS
 alter table T_USUARIOS
   add constraint UK_USUARIOS_ALIAS unique (ALIAS);
 alter table T_USUARIOS
+  add constraint UK_USUARIOS_DIRECCION_CORREO unique (DIRECCION_CORREO);
+alter table T_USUARIOS
   add constraint FK_USUARIOS_PERSONAS foreign key (ID_PERSONA)
   references T_PERSONAS (ID_PERSONA);
 
