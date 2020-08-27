@@ -547,8 +547,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                    'Debe ingresar usuario');
   
     l_rsp.lugar := 'Cargando datos del usuario';
-    l_usuario   := k_usuario.f_datos_usuario(k_usuario.f_id_usuario(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                                        'usuario')));
+    l_usuario   := k_usuario.f_datos_usuario(k_usuario.f_buscar_id(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                       'usuario')));
   
     k_servicio.p_respuesta_ok(l_rsp, l_usuario);
     RETURN l_rsp;

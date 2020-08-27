@@ -109,11 +109,11 @@ namespace Risk.API
             OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
 
             // Connection Pooling Configuration
-            connStrBuilder.Pooling = true; // Connection pooling.
-            connStrBuilder.MinPoolSize = 0; // Minimum number of connections in a pool.
-            connStrBuilder.MaxPoolSize = 10; // Maximum number of connections in a pool.
+            connStrBuilder.Pooling = Configuration.GetValue<bool>("OracleConfiguration:Pooling"); // Connection pooling.
+            connStrBuilder.MinPoolSize = Configuration.GetValue<int>("OracleConfiguration:MinPoolSize"); // Minimum number of connections in a pool.
+            connStrBuilder.MaxPoolSize = Configuration.GetValue<int>("OracleConfiguration:MaxPoolSize"); // Maximum number of connections in a pool.
+            connStrBuilder.ConnectionTimeout = Configuration.GetValue<int>("OracleConfiguration:ConnectionTimeout"); // Maximum time (in seconds) to wait for a free connection from the pool.
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
-            connStrBuilder.ConnectionTimeout = 60; // Maximum time (in seconds) to wait for a free connection from the pool.
             //connStrBuilder.ValidateConnection = true;
 
             //oracleConnection = new OracleConnection(connStrBuilder.ToString());
@@ -130,9 +130,7 @@ namespace Risk.API
             IAutService autService = serviceProvider.GetService<IAutService>();
             IGenService genService = serviceProvider.GetService<IGenService>();
 
-            //var respValorParametro = genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            //var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
-            var signingKey = Encoding.ASCII.GetBytes("9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=");
+            var signingKey = Encoding.ASCII.GetBytes(Configuration["JwtSigningKey"]);
 
             services.AddAuthentication(x =>
             {
