@@ -126,6 +126,7 @@ plugin plsqldoc generate k_aplicacion;
 plugin plsqldoc generate k_archivo;
 plugin plsqldoc generate k_auditoria;
 plugin plsqldoc generate k_autenticacion;
+plugin plsqldoc generate k_dato;
 plugin plsqldoc generate k_dispositivo;
 plugin plsqldoc generate k_error;
 plugin plsqldoc generate k_html;

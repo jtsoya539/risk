@@ -57,6 +57,7 @@ drop package k_servicio_aut;
 drop package k_servicio;
 drop package k_mensajeria;
 drop package k_archivo;
+drop package k_dato;
 drop package k_error;
 drop package k_autenticacion;
 drop package k_sesion;

@@ -1,11 +1,9 @@
-CREATE OR REPLACE TRIGGER gb_archivos
-  BEFORE INSERT OR UPDATE OR DELETE ON t_archivos
+CREATE OR REPLACE TRIGGER gb_datos
+  BEFORE INSERT OR UPDATE OR DELETE ON t_datos
   FOR EACH ROW
 DECLARE
-  l_existe_registro        VARCHAR2(1);
-  l_nombre_referencia      t_archivo_definiciones.nombre_referencia%TYPE;
-  l_tamano_maximo          t_archivo_definiciones.tamano_maximo%TYPE;
-  l_extensiones_permitidas t_archivo_definiciones.extensiones_permitidas%TYPE;
+  l_existe_registro   VARCHAR2(1);
+  l_nombre_referencia t_dato_definiciones.nombre_referencia%TYPE;
 BEGIN
   /*
   --------------------------------- MIT License ---------------------------------
@@ -35,15 +33,15 @@ BEGIN
   
     -- Valida definición
     BEGIN
-      SELECT d.nombre_referencia, d.tamano_maximo, d.extensiones_permitidas
-        INTO l_nombre_referencia, l_tamano_maximo, l_extensiones_permitidas
-        FROM t_archivo_definiciones d
+      SELECT d.nombre_referencia
+        INTO l_nombre_referencia
+        FROM t_dato_definiciones d
        WHERE upper(d.tabla) = upper(:new.tabla)
          AND upper(d.campo) = upper(:new.campo);
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000,
-                                'Definición de archivo inexistente');
+                                'Definición de dato adicional inexistente');
     END;
   
     -- Valida registro relacionado
@@ -73,45 +71,11 @@ END;'
       END IF;
     END IF;
   
-    IF :new.contenido IS NULL OR dbms_lob.getlength(:new.contenido) = 0 THEN
-      :new.checksum  := NULL;
-      :new.tamano    := NULL;
-      :new.nombre    := NULL;
-      :new.extension := NULL;
+    IF :new.contenido IS NULL THEN
+      NULL;
     ELSE
-      -- Valida nombre del archivo
-      IF :new.nombre IS NULL THEN
-        raise_application_error(-20000, 'Nombre del archivo obligatorio');
-      END IF;
-    
-      -- Valida extensión del archivo
-      IF :new.extension IS NULL THEN
-        raise_application_error(-20000,
-                                'Extensión del archivo obligatorio');
-      END IF;
-    
-      IF l_extensiones_permitidas IS NOT NULL THEN
-        IF k_archivo.f_tipo_mime(l_extensiones_permitidas, :new.extension) IS NULL THEN
-          raise_application_error(-20000,
-                                  'Extensión de archivo no permitida');
-        END IF;
-      END IF;
-    
-      -- Calcula propiedades del archivo
-      IF :old.contenido IS NULL OR
-         dbms_lob.compare(:old.contenido, :new.contenido) <> 0 THEN
-        k_archivo.p_calcular_propiedades(:new.contenido,
-                                         :new.checksum,
-                                         :new.tamano);
-      END IF;
-    
-      -- Valida tamaño del archivo
-      IF nvl(:new.tamano, 0) > nvl(l_tamano_maximo, 0) THEN
-        raise_application_error(-20000,
-                                'Archivo supera el tamaño máximo (' ||
-                                TRIM(to_char(l_tamano_maximo / 1000000,
-                                             '999G999G999D99')) || ' MB)');
-      END IF;
+      -- Valida tipo de dato
+      NULL;
     END IF;
   
   END IF;
