@@ -41,7 +41,47 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_RECUPERAR_DATO_STRING">f_recuperar_dato_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_RECUPERAR_DATO_NUMBER">f_recuperar_dato_number</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_RECUPERAR_DATO_BOOLEAN">f_recuperar_dato_boolean</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_RECUPERAR_DATO_DATE">f_recuperar_dato_date</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_GUARDAR_DATO">p_guardar_dato</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_DATO_STRING">p_guardar_dato_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_DATO_NUMBER">p_guardar_dato_number</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_DATO_BOOLEAN">p_guardar_dato_boolean</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_DATO_DATE">p_guardar_dato_date</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -59,6 +99,50 @@ FUNCTION f_recuperar_dato(i_tabla      IN VARCHAR2,
 
 </PRE>
 <HR>
+<A NAME="F_RECUPERAR_DATO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+f_recuperar_dato_string
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_recuperar_dato_string(i_tabla      IN VARCHAR2,
+                                 i_campo      IN VARCHAR2,
+                                 i_referencia IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_RECUPERAR_DATO_NUMBER"></A>
+<P CLASS="TYPE_TITLE">
+f_recuperar_dato_number
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_recuperar_dato_number(i_tabla      IN VARCHAR2,
+                                 i_campo      IN VARCHAR2,
+                                 i_referencia IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_RECUPERAR_DATO_BOOLEAN"></A>
+<P CLASS="TYPE_TITLE">
+f_recuperar_dato_boolean
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_recuperar_dato_boolean(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_RECUPERAR_DATO_DATE"></A>
+<P CLASS="TYPE_TITLE">
+f_recuperar_dato_date
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_recuperar_dato_date(i_tabla      IN VARCHAR2,
+                               i_campo      IN VARCHAR2,
+                               i_referencia IN VARCHAR2) RETURN DATE
+
+</PRE>
+<HR>
 <A NAME="P_GUARDAR_DATO"></A>
 <P CLASS="TYPE_TITLE">
 p_guardar_dato
@@ -68,6 +152,54 @@ PROCEDURE p_guardar_dato(i_tabla      IN VARCHAR2,
                          i_campo      IN VARCHAR2,
                          i_referencia IN VARCHAR2,
                          i_dato       IN anydata)
+
+</PRE>
+<HR>
+<A NAME="P_GUARDAR_DATO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_dato_string
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_dato_string(i_tabla      IN VARCHAR2,
+                                i_campo      IN VARCHAR2,
+                                i_referencia IN VARCHAR2,
+                                i_dato       IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_GUARDAR_DATO_NUMBER"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_dato_number
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_dato_number(i_tabla      IN VARCHAR2,
+                                i_campo      IN VARCHAR2,
+                                i_referencia IN VARCHAR2,
+                                i_dato       IN NUMBER)
+
+</PRE>
+<HR>
+<A NAME="P_GUARDAR_DATO_BOOLEAN"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_dato_boolean
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_dato_boolean(i_tabla      IN VARCHAR2,
+                                 i_campo      IN VARCHAR2,
+                                 i_referencia IN VARCHAR2,
+                                 i_dato       IN BOOLEAN)
+
+</PRE>
+<HR>
+<A NAME="P_GUARDAR_DATO_DATE"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_dato_date
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_dato_date(i_tabla      IN VARCHAR2,
+                              i_campo      IN VARCHAR2,
+                              i_referencia IN VARCHAR2,
+                              i_dato       IN DATE)
 
 </PRE>
 <P>&nbsp;</P>

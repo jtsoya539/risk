@@ -34,10 +34,46 @@ CREATE OR REPLACE PACKAGE k_dato IS
                             i_campo      IN VARCHAR2,
                             i_referencia IN VARCHAR2) RETURN anydata;
 
+  FUNCTION f_recuperar_dato_string(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION f_recuperar_dato_number(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2) RETURN NUMBER;
+
+  FUNCTION f_recuperar_dato_boolean(i_tabla      IN VARCHAR2,
+                                    i_campo      IN VARCHAR2,
+                                    i_referencia IN VARCHAR2) RETURN BOOLEAN;
+
+  FUNCTION f_recuperar_dato_date(i_tabla      IN VARCHAR2,
+                                 i_campo      IN VARCHAR2,
+                                 i_referencia IN VARCHAR2) RETURN DATE;
+
   PROCEDURE p_guardar_dato(i_tabla      IN VARCHAR2,
                            i_campo      IN VARCHAR2,
                            i_referencia IN VARCHAR2,
                            i_dato       IN anydata);
+
+  PROCEDURE p_guardar_dato_string(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2,
+                                  i_dato       IN VARCHAR2);
+
+  PROCEDURE p_guardar_dato_number(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2,
+                                  i_dato       IN NUMBER);
+
+  PROCEDURE p_guardar_dato_boolean(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2,
+                                   i_dato       IN BOOLEAN);
+
+  PROCEDURE p_guardar_dato_date(i_tabla      IN VARCHAR2,
+                                i_campo      IN VARCHAR2,
+                                i_referencia IN VARCHAR2,
+                                i_dato       IN DATE);
 
 END;
 /
@@ -48,8 +84,6 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
                             i_referencia IN VARCHAR2) RETURN anydata IS
     l_dato t_datos.contenido%TYPE;
   BEGIN
-    -- l_contenido := NEW y_archivo();
-  
     BEGIN
       SELECT a.contenido
         INTO l_dato
@@ -66,6 +100,42 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
     END;
   
     RETURN l_dato;
+  END;
+
+  FUNCTION f_recuperar_dato_string(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN anydata.accessvarchar2(f_recuperar_dato(i_tabla,
+                                                   i_campo,
+                                                   i_referencia));
+  END;
+
+  FUNCTION f_recuperar_dato_number(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2) RETURN NUMBER IS
+  BEGIN
+    RETURN anydata.accessnumber(f_recuperar_dato(i_tabla,
+                                                 i_campo,
+                                                 i_referencia));
+  END;
+
+  FUNCTION f_recuperar_dato_boolean(i_tabla      IN VARCHAR2,
+                                    i_campo      IN VARCHAR2,
+                                    i_referencia IN VARCHAR2) RETURN BOOLEAN IS
+  BEGIN
+    RETURN sys.diutil.int_to_bool(anydata.accessnumber(f_recuperar_dato(i_tabla,
+                                                                        i_campo,
+                                                                        i_referencia)));
+  END;
+
+  FUNCTION f_recuperar_dato_date(i_tabla      IN VARCHAR2,
+                                 i_campo      IN VARCHAR2,
+                                 i_referencia IN VARCHAR2) RETURN DATE IS
+  BEGIN
+    RETURN anydata.accessdate(f_recuperar_dato(i_tabla,
+                                               i_campo,
+                                               i_referencia));
   END;
 
   PROCEDURE p_guardar_dato(i_tabla      IN VARCHAR2,
@@ -85,6 +155,50 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
       VALUES
         (upper(i_tabla), upper(i_campo), i_referencia, i_dato);
     END IF;
+  END;
+
+  PROCEDURE p_guardar_dato_string(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2,
+                                  i_dato       IN VARCHAR2) IS
+  BEGIN
+    p_guardar_dato(i_tabla,
+                   i_campo,
+                   i_referencia,
+                   anydata.convertvarchar2(i_dato));
+  END;
+
+  PROCEDURE p_guardar_dato_number(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2,
+                                  i_dato       IN NUMBER) IS
+  BEGIN
+    p_guardar_dato(i_tabla,
+                   i_campo,
+                   i_referencia,
+                   anydata.convertnumber(i_dato));
+  END;
+
+  PROCEDURE p_guardar_dato_boolean(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2,
+                                   i_dato       IN BOOLEAN) IS
+  BEGIN
+    p_guardar_dato(i_tabla,
+                   i_campo,
+                   i_referencia,
+                   anydata.convertnumber(sys.diutil.bool_to_int(i_dato)));
+  END;
+
+  PROCEDURE p_guardar_dato_date(i_tabla      IN VARCHAR2,
+                                i_campo      IN VARCHAR2,
+                                i_referencia IN VARCHAR2,
+                                i_dato       IN DATE) IS
+  BEGIN
+    p_guardar_dato(i_tabla,
+                   i_campo,
+                   i_referencia,
+                   anydata.convertdate(i_dato));
   END;
 
 END;
