@@ -33,6 +33,8 @@ CREATE OR REPLACE PACKAGE k_usuario IS
   -- Excepciones
   ex_usuario_inexistente EXCEPTION;
 
+  FUNCTION f_buscar_id(i_usuario IN VARCHAR2) RETURN NUMBER;
+
   FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_alias(i_id_usuario IN NUMBER) RETURN VARCHAR2;
@@ -51,6 +53,23 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_usuario IS
+
+  FUNCTION f_buscar_id(i_usuario IN VARCHAR2) RETURN NUMBER IS
+    l_id_usuario t_usuarios.id_usuario%TYPE;
+  BEGIN
+    BEGIN
+      SELECT id_usuario
+        INTO l_id_usuario
+        FROM t_usuarios
+       WHERE (alias = i_usuario OR direccion_correo = i_usuario);
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_usuario := NULL;
+      WHEN OTHERS THEN
+        l_id_usuario := NULL;
+    END;
+    RETURN l_id_usuario;
+  END;
 
   FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER IS
     l_id_usuario t_usuarios.id_usuario%TYPE;

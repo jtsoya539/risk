@@ -36,6 +36,11 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_BUSCAR_ID">f_buscar_id</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ID_USUARIO">f_id_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -91,6 +96,15 @@ ex_usuario_inexistente
 </P>
 <PRE CLASS="DECL_TEXT">
 ex_usuario_inexistente EXCEPTION;
+</PRE>
+<HR>
+<A NAME="F_BUSCAR_ID"></A>
+<P CLASS="TYPE_TITLE">
+f_buscar_id
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_buscar_id(i_usuario IN VARCHAR2) RETURN NUMBER
+
 </PRE>
 <HR>
 <A NAME="F_ID_USUARIO"></A>

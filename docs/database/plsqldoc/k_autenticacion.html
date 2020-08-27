@@ -46,6 +46,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_EDITAR_USUARIO">p_editar_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_REGISTRAR_CLAVE">p_registrar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -72,11 +77,6 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REFRESCAR_SESION">f_refrescar_sesion</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_EDITAR_USUARIO">p_editar_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -132,7 +132,7 @@ PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
 p_registrar_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
+PROCEDURE p_registrar_usuario(i_alias            IN VARCHAR2,
                               i_clave            IN VARCHAR2,
                               i_nombre           IN VARCHAR2,
                               i_apellido         IN VARCHAR2,
@@ -141,12 +141,26 @@ PROCEDURE p_registrar_usuario(i_usuario          IN VARCHAR2,
 
 </PRE>
 <HR>
+<A NAME="P_EDITAR_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+p_editar_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_editar_usuario(i_alias_antiguo    IN VARCHAR2,
+                           i_alias_nuevo      IN VARCHAR2,
+                           i_nombre           IN VARCHAR2,
+                           i_apellido         IN VARCHAR2,
+                           i_direccion_correo IN VARCHAR2,
+                           i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
 <A NAME="P_REGISTRAR_CLAVE"></A>
 <P CLASS="TYPE_TITLE">
 p_registrar_clave
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
+PROCEDURE p_registrar_clave(i_alias      IN VARCHAR2,
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A')
 
@@ -157,7 +171,7 @@ PROCEDURE p_registrar_clave(i_usuario    IN VARCHAR2,
 p_cambiar_clave
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_cambiar_clave(i_usuario       IN VARCHAR2,
+PROCEDURE p_cambiar_clave(i_alias         IN VARCHAR2,
                           i_clave_antigua IN VARCHAR2,
                           i_clave_nueva   IN VARCHAR2,
                           i_tipo_clave    IN CHAR DEFAULT 'A')
@@ -212,20 +226,6 @@ FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                             i_access_token_nuevo    IN VARCHAR2,
                             i_refresh_token_nuevo   IN VARCHAR2)
   RETURN NUMBER
-
-</PRE>
-<HR>
-<A NAME="P_EDITAR_USUARIO"></A>
-<P CLASS="TYPE_TITLE">
-p_editar_usuario
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_editar_usuario(i_usuario_antiguo  IN VARCHAR2,
-                           i_usuario_nuevo    IN VARCHAR2,
-                           i_nombre           IN VARCHAR2,
-                           i_apellido         IN VARCHAR2,
-                           i_direccion_correo IN VARCHAR2,
-                           i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <P>&nbsp;</P>
