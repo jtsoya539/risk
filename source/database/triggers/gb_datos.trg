@@ -4,6 +4,9 @@ CREATE OR REPLACE TRIGGER gb_datos
 DECLARE
   l_existe_registro   VARCHAR2(1);
   l_nombre_referencia t_dato_definiciones.nombre_referencia%TYPE;
+  l_tipo_dato         t_dato_definiciones.tipo_dato%TYPE;
+  l_typeinfo          anytype;
+  l_typecode          PLS_INTEGER;
 BEGIN
   /*
   --------------------------------- MIT License ---------------------------------
@@ -33,8 +36,8 @@ BEGIN
   
     -- Valida definición
     BEGIN
-      SELECT d.nombre_referencia
-        INTO l_nombre_referencia
+      SELECT d.nombre_referencia, d.tipo_dato
+        INTO l_nombre_referencia, l_tipo_dato
         FROM t_dato_definiciones d
        WHERE upper(d.tabla) = upper(:new.tabla)
          AND upper(d.campo) = upper(:new.campo);
@@ -72,10 +75,47 @@ END;'
     END IF;
   
     IF :new.contenido IS NULL THEN
-      NULL;
+      NULL; -- ?
     ELSE
       -- Valida tipo de dato
-      NULL;
+      l_typecode := :new.contenido.gettype(l_typeinfo);
+    
+      CASE l_tipo_dato
+      
+        WHEN 'S' THEN
+          -- String
+          IF l_typecode <> dbms_types.typecode_varchar2 THEN
+            raise_application_error(-20000, 'Tipo de dato incorrecto');
+          END IF;
+        
+        WHEN 'N' THEN
+          -- Number
+          IF l_typecode <> dbms_types.typecode_number THEN
+            raise_application_error(-20000, 'Tipo de dato incorrecto');
+          END IF;
+        
+        WHEN 'B' THEN
+          -- Boolean
+          IF l_typecode <> dbms_types.typecode_number THEN
+            raise_application_error(-20000, 'Tipo de dato incorrecto');
+          END IF;
+        
+        WHEN 'D' THEN
+          -- Date
+          IF l_typecode <> dbms_types.typecode_date THEN
+            raise_application_error(-20000, 'Tipo de dato incorrecto');
+          END IF;
+        
+        WHEN 'O' THEN
+          -- Object
+          IF l_typecode <> dbms_types.typecode_object THEN
+            raise_application_error(-20000, 'Tipo de dato incorrecto');
+          END IF;
+        
+        ELSE
+          raise_application_error(-20000, 'Tipo de dato no soportado');
+        
+      END CASE;
     END IF;
   
   END IF;
