@@ -50,6 +50,10 @@ CREATE OR REPLACE PACKAGE k_dato IS
                                  i_campo      IN VARCHAR2,
                                  i_referencia IN VARCHAR2) RETURN DATE;
 
+  FUNCTION f_recuperar_dato_object(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2) RETURN y_objeto;
+
   PROCEDURE p_guardar_dato(i_tabla      IN VARCHAR2,
                            i_campo      IN VARCHAR2,
                            i_referencia IN VARCHAR2,
@@ -74,6 +78,14 @@ CREATE OR REPLACE PACKAGE k_dato IS
                                 i_campo      IN VARCHAR2,
                                 i_referencia IN VARCHAR2,
                                 i_dato       IN DATE);
+
+  -- Para evitar el error ORA-22370, el tipo (heredado de y_objeto) del dato no
+  -- debe contener atributos LOBs (CLOB, BLOB) ya que actualmente no cuenta con
+  -- soporte para persistencia
+  PROCEDURE p_guardar_dato_object(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2,
+                                  i_dato       IN y_objeto);
 
 END;
 /
@@ -138,6 +150,25 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
                                                i_referencia));
   END;
 
+  FUNCTION f_recuperar_dato_object(i_tabla      IN VARCHAR2,
+                                   i_campo      IN VARCHAR2,
+                                   i_referencia IN VARCHAR2) RETURN y_objeto IS
+    l_objeto   y_objeto;
+    l_anydata  anydata;
+    l_result   PLS_INTEGER;
+    l_typeinfo anytype;
+    l_typecode PLS_INTEGER;
+  BEGIN
+    l_anydata := f_recuperar_dato(i_tabla, i_campo, i_referencia);
+  
+    l_typecode := l_anydata.gettype(l_typeinfo);
+    IF l_typecode = dbms_types.typecode_object THEN
+      l_result := l_anydata.getobject(l_objeto);
+    END IF;
+  
+    RETURN l_objeto;
+  END;
+
   PROCEDURE p_guardar_dato(i_tabla      IN VARCHAR2,
                            i_campo      IN VARCHAR2,
                            i_referencia IN VARCHAR2,
@@ -199,6 +230,17 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
                    i_campo,
                    i_referencia,
                    anydata.convertdate(i_dato));
+  END;
+
+  PROCEDURE p_guardar_dato_object(i_tabla      IN VARCHAR2,
+                                  i_campo      IN VARCHAR2,
+                                  i_referencia IN VARCHAR2,
+                                  i_dato       IN y_objeto) IS
+  BEGIN
+    p_guardar_dato(i_tabla,
+                   i_campo,
+                   i_referencia,
+                   anydata.convertobject(i_dato));
   END;
 
 END;

@@ -61,6 +61,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_RECUPERAR_DATO_OBJECT">f_recuperar_dato_object</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_GUARDAR_DATO">p_guardar_dato</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -82,6 +87,11 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_GUARDAR_DATO_DATE">p_guardar_dato_date</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_DATO_OBJECT">p_guardar_dato_object</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -143,6 +153,17 @@ FUNCTION f_recuperar_dato_date(i_tabla      IN VARCHAR2,
 
 </PRE>
 <HR>
+<A NAME="F_RECUPERAR_DATO_OBJECT"></A>
+<P CLASS="TYPE_TITLE">
+f_recuperar_dato_object
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_recuperar_dato_object(i_tabla      IN VARCHAR2,
+                                 i_campo      IN VARCHAR2,
+                                 i_referencia IN VARCHAR2) RETURN y_objeto
+
+</PRE>
+<HR>
 <A NAME="P_GUARDAR_DATO"></A>
 <P CLASS="TYPE_TITLE">
 p_guardar_dato
@@ -200,6 +221,18 @@ PROCEDURE p_guardar_dato_date(i_tabla      IN VARCHAR2,
                               i_campo      IN VARCHAR2,
                               i_referencia IN VARCHAR2,
                               i_dato       IN DATE)
+
+</PRE>
+<HR>
+<A NAME="P_GUARDAR_DATO_OBJECT"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_dato_object
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_dato_object(i_tabla      IN VARCHAR2,
+                                i_campo      IN VARCHAR2,
+                                i_referencia IN VARCHAR2,
+                                i_dato       IN y_objeto)
 
 </PRE>
 <P>&nbsp;</P>
