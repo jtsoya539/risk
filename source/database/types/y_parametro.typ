@@ -81,12 +81,11 @@ CREATE OR REPLACE TYPE BODY y_parametro IS
   BEGIN
     l_json_object := NEW json_object_t();
     l_json_object.put('nombre', self.nombre);
-    IF self.valor IS NULL OR
-       k_servicio.f_objeto_to_json(self.valor) IS NULL THEN
+    IF self.valor IS NULL OR k_util.objeto_to_json(self.valor) IS NULL THEN
       l_json_object.put_null('valor');
     ELSE
       l_json_object.put('valor',
-                        json_element_t.parse(k_servicio.f_objeto_to_json(self.valor)));
+                        json_element_t.parse(k_util.objeto_to_json(self.valor)));
     END IF;
     RETURN l_json_object.to_clob;
   END;

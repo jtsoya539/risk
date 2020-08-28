@@ -81,7 +81,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
-  FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC;
+  FUNCTION f_hash(i_data      IN VARCHAR2,
+                  i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2;
 
@@ -94,6 +95,11 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
 
   FUNCTION base64decode(i_clob CLOB) RETURN BLOB;
+
+  FUNCTION json_to_objeto(i_json        IN CLOB,
+                          i_nombre_tipo IN VARCHAR2) RETURN anydata;
+
+  FUNCTION objeto_to_json(i_objeto IN anydata) RETURN CLOB;
 
   FUNCTION f_base_datos RETURN VARCHAR2;
 
@@ -519,10 +525,11 @@ END;';
     RETURN l_valor;
   END;
 
-  FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2 DETERMINISTIC IS
+  FUNCTION f_hash(i_data      IN VARCHAR2,
+                  i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC IS
   BEGIN
     RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
-                                             dbms_crypto.hash_sh1)));
+                                             i_hash_type)));
   END;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2 IS
@@ -651,6 +658,43 @@ END;';
         NULL;
     END;
     RETURN l_blob;
+  END;
+
+  FUNCTION json_to_objeto(i_json        IN CLOB,
+                          i_nombre_tipo IN VARCHAR2) RETURN anydata IS
+    l_retorno anydata;
+    l_objeto  y_objeto;
+  BEGIN
+    IF i_json IS NOT NULL AND i_nombre_tipo IS NOT NULL THEN
+      EXECUTE IMMEDIATE 'BEGIN :1 := ' || lower(i_nombre_tipo) ||
+                        '.parse_json(i_json => :2); END;'
+        USING OUT l_objeto, IN i_json;
+      l_retorno := anydata.convertobject(l_objeto);
+    END IF;
+    RETURN l_retorno;
+  END;
+
+  FUNCTION objeto_to_json(i_objeto IN anydata) RETURN CLOB IS
+    l_json     CLOB;
+    l_typeinfo anytype;
+    l_typecode PLS_INTEGER;
+  BEGIN
+    IF i_objeto IS NOT NULL THEN
+      l_typecode := i_objeto.gettype(l_typeinfo);
+      IF l_typecode = dbms_types.typecode_object THEN
+        EXECUTE IMMEDIATE 'DECLARE
+  l_retorno PLS_INTEGER;
+  l_anydata anydata := :1;
+  l_object  ' || i_objeto.gettypename || ';
+  l_clob    CLOB;
+BEGIN
+  l_retorno := l_anydata.getobject(obj => l_object);
+  :2        := l_object.to_json();
+END;'
+          USING IN i_objeto, OUT l_json;
+      END IF;
+    END IF;
+    RETURN l_json;
   END;
 
   FUNCTION f_base_datos RETURN VARCHAR2 IS

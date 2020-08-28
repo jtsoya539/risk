@@ -61,16 +61,6 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_OBJETO_PARSE_JSON">f_objeto_parse_json</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_OBJETO_TO_JSON">f_objeto_to_json</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -287,25 +277,6 @@ PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
                                 i_error_number IN NUMBER,
                                 i_error_msg    IN VARCHAR2,
                                 i_error_stack  IN VARCHAR2)
-
-</PRE>
-<HR>
-<A NAME="F_OBJETO_PARSE_JSON"></A>
-<P CLASS="TYPE_TITLE">
-f_objeto_parse_json
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_objeto_parse_json(i_json        IN CLOB,
-                             i_nombre_tipo IN VARCHAR2) RETURN anydata
-
-</PRE>
-<HR>
-<A NAME="F_OBJETO_TO_JSON"></A>
-<P CLASS="TYPE_TITLE">
-f_objeto_to_json
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB
 
 </PRE>
 <HR>

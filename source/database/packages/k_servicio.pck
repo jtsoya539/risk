@@ -62,11 +62,6 @@ CREATE OR REPLACE PACKAGE k_servicio IS
                                   i_error_msg    IN VARCHAR2,
                                   i_error_stack  IN VARCHAR2);
 
-  FUNCTION f_objeto_parse_json(i_json        IN CLOB,
-                               i_nombre_tipo IN VARCHAR2) RETURN anydata;
-
-  FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB;
-
   FUNCTION f_procesar_parametros(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN y_parametros;
 
@@ -357,43 +352,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END IF;
   END;
 
-  FUNCTION f_objeto_parse_json(i_json        IN CLOB,
-                               i_nombre_tipo IN VARCHAR2) RETURN anydata IS
-    l_retorno anydata;
-    l_objeto  y_objeto;
-  BEGIN
-    IF i_json IS NOT NULL AND i_nombre_tipo IS NOT NULL THEN
-      EXECUTE IMMEDIATE 'BEGIN :1 := ' || lower(i_nombre_tipo) ||
-                        '.parse_json(i_json => :2); END;'
-        USING OUT l_objeto, IN i_json;
-      l_retorno := anydata.convertobject(l_objeto);
-    END IF;
-    RETURN l_retorno;
-  END;
-
-  FUNCTION f_objeto_to_json(i_objeto IN anydata) RETURN CLOB IS
-    l_json     CLOB;
-    l_typeinfo anytype;
-    l_typecode PLS_INTEGER;
-  BEGIN
-    IF i_objeto IS NOT NULL THEN
-      l_typecode := i_objeto.gettype(l_typeinfo);
-      IF l_typecode = dbms_types.typecode_object THEN
-        EXECUTE IMMEDIATE 'DECLARE
-  l_retorno PLS_INTEGER;
-  l_anydata anydata := :1;
-  l_object  ' || i_objeto.gettypename || ';
-  l_clob    CLOB;
-BEGIN
-  l_retorno := l_anydata.getobject(obj => l_object);
-  :2        := l_object.to_json();
-END;'
-          USING IN i_objeto, OUT l_json;
-      END IF;
-    END IF;
-    RETURN l_json;
-  END;
-
   FUNCTION f_procesar_parametros(i_id_servicio IN NUMBER,
                                  i_parametros  IN CLOB) RETURN y_parametros IS
     l_parametros   y_parametros;
@@ -570,13 +528,13 @@ END;'
           END IF;
         
           IF l_json_element IS NOT NULL THEN
-            l_parametro.valor := f_objeto_parse_json(l_json_element.to_clob,
-                                                     par.formato);
+            l_parametro.valor := k_util.json_to_objeto(l_json_element.to_clob,
+                                                       par.formato);
           END IF;
         
           IF l_parametro.valor IS NULL AND par.valor_defecto IS NOT NULL THEN
-            l_parametro.valor := f_objeto_parse_json(par.valor_defecto,
-                                                     par.formato);
+            l_parametro.valor := k_util.json_to_objeto(par.valor_defecto,
+                                                       par.formato);
           END IF;
           IF l_parametro.valor IS NULL AND par.obligatorio = 'S' THEN
             raise_application_error(-20000,

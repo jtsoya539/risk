@@ -76,7 +76,7 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_HASH_SHA1">f_hash_sha1</A>&nbsp;&nbsp;
+<A HREF="#F_HASH">f_hash</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -107,6 +107,16 @@ Retorna el significado de un codigo dentro de un dominio
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#BASE64DECODE">base64decode</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#JSON_TO_OBJETO">json_to_objeto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#OBJETO_TO_JSON">objeto_to_json</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -370,12 +380,13 @@ FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <HR>
-<A NAME="F_HASH_SHA1"></A>
+<A NAME="F_HASH"></A>
 <P CLASS="TYPE_TITLE">
-f_hash_sha1
+f_hash
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_hash_sha1(i_data IN VARCHAR2) RETURN VARCHAR2
+FUNCTION f_hash(i_data      IN VARCHAR2,
+                i_hash_type IN PLS_INTEGER) RETURN VARCHAR2
 
 </PRE>
 <HR>
@@ -430,6 +441,25 @@ base64decode
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION base64decode(i_clob CLOB) RETURN BLOB
+
+</PRE>
+<HR>
+<A NAME="JSON_TO_OBJETO"></A>
+<P CLASS="TYPE_TITLE">
+json_to_objeto
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION json_to_objeto(i_json        IN CLOB,
+                        i_nombre_tipo IN VARCHAR2) RETURN anydata
+
+</PRE>
+<HR>
+<A NAME="OBJETO_TO_JSON"></A>
+<P CLASS="TYPE_TITLE">
+objeto_to_json
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION objeto_to_json(i_objeto IN anydata) RETURN CLOB
 
 </PRE>
 <HR>
