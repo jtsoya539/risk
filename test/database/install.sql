@@ -55,6 +55,7 @@ prompt
 prompt Creando tests de paquetes...
 prompt -----------------------------------
 prompt
+@@packages/test_k_dato.pck
 @@packages/test_k_util.pck
 
 prompt

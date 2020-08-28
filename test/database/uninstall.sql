@@ -55,6 +55,7 @@ prompt
 prompt Borrando tests de paquetes...
 prompt -----------------------------------
 prompt
+drop package test_k_dato;
 drop package test_k_util;
 
 prompt
