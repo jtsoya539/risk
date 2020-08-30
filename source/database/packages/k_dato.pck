@@ -121,6 +121,9 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
     RETURN anydata.accessvarchar2(f_recuperar_dato(i_tabla,
                                                    i_campo,
                                                    i_referencia));
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
   FUNCTION f_recuperar_dato_number(i_tabla      IN VARCHAR2,
@@ -130,6 +133,9 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
     RETURN anydata.accessnumber(f_recuperar_dato(i_tabla,
                                                  i_campo,
                                                  i_referencia));
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
   FUNCTION f_recuperar_dato_boolean(i_tabla      IN VARCHAR2,
@@ -139,6 +145,9 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
     RETURN sys.diutil.int_to_bool(anydata.accessnumber(f_recuperar_dato(i_tabla,
                                                                         i_campo,
                                                                         i_referencia)));
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
   FUNCTION f_recuperar_dato_date(i_tabla      IN VARCHAR2,
@@ -148,6 +157,9 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
     RETURN anydata.accessdate(f_recuperar_dato(i_tabla,
                                                i_campo,
                                                i_referencia));
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
   FUNCTION f_recuperar_dato_object(i_tabla      IN VARCHAR2,
@@ -167,6 +179,9 @@ CREATE OR REPLACE PACKAGE BODY k_dato IS
     END IF;
   
     RETURN l_objeto;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
   PROCEDURE p_guardar_dato(i_tabla      IN VARCHAR2,
