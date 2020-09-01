@@ -392,13 +392,24 @@ namespace Risk.API.Controllers
         [AllowAnonymous]
         [HttpGet("/[controller]/ActivarUsuario")]
         [SwaggerOperation(OperationId = "ActivarUsuario", Summary = "ActivarUsuario", Description = "Permite activar un usuario")]
-        [Produces(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Text.Html)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult ActivarUsuario([FromQuery, SwaggerParameter(Description = "Clave de activación", Required = true)] string key)
         {
             string usuario = Encoding.Default.GetString(Convert.FromBase64String(key));
             var respuesta = _autService.CambiarEstadoUsuario(usuario, EstadoUsuario.Activo);
-            return ProcesarRespuesta(respuesta);
+
+            string mensaje;
+            if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                mensaje = "Tu dirección de correo ha sido confirmada";
+            }
+            else
+            {
+                mensaje = "Hubo un error al momento de confirmar tu dirección de correo";
+            }
+            return Content("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Confirmación de correo</title></head>" +
+                "<body><h1>" + mensaje + "</h1></body></html>", MediaTypeNames.Text.Html);
         }
 
         [HttpPost("EliminarUsuario")]
