@@ -101,6 +101,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION objeto_to_json(i_objeto IN anydata) RETURN CLOB;
 
+  FUNCTION read_http_body(resp IN OUT utl_http.resp) RETURN CLOB;
+
   FUNCTION f_base_datos RETURN VARCHAR2;
 
   FUNCTION f_terminal RETURN VARCHAR2;
@@ -695,6 +697,24 @@ END;'
       END IF;
     END IF;
     RETURN l_json;
+  END;
+
+  FUNCTION read_http_body(resp IN OUT utl_http.resp) RETURN CLOB AS
+    l_http_body CLOB;
+    l_data      VARCHAR2(1024);
+  BEGIN
+    BEGIN
+      LOOP
+        utl_http.read_text(resp, l_data, 1024);
+        l_http_body := l_http_body || l_data;
+      END LOOP;
+    EXCEPTION
+      WHEN utl_http.end_of_body THEN
+        NULL;
+      WHEN OTHERS THEN
+        l_http_body := NULL;
+    END;
+    RETURN l_http_body;
   END;
 
   FUNCTION f_base_datos RETURN VARCHAR2 IS

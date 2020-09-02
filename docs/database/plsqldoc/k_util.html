@@ -121,6 +121,11 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#READ_HTTP_BODY">read_http_body</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_BASE_DATOS">f_base_datos</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -460,6 +465,15 @@ objeto_to_json
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION objeto_to_json(i_objeto IN anydata) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="READ_HTTP_BODY"></A>
+<P CLASS="TYPE_TITLE">
+read_http_body
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION read_http_body(resp IN OUT utl_http.resp) RETURN CLOB
 
 </PRE>
 <HR>
