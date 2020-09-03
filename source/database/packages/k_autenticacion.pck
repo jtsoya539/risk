@@ -282,8 +282,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                 i_apellido         IN VARCHAR2,
                                 i_direccion_correo IN VARCHAR2,
                                 i_numero_telefono  IN VARCHAR2 DEFAULT NULL) IS
-    l_id_persona t_personas.id_persona%TYPE;
-    l_id_usuario t_usuarios.id_usuario%TYPE;
+    l_id_persona          t_personas.id_persona%TYPE;
+    l_id_usuario          t_usuarios.id_usuario%TYPE;
+    l_confirmacion_activa VARCHAR2(1);
   BEGIN
     -- Valida clave
     p_validar_clave(i_alias, i_clave, c_clave_acceso);
@@ -309,13 +310,18 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        NULL)
     RETURNING id_persona INTO l_id_persona;
   
+    l_confirmacion_activa := nvl(k_util.f_valor_parametro('CONFIRMACION_DIRECCION_CORREO'),
+                                 'N');
+  
     -- Inserta usuario
     INSERT INTO t_usuarios
       (alias, id_persona, estado, direccion_correo, numero_telefono)
     VALUES
       (i_alias,
        l_id_persona,
-       'P', -- PENDIENTE DE ACTIVACIÓN
+       CASE l_confirmacion_activa WHEN 'S' THEN 'P' -- PENDIENTE DE ACTIVACIÓN
+       ELSE 'A' -- ACTIVO
+       END,
        i_direccion_correo,
        i_numero_telefono)
     RETURNING id_usuario INTO l_id_usuario;
@@ -327,6 +333,24 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        WHERE nombre = k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO');
   
     p_registrar_clave(i_alias, i_clave, c_clave_acceso);
+  
+    IF l_confirmacion_activa = 'S' THEN
+      -- Envía correo de verificación
+      IF k_mensajeria.f_enviar_correo('Confirmación de correo',
+                                      'Para activar tu cuenta, por favor verifica tu dirección de correo.' ||
+                                      utl_tcp.crlf ||
+                                      'Tu cuenta no será creada hasta que tu dirección de correo sea confirmada.' ||
+                                      utl_tcp.crlf ||
+                                      'Confirma tu dirección de correo con la siguiente URL:' ||
+                                      utl_tcp.crlf ||
+                                      f_generar_url_activacion(i_alias),
+                                      NULL,
+                                      i_direccion_correo) <>
+         k_mensajeria.c_ok THEN
+        raise_application_error(-20000,
+                                'Error al enviar correo de verificación');
+      END IF;
+    END IF;
   EXCEPTION
     WHEN dup_val_on_index THEN
       raise_application_error(-20000, 'Usuario ya existe');

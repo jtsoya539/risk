@@ -120,26 +120,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         k_servicio.f_valor_parametro_string(i_parametros,
                                                                             'numero_telefono'));
   
-    l_rsp.lugar := 'Enviando mensajería';
-    IF k_mensajeria.f_enviar_correo('Confirmación de correo',
-                                    'Para activar tu cuenta, por favor verifica tu dirección de correo.' ||
-                                    utl_tcp.crlf ||
-                                    'Tu cuenta no será creada hasta que tu dirección de correo sea confirmada.' ||
-                                    utl_tcp.crlf ||
-                                    'Confirma tu dirección de correo con la siguiente URL:' ||
-                                    utl_tcp.crlf ||
-                                    k_autenticacion.f_generar_url_activacion(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                                                 'usuario')),
-                                    NULL,
-                                    k_servicio.f_valor_parametro_string(i_parametros,
-                                                                        'direccion_correo')) <>
-       k_mensajeria.c_ok THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'aut0001',
-                                   'Error al enviar Mail');
-      RAISE k_servicio.ex_error_general;
-    END IF;
-  
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION

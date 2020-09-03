@@ -2,6 +2,9 @@ prompt Importing table t_parametros...
 set feedback off
 set define off
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('CONFIRMACION_DIRECCION_CORREO', 'Indica si está activa la confirmación de correo electrónico de usuarios (S/N)', 'S');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('BASE_DATOS_PRODUCCION', 'Nombre de la Base de Datos del entorno de Producción', 'RISK');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
