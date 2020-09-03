@@ -396,20 +396,64 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult ActivarUsuario([FromQuery, SwaggerParameter(Description = "Clave de activación", Required = true)] string key)
         {
-            string usuario = Encoding.Default.GetString(Convert.FromBase64String(key));
-            var respuesta = _autService.CambiarEstadoUsuario(usuario, EstadoUsuario.Activo);
-
             string mensaje;
-            if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+
+            try
             {
-                mensaje = "Tu dirección de correo ha sido confirmada";
+                string usuario = Encoding.Default.GetString(Convert.FromBase64String(key));
+                var respuesta = _autService.CambiarEstadoUsuario(usuario, EstadoUsuario.Activo);
+
+                if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+                {
+                    mensaje = "Tu dirección de correo fue confirmada con éxito";
+                }
+                else
+                {
+                    mensaje = "Hubo un error al tratar de confirmar tu dirección de correo";
+                }
             }
-            else
+            catch (Exception)
             {
-                mensaje = "Hubo un error al momento de confirmar tu dirección de correo";
+                mensaje = "Hubo un error al tratar de confirmar tu dirección de correo";
             }
-            return Content("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>Confirmación de correo</title></head>" +
-                "<body><h1>" + mensaje + "</h1></body></html>", MediaTypeNames.Text.Html);
+
+            return Content("<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <meta charset=\"utf-8\">\n" +
+                "    <title>Confirmación de correo</title>\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+                "    <link rel=\"stylesheet\" href=\"https://www.w3schools.com/w3css/4/w3.css\">\n" +
+                "    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Raleway\">\n" +
+                "    <style>\n" +
+                "        body,\n" +
+                "        h1 {\n" +
+                "            font-family: \"Raleway\", sans-serif\n" +
+                "        }\n" +
+                "        body,\n" +
+                "        html {\n" +
+                "            height: 100%\n" +
+                "        }\n" +
+                "        .bgimg {\n" +
+                "            min-height: 100%;\n" +
+                "            background-color: darkgreen;\n" +
+                "            background-position: center;\n" +
+                "            background-size: cover;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <div class=\"bgimg w3-display-container w3-animate-opacity w3-text-white\">\n" +
+                "        <div class=\"w3-display-topleft w3-padding-large w3-xlarge\"></div>\n" +
+                "        <div class=\"w3-display-middle\">\n" +
+                "            <h1 class=\"w3-xlarge w3-animate-top\">" + mensaje + "</h1>\n" +
+                "            <hr class=\"w3-border-grey\" style=\"margin:auto;width:40%\">\n" +
+                "            <p class=\"w3-medium w3-center\">Podés cerrar esta ventana</p>\n" +
+                "        </div>\n" +
+                "        <div class=\"w3-display-bottomleft w3-padding-large\"></div>\n" +
+                "    </div>\n" +
+                "</body>\n" +
+                "</html>", MediaTypeNames.Text.Html);
         }
 
         [HttpPost("EliminarUsuario")]
