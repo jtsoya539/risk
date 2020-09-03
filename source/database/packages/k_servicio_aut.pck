@@ -128,11 +128,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                     utl_tcp.crlf ||
                                     'Confirma tu dirección de correo con la siguiente URL:' ||
                                     utl_tcp.crlf ||
-                                    k_util.f_valor_parametro('URL_SERVICIOS_PRODUCCION') ||
-                                    '/Aut/ActivarUsuario?key=' ||
-                                    utl_url.escape(k_util.base64encode(k_util.clob_to_blob(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                                                               'usuario'))),
-                                                   TRUE),
+                                    k_autenticacion.f_generar_url_activacion(k_servicio.f_valor_parametro_string(i_parametros,
+                                                                                                                 'usuario')),
                                     NULL,
                                     k_servicio.f_valor_parametro_string(i_parametros,
                                                                         'direccion_correo')) <>

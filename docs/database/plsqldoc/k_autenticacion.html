@@ -80,6 +80,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_GENERAR_URL_ACTIVACION">f_generar_url_activacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Constants"></A>
@@ -226,6 +231,15 @@ FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                             i_access_token_nuevo    IN VARCHAR2,
                             i_refresh_token_nuevo   IN VARCHAR2)
   RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_GENERAR_URL_ACTIVACION"></A>
+<P CLASS="TYPE_TITLE">
+f_generar_url_activacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_generar_url_activacion(i_alias IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <P>&nbsp;</P>
