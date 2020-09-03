@@ -693,20 +693,11 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   FUNCTION f_generar_url_activacion(i_alias IN VARCHAR2) RETURN VARCHAR2 IS
     l_json_object json_object_t;
-    l_secret      VARCHAR2(100);
-    l_otp         VARCHAR2(100);
     l_key         VARCHAR2(1000);
   BEGIN
-    -- Genera secret
-    l_secret := oos_util_totp.generate_secret;
-  
-    -- Genera OTP
-    l_otp := oos_util_totp.generate_otp(l_secret);
-  
     l_json_object := NEW json_object_t();
     l_json_object.put('usuario', i_alias);
-    l_json_object.put('secret', l_secret);
-    l_json_object.put('otp', l_otp);
+    l_json_object.put('hash', k_util.f_hash(i_alias, dbms_crypto.hash_sh1));
   
     l_key := utl_url.escape(k_util.base64encode(k_util.clob_to_blob(l_json_object.to_clob)),
                             TRUE);

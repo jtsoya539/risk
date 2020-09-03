@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
 using Risk.API.Helpers;
 using Risk.API.Models;
@@ -394,23 +395,30 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "ActivarUsuario", Summary = "ActivarUsuario", Description = "Permite activar un usuario")]
         [Produces(MediaTypeNames.Text.Html)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
-        public IActionResult ActivarUsuario([FromQuery, SwaggerParameter(Description = "Clave de activación", Required = true)] string key)
+        public IActionResult ActivarUsuario([FromQuery, SwaggerParameter(Description = "Clave para la activación", Required = true)] string key)
         {
             string mensaje;
 
             try
             {
-                string usuario = Encoding.Default.GetString(Convert.FromBase64String(key));
-                var respuesta = _autService.CambiarEstadoUsuario(usuario, EstadoUsuario.Activo);
+                string json = Encoding.Default.GetString(Convert.FromBase64String(key));
 
-                if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+                var jObject = JObject.Parse(json);
+                string usuario = jObject.Value<string>("usuario");
+                string hash = jObject.Value<string>("hash");
+
+                if (!hash.Equals(HashHelper.SHA1(usuario)))
                 {
-                    mensaje = "Tu dirección de correo fue confirmada con éxito";
+                    throw new Exception();
                 }
-                else
+
+                var respuesta = _autService.CambiarEstadoUsuario(usuario, EstadoUsuario.Activo);
+                if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
                 {
-                    mensaje = "Hubo un error al tratar de confirmar tu dirección de correo";
+                    throw new Exception();
                 }
+
+                mensaje = "Tu dirección de correo fue confirmada con éxito";
             }
             catch (Exception)
             {
