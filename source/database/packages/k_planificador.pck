@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE k_trabajo IS
+CREATE OR REPLACE PACKAGE k_planificador IS
 
   /**
   Agrupa operaciones relacionadas con los Trabajos del sistema
@@ -97,7 +97,7 @@ CREATE OR REPLACE PACKAGE k_trabajo IS
 
 END;
 /
-CREATE OR REPLACE PACKAGE BODY k_trabajo IS
+CREATE OR REPLACE PACKAGE BODY k_planificador IS
 
   FUNCTION f_procesar_parametros(i_id_trabajo IN NUMBER,
                                  i_parametros IN CLOB) RETURN y_parametros IS
