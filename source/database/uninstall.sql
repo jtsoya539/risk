@@ -56,6 +56,7 @@ drop package k_servicio_msj;
 drop package k_servicio_gen;
 drop package k_servicio_aut;
 drop package k_servicio;
+drop package k_operacion;
 drop package k_mensajeria;
 drop package k_archivo;
 drop package k_dato;
