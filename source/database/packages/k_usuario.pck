@@ -148,7 +148,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
 
   FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario IS
     l_usuario y_usuario;
-    l_roles   y_roles;
+    l_roles   y_objetos;
     l_rol     y_rol;
   
     CURSOR cr_roles(i_id_usuario IN NUMBER) IS
@@ -160,7 +160,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
   BEGIN
     -- Inicializa respuesta
     l_usuario := NEW y_usuario();
-    l_roles   := NEW y_roles();
+    l_roles   := NEW y_objetos();
   
     -- Buscando datos del usuario
     BEGIN

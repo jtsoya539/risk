@@ -113,7 +113,6 @@ plugin plsqldoc generate y_parametro;
 plugin plsqldoc generate y_parametros;
 plugin plsqldoc generate y_respuesta;
 plugin plsqldoc generate y_rol;
-plugin plsqldoc generate y_roles;
 plugin plsqldoc generate y_sesion;
 plugin plsqldoc generate y_significado;
 plugin plsqldoc generate y_usuario;
