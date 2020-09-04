@@ -1,0 +1,55 @@
+create table T_TRABAJOS
+(
+  id_trabajo             NUMBER(15) not null,
+  nombre                 VARCHAR2(100),
+  tipo                   VARCHAR2(20),
+  activo                 VARCHAR2(1) default 'N' not null,
+  dominio                VARCHAR2(30),
+  accion                 VARCHAR2(4000),
+  fecha_inicio           TIMESTAMP WITH TIME ZONE,
+  intervalo_repeticion   VARCHAR2(200),
+  fecha_fin              TIMESTAMP WITH TIME ZONE,
+  comentarios            VARCHAR2(1000),
+  version_actual         VARCHAR2(10),
+  cantidad_ejecuciones   NUMBER,
+  fecha_ultima_ejecucion DATE
+)
+;
+comment on table T_TRABAJOS
+  is 'Plantilla de Trabajos';
+comment on column T_TRABAJOS.id_trabajo
+  is 'Identificador del trabajo';
+comment on column T_TRABAJOS.nombre
+  is 'Nombre del trabajo';
+comment on column T_TRABAJOS.tipo
+  is 'Tipo del trabajo';
+comment on column T_TRABAJOS.activo
+  is 'El trabajo esta activo? (S/N)';
+comment on column T_TRABAJOS.dominio
+  is 'Dominio del trabajo';
+comment on column T_TRABAJOS.accion
+  is 'Accion del trabajo';
+comment on column T_TRABAJOS.fecha_inicio
+  is 'Fecha de inicio del trabajo';
+comment on column T_TRABAJOS.intervalo_repeticion
+  is 'Intervalo de repeticion del trabajo';
+comment on column T_TRABAJOS.fecha_fin
+  is 'Fecha de fin del trabajo';
+comment on column T_TRABAJOS.comentarios
+  is 'Comentarios del trabajo';
+comment on column T_TRABAJOS.version_actual
+  is 'Version actual del trabajo';
+comment on column T_TRABAJOS.cantidad_ejecuciones
+  is 'Cantidad de ejecuciones del trabajo';
+comment on column T_TRABAJOS.fecha_ultima_ejecucion
+  is 'Fecha de la ultima ejecucion del trabajo';
+alter table T_TRABAJOS
+  add constraint PK_TRABAJOS primary key (ID_TRABAJO);
+alter table T_TRABAJOS
+  add constraint UK_TRA_NOMBRE_TIPO_DOMINIO unique (NOMBRE, TIPO, DOMINIO);
+alter table T_TRABAJOS
+  add constraint CK_TRABAJOS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+alter table T_TRABAJOS
+  add constraint CK_TRABAJOS_TIPO
+  check (TIPO IN ('PLSQL_BLOCK', 'STORED_PROCEDURE', 'EXECUTABLE', 'CHAIN', 'EXTERNAL_SCRIPT', 'SQL_SCRIPT', 'BACKUP_SCRIPT'));
