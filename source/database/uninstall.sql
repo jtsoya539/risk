@@ -118,6 +118,7 @@ drop table t_trabajos cascade constraints;
 drop table t_servicio_logs cascade constraints;
 drop table t_servicio_parametros cascade constraints;
 drop table t_servicios cascade constraints;
+drop table t_operacion_parametros cascade constraints;
 drop table t_operaciones cascade constraints;
 drop table t_rol_usuarios cascade constraints;
 drop table t_rol_permisos cascade constraints;

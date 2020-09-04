@@ -94,6 +94,7 @@ prompt
 @@tables/t_rol_permisos.tab
 @@tables/t_rol_usuarios.tab
 @@tables/t_operaciones.tab
+@@tables/t_operacion_parametros.tab
 @@tables/t_servicios.tab
 @@tables/t_servicio_parametros.tab
 @@tables/t_servicio_logs.tab
