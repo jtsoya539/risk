@@ -61,6 +61,7 @@ prompt
 @@sequences/s_id_barrio.seq
 @@sequences/s_id_persona.seq
 @@sequences/s_id_rol.seq
+@@sequences/s_id_operacion.seq
 @@sequences/s_id_servicio.seq
 @@sequences/s_id_servicio_log.seq
 @@sequences/s_id_trabajo.seq
@@ -92,6 +93,7 @@ prompt
 @@tables/t_permisos.tab
 @@tables/t_rol_permisos.tab
 @@tables/t_rol_usuarios.tab
+@@tables/t_operaciones.tab
 @@tables/t_servicios.tab
 @@tables/t_servicio_parametros.tab
 @@tables/t_servicio_logs.tab
@@ -172,6 +174,7 @@ prompt
 @@triggers/gs_barrios.trg
 @@triggers/gs_personas.trg
 @@triggers/gs_roles.trg
+@@triggers/gs_operaciones.trg
 @@triggers/gs_servicios.trg
 @@triggers/gs_servicio_logs.trg
 @@triggers/gs_trabajos.trg
