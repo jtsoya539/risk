@@ -51,6 +51,7 @@ prompt -----------------------------------
 prompt
 drop package k_reporte_gen;
 drop package k_reporte;
+drop package k_planificador;
 drop package k_servicio_msj;
 drop package k_servicio_gen;
 drop package k_servicio_aut;
@@ -113,6 +114,8 @@ drop table t_sesiones cascade constraints;
 drop table t_dispositivo_ubicaciones cascade constraints;
 drop table t_dispositivo_suscripciones cascade constraints;
 drop table t_dispositivos cascade constraints;
+drop table t_trabajo_parametros cascade constraints;
+drop table t_trabajos cascade constraints;
 drop table t_servicio_logs cascade constraints;
 drop table t_servicio_parametros cascade constraints;
 drop table t_servicios cascade constraints;
@@ -145,6 +148,7 @@ drop sequence s_id_persona;
 drop sequence s_id_rol;
 drop sequence s_id_servicio;
 drop sequence s_id_servicio_log;
+drop sequence s_id_trabajo;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
 drop sequence s_id_dispositivo;
