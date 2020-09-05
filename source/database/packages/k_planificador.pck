@@ -533,6 +533,13 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
       END;
     END IF;
   
+    -- Verificar si el trabajo existe
+    BEGIN
+      dbms_scheduler.get_attribute(NAME      => l_nombre_trabajo,
+                                   attribute => 'job_type',
+                                   VALUE     => l_tipo_trabajo);
+    END;
+  
     -- Editar fecha de inicio del trabajo
     IF i_fecha_inicio IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
