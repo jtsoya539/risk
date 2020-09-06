@@ -487,10 +487,9 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
              upper(nombre),
              upper(dominio),
              accion,
-             nvl(i_fecha_inicio, nvl(fecha_inicio, current_timestamp)) +
-             (tiempo_inicio / 86400),
-             nvl(i_intervalo_repeticion, intervalo_repeticion),
-             nvl(i_fecha_fin, fecha_fin),
+             i_fecha_inicio + (tiempo_inicio / 86400),
+             i_intervalo_repeticion,
+             i_fecha_fin,
              comentarios
         INTO l_tipo_trabajo,
              l_nombre_trabajo,
@@ -544,21 +543,21 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
     IF i_fecha_inicio IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
                                    attribute => 'start_date',
-                                   VALUE     => i_fecha_inicio);
+                                   VALUE     => l_fecha_inicio);
     END IF;
   
     -- Editar intérvalo de repetición del trabajo
     IF i_intervalo_repeticion IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
                                    attribute => 'repeat_interval',
-                                   VALUE     => i_intervalo_repeticion);
+                                   VALUE     => l_intervalo_repeticion);
     END IF;
   
     -- Editar fecha de fin del trabajo
     IF i_fecha_fin IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
                                    attribute => 'end_date',
-                                   VALUE     => i_fecha_fin);
+                                   VALUE     => l_fecha_fin);
     END IF;
   END;
 
