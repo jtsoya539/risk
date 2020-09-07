@@ -1,6 +1,8 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_OPERACION', 'P', 'PARÁMETROS', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_MENSAJERIA', 'M', 'MAIL', null, 'S');
@@ -111,15 +113,6 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_CLAVE', 'B', 'BLOQUEADO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DIRECCION_PARAMETRO', 'I', 'ENTRADA', 'IN', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DIRECCION_PARAMETRO', 'O', 'SALIDA', 'OUT', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DIRECCION_PARAMETRO', 'A', 'AMBOS', 'IN OUT', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DATO_PARAMETRO', 'S', 'STRING', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
@@ -132,13 +125,13 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DATO_PARAMETRO', 'D', 'DATE', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_SERVICIO', 'GEN', 'GENERAL', null, 'S');
+values ('DOMINIO_OPERACION', 'GEN', 'GENERAL', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_SERVICIO', 'AUT', 'AUTENTICACIÓN', null, 'S');
+values ('DOMINIO_OPERACION', 'AUT', 'AUTENTICACIÓN', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_SERVICIO', 'API', 'SERVICIO', null, 'S');
+values ('DOMINIO_OPERACION', 'API', 'SERVICIO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_SESION', 'I', 'INVÁLIDO', null, 'S');
@@ -156,7 +149,7 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_MENSAJERIA', 'R', 'PROCESADO CON ERROR', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_SERVICIO', 'MSJ', 'MENSAJERÍA', null, 'S');
+values ('DOMINIO_OPERACION', 'MSJ', 'MENSAJERÍA', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_MENSAJERIA', 'A', 'ANULADO', null, 'S');
