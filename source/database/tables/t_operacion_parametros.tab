@@ -1,0 +1,56 @@
+create table T_OPERACION_PARAMETROS
+(
+  id_operacion    NUMBER(15) not null,
+  nombre          VARCHAR2(100) not null,
+  orden           NUMBER(3) not null,
+  activo          VARCHAR2(1) default 'N' not null,
+  tipo_dato       VARCHAR2(1) not null,
+  formato         VARCHAR2(100),
+  longitud_maxima NUMBER(15),
+  obligatorio     VARCHAR2(1) default 'N' not null,
+  valor_defecto   VARCHAR2(1000),
+  etiqueta        VARCHAR2(2000),
+  detalle         VARCHAR2(4000)
+)
+;
+comment on table T_OPERACION_PARAMETROS
+  is 'Parámetros de Operaciones';
+comment on column T_OPERACION_PARAMETROS.id_operacion
+  is 'Identificador de la operación';
+comment on column T_OPERACION_PARAMETROS.nombre
+  is 'Nombre del parámetro';
+comment on column T_OPERACION_PARAMETROS.orden
+  is 'Número de orden del parámetro';
+comment on column T_OPERACION_PARAMETROS.activo
+  is 'El parámetro está activo? (S/N)';
+comment on column T_OPERACION_PARAMETROS.tipo_dato
+  is 'Tipo de dato del parámetro';
+comment on column T_OPERACION_PARAMETROS.formato
+  is 'Formato del parámetro';
+comment on column T_OPERACION_PARAMETROS.longitud_maxima
+  is 'Longitud máxima del parámetro';
+comment on column T_OPERACION_PARAMETROS.obligatorio
+  is 'El parámetro es obligatorio? (S/N)';
+comment on column T_OPERACION_PARAMETROS.valor_defecto
+  is 'Valor por defecto';
+comment on column T_OPERACION_PARAMETROS.etiqueta
+  is 'Etiqueta del parámetro';
+comment on column T_OPERACION_PARAMETROS.detalle
+  is 'Detalles adicionales del parámetro';
+alter table T_OPERACION_PARAMETROS
+  add constraint PK_OPERACION_PARAMETROS primary key (ID_OPERACION, NOMBRE);
+alter table T_OPERACION_PARAMETROS
+  add constraint UK_OPE_PAR_ID_OPERACION_ORDEN unique (ID_OPERACION, ORDEN);
+alter table T_OPERACION_PARAMETROS
+  add constraint FK_OPE_PARAMETROS_OPERACIONES foreign key (ID_OPERACION)
+  references T_OPERACIONES (ID_OPERACION);
+alter table T_OPERACION_PARAMETROS
+  add constraint CK_OPE_PAR_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+alter table T_OPERACION_PARAMETROS
+  add constraint CK_OPE_PAR_OBLIGATORIO
+  check (OBLIGATORIO IN ('S', 'N'));
+alter table T_OPERACION_PARAMETROS
+  add constraint CK_OPE_PAR_TIPO_DATO_FORMATO
+  check (TIPO_DATO <> 'O' OR (TIPO_DATO = 'O' AND FORMATO IS NOT NULL));
+

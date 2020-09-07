@@ -56,6 +56,7 @@ drop package k_servicio_msj;
 drop package k_servicio_gen;
 drop package k_servicio_aut;
 drop package k_servicio;
+drop package k_operacion;
 drop package k_mensajeria;
 drop package k_archivo;
 drop package k_dato;
@@ -97,6 +98,11 @@ drop type y_objetos force;
 drop type y_objeto force;
 
 prompt
+prompt Borrando vistas...
+prompt -----------------------------------
+prompt
+
+prompt
 prompt Borrando tablas...
 prompt -----------------------------------
 prompt
@@ -118,6 +124,8 @@ drop table t_trabajos cascade constraints;
 drop table t_servicio_logs cascade constraints;
 drop table t_servicio_parametros cascade constraints;
 drop table t_servicios cascade constraints;
+drop table t_operacion_parametros cascade constraints;
+drop table t_operaciones cascade constraints;
 drop table t_rol_usuarios cascade constraints;
 drop table t_rol_permisos cascade constraints;
 drop table t_permisos cascade constraints;
@@ -145,6 +153,7 @@ drop sequence s_id_ciudad;
 drop sequence s_id_barrio;
 drop sequence s_id_persona;
 drop sequence s_id_rol;
+drop sequence s_id_operacion;
 drop sequence s_id_servicio;
 drop sequence s_id_servicio_log;
 drop sequence s_id_trabajo;

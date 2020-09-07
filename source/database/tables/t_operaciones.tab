@@ -1,0 +1,35 @@
+create table T_OPERACIONES
+(
+  id_operacion   NUMBER(15) not null,
+  tipo           VARCHAR2(1) not null,
+  nombre         VARCHAR2(1000) not null,
+  dominio        VARCHAR2(30),
+  activo         VARCHAR2(1) default 'N' not null,
+  detalle        VARCHAR2(4000),
+  version_actual VARCHAR2(100)
+)
+;
+comment on table T_OPERACIONES
+  is 'Operaciones';
+comment on column T_OPERACIONES.id_operacion
+  is 'Identificador de la operación';
+comment on column T_OPERACIONES.tipo
+  is 'Tipo de la operación';
+comment on column T_OPERACIONES.nombre
+  is 'Nombre de la operación';
+comment on column T_OPERACIONES.dominio
+  is 'Dominio de la operación';
+comment on column T_OPERACIONES.activo
+  is 'La operación está activa? (S/N)';
+comment on column T_OPERACIONES.detalle
+  is 'Detalles adicionales de la operación';
+comment on column T_OPERACIONES.version_actual
+  is 'Version actual de la operación';
+alter table T_OPERACIONES
+  add constraint PK_OPERACIONES primary key (ID_OPERACION);
+alter table T_OPERACIONES
+  add constraint UK_OPE_TIPO_NOMBRE_DOMINIO unique (TIPO, NOMBRE, DOMINIO);
+alter table T_OPERACIONES
+  add constraint CK_OPERACIONES_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+
