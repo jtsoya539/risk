@@ -109,8 +109,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Obteniendo parámetros';
-    l_servicio  := k_servicio.f_valor_parametro_string(i_parametros,
-                                                       'servicio');
+    l_servicio  := k_operacion.f_valor_parametro_string(i_parametros,
+                                                        'servicio');
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -157,13 +157,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'parametro') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'parametro') IS NOT NULL,
                                    'Debe ingresar parametro');
   
     l_rsp.lugar      := 'Obteniendo valor del parametro';
-    l_dato.contenido := k_util.f_valor_parametro(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                     'parametro'));
+    l_dato.contenido := k_util.f_valor_parametro(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                      'parametro'));
   
     IF l_dato.contenido IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
@@ -198,20 +198,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'dominio') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'dominio') IS NOT NULL,
                                    'Debe ingresar dominio');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'codigo') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'codigo') IS NOT NULL,
                                    'Debe ingresar codigo');
   
     l_rsp.lugar      := 'Obteniendo significado';
-    l_dato.contenido := k_util.f_significado_codigo(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                        'dominio'),
-                                                    k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                        'codigo'));
+    l_dato.contenido := k_util.f_significado_codigo(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                         'dominio'),
+                                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                         'codigo'));
   
     IF l_dato.contenido IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp,
@@ -256,15 +256,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                'dominio')) LOOP
+    FOR ele IN cr_elementos(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'dominio')) LOOP
       l_elemento             := NEW y_significado();
       l_elemento.dominio     := ele.dominio;
       l_elemento.codigo      := ele.codigo;
@@ -320,15 +320,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_pais')) LOOP
+    FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_pais')) LOOP
       l_elemento             := NEW y_pais();
       l_elemento.id_pais     := ele.id_pais;
       l_elemento.nombre      := ele.nombre;
@@ -383,17 +383,17 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_departamento'),
-                            k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_pais')) LOOP
+    FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_departamento'),
+                            k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_pais')) LOOP
       l_elemento                 := NEW y_departamento();
       l_elemento.id_departamento := ele.id_departamento;
       l_elemento.nombre          := ele.nombre;
@@ -447,19 +447,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_ciudad'),
-                            k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_pais'),
-                            k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_departamento')) LOOP
+    FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_ciudad'),
+                            k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_pais'),
+                            k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_departamento')) LOOP
       l_elemento                 := NEW y_ciudad();
       l_elemento.id_ciudad       := ele.id_ciudad;
       l_elemento.nombre          := ele.nombre;
@@ -520,21 +520,21 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos(k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_barrio'),
-                            k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_pais'),
-                            k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_departamento'),
-                            k_servicio.f_valor_parametro_number(i_parametros,
-                                                                'id_ciudad')) LOOP
+    FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_barrio'),
+                            k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_pais'),
+                            k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_departamento'),
+                            k_operacion.f_valor_parametro_number(i_parametros,
+                                                                 'id_ciudad')) LOOP
       l_elemento                 := NEW y_barrio();
       l_elemento.id_barrio       := ele.id_barrio;
       l_elemento.nombre          := ele.nombre;
@@ -575,29 +575,29 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'tabla') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'tabla') IS NOT NULL,
                                    'Debe ingresar tabla');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'campo') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'campo') IS NOT NULL,
                                    'Debe ingresar campo');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'referencia') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'referencia') IS NOT NULL,
                                    'Debe ingresar referencia');
   
     l_rsp.lugar := 'Recuperando archivo';
-    l_archivo   := k_archivo.f_recuperar_archivo(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                     'tabla'),
-                                                 k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                     'campo'),
-                                                 k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                     'referencia'),
-                                                 k_servicio.f_valor_parametro_number(i_parametros,
-                                                                                     'version'));
+    l_archivo   := k_archivo.f_recuperar_archivo(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                      'tabla'),
+                                                 k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                      'campo'),
+                                                 k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                      'referencia'),
+                                                 k_operacion.f_valor_parametro_number(i_parametros,
+                                                                                      'version'));
   
     IF l_archivo.contenido IS NULL OR
        dbms_lob.getlength(l_archivo.contenido) = 0 THEN
@@ -629,35 +629,35 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'tabla') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'tabla') IS NOT NULL,
                                    'Debe ingresar tabla');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'campo') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'campo') IS NOT NULL,
                                    'Debe ingresar campo');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'referencia') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'referencia') IS NOT NULL,
                                    'Debe ingresar referencia');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'archivo') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'archivo') IS NOT NULL,
                                    'Debe ingresar archivo');
-    l_archivo := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                           'archivo') AS
+    l_archivo := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                            'archivo') AS
                        y_archivo);
   
     l_rsp.lugar := 'Guardando archivo';
-    k_archivo.p_guardar_archivo(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                    'tabla'),
-                                k_servicio.f_valor_parametro_string(i_parametros,
-                                                                    'campo'),
-                                k_servicio.f_valor_parametro_string(i_parametros,
-                                                                    'referencia'),
+    k_archivo.p_guardar_archivo(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                     'tabla'),
+                                k_operacion.f_valor_parametro_string(i_parametros,
+                                                                     'campo'),
+                                k_operacion.f_valor_parametro_string(i_parametros,
+                                                                     'referencia'),
                                 l_archivo);
   
     k_servicio.p_respuesta_ok(l_rsp);
@@ -686,15 +686,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'referencia') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'referencia') IS NOT NULL,
                                    'Debe ingresar referencia');
   
     l_rsp.lugar := 'Recuperando texto';
     l_archivo   := k_archivo.f_recuperar_archivo('T_TEXTOS',
                                                  'ARCHIVO',
-                                                 k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                     'referencia'));
+                                                 k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                      'referencia'));
   
     IF l_archivo.contenido IS NULL OR
        dbms_lob.getlength(l_archivo.contenido) = 0 THEN

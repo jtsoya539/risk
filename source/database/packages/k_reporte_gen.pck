@@ -47,16 +47,16 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
   
     l_rsp.lugar := 'Validando parámetros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'formato') IN
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'formato') IN
                                    (k_reporte.c_formato_pdf,
                                     k_reporte.c_formato_docx,
                                     k_reporte.c_formato_xlsx,
                                     k_reporte.c_formato_txt),
                                    'Formato de salida no soportado');
   
-    l_formato := k_servicio.f_valor_parametro_string(i_parametros,
-                                                     'formato');
+    l_formato := k_operacion.f_valor_parametro_string(i_parametros,
+                                                      'formato');
   
     l_rsp.lugar := 'Obteniendo versión del sistema';
     BEGIN

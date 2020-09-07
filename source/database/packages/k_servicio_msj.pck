@@ -81,11 +81,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos LOOP
@@ -151,11 +151,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos LOOP
@@ -216,11 +216,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Validando parametros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_object(i_parametros,
-                                                                       'pagina_parametros') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_servicio.f_valor_parametro_object(i_parametros,
-                                                                     'pagina_parametros') AS
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
                                  y_pagina_parametros);
   
     FOR ele IN cr_elementos LOOP
@@ -267,115 +267,115 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
   
     l_rsp.lugar := 'Validando parámetros';
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'tipo_mensajeria') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'tipo_mensajeria') IS NOT NULL,
                                    'Debe ingresar tipo_mensajeria');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'tipo_mensajeria') IN
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'tipo_mensajeria') IN
                                    ('M', 'S', 'P'),
                                    'Valor no válido para tipo_mensajeria');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_number(i_parametros,
-                                                                       'id_mensajeria') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_number(i_parametros,
+                                                                        'id_mensajeria') IS NOT NULL,
                                    'Debe ingresar id_mensajeria');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'estado') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'estado') IS NOT NULL,
                                    'Debe ingresar estado');
   
     k_servicio.p_validar_parametro(l_rsp,
-                                   k_servicio.f_valor_parametro_string(i_parametros,
-                                                                       'respuesta_envio') IS NOT NULL,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'respuesta_envio') IS NOT NULL,
                                    'Debe ingresar respuesta_envio');
   
     l_rsp.lugar := 'Cambiando estado de mensajería';
     CASE
-     k_servicio.f_valor_parametro_string(i_parametros, 'tipo_mensajeria')
+     k_operacion.f_valor_parametro_string(i_parametros, 'tipo_mensajeria')
     
       WHEN 'M' THEN
         -- Mail
         UPDATE t_correos m
            SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
                m.estado                  = CASE
-                                             WHEN k_servicio.f_valor_parametro_string(i_parametros, 'estado') IN ('R') AND
-                                                  nvl(m.cantidad_intentos_envio, 0) >=
+                                             WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
+                                                  ('R') AND nvl(m.cantidad_intentos_envio, 0) >=
                                                   k_mensajeria.c_cantidad_intentos_permitidos THEN
                                               'A' -- ANULADO
                                              ELSE
-                                              k_servicio.f_valor_parametro_string(i_parametros, 'estado')
+                                              k_operacion.f_valor_parametro_string(i_parametros, 'estado')
                                            END,
-               m.respuesta_envio         = substr(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                      'respuesta_envio'),
+               m.respuesta_envio         = substr(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                       'respuesta_envio'),
                                                   1,
                                                   1000),
                m.fecha_envio             = CASE
-                                             WHEN k_servicio.f_valor_parametro_string(i_parametros, 'estado') IN
+                                             WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
                                                   ('E', 'R') THEN
                                               SYSDATE
                                              ELSE
                                               NULL
                                            END
          WHERE m.id_correo =
-               k_servicio.f_valor_parametro_number(i_parametros,
-                                                   'id_mensajeria');
+               k_operacion.f_valor_parametro_number(i_parametros,
+                                                    'id_mensajeria');
       
       WHEN 'S' THEN
         -- SMS
         UPDATE t_mensajes m
            SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
                m.estado                  = CASE
-                                             WHEN k_servicio.f_valor_parametro_string(i_parametros, 'estado') IN ('R') AND
-                                                  nvl(m.cantidad_intentos_envio, 0) >=
+                                             WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
+                                                  ('R') AND nvl(m.cantidad_intentos_envio, 0) >=
                                                   k_mensajeria.c_cantidad_intentos_permitidos THEN
                                               'A' -- ANULADO
                                              ELSE
-                                              k_servicio.f_valor_parametro_string(i_parametros, 'estado')
+                                              k_operacion.f_valor_parametro_string(i_parametros, 'estado')
                                            END,
-               m.respuesta_envio         = substr(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                      'respuesta_envio'),
+               m.respuesta_envio         = substr(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                       'respuesta_envio'),
                                                   1,
                                                   1000),
                m.fecha_envio             = CASE
-                                             WHEN k_servicio.f_valor_parametro_string(i_parametros, 'estado') IN
+                                             WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
                                                   ('E', 'R') THEN
                                               SYSDATE
                                              ELSE
                                               NULL
                                            END
          WHERE m.id_mensaje =
-               k_servicio.f_valor_parametro_number(i_parametros,
-                                                   'id_mensajeria');
+               k_operacion.f_valor_parametro_number(i_parametros,
+                                                    'id_mensajeria');
       
       WHEN 'P' THEN
         -- Push
         UPDATE t_notificaciones m
            SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
                m.estado                  = CASE
-                                             WHEN k_servicio.f_valor_parametro_string(i_parametros, 'estado') IN ('R') AND
-                                                  nvl(m.cantidad_intentos_envio, 0) >=
+                                             WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
+                                                  ('R') AND nvl(m.cantidad_intentos_envio, 0) >=
                                                   k_mensajeria.c_cantidad_intentos_permitidos THEN
                                               'A' -- ANULADO
                                              ELSE
-                                              k_servicio.f_valor_parametro_string(i_parametros, 'estado')
+                                              k_operacion.f_valor_parametro_string(i_parametros, 'estado')
                                            END,
-               m.respuesta_envio         = substr(k_servicio.f_valor_parametro_string(i_parametros,
-                                                                                      'respuesta_envio'),
+               m.respuesta_envio         = substr(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                       'respuesta_envio'),
                                                   1,
                                                   1000),
                m.fecha_envio             = CASE
-                                             WHEN k_servicio.f_valor_parametro_string(i_parametros, 'estado') IN
+                                             WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
                                                   ('E', 'R') THEN
                                               SYSDATE
                                              ELSE
                                               NULL
                                            END
          WHERE m.id_notificacion =
-               k_servicio.f_valor_parametro_number(i_parametros,
-                                                   'id_mensajeria');
+               k_operacion.f_valor_parametro_number(i_parametros,
+                                                    'id_mensajeria');
       
     END CASE;
   
