@@ -98,6 +98,11 @@ drop type y_objetos force;
 drop type y_objeto force;
 
 prompt
+prompt Borrando vistas...
+prompt -----------------------------------
+prompt
+
+prompt
 prompt Borrando tablas...
 prompt -----------------------------------
 prompt

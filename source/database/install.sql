@@ -115,6 +115,11 @@ prompt
 @@tables/t_archivos.tab
 
 prompt
+prompt Creando vistas...
+prompt -----------------------------------
+prompt
+
+prompt
 prompt Creando types...
 prompt -----------------------------------
 prompt

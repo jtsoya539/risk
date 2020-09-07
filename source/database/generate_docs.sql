@@ -92,6 +92,11 @@ plugin plsqldoc generate t_usuario_claves;
 plugin plsqldoc generate t_usuarios;
 
 prompt
+prompt Generando docs de vistas...
+prompt -----------------------------------
+prompt
+
+prompt
 prompt Generando docs de types...
 prompt -----------------------------------
 prompt
