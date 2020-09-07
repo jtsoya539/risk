@@ -43,6 +43,7 @@ CREATE OR REPLACE PACKAGE k_planificador IS
   ex_trabajo_no_existe       EXCEPTION;
   ex_error_parametro         EXCEPTION;
   ex_error_general           EXCEPTION;
+  PRAGMA EXCEPTION_INIT(ex_trabajo_no_existe, -27475);
   PRAGMA EXCEPTION_INIT(ex_trabajo_no_existe, -27476);
   PRAGMA EXCEPTION_INIT(ex_trabajo_ya_existe, -27477);
 
@@ -94,6 +95,11 @@ CREATE OR REPLACE PACKAGE k_planificador IS
                                      i_fecha_inicio         IN TIMESTAMP WITH TIME ZONE DEFAULT NULL,
                                      i_intervalo_repeticion IN VARCHAR2 DEFAULT NULL,
                                      i_fecha_fin            IN TIMESTAMP WITH TIME ZONE DEFAULT NULL);
+
+  -- Elimina un trabajo en el sistema
+  -- %param
+  PROCEDURE p_eliminar_trabajo(i_id_trabajo IN NUMBER,
+                               i_parametros IN CLOB DEFAULT NULL);
 
 END;
 /
@@ -396,7 +402,8 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
              upper(nombre),
              upper(dominio),
              accion,
-             nvl(i_fecha_inicio, fecha_inicio),
+             nvl(i_fecha_inicio, nvl(fecha_inicio, current_timestamp)) +
+             (tiempo_inicio / 86400),
              nvl(i_intervalo_repeticion, intervalo_repeticion),
              nvl(i_fecha_fin, fecha_fin),
              comentarios
@@ -452,7 +459,8 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
                                 start_date      => l_fecha_inicio,
                                 repeat_interval => l_intervalo_repeticion,
                                 end_date        => l_fecha_fin,
-                                enabled         => TRUE);
+                                enabled         => TRUE,
+                                comments        => l_comentarios);
     END;
   END;
 
@@ -479,9 +487,9 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
              upper(nombre),
              upper(dominio),
              accion,
-             nvl(i_fecha_inicio, fecha_inicio),
-             nvl(i_intervalo_repeticion, intervalo_repeticion),
-             nvl(i_fecha_fin, fecha_fin),
+             i_fecha_inicio + (tiempo_inicio / 86400),
+             i_intervalo_repeticion,
+             i_fecha_fin,
              comentarios
         INTO l_tipo_trabajo,
              l_nombre_trabajo,
@@ -524,25 +532,32 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
       END;
     END IF;
   
+    -- Verificar si el trabajo existe
+    BEGIN
+      dbms_scheduler.get_attribute(NAME      => l_nombre_trabajo,
+                                   attribute => 'job_type',
+                                   VALUE     => l_tipo_trabajo);
+    END;
+  
     -- Editar fecha de inicio del trabajo
     IF i_fecha_inicio IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
                                    attribute => 'start_date',
-                                   VALUE     => i_fecha_inicio);
+                                   VALUE     => l_fecha_inicio);
     END IF;
   
     -- Editar intérvalo de repetición del trabajo
     IF i_intervalo_repeticion IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
                                    attribute => 'repeat_interval',
-                                   VALUE     => i_intervalo_repeticion);
+                                   VALUE     => l_intervalo_repeticion);
     END IF;
   
     -- Editar fecha de fin del trabajo
     IF i_fecha_fin IS NOT NULL THEN
       dbms_scheduler.set_attribute(NAME      => l_nombre_trabajo,
                                    attribute => 'end_date',
-                                   VALUE     => i_fecha_fin);
+                                   VALUE     => l_fecha_fin);
     END IF;
   END;
 
@@ -568,6 +583,57 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
                         i_intervalo_repeticion => i_intervalo_repeticion,
                         i_fecha_fin            => i_fecha_fin);
     END;
+  END;
+
+  -- Elimina un trabajo en el sistema
+  PROCEDURE p_eliminar_trabajo(i_id_trabajo IN NUMBER,
+                               i_parametros IN CLOB DEFAULT NULL) IS
+    l_prms y_parametros;
+    --
+    l_tipo_trabajo    t_trabajos.tipo%TYPE;
+    l_nombre_trabajo  t_trabajos.nombre%TYPE;
+    l_dominio_trabajo t_trabajos.dominio%TYPE;
+  BEGIN
+    -- Buscar datos del trabajo
+    BEGIN
+      SELECT tipo, upper(nombre), upper(dominio)
+        INTO l_tipo_trabajo, l_nombre_trabajo, l_dominio_trabajo
+        FROM t_trabajos
+       WHERE activo = 'S'
+         AND id_trabajo = i_id_trabajo;
+    EXCEPTION
+      WHEN no_data_found THEN
+        RAISE ex_trabajo_no_implementado;
+    END;
+  
+    IF i_parametros IS NOT NULL THEN
+      -- Obtener parámetros del trabajo
+      BEGIN
+        l_prms := f_procesar_parametros(i_id_trabajo, i_parametros);
+      EXCEPTION
+        WHEN OTHERS THEN
+          RAISE ex_error_parametro;
+      END;
+    
+      -- Procesar parámetros del trabajo
+      DECLARE
+        i PLS_INTEGER;
+      BEGIN
+        i := l_prms.first;
+        WHILE i IS NOT NULL LOOP
+          l_nombre_trabajo := REPLACE(l_nombre_trabajo,
+                                      '{' || l_prms(i).nombre || '}',
+                                      f_valor_parametro_string(l_prms,
+                                                               l_prms(i)
+                                                               .nombre));
+          i                := l_prms.next(i);
+        END LOOP;
+      END;
+    END IF;
+  
+    -- Elimina el trabajo
+    dbms_scheduler.drop_job(l_nombre_trabajo);
+  
   END;
 
 END;
