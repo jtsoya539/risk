@@ -30,6 +30,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   -------------------------------------------------------------------------------
   */
 
+  c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
+
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB) RETURN y_parametros;
 

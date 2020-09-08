@@ -77,8 +77,6 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
-  c_id_servicio_contexto CONSTANT PLS_INTEGER := 0;
-
   PROCEDURE lp_registrar_ejecucion(i_id_servicio IN NUMBER) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
   BEGIN
@@ -158,7 +156,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Procesando contexto';
     BEGIN
-      l_ctx := k_operacion.f_procesar_parametros(c_id_servicio_contexto,
+      l_ctx := k_operacion.f_procesar_parametros(k_operacion.c_id_operacion_contexto,
                                                  i_contexto);
     EXCEPTION
       WHEN OTHERS THEN
