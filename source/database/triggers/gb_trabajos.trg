@@ -42,7 +42,7 @@ BEGIN
     END;
   
     -- Valida tipo de operación
-    IF l_tipo_operacion <> 'R' THEN
+    IF l_tipo_operacion <> 'T' THEN
       raise_application_error(-20000, 'Operación no es de tipo Trabajo');
     END IF;
   
@@ -50,4 +50,3 @@ BEGIN
 
 END;
 /
-
