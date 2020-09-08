@@ -93,6 +93,7 @@ prompt
 @@tables/t_rol_usuarios.tab
 @@tables/t_operaciones.tab
 @@tables/t_operacion_parametros.tab
+@@tables/t_reportes.tab
 @@tables/t_servicios.tab
 @@tables/t_servicio_logs.tab
 @@tables/t_trabajos.tab
@@ -206,6 +207,7 @@ prompt
 @@scripts/ins_t_parametros.sql
 @@scripts/ins_t_operaciones.sql
 @@scripts/ins_t_operacion_parametros.sql
+@@scripts/ins_t_reportes.sql
 @@scripts/ins_t_servicios.sql
 @@scripts/ins_t_roles.sql
 @@scripts/ins_t_paises.sql

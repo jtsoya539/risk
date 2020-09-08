@@ -98,10 +98,10 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_USUARIO', 'B', 'BLOQUEADO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'T', 'TRANSACCIÓN', 'K_SERVICIO', 'S');
+values ('TIPO_SERVICIO', 'T', 'TRANSACCIÓN', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'P', 'PROCESO', 'K_SERVICIO', 'S');
+values ('TIPO_SERVICIO', 'P', 'PROCESO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_CLAVE', 'N', 'NUEVO', null, 'S');
@@ -158,10 +158,10 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DATO_PARAMETRO', 'O', 'OBJECT', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'R', 'REPORTE', 'K_REPORTE', 'S');
+values ('TIPO_SERVICIO', 'R', 'REPORTE', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'C', 'CONSULTA', 'K_SERVICIO', 'S');
+values ('TIPO_SERVICIO', 'C', 'CONSULTA', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TRUETYPE', null, 'S');
@@ -183,9 +183,6 @@ values ('EXTENSION_REPORTE', 'XLSX', 'REPORTE XLSX', 'application/octet-stream',
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_REPORTE', 'TXT', 'REPORTE TXT', 'text/plain', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'M', 'PARÁMETROS', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_USUARIO', 'P', 'PENDIENTE DE ACTIVACIÓN', null, 'S');
