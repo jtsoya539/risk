@@ -2,10 +2,10 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Package k_servicio</TITLE>
+ <TITLE>Package k_planificador</TITLE>
  <META name="object" content="PACKAGE">
- <META name="name" content="k_servicio">
- <META name="description" content="Agrupa operaciones relacionadas con los Servicios Web del sistema">
+ <META name="name" content="k_planificador">
+ <META name="description" content="Agrupa operaciones relacionadas con los Trabajos del sistema">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -13,8 +13,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Package k_servicio</P>
-Agrupa operaciones relacionadas con los Servicios Web del sistema<br>
+<P CLASS="MAIN_TITLE">Package k_planificador</P>
+Agrupa operaciones relacionadas con los Trabajos del sistema<br>
 
 <BR>
 <A NAME="Author"></A>
@@ -24,7 +24,7 @@ Author
 <TABLE CLASS="MAIN_TABLE">
 <TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-jtsoya539 27/3/2020 16:42:26
+dmezac 4/9/2020 07:30:15
 </TD></TR>
 </TABLE>
 <BR>
@@ -36,37 +36,22 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_LIMPIAR_HISTORIAL">p_limpiar_historial</A>&nbsp;&nbsp;
+<A HREF="#P_CREAR_TRABAJO">p_crear_trabajo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_VALIDAR_PARAMETRO">p_validar_parametro</A>&nbsp;&nbsp;
+<A HREF="#P_EDITAR_TRABAJO">p_editar_trabajo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_RESPUESTA_OK">p_respuesta_ok</A>&nbsp;&nbsp;
+<A HREF="#P_CREAR_O_EDITAR_TRABAJO">p_crear_o_editar_trabajo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_RESPUESTA_ERROR">p_respuesta_error</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_RESPUESTA_EXCEPCION">p_respuesta_excepcion</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_PAGINAR_ELEMENTOS">f_paginar_elementos</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_PROCESAR_SERVICIO">f_procesar_servicio</A>&nbsp;&nbsp;
+<A HREF="#P_ELIMINAR_TRABAJO">p_eliminar_trabajo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -78,7 +63,17 @@ Exceptions
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#EX_SERVICIO_NO_IMPLEMENTADO">ex_servicio_no_implementado</A>&nbsp;&nbsp;
+<A HREF="#EX_TRABAJO_NO_IMPLEMENTADO">ex_trabajo_no_implementado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_TRABAJO_YA_EXISTE">ex_trabajo_ya_existe</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_TRABAJO_NO_EXISTE">ex_trabajo_no_existe</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -105,7 +100,7 @@ Constants
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#C_SERVICIO_NO_IMPLEMENTADO">c_servicio_no_implementado</A>&nbsp;&nbsp;
+<A HREF="#C_TRABAJO_NO_IMPLEMENTADO">c_trabajo_no_implementado</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -132,15 +127,15 @@ Constants
 c_ok
 </P>
 <PRE CLASS="DECL_TEXT">
-c_ok                       CONSTANT VARCHAR2(10) := '0';
+c_ok                      CONSTANT VARCHAR2(10) := '0';
 </PRE>
 <HR>
-<A NAME="C_SERVICIO_NO_IMPLEMENTADO"></A>
+<A NAME="C_TRABAJO_NO_IMPLEMENTADO"></A>
 <P CLASS="TYPE_TITLE">
-c_servicio_no_implementado
+c_trabajo_no_implementado
 </P>
 <PRE CLASS="DECL_TEXT">
-c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
+c_trabajo_no_implementado CONSTANT VARCHAR2(10) := 'tra0001';
 </PRE>
 <HR>
 <A NAME="C_ERROR_PARAMETRO"></A>
@@ -148,7 +143,7 @@ c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
 c_error_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
-c_error_parametro          CONSTANT VARCHAR2(10) := 'api0002';
+c_error_parametro         CONSTANT VARCHAR2(10) := 'tra0002';
 </PRE>
 <HR>
 <A NAME="C_ERROR_GENERAL"></A>
@@ -156,7 +151,7 @@ c_error_parametro          CONSTANT VARCHAR2(10) := 'api0002';
 c_error_general
 </P>
 <PRE CLASS="DECL_TEXT">
-c_error_general            CONSTANT VARCHAR2(10) := 'api0099';
+c_error_general           CONSTANT VARCHAR2(10) := 'tra0099';
 </PRE>
 <HR>
 <A NAME="C_ERROR_INESPERADO"></A>
@@ -164,15 +159,31 @@ c_error_general            CONSTANT VARCHAR2(10) := 'api0099';
 c_error_inesperado
 </P>
 <PRE CLASS="DECL_TEXT">
-c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
+c_error_inesperado        CONSTANT VARCHAR2(10) := 'tra9999';
 </PRE>
 <HR>
-<A NAME="EX_SERVICIO_NO_IMPLEMENTADO"></A>
+<A NAME="EX_TRABAJO_NO_IMPLEMENTADO"></A>
 <P CLASS="TYPE_TITLE">
-ex_servicio_no_implementado
+ex_trabajo_no_implementado
 </P>
 <PRE CLASS="DECL_TEXT">
-ex_servicio_no_implementado EXCEPTION;
+ex_trabajo_no_implementado EXCEPTION;
+</PRE>
+<HR>
+<A NAME="EX_TRABAJO_YA_EXISTE"></A>
+<P CLASS="TYPE_TITLE">
+ex_trabajo_ya_existe
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_trabajo_ya_existe       EXCEPTION;
+</PRE>
+<HR>
+<A NAME="EX_TRABAJO_NO_EXISTE"></A>
+<P CLASS="TYPE_TITLE">
+ex_trabajo_no_existe
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_trabajo_no_existe       EXCEPTION;
 </PRE>
 <HR>
 <A NAME="EX_ERROR_PARAMETRO"></A>
@@ -180,7 +191,7 @@ ex_servicio_no_implementado EXCEPTION;
 ex_error_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
-ex_error_parametro          EXCEPTION;
+ex_error_parametro         EXCEPTION;
 </PRE>
 <HR>
 <A NAME="EX_ERROR_GENERAL"></A>
@@ -188,85 +199,55 @@ ex_error_parametro          EXCEPTION;
 ex_error_general
 </P>
 <PRE CLASS="DECL_TEXT">
-ex_error_general            EXCEPTION;
+ex_error_general           EXCEPTION;
 </PRE>
 <HR>
-<A NAME="P_LIMPIAR_HISTORIAL"></A>
+<A NAME="P_CREAR_TRABAJO"></A>
 <P CLASS="TYPE_TITLE">
-p_limpiar_historial
+p_crear_trabajo
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_limpiar_historial
+PROCEDURE p_crear_trabajo(i_id_trabajo           IN NUMBER,
+                          i_parametros           IN CLOB DEFAULT NULL,
+                          i_fecha_inicio         IN TIMESTAMP WITH TIME ZONE DEFAULT NULL,
+                          i_intervalo_repeticion IN VARCHAR2 DEFAULT NULL,
+                          i_fecha_fin            IN TIMESTAMP WITH TIME ZONE DEFAULT NULL)
 
 </PRE>
 <HR>
-<A NAME="P_VALIDAR_PARAMETRO"></A>
+<A NAME="P_EDITAR_TRABAJO"></A>
 <P CLASS="TYPE_TITLE">
-p_validar_parametro
+p_editar_trabajo
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
-                              i_expresion  IN BOOLEAN,
-                              i_mensaje    IN VARCHAR2)
+PROCEDURE p_editar_trabajo(i_id_trabajo           IN NUMBER,
+                           i_parametros           IN CLOB DEFAULT NULL,
+                           i_fecha_inicio         IN TIMESTAMP WITH TIME ZONE DEFAULT NULL,
+                           i_intervalo_repeticion IN VARCHAR2 DEFAULT NULL,
+                           i_fecha_fin            IN TIMESTAMP WITH TIME ZONE DEFAULT NULL)
 
 </PRE>
 <HR>
-<A NAME="P_RESPUESTA_OK"></A>
+<A NAME="P_CREAR_O_EDITAR_TRABAJO"></A>
 <P CLASS="TYPE_TITLE">
-p_respuesta_ok
+p_crear_o_editar_trabajo
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_respuesta_ok(io_respuesta IN OUT NOCOPY y_respuesta,
-                         i_datos      IN y_objeto DEFAULT NULL)
+PROCEDURE p_crear_o_editar_trabajo(i_id_trabajo           IN NUMBER,
+                                   i_parametros           IN CLOB DEFAULT NULL,
+                                   i_fecha_inicio         IN TIMESTAMP WITH TIME ZONE DEFAULT NULL,
+                                   i_intervalo_repeticion IN VARCHAR2 DEFAULT NULL,
+                                   i_fecha_fin            IN TIMESTAMP WITH TIME ZONE DEFAULT NULL)
 
 </PRE>
 <HR>
-<A NAME="P_RESPUESTA_ERROR"></A>
+<A NAME="P_ELIMINAR_TRABAJO"></A>
 <P CLASS="TYPE_TITLE">
-p_respuesta_error
+p_eliminar_trabajo
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
-                            i_codigo     IN VARCHAR2,
-                            i_mensaje    IN VARCHAR2,
-                            i_mensaje_bd IN VARCHAR2 DEFAULT NULL)
-
-</PRE>
-<HR>
-<A NAME="P_RESPUESTA_EXCEPCION"></A>
-<P CLASS="TYPE_TITLE">
-p_respuesta_excepcion
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
-                                i_error_number IN NUMBER,
-                                i_error_msg    IN VARCHAR2,
-                                i_error_stack  IN VARCHAR2)
-
-</PRE>
-<HR>
-<A NAME="F_PAGINAR_ELEMENTOS"></A>
-<P CLASS="TYPE_TITLE">
-f_paginar_elementos
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
-                             i_numero_pagina       IN INTEGER DEFAULT NULL,
-                             i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
-                             i_no_paginar          IN VARCHAR2 DEFAULT NULL)
-  RETURN y_pagina
-
-</PRE>
-<HR>
-<A NAME="F_PROCESAR_SERVICIO"></A>
-<P CLASS="TYPE_TITLE">
-f_procesar_servicio
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
-                             i_parametros  IN CLOB,
-                             i_contexto    IN CLOB DEFAULT NULL)
-  RETURN CLOB
+PROCEDURE p_eliminar_trabajo(i_id_trabajo IN NUMBER,
+                             i_parametros IN CLOB DEFAULT NULL)
 
 </PRE>
 <P>&nbsp;</P>

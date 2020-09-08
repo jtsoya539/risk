@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_operacion</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_operacion">
+ <META name="description" content="Agrupa operaciones relacionadas con las Operaciones">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_operacion</P>
+Agrupa operaciones relacionadas con las Operaciones<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 16:42:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_REGISTRAR_LOG">p_registrar_log</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO">f_valor_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_STRING">f_valor_parametro_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_NUMBER">f_valor_parametro_number</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_BOOLEAN">f_valor_parametro_boolean</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_DATE">f_valor_parametro_date</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_PARAMETRO_OBJECT">f_valor_parametro_object</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_OPERACION_CONTEXTO">c_id_operacion_contexto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_ID_OPERACION_CONTEXTO"></A>
+<P CLASS="TYPE_TITLE">
+c_id_operacion_contexto
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
+</PRE>
+<HR>
+<A NAME="P_REGISTRAR_LOG"></A>
+<P CLASS="TYPE_TITLE">
+p_registrar_log
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
+                          i_parametros   IN CLOB,
+                          i_respuesta    IN CLOB,
+                          i_contexto     IN CLOB DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="F_PROCESAR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+f_procesar_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
+                               i_parametros   IN CLOB) RETURN y_parametros
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro(i_parametros IN y_parametros,
+                           i_nombre     IN VARCHAR2) RETURN anydata
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_string
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_string(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_NUMBER"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_number
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_number(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_BOOLEAN"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_boolean
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_boolean(i_parametros IN y_parametros,
+                                   i_nombre     IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_DATE"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_date
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_date(i_parametros IN y_parametros,
+                                i_nombre     IN VARCHAR2) RETURN DATE
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_PARAMETRO_OBJECT"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_parametro_object
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
+                                  i_nombre     IN VARCHAR2) RETURN y_objeto
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

@@ -2,11 +2,11 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Table T_SERVICIOS</TITLE>
+ <TITLE>Table T_OPERACIONES</TITLE>
  <META name="object" content="TABLE">
- <META name="name" content="T_SERVICIOS">
- <META name="description" content="Servicios Web">
- <META name="columns" content="ID_SERVICIO TIPO CANTIDAD_EJECUCIONES FECHA_ULTIMA_EJECUCION">
+ <META name="name" content="T_OPERACIONES">
+ <META name="description" content="Operaciones">
+ <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,8 +14,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Table T_SERVICIOS</P>
-Servicios Web
+<P CLASS="MAIN_TITLE">Table T_OPERACIONES</P>
+Operaciones
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -47,7 +47,7 @@ Comments
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ID_SERVICIO
+ID_OPERACION
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 NUMBER(15)
@@ -59,7 +59,7 @@ NUMBER(15)
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Identificador del servicio
+Identificador de la operaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -70,38 +70,38 @@ TIPO
 VARCHAR2(1)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
+&nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Tipo del servicio
+Tipo de la operaci&#243;n
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-CANTIDAD_EJECUCIONES
+NOMBRE
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-NUMBER
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
+VARCHAR2(1000)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Cantidad de ejecuciones del servicio
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Nombre de la operaci&#243;n
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-FECHA_ULTIMA_EJECUCION
+DOMINIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-DATE
+VARCHAR2(30)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -110,7 +110,58 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Fecha de la ultima ejecucion del servicio
+Dominio de la operaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ACTIVO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(1)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+'N'
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+La operaci&#243;n est&#225; activa? (S/N)
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+DETALLE
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(4000)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Detalles adicionales de la operaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+VERSION_ACTUAL
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(100)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Version actual de la operaci&#243;n
 </TD>
 </TR>
 </TABLE>
@@ -132,17 +183,17 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_SERVICIOS
+PK_OPERACIONES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_SERVICIO
+ID_OPERACION
 </TD>
 </TR>
 </TABLE>
 <HR>
-<A NAME="Foreign Keys"></A>
+<A NAME="Unique Keys"></A>
 <TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
-Foreign Keys
+Unique Keys
 </TD></TR></TABLE>
 <TABLE CLASS="SIMPLE_TABLE">
 <TR>
@@ -154,27 +205,38 @@ Name
 Columns
 </U>
 </TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+UK_OPE_TIPO_NOMBRE_DOMINIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+TIPO,NOMBRE,DOMINIO
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Check Constraints"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Check Constraints
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
-Referencing Table
+Name
 </U>
 </TD>
 <TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
-Columns
+Condition
 </U>
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-FK_SERVICIOS_OPERACIONES
+CK_OPERACIONES_ACTIVO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_SERVICIO
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-T_OPERACIONES
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_OPERACION
+ACTIVO IN ('S', 'N')
 </TD>
 </TR>
 </TABLE>
@@ -200,10 +262,21 @@ Type
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_SERVICIOS
+PK_OPERACIONES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_SERVICIO
+ID_OPERACION
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Unique
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+UK_OPE_TIPO_NOMBRE_DOMINIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+TIPO,NOMBRE,DOMINIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

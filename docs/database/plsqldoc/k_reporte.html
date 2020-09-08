@@ -36,12 +36,22 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_LIMPIAR_HISTORIAL">p_limpiar_historial</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ARCHIVO_OK">f_archivo_ok</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ARCHIVO_ERROR">f_archivo_error</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PROCESAR_REPORTE">f_procesar_reporte</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -107,6 +117,15 @@ c_formato_txt
 c_formato_txt  CONSTANT VARCHAR2(10) := 'TXT';
 </PRE>
 <HR>
+<A NAME="P_LIMPIAR_HISTORIAL"></A>
+<P CLASS="TYPE_TITLE">
+p_limpiar_historial
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_limpiar_historial
+
+</PRE>
+<HR>
 <A NAME="F_ARCHIVO_OK"></A>
 <P CLASS="TYPE_TITLE">
 f_archivo_ok
@@ -126,6 +145,17 @@ f_archivo_error
 FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
                          i_formato   IN VARCHAR2 DEFAULT NULL)
   RETURN y_archivo
+
+</PRE>
+<HR>
+<A NAME="F_PROCESAR_REPORTE"></A>
+<P CLASS="TYPE_TITLE">
+f_procesar_reporte
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_procesar_reporte(i_id_reporte IN NUMBER,
+                            i_parametros IN CLOB,
+                            i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB
 
 </PRE>
 <P>&nbsp;</P>

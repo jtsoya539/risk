@@ -74,20 +74,23 @@ plugin plsqldoc generate t_dispositivo_ubicaciones;
 plugin plsqldoc generate t_errores;
 plugin plsqldoc generate t_mensajes;
 plugin plsqldoc generate t_notificaciones;
+plugin plsqldoc generate t_operaciones;
+plugin plsqldoc generate t_operacion_logs;
+plugin plsqldoc generate t_operacion_parametros;
 plugin plsqldoc generate t_paises;
 plugin plsqldoc generate t_parametros;
 plugin plsqldoc generate t_permisos;
 plugin plsqldoc generate t_personas;
+plugin plsqldoc generate t_reportes;
 plugin plsqldoc generate t_roles;
 plugin plsqldoc generate t_rol_parametros;
 plugin plsqldoc generate t_rol_permisos;
 plugin plsqldoc generate t_rol_usuarios;
-plugin plsqldoc generate t_servicio_logs;
-plugin plsqldoc generate t_servicio_parametros;
 plugin plsqldoc generate t_servicios;
 plugin plsqldoc generate t_sesiones;
 plugin plsqldoc generate t_significados;
 plugin plsqldoc generate t_sistemas;
+plugin plsqldoc generate t_trabajos;
 plugin plsqldoc generate t_usuario_claves;
 plugin plsqldoc generate t_usuarios;
 
@@ -135,6 +138,8 @@ plugin plsqldoc generate k_dispositivo;
 plugin plsqldoc generate k_error;
 plugin plsqldoc generate k_html;
 plugin plsqldoc generate k_mensajeria;
+plugin plsqldoc generate k_operacion;
+plugin plsqldoc generate k_planificador;
 plugin plsqldoc generate k_reporte;
 plugin plsqldoc generate k_reporte_gen;
 plugin plsqldoc generate k_servicio;
@@ -150,6 +155,30 @@ prompt
 prompt Generando docs de triggers...
 prompt -----------------------------------
 prompt
+plugin plsqldoc generate gb_archivos;
+plugin plsqldoc generate gb_datos;
+plugin plsqldoc generate gb_mensajes;
+plugin plsqldoc generate gb_personas;
+plugin plsqldoc generate gb_reportes;
+plugin plsqldoc generate gb_servicios;
+plugin plsqldoc generate gb_sesiones;
+plugin plsqldoc generate gb_trabajos;
+plugin plsqldoc generate gb_usuarios;
+plugin plsqldoc generate gs_barrios;
+plugin plsqldoc generate gs_ciudades;
+plugin plsqldoc generate gs_correo_adjuntos;
+plugin plsqldoc generate gs_correos;
+plugin plsqldoc generate gs_departamentos;
+plugin plsqldoc generate gs_dispositivos;
+plugin plsqldoc generate gs_mensajes;
+plugin plsqldoc generate gs_notificaciones;
+plugin plsqldoc generate gs_operaciones;
+plugin plsqldoc generate gs_operacion_logs;
+plugin plsqldoc generate gs_paises;
+plugin plsqldoc generate gs_personas;
+plugin plsqldoc generate gs_roles;
+plugin plsqldoc generate gs_sesiones;
+plugin plsqldoc generate gs_usuarios;
 
 prompt
 prompt Generando index...
