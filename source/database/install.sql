@@ -96,10 +96,8 @@ prompt
 @@tables/t_operaciones.tab
 @@tables/t_operacion_parametros.tab
 @@tables/t_servicios.tab
-@@tables/t_servicio_parametros.tab
 @@tables/t_servicio_logs.tab
 @@tables/t_trabajos.tab
-@@tables/t_trabajo_parametros.tab
 @@tables/t_dispositivos.tab
 @@tables/t_dispositivo_suscripciones.tab
 @@tables/t_dispositivo_ubicaciones.tab
@@ -213,7 +211,6 @@ prompt
 @@scripts/ins_t_operaciones.sql
 @@scripts/ins_t_operacion_parametros.sql
 @@scripts/ins_t_servicios.sql
-@@scripts/ins_t_servicio_parametros.sql
 @@scripts/ins_t_roles.sql
 @@scripts/ins_t_paises.sql
 @@scripts/ins_t_departamentos.sql
