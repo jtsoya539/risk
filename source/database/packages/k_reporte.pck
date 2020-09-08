@@ -36,6 +36,8 @@ CREATE OR REPLACE PACKAGE k_reporte IS
   c_formato_xlsx CONSTANT VARCHAR2(10) := 'XLSX';
   c_formato_txt  CONSTANT VARCHAR2(10) := 'TXT';
 
+  PROCEDURE p_limpiar_historial;
+
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
                         i_formato   IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo;
@@ -206,6 +208,12 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                    k_error.f_mensaje_error(k_servicio.c_error_inesperado),
                                    dbms_utility.format_error_stack);
       RETURN l_rsp;
+  END;
+
+  PROCEDURE p_limpiar_historial IS
+  BEGIN
+    UPDATE t_reportes
+       SET cantidad_ejecuciones = NULL, fecha_ultima_ejecucion = NULL;
   END;
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
