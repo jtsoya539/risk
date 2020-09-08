@@ -2,6 +2,7 @@ create table T_TRABAJOS
 (
   id_trabajo             NUMBER(15) not null,
   tipo                   VARCHAR2(20),
+  accion                 VARCHAR2(4000),
   fecha_inicio           TIMESTAMP(6) WITH TIME ZONE,
   tiempo_inicio          NUMBER(10),
   intervalo_repeticion   VARCHAR2(200),
@@ -17,6 +18,8 @@ comment on column T_TRABAJOS.id_trabajo
   is 'Identificador del trabajo';
 comment on column T_TRABAJOS.tipo
   is 'Tipo del trabajo';
+comment on column T_TRABAJOS.accion
+  is 'Accion del trabajo';
 comment on column T_TRABAJOS.fecha_inicio
   is 'Fecha de inicio del trabajo';
 comment on column T_TRABAJOS.tiempo_inicio
