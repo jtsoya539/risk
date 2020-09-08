@@ -63,7 +63,6 @@ prompt
 @@sequences/s_id_rol.seq
 @@sequences/s_id_operacion.seq
 @@sequences/s_id_servicio_log.seq
-@@sequences/s_id_trabajo.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
 @@sequences/s_id_dispositivo.seq
@@ -180,7 +179,6 @@ prompt
 @@triggers/gs_roles.trg
 @@triggers/gs_operaciones.trg
 @@triggers/gs_servicio_logs.trg
-@@triggers/gs_trabajos.trg
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
 @@triggers/gs_dispositivos.trg
