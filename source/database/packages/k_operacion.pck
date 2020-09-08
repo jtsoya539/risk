@@ -32,6 +32,11 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
 
+  PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
+                            i_parametros   IN CLOB,
+                            i_respuesta    IN CLOB,
+                            i_contexto     IN CLOB DEFAULT NULL);
+
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB) RETURN y_parametros;
 
@@ -56,6 +61,22 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_operacion IS
+
+  PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
+                            i_parametros   IN CLOB,
+                            i_respuesta    IN CLOB,
+                            i_contexto     IN CLOB DEFAULT NULL) IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+  BEGIN
+    INSERT INTO t_operacion_logs
+      (id_operacion, contexto, parametros, respuesta)
+    VALUES
+      (i_id_operacion, i_contexto, i_parametros, i_respuesta);
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+  END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB) RETURN y_parametros IS

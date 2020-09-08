@@ -1,4 +1,4 @@
-create sequence S_ID_SERVICIO_LOG
+create sequence S_ID_OPERACION_LOG
 minvalue 1
 maxvalue 9999999999999999999999999999
 start with 1

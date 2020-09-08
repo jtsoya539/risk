@@ -293,7 +293,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
              .to_json;
     -- Registra log con datos de entrada y salida
-    -- lp_registrar_log(i_id_reporte, i_parametros, l_rsp, i_contexto);
+    k_operacion.p_registrar_log(i_id_reporte,
+                                i_parametros,
+                                l_rsp,
+                                i_contexto);
     RETURN l_rsp;
   END;
 

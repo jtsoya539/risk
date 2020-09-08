@@ -62,7 +62,7 @@ prompt
 @@sequences/s_id_persona.seq
 @@sequences/s_id_rol.seq
 @@sequences/s_id_operacion.seq
-@@sequences/s_id_servicio_log.seq
+@@sequences/s_id_operacion_log.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
 @@sequences/s_id_dispositivo.seq
@@ -93,9 +93,9 @@ prompt
 @@tables/t_rol_usuarios.tab
 @@tables/t_operaciones.tab
 @@tables/t_operacion_parametros.tab
+@@tables/t_operacion_logs.tab
 @@tables/t_reportes.tab
 @@tables/t_servicios.tab
-@@tables/t_servicio_logs.tab
 @@tables/t_trabajos.tab
 @@tables/t_dispositivos.tab
 @@tables/t_dispositivo_suscripciones.tab
@@ -179,7 +179,7 @@ prompt
 @@triggers/gs_personas.trg
 @@triggers/gs_roles.trg
 @@triggers/gs_operaciones.trg
-@@triggers/gs_servicio_logs.trg
+@@triggers/gs_operacion_logs.trg
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
 @@triggers/gs_dispositivos.trg

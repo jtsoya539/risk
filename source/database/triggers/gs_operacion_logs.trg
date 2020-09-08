@@ -1,5 +1,5 @@
-CREATE OR REPLACE TRIGGER gs_servicio_logs
-  BEFORE INSERT ON t_servicio_logs
+CREATE OR REPLACE TRIGGER gs_operacion_logs
+  BEFORE INSERT ON t_operacion_logs
   FOR EACH ROW
 BEGIN
   /*
@@ -26,8 +26,8 @@ BEGIN
   -------------------------------------------------------------------------------
   */
 
-  IF :new.id_servicio_log IS NULL THEN
-    :new.id_servicio_log := s_id_servicio_log.nextval;
+  IF :new.id_operacion_log IS NULL THEN
+    :new.id_operacion_log := s_id_operacion_log.nextval;
   END IF;
 END;
 /

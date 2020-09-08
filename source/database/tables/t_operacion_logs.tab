@@ -1,0 +1,27 @@
+create table T_OPERACION_LOGS
+(
+  id_operacion_log NUMBER not null,
+  id_operacion     NUMBER(15),
+  contexto         CLOB,
+  parametros       CLOB,
+  respuesta        CLOB
+)
+;
+comment on table T_OPERACION_LOGS
+  is 'Logs de Operaciones';
+comment on column T_OPERACION_LOGS.id_operacion_log
+  is 'Identificador del log';
+comment on column T_OPERACION_LOGS.id_operacion
+  is 'Identificador de la operación';
+comment on column T_OPERACION_LOGS.contexto
+  is 'Contexto de la operación';
+comment on column T_OPERACION_LOGS.parametros
+  is 'Parámetros recibidos';
+comment on column T_OPERACION_LOGS.respuesta
+  is 'Respuesta enviada';
+alter table T_OPERACION_LOGS
+  add constraint PK_OPERACION_LOGS primary key (ID_OPERACION_LOG);
+alter table T_OPERACION_LOGS
+  add constraint FK_OPERACION_LOGS_OPERACIONES foreign key (ID_OPERACION)
+  references T_OPERACIONES (ID_OPERACION);
+

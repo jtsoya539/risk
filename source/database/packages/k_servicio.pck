@@ -90,22 +90,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       ROLLBACK;
   END;
 
-  PROCEDURE lp_registrar_log(i_id_servicio IN NUMBER,
-                             i_parametros  IN CLOB,
-                             i_respuesta   IN CLOB,
-                             i_contexto    IN CLOB DEFAULT NULL) IS
-    PRAGMA AUTONOMOUS_TRANSACTION;
-  BEGIN
-    INSERT INTO t_servicio_logs
-      (id_servicio, parametros, respuesta, contexto)
-    VALUES
-      (i_id_servicio, i_parametros, i_respuesta, i_contexto);
-    COMMIT;
-  EXCEPTION
-    WHEN OTHERS THEN
-      ROLLBACK;
-  END;
-
   FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
                                 i_parametros  IN CLOB,
                                 i_contexto    IN CLOB DEFAULT NULL)
@@ -435,7 +419,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
              .to_json;
     -- Registra log con datos de entrada y salida
-    lp_registrar_log(i_id_servicio, i_parametros, l_rsp, i_contexto);
+    k_operacion.p_registrar_log(i_id_servicio,
+                                i_parametros,
+                                l_rsp,
+                                i_contexto);
     RETURN l_rsp;
   END;
 
