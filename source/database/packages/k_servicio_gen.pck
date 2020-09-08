@@ -102,7 +102,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp  y_respuesta;
     l_dato y_dato;
     --
-    l_servicio t_servicios.nombre%TYPE;
+    l_servicio t_operaciones.nombre%TYPE;
   BEGIN
     -- Inicializa respuesta
     l_rsp  := NEW y_respuesta();
@@ -121,7 +121,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     BEGIN
       SELECT version_actual
         INTO l_dato.contenido
-        FROM t_servicios
+        FROM t_operaciones
        WHERE nombre = upper(l_servicio);
     EXCEPTION
       WHEN OTHERS THEN

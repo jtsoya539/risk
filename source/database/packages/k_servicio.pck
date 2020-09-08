@@ -112,32 +112,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                 i_parametros  IN CLOB,
                                 i_contexto    IN CLOB DEFAULT NULL)
     RETURN y_respuesta IS
-    l_rsp                 y_respuesta;
-    l_prms                y_parametros;
-    l_ctx                 y_parametros;
-    l_archivo             y_archivo;
-    l_tipo_servicio       t_servicios.tipo%TYPE;
-    l_nombre_servicio     t_servicios.nombre%TYPE;
-    l_dominio_servicio    t_servicios.dominio%TYPE;
-    l_referencia_servicio t_significados.referencia%TYPE;
-    l_sentencia           VARCHAR2(4000);
+    l_rsp              y_respuesta;
+    l_prms             y_parametros;
+    l_ctx              y_parametros;
+    l_nombre_servicio  t_operaciones.nombre%TYPE;
+    l_dominio_servicio t_operaciones.dominio%TYPE;
+    l_sentencia        VARCHAR2(4000);
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del servicio';
     BEGIN
-      SELECT tipo,
-             upper(nombre),
-             upper(dominio),
-             upper(k_util.f_referencia_codigo('TIPO_SERVICIO', tipo))
-        INTO l_tipo_servicio,
-             l_nombre_servicio,
-             l_dominio_servicio,
-             l_referencia_servicio
-        FROM t_servicios
-       WHERE activo = 'S'
-         AND id_servicio = i_id_servicio;
+      SELECT upper(o.nombre), upper(o.dominio)
+        INTO l_nombre_servicio, l_dominio_servicio
+        FROM t_servicios s, t_operaciones o
+       WHERE o.id_operacion = s.id_servicio
+         AND o.activo = 'S'
+         AND s.id_servicio = i_id_servicio;
     EXCEPTION
       WHEN no_data_found THEN
         p_respuesta_error(l_rsp,
@@ -206,20 +198,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                                               'usuario'));
   
     l_rsp.lugar := 'Construyendo sentencia';
-    l_sentencia := 'BEGIN :1 := ' || l_referencia_servicio || '_' ||
-                   l_dominio_servicio || '.' || l_nombre_servicio ||
-                   '(:2); END;';
+    l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
+                   l_nombre_servicio || '(:2); END;';
   
     l_rsp.lugar := 'Procesando servicio';
     BEGIN
-      IF l_tipo_servicio = 'R' THEN
-        -- R-REPORTE
-        EXECUTE IMMEDIATE l_sentencia
-          USING OUT l_archivo, IN l_prms;
-      ELSE
-        EXECUTE IMMEDIATE l_sentencia
-          USING OUT l_rsp, IN l_prms;
-      END IF;
+      EXECUTE IMMEDIATE l_sentencia
+        USING OUT l_rsp, IN l_prms;
     EXCEPTION
       WHEN ex_servicio_no_implementado THEN
         p_respuesta_error(l_rsp,
@@ -239,11 +224,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                           dbms_utility.format_error_stack);
         RAISE ex_error_general;
     END;
-  
-    IF l_tipo_servicio = 'R' THEN
-      -- R-REPORTE
-      l_rsp.datos := l_archivo;
-    END IF;
   
     IF l_rsp.codigo = c_ok THEN
       COMMIT;
