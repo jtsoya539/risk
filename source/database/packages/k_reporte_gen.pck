@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE k_reporte_gen IS
 
   /**
-  Agrupa operaciones relacionadas con reportes del dominio GEN
+  Agrupa operaciones relacionadas con los Reportes del dominio GEN
   
   %author jtsoya539 27/3/2020 16:42:26
   */

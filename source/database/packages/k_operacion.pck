@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE k_operacion IS
 
   /**
-  Agrupa operaciones relacionadas con las Operaciones
+  Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos)
   
   %author jtsoya539 27/3/2020 16:42:26
   */

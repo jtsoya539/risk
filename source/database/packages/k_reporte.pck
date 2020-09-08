@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE k_reporte IS
 
   /**
-  Agrupa operaciones relacionadas con los reportes del sistema
+  Agrupa operaciones relacionadas con los Reportes del sistema
   
   %author jtsoya539 27/3/2020 16:42:26
   */
