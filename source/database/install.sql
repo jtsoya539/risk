@@ -187,6 +187,9 @@ prompt
 @@triggers/gs_correo_adjuntos.trg
 @@triggers/gs_mensajes.trg
 @@triggers/gs_notificaciones.trg
+@@triggers/gb_reportes.trg
+@@triggers/gb_servicios.trg
+@@triggers/gb_trabajos.trg
 @@triggers/gb_usuarios.trg
 @@triggers/gb_sesiones.trg
 @@triggers/gb_personas.trg
