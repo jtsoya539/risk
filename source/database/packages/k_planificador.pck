@@ -93,8 +93,8 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
     l_prms y_parametros;
     --
     l_tipo_trabajo         t_trabajos.tipo%TYPE;
-    l_nombre_trabajo       t_trabajos.nombre%TYPE;
-    l_dominio_trabajo      t_trabajos.dominio%TYPE;
+    l_nombre_trabajo       t_operaciones.nombre%TYPE;
+    l_dominio_trabajo      t_operaciones.dominio%TYPE;
     l_accion_trabajo       t_trabajos.accion%TYPE;
     l_fecha_inicio         t_trabajos.fecha_inicio%TYPE;
     l_intervalo_repeticion t_trabajos.intervalo_repeticion%TYPE;
@@ -103,15 +103,15 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
   BEGIN
     -- Buscar datos del trabajo
     BEGIN
-      SELECT tipo,
-             upper(nombre),
-             upper(dominio),
-             accion,
-             nvl(i_fecha_inicio, nvl(fecha_inicio, current_timestamp)) +
-             (tiempo_inicio / 86400),
-             nvl(i_intervalo_repeticion, intervalo_repeticion),
-             nvl(i_fecha_fin, fecha_fin),
-             comentarios
+      SELECT t.tipo,
+             upper(o.nombre),
+             upper(o.dominio),
+             t.accion,
+             nvl(i_fecha_inicio, nvl(t.fecha_inicio, current_timestamp)) +
+             (t.tiempo_inicio / 86400),
+             nvl(i_intervalo_repeticion, t.intervalo_repeticion),
+             nvl(i_fecha_fin, t.fecha_fin),
+             t.comentarios
         INTO l_tipo_trabajo,
              l_nombre_trabajo,
              l_dominio_trabajo,
@@ -120,9 +120,10 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
              l_intervalo_repeticion,
              l_fecha_fin,
              l_comentarios
-        FROM t_trabajos
-       WHERE activo = 'S'
-         AND id_trabajo = i_id_trabajo;
+        FROM t_trabajos t, t_operaciones o
+       WHERE o.id_operacion = t.id_trabajo
+         AND o.activo = 'S'
+         AND t.id_trabajo = i_id_trabajo;
     EXCEPTION
       WHEN no_data_found THEN
         RAISE ex_trabajo_no_implementado;
@@ -181,8 +182,8 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
     l_prms y_parametros;
     --
     l_tipo_trabajo         t_trabajos.tipo%TYPE;
-    l_nombre_trabajo       t_trabajos.nombre%TYPE;
-    l_dominio_trabajo      t_trabajos.dominio%TYPE;
+    l_nombre_trabajo       t_operaciones.nombre%TYPE;
+    l_dominio_trabajo      t_operaciones.dominio%TYPE;
     l_accion_trabajo       t_trabajos.accion%TYPE;
     l_fecha_inicio         t_trabajos.fecha_inicio%TYPE;
     l_intervalo_repeticion t_trabajos.intervalo_repeticion%TYPE;
@@ -191,14 +192,14 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
   BEGIN
     -- Buscar datos del trabajo
     BEGIN
-      SELECT tipo,
-             upper(nombre),
-             upper(dominio),
-             accion,
-             i_fecha_inicio + (tiempo_inicio / 86400),
+      SELECT t.tipo,
+             upper(o.nombre),
+             upper(o.dominio),
+             t.accion,
+             i_fecha_inicio + (t.tiempo_inicio / 86400),
              i_intervalo_repeticion,
              i_fecha_fin,
-             comentarios
+             t.comentarios
         INTO l_tipo_trabajo,
              l_nombre_trabajo,
              l_dominio_trabajo,
@@ -207,9 +208,10 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
              l_intervalo_repeticion,
              l_fecha_fin,
              l_comentarios
-        FROM t_trabajos
-       WHERE activo = 'S'
-         AND id_trabajo = i_id_trabajo;
+        FROM t_trabajos t, t_operaciones o
+       WHERE o.id_operacion = t.id_trabajo
+         AND o.activo = 'S'
+         AND t.id_trabajo = i_id_trabajo;
     EXCEPTION
       WHEN no_data_found THEN
         RAISE ex_trabajo_no_implementado;
@@ -300,16 +302,17 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
     l_prms y_parametros;
     --
     l_tipo_trabajo    t_trabajos.tipo%TYPE;
-    l_nombre_trabajo  t_trabajos.nombre%TYPE;
-    l_dominio_trabajo t_trabajos.dominio%TYPE;
+    l_nombre_trabajo  t_operaciones.nombre%TYPE;
+    l_dominio_trabajo t_operaciones.dominio%TYPE;
   BEGIN
     -- Buscar datos del trabajo
     BEGIN
-      SELECT tipo, upper(nombre), upper(dominio)
+      SELECT t.tipo, upper(o.nombre), upper(o.dominio)
         INTO l_tipo_trabajo, l_nombre_trabajo, l_dominio_trabajo
-        FROM t_trabajos
-       WHERE activo = 'S'
-         AND id_trabajo = i_id_trabajo;
+        FROM t_trabajos t, t_operaciones o
+       WHERE o.id_operacion = t.id_trabajo
+         AND o.activo = 'S'
+         AND t.id_trabajo = i_id_trabajo;
     EXCEPTION
       WHEN no_data_found THEN
         RAISE ex_trabajo_no_implementado;
