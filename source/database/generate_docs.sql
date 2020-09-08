@@ -139,7 +139,6 @@ plugin plsqldoc generate k_error;
 plugin plsqldoc generate k_html;
 plugin plsqldoc generate k_mensajeria;
 plugin plsqldoc generate k_operacion;
-plugin plsqldoc generate k_planificador;
 plugin plsqldoc generate k_reporte;
 plugin plsqldoc generate k_reporte_gen;
 plugin plsqldoc generate k_servicio;
@@ -148,6 +147,7 @@ plugin plsqldoc generate k_servicio_gen;
 plugin plsqldoc generate k_servicio_msj;
 plugin plsqldoc generate k_sesion;
 plugin plsqldoc generate k_sistema;
+plugin plsqldoc generate k_trabajo;
 plugin plsqldoc generate k_usuario;
 plugin plsqldoc generate k_util;
 

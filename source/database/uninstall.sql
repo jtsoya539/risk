@@ -49,13 +49,13 @@ prompt
 prompt Borrando paquetes...
 prompt -----------------------------------
 prompt
-drop package k_reporte_gen;
-drop package k_reporte;
-drop package k_planificador;
+drop package k_trabajo;
 drop package k_servicio_msj;
 drop package k_servicio_gen;
 drop package k_servicio_aut;
 drop package k_servicio;
+drop package k_reporte_gen;
+drop package k_reporte;
 drop package k_operacion;
 drop package k_mensajeria;
 drop package k_archivo;

@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE k_planificador IS
+CREATE OR REPLACE PACKAGE k_trabajo IS
 
   /**
   Agrupa operaciones relacionadas con los Trabajos del sistema
@@ -82,7 +82,7 @@ CREATE OR REPLACE PACKAGE k_planificador IS
 
 END;
 /
-CREATE OR REPLACE PACKAGE BODY k_planificador IS
+CREATE OR REPLACE PACKAGE BODY k_trabajo IS
 
   -- Crea un trabajo en el sistema
   PROCEDURE p_crear_trabajo(i_id_trabajo           IN NUMBER,
@@ -147,13 +147,11 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
         l_nombre_trabajo := REPLACE(l_nombre_trabajo,
                                     '{' || l_prms(i).nombre || '}',
                                     k_operacion.f_valor_parametro_string(l_prms,
-                                                                         l_prms(i)
-                                                                         .nombre));
+                                                                         l_prms(i).nombre));
         l_accion_trabajo := REPLACE(l_accion_trabajo,
                                     '&' || l_prms(i).nombre,
                                     k_operacion.f_valor_parametro_string(l_prms,
-                                                                         l_prms(i)
-                                                                         .nombre));
+                                                                         l_prms(i).nombre));
         i                := l_prms.next(i);
       END LOOP;
     END;
@@ -236,8 +234,7 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
           l_nombre_trabajo := REPLACE(l_nombre_trabajo,
                                       '{' || l_prms(i).nombre || '}',
                                       k_operacion.f_valor_parametro_string(l_prms,
-                                                                           l_prms(i)
-                                                                           .nombre));
+                                                                           l_prms(i).nombre));
           i                := l_prms.next(i);
         END LOOP;
       END;
@@ -337,8 +334,7 @@ CREATE OR REPLACE PACKAGE BODY k_planificador IS
           l_nombre_trabajo := REPLACE(l_nombre_trabajo,
                                       '{' || l_prms(i).nombre || '}',
                                       k_operacion.f_valor_parametro_string(l_prms,
-                                                                           l_prms(i)
-                                                                           .nombre));
+                                                                           l_prms(i).nombre));
           i                := l_prms.next(i);
         END LOOP;
       END;

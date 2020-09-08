@@ -160,13 +160,13 @@ prompt
 @@packages/k_archivo.pck
 @@packages/k_mensajeria.pck
 @@packages/k_operacion.pck
+@@packages/k_reporte.pck
+@@packages/k_reporte_gen.pck
 @@packages/k_servicio.pck
 @@packages/k_servicio_aut.pck
 @@packages/k_servicio_gen.pck
 @@packages/k_servicio_msj.pck
-@@packages/k_planificador.pck
-@@packages/k_reporte.pck
-@@packages/k_reporte_gen.pck
+@@packages/k_trabajo.pck
 
 prompt
 prompt Creando triggers...
