@@ -152,7 +152,6 @@ drop sequence s_id_barrio;
 drop sequence s_id_persona;
 drop sequence s_id_rol;
 drop sequence s_id_operacion;
-drop sequence s_id_servicio;
 drop sequence s_id_servicio_log;
 drop sequence s_id_trabajo;
 drop sequence s_id_sesion;
