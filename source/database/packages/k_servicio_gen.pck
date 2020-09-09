@@ -691,7 +691,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                    'Debe ingresar referencia');
   
     l_rsp.lugar := 'Recuperando texto';
-    l_archivo   := k_archivo.f_recuperar_archivo('T_TEXTOS',
+    l_archivo   := k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_textos,
                                                  'ARCHIVO',
                                                  k_operacion.f_valor_parametro_string(i_parametros,
                                                                                       'referencia'));

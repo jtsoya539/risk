@@ -5,7 +5,7 @@ create table T_SISTEMAS
   detalle        VARCHAR2(2000),
   activo         VARCHAR2(1) default 'N' not null,
   fecha_actual   DATE,
-  version_actual VARCHAR2(10)
+  version_actual VARCHAR2(100)
 )
 ;
 comment on table T_SISTEMAS

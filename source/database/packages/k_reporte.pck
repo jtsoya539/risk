@@ -261,7 +261,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_pdf3_v5.set_page_orientation('PORTRAIT');
         as_pdf3_v5.set_margins(25, 30, 25, 30, 'mm');
       
-        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo('T_IMAGENES','ARCHIVO','x-mark-5-256.jpg')
+        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_imagenes,'ARCHIVO','x-mark-5-256.jpg')
                                          .contenido,
                              p_x      => 30,
                              p_y      => 272,

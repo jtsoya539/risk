@@ -6,7 +6,7 @@ create table T_APLICACIONES
   activo                          VARCHAR2(1) default 'N' not null,
   clave                           VARCHAR2(50),
   detalle                         VARCHAR2(2000),
-  version_actual                  VARCHAR2(10),
+  version_actual                  VARCHAR2(100),
   tiempo_expiracion_access_token  NUMBER(6),
   tiempo_expiracion_refresh_token NUMBER(6),
   template_notificacion           CLOB,

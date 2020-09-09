@@ -30,6 +30,11 @@ CREATE OR REPLACE PACKAGE k_archivo IS
   -------------------------------------------------------------------------------
   */
 
+  -- Carpetas de archivos
+  c_carpeta_fuentes  CONSTANT VARCHAR2(30) := 'FUENTES';
+  c_carpeta_imagenes CONSTANT VARCHAR2(30) := 'IMAGENES';
+  c_carpeta_textos   CONSTANT VARCHAR2(30) := 'TEXTOS';
+
   FUNCTION f_tipo_mime(i_dominio   IN VARCHAR2,
                        i_extension IN VARCHAR2) RETURN VARCHAR2;
 
@@ -102,7 +107,8 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          AND upper(a.tabla) = upper(i_tabla)
          AND upper(a.campo) = upper(i_campo)
          AND a.referencia = i_referencia
-         AND nvl(a.version_actual, 0) = nvl(i_version, nvl(a.version_actual, 0));
+         AND nvl(a.version_actual, 0) =
+             nvl(i_version, nvl(a.version_actual, 0));
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000, 'Archivo inexistente');
@@ -129,7 +135,13 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
   
     IF SQL%NOTFOUND THEN
       INSERT INTO t_archivos
-        (tabla, campo, referencia, contenido, nombre, extension, version_actual)
+        (tabla,
+         campo,
+         referencia,
+         contenido,
+         nombre,
+         extension,
+         version_actual)
       VALUES
         (upper(i_tabla),
          upper(i_campo),
@@ -158,14 +170,14 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
     l_version t_archivos.version_actual%TYPE;
   BEGIN
   
-      SELECT nvl(a.version_actual, 0)
-        INTO l_version
-        FROM t_archivos a, t_archivo_definiciones d
-       WHERE d.tabla = a.tabla
-         AND d.campo = a.campo
-         AND upper(a.tabla) = upper(i_tabla)
-         AND upper(a.campo) = upper(i_campo)
-         AND a.referencia = i_referencia;
+    SELECT nvl(a.version_actual, 0)
+      INTO l_version
+      FROM t_archivos a, t_archivo_definiciones d
+     WHERE d.tabla = a.tabla
+       AND d.campo = a.campo
+       AND upper(a.tabla) = upper(i_tabla)
+       AND upper(a.campo) = upper(i_campo)
+       AND a.referencia = i_referencia;
   
     RETURN l_version;
   EXCEPTION
