@@ -47,7 +47,7 @@ insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE,
 values (14, 'S', 'REGISTRAR_DISPOSITIVO', 'AUT', 'S', null, null);
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
-values (16, 'S', 'LISTAR_PAISES', 'GEN', 'S', null, '0.1');
+values (16, 'S', 'LISTAR_PAISES', 'GEN', 'S', null, '0.1.0');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
 values (17, 'S', 'TIEMPO_EXPIRACION_TOKEN', 'AUT', 'S', null, null);
@@ -74,13 +74,13 @@ insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE,
 values (24, 'S', 'VALIDAR_OTP', 'AUT', 'S', null, null);
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
-values (25, 'S', 'LISTAR_DEPARTAMENTOS', 'GEN', 'S', null, '0.1');
+values (25, 'S', 'LISTAR_DEPARTAMENTOS', 'GEN', 'S', null, '0.1.0');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
-values (26, 'S', 'LISTAR_CIUDADES', 'GEN', 'S', null, '0.1');
+values (26, 'S', 'LISTAR_CIUDADES', 'GEN', 'S', null, '0.1.0');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
-values (27, 'S', 'LISTAR_BARRIOS', 'GEN', 'S', null, '0.1');
+values (27, 'S', 'LISTAR_BARRIOS', 'GEN', 'S', null, '0.1.0');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
 values (28, 'S', 'RECUPERAR_TEXTO', 'GEN', 'S', null, null);
