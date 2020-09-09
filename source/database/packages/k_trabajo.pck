@@ -232,7 +232,7 @@ CREATE OR REPLACE PACKAGE BODY k_trabajo IS
         i := l_prms.first;
         WHILE i IS NOT NULL LOOP
           l_nombre_trabajo := REPLACE(l_nombre_trabajo,
-                                      '{' || l_prms(i).nombre || '}',
+                                      '{' || upper(l_prms(i).nombre) || '}',
                                       k_operacion.f_valor_parametro_string(l_prms,
                                                                            l_prms(i).nombre));
           i                := l_prms.next(i);
@@ -332,7 +332,7 @@ CREATE OR REPLACE PACKAGE BODY k_trabajo IS
         i := l_prms.first;
         WHILE i IS NOT NULL LOOP
           l_nombre_trabajo := REPLACE(l_nombre_trabajo,
-                                      '{' || l_prms(i).nombre || '}',
+                                      '{' || upper(l_prms(i).nombre) || '}',
                                       k_operacion.f_valor_parametro_string(l_prms,
                                                                            l_prms(i).nombre));
           i                := l_prms.next(i);
