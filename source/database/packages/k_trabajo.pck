@@ -108,7 +108,7 @@ CREATE OR REPLACE PACKAGE BODY k_trabajo IS
              upper(o.dominio),
              t.accion,
              nvl(i_fecha_inicio, nvl(t.fecha_inicio, current_timestamp)) +
-             (t.tiempo_inicio / 86400),
+             (nvl(t.tiempo_inicio, 0) / 86400),
              nvl(i_intervalo_repeticion, t.intervalo_repeticion),
              nvl(i_fecha_fin, t.fecha_fin),
              t.comentarios
@@ -145,11 +145,11 @@ CREATE OR REPLACE PACKAGE BODY k_trabajo IS
       i := l_prms.first;
       WHILE i IS NOT NULL LOOP
         l_nombre_trabajo := REPLACE(l_nombre_trabajo,
-                                    '{' || l_prms(i).nombre || '}',
+                                    '{' || upper(l_prms(i).nombre) || '}',
                                     k_operacion.f_valor_parametro_string(l_prms,
                                                                          l_prms(i).nombre));
         l_accion_trabajo := REPLACE(l_accion_trabajo,
-                                    '&' || l_prms(i).nombre,
+                                    '&' || upper(l_prms(i).nombre),
                                     k_operacion.f_valor_parametro_string(l_prms,
                                                                          l_prms(i).nombre));
         i                := l_prms.next(i);
@@ -194,7 +194,7 @@ CREATE OR REPLACE PACKAGE BODY k_trabajo IS
              upper(o.nombre),
              upper(o.dominio),
              t.accion,
-             i_fecha_inicio + (t.tiempo_inicio / 86400),
+             i_fecha_inicio + (nvl(t.tiempo_inicio, 0) / 86400),
              i_intervalo_repeticion,
              i_fecha_fin,
              t.comentarios
