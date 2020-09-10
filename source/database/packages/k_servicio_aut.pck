@@ -734,6 +734,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_dato   y_dato;
     l_secret VARCHAR2(100);
     l_otp    VARCHAR2(100);
+    l_body   CLOB;
   BEGIN
     -- Inicializa respuesta
     l_rsp  := NEW y_respuesta();
@@ -768,9 +769,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     
       WHEN 'M' THEN
         -- Mail
+        l_body := k_mensajeria.f_correo_html('Tu clave de validación es ' ||
+                                             l_otp,
+                                             'Clave de validación',
+                                             'Clave de validación');
+      
         IF k_mensajeria.f_enviar_correo('Clave de validación',
-                                        'Tu clave de validación es ' ||
-                                        l_otp,
+                                        l_body,
                                         NULL,
                                         k_operacion.f_valor_parametro_string(i_parametros,
                                                                              'destino')) <>

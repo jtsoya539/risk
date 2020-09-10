@@ -62,6 +62,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_CORREO_HTML">f_correo_html</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_ENVIAR_CORREO">p_enviar_correo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -162,6 +167,21 @@ f_numero_telefono_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_CORREO_HTML"></A>
+<P CLASS="TYPE_TITLE">
+f_correo_html
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_correo_html(i_contenido      IN VARCHAR2,
+                       i_titulo         IN VARCHAR2 DEFAULT NULL,
+                       i_encabezado     IN VARCHAR2 DEFAULT NULL,
+                       i_pie            IN VARCHAR2 DEFAULT NULL,
+                       i_boton_etiqueta IN VARCHAR2 DEFAULT NULL,
+                       i_boton_accion   IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
 
 </PRE>
 <HR>

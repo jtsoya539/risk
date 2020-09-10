@@ -50,6 +50,14 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
 
   FUNCTION f_numero_telefono_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
+  FUNCTION f_correo_html(i_contenido      IN VARCHAR2,
+                         i_titulo         IN VARCHAR2 DEFAULT NULL,
+                         i_encabezado     IN VARCHAR2 DEFAULT NULL,
+                         i_pie            IN VARCHAR2 DEFAULT NULL,
+                         i_boton_etiqueta IN VARCHAR2 DEFAULT NULL,
+                         i_boton_accion   IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB;
+
   PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
                             i_body       IN CLOB,
                             i_id_usuario IN NUMBER DEFAULT NULL,
@@ -133,6 +141,47 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
         l_numero_telefono := NULL;
     END;
     RETURN l_numero_telefono;
+  END;
+
+  FUNCTION f_correo_html(i_contenido      IN VARCHAR2,
+                         i_titulo         IN VARCHAR2 DEFAULT NULL,
+                         i_encabezado     IN VARCHAR2 DEFAULT NULL,
+                         i_pie            IN VARCHAR2 DEFAULT NULL,
+                         i_boton_etiqueta IN VARCHAR2 DEFAULT NULL,
+                         i_boton_accion   IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB IS
+    l_html      CLOB;
+    l_contenido CLOB;
+    l_archivo   y_archivo;
+  BEGIN
+    l_archivo := k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_textos,
+                                               'ARCHIVO',
+                                               'email-inlined.html');
+  
+    IF l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+      raise_application_error(-20000, 'Template de correo no definido');
+    END IF;
+  
+    l_html := k_util.blob_to_clob(l_archivo.contenido);
+  
+    -- Reemplaza CRLF por <br> en el contenido
+    l_contenido := REPLACE(i_contenido, utl_tcp.crlf, '<br>');
+  
+    l_html := REPLACE(l_html, '&CONTENIDO', l_contenido);
+    l_html := REPLACE(l_html, '&TITULO', i_titulo);
+    l_html := REPLACE(l_html, '&ENCABEZADO', i_encabezado);
+    l_html := REPLACE(l_html, '&PIE', i_pie);
+  
+    IF i_boton_etiqueta IS NOT NULL AND i_boton_accion IS NOT NULL THEN
+      l_html := REPLACE(l_html, '&BOTON_ETIQUETA', i_boton_etiqueta);
+      l_html := REPLACE(l_html, '&BOTON_ACCION', i_boton_accion);
+      l_html := REPLACE(l_html, '&BOTON_HIDDEN');
+    ELSE
+      l_html := REPLACE(l_html, '&BOTON_HIDDEN', 'style="display: none;"');
+    END IF;
+  
+    RETURN l_html;
   END;
 
   PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
