@@ -117,7 +117,17 @@ namespace Risk.Msj
                                 }
 
                                 message.Subject = item.MensajeSubject;
-                                message.Body = new TextPart("plain")
+
+                                string subtype;
+                                if (item.MensajeBody.Contains("<html>"))
+                                {
+                                    subtype = "html";
+                                }
+                                else
+                                {
+                                    subtype = "plain";
+                                }
+                                message.Body = new TextPart(subtype)
                                 {
                                     Text = item.MensajeBody
                                 };
