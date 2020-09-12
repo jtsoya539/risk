@@ -141,6 +141,7 @@ prompt
 @@types/y_correo.typ
 @@types/y_mensaje.typ
 @@types/y_notificacion.typ
+@@types/y_cadenas_caracteres.typ
 
 prompt
 prompt Creando paquetes...
