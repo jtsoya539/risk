@@ -86,12 +86,17 @@ namespace Risk.Msj
                     {
                         // Mail Configuration
                         Configurar();
-
-                        await ConfigurarOAuth2Async();
-
                         smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-                        smtpClient.Authenticate(oAuth2);
-                        // _smtpClient.Authenticate(_configuration["MailConfiguration:Usuario"], _configuration["MailConfiguration:Clave"]);
+
+                        if (_configuration.GetValue<bool>("MailConfiguration:EnableOAuth2"))
+                        {
+                            await ConfigurarOAuth2Async();
+                            smtpClient.Authenticate(oAuth2);
+                        }
+                        else
+                        {
+                            smtpClient.Authenticate(_configuration["MailConfiguration:UserName"], _configuration["MailConfiguration:Password"]);
+                        }
 
                         foreach (var item in mensajes)
                         {
