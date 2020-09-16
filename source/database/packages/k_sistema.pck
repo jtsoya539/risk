@@ -134,12 +134,20 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   END;
 
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata IS
+    l_valor anydata;
   BEGIN
     IF g_parametros.exists(i_parametro) THEN
-      RETURN g_parametros(i_parametro);
-    ELSE
-      RETURN NULL;
+      l_valor := g_parametros(i_parametro);
     END IF;
+  
+    -- Si el parámetro no se encuentra en la lista carga un valor nulo de tipo
+    -- VARCHAR2 para evitar el error ORA-30625 al acceder al valor a través de
+    -- AnyData.Access*
+    IF l_valor IS NULL THEN
+      l_valor := anydata.convertvarchar2(NULL);
+    END IF;
+  
+    RETURN l_valor;
   END;
 
   FUNCTION f_valor_parametro_string(i_parametro IN VARCHAR2) RETURN VARCHAR2 IS
