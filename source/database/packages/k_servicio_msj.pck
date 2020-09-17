@@ -72,7 +72,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
        WHERE estado IN ('P', 'R')
       -- P-PENDIENTE DE ENVÍO
       -- R-PROCESADO CON ERROR
-       ORDER BY id_correo
+       ORDER BY nvl(prioridad_envio, k_mensajeria.c_prioridad_media),
+                id_correo
          FOR UPDATE OF estado;
   BEGIN
     -- Inicializa respuesta
@@ -142,7 +143,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
        WHERE estado IN ('P', 'R')
       -- P-PENDIENTE DE ENVÍO
       -- R-PROCESADO CON ERROR
-       ORDER BY id_mensaje
+       ORDER BY nvl(prioridad_envio, k_mensajeria.c_prioridad_media),
+                id_mensaje
          FOR UPDATE OF estado;
   BEGIN
     -- Inicializa respuesta
@@ -207,7 +209,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
        WHERE estado IN ('P', 'R')
       -- P-PENDIENTE DE ENVÍO
       -- R-PROCESADO CON ERROR
-       ORDER BY id_notificacion
+       ORDER BY nvl(prioridad_envio, k_mensajeria.c_prioridad_media),
+                id_notificacion
          FOR UPDATE OF estado;
   BEGIN
     -- Inicializa respuesta

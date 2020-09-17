@@ -8,7 +8,8 @@ create table T_NOTIFICACIONES
   estado                  VARCHAR2(1) default 'P' not null,
   fecha_envio             DATE,
   respuesta_envio         VARCHAR2(1000),
-  cantidad_intentos_envio NUMBER(3)
+  cantidad_intentos_envio NUMBER(3),
+  prioridad_envio         NUMBER(3)
 )
 ;
 comment on table T_NOTIFICACIONES
@@ -31,6 +32,8 @@ comment on column T_NOTIFICACIONES.respuesta_envio
   is 'Respuesta del proceso de envío';
 comment on column T_NOTIFICACIONES.cantidad_intentos_envio
   is 'Cantidad de intentos de envío';
+comment on column T_NOTIFICACIONES.prioridad_envio
+  is 'Prioridad de envío';
 alter table T_NOTIFICACIONES
   add constraint PK_NOTIFICACIONES primary key (ID_NOTIFICACION);
 alter table T_NOTIFICACIONES

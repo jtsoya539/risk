@@ -12,7 +12,8 @@ create table T_CORREOS
   estado                  VARCHAR2(1) default 'P' not null,
   fecha_envio             DATE,
   respuesta_envio         VARCHAR2(1000),
-  cantidad_intentos_envio NUMBER(3)
+  cantidad_intentos_envio NUMBER(3),
+  prioridad_envio         NUMBER(3)
 )
 ;
 comment on table T_CORREOS
@@ -43,6 +44,8 @@ comment on column T_CORREOS.respuesta_envio
   is 'Respuesta del proceso de envío';
 comment on column T_CORREOS.cantidad_intentos_envio
   is 'Cantidad de intentos de envío';
+comment on column T_CORREOS.prioridad_envio
+  is 'Prioridad de envío';
 alter table T_CORREOS
   add constraint PK_CORREOS primary key (ID_CORREO);
 alter table T_CORREOS

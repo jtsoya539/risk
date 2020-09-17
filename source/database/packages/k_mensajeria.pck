@@ -40,6 +40,12 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   c_ok                           CONSTANT PLS_INTEGER := 0;
   c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
 
+  -- Prioridades de envío
+  c_prioridad_urgente    CONSTANT PLS_INTEGER := 1;
+  c_prioridad_importante CONSTANT PLS_INTEGER := 2;
+  c_prioridad_media      CONSTANT PLS_INTEGER := 3;
+  c_prioridad_baja       CONSTANT PLS_INTEGER := 4;
+
   FUNCTION f_validar_direccion_correo(i_direccion_correo VARCHAR2)
     RETURN BOOLEAN;
 
@@ -58,41 +64,47 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                          i_boton_accion   IN VARCHAR2 DEFAULT NULL)
     RETURN CLOB;
 
-  PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
-                            i_body       IN CLOB,
-                            i_id_usuario IN NUMBER DEFAULT NULL,
-                            i_to         IN VARCHAR2 DEFAULT NULL,
-                            i_reply_to   IN VARCHAR2 DEFAULT NULL,
-                            i_cc         IN VARCHAR2 DEFAULT NULL,
-                            i_bcc        IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_enviar_correo(i_subject         IN VARCHAR2,
+                            i_body            IN CLOB,
+                            i_id_usuario      IN NUMBER DEFAULT NULL,
+                            i_to              IN VARCHAR2 DEFAULT NULL,
+                            i_reply_to        IN VARCHAR2 DEFAULT NULL,
+                            i_cc              IN VARCHAR2 DEFAULT NULL,
+                            i_bcc             IN VARCHAR2 DEFAULT NULL,
+                            i_prioridad_envio IN NUMBER DEFAULT NULL);
 
   PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
                              i_id_usuario      IN NUMBER DEFAULT NULL,
-                             i_numero_telefono IN VARCHAR2 DEFAULT NULL);
+                             i_numero_telefono IN VARCHAR2 DEFAULT NULL,
+                             i_prioridad_envio IN NUMBER DEFAULT NULL);
 
-  PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
-                                  i_contenido   IN VARCHAR2,
-                                  i_id_usuario  IN NUMBER DEFAULT NULL,
-                                  i_suscripcion IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_enviar_notificacion(i_titulo          IN VARCHAR2,
+                                  i_contenido       IN VARCHAR2,
+                                  i_id_usuario      IN NUMBER DEFAULT NULL,
+                                  i_suscripcion     IN VARCHAR2 DEFAULT NULL,
+                                  i_prioridad_envio IN NUMBER DEFAULT NULL);
 
-  FUNCTION f_enviar_correo(i_subject    IN VARCHAR2,
-                           i_body       IN CLOB,
-                           i_id_usuario IN NUMBER DEFAULT NULL,
-                           i_to         IN VARCHAR2 DEFAULT NULL,
-                           i_reply_to   IN VARCHAR2 DEFAULT NULL,
-                           i_cc         IN VARCHAR2 DEFAULT NULL,
-                           i_bcc        IN VARCHAR2 DEFAULT NULL)
+  FUNCTION f_enviar_correo(i_subject         IN VARCHAR2,
+                           i_body            IN CLOB,
+                           i_id_usuario      IN NUMBER DEFAULT NULL,
+                           i_to              IN VARCHAR2 DEFAULT NULL,
+                           i_reply_to        IN VARCHAR2 DEFAULT NULL,
+                           i_cc              IN VARCHAR2 DEFAULT NULL,
+                           i_bcc             IN VARCHAR2 DEFAULT NULL,
+                           i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER;
 
   FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
                             i_id_usuario      IN NUMBER DEFAULT NULL,
-                            i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+                            i_numero_telefono IN VARCHAR2 DEFAULT NULL,
+                            i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER;
 
-  FUNCTION f_enviar_notificacion(i_titulo      IN VARCHAR2,
-                                 i_contenido   IN VARCHAR2,
-                                 i_id_usuario  IN NUMBER DEFAULT NULL,
-                                 i_suscripcion IN VARCHAR2 DEFAULT NULL)
+  FUNCTION f_enviar_notificacion(i_titulo          IN VARCHAR2,
+                                 i_contenido       IN VARCHAR2,
+                                 i_id_usuario      IN NUMBER DEFAULT NULL,
+                                 i_suscripcion     IN VARCHAR2 DEFAULT NULL,
+                                 i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER;
 
 END;
@@ -184,13 +196,14 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     RETURN l_html;
   END;
 
-  PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
-                            i_body       IN CLOB,
-                            i_id_usuario IN NUMBER DEFAULT NULL,
-                            i_to         IN VARCHAR2 DEFAULT NULL,
-                            i_reply_to   IN VARCHAR2 DEFAULT NULL,
-                            i_cc         IN VARCHAR2 DEFAULT NULL,
-                            i_bcc        IN VARCHAR2 DEFAULT NULL) IS
+  PROCEDURE p_enviar_correo(i_subject         IN VARCHAR2,
+                            i_body            IN CLOB,
+                            i_id_usuario      IN NUMBER DEFAULT NULL,
+                            i_to              IN VARCHAR2 DEFAULT NULL,
+                            i_reply_to        IN VARCHAR2 DEFAULT NULL,
+                            i_cc              IN VARCHAR2 DEFAULT NULL,
+                            i_bcc             IN VARCHAR2 DEFAULT NULL,
+                            i_prioridad_envio IN NUMBER DEFAULT NULL) IS
     l_mensaje_to t_correos.mensaje_to%TYPE;
   BEGIN
     l_mensaje_to := i_to;
@@ -225,7 +238,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
        mensaje_reply_to,
        mensaje_cc,
        mensaje_bcc,
-       estado)
+       estado,
+       prioridad_envio)
     VALUES
       (i_id_usuario,
        l_mensaje_to,
@@ -235,12 +249,14 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
        i_reply_to,
        i_cc,
        i_bcc,
-       'P');
+       'P',
+       nvl(i_prioridad_envio, c_prioridad_media));
   END;
 
   PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
                              i_id_usuario      IN NUMBER DEFAULT NULL,
-                             i_numero_telefono IN VARCHAR2 DEFAULT NULL) IS
+                             i_numero_telefono IN VARCHAR2 DEFAULT NULL,
+                             i_prioridad_envio IN NUMBER DEFAULT NULL) IS
     l_numero_telefono t_mensajes.numero_telefono%TYPE;
   BEGIN
     l_numero_telefono := i_numero_telefono;
@@ -263,15 +279,20 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     INSERT INTO t_mensajes
-      (id_usuario, numero_telefono, contenido, estado)
+      (id_usuario, numero_telefono, contenido, estado, prioridad_envio)
     VALUES
-      (i_id_usuario, l_numero_telefono, substr(i_contenido, 1, 160), 'P');
+      (i_id_usuario,
+       l_numero_telefono,
+       substr(i_contenido, 1, 160),
+       'P',
+       nvl(i_prioridad_envio, c_prioridad_media));
   END;
 
-  PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
-                                  i_contenido   IN VARCHAR2,
-                                  i_id_usuario  IN NUMBER DEFAULT NULL,
-                                  i_suscripcion IN VARCHAR2 DEFAULT NULL) IS
+  PROCEDURE p_enviar_notificacion(i_titulo          IN VARCHAR2,
+                                  i_contenido       IN VARCHAR2,
+                                  i_id_usuario      IN NUMBER DEFAULT NULL,
+                                  i_suscripcion     IN VARCHAR2 DEFAULT NULL,
+                                  i_prioridad_envio IN NUMBER DEFAULT NULL) IS
     l_suscripcion t_notificaciones.suscripcion%TYPE;
   BEGIN
     l_suscripcion := i_suscripcion;
@@ -301,22 +322,24 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     END IF;
   
     INSERT INTO t_notificaciones
-      (id_usuario, suscripcion, titulo, contenido, estado)
+      (id_usuario, suscripcion, titulo, contenido, estado, prioridad_envio)
     VALUES
       (i_id_usuario,
        l_suscripcion,
        substr(i_titulo, 1, 160),
        substr(i_contenido, 1, 500),
-       'P');
+       'P',
+       nvl(i_prioridad_envio, c_prioridad_media));
   END;
 
-  FUNCTION f_enviar_correo(i_subject    IN VARCHAR2,
-                           i_body       IN CLOB,
-                           i_id_usuario IN NUMBER DEFAULT NULL,
-                           i_to         IN VARCHAR2 DEFAULT NULL,
-                           i_reply_to   IN VARCHAR2 DEFAULT NULL,
-                           i_cc         IN VARCHAR2 DEFAULT NULL,
-                           i_bcc        IN VARCHAR2 DEFAULT NULL)
+  FUNCTION f_enviar_correo(i_subject         IN VARCHAR2,
+                           i_body            IN CLOB,
+                           i_id_usuario      IN NUMBER DEFAULT NULL,
+                           i_to              IN VARCHAR2 DEFAULT NULL,
+                           i_reply_to        IN VARCHAR2 DEFAULT NULL,
+                           i_cc              IN VARCHAR2 DEFAULT NULL,
+                           i_bcc             IN VARCHAR2 DEFAULT NULL,
+                           i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp PLS_INTEGER;
@@ -330,7 +353,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                     i_to,
                     i_reply_to,
                     i_cc,
-                    i_bcc);
+                    i_bcc,
+                    i_prioridad_envio);
   
     COMMIT;
     RETURN l_rsp;
@@ -343,7 +367,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
 
   FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
                             i_id_usuario      IN NUMBER DEFAULT NULL,
-                            i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+                            i_numero_telefono IN VARCHAR2 DEFAULT NULL,
+                            i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp PLS_INTEGER;
@@ -351,7 +376,10 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     -- Inicializa respuesta
     l_rsp := 0;
   
-    p_enviar_mensaje(i_contenido, i_id_usuario, i_numero_telefono);
+    p_enviar_mensaje(i_contenido,
+                     i_id_usuario,
+                     i_numero_telefono,
+                     i_prioridad_envio);
   
     COMMIT;
     RETURN l_rsp;
@@ -362,10 +390,11 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
       RETURN l_rsp;
   END;
 
-  FUNCTION f_enviar_notificacion(i_titulo      IN VARCHAR2,
-                                 i_contenido   IN VARCHAR2,
-                                 i_id_usuario  IN NUMBER DEFAULT NULL,
-                                 i_suscripcion IN VARCHAR2 DEFAULT NULL)
+  FUNCTION f_enviar_notificacion(i_titulo          IN VARCHAR2,
+                                 i_contenido       IN VARCHAR2,
+                                 i_id_usuario      IN NUMBER DEFAULT NULL,
+                                 i_suscripcion     IN VARCHAR2 DEFAULT NULL,
+                                 i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp PLS_INTEGER;
@@ -376,7 +405,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     p_enviar_notificacion(i_titulo,
                           i_contenido,
                           i_id_usuario,
-                          i_suscripcion);
+                          i_suscripcion,
+                          i_prioridad_envio);
   
     COMMIT;
     RETURN l_rsp;

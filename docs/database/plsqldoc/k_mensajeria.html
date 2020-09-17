@@ -113,6 +113,26 @@ Constants
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_PRIORIDAD_URGENTE">c_prioridad_urgente</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_PRIORIDAD_IMPORTANTE">c_prioridad_importante</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_PRIORIDAD_MEDIA">c_prioridad_media</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_PRIORIDAD_BAJA">c_prioridad_baja</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -130,6 +150,38 @@ c_cantidad_intentos_permitidos
 </P>
 <PRE CLASS="DECL_TEXT">
 c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
+</PRE>
+<HR>
+<A NAME="C_PRIORIDAD_URGENTE"></A>
+<P CLASS="TYPE_TITLE">
+c_prioridad_urgente
+</P>
+<PRE CLASS="DECL_TEXT">
+c_prioridad_urgente    CONSTANT PLS_INTEGER := 1;
+</PRE>
+<HR>
+<A NAME="C_PRIORIDAD_IMPORTANTE"></A>
+<P CLASS="TYPE_TITLE">
+c_prioridad_importante
+</P>
+<PRE CLASS="DECL_TEXT">
+c_prioridad_importante CONSTANT PLS_INTEGER := 2;
+</PRE>
+<HR>
+<A NAME="C_PRIORIDAD_MEDIA"></A>
+<P CLASS="TYPE_TITLE">
+c_prioridad_media
+</P>
+<PRE CLASS="DECL_TEXT">
+c_prioridad_media      CONSTANT PLS_INTEGER := 3;
+</PRE>
+<HR>
+<A NAME="C_PRIORIDAD_BAJA"></A>
+<P CLASS="TYPE_TITLE">
+c_prioridad_baja
+</P>
+<PRE CLASS="DECL_TEXT">
+c_prioridad_baja       CONSTANT PLS_INTEGER := 4;
 </PRE>
 <HR>
 <A NAME="F_VALIDAR_DIRECCION_CORREO"></A>
@@ -190,13 +242,14 @@ FUNCTION f_correo_html(i_contenido      IN VARCHAR2,
 p_enviar_correo
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_enviar_correo(i_subject    IN VARCHAR2,
-                          i_body       IN CLOB,
-                          i_id_usuario IN NUMBER DEFAULT NULL,
-                          i_to         IN VARCHAR2 DEFAULT NULL,
-                          i_reply_to   IN VARCHAR2 DEFAULT NULL,
-                          i_cc         IN VARCHAR2 DEFAULT NULL,
-                          i_bcc        IN VARCHAR2 DEFAULT NULL)
+PROCEDURE p_enviar_correo(i_subject         IN VARCHAR2,
+                          i_body            IN CLOB,
+                          i_id_usuario      IN NUMBER DEFAULT NULL,
+                          i_to              IN VARCHAR2 DEFAULT NULL,
+                          i_reply_to        IN VARCHAR2 DEFAULT NULL,
+                          i_cc              IN VARCHAR2 DEFAULT NULL,
+                          i_bcc             IN VARCHAR2 DEFAULT NULL,
+                          i_prioridad_envio IN NUMBER DEFAULT NULL)
 
 </PRE>
 <HR>
@@ -207,7 +260,8 @@ p_enviar_mensaje
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
                            i_id_usuario      IN NUMBER DEFAULT NULL,
-                           i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+                           i_numero_telefono IN VARCHAR2 DEFAULT NULL,
+                           i_prioridad_envio IN NUMBER DEFAULT NULL)
 
 </PRE>
 <HR>
@@ -216,10 +270,11 @@ PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
 p_enviar_notificacion
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
-                                i_contenido   IN VARCHAR2,
-                                i_id_usuario  IN NUMBER DEFAULT NULL,
-                                i_suscripcion IN VARCHAR2 DEFAULT NULL)
+PROCEDURE p_enviar_notificacion(i_titulo          IN VARCHAR2,
+                                i_contenido       IN VARCHAR2,
+                                i_id_usuario      IN NUMBER DEFAULT NULL,
+                                i_suscripcion     IN VARCHAR2 DEFAULT NULL,
+                                i_prioridad_envio IN NUMBER DEFAULT NULL)
 
 </PRE>
 <HR>
@@ -228,13 +283,14 @@ PROCEDURE p_enviar_notificacion(i_titulo      IN VARCHAR2,
 f_enviar_correo
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_enviar_correo(i_subject    IN VARCHAR2,
-                         i_body       IN CLOB,
-                         i_id_usuario IN NUMBER DEFAULT NULL,
-                         i_to         IN VARCHAR2 DEFAULT NULL,
-                         i_reply_to   IN VARCHAR2 DEFAULT NULL,
-                         i_cc         IN VARCHAR2 DEFAULT NULL,
-                         i_bcc        IN VARCHAR2 DEFAULT NULL)
+FUNCTION f_enviar_correo(i_subject         IN VARCHAR2,
+                         i_body            IN CLOB,
+                         i_id_usuario      IN NUMBER DEFAULT NULL,
+                         i_to              IN VARCHAR2 DEFAULT NULL,
+                         i_reply_to        IN VARCHAR2 DEFAULT NULL,
+                         i_cc              IN VARCHAR2 DEFAULT NULL,
+                         i_bcc             IN VARCHAR2 DEFAULT NULL,
+                         i_prioridad_envio IN NUMBER DEFAULT NULL)
   RETURN PLS_INTEGER
 
 </PRE>
@@ -246,7 +302,8 @@ f_enviar_mensaje
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
                           i_id_usuario      IN NUMBER DEFAULT NULL,
-                          i_numero_telefono IN VARCHAR2 DEFAULT NULL)
+                          i_numero_telefono IN VARCHAR2 DEFAULT NULL,
+                          i_prioridad_envio IN NUMBER DEFAULT NULL)
   RETURN PLS_INTEGER
 
 </PRE>
@@ -256,10 +313,11 @@ FUNCTION f_enviar_mensaje(i_contenido       IN VARCHAR2,
 f_enviar_notificacion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_enviar_notificacion(i_titulo      IN VARCHAR2,
-                               i_contenido   IN VARCHAR2,
-                               i_id_usuario  IN NUMBER DEFAULT NULL,
-                               i_suscripcion IN VARCHAR2 DEFAULT NULL)
+FUNCTION f_enviar_notificacion(i_titulo          IN VARCHAR2,
+                               i_contenido       IN VARCHAR2,
+                               i_id_usuario      IN NUMBER DEFAULT NULL,
+                               i_suscripcion     IN VARCHAR2 DEFAULT NULL,
+                               i_prioridad_envio IN NUMBER DEFAULT NULL)
   RETURN PLS_INTEGER
 
 </PRE>
