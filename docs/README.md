@@ -20,7 +20,7 @@ Los servicios de mensajería del proyecto Risk.Msj tienen requerimientos especia
 
 Servicio|Requerimiento
 --------|-------------
-Mail|Cuenta de Gmail configurada con autenticación [OAuth](https://github.com/jstedfast/MailKit/blob/master/GMailOAuth2.md).
+Mail|Cuenta de Gmail configurada con autenticación [OAuth](https://github.com/jstedfast/MailKit/blob/master/GMailOAuth2.md) o acceso de [apps menos seguras](https://www.google.com/settings/security/lesssecureapps).
 Push|Cuenta de Twilio configurada con el servicio [SMS](https://www.twilio.com/sms).
 SMS|Cuenta de Azure configurada con el servicio [Notification Hubs](https://azure.microsoft.com/es-es/services/notification-hubs/).
 

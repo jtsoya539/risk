@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
+using Google.Apis.Util;
 using Google.Apis.Util.Store;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -66,7 +67,7 @@ namespace Risk.Msj
             var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
             var credential = await authCode.AuthorizeAsync(_configuration["MailConfiguration:UserId"], CancellationToken.None);
 
-            if (authCode.ShouldRequestAuthorizationCode(credential.Token))
+            if (credential.Token.IsExpired(SystemClock.Default))
                 await credential.RefreshTokenAsync(CancellationToken.None);
 
             oAuth2 = new SaslMechanismOAuth2(credential.UserId, credential.Token.AccessToken);
