@@ -73,6 +73,7 @@ plugin plsqldoc generate t_dispositivo_suscripciones;
 plugin plsqldoc generate t_dispositivo_ubicaciones;
 plugin plsqldoc generate t_errores;
 plugin plsqldoc generate t_mensajes;
+plugin plsqldoc generate t_migraciones;
 plugin plsqldoc generate t_notificaciones;
 plugin plsqldoc generate t_operaciones;
 plugin plsqldoc generate t_operacion_logs;

@@ -1,0 +1,21 @@
+create table T_MIGRACIONES
+(
+  id_migracion    VARCHAR2(50) not null,
+  descripcion     VARCHAR2(4000),
+  fecha_ejecucion DATE default SYSDATE,
+  referencia      VARCHAR2(500)
+)
+;
+comment on table T_MIGRACIONES
+  is 'Migraciones';
+comment on column T_MIGRACIONES.id_migracion
+  is 'Identificador de la migración';
+comment on column T_MIGRACIONES.descripcion
+  is 'Descripción de la migración';
+comment on column T_MIGRACIONES.fecha_ejecucion
+  is 'Fecha de ejecución de la migración';
+comment on column T_MIGRACIONES.referencia
+  is 'Referencia externa relacionada a la migración';
+alter table T_MIGRACIONES
+  add constraint PK_MIGRACIONES primary key (ID_MIGRACION);
+
