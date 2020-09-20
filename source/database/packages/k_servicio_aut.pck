@@ -778,7 +778,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         l_body,
                                         NULL,
                                         k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'destino')) <>
+                                                                             'destino'),
+                                        NULL,
+                                        NULL,
+                                        NULL,
+                                        k_mensajeria.c_prioridad_urgente) <>
            k_mensajeria.c_ok THEN
           k_servicio.p_respuesta_error(l_rsp,
                                        'aut0001',
@@ -792,7 +796,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                          l_otp,
                                          NULL,
                                          k_operacion.f_valor_parametro_string(i_parametros,
-                                                                              'destino')) <>
+                                                                              'destino'),
+                                         k_mensajeria.c_prioridad_urgente) <>
            k_mensajeria.c_ok THEN
           k_servicio.p_respuesta_error(l_rsp,
                                        'aut0002',

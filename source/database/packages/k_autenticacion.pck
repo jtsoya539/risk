@@ -353,7 +353,11 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       IF k_mensajeria.f_enviar_correo('Confirmación de correo',
                                       l_body,
                                       NULL,
-                                      i_direccion_correo) <>
+                                      i_direccion_correo,
+                                      NULL,
+                                      NULL,
+                                      NULL,
+                                      k_mensajeria.c_prioridad_importante) <>
          k_mensajeria.c_ok THEN
         raise_application_error(-20000,
                                 'Error al enviar correo de verificación');
