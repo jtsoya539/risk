@@ -104,6 +104,9 @@ insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE,
 values (42, 'S', 'EDITAR_USUARIO', 'AUT', 'S', null, null);
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
+values (43, 'S', 'REGISTRAR_UBICACION', 'AUT', 'S', null, null);
+
+insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL)
 values (50, 'S', 'VERSION_SERVICIO', 'GEN', 'S', null, null);
 
 prompt Done.

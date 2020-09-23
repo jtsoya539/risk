@@ -98,6 +98,9 @@ insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_E
 values (42, 'T', null, null);
 
 insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (43, 'T', null, null);
+
+insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (50, 'T', null, null);
 
 prompt Done.

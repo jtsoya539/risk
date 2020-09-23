@@ -61,6 +61,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION datos_dispositivo(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION registrar_ubicacion(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION tiempo_expiracion_token(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
@@ -629,6 +632,42 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                                                                            'token_dispositivo')));
   
     k_servicio.p_respuesta_ok(l_rsp, l_dispositivo);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION registrar_ubicacion(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parámetros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'token_dispositivo') IS NOT NULL,
+                                   'Debe ingresar token_dispositivo');
+  
+    l_rsp.lugar := 'Registrando ubicación del dispositivo';
+    k_dispositivo.p_registrar_ubicacion(k_dispositivo.f_id_dispositivo(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                            'token_dispositivo')),
+                                        k_operacion.f_valor_parametro_number(i_parametros,
+                                                                             'latitud'),
+                                        k_operacion.f_valor_parametro_number(i_parametros,
+                                                                             'longitud'));
+  
+    k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_servicio.ex_error_parametro THEN
