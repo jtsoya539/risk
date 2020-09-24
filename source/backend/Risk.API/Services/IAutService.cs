@@ -40,6 +40,7 @@ namespace Risk.API.Services
         Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion);
         Respuesta<Dato> RegistrarDispositivo(Dispositivo dispositivo);
         Respuesta<Dispositivo> DatosDispositivo(string tokenDispositivo);
+        Respuesta<Dato> RegistrarUbicacion(string tokenDispositivo, double latitud, double longitud);
         Respuesta<Dato> TiempoExpiracionToken(TipoToken tipoToken);
         Respuesta<Dato> EditarUsuario(string usuarioAntiguo, string usuarioNuevo, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
         Respuesta<Dato> CambiarEstadoUsuario(string usuario, EstadoUsuario estado);

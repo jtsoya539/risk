@@ -51,6 +51,7 @@ namespace Risk.API.Services
         private const int ID_GENERAR_OTP = 23;
         private const int ID_VALIDAR_OTP = 24;
         private const int ID_EDITAR_USUARIO = 42;
+        private const int ID_REGISTRAR_UBICACION = 43;
 
         public AutService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(configuration, httpContextAccessor, dbConnectionFactory)
@@ -210,6 +211,19 @@ namespace Risk.API.Services
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDispositivo>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetDispositivoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> RegistrarUbicacion(string tokenDispositivo, double latitud, double longitud)
+        {
+            JObject prms = new JObject();
+            prms.Add("token_dispositivo", tokenDispositivo);
+            prms.Add("latitud", latitud);
+            prms.Add("longitud", longitud);
+
+            string rsp = base.ProcesarServicio(ID_REGISTRAR_UBICACION, prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
         public Respuesta<Dato> TiempoExpiracionToken(TipoToken tipoToken)

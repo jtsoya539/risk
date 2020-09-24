@@ -319,6 +319,18 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [AllowAnonymous]
+        [HttpPost("RegistrarUbicacion")]
+        [SwaggerOperation(OperationId = "RegistrarUbicacion", Summary = "RegistrarUbicacion", Description = "Permite registrar la ubicación (coordenadas geográficas) de un dispositivo")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult RegistrarUbicacion([FromBody] RegistrarUbicacionRequestBody requestBody)
+        {
+            var respuesta = _autService.RegistrarUbicacion(requestBody.TokenDispositivo, requestBody.Latitud, requestBody.Longitud);
+            return ProcesarRespuesta(respuesta);
+        }
+
         [HttpGet("DatosUsuario")]
         [SwaggerOperation(OperationId = "DatosUsuario", Summary = "DatosUsuario", Description = "Permite obtener los datos de un usuario")]
         [Produces(MediaTypeNames.Application.Json)]
