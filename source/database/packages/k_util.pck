@@ -81,6 +81,9 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
+  PROCEDURE p_actualizar_valor_parametro(i_id_parametro IN VARCHAR2,
+                                         i_valor        IN VARCHAR2);
+
   FUNCTION f_hash(i_data      IN VARCHAR2,
                   i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC;
 
@@ -538,6 +541,17 @@ END;';
         l_valor := NULL;
     END;
     RETURN l_valor;
+  END;
+
+  PROCEDURE p_actualizar_valor_parametro(i_id_parametro IN VARCHAR2,
+                                         i_valor        IN VARCHAR2) IS
+    l_valor t_parametros.valor%TYPE := i_valor;
+  BEGIN
+    BEGIN
+      UPDATE t_parametros a
+         SET a.valor = l_valor
+       WHERE a.id_parametro = i_id_parametro;
+    END;
   END;
 
   FUNCTION f_hash(i_data      IN VARCHAR2,
