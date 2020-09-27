@@ -545,13 +545,10 @@ END;';
 
   PROCEDURE p_actualizar_valor_parametro(i_id_parametro IN VARCHAR2,
                                          i_valor        IN VARCHAR2) IS
-    l_valor t_parametros.valor%TYPE := i_valor;
   BEGIN
-    BEGIN
-      UPDATE t_parametros a
-         SET a.valor = l_valor
-       WHERE a.id_parametro = i_id_parametro;
-    END;
+    UPDATE t_parametros a
+       SET a.valor = i_valor
+     WHERE a.id_parametro = i_id_parametro;
   END;
 
   FUNCTION f_hash(i_data      IN VARCHAR2,
