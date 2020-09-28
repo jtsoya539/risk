@@ -35,4 +35,7 @@ alter table T_OPERACIONES
 alter table T_OPERACIONES
   add constraint CK_OPERACIONES_ACTIVO
   check (ACTIVO IN ('S', 'N'));
+alter table T_OPERACIONES
+  add constraint CK_OPERACIONES_LOG_ACTIVO
+  check (LOG_ACTIVO IN ('S', 'N'));
 
