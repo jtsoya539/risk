@@ -34,7 +34,6 @@ namespace Risk.API.Services
 {
     public class AutService : RiskServiceBase, IAutService
     {
-        private const string TIPO_OPERACION = "S";
         private const string DOMINIO_OPERACION = "AUT";
         private const int ID_VALIDAR_CREDENCIALES = 1;
         private const int ID_INICIAR_SESION = 2;

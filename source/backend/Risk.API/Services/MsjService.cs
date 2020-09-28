@@ -34,12 +34,15 @@ namespace Risk.API.Services
 {
     public class MsjService : RiskServiceBase, IMsjService
     {
-        private const string TIPO_OPERACION = "S";
         private const string DOMINIO_OPERACION = "MSJ";
-        private const int ID_LISTAR_MENSAJES_PENDIENTES = 30;
-        private const int ID_LISTAR_CORREOS_PENDIENTES = 31;
-        private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 32;
-        private const int ID_CAMBIAR_ESTADO_MENSAJERIA = 33;
+        //private const int ID_LISTAR_MENSAJES_PENDIENTES = 30;
+        private const string NOMBRE_LISTAR_MENSAJES_PENDIENTES = "LISTAR_MENSAJES_PENDIENTES";
+        //private const int ID_LISTAR_CORREOS_PENDIENTES = 31;
+        private const string NOMBRE_LISTAR_CORREOS_PENDIENTES = "LISTAR_CORREOS_PENDIENTES";
+        //private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 32;
+        private const string NOMBRE_LISTAR_NOTIFICACIONES_PENDIENTES = "LISTAR_NOTIFICACIONES_PENDIENTES";
+        //private const int ID_CAMBIAR_ESTADO_MENSAJERIA = 33;
+        private const string NOMBRE_CAMBIAR_ESTADO_MENSAJERIA = "CAMBIAR_ESTADO_MENSAJERIA";
 
         public MsjService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(configuration, httpContextAccessor, dbConnectionFactory)
@@ -54,7 +57,11 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_MENSAJES_PENDIENTES, prms.ToString(Formatting.None));
+            //string rsp = base.ProcesarServicio(ID_LISTAR_MENSAJES_PENDIENTES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_MENSAJES_PENDIENTES,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YMensaje>>>(rsp);
 
             Pagina<Mensaje> datos = null;
@@ -74,7 +81,11 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_CORREOS_PENDIENTES, prms.ToString(Formatting.None));
+            //string rsp = base.ProcesarServicio(ID_LISTAR_CORREOS_PENDIENTES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_CORREOS_PENDIENTES,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCorreo>>>(rsp);
 
             Pagina<Correo> datos = null;
@@ -94,7 +105,11 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_NOTIFICACIONES_PENDIENTES, prms.ToString(Formatting.None));
+            //string rsp = base.ProcesarServicio(ID_LISTAR_NOTIFICACIONES_PENDIENTES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_NOTIFICACIONES_PENDIENTES,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YNotificacion>>>(rsp);
 
             Pagina<Notificacion> datos = null;
@@ -114,7 +129,11 @@ namespace Risk.API.Services
             prms.Add("estado", ModelsMapper.GetValueFromEstadoMensajeriaEnum(estado));
             prms.Add("respuesta_envio", respuestaEnvio);
 
-            string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJERIA, prms.ToString(Formatting.None));
+            //string rsp = base.ProcesarServicio(ID_CAMBIAR_ESTADO_MENSAJERIA, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_CAMBIAR_ESTADO_MENSAJERIA,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
