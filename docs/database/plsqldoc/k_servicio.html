@@ -70,6 +70,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PROCESAR_SERVICIO2">f_procesar_servicio</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Exceptions"></A>
@@ -267,6 +272,18 @@ FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
                              i_parametros  IN CLOB,
                              i_contexto    IN CLOB DEFAULT NULL)
   RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_PROCESAR_SERVICIO2"></A>
+<P CLASS="TYPE_TITLE">
+f_procesar_servicio
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_procesar_servicio(i_nombre     IN VARCHAR2,
+                             i_dominio    IN VARCHAR2,
+                             i_parametros IN CLOB,
+                             i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB
 
 </PRE>
 <P>&nbsp;</P>

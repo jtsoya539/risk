@@ -6,7 +6,8 @@ create table T_OPERACIONES
   dominio        VARCHAR2(30),
   activo         VARCHAR2(1) default 'N' not null,
   detalle        VARCHAR2(4000),
-  version_actual VARCHAR2(100)
+  version_actual VARCHAR2(100),
+  log_activo     VARCHAR2(1) default 'N' not null
 )
 ;
 comment on table T_OPERACIONES
@@ -25,6 +26,8 @@ comment on column T_OPERACIONES.detalle
   is 'Detalles adicionales de la operación';
 comment on column T_OPERACIONES.version_actual
   is 'Version actual de la operación';
+comment on column T_OPERACIONES.log_activo
+  is 'El log de la operación está activo? (S/N)';
 alter table T_OPERACIONES
   add constraint PK_OPERACIONES primary key (ID_OPERACION);
 alter table T_OPERACIONES

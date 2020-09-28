@@ -30,12 +30,22 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   -------------------------------------------------------------------------------
   */
 
+  -- Tipos de Operaciones
+  c_tipo_servicio   CONSTANT CHAR(1) := 'S';
+  c_tipo_reporte    CONSTANT CHAR(1) := 'R';
+  c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
+  c_tipo_parametros CONSTANT CHAR(1) := 'P';
+
   c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
 
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
                             i_respuesta    IN CLOB,
                             i_contexto     IN CLOB DEFAULT NULL);
+
+  FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
+                          i_nombre  IN VARCHAR2,
+                          i_dominio IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB) RETURN y_parametros;
@@ -67,15 +77,50 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                             i_respuesta    IN CLOB,
                             i_contexto     IN CLOB DEFAULT NULL) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
+    l_log_activo t_operaciones.log_activo%TYPE;
   BEGIN
-    INSERT INTO t_operacion_logs
-      (id_operacion, contexto, parametros, respuesta)
-    VALUES
-      (i_id_operacion, i_contexto, i_parametros, i_respuesta);
+    BEGIN
+      SELECT log_activo
+        INTO l_log_activo
+        FROM t_operaciones
+       WHERE id_operacion = i_id_operacion;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_log_activo := 'N';
+    END;
+  
+    IF l_log_activo = 'S' THEN
+      INSERT INTO t_operacion_logs
+        (id_operacion, contexto, parametros, respuesta)
+      VALUES
+        (i_id_operacion, i_contexto, i_parametros, i_respuesta);
+    END IF;
+  
     COMMIT;
   EXCEPTION
     WHEN OTHERS THEN
       ROLLBACK;
+  END;
+
+  FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
+                          i_nombre  IN VARCHAR2,
+                          i_dominio IN VARCHAR2) RETURN NUMBER IS
+    l_id_operacion t_operaciones.id_operacion%TYPE;
+  BEGIN
+    BEGIN
+      SELECT a.id_operacion
+        INTO l_id_operacion
+        FROM t_operaciones a
+       WHERE a.tipo = i_tipo
+         AND a.nombre = i_nombre
+         AND a.dominio = i_dominio;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_operacion := NULL;
+      WHEN OTHERS THEN
+        l_id_operacion := NULL;
+    END;
+    RETURN l_id_operacion;
   END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,

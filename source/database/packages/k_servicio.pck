@@ -73,6 +73,11 @@ CREATE OR REPLACE PACKAGE k_servicio IS
                                i_contexto    IN CLOB DEFAULT NULL)
     RETURN CLOB;
 
+  FUNCTION f_procesar_servicio(i_nombre     IN VARCHAR2,
+                               i_dominio    IN VARCHAR2,
+                               i_parametros IN CLOB,
+                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio IS
@@ -416,10 +421,32 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_servicio,
+                                i_parametros,
+                                l_rsp,
+                                i_contexto);
+    RETURN l_rsp;
+  END;
+
+  FUNCTION f_procesar_servicio(i_nombre     IN VARCHAR2,
+                               i_dominio    IN VARCHAR2,
+                               i_parametros IN CLOB,
+                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
+    l_rsp         CLOB;
+    l_id_servicio t_servicios.id_servicio%TYPE;
+  BEGIN
+    -- Busca servicio
+    l_id_servicio := k_operacion.f_id_operacion(k_operacion.c_tipo_servicio,
+                                                i_nombre,
+                                                i_dominio);
+    -- Registra ejecución
+    lp_registrar_ejecucion(l_id_servicio);
+    -- Procesa servicio
+    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto).to_json;
+    -- Registra log con datos de entrada y salida
+    k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,
                                 l_rsp,
                                 i_contexto);

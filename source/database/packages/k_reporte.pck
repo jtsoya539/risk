@@ -50,6 +50,11 @@ CREATE OR REPLACE PACKAGE k_reporte IS
                               i_parametros IN CLOB,
                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
 
+  FUNCTION f_procesar_reporte(i_nombre     IN VARCHAR2,
+                              i_dominio    IN VARCHAR2,
+                              i_parametros IN CLOB,
+                              i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_reporte IS
@@ -261,8 +266,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_pdf3_v5.set_page_orientation('PORTRAIT');
         as_pdf3_v5.set_margins(25, 30, 25, 30, 'mm');
       
-        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_imagenes,'ARCHIVO','x-mark-5-256.jpg')
-                                         .contenido,
+        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_imagenes,'ARCHIVO','x-mark-5-256.jpg').contenido,
                              p_x      => 30,
                              p_y      => 272,
                              p_width  => 10,
@@ -298,10 +302,32 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_reporte,
+                                i_parametros,
+                                l_rsp,
+                                i_contexto);
+    RETURN l_rsp;
+  END;
+
+  FUNCTION f_procesar_reporte(i_nombre     IN VARCHAR2,
+                              i_dominio    IN VARCHAR2,
+                              i_parametros IN CLOB,
+                              i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
+    l_rsp        CLOB;
+    l_id_reporte t_reportes.id_reporte%TYPE;
+  BEGIN
+    -- Busca reporte
+    l_id_reporte := k_operacion.f_id_operacion(k_operacion.c_tipo_reporte,
+                                               i_nombre,
+                                               i_dominio);
+    -- Registra ejecución
+    lp_registrar_ejecucion(l_id_reporte);
+    -- Procesa reporte
+    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto).to_json;
+    -- Registra log con datos de entrada y salida
+    k_operacion.p_registrar_log(l_id_reporte,
                                 i_parametros,
                                 l_rsp,
                                 i_contexto);

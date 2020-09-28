@@ -41,6 +41,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_OPERACION">f_id_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -83,12 +88,64 @@ Constants
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_TIPO_SERVICIO">c_tipo_servicio</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_TIPO_REPORTE">c_tipo_reporte</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_TIPO_TRABAJO">c_tipo_trabajo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_TIPO_PARAMETROS">c_tipo_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_ID_OPERACION_CONTEXTO">c_id_operacion_contexto</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="C_TIPO_SERVICIO"></A>
+<P CLASS="TYPE_TITLE">
+c_tipo_servicio
+</P>
+<PRE CLASS="DECL_TEXT">
+c_tipo_servicio   CONSTANT CHAR(1) := 'S';
+</PRE>
+<HR>
+<A NAME="C_TIPO_REPORTE"></A>
+<P CLASS="TYPE_TITLE">
+c_tipo_reporte
+</P>
+<PRE CLASS="DECL_TEXT">
+c_tipo_reporte    CONSTANT CHAR(1) := 'R';
+</PRE>
+<HR>
+<A NAME="C_TIPO_TRABAJO"></A>
+<P CLASS="TYPE_TITLE">
+c_tipo_trabajo
+</P>
+<PRE CLASS="DECL_TEXT">
+c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
+</PRE>
+<HR>
+<A NAME="C_TIPO_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+c_tipo_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+c_tipo_parametros CONSTANT CHAR(1) := 'P';
+</PRE>
 <HR>
 <A NAME="C_ID_OPERACION_CONTEXTO"></A>
 <P CLASS="TYPE_TITLE">
@@ -107,6 +164,17 @@ PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                           i_parametros   IN CLOB,
                           i_respuesta    IN CLOB,
                           i_contexto     IN CLOB DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="F_ID_OPERACION"></A>
+<P CLASS="TYPE_TITLE">
+f_id_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
+                        i_nombre  IN VARCHAR2,
+                        i_dominio IN VARCHAR2) RETURN NUMBER
 
 </PRE>
 <HR>
