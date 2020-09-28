@@ -34,6 +34,8 @@ namespace Risk.API.Services
 {
     public class MsjService : RiskServiceBase, IMsjService
     {
+        private const string TIPO_OPERACION = "S";
+        private const string DOMINIO_OPERACION = "MSJ";
         private const int ID_LISTAR_MENSAJES_PENDIENTES = 30;
         private const int ID_LISTAR_CORREOS_PENDIENTES = 31;
         private const int ID_LISTAR_NOTIFICACIONES_PENDIENTES = 32;

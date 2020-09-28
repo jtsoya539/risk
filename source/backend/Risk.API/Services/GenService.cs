@@ -34,6 +34,8 @@ namespace Risk.API.Services
 {
     public class GenService : RiskServiceBase, IGenService
     {
+        private const string TIPO_OPERACION = "S";
+        private const string DOMINIO_OPERACION = "GEN";
         private const int ID_VALOR_PARAMETRO = 8;
         private const int ID_SIGNIFICADO_CODIGO = 9;
         private const int ID_VERSION_SISTEMA = 13;
