@@ -35,18 +35,18 @@ namespace Risk.API.Services
     public class GenService : RiskServiceBase, IGenService
     {
         private const string DOMINIO_OPERACION = "GEN";
-        private const int ID_VALOR_PARAMETRO = 8;
-        private const int ID_SIGNIFICADO_CODIGO = 9;
-        private const int ID_VERSION_SISTEMA = 13;
-        private const int ID_VERSION_SERVICIO = 50;
-        private const int ID_LISTAR_PAISES = 16;
-        private const int ID_LISTAR_DEPARTAMENTOS = 25;
-        private const int ID_LISTAR_CIUDADES = 26;
-        private const int ID_LISTAR_BARRIOS = 27;
-        private const int ID_RECUPERAR_ARCHIVO = 18;
-        private const int ID_GUARDAR_ARCHIVO = 19;
-        private const int ID_RECUPERAR_TEXTO = 28;
-        private const int ID_LISTAR_SIGNIFICADOS = 29;
+        private const string NOMBRE_VALOR_PARAMETRO = "VALOR_PARAMETRO";
+        private const string NOMBRE_SIGNIFICADO_CODIGO = "SIGNIFICADO_CODIGO";
+        private const string NOMBRE_VERSION_SISTEMA = "VERSION_SISTEMA";
+        private const string NOMBRE_VERSION_SERVICIO = "VERSION_SERVICIO";
+        private const string NOMBRE_LISTAR_PAISES = "LISTAR_PAISES";
+        private const string NOMBRE_LISTAR_DEPARTAMENTOS = "LISTAR_DEPARTAMENTOS";
+        private const string NOMBRE_LISTAR_CIUDADES = "LISTAR_CIUDADES";
+        private const string NOMBRE_LISTAR_BARRIOS = "LISTAR_BARRIOS";
+        private const string NOMBRE_RECUPERAR_ARCHIVO = "RECUPERAR_ARCHIVO";
+        private const string NOMBRE_GUARDAR_ARCHIVO = "GUARDAR_ARCHIVO";
+        private const string NOMBRE_RECUPERAR_TEXTO = "RECUPERAR_TEXTO";
+        private const string NOMBRE_LISTAR_SIGNIFICADOS = "LISTAR_SIGNIFICADOS";
 
         public GenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(configuration, httpContextAccessor, dbConnectionFactory)
@@ -57,7 +57,10 @@ namespace Risk.API.Services
         {
             JObject prms = new JObject();
 
-            string rsp = base.ProcesarServicio(ID_VERSION_SISTEMA, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_VERSION_SISTEMA,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
@@ -68,7 +71,10 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("servicio", servicio);
 
-            string rsp = base.ProcesarServicio(ID_VERSION_SERVICIO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_VERSION_SERVICIO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
@@ -79,7 +85,10 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("parametro", parametro);
 
-            string rsp = base.ProcesarServicio(ID_VALOR_PARAMETRO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_VALOR_PARAMETRO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
@@ -91,7 +100,10 @@ namespace Risk.API.Services
             prms.Add("dominio", dominio);
             prms.Add("codigo", codigo);
 
-            string rsp = base.ProcesarServicio(ID_SIGNIFICADO_CODIGO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_SIGNIFICADO_CODIGO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
@@ -107,7 +119,10 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_SIGNIFICADOS, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_SIGNIFICADOS,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YSignificado>>>(rsp);
 
             Pagina<Significado> datos = null;
@@ -129,7 +144,10 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_PAISES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_PAISES,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
 
             Pagina<Pais> datos = null;
@@ -152,7 +170,10 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_DEPARTAMENTOS, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_DEPARTAMENTOS,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YDepartamento>>>(rsp);
 
             Pagina<Departamento> datos = null;
@@ -176,7 +197,10 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_CIUDADES, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_CIUDADES,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCiudad>>>(rsp);
 
             Pagina<Ciudad> datos = null;
@@ -201,7 +225,10 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
             }
 
-            string rsp = base.ProcesarServicio(ID_LISTAR_BARRIOS, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_BARRIOS,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YBarrio>>>(rsp);
 
             Pagina<Barrio> datos = null;
@@ -221,7 +248,10 @@ namespace Risk.API.Services
             prms.Add("referencia", referencia);
             prms.Add("version", version);
 
-            string rsp = base.ProcesarServicio(ID_RECUPERAR_ARCHIVO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_RECUPERAR_ARCHIVO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
@@ -239,7 +269,10 @@ namespace Risk.API.Services
                 prms.Add("archivo", JToken.FromObject(ModelsMapper.GetYArchivoFromModel(archivo)));
             }
 
-            string rsp = base.ProcesarServicio(ID_GUARDAR_ARCHIVO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_GUARDAR_ARCHIVO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
@@ -250,12 +283,13 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("referencia", referencia);
 
-            string rsp = base.ProcesarServicio(ID_RECUPERAR_TEXTO, prms.ToString(Formatting.None));
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_RECUPERAR_TEXTO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
-
-
     }
 }
