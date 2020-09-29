@@ -77,68 +77,6 @@ namespace Risk.API.Services
             return ctx.ToString(Formatting.None);
         }
 
-        public string ProcesarServicio(int idServicio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
-        {
-            string respuesta = string.Empty;
-            if (idServicio > 0)
-            {
-                using (OracleConnection con = (OracleConnection)_dbConnectionFactory.CreateConnection())
-                {
-                    try
-                    {
-                        if (con.State != ConnectionState.Open)
-                        {
-                            con.Open();
-                        }
-
-                        // SetApplicationContext
-                        con.ClientId = _configuration["SwaggerConfiguration:Title"];
-                        con.ClientInfo = _configuration["SwaggerConfiguration:Description"];
-                        con.ModuleName = Path.GetFileNameWithoutExtension(callerFilePath);
-                        con.ActionName = callerMemberName;
-
-                        using (OracleCommand cmd = con.CreateCommand())
-                        {
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.CommandText = SQL_PROCESAR_SERVICIO;
-                            cmd.BindByName = true;
-
-                            OracleClob result = new OracleClob(con);
-                            OracleClob iParametros = new OracleClob(con);
-                            OracleClob iContexto = new OracleClob(con);
-
-                            iParametros.Write(parametros.ToCharArray(), 0, parametros.Length);
-
-                            string contexto = ObtenerContexto();
-                            iContexto.Write(contexto.ToCharArray(), 0, contexto.Length);
-
-                            cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
-                            cmd.Parameters.Add("i_id_servicio", OracleDbType.Int32, idServicio, ParameterDirection.Input);
-                            cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
-                            cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
-
-                            cmd.ExecuteNonQuery();
-
-                            result = (OracleClob)cmd.Parameters["result"].Value;
-                            respuesta = result.Value;
-
-                            result.Dispose();
-                            iParametros.Dispose();
-                            iContexto.Dispose();
-                        }
-
-                        con.Close();
-                    }
-                    catch (OracleException oe)
-                    {
-                        Console.WriteLine(oe);
-                        respuesta = RESPUESTA_ERROR_BASE_DATOS;
-                    }
-                }
-            }
-            return respuesta;
-        }
-
         public string ProcesarOperacion(string tipo, string nombre, string dominio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
         {
             string respuesta = string.Empty;
