@@ -47,6 +47,9 @@ insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE,
 values (14, 'S', 'REGISTRAR_DISPOSITIVO', 'AUT', 'S', null, '0.1.0', 'N');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
+values (15, 'S', 'REGISTRAR_UBICACION', 'AUT', 'S', null, '0.1.0', 'N');
+
+insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
 values (16, 'S', 'LISTAR_PAISES', 'GEN', 'S', null, '0.1.0', 'N');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
@@ -102,9 +105,6 @@ values (33, 'S', 'CAMBIAR_ESTADO_MENSAJERIA', 'MSJ', 'S', null, '0.1.0', 'N');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
 values (42, 'S', 'EDITAR_USUARIO', 'AUT', 'S', null, '0.1.0', 'N');
-
-insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
-values (43, 'S', 'REGISTRAR_UBICACION', 'AUT', 'S', null, '0.1.0', 'N');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
 values (50, 'S', 'VERSION_SERVICIO', 'GEN', 'S', null, '0.1.0', 'N');
