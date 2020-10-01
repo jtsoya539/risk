@@ -25,6 +25,7 @@ SOFTWARE.
 using Microsoft.AspNetCore.Http;
 using Risk.API.Helpers;
 using Risk.API.Services;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace Risk.API.Middlewares
@@ -47,7 +48,8 @@ namespace Risk.API.Middlewares
                 if (string.IsNullOrEmpty(claveAplicacion))
                 {
                     context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                    await context.Response.WriteAsync($"{RiskConstants.HEADER_RISK_APP_KEY} missing");
+                    context.Response.ContentType = MediaTypeNames.Text.Plain;
+                    await context.Response.WriteAsync($"Missing {RiskConstants.HEADER_RISK_APP_KEY}");
                     return;
                 }
                 else
@@ -57,6 +59,7 @@ namespace Risk.API.Middlewares
                     if (!respValidarClaveAplicacion.Codigo.Equals(RiskConstants.CODIGO_OK))
                     {
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                        context.Response.ContentType = MediaTypeNames.Text.Plain;
                         await context.Response.WriteAsync($"Invalid {RiskConstants.HEADER_RISK_APP_KEY}");
                         return;
                     }

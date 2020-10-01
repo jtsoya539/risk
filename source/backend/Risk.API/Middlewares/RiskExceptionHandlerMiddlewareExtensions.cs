@@ -22,23 +22,31 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Helpers
+using System.Net.Mime;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using Risk.API.Helpers;
+
+namespace Risk.API.Middlewares
 {
-    public static class RiskConstants
+    public static class RiskExceptionHandlerMiddlewareExtensions
     {
-        public const string RESPUESTA_EXCEPTION = "{\"Codigo\":\"exc9999\",\"Mensaje\":\"Error inesperado\",\"Datos\":null}";
-
-        // Códigos de respuesta de Base de Datos
-        public const string CODIGO_OK = "0";
-        public const string CODIGO_ERROR_INESPERADO = "api9999";
-        public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
-
-        // OpenApi Security Schemes
-        public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";
-        public const string SECURITY_SCHEME_ACCESS_TOKEN = "AccessToken";
-
-        // Http Headers
-        public const string HEADER_RISK_APP_KEY = "Risk-App-Key";
-        public const string HEADER_AUTHORIZATION = "Authorization";
+        public static void UseRiskExceptionHandler(this IApplicationBuilder builder)
+        {
+            builder.UseExceptionHandler(appError =>
+            {
+                appError.Run(async context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                    context.Response.ContentType = MediaTypeNames.Application.Json;
+                    var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (exceptionHandlerFeature != null)
+                    {
+                        await context.Response.WriteAsync(RiskConstants.RESPUESTA_EXCEPTION);
+                    }
+                });
+            });
+        }
     }
 }

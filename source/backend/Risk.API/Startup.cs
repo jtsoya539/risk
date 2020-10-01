@@ -206,6 +206,10 @@ namespace Risk.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseRiskExceptionHandler();
+            }
 
             app.UseHttpsRedirection();
 

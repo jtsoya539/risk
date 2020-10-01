@@ -44,7 +44,6 @@ namespace Risk.API.Services
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
         private const string SQL_PROCESAR_REPORTE = "K_REPORTE.F_PROCESAR_REPORTE";
-        private const string RESPUESTA_ERROR_BASE_DATOS = "{\"codigo\":\"api9999\",\"mensaje\":\"Servicio no disponible\",\"mensaje_bd\":null,\"lugar\":null,\"datos\":null}";
 
         public RiskServiceBase(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
         {
@@ -144,7 +143,7 @@ namespace Risk.API.Services
                     catch (OracleException oe)
                     {
                         Console.WriteLine(oe);
-                        respuesta = RESPUESTA_ERROR_BASE_DATOS;
+                        respuesta = RiskConstants.RESPUESTA_EXCEPTION;
                     }
                 }
             }
