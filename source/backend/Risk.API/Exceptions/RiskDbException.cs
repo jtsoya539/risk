@@ -22,26 +22,16 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Helpers
+namespace Risk.API.Exceptions
 {
-    public static class RiskConstants
+    [System.Serializable]
+    public class RiskDbException : System.Exception
     {
-        // Códigos de respuesta para excepciones en API
-        public const string CODIGO_DB_EXCEPTION = "exc0001";
-        public const string CODIGO_API_EXCEPTION = "exc0002";
-        public const string CODIGO_EXCEPTION = "exc9999";
-
-        // Códigos de respuesta de Base de Datos
-        public const string CODIGO_OK = "0";
-        public const string CODIGO_ERROR_INESPERADO = "api9999";
-        public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
-
-        // OpenApi Security Schemes
-        public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";
-        public const string SECURITY_SCHEME_ACCESS_TOKEN = "AccessToken";
-
-        // Http Headers
-        public const string HEADER_RISK_APP_KEY = "Risk-App-Key";
-        public const string HEADER_AUTHORIZATION = "Authorization";
+        public RiskDbException() { }
+        public RiskDbException(string message) : base(message) { }
+        public RiskDbException(string message, System.Exception inner) : base(message, inner) { }
+        protected RiskDbException(
+            System.Runtime.Serialization.SerializationInfo info,
+            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }

@@ -33,6 +33,7 @@ using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 using Risk.API.Entities;
+using Risk.API.Exceptions;
 using Risk.API.Helpers;
 
 namespace Risk.API.Services
@@ -142,8 +143,7 @@ namespace Risk.API.Services
                     }
                     catch (OracleException oe)
                     {
-                        Console.WriteLine(oe);
-                        respuesta = RiskConstants.RESPUESTA_EXCEPTION;
+                        throw new RiskDbException("Operación no disponible o con error", oe);
                     }
                 }
             }

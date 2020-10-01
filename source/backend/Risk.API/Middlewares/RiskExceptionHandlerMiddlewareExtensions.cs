@@ -26,7 +26,10 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Risk.API.Exceptions;
 using Risk.API.Helpers;
+using Risk.API.Models;
 
 namespace Risk.API.Middlewares
 {
@@ -43,7 +46,25 @@ namespace Risk.API.Middlewares
                     var exceptionHandlerFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (exceptionHandlerFeature != null)
                     {
-                        await context.Response.WriteAsync(RiskConstants.RESPUESTA_EXCEPTION);
+                        var exception = exceptionHandlerFeature.Error;
+                        var respuesta = new Respuesta<Dato>();
+                        if (exception is RiskDbException)
+                        {
+                            respuesta.Codigo = RiskConstants.CODIGO_DB_EXCEPTION;
+                            respuesta.Mensaje = exception.Message;
+                        }
+                        else if (exception is RiskApiException)
+                        {
+                            respuesta.Codigo = RiskConstants.CODIGO_API_EXCEPTION;
+                            respuesta.Mensaje = exception.Message;
+                        }
+                        else
+                        {
+                            respuesta.Codigo = RiskConstants.CODIGO_EXCEPTION;
+                            respuesta.Mensaje = "Error inesperado";
+                        }
+
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(respuesta));
                     }
                 });
             });
