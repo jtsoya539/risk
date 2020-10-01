@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Risk.API.Attributes;
@@ -36,6 +37,17 @@ namespace Risk.API.Filters
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
+            var content = new Dictionary<string, OpenApiMediaType>
+            {
+                [MediaTypeNames.Text.Plain] = new OpenApiMediaType
+                {
+                    Schema = new OpenApiSchema()
+                    {
+                        Type = "string"
+                    }
+                }
+            };
+
             var allowAnyClientAttributes = context.MethodInfo.GetCustomAttributes(true).OfType<AllowAnyClientAttribute>();
 
             if (!allowAnyClientAttributes.Any())
@@ -60,7 +72,11 @@ namespace Risk.API.Filters
                 // Add Http Response
                 if (!operation.Responses.ContainsKey("403"))
                 {
-                    operation.Responses.Add("403", new OpenApiResponse { Description = "Aplicación no autorizada" });
+                    operation.Responses.Add("403", new OpenApiResponse
+                    {
+                        Description = "Aplicación no autorizada",
+                        Content = content
+                    });
                 }
             }
 
@@ -89,7 +105,11 @@ namespace Risk.API.Filters
                 // Add Http Response
                 if (!operation.Responses.ContainsKey("401"))
                 {
-                    operation.Responses.Add("401", new OpenApiResponse { Description = "Operación no autorizada" });
+                    operation.Responses.Add("401", new OpenApiResponse
+                    {
+                        Description = "Operación no autorizada",
+                        Content = content
+                    });
                 }
             }
         }
