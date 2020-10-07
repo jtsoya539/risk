@@ -100,6 +100,7 @@ namespace Risk.API.Services
                         using (OracleCommand cmd = con.CreateCommand())
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.BindByName = true;
                             switch (tipo)
                             {
                                 case "S":
@@ -112,7 +113,6 @@ namespace Risk.API.Services
                                     cmd.CommandText = string.Empty;
                                     break;
                             }
-                            cmd.BindByName = true;
 
                             OracleClob result = new OracleClob(con);
                             OracleClob iParametros = new OracleClob(con);
