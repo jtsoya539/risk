@@ -110,6 +110,7 @@ plugin plsqldoc generate y_cadenas_caracteres;
 plugin plsqldoc generate y_ciudad;
 plugin plsqldoc generate y_correo;
 plugin plsqldoc generate y_dato;
+plugin plsqldoc generate y_datos;
 plugin plsqldoc generate y_departamento;
 plugin plsqldoc generate y_dispositivo;
 plugin plsqldoc generate y_mensaje;

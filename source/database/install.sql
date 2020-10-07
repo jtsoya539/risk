@@ -124,6 +124,7 @@ prompt
 @@types/y_objeto.typ
 @@types/y_objetos.typ
 @@types/y_dato.typ
+@@types/y_datos.typ
 @@types/y_archivo.typ
 @@types/y_parametro.typ
 @@types/y_parametros.typ
