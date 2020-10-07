@@ -51,7 +51,7 @@ SOFTWARE.
 /** Plataforma para las notificaciones push de la aplicación */
   plataforma_notificacion VARCHAR2(10),
 /** Suscripciones para notificaciones push del dispositivo */
-  suscripciones y_objetos,
+  suscripciones y_datos,
 
 /**
 Constructor del objeto sin parámetros.
@@ -86,7 +86,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     self.token_notificacion        := NULL;
     self.template_notificacion     := NULL;
     self.plataforma_notificacion   := NULL;
-    self.suscripciones             := NEW y_objetos();
+    self.suscripciones             := NEW y_datos();
     RETURN;
   END;
 
@@ -94,7 +94,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_dispositivo   y_dispositivo;
     l_json_object   json_object_t;
     l_dato          y_dato;
-    l_suscripciones y_objetos;
+    l_suscripciones y_datos;
     l_json_array    json_array_t;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
@@ -114,9 +114,9 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_json_array := l_json_object.get_array('suscripciones');
   
     IF l_json_array IS NULL THEN
-      l_dispositivo.suscripciones := NEW y_objetos();
+      l_dispositivo.suscripciones := NEW y_datos();
     ELSE
-      l_suscripciones := NEW y_objetos();
+      l_suscripciones := NEW y_datos();
       FOR i IN 0 .. l_json_array.get_size - 1 LOOP
         l_dato := NEW y_dato();
         l_dato := treat(y_dato.parse_json(l_json_array.get(i).to_clob) AS

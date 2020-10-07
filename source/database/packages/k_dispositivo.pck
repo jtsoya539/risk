@@ -158,7 +158,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
   FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
     RETURN y_dispositivo IS
     l_dispositivo   y_dispositivo;
-    l_suscripciones y_objetos;
+    l_suscripciones y_datos;
     l_suscripcion   y_dato;
   
     CURSOR cr_suscripciones(i_id_dispositivo IN NUMBER) IS
@@ -169,7 +169,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
   BEGIN
     -- Inicializa respuesta
     l_dispositivo   := NEW y_dispositivo();
-    l_suscripciones := NEW y_objetos();
+    l_suscripciones := NEW y_datos();
   
     -- Buscando datos del dispositivo
     BEGIN
