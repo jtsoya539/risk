@@ -28,6 +28,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
@@ -40,14 +41,16 @@ namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
+        protected readonly ILogger<RiskServiceBase> _logger;
         protected readonly IConfiguration _configuration;
         protected readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
         private const string SQL_PROCESAR_REPORTE = "K_REPORTE.F_PROCESAR_REPORTE";
 
-        public RiskServiceBase(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+        public RiskServiceBase(ILogger<RiskServiceBase> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
         {
+            _logger = logger;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             _dbConnectionFactory = dbConnectionFactory;
@@ -129,10 +132,12 @@ namespace Risk.API.Services
                             cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
                             cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
 
+                            _logger.LogInformation($"Ejecutando el SP [{cmd.CommandText}] con parámetros i_nombre=[{nombre}], i_dominio=[{dominio}], i_parametros=[{parametros}], i_contexto=[{contexto}]");
                             cmd.ExecuteNonQuery();
 
                             result = (OracleClob)cmd.Parameters["result"].Value;
                             respuesta = result.Value;
+                            _logger.LogInformation($"El SP [{cmd.CommandText}] retornó [{respuesta}]");
 
                             result.Dispose();
                             iParametros.Dispose();

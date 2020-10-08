@@ -24,6 +24,7 @@ SOFTWARE.
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Risk.API.Entities;
@@ -54,8 +55,8 @@ namespace Risk.API.Services
         private const string NOMBRE_EDITAR_USUARIO = "EDITAR_USUARIO";
         private const string NOMBRE_REGISTRAR_UBICACION = "REGISTRAR_UBICACION";
 
-        public AutService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
-            : base(configuration, httpContextAccessor, dbConnectionFactory)
+        public AutService(ILogger<AutService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(logger, configuration, httpContextAccessor, dbConnectionFactory)
         {
         }
 
