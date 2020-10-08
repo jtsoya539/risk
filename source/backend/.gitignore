@@ -435,7 +435,8 @@ $RECYCLE.BIN/
 ##
 ## Risk.API
 ##
-
+Risk.API/config/oracle
+!Risk.API/config/oracle/README.md
 
 ##
 ## Risk.API.Client
