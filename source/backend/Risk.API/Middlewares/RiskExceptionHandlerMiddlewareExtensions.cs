@@ -35,6 +35,8 @@ namespace Risk.API.Middlewares
 {
     public static class RiskExceptionHandlerMiddlewareExtensions
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public static void UseRiskExceptionHandler(this IApplicationBuilder builder)
         {
             builder.UseExceptionHandler(appError =>
@@ -64,6 +66,7 @@ namespace Risk.API.Middlewares
                             respuesta.Mensaje = "Error inesperado";
                         }
 
+                        logger.Error(exception, "Error inesperado en Risk.API. Respuesta: {0}", JsonConvert.SerializeObject(respuesta));
                         await context.Response.WriteAsync(JsonConvert.SerializeObject(respuesta));
                     }
                 });

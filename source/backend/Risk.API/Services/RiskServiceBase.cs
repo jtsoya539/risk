@@ -22,7 +22,6 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -132,12 +131,17 @@ namespace Risk.API.Services
                             cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
                             cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
 
-                            _logger.LogInformation($"Ejecutando el SP [{cmd.CommandText}] con parámetros i_nombre=[{nombre}], i_dominio=[{dominio}], i_parametros=[{parametros}], i_contexto=[{contexto}]");
+                            _logger.LogInformation("Ejecutando el SP [{0}] con parámetros i_nombre=[{1}], i_dominio=[{2}], i_parametros=[{3}], i_contexto=[{4}]",
+                                cmd.CommandText,
+                                nombre,
+                                dominio,
+                                parametros,
+                                contexto);
                             cmd.ExecuteNonQuery();
 
                             result = (OracleClob)cmd.Parameters["result"].Value;
                             respuesta = result.Value;
-                            _logger.LogInformation($"El SP [{cmd.CommandText}] retornó [{respuesta}]");
+                            _logger.LogInformation("El SP [{0}] retornó [{1}]", cmd.CommandText, respuesta);
 
                             result.Dispose();
                             iParametros.Dispose();
