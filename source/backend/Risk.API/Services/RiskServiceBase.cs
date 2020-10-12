@@ -22,12 +22,12 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
@@ -40,14 +40,16 @@ namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
+        protected readonly ILogger<RiskServiceBase> _logger;
         protected readonly IConfiguration _configuration;
         protected readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private const string SQL_PROCESAR_SERVICIO = "K_SERVICIO.F_PROCESAR_SERVICIO";
         private const string SQL_PROCESAR_REPORTE = "K_REPORTE.F_PROCESAR_REPORTE";
 
-        public RiskServiceBase(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+        public RiskServiceBase(ILogger<RiskServiceBase> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
         {
+            _logger = logger;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             _dbConnectionFactory = dbConnectionFactory;
@@ -129,10 +131,17 @@ namespace Risk.API.Services
                             cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
                             cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
 
+                            _logger.LogDebug("Ejecutando el SP [{0}] con parámetros i_nombre=[{1}], i_dominio=[{2}], i_parametros=[{3}], i_contexto=[{4}]",
+                                cmd.CommandText,
+                                nombre,
+                                dominio,
+                                parametros,
+                                contexto);
                             cmd.ExecuteNonQuery();
 
                             result = (OracleClob)cmd.Parameters["result"].Value;
                             respuesta = result.Value;
+                            _logger.LogDebug("El SP [{0}] retornó [{1}]", cmd.CommandText, respuesta);
 
                             result.Dispose();
                             iParametros.Dispose();

@@ -24,6 +24,7 @@ SOFTWARE.
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Risk.API.Entities;
@@ -48,8 +49,8 @@ namespace Risk.API.Services
         private const string NOMBRE_RECUPERAR_TEXTO = "RECUPERAR_TEXTO";
         private const string NOMBRE_LISTAR_SIGNIFICADOS = "LISTAR_SIGNIFICADOS";
 
-        public GenService(IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
-            : base(configuration, httpContextAccessor, dbConnectionFactory)
+        public GenService(ILogger<GenService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(logger, configuration, httpContextAccessor, dbConnectionFactory)
         {
         }
 

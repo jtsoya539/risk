@@ -1,0 +1,1 @@
+En este directorio se almacenan los archivos de configuración de Oracle.
