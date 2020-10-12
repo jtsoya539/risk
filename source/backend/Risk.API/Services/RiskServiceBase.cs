@@ -131,7 +131,7 @@ namespace Risk.API.Services
                             cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
                             cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
 
-                            _logger.LogInformation("Ejecutando el SP [{0}] con parámetros i_nombre=[{1}], i_dominio=[{2}], i_parametros=[{3}], i_contexto=[{4}]",
+                            _logger.LogDebug("Ejecutando el SP [{0}] con parámetros i_nombre=[{1}], i_dominio=[{2}], i_parametros=[{3}], i_contexto=[{4}]",
                                 cmd.CommandText,
                                 nombre,
                                 dominio,
@@ -141,7 +141,7 @@ namespace Risk.API.Services
 
                             result = (OracleClob)cmd.Parameters["result"].Value;
                             respuesta = result.Value;
-                            _logger.LogInformation("El SP [{0}] retornó [{1}]", cmd.CommandText, respuesta);
+                            _logger.LogDebug("El SP [{0}] retornó [{1}]", cmd.CommandText, respuesta);
 
                             result.Dispose();
                             iParametros.Dispose();

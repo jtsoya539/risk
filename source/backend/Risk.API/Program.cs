@@ -38,12 +38,12 @@ namespace Risk.API
             var logger = NLog.Web.NLogBuilder.ConfigureNLog(Path.Combine("config", "log", "nlog.config")).GetCurrentClassLogger();
             try
             {
-                logger.Debug("Iniciando Risk.API");
+                logger.Info("Iniciando Risk.API");
                 CreateHostBuilder(args).Build().Run();
             }
             catch (Exception exception)
             {
-                logger.Error(exception, "Error al iniciar Risk.API");
+                logger.Fatal(exception, "Error al iniciar Risk.API");
                 throw;
             }
             finally
