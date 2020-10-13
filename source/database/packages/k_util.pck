@@ -120,13 +120,13 @@ CREATE OR REPLACE PACKAGE k_util IS
   Retorna una tabla de cadenas delimitadas por un separador
   
   %author dmezac 10/9/2020 18:05:15
-  %param i_cadena Cadena0
+  %param i_cadena Cadena
   %param i_separador Caracter separador. Por defecto '~'
   %return Tabla de cadenas
   */
   FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
                              i_separador VARCHAR2 DEFAULT '~')
-    RETURN y_cadenas_caracteres
+    RETURN y_cadenas
     PIPELINED;
 
 END;
@@ -768,7 +768,7 @@ END;'
 
   FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
                              i_separador VARCHAR2 DEFAULT '~')
-    RETURN y_cadenas_caracteres
+    RETURN y_cadenas
     PIPELINED IS
     l_idx    PLS_INTEGER;
     l_cadena VARCHAR2(32767) := i_cadena;

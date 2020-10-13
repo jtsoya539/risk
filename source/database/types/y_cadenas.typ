@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_cadenas_caracteres IS TABLE OF VARCHAR2(32767)
+CREATE OR REPLACE TYPE y_cadenas IS TABLE OF VARCHAR2(32767)
 /**
 Lista de cadenas de caracteres.
 

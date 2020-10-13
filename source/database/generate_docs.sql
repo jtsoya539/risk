@@ -106,7 +106,7 @@ prompt -----------------------------------
 prompt
 plugin plsqldoc generate y_archivo;
 plugin plsqldoc generate y_barrio;
-plugin plsqldoc generate y_cadenas_caracteres;
+plugin plsqldoc generate y_cadenas;
 plugin plsqldoc generate y_ciudad;
 plugin plsqldoc generate y_correo;
 plugin plsqldoc generate y_dato;
