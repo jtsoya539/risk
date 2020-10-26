@@ -3,11 +3,19 @@
 Bienvenido/a a la documentación del Proyecto RISK.
 
 ## Contenido
+* [Arquitectura](#arquitectura)
 * [Requerimientos](#requerimientos)
 * [Instalación](#instalación)
 * [Guía de estilo para Desarrollo](database/styleguide.md)
 * [API PL/SQL](database/plsqldoc/index.html)
 * [API Clientes de Risk.API](backend/README.md)
+
+## Arquitectura
+### General
+![Arquitectura General](architecture/Risk.png)
+
+### Mensajería
+![Arquitectura Mensajería](architecture/Msj.png)
 
 ## Requerimientos
 ### Base de Datos
