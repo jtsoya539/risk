@@ -162,6 +162,7 @@ prompt
 @@packages/k_archivo.pck
 @@packages/k_mensajeria.pck
 @@packages/k_autenticacion.pck
+@@packages/k_autorizacion.pck
 @@packages/k_operacion.pck
 @@packages/k_servicio.pck
 @@packages/k_reporte.pck

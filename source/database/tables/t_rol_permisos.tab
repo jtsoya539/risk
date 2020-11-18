@@ -1,7 +1,7 @@
 create table T_ROL_PERMISOS
 (
   id_rol     NUMBER(3) not null,
-  id_permiso VARCHAR2(50) not null,
+  id_permiso VARCHAR2(300) not null,
   consultar  VARCHAR2(1) default 'N' not null,
   insertar   VARCHAR2(1) default 'N' not null,
   actualizar VARCHAR2(1) default 'N' not null,

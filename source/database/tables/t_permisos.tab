@@ -1,6 +1,6 @@
 create table T_PERMISOS
 (
-  id_permiso  VARCHAR2(50) not null,
+  id_permiso  VARCHAR2(300) not null,
   descripcion VARCHAR2(500),
   detalle     VARCHAR2(2000)
 )
