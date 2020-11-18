@@ -47,6 +47,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                           i_nombre  IN VARCHAR2,
                           i_dominio IN VARCHAR2) RETURN NUMBER;
 
+  FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB) RETURN y_parametros;
 
@@ -121,6 +123,26 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         l_id_operacion := NULL;
     END;
     RETURN l_id_operacion;
+  END;
+
+  FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2 IS
+    l_id_permiso t_permisos.id_permiso%TYPE;
+  BEGIN
+    BEGIN
+      SELECT p.id_permiso
+        INTO l_id_permiso
+        FROM t_permisos p, t_operaciones a
+       WHERE upper(p.id_permiso) =
+             upper(k_util.f_significado_codigo('TIPO_OPERACION', a.tipo) || ':' ||
+                   a.dominio || ':' || a.nombre)
+         AND a.id_operacion = i_id_operacion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_permiso := NULL;
+      WHEN OTHERS THEN
+        l_id_permiso := NULL;
+    END;
+    RETURN l_id_permiso;
   END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,

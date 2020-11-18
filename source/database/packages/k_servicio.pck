@@ -34,6 +34,7 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   c_ok                       CONSTANT VARCHAR2(10) := '0';
   c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
   c_error_parametro          CONSTANT VARCHAR2(10) := 'api0002';
+  c_error_permiso            CONSTANT VARCHAR2(10) := 'api0003';
   c_error_general            CONSTANT VARCHAR2(10) := 'api0099';
   c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
 
@@ -183,6 +184,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     k_sistema.p_definir_parametro_string(k_sistema.c_usuario,
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'usuario'));
+  
+    l_rsp.lugar := 'Validando permiso';
+    IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN
+      IF NOT
+          k_autorizacion.f_validar_permiso(k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario),
+                                           k_operacion.f_id_permiso(i_id_servicio)) THEN
+        p_respuesta_error(l_rsp,
+                          c_error_permiso,
+                          k_error.f_mensaje_error(c_error_permiso));
+        RAISE ex_error_general;
+      END IF;
+    END IF;
   
     l_rsp.lugar := 'Construyendo sentencia';
     l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
@@ -421,7 +434,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_servicio,
                                 i_parametros,
@@ -444,7 +458,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,

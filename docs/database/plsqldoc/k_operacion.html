@@ -46,6 +46,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_PERMISO">f_id_permiso</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -175,6 +180,15 @@ f_id_operacion
 FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
                         i_nombre  IN VARCHAR2,
                         i_dominio IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_ID_PERMISO"></A>
+<P CLASS="TYPE_TITLE">
+f_id_permiso
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2
 
 </PRE>
 <HR>
