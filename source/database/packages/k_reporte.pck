@@ -162,6 +162,18 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'usuario'));
   
+    l_rsp.lugar := 'Validando permiso';
+    IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN
+      IF NOT
+          k_autorizacion.f_validar_permiso(k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario),
+                                           k_operacion.f_id_permiso(i_id_reporte)) THEN
+        k_servicio. p_respuesta_error(l_rsp,
+                                      k_servicio.c_error_permiso,
+                                      k_error.f_mensaje_error(k_servicio.c_error_permiso));
+        RAISE k_servicio.ex_error_general;
+      END IF;
+    END IF;
+  
     l_rsp.lugar := 'Construyendo sentencia';
     l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
                    l_nombre_reporte || '(:2); END;';
