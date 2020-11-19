@@ -57,6 +57,8 @@ namespace Risk.API.Controllers
                         return StatusCode(StatusCodes.Status500InternalServerError, respuesta); // 500 Internal Server Error
                     else if (respuesta.Codigo.Equals(RiskConstants.CODIGO_SERVICIO_NO_IMPLEMENTADO))
                         return StatusCode(StatusCodes.Status501NotImplemented, respuesta); // 501 Not Implemented
+                    else if (respuesta.Codigo.Equals(RiskConstants.CODIGO_ERROR_PERMISO))
+                        return StatusCode(StatusCodes.Status401Unauthorized, respuesta); // 401 Unauthorized
                     else
                         return BadRequest(respuesta); // 400 Bad Request
                 }

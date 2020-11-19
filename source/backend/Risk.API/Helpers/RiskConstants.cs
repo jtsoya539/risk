@@ -33,8 +33,11 @@ namespace Risk.API.Helpers
 
         // Códigos de respuesta de Base de Datos
         public const string CODIGO_OK = "0";
-        public const string CODIGO_ERROR_INESPERADO = "api9999";
         public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
+        public const string CODIGO_ERROR_PARAMETRO = "api0002";
+        public const string CODIGO_ERROR_PERMISO = "api0003";
+        public const string CODIGO_ERROR_GENERAL = "api0099";
+        public const string CODIGO_ERROR_INESPERADO = "api9999";
 
         // OpenApi Security Schemes
         public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";
