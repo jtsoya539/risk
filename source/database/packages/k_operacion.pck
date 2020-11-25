@@ -292,7 +292,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         WHEN 'D' THEN
           -- Date
           IF l_json_element IS NOT NULL AND NOT l_json_element.is_null AND
-             NOT l_json_element.is_date THEN
+             NOT l_json_element.is_string /*l_json_element.is_date*/
+           THEN
             raise_application_error(-20000,
                                     'Parámetro ' ||
                                     nvl(par.etiqueta, par.nombre) ||
