@@ -46,6 +46,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_PERSONA">f_id_persona</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ALIAS">f_alias</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -113,6 +118,15 @@ f_id_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_ID_PERSONA"></A>
+<P CLASS="TYPE_TITLE">
+f_id_persona
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_persona(i_id_usuario IN NUMBER) RETURN NUMBER
 
 </PRE>
 <HR>
