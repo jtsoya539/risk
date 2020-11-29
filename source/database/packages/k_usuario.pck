@@ -37,6 +37,8 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_id_usuario(i_alias IN VARCHAR2) RETURN NUMBER;
 
+  FUNCTION f_id_persona(i_id_usuario IN NUMBER) RETURN NUMBER;
+
   FUNCTION f_alias(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
   FUNCTION f_estado(i_id_usuario IN NUMBER) RETURN VARCHAR2;
@@ -86,6 +88,23 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
         l_id_usuario := NULL;
     END;
     RETURN l_id_usuario;
+  END;
+
+  FUNCTION f_id_persona(i_id_usuario IN NUMBER) RETURN NUMBER IS
+    l_id_persona t_usuarios.id_persona%TYPE;
+  BEGIN
+    BEGIN
+      SELECT u.id_persona
+        INTO l_id_persona
+        FROM t_usuarios u
+       WHERE u.id_usuario = i_id_usuario;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_persona := NULL;
+      WHEN OTHERS THEN
+        l_id_persona := NULL;
+    END;
+    RETURN l_id_persona;
   END;
 
   FUNCTION f_alias(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS
