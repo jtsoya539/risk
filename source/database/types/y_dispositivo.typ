@@ -39,7 +39,7 @@ SOFTWARE.
 /** Version del sistema operativo */
   version_sistema_operativo VARCHAR2(100),
 /** Tipo del dispositivo */
-  tipo VARCHAR2(100),
+  tipo VARCHAR2(1),
 /** Nombre del navegador */
   nombre_navegador VARCHAR2(100),
 /** Version del navegador */
@@ -156,8 +156,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
       l_json_array := NEW json_array_t();
       i            := self.suscripciones.first;
       WHILE i IS NOT NULL LOOP
-        l_json_array.append(json_object_t.parse(self.suscripciones(i)
-                                                .to_json));
+        l_json_array.append(json_object_t.parse(self.suscripciones(i).to_json));
         i := self.suscripciones.next(i);
       END LOOP;
       l_json_object.put('suscripciones', l_json_array);

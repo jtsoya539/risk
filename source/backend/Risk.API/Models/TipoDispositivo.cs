@@ -22,22 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Collections.Generic;
-
 namespace Risk.API.Models
 {
-    public class Dispositivo
+    public enum TipoDispositivo
     {
-        public int IdDispositivo { get; set; }
-        public string TokenDispositivo { get; set; }
-        public string NombreSistemaOperativo { get; set; }
-        public string VersionSistemaOperativo { get; set; }
-        public TipoDispositivo Tipo { get; set; }
-        public string NombreNavegador { get; set; }
-        public string VersionNavegador { get; set; }
-        public string TokenNotificacion { get; set; }
-        public string TemplateNotificacion { get; set; }
-        public string PlataformaNotificacion { get; set; }
-        public List<Dato> Suscripciones { get; set; }
+        Mobile,
+        Tablet,
+        Desktop,
+        Tv,
+        Watch
     }
 }
