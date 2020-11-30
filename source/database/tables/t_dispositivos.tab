@@ -6,7 +6,7 @@ create table T_DISPOSITIVOS
   id_aplicacion             VARCHAR2(5),
   nombre_sistema_operativo  VARCHAR2(100),
   version_sistema_operativo VARCHAR2(100),
-  tipo                      VARCHAR2(100),
+  tipo                      VARCHAR2(1),
   nombre_navegador          VARCHAR2(100),
   version_navegador         VARCHAR2(100),
   token_notificacion        VARCHAR2(500)

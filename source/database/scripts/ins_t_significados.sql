@@ -257,4 +257,19 @@ values ('TIPO_OPERACION', 'R', 'REPORTE', null, 'S');
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_OPERACION', 'T', 'TRABAJO', null, 'S');
 
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_DISPOSITIVO', 'M', 'MOBILE', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_DISPOSITIVO', 'T', 'TABLET', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_DISPOSITIVO', 'D', 'DESKTOP', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_DISPOSITIVO', 'V', 'TV', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_DISPOSITIVO', 'W', 'WATCH', null, 'S');
+
 prompt Done.

@@ -163,7 +163,7 @@ namespace Risk.API.Helpers
                     TokenDispositivo = entity.TokenDispositivo,
                     NombreSistemaOperativo = entity.NombreSistemaOperativo,
                     VersionSistemaOperativo = entity.VersionSistemaOperativo,
-                    Tipo = entity.Tipo,
+                    Tipo = GetTipoDispositivoEnumFromValue(entity.Tipo),
                     NombreNavegador = entity.NombreNavegador,
                     VersionNavegador = entity.VersionNavegador,
                     TokenNotificacion = entity.TokenNotificacion,
@@ -481,6 +481,25 @@ namespace Risk.API.Helpers
                 CantidadElementos = entity.CantidadElementos,
                 Elementos = elementos
             };
+        }
+
+        public static TipoDispositivo GetTipoDispositivoEnumFromValue(string value)
+        {
+            switch (value)
+            {
+                case "M":
+                    return TipoDispositivo.Mobile;
+                case "T":
+                    return TipoDispositivo.Tablet;
+                case "D":
+                    return TipoDispositivo.Desktop;
+                case "V":
+                    return TipoDispositivo.Tv;
+                case "W":
+                    return TipoDispositivo.Watch;
+                default:
+                    return TipoDispositivo.Mobile;
+            }
         }
     }
 }

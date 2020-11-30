@@ -75,7 +75,7 @@ namespace Risk.API.Helpers
                     TokenDispositivo = model.TokenDispositivo,
                     NombreSistemaOperativo = model.NombreSistemaOperativo,
                     VersionSistemaOperativo = model.VersionSistemaOperativo,
-                    Tipo = model.Tipo,
+                    Tipo = GetValueFromTipoDispositivoEnum(model.Tipo),
                     NombreNavegador = model.NombreNavegador,
                     VersionNavegador = model.VersionNavegador,
                     TokenNotificacion = model.TokenNotificacion,
@@ -234,6 +234,25 @@ namespace Risk.API.Helpers
                     return "T";
                 case TipoOperacion.Parametros:
                     return "P";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetValueFromTipoDispositivoEnum(TipoDispositivo enumeration)
+        {
+            switch (enumeration)
+            {
+                case TipoDispositivo.Mobile:
+                    return "M";
+                case TipoDispositivo.Tablet:
+                    return "T";
+                case TipoDispositivo.Desktop:
+                    return "D";
+                case TipoDispositivo.Tv:
+                    return "V";
+                case TipoDispositivo.Watch:
+                    return "W";
                 default:
                     return string.Empty;
             }
