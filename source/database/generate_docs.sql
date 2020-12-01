@@ -105,6 +105,7 @@ prompt Generando docs de types...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate y_archivo;
+plugin plsqldoc generate y_archivos;
 plugin plsqldoc generate y_barrio;
 plugin plsqldoc generate y_cadenas;
 plugin plsqldoc generate y_ciudad;
