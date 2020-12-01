@@ -403,6 +403,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                       NULL,
                                       NULL,
                                       NULL,
+                                      NULL,
                                       k_mensajeria.c_prioridad_importante) <>
          k_mensajeria.c_ok THEN
         raise_application_error(-20000,

@@ -46,6 +46,31 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
 
+  FUNCTION lf_adjuntos(i_id_correo IN NUMBER) RETURN y_archivos IS
+    l_adjuntos y_archivos;
+    l_archivo  y_archivo;
+  
+    CURSOR cr_elementos IS
+      SELECT id_correo_adjunto
+        FROM t_correo_adjuntos
+       WHERE id_correo = i_id_correo
+       ORDER BY id_correo_adjunto;
+  BEGIN
+    -- Inicializa respuesta
+    l_adjuntos := NEW y_archivos();
+  
+    FOR ele IN cr_elementos LOOP
+      l_archivo := NEW y_archivo();
+      l_archivo := k_archivo.f_recuperar_archivo('T_CORREO_ADJUNTOS',
+                                                 'ARCHIVO',
+                                                 to_char(ele.id_correo_adjunto));
+      l_adjuntos.extend;
+      l_adjuntos(l_adjuntos.count) := l_archivo;
+    END LOOP;
+  
+    RETURN l_adjuntos;
+  END;
+
   FUNCTION listar_correos_pendientes(i_parametros IN y_parametros)
     RETURN y_respuesta IS
     l_rsp       y_respuesta;
@@ -99,6 +124,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
       l_elemento.mensaje_reply_to := ele.mensaje_reply_to;
       l_elemento.mensaje_cc       := ele.mensaje_cc;
       l_elemento.mensaje_bcc      := ele.mensaje_bcc;
+      l_elemento.adjuntos         := lf_adjuntos(ele.id_correo);
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;

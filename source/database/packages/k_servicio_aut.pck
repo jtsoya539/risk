@@ -821,6 +821,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         NULL,
                                         NULL,
                                         NULL,
+                                        NULL,
                                         k_mensajeria.c_prioridad_urgente) <>
            k_mensajeria.c_ok THEN
           k_servicio.p_respuesta_error(l_rsp,

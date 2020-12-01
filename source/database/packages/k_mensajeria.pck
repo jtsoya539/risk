@@ -71,6 +71,7 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                             i_reply_to        IN VARCHAR2 DEFAULT NULL,
                             i_cc              IN VARCHAR2 DEFAULT NULL,
                             i_bcc             IN VARCHAR2 DEFAULT NULL,
+                            i_adjuntos        IN y_archivos DEFAULT NULL,
                             i_prioridad_envio IN NUMBER DEFAULT NULL);
 
   PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
@@ -91,6 +92,7 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                            i_reply_to        IN VARCHAR2 DEFAULT NULL,
                            i_cc              IN VARCHAR2 DEFAULT NULL,
                            i_bcc             IN VARCHAR2 DEFAULT NULL,
+                           i_adjuntos        IN y_archivos DEFAULT NULL,
                            i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER;
 
@@ -203,8 +205,12 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                             i_reply_to        IN VARCHAR2 DEFAULT NULL,
                             i_cc              IN VARCHAR2 DEFAULT NULL,
                             i_bcc             IN VARCHAR2 DEFAULT NULL,
+                            i_adjuntos        IN y_archivos DEFAULT NULL,
                             i_prioridad_envio IN NUMBER DEFAULT NULL) IS
-    l_mensaje_to t_correos.mensaje_to%TYPE;
+    l_mensaje_to        t_correos.mensaje_to%TYPE;
+    l_id_correo         t_correos.id_correo%TYPE;
+    l_id_correo_adjunto t_correo_adjuntos.id_correo_adjunto%TYPE;
+    i                   INTEGER;
   BEGIN
     l_mensaje_to := i_to;
   
@@ -250,7 +256,26 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
        i_cc,
        i_bcc,
        'P',
-       nvl(i_prioridad_envio, c_prioridad_media));
+       nvl(i_prioridad_envio, c_prioridad_media))
+    RETURNING id_correo INTO l_id_correo;
+  
+    IF i_adjuntos IS NOT NULL THEN
+      i := i_adjuntos.first;
+      WHILE i IS NOT NULL LOOP
+        INSERT INTO t_correo_adjuntos
+          (id_correo)
+        VALUES
+          (l_id_correo)
+        RETURNING id_correo_adjunto INTO l_id_correo_adjunto;
+      
+        k_archivo.p_guardar_archivo('T_CORREO_ADJUNTOS',
+                                    'ARCHIVO',
+                                    to_char(l_id_correo_adjunto),
+                                    i_adjuntos(i));
+      
+        i := i_adjuntos.next(i);
+      END LOOP;
+    END IF;
   END;
 
   PROCEDURE p_enviar_mensaje(i_contenido       IN VARCHAR2,
@@ -339,6 +364,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                            i_reply_to        IN VARCHAR2 DEFAULT NULL,
                            i_cc              IN VARCHAR2 DEFAULT NULL,
                            i_bcc             IN VARCHAR2 DEFAULT NULL,
+                           i_adjuntos        IN y_archivos DEFAULT NULL,
                            i_prioridad_envio IN NUMBER DEFAULT NULL)
     RETURN PLS_INTEGER IS
     PRAGMA AUTONOMOUS_TRANSACTION;
@@ -354,6 +380,7 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                     i_reply_to,
                     i_cc,
                     i_bcc,
+                    i_adjuntos,
                     i_prioridad_envio);
   
     COMMIT;

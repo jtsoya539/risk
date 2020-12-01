@@ -249,6 +249,7 @@ PROCEDURE p_enviar_correo(i_subject         IN VARCHAR2,
                           i_reply_to        IN VARCHAR2 DEFAULT NULL,
                           i_cc              IN VARCHAR2 DEFAULT NULL,
                           i_bcc             IN VARCHAR2 DEFAULT NULL,
+                          i_adjuntos        IN y_archivos DEFAULT NULL,
                           i_prioridad_envio IN NUMBER DEFAULT NULL)
 
 </PRE>
@@ -290,6 +291,7 @@ FUNCTION f_enviar_correo(i_subject         IN VARCHAR2,
                          i_reply_to        IN VARCHAR2 DEFAULT NULL,
                          i_cc              IN VARCHAR2 DEFAULT NULL,
                          i_bcc             IN VARCHAR2 DEFAULT NULL,
+                         i_adjuntos        IN y_archivos DEFAULT NULL,
                          i_prioridad_envio IN NUMBER DEFAULT NULL)
   RETURN PLS_INTEGER
 
