@@ -1,6 +1,6 @@
 # GenApi
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,9 +8,12 @@ Method | HTTP request | Description
 [**listarCiudades**](GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 [**listarDepartamentos**](GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 [**listarPaises**](GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
+[**listarSignificados**](GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+[**recuperarTexto**](GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
 [**significadoCodigo**](GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 [**valorParametro**](GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-[**versionSistema**](GenApi.md#versionSistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
+[**versionServicio**](GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
+[**versionSistema**](GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
 
 
 
@@ -36,7 +39,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -88,7 +91,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -122,7 +125,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -172,7 +175,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -206,7 +209,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -254,7 +257,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -288,7 +291,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -334,7 +337,170 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
+## listarSignificados
+
+> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar)
+
+ListarSignificados
+
+Obtiene una lista de significados dentro de un dominio
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.GenApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure HTTP bearer authorization: AccessToken
+        HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
+        AccessToken.setBearerToken("BEARER TOKEN");
+
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        GenApi apiInstance = new GenApi(defaultClient);
+        String dominio = "dominio_example"; // String | Dominio
+        Integer pagina = 56; // Integer | Número de la página
+        Integer porPagina = 56; // Integer | Cantidad de elementos por página
+        String noPaginar = "noPaginar_example"; // String | No paginar? (S/N)
+        try {
+            SignificadoPaginaRespuesta result = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling GenApi#listarSignificados");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **dominio** | **String**| Dominio |
+ **pagina** | **Integer**| Número de la página | [optional]
+ **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **String**| No paginar? (S/N) | [optional]
+
+### Return type
+
+[**SignificadoPaginaRespuesta**](SignificadoPaginaRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
+## recuperarTexto
+
+> DatoRespuesta recuperarTexto(referencia)
+
+RecuperarTexto
+
+Obtiene un texto definido en el sistema
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.GenApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        GenApi apiInstance = new GenApi(defaultClient);
+        String referencia = "referencia_example"; // String | Referencia del texto
+        try {
+            DatoRespuesta result = apiInstance.recuperarTexto(referencia);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling GenApi#recuperarTexto");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **referencia** | **String**| Referencia del texto |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -368,7 +534,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -416,7 +582,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -451,7 +617,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -497,7 +663,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/json
+- **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -505,6 +671,82 @@ Name | Type | Description  | Notes
 | **200** | Operación exitosa |  -  |
 | **403** | Aplicación no autorizada |  -  |
 | **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
+## versionServicio
+
+> DatoRespuesta versionServicio(servicio)
+
+VersionServicio
+
+Obtiene la versión actual del servicio
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.GenApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        GenApi apiInstance = new GenApi(defaultClient);
+        String servicio = "servicio_example"; // String | Nombre del servicio
+        try {
+            DatoRespuesta result = apiInstance.versionServicio(servicio);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling GenApi#versionServicio");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **servicio** | **String**| Nombre del servicio |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
 | **400** | Operación con error |  -  |
 | **500** | Error inesperado |  -  |
 | **501** | Servicio no implementado o inactivo |  -  |
@@ -531,7 +773,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
 
         GenApi apiInstance = new GenApi(defaultClient);
         try {

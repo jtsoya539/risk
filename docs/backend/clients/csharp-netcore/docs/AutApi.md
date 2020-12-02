@@ -1,11 +1,13 @@
 # Risk.API.Client.Api.AutApi
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ActivarUsuario**](AutApi.md#activarusuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario
 [**CambiarClaveAcceso**](AutApi.md#cambiarclaveacceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 [**CambiarClaveTransaccional**](AutApi.md#cambiarclavetransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
+[**DatosUsuario**](AutApi.md#datosusuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
 [**EditarUsuario**](AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**EliminarUsuario**](AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**FinalizarSesion**](AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -16,10 +18,84 @@ Method | HTTP request | Description
 [**RefrescarSesion**](AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
 [**RegistrarClaveTransaccional**](AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**RegistrarDispositivo**](AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
+[**RegistrarUbicacion**](AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 [**RegistrarUsuario**](AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 [**ValidarOtp**](AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 [**ValidarSesion**](AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
+
+<a name="activarusuario"></a>
+# **ActivarUsuario**
+> DatoRespuesta ActivarUsuario (string key)
+
+ActivarUsuario
+
+Permite activar un usuario
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ActivarUsuarioExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            var apiInstance = new AutApi(config);
+            var key = key_example;  // string | Clave para la activación
+
+            try
+            {
+                // ActivarUsuario
+                DatoRespuesta result = apiInstance.ActivarUsuario(key);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.ActivarUsuario: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **key** | **string**| Clave para la activación | 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/html, application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="cambiarclaveacceso"></a>
 # **CambiarClaveAcceso**
@@ -44,7 +120,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -89,7 +165,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -126,7 +202,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -171,7 +247,89 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="datosusuario"></a>
+# **DatosUsuario**
+> UsuarioRespuesta DatosUsuario (string usuario)
+
+DatosUsuario
+
+Permite obtener los datos de un usuario
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class DatosUsuarioExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var usuario = usuario_example;  // string | Usuario
+
+            try
+            {
+                // DatosUsuario
+                UsuarioRespuesta result = apiInstance.DatosUsuario(usuario);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.DatosUsuario: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **usuario** | **string**| Usuario | 
+
+### Return type
+
+[**UsuarioRespuesta**](UsuarioRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -208,7 +366,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -255,7 +413,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -292,7 +450,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -337,7 +495,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -374,7 +532,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -419,7 +577,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -456,7 +614,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -501,7 +659,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -537,7 +695,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -588,7 +746,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -625,7 +783,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -668,7 +826,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -683,7 +841,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperaravatarusuario"></a>
 # **RecuperarAvatarUsuario**
-> System.IO.Stream RecuperarAvatarUsuario (string usuario)
+> System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null)
 
 RecuperarAvatarUsuario
 
@@ -704,7 +862,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -714,11 +872,12 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
+            var version = 56;  // int? | Version (optional) 
 
             try
             {
                 // RecuperarAvatarUsuario
-                System.IO.Stream result = apiInstance.RecuperarAvatarUsuario(usuario);
+                System.IO.Stream result = apiInstance.RecuperarAvatarUsuario(usuario, version);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -737,6 +896,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
+ **version** | **int?**| Version | [optional] 
 
 ### Return type
 
@@ -749,7 +909,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -786,7 +946,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -829,7 +989,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -865,7 +1025,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -910,7 +1070,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -947,7 +1107,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -990,7 +1150,86 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="registrarubicacion"></a>
+# **RegistrarUbicacion**
+> DatoRespuesta RegistrarUbicacion (RegistrarUbicacionRequestBody registrarUbicacionRequestBody = null)
+
+RegistrarUbicacion
+
+Permite registrar la ubicación (coordenadas geográficas) de un dispositivo
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class RegistrarUbicacionExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var registrarUbicacionRequestBody = new RegistrarUbicacionRequestBody(); // RegistrarUbicacionRequestBody |  (optional) 
+
+            try
+            {
+                // RegistrarUbicacion
+                DatoRespuesta result = apiInstance.RegistrarUbicacion(registrarUbicacionRequestBody);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.RegistrarUbicacion: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional] 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1026,7 +1265,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1069,7 +1308,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1105,7 +1344,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1150,7 +1389,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1186,7 +1425,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -1231,7 +1470,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |

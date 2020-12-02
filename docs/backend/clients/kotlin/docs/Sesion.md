@@ -8,7 +8,8 @@ Name | Type | Description | Notes
 **estado** | **kotlin.String** |  |  [optional]
 **accessToken** | **kotlin.String** |  |  [optional]
 **refreshToken** | **kotlin.String** |  |  [optional]
-**tiempoExpiracion** | **kotlin.Int** |  |  [optional]
+**tiempoExpiracionAccessToken** | **kotlin.Int** |  |  [optional]
+**tiempoExpiracionRefreshToken** | **kotlin.Int** |  |  [optional]
 
 
 

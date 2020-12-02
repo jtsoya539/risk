@@ -31,12 +31,14 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AutApi* | [**activarUsuario**](docs/AutApi.md#activarusuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario
 *AutApi* | [**cambiarClaveAcceso**](docs/AutApi.md#cambiarclaveacceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 *AutApi* | [**cambiarClaveTransaccional**](docs/AutApi.md#cambiarclavetransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
+*AutApi* | [**datosUsuario**](docs/AutApi.md#datosusuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
 *AutApi* | [**editarUsuario**](docs/AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**eliminarUsuario**](docs/AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**finalizarSesion**](docs/AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -47,6 +49,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**refrescarSesion**](docs/AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
 *AutApi* | [**registrarClaveTransaccional**](docs/AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**registrarDispositivo**](docs/AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
+*AutApi* | [**registrarUbicacion**](docs/AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
@@ -54,9 +57,12 @@ Class | Method | HTTP request | Description
 *GenApi* | [**listarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**listarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**listarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
+*GenApi* | [**listarSignificados**](docs/GenApi.md#listarsignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+*GenApi* | [**recuperarTexto**](docs/GenApi.md#recuperartexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
 *GenApi* | [**significadoCodigo**](docs/GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**valorParametro**](docs/GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-*GenApi* | [**versionSistema**](docs/GenApi.md#versionsistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
+*GenApi* | [**versionServicio**](docs/GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
+*GenApi* | [**versionSistema**](docs/GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema
 *MsjApi* | [**cambiarEstadoMensajeria**](docs/MsjApi.md#cambiarestadomensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
 *MsjApi* | [**listarCorreosPendientes**](docs/MsjApi.md#listarcorreospendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes
 *MsjApi* | [**listarMensajesPendientes**](docs/MsjApi.md#listarmensajespendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes
@@ -66,6 +72,7 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [py.com.risk.client.models.Archivo](docs/Archivo.md)
  - [py.com.risk.client.models.Barrio](docs/Barrio.md)
  - [py.com.risk.client.models.BarrioPagina](docs/BarrioPagina.md)
  - [py.com.risk.client.models.BarrioPaginaRespuesta](docs/BarrioPaginaRespuesta.md)
@@ -102,10 +109,18 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [py.com.risk.client.models.RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)
  - [py.com.risk.client.models.RegistrarDispositivoRequestBody](docs/RegistrarDispositivoRequestBody.md)
+ - [py.com.risk.client.models.RegistrarUbicacionRequestBody](docs/RegistrarUbicacionRequestBody.md)
  - [py.com.risk.client.models.RegistrarUsuarioRequestBody](docs/RegistrarUsuarioRequestBody.md)
+ - [py.com.risk.client.models.Rol](docs/Rol.md)
  - [py.com.risk.client.models.Sesion](docs/Sesion.md)
  - [py.com.risk.client.models.SesionRespuesta](docs/SesionRespuesta.md)
+ - [py.com.risk.client.models.Significado](docs/Significado.md)
+ - [py.com.risk.client.models.SignificadoPagina](docs/SignificadoPagina.md)
+ - [py.com.risk.client.models.SignificadoPaginaRespuesta](docs/SignificadoPaginaRespuesta.md)
+ - [py.com.risk.client.models.TipoDispositivo](docs/TipoDispositivo.md)
  - [py.com.risk.client.models.TipoMensajeria](docs/TipoMensajeria.md)
+ - [py.com.risk.client.models.Usuario](docs/Usuario.md)
+ - [py.com.risk.client.models.UsuarioRespuesta](docs/UsuarioRespuesta.md)
 
 
 <a name="documentation-for-authorization"></a>

@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **estado** | **String** |  |  [optional]
 **accessToken** | **String** |  |  [optional]
 **refreshToken** | **String** |  |  [optional]
-**tiempoExpiracion** | **Integer** |  |  [optional]
+**tiempoExpiracionAccessToken** | **Integer** |  |  [optional]
+**tiempoExpiracionRefreshToken** | **Integer** |  |  [optional]
 
 
 

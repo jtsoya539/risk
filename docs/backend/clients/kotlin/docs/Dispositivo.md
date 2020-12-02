@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **tokenDispositivo** | **kotlin.String** |  |  [optional]
 **nombreSistemaOperativo** | **kotlin.String** |  |  [optional]
 **versionSistemaOperativo** | **kotlin.String** |  |  [optional]
-**tipo** | **kotlin.String** |  |  [optional]
+**tipo** | [**TipoDispositivo**](TipoDispositivo.md) |  |  [optional]
 **nombreNavegador** | **kotlin.String** |  |  [optional]
 **versionNavegador** | **kotlin.String** |  |  [optional]
 **tokenNotificacion** | **kotlin.String** |  |  [optional]

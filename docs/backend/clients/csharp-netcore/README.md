@@ -61,26 +61,19 @@ namespace Example
         {
 
             Configuration config = new Configuration();
-            config.BasePath = "https://risk-project-api.azurewebsites.net";
-            // Configure Bearer token for authorization: AccessToken
-            config.AccessToken = "YOUR_BEARER_TOKEN";
-            // Configure API key authorization: RiskAppKey
-            config.ApiKey.Add("Risk-App-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.ApiKeyPrefix.Add("Risk-App-Key", "Bearer");
-
+            config.BasePath = "https://localhost:5001";
             var apiInstance = new AutApi(config);
-            var cambiarClaveAccesoRequestBody = new CambiarClaveAccesoRequestBody(); // CambiarClaveAccesoRequestBody |  (optional) 
+            var key = key_example;  // string | Clave para la activación
 
             try
             {
-                // CambiarClaveAcceso
-                DatoRespuesta result = apiInstance.CambiarClaveAcceso(cambiarClaveAccesoRequestBody);
+                // ActivarUsuario
+                DatoRespuesta result = apiInstance.ActivarUsuario(key);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling AutApi.CambiarClaveAcceso: " + e.Message );
+                Debug.Print("Exception when calling AutApi.ActivarUsuario: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -93,12 +86,14 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AutApi* | [**ActivarUsuario**](docs/AutApi.md#activarusuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario
 *AutApi* | [**CambiarClaveAcceso**](docs/AutApi.md#cambiarclaveacceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 *AutApi* | [**CambiarClaveTransaccional**](docs/AutApi.md#cambiarclavetransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
+*AutApi* | [**DatosUsuario**](docs/AutApi.md#datosusuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
 *AutApi* | [**EditarUsuario**](docs/AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**EliminarUsuario**](docs/AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**FinalizarSesion**](docs/AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -109,6 +104,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**RefrescarSesion**](docs/AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
 *AutApi* | [**RegistrarClaveTransaccional**](docs/AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**RegistrarDispositivo**](docs/AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
+*AutApi* | [**RegistrarUbicacion**](docs/AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 *AutApi* | [**RegistrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**ValidarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**ValidarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
@@ -116,9 +112,12 @@ Class | Method | HTTP request | Description
 *GenApi* | [**ListarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**ListarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**ListarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
+*GenApi* | [**ListarSignificados**](docs/GenApi.md#listarsignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+*GenApi* | [**RecuperarTexto**](docs/GenApi.md#recuperartexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
 *GenApi* | [**SignificadoCodigo**](docs/GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**ValorParametro**](docs/GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-*GenApi* | [**VersionSistema**](docs/GenApi.md#versionsistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
+*GenApi* | [**VersionServicio**](docs/GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
+*GenApi* | [**VersionSistema**](docs/GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema
 *MsjApi* | [**CambiarEstadoMensajeria**](docs/MsjApi.md#cambiarestadomensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
 *MsjApi* | [**ListarCorreosPendientes**](docs/MsjApi.md#listarcorreospendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes
 *MsjApi* | [**ListarMensajesPendientes**](docs/MsjApi.md#listarmensajespendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes
@@ -128,6 +127,7 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.Archivo](docs/Archivo.md)
  - [Model.Barrio](docs/Barrio.md)
  - [Model.BarrioPagina](docs/BarrioPagina.md)
  - [Model.BarrioPaginaRespuesta](docs/BarrioPaginaRespuesta.md)
@@ -164,10 +164,18 @@ Class | Method | HTTP request | Description
  - [Model.RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [Model.RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)
  - [Model.RegistrarDispositivoRequestBody](docs/RegistrarDispositivoRequestBody.md)
+ - [Model.RegistrarUbicacionRequestBody](docs/RegistrarUbicacionRequestBody.md)
  - [Model.RegistrarUsuarioRequestBody](docs/RegistrarUsuarioRequestBody.md)
+ - [Model.Rol](docs/Rol.md)
  - [Model.Sesion](docs/Sesion.md)
  - [Model.SesionRespuesta](docs/SesionRespuesta.md)
+ - [Model.Significado](docs/Significado.md)
+ - [Model.SignificadoPagina](docs/SignificadoPagina.md)
+ - [Model.SignificadoPaginaRespuesta](docs/SignificadoPaginaRespuesta.md)
+ - [Model.TipoDispositivo](docs/TipoDispositivo.md)
  - [Model.TipoMensajeria](docs/TipoMensajeria.md)
+ - [Model.Usuario](docs/Usuario.md)
+ - [Model.UsuarioRespuesta](docs/UsuarioRespuesta.md)
 
 
 <a name="documentation-for-authorization"></a>

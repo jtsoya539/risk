@@ -1,6 +1,6 @@
 # MsjApi
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -60,7 +60,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="listarCorreosPendientes"></a>
 # **listarCorreosPendientes**
@@ -116,7 +116,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="listarMensajesPendientes"></a>
 # **listarMensajesPendientes**
@@ -172,7 +172,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="listarNotificacionesPendientes"></a>
 # **listarNotificacionesPendientes**
@@ -228,5 +228,5 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 

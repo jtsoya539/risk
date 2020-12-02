@@ -1,6 +1,6 @@
 # GenApi
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,9 +8,12 @@ Method | HTTP request | Description
 [**listarCiudades**](GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 [**listarDepartamentos**](GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 [**listarPaises**](GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
+[**listarSignificados**](GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+[**recuperarTexto**](GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
 [**significadoCodigo**](GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 [**valorParametro**](GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-[**versionSistema**](GenApi.md#versionSistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
+[**versionServicio**](GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
+[**versionSistema**](GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
 
 
 <a name="listarBarrios"></a>
@@ -71,7 +74,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="listarCiudades"></a>
 # **listarCiudades**
@@ -129,7 +132,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="listarDepartamentos"></a>
 # **listarDepartamentos**
@@ -185,7 +188,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="listarPaises"></a>
 # **listarPaises**
@@ -239,7 +242,115 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
+
+<a name="listarSignificados"></a>
+# **listarSignificados**
+> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar)
+
+ListarSignificados
+
+Obtiene una lista de significados dentro de un dominio
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = GenApi()
+val dominio : kotlin.String = dominio_example // kotlin.String | Dominio
+val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
+val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
+val noPaginar : kotlin.String = noPaginar_example // kotlin.String | No paginar? (S/N)
+try {
+    val result : SignificadoPaginaRespuesta = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GenApi#listarSignificados")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GenApi#listarSignificados")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **dominio** | **kotlin.String**| Dominio |
+ **pagina** | **kotlin.Int**| Número de la página | [optional]
+ **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **kotlin.String**| No paginar? (S/N) | [optional]
+
+### Return type
+
+[**SignificadoPaginaRespuesta**](SignificadoPaginaRespuesta.md)
+
+### Authorization
+
+
+Configure AccessToken:
+    ApiClient.accessToken = ""
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+<a name="recuperarTexto"></a>
+# **recuperarTexto**
+> DatoRespuesta recuperarTexto(referencia)
+
+RecuperarTexto
+
+Obtiene un texto definido en el sistema
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = GenApi()
+val referencia : kotlin.String = referencia_example // kotlin.String | Referencia del texto
+try {
+    val result : DatoRespuesta = apiInstance.recuperarTexto(referencia)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GenApi#recuperarTexto")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GenApi#recuperarTexto")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **referencia** | **kotlin.String**| Referencia del texto |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
 
 <a name="significadoCodigo"></a>
 # **significadoCodigo**
@@ -293,7 +404,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="valorParametro"></a>
 # **valorParametro**
@@ -345,7 +456,57 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
+
+<a name="versionServicio"></a>
+# **versionServicio**
+> DatoRespuesta versionServicio(servicio)
+
+VersionServicio
+
+Obtiene la versión actual del servicio
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = GenApi()
+val servicio : kotlin.String = servicio_example // kotlin.String | Nombre del servicio
+try {
+    val result : DatoRespuesta = apiInstance.versionServicio(servicio)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GenApi#versionServicio")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GenApi#versionServicio")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **servicio** | **kotlin.String**| Nombre del servicio |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
 
 <a name="versionSistema"></a>
 # **versionSistema**

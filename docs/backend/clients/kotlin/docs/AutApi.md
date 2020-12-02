@@ -1,11 +1,13 @@
 # AutApi
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**activarUsuario**](AutApi.md#activarUsuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario
 [**cambiarClaveAcceso**](AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 [**cambiarClaveTransaccional**](AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
+[**datosUsuario**](AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
 [**editarUsuario**](AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**eliminarUsuario**](AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**finalizarSesion**](AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -16,10 +18,58 @@ Method | HTTP request | Description
 [**refrescarSesion**](AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
 [**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
+[**registrarUbicacion**](AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 [**registrarUsuario**](AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 [**validarOtp**](AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 [**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
+
+<a name="activarUsuario"></a>
+# **activarUsuario**
+> DatoRespuesta activarUsuario(key)
+
+ActivarUsuario
+
+Permite activar un usuario
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val key : kotlin.String = key_example // kotlin.String | Clave para la activación
+try {
+    val result : DatoRespuesta = apiInstance.activarUsuario(key)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#activarUsuario")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#activarUsuario")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **key** | **kotlin.String**| Clave para la activación |
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/html, application/json
 
 <a name="cambiarClaveAcceso"></a>
 # **cambiarClaveAcceso**
@@ -71,7 +121,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="cambiarClaveTransaccional"></a>
 # **cambiarClaveTransaccional**
@@ -123,7 +173,59 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
+
+<a name="datosUsuario"></a>
+# **datosUsuario**
+> UsuarioRespuesta datosUsuario(usuario)
+
+DatosUsuario
+
+Permite obtener los datos de un usuario
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
+try {
+    val result : UsuarioRespuesta = apiInstance.datosUsuario(usuario)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#datosUsuario")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#datosUsuario")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **usuario** | **kotlin.String**| Usuario |
+
+### Return type
+
+[**UsuarioRespuesta**](UsuarioRespuesta.md)
+
+### Authorization
+
+
+Configure AccessToken:
+    ApiClient.accessToken = ""
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
 
 <a name="editarUsuario"></a>
 # **editarUsuario**
@@ -177,7 +279,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="eliminarUsuario"></a>
 # **eliminarUsuario**
@@ -229,7 +331,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="finalizarSesion"></a>
 # **finalizarSesion**
@@ -281,7 +383,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="generarOtp"></a>
 # **generarOtp**
@@ -333,7 +435,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="guardarAvatarUsuario"></a>
 # **guardarAvatarUsuario**
@@ -391,7 +493,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="iniciarSesion"></a>
 # **iniciarSesion**
@@ -441,11 +543,11 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="recuperarAvatarUsuario"></a>
 # **recuperarAvatarUsuario**
-> java.io.File recuperarAvatarUsuario(usuario)
+> java.io.File recuperarAvatarUsuario(usuario, version)
 
 RecuperarAvatarUsuario
 
@@ -459,8 +561,9 @@ Permite recuperar el avatar de un usuario
 
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
+val version : kotlin.Int = 56 // kotlin.Int | Version
 try {
-    val result : java.io.File = apiInstance.recuperarAvatarUsuario(usuario)
+    val result : java.io.File = apiInstance.recuperarAvatarUsuario(usuario, version)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#recuperarAvatarUsuario")
@@ -476,6 +579,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
+ **version** | **kotlin.Int**| Version | [optional]
 
 ### Return type
 
@@ -493,7 +597,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 <a name="refrescarSesion"></a>
 # **refrescarSesion**
@@ -543,7 +647,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="registrarClaveTransaccional"></a>
 # **registrarClaveTransaccional**
@@ -595,7 +699,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="registrarDispositivo"></a>
 # **registrarDispositivo**
@@ -645,7 +749,57 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
+
+<a name="registrarUbicacion"></a>
+# **registrarUbicacion**
+> DatoRespuesta registrarUbicacion(registrarUbicacionRequestBody)
+
+RegistrarUbicacion
+
+Permite registrar la ubicación (coordenadas geográficas) de un dispositivo
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val registrarUbicacionRequestBody : RegistrarUbicacionRequestBody =  // RegistrarUbicacionRequestBody | 
+try {
+    val result : DatoRespuesta = apiInstance.registrarUbicacion(registrarUbicacionRequestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#registrarUbicacion")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#registrarUbicacion")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional]
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="registrarUsuario"></a>
 # **registrarUsuario**
@@ -695,7 +849,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="validarOtp"></a>
 # **validarOtp**
@@ -747,7 +901,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 
 <a name="validarSesion"></a>
 # **validarSesion**
@@ -799,5 +953,5 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, text/plain
 

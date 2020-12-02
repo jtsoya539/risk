@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v1
 
-- Build date: 2020-08-04T16:05:09.045-04:00[America/Asuncion]
+- Build date: 2020-12-02T14:12:51.469-03:00[America/Asuncion]
 
 Risk Web API
 
@@ -84,25 +84,15 @@ public class AutApiExample {
 
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://risk-project-api.azurewebsites.net");
+        defaultClient.setBasePath("https://localhost:5001");
         
-        // Configure HTTP bearer authorization: AccessToken
-        HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
-        AccessToken.setBearerToken("BEARER TOKEN");
-
-        // Configure API key authorization: RiskAppKey
-        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
-        RiskAppKey.setApiKey("YOUR API KEY");
-        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-        //RiskAppKey.setApiKeyPrefix("Token");
-
         AutApi apiInstance = new AutApi(defaultClient);
-        CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = new CambiarClaveAccesoRequestBody(); // CambiarClaveAccesoRequestBody | 
+        String key = "key_example"; // String | Clave para la activación
         try {
-            DatoRespuesta result = apiInstance.cambiarClaveAcceso(cambiarClaveAccesoRequestBody);
+            DatoRespuesta result = apiInstance.activarUsuario(key);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling AutApi#cambiarClaveAcceso");
+            System.err.println("Exception when calling AutApi#activarUsuario");
             System.err.println("Status code: " + e.getCode());
             System.err.println("Reason: " + e.getResponseBody());
             System.err.println("Response headers: " + e.getResponseHeaders());
@@ -115,12 +105,14 @@ public class AutApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://risk-project-api.azurewebsites.net*
+All URIs are relative to *https://localhost:5001*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AutApi* | [**activarUsuario**](docs/AutApi.md#activarUsuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario
 *AutApi* | [**cambiarClaveAcceso**](docs/AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 *AutApi* | [**cambiarClaveTransaccional**](docs/AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
+*AutApi* | [**datosUsuario**](docs/AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
 *AutApi* | [**editarUsuario**](docs/AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**eliminarUsuario**](docs/AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**finalizarSesion**](docs/AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -131,6 +123,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**refrescarSesion**](docs/AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
 *AutApi* | [**registrarClaveTransaccional**](docs/AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**registrarDispositivo**](docs/AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
+*AutApi* | [**registrarUbicacion**](docs/AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
@@ -138,9 +131,12 @@ Class | Method | HTTP request | Description
 *GenApi* | [**listarCiudades**](docs/GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**listarDepartamentos**](docs/GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**listarPaises**](docs/GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
+*GenApi* | [**listarSignificados**](docs/GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+*GenApi* | [**recuperarTexto**](docs/GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
 *GenApi* | [**significadoCodigo**](docs/GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**valorParametro**](docs/GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-*GenApi* | [**versionSistema**](docs/GenApi.md#versionSistema) | **GET** /Api/Gen/VersionSistema | VersionSistema
+*GenApi* | [**versionServicio**](docs/GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
+*GenApi* | [**versionSistema**](docs/GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
 *MsjApi* | [**cambiarEstadoMensajeria**](docs/MsjApi.md#cambiarEstadoMensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
 *MsjApi* | [**listarCorreosPendientes**](docs/MsjApi.md#listarCorreosPendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes
 *MsjApi* | [**listarMensajesPendientes**](docs/MsjApi.md#listarMensajesPendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes
@@ -149,6 +145,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [Archivo](docs/Archivo.md)
  - [Barrio](docs/Barrio.md)
  - [BarrioPagina](docs/BarrioPagina.md)
  - [BarrioPaginaRespuesta](docs/BarrioPaginaRespuesta.md)
@@ -185,10 +182,18 @@ Class | Method | HTTP request | Description
  - [RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)
  - [RegistrarDispositivoRequestBody](docs/RegistrarDispositivoRequestBody.md)
+ - [RegistrarUbicacionRequestBody](docs/RegistrarUbicacionRequestBody.md)
  - [RegistrarUsuarioRequestBody](docs/RegistrarUsuarioRequestBody.md)
+ - [Rol](docs/Rol.md)
  - [Sesion](docs/Sesion.md)
  - [SesionRespuesta](docs/SesionRespuesta.md)
+ - [Significado](docs/Significado.md)
+ - [SignificadoPagina](docs/SignificadoPagina.md)
+ - [SignificadoPaginaRespuesta](docs/SignificadoPaginaRespuesta.md)
+ - [TipoDispositivo](docs/TipoDispositivo.md)
  - [TipoMensajeria](docs/TipoMensajeria.md)
+ - [Usuario](docs/Usuario.md)
+ - [UsuarioRespuesta](docs/UsuarioRespuesta.md)
 
 
 ## Documentation for Authorization

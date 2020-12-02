@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **mensajeReplyTo** | **String** |  |  [optional]
 **mensajeCc** | **String** |  |  [optional]
 **mensajeBcc** | **String** |  |  [optional]
+**adjuntos** | [**List&lt;Archivo&gt;**](Archivo.md) |  |  [optional]
 
 
 

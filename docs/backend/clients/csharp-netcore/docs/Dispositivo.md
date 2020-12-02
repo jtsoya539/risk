@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **TokenDispositivo** | **string** |  | [optional] 
 **NombreSistemaOperativo** | **string** |  | [optional] 
 **VersionSistemaOperativo** | **string** |  | [optional] 
-**Tipo** | **string** |  | [optional] 
+**Tipo** | **TipoDispositivo** |  | [optional] 
 **NombreNavegador** | **string** |  | [optional] 
 **VersionNavegador** | **string** |  | [optional] 
 **TokenNotificacion** | **string** |  | [optional] 
