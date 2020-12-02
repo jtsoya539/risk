@@ -53,6 +53,19 @@ namespace Risk.API.Helpers
             return model;
         }
 
+        public static List<Archivo> GetArchivoListFromEntity(List<YArchivo> entityList)
+        {
+            List<Archivo> modelList = new List<Archivo>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetArchivoFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
         public static Dato GetDatoFromEntity(YDato entity)
         {
             Dato model;
@@ -417,7 +430,8 @@ namespace Risk.API.Helpers
                     MensajeFrom = entity.MensajeFrom,
                     MensajeReplyTo = entity.MensajeReplyTo,
                     MensajeCc = entity.MensajeCc,
-                    MensajeBcc = entity.MensajeBcc
+                    MensajeBcc = entity.MensajeBcc,
+                    Adjuntos = GetArchivoListFromEntity(entity.Adjuntos)
                 };
             }
             return model;

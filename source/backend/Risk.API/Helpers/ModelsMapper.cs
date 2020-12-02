@@ -109,6 +109,19 @@ namespace Risk.API.Helpers
             return entity;
         }
 
+        public static List<YArchivo> GetYArchivoListFromModel(List<Archivo> modelList)
+        {
+            List<YArchivo> entityList = new List<YArchivo>();
+            if (modelList != null)
+            {
+                foreach (var item in modelList)
+                {
+                    entityList.Add(GetYArchivoFromModel(item));
+                }
+            }
+            return entityList;
+        }
+
         public static YPaginaParametros GetYPaginaParametrosFromModel(PaginaParametros model)
         {
             YPaginaParametros entity;

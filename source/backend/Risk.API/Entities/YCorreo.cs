@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Risk.API.Entities
@@ -44,5 +45,7 @@ namespace Risk.API.Entities
         public string MensajeCc { get; set; }
         [JsonProperty("mensaje_bcc")]
         public string MensajeBcc { get; set; }
+        [JsonProperty("adjuntos")]
+        public List<YArchivo> Adjuntos { get; set; }
     }
 }

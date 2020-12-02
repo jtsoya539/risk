@@ -22,6 +22,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System.Collections.Generic;
+
 namespace Risk.API.Models
 {
     public class Correo
@@ -34,5 +36,6 @@ namespace Risk.API.Models
         public string MensajeReplyTo { get; set; }
         public string MensajeCc { get; set; }
         public string MensajeBcc { get; set; }
+        public List<Archivo> Adjuntos { get; set; }
     }
 }
