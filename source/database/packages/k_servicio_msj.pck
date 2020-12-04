@@ -64,6 +64,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
       l_archivo := k_archivo.f_recuperar_archivo('T_CORREO_ADJUNTOS',
                                                  'ARCHIVO',
                                                  to_char(ele.id_correo_adjunto));
+      IF l_archivo.contenido IS NULL OR
+         dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+        CONTINUE;
+      END IF;
       l_adjuntos.extend;
       l_adjuntos(l_adjuntos.count) := l_archivo;
     END LOOP;
