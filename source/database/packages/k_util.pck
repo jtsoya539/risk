@@ -87,6 +87,8 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_hash(i_data      IN VARCHAR2,
                   i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC;
 
+  FUNCTION f_html RETURN CLOB;
+
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2;
 
   FUNCTION string_to_bool(i_string IN VARCHAR2) RETURN BOOLEAN;
@@ -556,6 +558,23 @@ END;';
   BEGIN
     RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
                                              i_hash_type)));
+  END;
+
+  FUNCTION f_html RETURN CLOB IS
+    l_html CLOB;
+    l_page htp.htbuf_arr;
+    l_rows INTEGER := 999999;
+    i      BINARY_INTEGER;
+  BEGIN
+    htp.get_page(l_page, l_rows);
+  
+    i := l_page.first;
+    WHILE i IS NOT NULL LOOP
+      l_html := l_html || l_page(i);
+      i      := l_page.next(i);
+    END LOOP;
+  
+    RETURN l_html;
   END;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2 IS

@@ -152,7 +152,6 @@ prompt -----------------------------------
 prompt
 @@packages/k_util.pck
 @@packages/k_sistema.pck
-@@packages/k_html.pck
 @@packages/k_auditoria.pck
 @@packages/k_aplicacion.pck
 @@packages/k_usuario.pck

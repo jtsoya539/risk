@@ -68,7 +68,6 @@ drop package k_dispositivo;
 drop package k_usuario;
 drop package k_aplicacion;
 drop package k_auditoria;
-drop package k_html;
 drop package k_sistema;
 drop package k_util;
 
