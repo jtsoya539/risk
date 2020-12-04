@@ -149,20 +149,24 @@ namespace Risk.Msj
                                 {
                                     foreach (var adjunto in item.Adjuntos)
                                     {
-                                        byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(adjunto.Contenido));
-                                        using (var ms = new MemoryStream())
+                                        string contentType = adjunto.TipoMime;
+                                        if (contentType == null)
                                         {
-                                            ms.Write(contenido, 0, contenido.Length);
-
-                                            var attachment = new MimePart(adjunto.TipoMime)
-                                            {
-                                                Content = new MimeContent(ms, ContentEncoding.Default),
-                                                ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-                                                ContentTransferEncoding = ContentEncoding.Base64,
-                                                FileName = string.Concat(adjunto.Nombre, ".", adjunto.Extension)
-                                            };
-                                            multipart.Add(attachment);
+                                            contentType = "application/octet-stream";
                                         }
+
+                                        byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(adjunto.Contenido));
+                                        var ms = new MemoryStream();
+                                        ms.Write(contenido, 0, contenido.Length);
+
+                                        var attachment = new MimePart(contentType)
+                                        {
+                                            Content = new MimeContent(ms, ContentEncoding.Default),
+                                            ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
+                                            ContentTransferEncoding = ContentEncoding.Base64,
+                                            FileName = string.Concat(adjunto.Nombre, ".", adjunto.Extension)
+                                        };
+                                        multipart.Add(attachment);
                                     }
                                 }
 
