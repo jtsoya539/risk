@@ -450,3 +450,6 @@ Risk.API.Client/
 ##
 ## Risk.Msj
 ##
+Risk.Msj/config
+!Risk.Msj/config/log
+!Risk.Msj/config/gmail/README.md
