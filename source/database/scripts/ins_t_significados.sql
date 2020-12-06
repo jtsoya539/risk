@@ -96,28 +96,28 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_IMAGEN', 'SVG', 'IMAGEN SVG', 'image/svg+xml', 'N');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'BMP', 'DOCUMENTO BMP', 'image/bmp', 'S');
+values ('EXTENSION_ADJUNTO', 'BMP', 'ADJUNTO BMP', 'image/bmp', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'GIF', 'DOCUMENTO GIF', 'image/gif', 'S');
+values ('EXTENSION_ADJUNTO', 'GIF', 'ADJUNTO GIF', 'image/gif', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'JPEG', 'DOCUMENTO JPEG', 'image/jpeg', 'S');
+values ('EXTENSION_ADJUNTO', 'JPEG', 'ADJUNTO JPEG', 'image/jpeg', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'PNG', 'DOCUMENTO PNG', 'image/png', 'S');
+values ('EXTENSION_ADJUNTO', 'PNG', 'ADJUNTO PNG', 'image/png', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'SVG', 'DOCUMENTO SVG', 'image/svg+xml', 'N');
+values ('EXTENSION_ADJUNTO', 'SVG', 'ADJUNTO SVG', 'image/svg+xml', 'N');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'DOC', 'DOCUMENTO DOC', 'application/octet-stream', 'S');
+values ('EXTENSION_ADJUNTO', 'DOC', 'ADJUNTO DOC', 'application/octet-stream', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'DOCX', 'DOCUMENTO DOCX', 'application/octet-stream', 'S');
+values ('EXTENSION_ADJUNTO', 'DOCX', 'ADJUNTO DOCX', 'application/octet-stream', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_DOCUMENTO', 'PDF', 'DOCUMENTO PDF', 'application/pdf', 'S');
+values ('EXTENSION_ADJUNTO', 'PDF', 'ADJUNTO PDF', 'application/pdf', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_CLAVE', 'A', 'ACCESO', null, 'S');
@@ -271,5 +271,44 @@ values ('TIPO_DISPOSITIVO', 'V', 'TV', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DISPOSITIVO', 'W', 'WATCH', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'JPG', 'ADJUNTO JPG', 'image/jpeg', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'WEBP', 'ADJUNTO WEBP', 'image/webp', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'XLS', 'ADJUNTO XLS', 'application/octet-stream', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'XLSX', 'ADJUNTO XLSX', 'application/octet-stream', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'PPT', 'ADJUNTO PPT', 'application/octet-stream', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'PPTX', 'ADJUNTO PPTX', 'application/octet-stream', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'ZIP', 'ADJUNTO ZIP', 'application/zip', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'RAR', 'ADJUNTO RAR', 'application/vnd.rar', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', '7Z', 'ADJUNTO 7Z', 'application/x-7z-compressed', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'TAR', 'ADJUNTO TAR', 'application/x-tar', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'TXT', 'ADJUNTO TXT', 'text/plain', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'CSV', 'ADJUNTO CSV', 'text/csv', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_ADJUNTO', 'EPUB', 'ADJUNTO EPUB', 'application/epub+zip', 'S');
 
 prompt Done.
