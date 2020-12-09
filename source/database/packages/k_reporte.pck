@@ -263,6 +263,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     RETURN y_archivo IS
     l_archivo y_archivo;
     l_formato VARCHAR2(10);
+    l_txt     CLOB;
   BEGIN
     -- Inicializa archivo
     l_archivo := NEW y_archivo();
@@ -296,7 +297,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_xlsx.new_sheet('Error');
         as_xlsx.cell(1,
                      1,
-                     'Cï¿½digo',
+                     'Código',
                      p_fontid => as_xlsx.get_font(p_name => 'Calibri',
                                                   p_bold => TRUE));
         as_xlsx.cell(1,
@@ -308,6 +309,13 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_xlsx.cell(2, 2, i_respuesta.mensaje);
         -- as_xlsx.set_column_width(2, 100);
         l_archivo.contenido := as_xlsx.finish;
+      
+      WHEN c_formato_txt THEN
+        -- TXT
+        l_txt               := 'Código: ' || i_respuesta.codigo ||
+                               utl_tcp.crlf || 'Mensaje: ' ||
+                               i_respuesta.mensaje;
+        l_archivo.contenido := k_util.clob_to_blob(l_txt);
       
       ELSE
         raise_application_error(-20000, 'Formato de salida no soportado');
