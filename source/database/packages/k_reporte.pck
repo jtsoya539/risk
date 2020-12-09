@@ -290,6 +290,25 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_pdf3_v5.write('Mensaje: ' || i_respuesta.mensaje, 'mm', 45);
         l_archivo.contenido := as_pdf3_v5.get_pdf;
       
+      WHEN c_formato_xlsx THEN
+        -- XLSX
+        as_xlsx.clear_workbook;
+        as_xlsx.new_sheet('Error');
+        as_xlsx.cell(1,
+                     1,
+                     'C�digo',
+                     p_fontid => as_xlsx.get_font(p_name => 'Calibri',
+                                                  p_bold => TRUE));
+        as_xlsx.cell(1,
+                     2,
+                     'Mensaje',
+                     p_fontid => as_xlsx.get_font(p_name => 'Calibri',
+                                                  p_bold => TRUE));
+        as_xlsx.cell(2, 1, i_respuesta.codigo);
+        as_xlsx.cell(2, 2, i_respuesta.mensaje);
+        -- as_xlsx.set_column_width(2, 100);
+        l_archivo.contenido := as_xlsx.finish;
+      
       ELSE
         raise_application_error(-20000, 'Formato de salida no soportado');
     END CASE;
