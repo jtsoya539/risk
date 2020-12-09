@@ -55,6 +55,10 @@ CREATE OR REPLACE PACKAGE k_reporte IS
                               i_parametros IN CLOB,
                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
 
+  FUNCTION f_generar_reporte_sql(i_id_reporte IN NUMBER,
+                                 i_parametros IN y_parametros)
+    RETURN y_archivo;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_reporte IS
@@ -83,14 +87,15 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_nombre_reporte  t_operaciones.nombre%TYPE;
     l_dominio_reporte t_operaciones.dominio%TYPE;
     l_sentencia       VARCHAR2(4000);
+    l_consulta_sql    t_reportes.consulta_sql%TYPE;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del reporte';
     BEGIN
-      SELECT upper(o.nombre), upper(o.dominio)
-        INTO l_nombre_reporte, l_dominio_reporte
+      SELECT upper(o.nombre), upper(o.dominio), r.consulta_sql
+        INTO l_nombre_reporte, l_dominio_reporte, l_consulta_sql
         FROM t_reportes r, t_operaciones o
        WHERE o.id_operacion = r.id_reporte
          AND o.activo = 'S'
@@ -174,33 +179,39 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       END IF;
     END IF;
   
-    l_rsp.lugar := 'Construyendo sentencia';
-    l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
-                   l_nombre_reporte || '(:2); END;';
-  
-    l_rsp.lugar := 'Procesando reporte';
-    BEGIN
-      EXECUTE IMMEDIATE l_sentencia
-        USING OUT l_archivo, IN l_prms;
-    EXCEPTION
-      WHEN k_servicio.ex_servicio_no_implementado THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     k_servicio.c_servicio_no_implementado,
-                                     'Servicio no implementado',
-                                     dbms_utility.format_error_stack);
-        RAISE k_servicio.ex_error_general;
-      WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'api0004',
-                                     CASE
-                                     k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                     k_error.c_user_defined_error THEN
-                                     utl_call_stack.error_msg(1) WHEN
-                                     k_error.c_oracle_predefined_error THEN
-                                     'Error al procesar servicio' END,
-                                     dbms_utility.format_error_stack);
-        RAISE k_servicio.ex_error_general;
-    END;
+    IF l_consulta_sql IS NOT NULL THEN
+      l_archivo := f_generar_reporte_sql(i_id_reporte, l_prms);
+    
+    ELSE
+      l_rsp.lugar := 'Construyendo sentencia';
+      l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
+                     l_nombre_reporte || '(:2); END;';
+    
+      l_rsp.lugar := 'Procesando reporte';
+      BEGIN
+        EXECUTE IMMEDIATE l_sentencia
+          USING OUT l_archivo, IN l_prms;
+      EXCEPTION
+        WHEN k_servicio.ex_servicio_no_implementado THEN
+          k_servicio.p_respuesta_error(l_rsp,
+                                       k_servicio.c_servicio_no_implementado,
+                                       'Servicio no implementado',
+                                       dbms_utility.format_error_stack);
+          RAISE k_servicio.ex_error_general;
+        WHEN OTHERS THEN
+          k_servicio.p_respuesta_error(l_rsp,
+                                       'api0004',
+                                       CASE
+                                       k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                       k_error.c_user_defined_error THEN
+                                       utl_call_stack.error_msg(1) WHEN
+                                       k_error.c_oracle_predefined_error THEN
+                                       'Error al procesar servicio' END,
+                                       dbms_utility.format_error_stack);
+          RAISE k_servicio.ex_error_general;
+      END;
+    
+    END IF;
   
     l_rsp.datos := l_archivo;
   
@@ -371,6 +382,19 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                 l_rsp,
                                 i_contexto);
     RETURN l_rsp;
+  END;
+
+  FUNCTION f_generar_reporte_sql(i_id_reporte IN NUMBER,
+                                 i_parametros IN y_parametros)
+    RETURN y_archivo IS
+    l_rsp       y_respuesta;
+    l_contenido BLOB;
+    l_formato   VARCHAR2(10);
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    RETURN k_reporte.f_archivo_ok(l_contenido, l_formato);
   END;
 
 END;

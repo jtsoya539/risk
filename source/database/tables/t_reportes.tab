@@ -3,7 +3,8 @@ create table T_REPORTES
   id_reporte             NUMBER(15) not null,
   tipo                   VARCHAR2(1),
   cantidad_ejecuciones   NUMBER,
-  fecha_ultima_ejecucion DATE
+  fecha_ultima_ejecucion DATE,
+  consulta_sql           CLOB
 )
 ;
 comment on table T_REPORTES
@@ -16,6 +17,8 @@ comment on column T_REPORTES.cantidad_ejecuciones
   is 'Cantidad de ejecuciones del reporte';
 comment on column T_REPORTES.fecha_ultima_ejecucion
   is 'Fecha de la ultima ejecucion del reporte';
+comment on column T_REPORTES.consulta_sql
+  is 'Consulta SQL del reporte';
 alter table T_REPORTES
   add constraint PK_REPORTES primary key (ID_REPORTE);
 alter table T_REPORTES
