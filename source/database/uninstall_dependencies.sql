@@ -23,4 +23,6 @@ SOFTWARE.
 */
 
 drop package as_pdf3_v5;
+drop package as_xlsx;
+drop package as_zip;
 drop package oos_util_totp;
