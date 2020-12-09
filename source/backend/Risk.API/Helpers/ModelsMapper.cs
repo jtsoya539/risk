@@ -141,6 +141,23 @@ namespace Risk.API.Helpers
             return entity;
         }
 
+        public static string GetValueFromFormatoReporteEnum(FormatoReporte enumeration)
+        {
+            switch (enumeration)
+            {
+                case FormatoReporte.Pdf:
+                    return "PDF";
+                case FormatoReporte.Docx:
+                    return "DOCX";
+                case FormatoReporte.Xlsx:
+                    return "XLSX";
+                case FormatoReporte.Txt:
+                    return "TXT";
+                default:
+                    return string.Empty;
+            }
+        }
+
         public static string GetValueFromEstadoUsuarioEnum(EstadoUsuario enumeration)
         {
             switch (enumeration)

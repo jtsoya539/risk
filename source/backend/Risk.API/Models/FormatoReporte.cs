@@ -24,13 +24,11 @@ SOFTWARE.
 
 namespace Risk.API.Models
 {
-    public class Archivo
+    public enum FormatoReporte
     {
-        public string Contenido { get; set; }
-        public string Checksum { get; set; }
-        public int? Tamano { get; set; }
-        public string Nombre { get; set; }
-        public string Extension { get; set; }
-        public string TipoMime { get; set; }
+        Pdf,
+        Docx,
+        Xlsx,
+        Txt
     }
 }

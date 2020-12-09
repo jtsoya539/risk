@@ -292,5 +292,19 @@ namespace Risk.API.Services
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
+
+        public Respuesta<Archivo> ReporteVersionSistema(FormatoReporte formato)
+        {
+            JObject prms = new JObject();
+            prms.Add("formato", ModelsMapper.GetValueFromFormatoReporteEnum(formato));
+
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Reporte),
+                NOMBRE_VERSION_SISTEMA,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
+        }
     }
 }

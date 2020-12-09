@@ -99,7 +99,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       WHEN no_data_found THEN
         k_servicio.p_respuesta_error(l_rsp,
                                      k_servicio.c_servicio_no_implementado,
-                                     'Servicio inexistente o inactivo');
+                                     'Reporte inexistente o inactivo');
         RAISE k_servicio.ex_error_parametro;
     END;
   

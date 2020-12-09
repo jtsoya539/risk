@@ -22,12 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Risk.API.Attributes;
+using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -215,6 +217,30 @@ namespace Risk.API.Controllers
         {
             var respuesta = _genService.RecuperarTexto(referencia);
             return ProcesarRespuesta(respuesta);
+        }
+
+        [HttpGet("ReporteVersionSistema")]
+        [SwaggerOperation(OperationId = "ReporteVersionSistema", Summary = "ReporteVersionSistema", Description = "Obtiene un reporte con la versión actual del sistema")]
+        [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        public IActionResult ReporteVersionSistema([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato)
+        {
+            var respuesta = _genService.ReporteVersionSistema(formato);
+
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respuesta);
+            }
+
+            var archivo = respuesta.Datos;
+
+            if (archivo.Contenido == null)
+            {
+                return ProcesarRespuesta(respuesta);
+            }
+
+            byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
+            return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
         }
     }
 }

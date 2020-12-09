@@ -33,7 +33,7 @@ namespace Risk.API.Entities
         [JsonProperty("checksum")]
         public string Checksum { get; set; }
         [JsonProperty("tamano")]
-        public int Tamano { get; set; }
+        public int? Tamano { get; set; }
         [JsonProperty("nombre")]
         public string Nombre { get; set; }
         [JsonProperty("extension")]
