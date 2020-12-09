@@ -51,17 +51,17 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_REPORTE_SQL">f_reporte_sql</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_REPORTE">f_procesar_reporte</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_REPORTE2">f_procesar_reporte</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_GENERAR_REPORTE_SQL">f_generar_reporte_sql</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -158,6 +158,16 @@ FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
 
 </PRE>
 <HR>
+<A NAME="F_REPORTE_SQL"></A>
+<P CLASS="TYPE_TITLE">
+f_reporte_sql
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
+                       i_parametros IN y_parametros) RETURN y_archivo
+
+</PRE>
+<HR>
 <A NAME="F_PROCESAR_REPORTE"></A>
 <P CLASS="TYPE_TITLE">
 f_procesar_reporte
@@ -178,17 +188,6 @@ FUNCTION f_procesar_reporte(i_nombre     IN VARCHAR2,
                             i_dominio    IN VARCHAR2,
                             i_parametros IN CLOB,
                             i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB
-
-</PRE>
-<HR>
-<A NAME="F_GENERAR_REPORTE_SQL"></A>
-<P CLASS="TYPE_TITLE">
-f_generar_reporte_sql
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_generar_reporte_sql(i_id_reporte IN NUMBER,
-                               i_parametros IN y_parametros)
-  RETURN y_archivo
 
 </PRE>
 <P>&nbsp;</P>

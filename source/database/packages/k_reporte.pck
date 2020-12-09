@@ -46,6 +46,9 @@ CREATE OR REPLACE PACKAGE k_reporte IS
                            i_formato   IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo;
 
+  FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
+                         i_parametros IN y_parametros) RETURN y_archivo;
+
   FUNCTION f_procesar_reporte(i_id_reporte IN NUMBER,
                               i_parametros IN CLOB,
                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
@@ -54,10 +57,6 @@ CREATE OR REPLACE PACKAGE k_reporte IS
                               i_dominio    IN VARCHAR2,
                               i_parametros IN CLOB,
                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
-
-  FUNCTION f_generar_reporte_sql(i_id_reporte IN NUMBER,
-                                 i_parametros IN y_parametros)
-    RETURN y_archivo;
 
 END;
 /
@@ -180,7 +179,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     END IF;
   
     IF l_consulta_sql IS NOT NULL THEN
-      l_archivo := f_generar_reporte_sql(i_id_reporte, l_prms);
+      l_archivo := f_reporte_sql(i_id_reporte, l_prms);
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
@@ -344,6 +343,42 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     RETURN l_archivo;
   END;
 
+  FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
+                         i_parametros IN y_parametros) RETURN y_archivo IS
+    l_rsp       y_respuesta;
+    l_contenido BLOB;
+    l_formato   VARCHAR2(10);
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parámetros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'formato') IN
+                                   (c_formato_pdf,
+                                    c_formato_docx,
+                                    c_formato_xlsx,
+                                    c_formato_txt),
+                                   'Formato de salida no soportado');
+  
+    l_formato := k_operacion.f_valor_parametro_string(i_parametros,
+                                                      'formato');
+  
+    RETURN f_archivo_ok(l_contenido, l_formato);
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN f_archivo_error(l_rsp, l_formato);
+    WHEN k_servicio.ex_error_general THEN
+      RETURN f_archivo_error(l_rsp, l_formato);
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN f_archivo_error(l_rsp, l_formato);
+  END;
+
   FUNCTION f_procesar_reporte(i_id_reporte IN NUMBER,
                               i_parametros IN CLOB,
                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
@@ -382,19 +417,6 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                 l_rsp,
                                 i_contexto);
     RETURN l_rsp;
-  END;
-
-  FUNCTION f_generar_reporte_sql(i_id_reporte IN NUMBER,
-                                 i_parametros IN y_parametros)
-    RETURN y_archivo IS
-    l_rsp       y_respuesta;
-    l_contenido BLOB;
-    l_formato   VARCHAR2(10);
-  BEGIN
-    -- Inicializa respuesta
-    l_rsp := NEW y_respuesta();
-  
-    RETURN k_reporte.f_archivo_ok(l_contenido, l_formato);
   END;
 
 END;
