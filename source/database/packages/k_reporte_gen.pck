@@ -85,7 +85,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         l_contenido := as_pdf3_v5.get_pdf;
       
       ELSE
-        NULL;
+        k_servicio.p_respuesta_error(l_rsp,
+                                     'gen0002',
+                                     'Formato de salida no implementado');
+        RAISE k_servicio.ex_error_general;
     END CASE;
   
     RETURN k_reporte.f_archivo_ok(l_contenido, l_formato);
