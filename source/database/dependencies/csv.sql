@@ -19,6 +19,7 @@ CREATE OR REPLACE PACKAGE csv AS
 --   15-JAN-2019  Tim Hall  Add DBMS_OUTPUT support.
 --   31-JAN-2019  Tim Hall  Add set_quotes procedure.
 --   22-NOV-2020  Tim Hall  Amend set_quotes to allow control of string escaping.
+--   11-DEC-2020  J. Meza   Add CLOB support.
 -- --------------------------------------------------------------------------
 
 PROCEDURE generate (p_dir        IN  VARCHAR2,
@@ -29,6 +30,10 @@ PROCEDURE generate_rc (p_dir        IN  VARCHAR2,
                        p_file       IN  VARCHAR2,
                        p_refcursor  IN OUT SYS_REFCURSOR);
 
+PROCEDURE generate_clob (p_query  IN  VARCHAR2);
+
+PROCEDURE generate_clob_rc (p_refcursor  IN OUT SYS_REFCURSOR);
+
 PROCEDURE output (p_query  IN  VARCHAR2);
 
 PROCEDURE output_rc (p_refcursor  IN OUT SYS_REFCURSOR);
@@ -38,6 +43,8 @@ PROCEDURE set_separator (p_sep  IN  VARCHAR2);
 PROCEDURE set_quotes (p_add_quotes  IN  BOOLEAN := TRUE,
                       p_quote_char  IN  VARCHAR2 := '"',
                       p_escape      IN  BOOLEAN := TRUE);
+
+FUNCTION get_clob RETURN CLOB;
 
 END csv;
 /
@@ -79,6 +86,7 @@ CREATE OR REPLACE PACKAGE BODY csv AS
 --   22-NOV-2020  Tim Hall  Amend set_quotes to allow control of string escaping.
 --                          Amend generate_all to include optional string escapes.
 --                          Suggested by Anssi Kanninen.
+--   11-DEC-2020  J. Meza   Add CLOB support.
 -- --------------------------------------------------------------------------
 
 g_out_type    VARCHAR2(1) := 'F';
@@ -86,6 +94,7 @@ g_sep         VARCHAR2(5) := ',';
 g_add_quotes  BOOLEAN     := TRUE;
 g_quote_char  VARCHAR2(1) := '"';
 g_escape      BOOLEAN     := TRUE;
+g_clob        CLOB        := '';
 
 -- Prototype for hidden procedures.
 PROCEDURE generate_all (p_dir        IN  VARCHAR2,
@@ -127,6 +136,31 @@ BEGIN
                 p_query      => NULL,
                 p_refcursor  => p_refcursor);
 END generate_rc;
+
+
+-- Stub to get a CSV CLOB from a query.
+PROCEDURE generate_clob (p_query  IN  VARCHAR2) AS
+  l_cursor  SYS_REFCURSOR;
+BEGIN
+  g_out_type := 'C';
+
+  generate_all (p_dir        => NULL,
+                p_file       => NULL,
+                p_query      => p_query,
+                p_refcursor  => l_cursor);
+END generate_clob;
+
+
+-- Stub to get a CSV CLOB from a REF CURSOR.
+PROCEDURE generate_clob_rc (p_refcursor  IN OUT SYS_REFCURSOR) AS
+BEGIN
+  g_out_type := 'C';
+
+  generate_all (p_dir        => NULL,
+                p_file       => NULL,
+                p_query      => NULL,
+                p_refcursor  => p_refcursor);
+END generate_clob_rc;
 
 
 -- Stub to output a CSV from a query.
@@ -186,9 +220,11 @@ BEGIN
   IF p_query IS NOT NULL THEN
     l_rows := DBMS_SQL.execute(l_cursor);
   END IF;
-  
+
   IF g_out_type = 'F' THEN
     l_file := UTL_FILE.fopen(p_dir, p_file, 'w', 32767);
+  ELSIF g_out_type = 'C' THEN
+    g_clob := '';
   END IF;
 
   -- Output the column names.
@@ -280,8 +316,10 @@ PROCEDURE put (p_file  IN  UTL_FILE.file_type,
 BEGIN
   IF g_out_type = 'F' THEN
     UTL_FILE.put(p_file, p_text);
-  ELSE
+  ELSIF g_out_type = 'D' THEN
     DBMS_OUTPUT.put(p_text);
+  ELSE
+    g_clob := g_clob || p_text;
   END IF;
 END put;
 
@@ -291,10 +329,18 @@ PROCEDURE new_line (p_file  IN  UTL_FILE.file_type) AS
 BEGIN
   IF g_out_type = 'F' THEN
     UTL_FILE.new_line(p_file);
-  ELSE
+  ELSIF g_out_type = 'D' THEN
     DBMS_OUTPUT.new_line;
+  ELSE
+    g_clob := g_clob || UTL_TCP.CRLF;
   END IF;
 END new_line;
+
+ 
+FUNCTION get_clob RETURN CLOB AS
+BEGIN
+  RETURN g_clob;
+END get_clob;
 
 END csv;
 /
