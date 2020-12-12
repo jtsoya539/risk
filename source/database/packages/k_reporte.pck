@@ -85,16 +85,16 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_archivo         y_archivo;
     l_nombre_reporte  t_operaciones.nombre%TYPE;
     l_dominio_reporte t_operaciones.dominio%TYPE;
+    l_tipo_reporte    t_reportes.tipo%TYPE;
     l_sentencia       VARCHAR2(4000);
-    l_consulta_sql    t_reportes.consulta_sql%TYPE;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del reporte';
     BEGIN
-      SELECT upper(o.nombre), upper(o.dominio), r.consulta_sql
-        INTO l_nombre_reporte, l_dominio_reporte, l_consulta_sql
+      SELECT upper(o.nombre), upper(o.dominio), r.tipo
+        INTO l_nombre_reporte, l_dominio_reporte, l_tipo_reporte
         FROM t_reportes r, t_operaciones o
        WHERE o.id_operacion = r.id_reporte
          AND o.activo = 'S'
@@ -178,7 +178,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       END IF;
     END IF;
   
-    IF l_consulta_sql IS NOT NULL THEN
+    IF l_tipo_reporte = 'C' THEN
+      -- CONSULTA
       l_archivo := f_reporte_sql(i_id_reporte, l_prms);
     
     ELSE

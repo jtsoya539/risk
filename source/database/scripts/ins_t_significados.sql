@@ -219,9 +219,6 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DATO_PARAMETRO', 'O', 'OBJECT', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('TIPO_SERVICIO', 'R', 'REPORTE', null, 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_SERVICIO', 'C', 'CONSULTA', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
@@ -310,5 +307,11 @@ values ('EXTENSION_ADJUNTO', 'CSV', 'ADJUNTO CSV', 'text/csv', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_ADJUNTO', 'EPUB', 'ADJUNTO EPUB', 'application/epub+zip', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_REPORTE', 'H', 'AD HOC', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_REPORTE', 'C', 'CONSULTA', null, 'S');
 
 prompt Done.
