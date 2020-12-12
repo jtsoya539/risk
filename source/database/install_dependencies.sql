@@ -28,3 +28,7 @@ SOFTWARE.
 @@dependencies/csv.sql
 @@dependencies/oos_util_totp.pks
 @@dependencies/oos_util_totp.pkb
+@@dependencies/ZT_QR.pks
+@@dependencies/ZT_QR.pkb
+@@dependencies/ZT_WORD.pks
+@@dependencies/ZT_WORD.pkb

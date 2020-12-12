@@ -7,3 +7,5 @@ as_xlsx|Genera archivos en formato XLSX|https://technology.amis.nl/2011/02/19/cr
 as_zip|Comprime y descomprime archivos en formato ZIP|https://technology.amis.nl/2010/03/13/utl_compress-gzip-and-zlib/
 csv|Genera archivos en formato CSV|https://oracle-base.com/dba/script?category=miscellaneous&file=csv.sql
 oos_util_totp|Genera y valida códigos con el algoritmo TOTP|https://github.com/OraOpenSource/oos-utils
+zt_qr|Genera códigos QR|https://github.com/zorantica/plsql-qr-code
+zt_word|Genera archivos en formato DOCX|https://github.com/zorantica/plsql-word
