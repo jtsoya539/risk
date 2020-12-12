@@ -284,22 +284,21 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     CASE l_formato
       WHEN c_formato_pdf THEN
         -- PDF
-        as_pdf3_v5.init;
-        as_pdf3_v5.set_page_format('A4');
-        as_pdf3_v5.set_page_orientation('PORTRAIT');
-        as_pdf3_v5.set_margins(25, 30, 25, 30, 'mm');
+        as_pdf3.init;
+        as_pdf3.set_page_format('A4');
+        as_pdf3.set_page_orientation('PORTRAIT');
+        as_pdf3.set_margins(25, 30, 25, 30, 'mm');
       
-        as_pdf3_v5.put_image(p_img    => k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_imagenes,'ARCHIVO','x-mark-5-256.jpg').contenido,
-                             p_x      => 30,
-                             p_y      => 272,
-                             p_width  => 10,
-                             p_height => 10,
-                             p_um     => 'mm');
+        as_pdf3.put_image(p_img    => k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_imagenes,'ARCHIVO','x-mark-5-256.jpg').contenido,
+                          p_x      => 30,
+                          p_y      => 272,
+                          p_width  => 10,
+                          p_height => 10);
       
-        as_pdf3_v5.write('Código: ' || i_respuesta.codigo, 'mm', 45);
-        as_pdf3_v5.write(utl_tcp.crlf);
-        as_pdf3_v5.write('Mensaje: ' || i_respuesta.mensaje, 'mm', 45);
-        l_archivo.contenido := as_pdf3_v5.get_pdf;
+        as_pdf3.write('Código: ' || i_respuesta.codigo, 'mm', 45);
+        as_pdf3.write(utl_tcp.crlf);
+        as_pdf3.write('Mensaje: ' || i_respuesta.mensaje, 'mm', 45);
+        l_archivo.contenido := as_pdf3.get_pdf;
       
       WHEN c_formato_xlsx THEN
         -- XLSX
@@ -345,12 +344,31 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
 
   FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
                          i_parametros IN y_parametros) RETURN y_archivo IS
-    l_rsp       y_respuesta;
-    l_contenido BLOB;
-    l_formato   VARCHAR2(10);
+    l_rsp             y_respuesta;
+    l_contenido       BLOB;
+    l_formato         VARCHAR2(10);
+    l_nombre_reporte  t_operaciones.nombre%TYPE;
+    l_dominio_reporte t_operaciones.dominio%TYPE;
+    l_consulta_sql    t_reportes.consulta_sql%TYPE;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Buscando datos del reporte';
+    BEGIN
+      SELECT upper(o.nombre), upper(o.dominio), r.consulta_sql
+        INTO l_nombre_reporte, l_dominio_reporte, l_consulta_sql
+        FROM t_reportes r, t_operaciones o
+       WHERE o.id_operacion = r.id_reporte
+         AND o.activo = 'S'
+         AND r.id_reporte = i_id_reporte;
+    EXCEPTION
+      WHEN no_data_found THEN
+        k_servicio.p_respuesta_error(l_rsp,
+                                     k_servicio.c_error_parametro,
+                                     'Reporte inexistente o inactivo');
+        RAISE k_servicio.ex_error_parametro;
+    END;
   
     l_rsp.lugar := 'Validando parámetros';
     k_servicio.p_validar_parametro(l_rsp,
@@ -364,6 +382,42 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   
     l_formato := k_operacion.f_valor_parametro_string(i_parametros,
                                                       'formato');
+  
+    IF l_consulta_sql IS NULL THEN
+      k_servicio.p_respuesta_error(l_rsp,
+                                   k_servicio.c_error_general,
+                                   'Consulta SQL no definida');
+      RAISE k_servicio.ex_error_parametro;
+    END IF;
+  
+    CASE l_formato
+      WHEN c_formato_pdf THEN
+        -- PDF
+        as_pdf3.init;
+        as_pdf3.set_page_format('A4');
+        as_pdf3.set_page_orientation('LANDSCAPE');
+        as_pdf3.set_margins(12.7, 12.7, 12.7, 12.7, 'mm');
+        as_pdf3.set_font('helvetica', 8);
+      
+        as_pdf3.query2table(l_consulta_sql);
+        l_contenido := as_pdf3.get_pdf;
+      
+      WHEN c_formato_docx THEN
+        -- DOCX
+        l_contenido := NULL; -- TODO
+    
+      WHEN c_formato_xlsx THEN
+        -- XLSX
+        as_xlsx.clear_workbook;
+        as_xlsx.query2sheet(l_consulta_sql);
+        l_contenido := as_xlsx.finish;
+      
+      WHEN c_formato_txt THEN
+        -- TXT
+        csv.generate_clob(l_consulta_sql);
+        l_contenido := k_util.clob_to_blob(csv.get_clob);
+      
+    END CASE;
   
     RETURN f_archivo_ok(l_contenido, l_formato);
   EXCEPTION

@@ -22,7 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-@@dependencies/as_pdf3_v5.11.sql
+@@dependencies/as_pdf3_4.txt
 @@dependencies/as_xlsx18.txt
 @@dependencies/as_zip10.txt
 @@dependencies/csv.sql
