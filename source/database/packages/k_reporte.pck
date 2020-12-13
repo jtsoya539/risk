@@ -272,9 +272,11 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
                            i_formato   IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo IS
-    l_archivo y_archivo;
-    l_formato VARCHAR2(10);
-    l_txt     CLOB;
+    l_archivo   y_archivo;
+    l_formato   VARCHAR2(10);
+    l_document  PLS_INTEGER;
+    l_paragraph PLS_INTEGER;
+    l_txt       CLOB;
   BEGIN
     -- Inicializa archivo
     l_archivo := NEW y_archivo();
@@ -289,17 +291,21 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_pdf3.set_page_format('A4');
         as_pdf3.set_page_orientation('PORTRAIT');
         as_pdf3.set_margins(25, 30, 25, 30, 'mm');
-      
-        as_pdf3.put_image(p_img    => k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_imagenes,'ARCHIVO','x-mark-5-256.jpg').contenido,
-                          p_x      => 30,
-                          p_y      => 272,
-                          p_width  => 10,
-                          p_height => 10);
-      
-        as_pdf3.write('Código: ' || i_respuesta.codigo, 'mm', 45);
+        as_pdf3.write('Código: ' || i_respuesta.codigo);
         as_pdf3.write(utl_tcp.crlf);
-        as_pdf3.write('Mensaje: ' || i_respuesta.mensaje, 'mm', 45);
+        as_pdf3.write('Mensaje: ' || i_respuesta.mensaje);
         l_archivo.contenido := as_pdf3.get_pdf;
+      
+      WHEN c_formato_docx THEN
+        -- DOCX
+        l_document          := zt_word.f_new_document;
+        l_paragraph         := zt_word.f_new_paragraph(p_doc_id => l_document,
+                                                       p_text   => 'Código: ' ||
+                                                                   i_respuesta.codigo);
+        l_paragraph         := zt_word.f_new_paragraph(p_doc_id => l_document,
+                                                       p_text   => 'Mensaje: ' ||
+                                                                   i_respuesta.mensaje);
+        l_archivo.contenido := zt_word.f_make_document(l_document);
       
       WHEN c_formato_xlsx THEN
         -- XLSX
@@ -351,6 +357,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_nombre_reporte  t_operaciones.nombre%TYPE;
     l_dominio_reporte t_operaciones.dominio%TYPE;
     l_consulta_sql    t_reportes.consulta_sql%TYPE;
+    l_document        PLS_INTEGER;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
@@ -405,8 +412,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       
       WHEN c_formato_docx THEN
         -- DOCX
-        l_contenido := NULL; -- TODO
-    
+        l_document  := zt_word.f_new_document;
+        l_contenido := zt_word.f_make_document(l_document);
+      
       WHEN c_formato_xlsx THEN
         -- XLSX
         as_xlsx.clear_workbook;
