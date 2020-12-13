@@ -272,11 +272,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
                            i_formato   IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo IS
-    l_archivo   y_archivo;
-    l_formato   VARCHAR2(10);
-    l_document  PLS_INTEGER;
-    l_paragraph PLS_INTEGER;
-    l_txt       CLOB;
+    l_archivo y_archivo;
+    l_formato VARCHAR2(10);
   BEGIN
     -- Inicializa archivo
     l_archivo := NEW y_archivo();
@@ -298,14 +295,19 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       
       WHEN c_formato_docx THEN
         -- DOCX
-        l_document          := zt_word.f_new_document;
-        l_paragraph         := zt_word.f_new_paragraph(p_doc_id => l_document,
-                                                       p_text   => 'Código: ' ||
-                                                                   i_respuesta.codigo);
-        l_paragraph         := zt_word.f_new_paragraph(p_doc_id => l_document,
-                                                       p_text   => 'Mensaje: ' ||
-                                                                   i_respuesta.mensaje);
-        l_archivo.contenido := zt_word.f_make_document(l_document);
+        DECLARE
+          l_document  PLS_INTEGER;
+          l_paragraph PLS_INTEGER;
+        BEGIN
+          l_document          := zt_word.f_new_document;
+          l_paragraph         := zt_word.f_new_paragraph(p_doc_id => l_document,
+                                                         p_text   => 'Código: ' ||
+                                                                     i_respuesta.codigo);
+          l_paragraph         := zt_word.f_new_paragraph(p_doc_id => l_document,
+                                                         p_text   => 'Mensaje: ' ||
+                                                                     i_respuesta.mensaje);
+          l_archivo.contenido := zt_word.f_make_document(l_document);
+        END;
       
       WHEN c_formato_xlsx THEN
         -- XLSX
@@ -328,10 +330,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       
       WHEN c_formato_txt THEN
         -- TXT
-        l_txt               := 'Código: ' || i_respuesta.codigo ||
-                               utl_tcp.crlf || 'Mensaje: ' ||
-                               i_respuesta.mensaje;
-        l_archivo.contenido := k_util.clob_to_blob(l_txt);
+        DECLARE
+          l_txt CLOB;
+        BEGIN
+          l_txt               := 'Código: ' || i_respuesta.codigo ||
+                                 utl_tcp.crlf || 'Mensaje: ' ||
+                                 i_respuesta.mensaje;
+          l_archivo.contenido := k_util.clob_to_blob(l_txt);
+        END;
       
       ELSE
         raise_application_error(-20000, 'Formato de salida no soportado');
@@ -357,7 +363,6 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_nombre_reporte  t_operaciones.nombre%TYPE;
     l_dominio_reporte t_operaciones.dominio%TYPE;
     l_consulta_sql    t_reportes.consulta_sql%TYPE;
-    l_document        PLS_INTEGER;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
@@ -401,19 +406,39 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     CASE l_formato
       WHEN c_formato_pdf THEN
         -- PDF
-        as_pdf3.init;
-        as_pdf3.set_page_format('A4');
-        as_pdf3.set_page_orientation('LANDSCAPE');
-        as_pdf3.set_margins(12.7, 12.7, 12.7, 12.7, 'mm');
-        as_pdf3.set_font('helvetica', 8);
-      
-        as_pdf3.query2table(l_consulta_sql);
-        l_contenido := as_pdf3.get_pdf;
+        DECLARE
+          l_cursor   PLS_INTEGER;
+          l_col_cnt  PLS_INTEGER;
+          l_desc_tab dbms_sql.desc_tab2;
+          l_headers  as_pdf3.tp_headers;
+        BEGIN
+          as_pdf3.init;
+          as_pdf3.set_page_format('A4');
+          as_pdf3.set_page_orientation('LANDSCAPE');
+          as_pdf3.set_margins(12.7, 12.7, 12.7, 12.7, 'mm');
+          as_pdf3.set_font('helvetica', 8);
+        
+          l_cursor := dbms_sql.open_cursor;
+          dbms_sql.parse(l_cursor, l_consulta_sql, dbms_sql.native);
+          dbms_sql.describe_columns2(l_cursor, l_col_cnt, l_desc_tab);
+          l_headers := NEW as_pdf3.tp_headers();
+          FOR i IN 1 .. l_col_cnt LOOP
+            l_headers.extend;
+            l_headers(l_headers.count) := l_desc_tab(i).col_name;
+          END LOOP;
+        
+          as_pdf3.query2table(l_consulta_sql, NULL, l_headers);
+          l_contenido := as_pdf3.get_pdf;
+        END;
       
       WHEN c_formato_docx THEN
         -- DOCX
-        l_document  := zt_word.f_new_document;
-        l_contenido := zt_word.f_make_document(l_document);
+        DECLARE
+          l_document PLS_INTEGER;
+        BEGIN
+          l_document  := zt_word.f_new_document;
+          l_contenido := zt_word.f_make_document(l_document);
+        END;
       
       WHEN c_formato_xlsx THEN
         -- XLSX
