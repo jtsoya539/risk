@@ -24,4 +24,7 @@ alter table T_REPORTES
 alter table T_REPORTES
   add constraint FK_REPORTES_OPERACIONES foreign key (ID_REPORTE)
   references T_OPERACIONES (ID_OPERACION);
+alter table T_REPORTES
+  add constraint CK_REPORTES_TIPO_CONSULTA_SQL
+  check (TIPO <> 'C' OR (TIPO = 'C' AND CONSULTA_SQL IS NOT NULL));
 
