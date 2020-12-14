@@ -287,7 +287,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_pdf3.init;
         as_pdf3.set_page_format('A4');
         as_pdf3.set_page_orientation('PORTRAIT');
-        as_pdf3.set_margins(25, 30, 25, 30, 'mm');
+        as_pdf3.set_margins(2.5, 3, 2.5, 3, 'cm');
         as_pdf3.write('Código: ' || i_respuesta.codigo);
         as_pdf3.write(utl_tcp.crlf);
         as_pdf3.write('Mensaje: ' || i_respuesta.mensaje);
@@ -415,7 +415,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           as_pdf3.init;
           as_pdf3.set_page_format('A4');
           as_pdf3.set_page_orientation('LANDSCAPE');
-          as_pdf3.set_margins(12.7, 12.7, 12.7, 12.7, 'mm');
+          as_pdf3.set_margins(1.27, 1.27, 1.27, 1.27, 'cm');
           as_pdf3.set_font('helvetica', 8);
         
           l_cursor := dbms_sql.open_cursor;
@@ -435,8 +435,17 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         -- DOCX
         DECLARE
           l_document PLS_INTEGER;
+          l_page     zt_word.r_page;
         BEGIN
-          l_document  := zt_word.f_new_document;
+          l_document           := zt_word.f_new_document;
+          l_page               := zt_word.f_get_default_page(l_document);
+          l_page.orientation   := 'landscape';
+          l_page.margin_top    := 720; -- 1.27 cm
+          l_page.margin_bottom := 720; -- 1.27 cm
+          l_page.margin_left   := 720; -- 1.27 cm
+          l_page.margin_right  := 720; -- 1.27 cm
+          zt_word.p_set_default_page(l_document, l_page);
+        
           l_contenido := zt_word.f_make_document(l_document);
         END;
       
@@ -475,7 +484,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_reporte,
                                 i_parametros,
@@ -498,7 +508,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_reporte,
                                 i_parametros,
