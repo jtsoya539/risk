@@ -124,7 +124,7 @@ namespace Risk.API
             IAutService autService = serviceProvider.GetService<IAutService>();
             IGenService genService = serviceProvider.GetService<IGenService>();
 
-            var signingKey = Encoding.ASCII.GetBytes(Configuration["JwtSigningKey"]);
+            //var signingKey = Encoding.ASCII.GetBytes(Configuration["JwtSigningKey"]);
 
             services.AddAuthentication(x =>
             {
@@ -133,7 +133,7 @@ namespace Risk.API
             }).AddJwtBearer(x =>
             {
                 x.SecurityTokenValidators.Clear();
-                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(autService));
+                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(autService, genService));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -141,10 +141,10 @@ namespace Risk.API
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(signingKey),
+                    //IssuerSigningKey = new SymmetricSecurityKey(signingKey),
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromSeconds(10)
-                    // ClockSkew = TimeSpan.Zero
+                    //ClockSkew = TimeSpan.Zero
                 };
             });
 

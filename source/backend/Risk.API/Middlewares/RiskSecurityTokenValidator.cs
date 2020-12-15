@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Risk.API.Helpers;
 using Risk.API.Models;
@@ -35,6 +36,7 @@ namespace Risk.API.Middlewares
     {
         private int _maximumTokenSizeInBytes = TokenValidationParameters.DefaultMaximumTokenSizeInBytes;
         private readonly IAutService _autService;
+        private readonly IGenService _genService;
         private JwtSecurityTokenHandler _tokenHandler;
 
         public bool CanValidateToken
@@ -57,9 +59,10 @@ namespace Risk.API.Middlewares
             }
         }
 
-        public RiskSecurityTokenValidator(IAutService autService)
+        public RiskSecurityTokenValidator(IAutService autService, IGenService genService)
         {
             _autService = autService;
+            _genService = genService;
             _tokenHandler = new JwtSecurityTokenHandler();
         }
 
@@ -72,6 +75,14 @@ namespace Risk.API.Middlewares
         {
             ClaimsPrincipal claimsPrincipal;
             Respuesta<Dato> respuesta;
+
+            respuesta = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                throw new SecurityTokenValidationException(respuesta.Mensaje);
+            }
+            var signingKey = Encoding.ASCII.GetBytes(respuesta.Datos.Contenido);
+            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(signingKey);
 
             try
             {
