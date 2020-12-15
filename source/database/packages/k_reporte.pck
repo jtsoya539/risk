@@ -434,8 +434,16 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       WHEN c_formato_docx THEN
         -- DOCX
         DECLARE
-          l_document PLS_INTEGER;
-          l_page     zt_word.r_page;
+          l_document      PLS_INTEGER;
+          l_table         PLS_INTEGER;
+          l_cursor        PLS_INTEGER;
+          l_row_cnt       PLS_INTEGER;
+          l_col_cnt       PLS_INTEGER;
+          l_row_counter   PLS_INTEGER;
+          l_page          zt_word.r_page;
+          l_desc_tab      dbms_sql.desc_tab2;
+          l_columns_width VARCHAR2(4000);
+          l_buffer        VARCHAR2(32767);
         BEGIN
           l_document           := zt_word.f_new_document;
           l_page               := zt_word.f_get_default_page(l_document);
@@ -445,6 +453,72 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           l_page.margin_left   := 720; -- 1.27 cm
           l_page.margin_right  := 720; -- 1.27 cm
           zt_word.p_set_default_page(l_document, l_page);
+        
+          -- Obtiene la cantidad total de registros de la consulta
+          EXECUTE IMMEDIATE 'SELECT COUNT(*) FROM (' || l_consulta_sql || ')'
+            INTO l_row_cnt;
+        
+          l_cursor := dbms_sql.open_cursor;
+          dbms_sql.parse(l_cursor, l_consulta_sql, dbms_sql.native);
+          dbms_sql.describe_columns2(l_cursor, l_col_cnt, l_desc_tab);
+        
+          FOR i IN 1 .. l_col_cnt LOOP
+            dbms_sql.define_column(l_cursor, i, l_buffer, 32767);
+            IF i > 1 THEN
+              l_columns_width := l_columns_width || ',';
+            END IF;
+            l_columns_width := l_columns_width || '0';
+          END LOOP;
+        
+          -- Crea una tabla con la cantidad calculada de filas y columnas
+          l_table := zt_word.f_new_table(p_doc_id        => l_document,
+                                         p_rows          => l_row_cnt + 1,
+                                         p_columns       => l_col_cnt,
+                                         p_columns_width => l_columns_width);
+        
+          -- Define los encabezados en la primera fila de la tabla
+          FOR i IN 1 .. l_col_cnt LOOP
+            zt_word.p_table_cell(p_doc_id           => l_document,
+                                 p_table_id         => l_table,
+                                 p_row              => 1,
+                                 p_column           => i,
+                                 p_alignment_h      => 'LEFT',
+                                 p_font             => zt_word.f_font(p_font_size => 9,
+                                                                      p_bold      => TRUE),
+                                 p_background_color => 'CCCCCC',
+                                 p_text             => l_desc_tab(i).col_name);
+          END LOOP;
+        
+          l_row_cnt := dbms_sql.execute(l_cursor);
+        
+          -- Define los campos a partir de la segunda fila de la tabla
+          l_row_counter := 1;
+          LOOP
+            EXIT WHEN dbms_sql.fetch_rows(l_cursor) = 0;
+            l_row_counter := l_row_counter + 1;
+            FOR i IN 1 .. l_col_cnt LOOP
+              IF l_desc_tab(i).col_type IN (dbms_types.typecode_blob) THEN
+                l_buffer := NULL;
+              ELSE
+                dbms_sql.column_value(l_cursor, i, l_buffer);
+              END IF;
+              l_buffer := REPLACE(l_buffer, '<', '&lt;');
+              l_buffer := REPLACE(l_buffer, '>', '&gt;');
+              l_buffer := REPLACE(l_buffer, '&', '&amp;');
+              l_buffer := REPLACE(l_buffer, '"', '&quot;');
+              l_buffer := REPLACE(l_buffer, '''', '&apos;');
+              l_buffer := nvl(l_buffer, ' ');
+              zt_word.p_table_cell(p_doc_id      => l_document,
+                                   p_table_id    => l_table,
+                                   p_row         => l_row_counter,
+                                   p_column      => i,
+                                   p_alignment_h => 'LEFT',
+                                   p_font        => zt_word.f_font(p_font_size => 9),
+                                   p_text        => l_buffer);
+            END LOOP;
+          END LOOP;
+        
+          dbms_sql.close_cursor(l_cursor);
         
           l_contenido := zt_word.f_make_document(l_document);
         END;
@@ -484,8 +558,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_reporte,
                                 i_parametros,
@@ -508,8 +581,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_reporte,
                                 i_parametros,
