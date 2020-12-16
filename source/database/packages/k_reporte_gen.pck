@@ -94,6 +94,13 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
           l_contenido := zt_word.f_make_document(l_document);
         END;
       
+      WHEN k_reporte.c_formato_xlsx THEN
+        -- XLSX
+        as_xlsx.clear_workbook;
+        as_xlsx.new_sheet;
+        as_xlsx.cell(1, 1, l_version_actual);
+        l_contenido := as_xlsx.finish;
+      
       WHEN k_reporte.c_formato_txt THEN
         -- TXT
         DECLARE
