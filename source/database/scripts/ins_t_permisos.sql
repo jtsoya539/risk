@@ -1,6 +1,10 @@
 prompt Importing table t_permisos...
 set feedback off
 set define off
+
+insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
+values ('REPORTE:GEN:LISTAR_SIGNIFICADOS', null, null);
+
 insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
 values ('REPORTE:GEN:VERSION_SISTEMA', null, null);
 

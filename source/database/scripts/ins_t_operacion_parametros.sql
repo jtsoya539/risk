@@ -1,6 +1,7 @@
 prompt Importing table t_operacion_parametros...
 set feedback off
 set define off
+
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (0, 'DIRECCION_IP', 1, 'S', 'S', null, null, 'N', null, null, null);
 
@@ -155,7 +156,7 @@ insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DA
 values (19, 'ARCHIVO', 4, 'S', 'O', 'Y_ARCHIVO', null, 'S', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
-values (20, 'FORMATO', 10, 'S', 'S', null, null, 'S', 'PDF', null, null);
+values (20, 'FORMATO', 1, 'S', 'S', null, 4, 'S', 'PDF', null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (21, 'TOKEN_DISPOSITIVO', 1, 'S', 'S', null, null, 'S', null, null, null);
@@ -243,6 +244,12 @@ values (33, 'ESTADO', 3, 'S', 'S', null, null, 'S', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (33, 'RESPUESTA_ENVIO', 4, 'S', 'S', null, null, 'S', null, null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (36, 'FORMATO', 1, 'S', 'S', null, 4, 'S', 'PDF', null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (36, 'DOMINIO', 2, 'S', 'S', null, null, 'N', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (42, 'USUARIO_ANTIGUO', 1, 'S', 'S', null, null, 'S', null, null, null);
