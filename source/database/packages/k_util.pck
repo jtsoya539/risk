@@ -46,6 +46,19 @@ CREATE OR REPLACE PACKAGE k_util IS
                                   i_type  IN VARCHAR2 DEFAULT NULL);
 
   /**
+  Retorna una tabla de cadenas delimitadas por un separador
+  
+  %author dmezac 10/9/2020 18:05:15
+  %param i_cadena Cadena
+  %param i_separador Caracter separador. Por defecto '~'
+  %return Tabla de cadenas
+  */
+  FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
+                             i_separador VARCHAR2 DEFAULT '~')
+    RETURN y_cadenas
+    PIPELINED;
+
+  /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
   Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
   
@@ -117,19 +130,6 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_direccion_ip RETURN VARCHAR2;
 
   FUNCTION f_esquema_actual RETURN VARCHAR2;
-
-  /**
-  Retorna una tabla de cadenas delimitadas por un separador
-  
-  %author dmezac 10/9/2020 18:05:15
-  %param i_cadena Cadena
-  %param i_separador Caracter separador. Por defecto '~'
-  %return Tabla de cadenas
-  */
-  FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
-                             i_separador VARCHAR2 DEFAULT '~')
-    RETURN y_cadenas
-    PIPELINED;
 
 END;
 /
@@ -354,6 +354,26 @@ SOFTWARE.
 END;';
     dbms_output.put_line(l_sentencia);
     EXECUTE IMMEDIATE l_sentencia;
+  END;
+
+  FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
+                             i_separador VARCHAR2 DEFAULT '~')
+    RETURN y_cadenas
+    PIPELINED IS
+    l_idx    PLS_INTEGER;
+    l_cadena VARCHAR2(32767) := i_cadena;
+  BEGIN
+    LOOP
+      l_idx := instr(l_cadena, i_separador);
+      IF l_idx > 0 THEN
+        PIPE ROW(substr(l_cadena, 1, l_idx - 1));
+        l_cadena := substr(l_cadena, l_idx + length(i_separador));
+      ELSE
+        PIPE ROW(l_cadena);
+        EXIT;
+      END IF;
+    END LOOP;
+    RETURN;
   END;
 
   FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,
@@ -783,26 +803,6 @@ END;'
   FUNCTION f_esquema_actual RETURN VARCHAR2 IS
   BEGIN
     RETURN sys_context('USERENV', 'CURRENT_SCHEMA');
-  END;
-
-  FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
-                             i_separador VARCHAR2 DEFAULT '~')
-    RETURN y_cadenas
-    PIPELINED IS
-    l_idx    PLS_INTEGER;
-    l_cadena VARCHAR2(32767) := i_cadena;
-  BEGIN
-    LOOP
-      l_idx := instr(l_cadena, i_separador);
-      IF l_idx > 0 THEN
-        PIPE ROW(substr(l_cadena, 1, l_idx - 1));
-        l_cadena := substr(l_cadena, l_idx + length(i_separador));
-      ELSE
-        PIPE ROW(l_cadena);
-        EXIT;
-      END IF;
-    END LOOP;
-    RETURN;
   END;
 
 END;
