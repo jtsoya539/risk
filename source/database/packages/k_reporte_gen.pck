@@ -78,11 +78,30 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         as_pdf3.init;
         as_pdf3.set_page_format('A4');
         as_pdf3.set_page_orientation('PORTRAIT');
-        as_pdf3.set_margins(25, 30, 25, 30, 'mm');
-      
+        as_pdf3.set_margins(2.5, 3, 2.5, 3, 'cm');
         as_pdf3.write(l_version_actual);
-      
         l_contenido := as_pdf3.get_pdf;
+      
+      WHEN k_reporte.c_formato_docx THEN
+        -- DOCX
+        DECLARE
+          l_document  PLS_INTEGER;
+          l_paragraph PLS_INTEGER;
+        BEGIN
+          l_document  := zt_word.f_new_document;
+          l_paragraph := zt_word.f_new_paragraph(p_doc_id => l_document,
+                                                 p_text   => l_version_actual);
+          l_contenido := zt_word.f_make_document(l_document);
+        END;
+      
+      WHEN k_reporte.c_formato_txt THEN
+        -- TXT
+        DECLARE
+          l_txt CLOB;
+        BEGIN
+          l_txt       := l_version_actual;
+          l_contenido := k_util.clob_to_blob(l_txt);
+        END;
       
       ELSE
         k_servicio.p_respuesta_error(l_rsp,

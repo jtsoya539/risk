@@ -77,6 +77,19 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       ROLLBACK;
   END;
 
+  PROCEDURE lp_registrar_sql_ejecucion(i_id_reporte IN NUMBER,
+                                       i_sql        IN CLOB) IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+  BEGIN
+    UPDATE t_reportes
+       SET sql_ultima_ejecucion = i_sql
+     WHERE id_reporte = i_id_reporte;
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+  END;
+
   FUNCTION lf_procesar_reporte(i_id_reporte IN NUMBER,
                                i_parametros IN CLOB,
                                i_contexto   IN CLOB DEFAULT NULL)
@@ -445,7 +458,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   
     l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql ||
                       ') WHERE 1 = 1' || f_filtros_sql(i_parametros);
-    dbms_output.put_line(l_consulta_sql);
+    -- Registra SQL
+    lp_registrar_sql_ejecucion(i_id_reporte, l_consulta_sql);
   
     CASE l_formato
       WHEN c_formato_pdf THEN
