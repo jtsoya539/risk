@@ -242,5 +242,30 @@ namespace Risk.API.Controllers
             byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
             return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
         }
+
+        [HttpGet("ReporteListarSignificados")]
+        [SwaggerOperation(OperationId = "ReporteListarSignificados", Summary = "ReporteListarSignificados", Description = "Obtiene un reporte con los significados dentro de un dominio")]
+        [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        public IActionResult ReporteListarSignificados([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato,
+            [FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio)
+        {
+            var respuesta = _genService.ReporteListarSignificados(formato, dominio);
+
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respuesta);
+            }
+
+            var archivo = respuesta.Datos;
+
+            if (archivo.Contenido == null)
+            {
+                return ProcesarRespuesta(respuesta);
+            }
+
+            byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
+            return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
+        }
     }
 }

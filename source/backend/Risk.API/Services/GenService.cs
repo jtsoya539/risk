@@ -306,5 +306,20 @@ namespace Risk.API.Services
 
             return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
         }
+
+        public Respuesta<Archivo> ReporteListarSignificados(FormatoReporte formato, string dominio)
+        {
+            JObject prms = new JObject();
+            prms.Add("formato", ModelsMapper.GetValueFromFormatoReporteEnum(formato));
+            prms.Add("dominio", dominio);
+
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Reporte),
+                NOMBRE_LISTAR_SIGNIFICADOS,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
+        }
     }
 }

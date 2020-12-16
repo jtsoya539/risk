@@ -41,5 +41,6 @@ namespace Risk.API.Services
         Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo);
         Respuesta<Dato> RecuperarTexto(string referencia);
         Respuesta<Archivo> ReporteVersionSistema(FormatoReporte formato);
+        Respuesta<Archivo> ReporteListarSignificados(FormatoReporte formato, string dominio);
     }
 }
