@@ -150,9 +150,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'direccion_ip'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_servicio,
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
                                          i_id_reporte);
-    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_servicio,
+    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
                                          l_nombre_reporte);
     k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
                                          k_aplicacion.f_id_aplicacion(k_operacion.f_valor_parametro_string(l_ctx,
@@ -262,7 +262,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_archivo.p_calcular_propiedades(l_archivo.contenido,
                                      l_archivo.checksum,
                                      l_archivo.tamano);
-    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_servicio) ||
+    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion) ||
                                  to_char(SYSDATE, '_YYYYMMDD_HH24MISS'));
     l_archivo.extension := lower(l_formato);
     l_archivo.tipo_mime := k_archivo.f_tipo_mime('EXTENSION_REPORTE',
@@ -348,7 +348,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_archivo.p_calcular_propiedades(l_archivo.contenido,
                                      l_archivo.checksum,
                                      l_archivo.tamano);
-    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_servicio) ||
+    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion) ||
                                  to_char(SYSDATE, '_YYYYMMDD_HH24MISS'));
     l_archivo.extension := lower(l_formato);
     l_archivo.tipo_mime := k_archivo.f_tipo_mime('EXTENSION_REPORTE',
@@ -368,8 +368,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       WHILE i IS NOT NULL LOOP
       
         IF i_parametros(i).nombre <> 'formato' THEN
-          l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i)
-                          .nombre || ' = ';
+          l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i).nombre ||
+                           ' = ';
         
           l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
           IF l_typecode = dbms_types.typecode_varchar2 THEN
@@ -377,12 +377,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                              anydata.accessvarchar2(i_parametros(i).valor) || '''';
           ELSIF l_typecode = dbms_types.typecode_number THEN
             l_filtros_sql := l_filtros_sql ||
-                             to_char(anydata.accessnumber(i_parametros(i)
-                                                          .valor));
+                             to_char(anydata.accessnumber(i_parametros(i).valor));
           ELSIF l_typecode = dbms_types.typecode_date THEN
             l_filtros_sql := l_filtros_sql || 'to_date(''' ||
-                             to_char(anydata.accessdate(i_parametros(i)
-                                                        .valor),
+                             to_char(anydata.accessdate(i_parametros(i).valor),
                                      'YYYY-MM-DD') ||
                              ''', ''YYYY-MM-DD'') ';
           ELSE
@@ -604,8 +602,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_reporte,
                                 i_parametros,
@@ -628,8 +625,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_reporte,
                                 i_parametros,

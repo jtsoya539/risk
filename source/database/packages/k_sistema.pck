@@ -36,12 +36,12 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   c_fecha   CONSTANT VARCHAR2(50) := 'FECHA';
   c_usuario CONSTANT VARCHAR2(50) := 'USUARIO';
   --
-  c_direccion_ip    CONSTANT VARCHAR2(50) := 'DIRECCION_IP';
-  c_id_servicio     CONSTANT VARCHAR2(50) := 'ID_SERVICIO';
-  c_nombre_servicio CONSTANT VARCHAR2(50) := 'NOMBRE_SERVICIO';
-  c_id_aplicacion   CONSTANT VARCHAR2(50) := 'ID_APLICACION';
-  c_id_sesion       CONSTANT VARCHAR2(50) := 'ID_SESION';
-  c_id_usuario      CONSTANT VARCHAR2(50) := 'ID_USUARIO';
+  c_direccion_ip     CONSTANT VARCHAR2(50) := 'DIRECCION_IP';
+  c_id_operacion     CONSTANT VARCHAR2(50) := 'ID_OPERACION';
+  c_nombre_operacion CONSTANT VARCHAR2(50) := 'NOMBRE_OPERACION';
+  c_id_aplicacion    CONSTANT VARCHAR2(50) := 'ID_APLICACION';
+  c_id_sesion        CONSTANT VARCHAR2(50) := 'ID_SESION';
+  c_id_usuario       CONSTANT VARCHAR2(50) := 'ID_USUARIO';
 
   FUNCTION f_es_produccion RETURN BOOLEAN;
 

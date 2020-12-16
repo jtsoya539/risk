@@ -167,9 +167,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'direccion_ip'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_servicio,
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
                                          i_id_servicio);
-    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_servicio,
+    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
                                          l_nombre_servicio);
     k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
                                          k_aplicacion.f_id_aplicacion(k_operacion.f_valor_parametro_string(l_ctx,
@@ -434,8 +434,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_servicio,
                                 i_parametros,
@@ -458,8 +457,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,
