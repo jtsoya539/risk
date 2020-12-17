@@ -248,7 +248,7 @@ namespace Risk.API.Controllers
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         public IActionResult ReporteListarSignificados([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato,
-            [FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio)
+            [FromQuery, SwaggerParameter(Description = "Dominio", Required = false)] string dominio)
         {
             var respuesta = _genService.ReporteListarSignificados(formato, dominio);
 

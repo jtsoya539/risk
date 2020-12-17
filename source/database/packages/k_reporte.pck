@@ -384,20 +384,38 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i).nombre ||
                            ' = ';
         
-          l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
-          IF l_typecode = dbms_types.typecode_varchar2 THEN
-            l_filtros_sql := l_filtros_sql || '''' ||
-                             anydata.accessvarchar2(i_parametros(i).valor) || '''';
-          ELSIF l_typecode = dbms_types.typecode_number THEN
-            l_filtros_sql := l_filtros_sql ||
-                             to_char(anydata.accessnumber(i_parametros(i).valor));
-          ELSIF l_typecode = dbms_types.typecode_date THEN
-            l_filtros_sql := l_filtros_sql || 'to_date(''' ||
-                             to_char(anydata.accessdate(i_parametros(i).valor),
-                                     'YYYY-MM-DD') ||
-                             ''', ''YYYY-MM-DD'') ';
-          ELSE
+          IF i_parametros(i).valor IS NULL THEN
             l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+          ELSE
+            l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
+            IF l_typecode = dbms_types.typecode_varchar2 THEN
+              IF anydata.accessvarchar2(i_parametros(i).valor) IS NULL THEN
+                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              ELSE
+                l_filtros_sql := l_filtros_sql || '''' ||
+                                 REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
+                                         '''',
+                                         '''''') || '''';
+              END IF;
+            ELSIF l_typecode = dbms_types.typecode_number THEN
+              IF anydata.accessnumber(i_parametros(i).valor) IS NULL THEN
+                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              ELSE
+                l_filtros_sql := l_filtros_sql ||
+                                 to_char(anydata.accessnumber(i_parametros(i).valor));
+              END IF;
+            ELSIF l_typecode = dbms_types.typecode_date THEN
+              IF anydata.accessdate(i_parametros(i).valor) IS NULL THEN
+                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              ELSE
+                l_filtros_sql := l_filtros_sql || 'to_date(''' ||
+                                 to_char(anydata.accessdate(i_parametros(i).valor),
+                                         'YYYY-MM-DD') ||
+                                 ''', ''YYYY-MM-DD'') ';
+              END IF;
+            ELSE
+              l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+            END IF;
           END IF;
         END IF;
       
