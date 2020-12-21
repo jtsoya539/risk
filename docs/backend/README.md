@@ -2,7 +2,7 @@
 
 ## Contenido
 * [Generación de clientes de Risk.API](../../source/backend/Risk.API.Client/README.md)
-* [API de clientes de Risk.API](#arquitectura)
+* [API de clientes de Risk.API](#api-de-clientes-de-riskapi)
 
 ## API de clientes de Risk.API
 

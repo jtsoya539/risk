@@ -42,7 +42,7 @@ create_code_user.sql|Crea usuario y otorga permisos necesarios para instalar los
 generate_docs.sql|Genera archivos de documentación de objetos de Base de Datos con la herramienta *plsqldoc*. Se debe ejecutar desde un Command Window de PL/SQL Developer con el plug-in *plsqldoc* instalado.
 install.sql|Instala en el esquema actual los objetos de Base de Datos del Proyecto RISK.
 install_audit.sql|Genera campos y triggers de auditoría.
-install_dependencies.sql|Instala en el esquema actual las dependencias de terceros (Ver [Dependencias](../source/database/dependencies/README.md)).
+install_dependencies.sql|Instala en el esquema actual las dependencias de terceros (Ver [Dependencias](database/README.md#dependencias)).
 uninstall.sql|Desinstala del esquema actual los objetos de Base de Datos del Proyecto RISK.
 uninstall_dependencies.sql|Desinstala del esquema actual las dependencias de terceros.
 
