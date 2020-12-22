@@ -27,17 +27,17 @@ namespace Risk.API.Helpers
     public static class RiskConstants
     {
         // Códigos de respuesta para excepciones en API
-        public const string CODIGO_DB_EXCEPTION = "exc0001";
-        public const string CODIGO_API_EXCEPTION = "exc0002";
-        public const string CODIGO_EXCEPTION = "exc9999";
+        public const string CODIGO_DB_EXCEPTION = "api0001";
+        public const string CODIGO_API_EXCEPTION = "api0002";
+        public const string CODIGO_EXCEPTION = "api9999";
 
         // Códigos de respuesta de Base de Datos
         public const string CODIGO_OK = "0";
-        public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "api0001";
-        public const string CODIGO_ERROR_PARAMETRO = "api0002";
-        public const string CODIGO_ERROR_PERMISO = "api0003";
-        public const string CODIGO_ERROR_GENERAL = "api0099";
-        public const string CODIGO_ERROR_INESPERADO = "api9999";
+        public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "ser0001";
+        public const string CODIGO_ERROR_PARAMETRO = "ser0002";
+        public const string CODIGO_ERROR_PERMISO = "ser0003";
+        public const string CODIGO_ERROR_GENERAL = "ser0099";
+        public const string CODIGO_ERROR_INESPERADO = "ser9999";
 
         // OpenApi Security Schemes
         public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";

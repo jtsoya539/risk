@@ -215,7 +215,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           RAISE k_servicio.ex_error_general;
         WHEN OTHERS THEN
           k_servicio.p_respuesta_error(l_rsp,
-                                       'api0004',
+                                       k_servicio.c_error_general,
                                        CASE
                                        k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                                        k_error.c_user_defined_error THEN

@@ -32,11 +32,11 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   -- Códigos de respuesta
   c_ok                       CONSTANT VARCHAR2(10) := '0';
-  c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'api0001';
-  c_error_parametro          CONSTANT VARCHAR2(10) := 'api0002';
-  c_error_permiso            CONSTANT VARCHAR2(10) := 'api0003';
-  c_error_general            CONSTANT VARCHAR2(10) := 'api0099';
-  c_error_inesperado         CONSTANT VARCHAR2(10) := 'api9999';
+  c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'ser0001';
+  c_error_parametro          CONSTANT VARCHAR2(10) := 'ser0002';
+  c_error_permiso            CONSTANT VARCHAR2(10) := 'ser0003';
+  c_error_general            CONSTANT VARCHAR2(10) := 'ser0099';
+  c_error_inesperado         CONSTANT VARCHAR2(10) := 'ser9999';
 
   -- Excepciones
   ex_servicio_no_implementado EXCEPTION;
@@ -214,7 +214,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         RAISE ex_error_general;
       WHEN OTHERS THEN
         p_respuesta_error(l_rsp,
-                          'api0004',
+                          c_error_general,
                           CASE
                           k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
                           k_error.c_user_defined_error THEN
