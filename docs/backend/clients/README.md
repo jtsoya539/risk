@@ -1,46 +1,12 @@
-# Risk.API.Client
+# Generación de clientes de Risk.API
 
-## Instalación
-Descargar el generador de clientes **openapi-generator-cli.jar** o **swagger-codegen-cli.jar**
-```
-Invoke-WebRequest -OutFile openapi-generator-cli.jar https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.3.1/openapi-generator-cli-4.3.1.jar
-Invoke-WebRequest -OutFile swagger-codegen-cli.jar https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.19/swagger-codegen-cli-3.0.19.jar
-```
+## Generadores
+* [OpenAPI Generator](https://openapi-generator.tech/)
+* [Swagger Codegen](https://swagger.io/tools/swagger-codegen/)
 
-Comprobar la correcta instalación
-```
-java -jar openapi-generator-cli.jar help
-java -jar swagger-codegen-cli.jar version
-```
-
-## Generación de clientes
-```
-java -jar openapi-generator-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.Client -g csharp-netcore -c config-csharp-netcore.json
-java -jar openapi-generator-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.KotlinClient -g kotlin -c config-kotlin.json
-java -jar swagger-codegen-cli.jar generate -i https://risk-project.azurewebsites.net/swagger/v1/swagger.json -o Risk.API.JavaClient -l java -c config-java.json
-```
-
-
-Agregar los metadatos del paquete NuGet en Risk.API.Client.csproj
-```
-  <PropertyGroup>
-    <PackageId>Risk.API.Client</PackageId>
-    <Version>x.x.x</Version>
-    <Authors>jtsoya539</Authors>
-    <Company>RamaPy</Company>
-    <Title>Risk.API.Client</Title>
-    <PackageDescription>.NET Client for Risk.API</PackageDescription>
-```
-
-En el directorio donde se encuentra Risk.API.Client.csproj
-```
-dotnet pack
-```
-
-En el directorio donde se encuentra Risk.API.Client.x.x.x.nupkg
-```
-dotnet nuget push .\Risk.API.Client.x.x.x.nupkg -k MI_API_KEY -s https://api.nuget.org/v3/index.json
-```
-
-## Documentación de generadores
- - [openapi-generator-cli](https://openapi-generator.tech/docs/generators/)
+## Pasos para generar un cliente
+1. Editar el archivo *generate_clients.bat* configurando las siguientes variables de entorno: *RISK_HOME*, *SWAGGER_SPEC_URL*, *CLIENT_VERSION* (opcional), *API_KEY* (opcional)
+2. Ejecutar el archivo *generate_clients.bat* con Símbolo del sistema (cmd) de Windows
+3. Descargar el generador de preferencia con la opción **1.**
+4. Seleccionar el generador de preferencia con la opción **6.**
+5. Generar el cliente de preferencia con la opción **2.**
