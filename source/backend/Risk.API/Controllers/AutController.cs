@@ -365,25 +365,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] GuardarArchivoRequestBody requestBody)
         {
-            string contenido = string.Empty;
-
-            if (requestBody.Archivo.Length > 0)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    requestBody.Archivo.CopyTo(ms);
-                    contenido = Convert.ToBase64String(GZipHelper.Compress(ms.ToArray()));
-                }
-            }
-
-            Archivo archivo = new Archivo
-            {
-                Contenido = contenido,
-                Nombre = requestBody.Nombre,
-                Extension = requestBody.Extension
-            };
-
-            var respuesta = _genService.GuardarArchivo("T_USUARIOS", "AVATAR", usuario, archivo);
+            var respuesta = _genService.GuardarArchivo("T_USUARIOS", "AVATAR", usuario, ProcesarArchivo(requestBody));
             return ProcesarRespuesta(respuesta);
         }
 

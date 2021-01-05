@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.IO;
 using System.Net;
 using System.Web;
 using Microsoft.AspNetCore.Http;
@@ -88,6 +89,38 @@ namespace Risk.API.Controllers
             }
 
             return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public Archivo ProcesarArchivo(GuardarArchivoRequestBody requestBody)
+        {
+            string contenido = string.Empty;
+            string url = string.Empty;
+
+            if (requestBody.Archivo != null)
+            {
+                if (requestBody.Archivo.Length > 0)
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        requestBody.Archivo.CopyTo(ms);
+                        contenido = Convert.ToBase64String(GZipHelper.Compress(ms.ToArray()));
+                    }
+                }
+            }
+            else if (requestBody.Url != null)
+            {
+                url = requestBody.Url;
+            }
+
+
+            return new Archivo
+            {
+                Contenido = contenido,
+                Url = url,
+                Nombre = requestBody.Nombre,
+                Extension = requestBody.Extension
+            };
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]

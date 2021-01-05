@@ -32,6 +32,8 @@ namespace Risk.API.Models
     {
         [SwaggerSchema("Contenido del archivo")]
         public IFormFile Archivo { get; set; }
+        [SwaggerSchema("URL del archivo")]
+        public string Url { get; set; }
         [SwaggerSchema("Nombre del archivo")]
         public string Nombre { get; set; }
         [SwaggerSchema("Extensión del archivo")]
