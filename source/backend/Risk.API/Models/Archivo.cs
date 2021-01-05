@@ -27,6 +27,7 @@ namespace Risk.API.Models
     public class Archivo
     {
         public string Contenido { get; set; }
+        public string Url { get; set; }
         public string Checksum { get; set; }
         public int? Tamano { get; set; }
         public string Nombre { get; set; }

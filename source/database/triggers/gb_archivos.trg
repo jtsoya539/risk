@@ -73,12 +73,7 @@ END;'
       END IF;
     END IF;
   
-    IF :new.contenido IS NULL OR dbms_lob.getlength(:new.contenido) = 0 THEN
-      :new.checksum  := NULL;
-      :new.tamano    := NULL;
-      :new.nombre    := NULL;
-      :new.extension := NULL;
-    ELSE
+    IF :new.contenido IS NOT NULL OR :new.url IS NOT NULL THEN
       -- Valida nombre del archivo
       IF :new.nombre IS NULL THEN
         raise_application_error(-20000, 'Nombre del archivo obligatorio');
@@ -96,7 +91,12 @@ END;'
                                   'Extensión de archivo no permitida');
         END IF;
       END IF;
-    
+    END IF;
+  
+    IF :new.contenido IS NULL OR dbms_lob.getlength(:new.contenido) = 0 THEN
+      :new.checksum := NULL;
+      :new.tamano   := NULL;
+    ELSE
       -- Calcula propiedades del archivo
       IF :old.contenido IS NULL OR
          dbms_lob.compare(:old.contenido, :new.contenido) <> 0 THEN

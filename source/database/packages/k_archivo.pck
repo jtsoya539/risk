@@ -90,12 +90,14 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
   
     BEGIN
       SELECT a.contenido,
+             a.url,
              a.checksum,
              a.tamano,
              a.nombre,
              a.extension,
              f_tipo_mime(d.extensiones_permitidas, a.extension)
         INTO l_archivo.contenido,
+             l_archivo.url,
              l_archivo.checksum,
              l_archivo.tamano,
              l_archivo.nombre,
@@ -126,6 +128,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
   BEGIN
     UPDATE t_archivos a
        SET a.contenido      = i_archivo.contenido,
+           a.url            = i_archivo.url,
            a.nombre         = i_archivo.nombre,
            a.extension      = i_archivo.extension,
            a.version_actual = nvl(a.version_actual, 0) + 1
@@ -139,6 +142,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          campo,
          referencia,
          contenido,
+         url,
          nombre,
          extension,
          version_actual)
@@ -147,6 +151,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          upper(i_campo),
          i_referencia,
          i_archivo.contenido,
+         i_archivo.url,
          i_archivo.nombre,
          i_archivo.extension,
          1);

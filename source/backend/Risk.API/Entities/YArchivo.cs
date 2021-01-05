@@ -30,6 +30,8 @@ namespace Risk.API.Entities
     {
         [JsonProperty("contenido")]
         public string Contenido { get; set; }
+        [JsonProperty("url")]
+        public string Url { get; set; }
         [JsonProperty("checksum")]
         public string Checksum { get; set; }
         [JsonProperty("tamano")]

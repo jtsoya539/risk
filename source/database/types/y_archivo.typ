@@ -32,6 +32,8 @@ SOFTWARE.
 
 /** Contenido del archivo */
   contenido BLOB,
+/** URL del archivo */
+  url VARCHAR2(4000),
 /** Hash del archivo calculado con el algoritmo SHA-1 */
   checksum VARCHAR2(100),
 /** Tamaño del archivo en bytes */
@@ -68,6 +70,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
   CONSTRUCTOR FUNCTION y_archivo RETURN SELF AS RESULT AS
   BEGIN
     self.contenido := NULL;
+    self.url       := NULL;
     self.checksum  := NULL;
     self.tamano    := NULL;
     self.nombre    := NULL;
@@ -91,6 +94,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
       -- Decodifica en formato Base64 y descomprime con gzip
       l_archivo.contenido := utl_compress.lz_uncompress(k_util.base64decode(l_gzip_base64));
     END IF;
+    l_archivo.url       := l_json_object.get_string('url');
     l_archivo.checksum  := l_json_object.get_string('checksum');
     l_archivo.tamano    := l_json_object.get_number('tamano');
     l_archivo.nombre    := l_json_object.get_string('nombre');
@@ -114,6 +118,7 @@ CREATE OR REPLACE TYPE BODY y_archivo IS
       l_json_object := json_object_t.parse('{"contenido":"' ||
                                            l_gzip_base64 || '"}');
     END IF;
+    l_json_object.put('url', self.url);
     l_json_object.put('checksum', self.checksum);
     l_json_object.put('tamano', self.tamano);
     l_json_object.put('nombre', self.nombre);

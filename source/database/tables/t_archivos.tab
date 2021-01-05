@@ -4,6 +4,7 @@ create table T_ARCHIVOS
   campo          VARCHAR2(30) not null,
   referencia     VARCHAR2(500) not null,
   contenido      BLOB,
+  url            VARCHAR2(4000),
   checksum       VARCHAR2(100),
   tamano         NUMBER,
   nombre         VARCHAR2(4000),
@@ -21,6 +22,8 @@ comment on column T_ARCHIVOS.referencia
   is 'Identificador del registro relacionado';
 comment on column T_ARCHIVOS.contenido
   is 'Contenido del archivo';
+comment on column T_ARCHIVOS.url
+  is 'URL del archivo';
 comment on column T_ARCHIVOS.checksum
   is 'Hash del archivo calculado con el algoritmo SHA-1';
 comment on column T_ARCHIVOS.tamano
@@ -36,3 +39,4 @@ alter table T_ARCHIVOS
 alter table T_ARCHIVOS
   add constraint FK_ARC_ARCHIVO_DEFINICIONES foreign key (TABLA, CAMPO)
   references T_ARCHIVO_DEFINICIONES (TABLA, CAMPO);
+

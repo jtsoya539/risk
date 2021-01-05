@@ -43,6 +43,7 @@ namespace Risk.API.Helpers
                 model = new Archivo
                 {
                     Contenido = entity.Contenido,
+                    Url = entity.Url,
                     Checksum = entity.Checksum,
                     Tamano = entity.Tamano,
                     Nombre = entity.Nombre,

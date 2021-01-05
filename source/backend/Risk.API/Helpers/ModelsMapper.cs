@@ -99,6 +99,7 @@ namespace Risk.API.Helpers
                 entity = new YArchivo
                 {
                     Contenido = model.Contenido,
+                    Url = model.Url,
                     Checksum = model.Checksum,
                     Tamano = model.Tamano,
                     Nombre = model.Nombre,
