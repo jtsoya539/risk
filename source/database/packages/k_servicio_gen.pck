@@ -599,8 +599,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                  k_operacion.f_valor_parametro_number(i_parametros,
                                                                                       'version'));
   
-    IF l_archivo.contenido IS NULL OR
-       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+    IF (l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0) AND
+       l_archivo.url IS NULL THEN
       k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Archivo inexistente');
       RAISE k_servicio.ex_error_general;
     END IF;

@@ -355,10 +355,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respuesta);
             }
 
-            var archivo = respuesta.Datos;
-            byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
-
-            return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
+            return ProcesarArchivo(respuesta.Datos);
         }
 
         [HttpPost("GuardarAvatarUsuario")]

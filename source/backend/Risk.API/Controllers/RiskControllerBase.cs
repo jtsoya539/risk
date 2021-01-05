@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Net;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,7 @@ namespace Risk.API.Controllers
             _enableHttpStatusCodes = _configuration.GetValue<bool>("EnableHttpStatusCodes");
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult ProcesarRespuesta<T>(Respuesta<T> respuesta)
         {
             if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
@@ -69,6 +71,26 @@ namespace Risk.API.Controllers
             }
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public FileContentResult ProcesarArchivo(Archivo archivo)
+        {
+            byte[] contenido = null;
+            if (archivo.Contenido != null)
+            {
+                contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
+            }
+            else if (archivo.Url != null)
+            {
+                using (var webClient = new WebClient())
+                {
+                    contenido = webClient.DownloadData(archivo.Url);
+                }
+            }
+
+            return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
         public Pagina<T> ProcesarPagina<T>(Pagina<T> pagina)
         {
             Pagina<T> resp;
