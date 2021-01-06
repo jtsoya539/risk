@@ -55,7 +55,7 @@ namespace Risk.API.Services
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        private string ObtenerContexto()
+        protected string ObtenerContexto()
         {
             JObject ctx = new JObject();
 
@@ -79,7 +79,7 @@ namespace Risk.API.Services
             return ctx.ToString(Formatting.None);
         }
 
-        public string ProcesarOperacion(string tipo, string nombre, string dominio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
+        protected string ProcesarOperacion(string tipo, string nombre, string dominio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
         {
             string respuesta = string.Empty;
             if (tipo != null && nombre != null && dominio != null)
