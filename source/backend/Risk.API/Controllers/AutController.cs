@@ -24,16 +24,13 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
-using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
 using Risk.API.Helpers;
@@ -58,57 +55,6 @@ namespace Risk.API.Controllers
             _autService = autService;
             _genService = genService;
             _notificationHubClientConnection = notificationHubClientConnection;
-        }
-
-        private string GenerarAccessToken(string usuario)
-        {
-            var respDatosUsuario = _autService.DatosUsuario(usuario);
-            if (!respDatosUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                return string.Empty;
-            }
-
-            Usuario datosUsuario = respDatosUsuario.Datos;
-
-            // Crea la lista de claims (pertenencias, características) del usuario
-            List<Claim> claims = new List<Claim>();
-
-            claims.Add(new Claim(ClaimTypes.Name, datosUsuario.Alias));
-            claims.Add(new Claim(ClaimTypes.GivenName, datosUsuario.Nombre ?? ""));
-            claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? ""));
-            claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? ""));
-            //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
-
-            // Agrega los roles del usuario a la lista de claims
-            foreach (var rol in datosUsuario.Roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
-            }
-
-            var respTiempoExpiracionToken = _autService.TiempoExpiracionToken(TipoToken.AccessToken);
-            if (!respTiempoExpiracionToken.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                return string.Empty;
-            }
-            int tiempoExpiracion = int.Parse(respTiempoExpiracionToken.Datos.Contenido);
-
-            var respValorParametro = _genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                return string.Empty;
-            }
-            var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims.ToArray()),
-                Expires = DateTime.UtcNow.AddSeconds(tiempoExpiracion),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(signingKey), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var createdToken = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(createdToken);
         }
 
         private void RegistrarDispositivoNotificationHub(string tokenDispositivo)
@@ -211,7 +157,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respValidarCredenciales);
             }
 
-            var accessToken = GenerarAccessToken(requestBody.Usuario);
+            var accessToken = TokenHelper.GenerarAccessToken(requestBody.Usuario, _autService, _genService);
             var refreshToken = TokenHelper.GenerarRefreshToken();
 
             var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken, requestBody.TokenDispositivo);
@@ -234,7 +180,7 @@ namespace Risk.API.Controllers
         {
             string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
 
-            var accessTokenNuevo = GenerarAccessToken(usuario);
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario, _autService, _genService);
             var refreshTokenNuevo = TokenHelper.GenerarRefreshToken();
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
