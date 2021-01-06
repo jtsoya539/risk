@@ -23,13 +23,11 @@ SOFTWARE.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Net.Mime;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
@@ -55,79 +53,6 @@ namespace Risk.API.Controllers
             _autService = autService;
             _genService = genService;
             _notificationHubClientConnection = notificationHubClientConnection;
-        }
-
-        private void RegistrarDispositivoNotificationHub(string tokenDispositivo)
-        {
-            if (_notificationHubClientConnection.Hub == null)
-            {
-                return;
-            }
-
-            var respDatosDispositivo = _autService.DatosDispositivo(tokenDispositivo);
-            if (!respDatosDispositivo.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                return;
-            }
-
-            Dispositivo dispositivo = respDatosDispositivo.Datos;
-
-            if (dispositivo.TokenNotificacion == null || dispositivo.TokenNotificacion.Equals(string.Empty))
-            {
-                return;
-            }
-
-            NotificationPlatform platform;
-            switch (dispositivo.PlataformaNotificacion)
-            {
-                case "wns":
-                    platform = NotificationPlatform.Wns;
-                    break;
-                case "apns":
-                    platform = NotificationPlatform.Apns;
-                    break;
-                case "mpns":
-                    platform = NotificationPlatform.Mpns;
-                    break;
-                case "fcm":
-                    platform = NotificationPlatform.Fcm;
-                    break;
-                case "adm":
-                    platform = NotificationPlatform.Adm;
-                    break;
-                case "baidu":
-                    platform = NotificationPlatform.Baidu;
-                    break;
-                default:
-                    platform = NotificationPlatform.Fcm;
-                    break;
-            }
-
-            List<string> tags = new List<string>();
-            if (dispositivo.Suscripciones != null)
-            {
-                foreach (var item in dispositivo.Suscripciones)
-                {
-                    tags.Add(item.Contenido);
-                }
-            }
-
-            var templates = new Dictionary<string, InstallationTemplate>()
-            {
-                {"default_template", new InstallationTemplate { Body = dispositivo.TemplateNotificacion }}
-            };
-
-            Installation installation = new Installation
-            {
-                InstallationId = dispositivo.TokenDispositivo,
-                Platform = platform,
-                PushChannel = dispositivo.TokenNotificacion,
-                PushChannelExpired = false,
-                Tags = tags,
-                Templates = templates
-            };
-
-            _notificationHubClientConnection.Hub.CreateOrUpdateInstallation(installation);
         }
 
         [AllowAnonymous]
@@ -164,7 +89,7 @@ namespace Risk.API.Controllers
 
             if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
-                RegistrarDispositivoNotificationHub(requestBody.TokenDispositivo);
+                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
             }
 
             return ProcesarRespuesta(respIniciarSesion);
@@ -258,7 +183,7 @@ namespace Risk.API.Controllers
 
             if (respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
-                RegistrarDispositivoNotificationHub(respuesta.Datos.Contenido);
+                NotificationHubHelper.RegistrarDispositivo(respuesta.Datos.Contenido, _autService, _notificationHubClientConnection);
             }
 
             return ProcesarRespuesta(respuesta);
