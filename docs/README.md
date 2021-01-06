@@ -47,3 +47,9 @@ uninstall.sql|Desinstala del esquema actual los objetos de Base de Datos del Pro
 uninstall_dependencies.sql|Desinstala del esquema actual las dependencias de terceros.
 
 ### Back-End
+#### Pasos para configurar el entorno de desarrollo
+1. Instalar el SDK de .NET Core 3.1 siguiendo las instrucciones según la plataforma preferida.
+2. Opcionalmente, instalar el editor Visual Studio Code con la extensión C#.
+3. Clonar o descargar el repositorio de RISK.
+4. En el command prompt, ubicarse en la raíz del repositorio e ir hasta *source/backend/Risk.API* (contiene el archivo del proyecto *Risk.API.csproj*).
+5. Ejecutar el comando: `dotnet run`.
