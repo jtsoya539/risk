@@ -22,7 +22,6 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
