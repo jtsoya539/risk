@@ -22,13 +22,20 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Agrupa datos de Ciudades")]
     public class Ciudad
     {
+        [SwaggerSchema("Identificador de la ciudad")]
         public int IdCiudad { get; set; }
+        [SwaggerSchema("Nombre de la ciudad")]
         public string Nombre { get; set; }
+        [SwaggerSchema("País de la ciudad")]
         public int IdPais { get; set; }
+        [SwaggerSchema("Departamento de la ciudad")]
         public int IdDepartamento { get; set; }
     }
 }

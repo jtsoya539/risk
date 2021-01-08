@@ -22,16 +22,26 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Agrupa datos de un archivo")]
     public class Archivo
     {
+        [SwaggerSchema("Contenido del archivo comprimido con gzip y codificado en formato Base64")]
         public string Contenido { get; set; }
+        [SwaggerSchema("URL del archivo")]
         public string Url { get; set; }
+        [SwaggerSchema("Hash del archivo calculado con el algoritmo SHA-1")]
         public string Checksum { get; set; }
+        [SwaggerSchema("Tamaño del archivo en bytes")]
         public int? Tamano { get; set; }
+        [SwaggerSchema("Nombre del archivo")]
         public string Nombre { get; set; }
+        [SwaggerSchema("Extensión del archivo")]
         public string Extension { get; set; }
+        [SwaggerSchema("Tipo MIME del archivo")]
         public string TipoMime { get; set; }
     }
 }

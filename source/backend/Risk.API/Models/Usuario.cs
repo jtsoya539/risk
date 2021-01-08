@@ -23,20 +23,32 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Agrupa datos de un usuario")]
     public class Usuario
     {
+        [SwaggerSchema("Identificador del usuario")]
         public int IdUsuario { get; set; }
+        [SwaggerSchema("Alias del usuario (identificador para autenticacion)")]
         public string Alias { get; set; }
+        [SwaggerSchema("Nombre de la persona")]
         public string Nombre { get; set; }
+        [SwaggerSchema("Apellido de la persona")]
         public string Apellido { get; set; }
+        [SwaggerSchema("Tipo de la persona")]
         public string TipoPersona { get; set; }
+        [SwaggerSchema("Estado del usuario")]
         public string Estado { get; set; }
+        [SwaggerSchema("Direccion de correo electronico principal del usuario")]
         public string DireccionCorreo { get; set; }
+        [SwaggerSchema("Numero de telefono principal del usuario")]
         public string NumeroTelefono { get; set; }
+        [SwaggerSchema("Version del avatar del usuario")]
         public int? VersionAvatar { get; set; }
+        [SwaggerSchema("Roles del usuario")]
         public List<Rol> Roles { get; set; }
     }
 }

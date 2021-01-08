@@ -22,14 +22,22 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Agrupa datos de Barrios")]
     public class Barrio
     {
+        [SwaggerSchema("Identificador del barrio")]
         public int IdBarrio { get; set; }
+        [SwaggerSchema("Nombre del barrio")]
         public string Nombre { get; set; }
+        [SwaggerSchema("País del barrio")]
         public int IdPais { get; set; }
+        [SwaggerSchema("Departamento del barrio")]
         public int IdDepartamento { get; set; }
+        [SwaggerSchema("Ciudad del barrio")]
         public int IdCiudad { get; set; }
     }
 }

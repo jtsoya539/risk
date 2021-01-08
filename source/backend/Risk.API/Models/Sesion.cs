@@ -22,15 +22,24 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Agrupa datos de una sesión")]
     public class Sesion
     {
+        [SwaggerSchema("Identificador de la sesion")]
         public int IdSesion { get; set; }
+        [SwaggerSchema("Estado de la sesion")]
         public string Estado { get; set; }
+        [SwaggerSchema("Access Token de la sesion")]
         public string AccessToken { get; set; }
+        [SwaggerSchema("Refresh Token de la sesion")]
         public string RefreshToken { get; set; }
+        [SwaggerSchema("Tiempo de expiración del Access Token en segundos")]
         public int TiempoExpiracionAccessToken { get; set; }
+        [SwaggerSchema("Tiempo de expiración del Refresh Token en horas")]
         public int TiempoExpiracionRefreshToken { get; set; }
     }
 }
