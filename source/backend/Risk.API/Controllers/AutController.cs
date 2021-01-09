@@ -211,12 +211,13 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [Obsolete("Usar servicio RecuperarArchivo del dominio GENERAL")]
         [HttpGet("RecuperarAvatarUsuario")]
         [SwaggerOperation(OperationId = "RecuperarAvatarUsuario", Summary = "RecuperarAvatarUsuario", Description = "Permite recuperar el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         public IActionResult RecuperarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario,
-            [FromQuery, SwaggerParameter(Description = "Version", Required = false)] int? version)
+            [FromQuery, SwaggerParameter(Description = "Versión", Required = false)] int? version)
         {
             var respuesta = _genService.RecuperarArchivo("T_USUARIOS", "AVATAR", usuario, version);
 
@@ -228,6 +229,7 @@ namespace Risk.API.Controllers
             return ProcesarArchivo(respuesta.Datos);
         }
 
+        [Obsolete("Usar servicio GuardarArchivo del dominio GENERAL")]
         [HttpPost("GuardarAvatarUsuario")]
         [SwaggerOperation(OperationId = "GuardarAvatarUsuario", Summary = "GuardarAvatarUsuario", Description = "Permite guardar el avatar de un usuario")]
         [Consumes("multipart/form-data")]

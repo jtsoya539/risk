@@ -207,6 +207,39 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [HttpGet("RecuperarArchivo")]
+        [SwaggerOperation(OperationId = "RecuperarArchivo", Summary = "RecuperarArchivo", Description = "Permite recuperar un archivo")]
+        [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        public IActionResult RecuperarArchivo([FromQuery, SwaggerParameter(Description = "Tabla", Required = true)] string tabla,
+            [FromQuery, SwaggerParameter(Description = "Campo", Required = true)] string campo,
+            [FromQuery, SwaggerParameter(Description = "Referencia", Required = true)] string referencia,
+            [FromQuery, SwaggerParameter(Description = "Versión", Required = false)] int? version)
+        {
+            var respuesta = _genService.RecuperarArchivo(tabla, campo, referencia, version);
+
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respuesta);
+            }
+
+            return ProcesarArchivo(respuesta.Datos);
+        }
+
+        [HttpPost("GuardarArchivo")]
+        [SwaggerOperation(OperationId = "GuardarArchivo", Summary = "GuardarArchivo", Description = "Permite guardar un archivo")]
+        [Consumes("multipart/form-data")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult GuardarArchivo([FromQuery, SwaggerParameter(Description = "Tabla", Required = true)] string tabla,
+            [FromQuery, SwaggerParameter(Description = "Campo", Required = true)] string campo,
+            [FromQuery, SwaggerParameter(Description = "Referencia", Required = true)] string referencia,
+            [FromForm] GuardarArchivoRequestBody requestBody)
+        {
+            var respuesta = _genService.GuardarArchivo(tabla, campo, referencia, ProcesarArchivo(requestBody));
+            return ProcesarRespuesta(respuesta);
+        }
+
         [AllowAnonymous]
         [HttpGet("RecuperarTexto")]
         [SwaggerOperation(OperationId = "RecuperarTexto", Summary = "RecuperarTexto", Description = "Obtiene un texto definido en el sistema")]
@@ -219,7 +252,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("ReporteVersionSistema")]
-        [SwaggerOperation(OperationId = "ReporteVersionSistema", Summary = "ReporteVersionSistema", Description = "Obtiene un reporte con la versión actual del sistema")]
+        [SwaggerOperation(OperationId = "ReporteVersionSistema", Summary = "ReporteVersionSistema", Description = "Obtiene un reporte con la versión actual del sistema", Tags = new[] { "Gen", "Rep" })]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         public IActionResult ReporteVersionSistema([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato)
@@ -235,7 +268,7 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("ReporteListarSignificados")]
-        [SwaggerOperation(OperationId = "ReporteListarSignificados", Summary = "ReporteListarSignificados", Description = "Obtiene un reporte con los significados dentro de un dominio")]
+        [SwaggerOperation(OperationId = "ReporteListarSignificados", Summary = "ReporteListarSignificados", Description = "Obtiene un reporte con los significados dentro de un dominio", Tags = new[] { "Gen", "Rep" })]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
         public IActionResult ReporteListarSignificados([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato,
