@@ -272,4 +272,10 @@ values (42, 'NUMERO_TELEFONO', 6, 'S', 'S', null, null, 'N', null, null, null);
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (50, 'SERVICIO', 1, 'S', 'S', null, null, 'S', null, null, null);
 
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (51, 'ID_ERROR', 1, 'S', 'S', null, null, 'N', null, null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (51, 'PAGINA_PARAMETROS', 10, 'S', 'O', 'Y_PAGINA_PARAMETROS', null, 'N', null, null, null);
+
 prompt Done.

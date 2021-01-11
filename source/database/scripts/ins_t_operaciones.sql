@@ -113,4 +113,7 @@ values (42, 'S', 'EDITAR_USUARIO', 'AUT', 'S', null, '0.1.0', 'N');
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
 values (50, 'S', 'VERSION_SERVICIO', 'GEN', 'S', null, '0.1.0', 'N');
 
+insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
+values (51, 'S', 'LISTAR_ERRORES', 'GEN', 'S', null, '0.1.0', 'N');
+
 prompt Done.

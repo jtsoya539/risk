@@ -129,6 +129,7 @@ prompt
 
 @@types/y_dato.typ
 @@types/y_datos.typ
+@@types/y_error.typ
 @@types/y_archivo.typ
 @@types/y_archivos.typ
 @@types/y_parametro.typ

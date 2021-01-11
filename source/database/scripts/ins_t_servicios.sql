@@ -1,6 +1,7 @@
 prompt Importing table t_servicios...
 set feedback off
 set define off
+
 insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (1, 'T', null, null);
 
@@ -102,5 +103,8 @@ values (42, 'T', null, null);
 
 insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (50, 'T', null, null);
+
+insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
+values (51, 'T', null, null);
 
 prompt Done.

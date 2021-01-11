@@ -75,6 +75,9 @@ insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR,
 values (2, 'SERVICIO:GEN:LISTAR_DEPARTAMENTOS', 'N', 'N', 'N', 'N');
 
 insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)
+values (2, 'SERVICIO:GEN:LISTAR_ERRORES', 'N', 'N', 'N', 'N');
+
+insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)
 values (2, 'SERVICIO:GEN:LISTAR_PAISES', 'N', 'N', 'N', 'N');
 
 insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)

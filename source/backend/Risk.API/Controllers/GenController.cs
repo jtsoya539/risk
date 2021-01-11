@@ -207,6 +207,29 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [AllowAnonymous]
+        [HttpGet("ListarErrores")]
+        [SwaggerOperation(OperationId = "ListarErrores", Summary = "ListarErrores", Description = "Obtiene una lista de errores")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Error>>))]
+        public IActionResult ListarErrores([FromQuery, SwaggerParameter(Description = "Identificador del error", Required = false)] string idError,
+            [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+        {
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _genService.ListarErrores(idError, paginaParametros);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
         [HttpGet("RecuperarArchivo")]
         [SwaggerOperation(OperationId = "RecuperarArchivo", Summary = "RecuperarArchivo", Description = "Permite recuperar un archivo")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]

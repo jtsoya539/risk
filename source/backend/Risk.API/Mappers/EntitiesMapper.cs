@@ -381,6 +381,37 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
+        public static Error GetErrorFromEntity(YError entity)
+        {
+            Error model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Error
+                {
+                    IdError = entity.IdError,
+                    Mensaje = entity.Mensaje
+                };
+            }
+            return model;
+        }
+
+        public static List<Error> GetErrorListFromEntity(List<YError> entityList)
+        {
+            List<Error> modelList = new List<Error>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetErrorFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
         public static Mensaje GetMensajeFromEntity(YMensaje entity)
         {
             Mensaje model;

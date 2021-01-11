@@ -94,6 +94,7 @@ drop type y_parametros force;
 drop type y_parametro force;
 drop type y_archivos force;
 drop type y_archivo force;
+drop type y_error force;
 drop type y_datos force;
 drop type y_dato force;
 drop type y_objetos force;

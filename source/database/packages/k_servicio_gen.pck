@@ -51,6 +51,8 @@ CREATE OR REPLACE PACKAGE k_servicio_gen IS
 
   FUNCTION listar_barrios(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION listar_errores(i_parametros IN y_parametros) RETURN y_respuesta;
+
   FUNCTION recuperar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION guardar_archivo(i_parametros IN y_parametros) RETURN y_respuesta;
@@ -541,6 +543,63 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
       l_elemento.id_pais         := ele.id_pais;
       l_elemento.id_departamento := ele.id_departamento;
       l_elemento.id_ciudad       := ele.id_ciudad;
+    
+      l_elementos.extend;
+      l_elementos(l_elementos.count) := l_elemento;
+    END LOOP;
+  
+    l_pagina := k_servicio.f_paginar_elementos(l_elementos,
+                                               l_pagina_parametros.pagina,
+                                               l_pagina_parametros.por_pagina,
+                                               l_pagina_parametros.no_paginar);
+  
+    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION listar_errores(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp       y_respuesta;
+    l_pagina    y_pagina;
+    l_elementos y_objetos;
+    l_elemento  y_error;
+  
+    l_pagina_parametros y_pagina_parametros;
+  
+    CURSOR cr_elementos(i_id_error IN VARCHAR2) IS
+      SELECT a.id_error, a.mensaje
+        FROM t_errores a
+       WHERE a.id_error = nvl(i_id_error, a.id_error)
+       ORDER BY a.id_error;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp       := NEW y_respuesta();
+    l_elementos := NEW y_objetos();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') IS NOT NULL,
+                                   'Debe ingresar pagina_parametros');
+    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                      'pagina_parametros') AS
+                                 y_pagina_parametros);
+  
+    FOR ele IN cr_elementos(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'id_error')) LOOP
+      l_elemento          := NEW y_error();
+      l_elemento.id_error := ele.id_error;
+      l_elemento.mensaje  := ele.mensaje;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;

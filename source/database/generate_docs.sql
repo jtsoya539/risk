@@ -114,6 +114,7 @@ plugin plsqldoc generate y_dato;
 plugin plsqldoc generate y_datos;
 plugin plsqldoc generate y_departamento;
 plugin plsqldoc generate y_dispositivo;
+plugin plsqldoc generate y_error;
 plugin plsqldoc generate y_mensaje;
 plugin plsqldoc generate y_notificacion;
 plugin plsqldoc generate y_objeto;

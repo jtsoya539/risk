@@ -75,6 +75,9 @@ insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
 values ('SERVICIO:GEN:LISTAR_DEPARTAMENTOS', null, null);
 
 insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
+values ('SERVICIO:GEN:LISTAR_ERRORES', null, null);
+
+insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
 values ('SERVICIO:GEN:LISTAR_PAISES', null, null);
 
 insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
