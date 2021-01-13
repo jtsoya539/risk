@@ -68,7 +68,7 @@ namespace Risk.API.Workers
             {
                 if (_msjHelper.EnvioMensajesActivo())
                 {
-                    _logger.LogInformation($"SMSWorker running at: {DateTimeOffset.Now}");
+                    _logger.LogInformation("Ejecutando SMSWorker");
 
                     var mensajes = _msjHelper.ListarMensajesPendientes();
 

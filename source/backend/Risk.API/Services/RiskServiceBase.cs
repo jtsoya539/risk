@@ -74,7 +74,7 @@ namespace Risk.API.Services
             }
             catch (Exception ex)
             {
-                _logger.LogInformation($"Error al obtener contexto: {ex.Message}");
+                _logger.LogDebug($"Error al obtener contexto: {ex.Message}");
             }
 
             ctx.Add("direccion_ip", direccionIp);

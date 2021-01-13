@@ -9,6 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="config\gmail\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="config\oracle\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
