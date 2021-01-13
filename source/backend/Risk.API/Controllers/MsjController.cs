@@ -22,11 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.Annotations;
@@ -40,10 +42,48 @@ namespace Risk.API.Controllers
     public class MsjController : RiskControllerBase
     {
         private readonly IMsjService _msjService;
+        private readonly IMsjHelper _msjHelper;
 
-        public MsjController(IMsjService msjService, IConfiguration configuration) : base(configuration)
+        public MsjController(IMsjService msjService, IMsjHelper msjHelper, IConfiguration configuration) : base(configuration)
         {
             _msjService = msjService;
+            _msjHelper = msjHelper;
+        }
+
+        [HttpPost("ActivarMensajeria")]
+        [SwaggerOperation(OperationId = "ActivarMensajeria", Summary = "ActivarMensajeria", Description = "Permite activar el servicio de mensajería")]
+        [Produces(MediaTypeNames.Text.Plain)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(string))]
+        public IActionResult ActivarMensajeria()
+        {
+            string respuesta = "OK";
+            try
+            {
+                _msjHelper.MensajeriaActiva = true;
+            }
+            catch (Exception)
+            {
+                respuesta = "ERROR";
+            }
+            return Ok(respuesta);
+        }
+
+        [HttpPost("DesactivarMensajeria")]
+        [SwaggerOperation(OperationId = "DesactivarMensajeria", Summary = "DesactivarMensajeria", Description = "Permite desactivar el servicio de mensajería")]
+        [Produces(MediaTypeNames.Text.Plain)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(string))]
+        public IActionResult DesactivarMensajeria()
+        {
+            string respuesta = "OK";
+            try
+            {
+                _msjHelper.MensajeriaActiva = false;
+            }
+            catch (Exception)
+            {
+                respuesta = "ERROR";
+            }
+            return Ok(respuesta);
         }
 
         [HttpGet("ListarMensajesPendientes")]

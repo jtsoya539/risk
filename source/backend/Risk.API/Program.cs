@@ -25,9 +25,11 @@ SOFTWARE.
 using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
+using Risk.API.Workers;
 
 namespace Risk.API
 {
@@ -57,6 +59,12 @@ namespace Risk.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    services.AddHostedService<MailWorker>();
+                    services.AddHostedService<PushWorker>();
+                    services.AddHostedService<SMSWorker>();
                 })
                 .ConfigureLogging(logging =>
                 {

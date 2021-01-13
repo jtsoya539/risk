@@ -24,7 +24,6 @@ SOFTWARE.
 
 using System;
 using System.IO;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -119,6 +118,7 @@ namespace Risk.API
             services.AddScoped<IAutService, AutService>();
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IMsjService, MsjService>();
+            services.AddSingleton<IMsjHelper, MsjHelper>();
 
             var serviceProvider = services.BuildServiceProvider();
             IAutService autService = serviceProvider.GetService<IAutService>();
