@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Risk.API.Models;
 using Risk.API.Services;
@@ -33,13 +34,20 @@ namespace Risk.API.Helpers
     public class MsjHelper : IMsjHelper
     {
         private readonly ILogger<MsjHelper> _logger;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IMsjService _msjService;
         public bool MensajeriaActiva { get; set; }
 
-        public MsjHelper(ILogger<MsjHelper> logger, IMsjService msjService)
+        public MsjHelper(ILogger<MsjHelper> logger, IServiceScopeFactory serviceScopeFactory)
         {
             _logger = logger;
-            _msjService = msjService;
+            _serviceScopeFactory = serviceScopeFactory;
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                _msjService = scope.ServiceProvider.GetService<IMsjService>();
+            }
+
             MensajeriaActiva = false;
         }
 

@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
 using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -59,17 +60,22 @@ namespace Risk.API.Services
         {
             JObject ctx = new JObject();
 
-            // direccion_ip
-            string direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            string direccionIp = string.Empty; // direccion_ip
+            string claveAplicacion = string.Empty; // clave_aplicacion
+            string accessToken = string.Empty; // access_token
+            string usuario = string.Empty; // usuario
 
-            // clave_aplicacion
-            string claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
-
-            // access_token
-            string accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
-
-            // usuario
-            string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
+            try
+            {
+                direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"Error al obtener contexto: {ex.Message}");
+            }
 
             ctx.Add("direccion_ip", direccionIp);
             ctx.Add("clave_aplicacion", claveAplicacion);
