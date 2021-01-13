@@ -59,7 +59,6 @@ namespace Risk.API.Controllers
             string respuesta = "OK";
             try
             {
-                _msjHelper.MensajeriaActiva = true;
             }
             catch (Exception)
             {
@@ -77,7 +76,6 @@ namespace Risk.API.Controllers
             string respuesta = "OK";
             try
             {
-                _msjHelper.MensajeriaActiva = false;
             }
             catch (Exception)
             {

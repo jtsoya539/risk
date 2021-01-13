@@ -66,7 +66,7 @@ namespace Risk.API.Workers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_configuration.GetValue<bool>("EnableSMS") && _msjHelper.MensajeriaActiva)
+                if (_msjHelper.EnvioMensajesActivo())
                 {
                     _logger.LogInformation($"SMSWorker running at: {DateTimeOffset.Now}");
 

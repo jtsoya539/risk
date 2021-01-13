@@ -99,7 +99,7 @@ namespace Risk.API.Workers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_configuration.GetValue<bool>("EnableMail") && _msjHelper.MensajeriaActiva)
+                if (_msjHelper.EnvioCorreosActivo())
                 {
                     _logger.LogInformation($"MailWorker running at: {DateTimeOffset.Now}");
 

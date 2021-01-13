@@ -3,6 +3,15 @@ set feedback off
 set define off
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('ENVIO_CORREOS_ACTIVO', 'Indica si está activo el envío de correos electrónicos (E-mail) (S/N)', 'N');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('ENVIO_MENSAJES_ACTIVO', 'Indica si está activo el envío de mensajes de texto (SMS) (S/N)', 'N');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('ENVIO_NOTIFICACIONES_ACTIVO', 'Indica si está activo el envío de notificaciones push (S/N)', 'N');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('CONFIRMACION_DIRECCION_CORREO', 'Indica si está activa la confirmación de correo electrónico de usuarios (S/N)', 'S');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)

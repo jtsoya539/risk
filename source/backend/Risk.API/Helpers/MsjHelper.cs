@@ -35,8 +35,8 @@ namespace Risk.API.Helpers
     {
         private readonly ILogger<MsjHelper> _logger;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly IGenService _genService;
         private readonly IMsjService _msjService;
-        public bool MensajeriaActiva { get; set; }
 
         public MsjHelper(ILogger<MsjHelper> logger, IServiceScopeFactory serviceScopeFactory)
         {
@@ -45,26 +45,47 @@ namespace Risk.API.Helpers
 
             using (var scope = _serviceScopeFactory.CreateScope())
             {
+                _genService = scope.ServiceProvider.GetService<IGenService>();
                 _msjService = scope.ServiceProvider.GetService<IMsjService>();
             }
-
-            MensajeriaActiva = false;
         }
 
-        public void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio)
+        public bool EnvioCorreosActivo()
         {
             try
             {
-                var respuesta = _msjService.CambiarEstadoMensajeria(tipo, id, estado, respuestaEnvio);
-
-                if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
-                {
-                    throw new Exception();
-                }
+                var respValorParametro = _genService.ValorParametro("ENVIO_CORREOS_ACTIVO");
+                return respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK) && respValorParametro.Datos.Contenido.Equals("S");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError($"Error al cambiar estado de envío de la mensajería: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool EnvioNotificacionesActivo()
+        {
+            try
+            {
+                var respValorParametro = _genService.ValorParametro("ENVIO_NOTIFICACIONES_ACTIVO");
+                return respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK) && respValorParametro.Datos.Contenido.Equals("S");
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool EnvioMensajesActivo()
+        {
+            try
+            {
+                var respValorParametro = _genService.ValorParametro("ENVIO_MENSAJES_ACTIVO");
+                return respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK) && respValorParametro.Datos.Contenido.Equals("S");
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -132,6 +153,23 @@ namespace Risk.API.Helpers
             }
 
             return mensajes;
+        }
+
+        public void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio)
+        {
+            try
+            {
+                var respuesta = _msjService.CambiarEstadoMensajeria(tipo, id, estado, respuestaEnvio);
+
+                if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al cambiar estado de envío de la mensajería: {ex.Message}");
+            }
         }
     }
 }

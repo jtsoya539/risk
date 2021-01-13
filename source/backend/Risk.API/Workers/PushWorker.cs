@@ -65,7 +65,7 @@ namespace Risk.API.Workers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_configuration.GetValue<bool>("EnablePush") && _msjHelper.MensajeriaActiva)
+                if (_msjHelper.EnvioNotificacionesActivo())
                 {
                     _logger.LogInformation($"PushWorker running at: {DateTimeOffset.Now}");
 

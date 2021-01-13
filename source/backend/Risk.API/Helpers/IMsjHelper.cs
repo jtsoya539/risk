@@ -29,10 +29,12 @@ namespace Risk.API.Helpers
 {
     public interface IMsjHelper
     {
-        bool MensajeriaActiva { get; set; }
-        void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio);
+        bool EnvioCorreosActivo();
+        bool EnvioNotificacionesActivo();
+        bool EnvioMensajesActivo();
         List<Correo> ListarCorreosPendientes();
         List<Notificacion> ListarNotificacionesPendientes();
         List<Mensaje> ListarMensajesPendientes();
+        void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio);
     }
 }
