@@ -99,7 +99,7 @@ namespace Risk.API.Workers
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(_configuration.GetValue<double>("ExecuteDelaySeconds")), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(_configuration.GetValue<double>("WorkerExecuteDelaySeconds")), stoppingToken);
             }
         }
     }
