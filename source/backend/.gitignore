@@ -437,6 +437,7 @@ $RECYCLE.BIN/
 ##
 Risk.API/config
 !Risk.API/config/log
+!Risk.API/config/gmail/README.md
 !Risk.API/config/oracle/README.md
 
 ##
@@ -446,10 +447,3 @@ Risk.API.Client/
 !Risk.API.Client/config-*.json
 !Risk.API.Client/generate_clients.bat
 !Risk.API.Client/README.md
-
-##
-## Risk.Msj
-##
-Risk.Msj/config
-!Risk.Msj/config/log
-!Risk.Msj/config/gmail/README.md
