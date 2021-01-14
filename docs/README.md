@@ -23,7 +23,7 @@ Bienvenido/a a la documentación del Proyecto RISK.
 ### Back-End
 * [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
-Los servicios de mensajería del proyecto Risk.Msj tienen requerimientos especiales de terceros:
+Los servicios de mensajería tienen requerimientos especiales de terceros:
 
 Servicio|Requerimiento
 --------|-------------
