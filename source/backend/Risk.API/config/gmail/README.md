@@ -1,0 +1,1 @@
+En este directorio se almacenan las credenciales para la autenticación OAuth2 de la cuenta de Google
