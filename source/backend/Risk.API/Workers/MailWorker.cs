@@ -62,12 +62,23 @@ namespace Risk.API.Workers
         }
 
         // Mail Configuration
-        private void Configurar()
+        private async Task Configurar()
         {
             mailboxFromName = _configuration["MailConfiguration:MailboxFromName"];
             mailboxFromAddress = _configuration["MailConfiguration:MailboxFromAddress"];
 
             smtpClient = new SmtpClient();
+            smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
+
+            if (_configuration.GetValue<bool>("MailConfiguration:EnableOAuth2"))
+            {
+                await ConfigurarOAuth2Async();
+                smtpClient.Authenticate(oAuth2);
+            }
+            else
+            {
+                smtpClient.Authenticate(_configuration["MailConfiguration:UserName"], _configuration["MailConfiguration:Password"]);
+            }
         }
 
         private async Task ConfigurarOAuth2Async()
@@ -108,18 +119,7 @@ namespace Risk.API.Workers
                     if (mensajes.Any())
                     {
                         // Mail Configuration
-                        Configurar();
-                        smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-
-                        if (_configuration.GetValue<bool>("MailConfiguration:EnableOAuth2"))
-                        {
-                            await ConfigurarOAuth2Async();
-                            smtpClient.Authenticate(oAuth2);
-                        }
-                        else
-                        {
-                            smtpClient.Authenticate(_configuration["MailConfiguration:UserName"], _configuration["MailConfiguration:Password"]);
-                        }
+                        await Configurar();
 
                         foreach (var item in mensajes)
                         {
