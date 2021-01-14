@@ -52,36 +52,22 @@ namespace Risk.API.Controllers
 
         [HttpPost("ActivarMensajeria")]
         [SwaggerOperation(OperationId = "ActivarMensajeria", Summary = "ActivarMensajeria", Description = "Permite activar el servicio de mensajería")]
-        [Produces(MediaTypeNames.Text.Plain)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(string))]
-        public IActionResult ActivarMensajeria()
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult ActivarMensajeria([FromQuery, SwaggerParameter(Description = "Tipo de mensajería a activar", Required = true)] TipoMensajeria tipoMensajeria)
         {
-            string respuesta = "OK";
-            try
-            {
-            }
-            catch (Exception)
-            {
-                respuesta = "ERROR";
-            }
-            return Ok(respuesta);
+            var respuesta = _msjService.ActivarDesactivarMensajeria(tipoMensajeria, true);
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpPost("DesactivarMensajeria")]
         [SwaggerOperation(OperationId = "DesactivarMensajeria", Summary = "DesactivarMensajeria", Description = "Permite desactivar el servicio de mensajería")]
-        [Produces(MediaTypeNames.Text.Plain)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(string))]
-        public IActionResult DesactivarMensajeria()
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult DesactivarMensajeria([FromQuery, SwaggerParameter(Description = "Tipo de mensajería a desactivar", Required = true)] TipoMensajeria tipoMensajeria)
         {
-            string respuesta = "OK";
-            try
-            {
-            }
-            catch (Exception)
-            {
-                respuesta = "ERROR";
-            }
-            return Ok(respuesta);
+            var respuesta = _msjService.ActivarDesactivarMensajeria(tipoMensajeria, false);
+            return ProcesarRespuesta(respuesta);
         }
 
         [HttpGet("ListarMensajesPendientes")]

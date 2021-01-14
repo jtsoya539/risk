@@ -288,5 +288,17 @@ namespace Risk.API.Mappers
                     return string.Empty;
             }
         }
+
+        public static string GetValueFromBool(bool valor)
+        {
+            if (valor)
+            {
+                return "S";
+            }
+            else
+            {
+                return "N";
+            }
+        }
     }
 }

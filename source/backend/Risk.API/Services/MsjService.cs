@@ -40,6 +40,7 @@ namespace Risk.API.Services
         private const string NOMBRE_LISTAR_CORREOS_PENDIENTES = "LISTAR_CORREOS_PENDIENTES";
         private const string NOMBRE_LISTAR_NOTIFICACIONES_PENDIENTES = "LISTAR_NOTIFICACIONES_PENDIENTES";
         private const string NOMBRE_CAMBIAR_ESTADO_MENSAJERIA = "CAMBIAR_ESTADO_MENSAJERIA";
+        private const string NOMBRE_ACTIVAR_DESACTIVAR_MENSAJERIA = "ACTIVAR_DESACTIVAR_MENSAJERIA";
 
         public MsjService(ILogger<MsjService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(logger, configuration, httpContextAccessor, dbConnectionFactory)
@@ -125,6 +126,21 @@ namespace Risk.API.Services
 
             string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
                 NOMBRE_CAMBIAR_ESTADO_MENSAJERIA,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> ActivarDesactivarMensajeria(TipoMensajeria tipoMensajeria, bool estado)
+        {
+            JObject prms = new JObject();
+            prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
+            prms.Add("estado", ModelsMapper.GetValueFromBool(estado));
+
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_ACTIVAR_DESACTIVAR_MENSAJERIA,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

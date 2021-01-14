@@ -42,6 +42,9 @@ CREATE OR REPLACE PACKAGE k_servicio_msj IS
   FUNCTION cambiar_estado_mensajeria(i_parametros IN y_parametros)
     RETURN y_respuesta;
 
+  FUNCTION activar_desactivar_mensajeria(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
@@ -412,6 +415,65 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                     'id_mensajeria');
       
     END CASE;
+  
+    k_servicio.p_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_servicio.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_servicio.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION activar_desactivar_mensajeria(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parámetros';
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'tipo_mensajeria') IS NOT NULL,
+                                   'Debe ingresar tipo_mensajeria');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'tipo_mensajeria') IN
+                                   ('M', 'S', 'P'),
+                                   'Valor no válido para tipo_mensajeria');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'estado') IS NOT NULL,
+                                   'Debe ingresar estado');
+  
+    k_servicio.p_validar_parametro(l_rsp,
+                                   k_operacion.f_valor_parametro_string(i_parametros,
+                                                                        'estado') IN
+                                   ('S', 'N'),
+                                   'Valor no válido para estado');
+  
+    l_rsp.lugar := 'Cambiando valor del parámetro';
+    UPDATE t_parametros
+       SET valor = k_operacion.f_valor_parametro_string(i_parametros,
+                                                        'estado')
+     WHERE id_parametro =
+           decode(k_operacion.f_valor_parametro_string(i_parametros,
+                                                       'tipo_mensajeria'),
+                  'M',
+                  'ENVIO_CORREOS_ACTIVO',
+                  'S',
+                  'ENVIO_MENSAJES_ACTIVO',
+                  'P',
+                  'ENVIO_NOTIFICACIONES_ACTIVO');
   
     k_servicio.p_respuesta_ok(l_rsp);
     RETURN l_rsp;

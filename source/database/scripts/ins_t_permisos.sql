@@ -102,6 +102,9 @@ insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
 values ('SERVICIO:GEN:VERSION_SISTEMA', null, null);
 
 insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
+values ('SERVICIO:MSJ:ACTIVAR_DESACTIVAR_MENSAJERIA', null, null);
+
+insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)
 values ('SERVICIO:MSJ:CAMBIAR_ESTADO_MENSAJERIA', null, null);
 
 insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)

@@ -246,6 +246,12 @@ insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DA
 values (33, 'RESPUESTA_ENVIO', 4, 'S', 'S', null, null, 'S', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (34, 'TIPO_MENSAJERIA', 1, 'S', 'S', null, 1, 'S', null, null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (34, 'ESTADO', 2, 'S', 'S', null, 1, 'S', null, null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (36, 'FORMATO', 1, 'S', 'S', null, 4, 'S', 'PDF', null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
