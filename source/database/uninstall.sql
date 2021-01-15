@@ -157,7 +157,6 @@ drop sequence s_id_ciudad;
 drop sequence s_id_barrio;
 drop sequence s_id_persona;
 drop sequence s_id_rol;
-drop sequence s_id_operacion;
 drop sequence s_id_operacion_log;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;

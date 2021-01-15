@@ -61,7 +61,6 @@ prompt
 @@sequences/s_id_barrio.seq
 @@sequences/s_id_persona.seq
 @@sequences/s_id_rol.seq
-@@sequences/s_id_operacion.seq
 @@sequences/s_id_operacion_log.seq
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
