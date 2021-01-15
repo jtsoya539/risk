@@ -1,6 +1,6 @@
 create table T_OPERACIONES
 (
-  id_operacion   NUMBER(15) not null,
+  id_operacion   NUMBER not null,
   tipo           VARCHAR2(1) not null,
   nombre         VARCHAR2(1000) not null,
   dominio        VARCHAR2(30),

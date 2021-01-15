@@ -1,6 +1,6 @@
 create table T_TRABAJOS
 (
-  id_trabajo             NUMBER(15) not null,
+  id_trabajo             NUMBER not null,
   tipo                   VARCHAR2(20),
   accion                 VARCHAR2(4000),
   fecha_inicio           TIMESTAMP(6) WITH TIME ZONE,

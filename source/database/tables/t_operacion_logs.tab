@@ -1,7 +1,7 @@
 create table T_OPERACION_LOGS
 (
   id_operacion_log NUMBER not null,
-  id_operacion     NUMBER(15),
+  id_operacion     NUMBER,
   contexto         CLOB,
   parametros       CLOB,
   respuesta        CLOB

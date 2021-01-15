@@ -1,6 +1,6 @@
 create table T_SERVICIOS
 (
-  id_servicio            NUMBER(15) not null,
+  id_servicio            NUMBER not null,
   tipo                   VARCHAR2(1),
   cantidad_ejecuciones   NUMBER,
   fecha_ultima_ejecucion DATE
