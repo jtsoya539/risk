@@ -680,8 +680,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Obtiene la fecha de expiracion del Access Token y Refresh Token
-    l_fecha_expiracion_access_token  := k_sesion.f_fecha_expiracion_access_token(i_access_token);
-    l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+    l_fecha_expiracion_access_token := k_sesion.f_fecha_expiracion_access_token(i_access_token);
+    IF i_refresh_token IS NOT NULL THEN
+      l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+    END IF;
   
     -- Inserta sesion
     INSERT INTO t_sesiones
@@ -748,8 +750,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     -- Obtiene la fecha de expiracion del Access Token y Refresh Token
-    l_fecha_expiracion_access_token  := k_sesion.f_fecha_expiracion_access_token(i_access_token_nuevo);
-    l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+    l_fecha_expiracion_access_token := k_sesion.f_fecha_expiracion_access_token(i_access_token_nuevo);
+    IF i_refresh_token_nuevo IS NOT NULL THEN
+      l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+    END IF;
   
     -- Actualiza sesion
     UPDATE t_sesiones
