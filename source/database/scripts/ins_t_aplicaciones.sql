@@ -17,6 +17,6 @@ insert into t_aplicaciones (ID_APLICACION, NOMBRE, TIPO, ACTIVO, CLAVE, DETALLE,
 values ('TEST', 'RISK TEST', 'W', 'S', 'KM1gROAnPUAZykrHcOOJRAC1jkcnyBVLRWXcRD3pjvQ=', 'Cliente HTTP para pruebas de Servicios Web', '0.1.0', 3600, 5, null, null);
 
 insert into t_aplicaciones (ID_APLICACION, NOMBRE, TIPO, ACTIVO, CLAVE, DETALLE, VERSION_ACTUAL, TIEMPO_EXPIRACION_ACCESS_TOKEN, TIEMPO_EXPIRACION_REFRESH_TOKEN, TEMPLATE_NOTIFICACION, PLATAFORMA_NOTIFICACION)
-values ('DEV', 'RISK DEVELOPER', 'W', 'S', 'ylaoJAJUj7iFZ5TN7rXLY+M8Wkykqfe0CKqDILvjW5c=', 'Aplicaciï¿½n Web para facilitar el desarrollo de Servicios Web', '0.1.0', null, null, null, null);
+values ('DEV', 'RISK DEVELOPER', 'W', 'S', 'ylaoJAJUj7iFZ5TN7rXLY+M8Wkykqfe0CKqDILvjW5c=', 'Aplicación Web para facilitar el desarrollo de Servicios Web', '0.1.0', null, null, null, null);
 
 prompt Done.
