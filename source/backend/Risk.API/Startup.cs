@@ -57,7 +57,7 @@ namespace Risk.API
         // This method gets called when the application host is performing a graceful shutdown.
         private void OnShutdown()
         {
-            //OracleConnection.ClearPool(oracleConnection);
+            OracleConnection.ClearAllPools();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
