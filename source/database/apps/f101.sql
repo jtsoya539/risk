@@ -28,7 +28,7 @@ prompt APPLICATION 101 - RISK Developer
 -- Application Export:
 --   Application:     101
 --   Name:            RISK Developer
---   Date and Time:   21:45 Sunday January 17, 2021
+--   Date and Time:   20:56 Monday January 18, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -65,7 +65,7 @@ prompt APPLICATION 101 - RISK Developer
 --       Reports:
 --       E-Mail:
 --     Supporting Objects:  Included
---       Install scripts:          1
+--       Install scripts:          3
 --   Version:         20.2.0.00.20
 --   Instance ID:     500134684140051
 --
@@ -107,6 +107,7 @@ wwv_flow_api.create_flow(
 ,p_no_proxy_domains=>nvl(wwv_flow_application_install.get_no_proxy_domains,'')
 ,p_flow_version=>'Release 1.0'
 ,p_flow_status=>'AVAILABLE_W_EDIT_LINK'
+,p_flow_unavailable_text=>'This application is currently unavailable at this time.'
 ,p_exact_substitutions_only=>'Y'
 ,p_browser_cache=>'N'
 ,p_browser_frame=>'D'
@@ -116,8 +117,10 @@ wwv_flow_api.create_flow(
 ,p_auto_time_zone=>'N'
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK Developer'
+,p_substitution_string_02=>'RISK_APP_KEY'
+,p_substitution_value_02=>'ylaoJAJUj7iFZ5TN7rXLY+M8Wkykqfe0CKqDILvjW5c='
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210117214340'
+,p_last_upd_yyyymmddhh24miss=>'20210118205538'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -320,7 +323,7 @@ wwv_flow_api.create_security_scheme(
 ,p_scheme_type=>'NATIVE_FUNCTION_BODY'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'RETURN k_autorizacion.f_validar_permiso(i_id_usuario => k_usuario.f_id_usuario(lower(:app_user)),',
-'                                        i_id_permiso => ''REPORTE:GEN:VERSION_SISTEMA'');'))
+'                                        i_id_permiso => ''PAGE:DEV:'' || upper(:app_page_alias));'))
 ,p_error_message=>unistr('Sin autorizaci\00F3n')
 ,p_caching=>'BY_USER_BY_PAGE_VIEW'
 );
@@ -13927,21 +13930,23 @@ prompt --application/deployment/definition
 begin
 wwv_flow_api.create_install(
  p_id=>wwv_flow_api.id(10000101096745822)
-,p_deinstall_script_clob=>'drop package k_developer;'
+,p_deinstall_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'delete t_rol_permisos where id_permiso like ''PAGE%'';',
+'delete t_permisos where id_permiso like ''PAGE%'';',
+'drop package k_developer;'))
 );
 end;
 /
 prompt --application/deployment/install/install_k_developer
 begin
 wwv_flow_api.create_install_script(
- p_id=>wwv_flow_api.id(12600138983498547)
+ p_id=>wwv_flow_api.id(15701002919355215)
 ,p_install_id=>wwv_flow_api.id(10000101096745822)
 ,p_name=>'k_developer'
-,p_sequence=>1
+,p_sequence=>10
 ,p_script_type=>'INSTALL'
 ,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'CREATE OR REPLACE PACKAGE k_developer IS',
-'',
 '  /**',
 unistr('  Agrupa operaciones relacionadas con la aplicaci\00F3n RISK Developer'),
 '  ',
@@ -13970,21 +13975,14 @@ unistr('  Agrupa operaciones relacionadas con la aplicaci\00F3n RISK Developer')
 '  SOFTWARE.',
 '  -------------------------------------------------------------------------------',
 '  */',
-'',
 '  FUNCTION f_authentication(p_username IN VARCHAR2,',
 '                            p_password IN VARCHAR2) RETURN BOOLEAN;',
-'',
 '  FUNCTION f_verify_session RETURN BOOLEAN;',
-'',
 '  PROCEDURE p_post_authentication;',
-'',
 '  PROCEDURE p_post_logout;',
-'',
 'END;',
 '/',
-'',
 'CREATE OR REPLACE PACKAGE BODY k_developer IS',
-'',
 '  FUNCTION f_authentication(p_username IN VARCHAR2,',
 '                            p_password IN VARCHAR2) RETURN BOOLEAN IS',
 '  BEGIN',
@@ -13992,30 +13990,91 @@ unistr('  Agrupa operaciones relacionadas con la aplicaci\00F3n RISK Developer')
 '                                                  i_clave      => p_password,',
 '                                                  i_tipo_clave => k_autenticacion.c_clave_acceso);',
 '  END;',
-'',
 '  FUNCTION f_verify_session RETURN BOOLEAN IS',
 '  BEGIN',
 '    RETURN k_sesion.f_validar_sesion(i_access_token => v(''APP_SESSION''));',
 '  END;',
-'',
 '  PROCEDURE p_post_authentication IS',
 '    l_id_sesion t_sesiones.id_sesion%TYPE;',
 '  BEGIN',
-'    l_id_sesion := k_autenticacion.f_iniciar_sesion(i_id_aplicacion => ''DEV'', -- RISK DEVELOPER',
+'    l_id_sesion := k_autenticacion.f_iniciar_sesion(i_id_aplicacion => k_aplicacion.f_id_aplicacion(v(''RISK_APP_KEY'')),',
 '                                                    i_usuario       => lower(v(''APP_USER'')),',
 '                                                    i_access_token  => v(''APP_SESSION''),',
 '                                                    i_refresh_token => NULL);',
 '  END;',
-'',
 '  PROCEDURE p_post_logout IS',
 '  BEGIN',
 '    k_sesion.p_cambiar_estado(i_access_token => v(''APP_SESSION''),',
 '                              i_estado       => ''F'');',
 '  END;',
-'',
 'END;',
 '/',
+''))
+);
+end;
+/
+prompt --application/deployment/install/install_ins_t_permisos
+begin
+wwv_flow_api.create_install_script(
+ p_id=>wwv_flow_api.id(15700201370339762)
+,p_install_id=>wwv_flow_api.id(10000101096745822)
+,p_name=>'ins_t_permisos'
+,p_sequence=>20
+,p_script_type=>'INSTALL'
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'prompt Importing table t_permisos...',
+'set feedback off',
+'set define off',
 '',
+'insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)',
+'values (''PAGE:DEV:HOME'', null, null);',
+'',
+'insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)',
+'values (''PAGE:DEV:LOGIN'', null, null);',
+'',
+'insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)',
+'values (''PAGE:DEV:OPERACIONES'', null, null);',
+'',
+'insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)',
+'values (''PAGE:DEV:PERMISOS'', null, null);',
+'',
+'insert into t_permisos (ID_PERMISO, DESCRIPCION, DETALLE)',
+'values (''PAGE:DEV:ROLES'', null, null);',
+'',
+'prompt Done.',
+''))
+);
+end;
+/
+prompt --application/deployment/install/install_ins_t_rol_permisos
+begin
+wwv_flow_api.create_install_script(
+ p_id=>wwv_flow_api.id(15700491433342844)
+,p_install_id=>wwv_flow_api.id(10000101096745822)
+,p_name=>'ins_t_rol_permisos'
+,p_sequence=>30
+,p_script_type=>'INSTALL'
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'prompt Importing table t_rol_permisos...',
+'set feedback off',
+'set define off',
+'',
+'insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)',
+'values (2, ''PAGE:DEV:HOME'', ''N'', ''N'', ''N'', ''N'');',
+'',
+'insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)',
+'values (2, ''PAGE:DEV:LOGIN'', ''N'', ''N'', ''N'', ''N'');',
+'',
+'insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)',
+'values (2, ''PAGE:DEV:OPERACIONES'', ''N'', ''N'', ''N'', ''N'');',
+'',
+'insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)',
+'values (2, ''PAGE:DEV:PERMISOS'', ''N'', ''N'', ''N'', ''N'');',
+'',
+'insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)',
+'values (2, ''PAGE:DEV:ROLES'', ''N'', ''N'', ''N'', ''N'');',
+'',
+'prompt Done.',
 ''))
 );
 end;
