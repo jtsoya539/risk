@@ -28,7 +28,7 @@ prompt APPLICATION 101 - RISK Developer
 -- Application Export:
 --   Application:     101
 --   Name:            RISK Developer
---   Date and Time:   20:56 Monday January 18, 2021
+--   Date and Time:   22:12 Monday January 18, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -66,6 +66,7 @@ prompt APPLICATION 101 - RISK Developer
 --       E-Mail:
 --     Supporting Objects:  Included
 --       Install scripts:          3
+--       Validations:              1
 --   Version:         20.2.0.00.20
 --   Instance ID:     500134684140051
 --
@@ -105,7 +106,7 @@ wwv_flow_api.create_flow(
 ,p_public_user=>'APEX_PUBLIC_USER'
 ,p_proxy_server=>nvl(wwv_flow_application_install.get_proxy,'')
 ,p_no_proxy_domains=>nvl(wwv_flow_application_install.get_no_proxy_domains,'')
-,p_flow_version=>'Release 1.0'
+,p_flow_version=>'v0.1.0'
 ,p_flow_status=>'AVAILABLE_W_EDIT_LINK'
 ,p_flow_unavailable_text=>'This application is currently unavailable at this time.'
 ,p_exact_substitutions_only=>'Y'
@@ -120,7 +121,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_02=>'RISK_APP_KEY'
 ,p_substitution_value_02=>'ylaoJAJUj7iFZ5TN7rXLY+M8Wkykqfe0CKqDILvjW5c='
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210118205538'
+,p_last_upd_yyyymmddhh24miss=>'20210118221056'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -14081,7 +14082,15 @@ end;
 /
 prompt --application/deployment/checks
 begin
-null;
+wwv_flow_api.create_install_check(
+ p_id=>wwv_flow_api.id(16000151885464440)
+,p_install_id=>wwv_flow_api.id(10000101096745822)
+,p_name=>'RISK Instalado'
+,p_sequence=>10
+,p_check_type=>'EXISTS'
+,p_check_condition=>'select * from t_sistemas'
+,p_failure_message=>'El Proyecto RISK debe estar instalado'
+);
 end;
 /
 prompt --application/deployment/buildoptions
