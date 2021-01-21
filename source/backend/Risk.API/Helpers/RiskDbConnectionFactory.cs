@@ -25,7 +25,7 @@ SOFTWARE.
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 
-namespace Risk.API.Entities
+namespace Risk.API.Helpers
 {
     public class RiskDbConnectionFactory : IDbConnectionFactory
     {

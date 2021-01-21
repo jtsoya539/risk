@@ -24,7 +24,7 @@ SOFTWARE.
 
 using System.Data;
 
-namespace Risk.API.Entities
+namespace Risk.API.Helpers
 {
     public interface IDbConnectionFactory
     {
