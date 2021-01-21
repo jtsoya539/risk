@@ -1,6 +1,8 @@
 prompt Importing table t_parametros...
 set feedback off
 set define off
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('METODO_VALIDACION_CREDENCIALES', 'Método de validación de credenciales', 'RISK');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('ENVIO_CORREOS_ACTIVO', 'Indica si está activo el envío de correos electrónicos (E-mail) (S/N)', 'N');

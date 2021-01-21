@@ -61,6 +61,16 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_CREDENCIALES_RISK">f_validar_credenciales_risk</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_CREDENCIALES_ORACLE">f_validar_credenciales_oracle</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALIDAR_CREDENCIALES">f_validar_credenciales</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -180,6 +190,29 @@ PROCEDURE p_cambiar_clave(i_alias         IN VARCHAR2,
                           i_clave_antigua IN VARCHAR2,
                           i_clave_nueva   IN VARCHAR2,
                           i_tipo_clave    IN CHAR DEFAULT 'A')
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_CREDENCIALES_RISK"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_credenciales_risk
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_credenciales_risk(i_id_usuario IN NUMBER,
+                                     i_clave      IN VARCHAR2,
+                                     i_tipo_clave IN CHAR DEFAULT 'A')
+  RETURN BOOLEAN
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_CREDENCIALES_ORACLE"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_credenciales_oracle
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_credenciales_oracle(i_usuario IN VARCHAR2,
+                                       i_clave   IN VARCHAR2)
+  RETURN BOOLEAN
 
 </PRE>
 <HR>
