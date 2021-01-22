@@ -50,6 +50,41 @@ CREATE OR REPLACE PACKAGE test_k_util IS
   PROCEDURE p_actualizar_valor_parametro_uso_basico;
   --%endcontext
 
+  --%context(Tests unitarios de f_base_datos)
+  --%name(f_base_datos)
+
+  --%test()
+  PROCEDURE f_base_datos;
+  --%endcontext
+
+  --%context(Tests unitarios de f_terminal)
+  --%name(f_terminal)
+
+  --%test()
+  PROCEDURE f_terminal;
+  --%endcontext
+
+  --%context(Tests unitarios de f_host)
+  --%name(f_host)
+
+  --%test()
+  PROCEDURE f_host;
+  --%endcontext
+
+  --%context(Tests unitarios de f_direccion_ip)
+  --%name(f_direccion_ip)
+
+  --%test()
+  PROCEDURE f_direccion_ip;
+  --%endcontext
+
+  --%context(Tests unitarios de f_esquema_actual)
+  --%name(f_esquema_actual)
+
+  --%test()
+  PROCEDURE f_esquema_actual;
+  --%endcontext
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY test_k_util IS
@@ -151,6 +186,35 @@ CREATE OR REPLACE PACKAGE BODY test_k_util IS
       FROM t_parametros a
      WHERE a.id_parametro = 'PARAMETRO_CON_VALOR';
     ut.expect(l_valor).to_equal('VALOR2');
+  END;
+
+  PROCEDURE f_base_datos IS
+  BEGIN
+    ut.expect(k_util.f_base_datos).to_equal(sys_context('USERENV',
+                                                        'DB_NAME'));
+  END;
+
+  PROCEDURE f_terminal IS
+  BEGIN
+    ut.expect(k_util.f_terminal).to_equal(sys_context('USERENV',
+                                                      'TERMINAL'));
+  END;
+
+  PROCEDURE f_host IS
+  BEGIN
+    ut.expect(k_util.f_host).to_equal(sys_context('USERENV', 'HOST'));
+  END;
+
+  PROCEDURE f_direccion_ip IS
+  BEGIN
+    ut.expect(k_util.f_direccion_ip).to_equal(sys_context('USERENV',
+                                                          'IP_ADDRESS'));
+  END;
+
+  PROCEDURE f_esquema_actual IS
+  BEGIN
+    ut.expect(k_util.f_esquema_actual).to_equal(sys_context('USERENV',
+                                                            'CURRENT_SCHEMA'));
   END;
 
 END;

@@ -380,7 +380,7 @@ END;';
                             i_posicion  IN NUMBER,
                             i_separador IN VARCHAR2 DEFAULT '~')
     RETURN VARCHAR2 IS
-    l_valor           VARCHAR2(1000);
+    l_valor           VARCHAR2(32767);
     l_posicion        NUMBER;
     l_separador       VARCHAR2(10);
     l_longitud_valor  NUMBER;
@@ -401,7 +401,7 @@ END;';
       IF l_posicion_inicio = 0 THEN
         l_posicion_inicio := instr(i_cadena, l_separador, -1, 1);
       END IF;
-      l_posicion_inicio := l_posicion_inicio + 1;
+      l_posicion_inicio := l_posicion_inicio + length(l_separador);
     ELSE
       l_posicion_inicio := 1;
     END IF;
