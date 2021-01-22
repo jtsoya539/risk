@@ -50,6 +50,13 @@ CREATE OR REPLACE PACKAGE test_k_util IS
   PROCEDURE p_actualizar_valor_parametro_uso_basico;
   --%endcontext
 
+  --%context(Tests unitarios de f_html)
+  --%name(f_html)
+
+  --%test()
+  PROCEDURE f_html;
+  --%endcontext
+
   --%context(Tests unitarios de f_base_datos)
   --%name(f_base_datos)
 
@@ -186,6 +193,25 @@ CREATE OR REPLACE PACKAGE BODY test_k_util IS
       FROM t_parametros a
      WHERE a.id_parametro = 'PARAMETRO_CON_VALOR';
     ut.expect(l_valor).to_equal('VALOR2');
+  END;
+
+  PROCEDURE f_html IS
+    l_html CLOB;
+  BEGIN
+    -- Arrange
+    owa.init_cgi_env(NEW owa.vc_arr());
+    htp.htmlopen; -- generates <HTML>
+    htp.headopen; -- generates <HEAD>
+    htp.title('Hello'); -- generates <TITLE>Hello</TITLE>
+    htp.headclose; -- generates </HEAD>
+    htp.bodyopen; -- generates <BODY>
+    htp.header(1, 'Hello'); -- generates <H1>Hello</H1>
+    htp.bodyclose; -- generates </BODY>
+    htp.htmlclose; -- generates </HTML>
+    -- Act
+    l_html := k_util.f_html;
+    -- Assert
+    ut.expect(l_html).to_be_like('%<html>%<title>Hello</title>%<h1>Hello</h1>%</html>%');
   END;
 
   PROCEDURE f_base_datos IS
