@@ -55,7 +55,7 @@ namespace Risk.API.Workers
             {
                 if (_msjHelper.EnvioCorreosActivo())
                 {
-                    _logger.LogInformation("Ejecutando MailWorker");
+                    _logger.LogInformation($"Ejecutando {this.GetType().Name}");
 
                     var mensajes = _msjHelper.ListarCorreosPendientes();
 

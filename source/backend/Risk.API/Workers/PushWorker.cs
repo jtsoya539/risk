@@ -55,7 +55,7 @@ namespace Risk.API.Workers
             {
                 if (_msjHelper.EnvioNotificacionesActivo())
                 {
-                    _logger.LogInformation("Ejecutando PushWorker");
+                    _logger.LogInformation($"Ejecutando {this.GetType().Name}");
 
                     var mensajes = _msjHelper.ListarNotificacionesPendientes();
 
