@@ -1,0 +1,68 @@
+/*
+--------------------------------- MIT License ---------------------------------
+Copyright (c) 2019 jtsoya539
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-------------------------------------------------------------------------------
+*/
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Azure.NotificationHubs;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Risk.API.Models;
+
+namespace Risk.API.Helpers
+{
+    public class PushSender : IMsjSender<Notificacion>
+    {
+        private readonly ILogger<PushSender> _logger;
+        private readonly IConfiguration _configuration;
+
+        // Notification Hub Configuration
+        private NotificationHubClient hubClient;
+
+        public PushSender(ILogger<PushSender> logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            _configuration = configuration;
+        }
+
+        public Task Configurar()
+        {
+            hubClient = NotificationHubClient.CreateClientFromConnectionString(
+                _configuration["NotificationHubConfiguration:ConnectionString"],
+                _configuration["NotificationHubConfiguration:NotificationHubPath"]
+            );
+            return Task.CompletedTask;
+        }
+
+        public Task Desconfigurar()
+        {
+            return Task.CompletedTask;
+        }
+
+        public async Task Enviar(Notificacion msj)
+        {
+            var properties = new Dictionary<string, string> { { "titulo", msj.Titulo }, { "contenido", msj.Contenido } };
+            await hubClient.SendTemplateNotificationAsync(properties, msj.Suscripcion);
+        }
+    }
+}

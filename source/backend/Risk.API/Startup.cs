@@ -40,6 +40,7 @@ using Risk.API.Entities;
 using Risk.API.Filters;
 using Risk.API.Helpers;
 using Risk.API.Middlewares;
+using Risk.API.Models;
 using Risk.API.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -118,7 +119,12 @@ namespace Risk.API
             services.AddScoped<IAutService, AutService>();
             services.AddScoped<IGenService, GenService>();
             services.AddScoped<IMsjService, MsjService>();
+
+            // Add Msj helper and senders
             services.AddSingleton<IMsjHelper, MsjHelper>();
+            services.AddSingleton<IMsjSender<Correo>, MailSender>();
+            services.AddSingleton<IMsjSender<Notificacion>, PushSender>();
+            services.AddSingleton<IMsjSender<Mensaje>, SMSSender>();
 
             var serviceProvider = services.BuildServiceProvider();
             IAutService autService = serviceProvider.GetService<IAutService>();

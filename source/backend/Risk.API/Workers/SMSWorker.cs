@@ -29,12 +29,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Risk.API.Helpers;
 using Risk.API.Models;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
 
 namespace Risk.API.Workers
 {
@@ -43,23 +39,14 @@ namespace Risk.API.Workers
         private readonly ILogger<SMSWorker> _logger;
         private readonly IConfiguration _configuration;
         private readonly IMsjHelper _msjHelper;
+        private readonly IMsjSender<Mensaje> _msjSender;
 
-        // Twilio Configuration
-        private string phoneNumberFrom;
-
-        public SMSWorker(ILogger<SMSWorker> logger, IConfiguration configuration, IMsjHelper msjHelper)
+        public SMSWorker(ILogger<SMSWorker> logger, IConfiguration configuration, IMsjHelper msjHelper, IMsjSender<Mensaje> msjSender)
         {
             _logger = logger;
             _configuration = configuration;
             _msjHelper = msjHelper;
-        }
-
-        // Twilio Configuration
-        private void Configurar()
-        {
-            phoneNumberFrom = _configuration["TwilioConfiguration:PhoneNumberFrom"];
-
-            TwilioClient.Init(_configuration["TwilioConfiguration:AccountSid"], _configuration["TwilioConfiguration:AuthToken"]);
+            _msjSender = msjSender;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -74,28 +61,25 @@ namespace Risk.API.Workers
 
                     if (mensajes.Any())
                     {
-                        // Twilio Configuration
-                        Configurar();
+                        await _msjSender.Configurar();
 
                         foreach (var item in mensajes)
                         {
                             try
                             {
-                                var message = MessageResource.Create(
-                                    from: new PhoneNumber(phoneNumberFrom),
-                                    to: new PhoneNumber(item.NumeroTelefono),
-                                    body: item.Contenido
-                                );
+                                await _msjSender.Enviar(item);
 
                                 // Cambia estado de la mensajería a E-ENVIADO
-                                _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.Enviado, JsonConvert.SerializeObject(message));
+                                _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.Enviado, "OK");
                             }
-                            catch (Twilio.Exceptions.ApiException e)
+                            catch (Exception e)
                             {
                                 // Cambia estado de la mensajería a R-PROCESADO CON ERROR
                                 _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.ProcesadoError, e.Message);
                             }
                         }
+
+                        await _msjSender.Desconfigurar();
                     }
                 }
 

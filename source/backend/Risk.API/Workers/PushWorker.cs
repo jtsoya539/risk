@@ -23,11 +23,9 @@ SOFTWARE.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -41,24 +39,14 @@ namespace Risk.API.Workers
         private readonly ILogger<PushWorker> _logger;
         private readonly IConfiguration _configuration;
         private readonly IMsjHelper _msjHelper;
+        private readonly IMsjSender<Notificacion> _msjSender;
 
-        // Notification Hub Configuration
-        private NotificationHubClient hubClient;
-
-        public PushWorker(ILogger<PushWorker> logger, IConfiguration configuration, IMsjHelper msjHelper)
+        public PushWorker(ILogger<PushWorker> logger, IConfiguration configuration, IMsjHelper msjHelper, IMsjSender<Notificacion> msjSender)
         {
             _logger = logger;
             _configuration = configuration;
             _msjHelper = msjHelper;
-        }
-
-        // Notification Hub Configuration
-        private void Configurar()
-        {
-            hubClient = NotificationHubClient.CreateClientFromConnectionString(
-                _configuration["NotificationHubConfiguration:ConnectionString"],
-                _configuration["NotificationHubConfiguration:NotificationHubPath"]
-            );
+            _msjSender = msjSender;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -73,15 +61,13 @@ namespace Risk.API.Workers
 
                     if (mensajes.Any())
                     {
-                        // Notification Hub Configuration
-                        Configurar();
+                        await _msjSender.Configurar();
 
                         foreach (var item in mensajes)
                         {
                             try
                             {
-                                var properties = new Dictionary<string, string> { { "titulo", item.Titulo }, { "contenido", item.Contenido } };
-                                await hubClient.SendTemplateNotificationAsync(properties, item.Suscripcion);
+                                await _msjSender.Enviar(item);
 
                                 // Cambia estado de la mensajería a E-ENVIADO
                                 _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.Push, item.IdNotificacion, EstadoMensajeria.Enviado, "OK");
@@ -92,6 +78,8 @@ namespace Risk.API.Workers
                                 _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.Push, item.IdNotificacion, EstadoMensajeria.ProcesadoError, e.Message);
                             }
                         }
+
+                        await _msjSender.Desconfigurar();
                     }
                 }
 
