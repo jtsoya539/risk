@@ -48,8 +48,8 @@ namespace Risk.API.Helpers
 
         public Task Configurar()
         {
-            TwilioClient.Init(_configuration["TwilioConfiguration:AccountSid"], _configuration["TwilioConfiguration:AuthToken"]);
-            phoneNumberFrom = _configuration["TwilioConfiguration:PhoneNumberFrom"];
+            TwilioClient.Init(_configuration["MsjConfiguration:Twilio:AccountSid"], _configuration["MsjConfiguration:Twilio:AuthToken"]);
+            phoneNumberFrom = _configuration["MsjConfiguration:Twilio:PhoneNumberFrom"];
             return Task.CompletedTask;
         }
 

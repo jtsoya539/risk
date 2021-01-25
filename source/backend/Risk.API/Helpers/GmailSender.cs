@@ -61,20 +61,20 @@ namespace Risk.API.Helpers
         {
             var clientSecrets = new ClientSecrets
             {
-                ClientId = _configuration["MailConfiguration:ClientId"],
-                ClientSecret = _configuration["MailConfiguration:ClientSecret"]
+                ClientId = _configuration["MsjConfiguration:Gmail:ClientId"],
+                ClientSecret = _configuration["MsjConfiguration:Gmail:ClientSecret"]
             };
 
             var codeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
             {
-                DataStore = new FileDataStore(_configuration["MailConfiguration:CredentialLocation"], true),
+                DataStore = new FileDataStore(_configuration["MsjConfiguration:Gmail:CredentialLocation"], true),
                 Scopes = new[] { "https://mail.google.com/" },
                 ClientSecrets = clientSecrets
             });
             var codeReceiver = new LocalServerCodeReceiver();
 
             var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
-            var credential = await authCode.AuthorizeAsync(_configuration["MailConfiguration:UserId"], CancellationToken.None);
+            var credential = await authCode.AuthorizeAsync(_configuration["MsjConfiguration:Gmail:UserId"], CancellationToken.None);
 
             if (credential.Token.IsExpired(SystemClock.Default))
                 await credential.RefreshTokenAsync(CancellationToken.None);
@@ -84,20 +84,20 @@ namespace Risk.API.Helpers
 
         public async Task Configurar()
         {
-            mailboxFromName = _configuration["MailConfiguration:MailboxFromName"];
-            mailboxFromAddress = _configuration["MailConfiguration:MailboxFromAddress"];
+            mailboxFromName = _configuration["MsjConfiguration:Gmail:MailboxFromName"];
+            mailboxFromAddress = _configuration["MsjConfiguration:Gmail:MailboxFromAddress"];
 
             smtpClient = new SmtpClient();
             smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
 
-            if (_configuration.GetValue<bool>("MailConfiguration:EnableOAuth2"))
+            if (_configuration.GetValue<bool>("MsjConfiguration:Gmail:EnableOAuth2"))
             {
                 await ConfigurarOAuth2Async();
                 smtpClient.Authenticate(oAuth2);
             }
             else
             {
-                smtpClient.Authenticate(_configuration["MailConfiguration:UserName"], _configuration["MailConfiguration:Password"]);
+                smtpClient.Authenticate(_configuration["MsjConfiguration:Gmail:UserName"], _configuration["MsjConfiguration:Gmail:Password"]);
             }
         }
 

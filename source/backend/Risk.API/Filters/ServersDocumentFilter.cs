@@ -42,7 +42,7 @@ namespace Risk.API.Filters
         {
             List<OpenApiServer> openApiServers = new List<OpenApiServer>();
 
-            var servers = Configuration.GetSection("Servers").GetChildren();
+            var servers = Configuration.GetSection("SwaggerConfiguration:Servers").GetChildren();
             foreach (var item in servers)
             {
                 openApiServers.Add(new OpenApiServer { Description = item.Key, Url = item.Value });

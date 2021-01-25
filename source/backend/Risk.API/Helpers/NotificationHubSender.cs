@@ -48,8 +48,8 @@ namespace Risk.API.Helpers
         public Task Configurar()
         {
             hubClient = NotificationHubClient.CreateClientFromConnectionString(
-                _configuration["NotificationHubConfiguration:ConnectionString"],
-                _configuration["NotificationHubConfiguration:NotificationHubPath"]
+                _configuration["MsjConfiguration:NotificationHub:ConnectionString"],
+                _configuration["MsjConfiguration:NotificationHub:NotificationHubPath"]
             );
             return Task.CompletedTask;
         }
