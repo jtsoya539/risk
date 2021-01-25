@@ -122,9 +122,9 @@ namespace Risk.API
 
             // Add Msj helper and senders
             services.AddSingleton<IMsjHelper, MsjHelper>();
-            services.AddSingleton<IMsjSender<Correo>, MailSender>();
-            services.AddSingleton<IMsjSender<Notificacion>, PushSender>();
-            services.AddSingleton<IMsjSender<Mensaje>, SMSSender>();
+            services.AddSingleton<IMsjSender<Correo>, GmailSender>();
+            services.AddSingleton<IMsjSender<Notificacion>, NotificationHubSender>();
+            services.AddSingleton<IMsjSender<Mensaje>, TwilioSender>();
 
             var serviceProvider = services.BuildServiceProvider();
             IAutService autService = serviceProvider.GetService<IAutService>();

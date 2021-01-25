@@ -40,18 +40,18 @@ using Risk.API.Models;
 
 namespace Risk.API.Helpers
 {
-    public class MailSender : IMsjSender<Correo>
+    public class GmailSender : IMsjSender<Correo>
     {
-        private readonly ILogger<MailSender> _logger;
+        private readonly ILogger<GmailSender> _logger;
         private readonly IConfiguration _configuration;
 
-        // Mail Configuration
+        // Gmail Configuration
         private string mailboxFromName;
         private string mailboxFromAddress;
         private SmtpClient smtpClient;
         private SaslMechanismOAuth2 oAuth2;
 
-        public MailSender(ILogger<MailSender> logger, IConfiguration configuration)
+        public GmailSender(ILogger<GmailSender> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
