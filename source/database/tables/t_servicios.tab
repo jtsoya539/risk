@@ -3,7 +3,9 @@ create table T_SERVICIOS
   id_servicio            NUMBER not null,
   tipo                   VARCHAR2(1),
   cantidad_ejecuciones   NUMBER,
-  fecha_ultima_ejecucion DATE
+  fecha_ultima_ejecucion DATE,
+  consulta_sql           CLOB,
+  sql_ultima_ejecucion   CLOB
 )
 ;
 comment on table T_SERVICIOS
@@ -16,9 +18,16 @@ comment on column T_SERVICIOS.cantidad_ejecuciones
   is 'Cantidad de ejecuciones del servicio';
 comment on column T_SERVICIOS.fecha_ultima_ejecucion
   is 'Fecha de la ultima ejecucion del servicio';
+comment on column T_SERVICIOS.consulta_sql
+  is 'Consulta SQL del servicio';
+comment on column T_SERVICIOS.sql_ultima_ejecucion
+  is 'SQL de la ultima ejecucion del servicio';
 alter table T_SERVICIOS
   add constraint PK_SERVICIOS primary key (ID_SERVICIO);
 alter table T_SERVICIOS
   add constraint FK_SERVICIOS_OPERACIONES foreign key (ID_SERVICIO)
   references T_OPERACIONES (ID_OPERACION);
+alter table T_SERVICIOS
+  add constraint CK_SERVICIOS_TIPO_CONSULTA_SQL
+  check (TIPO <> 'C' OR (TIPO = 'C' AND CONSULTA_SQL IS NOT NULL));
 

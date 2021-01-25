@@ -96,6 +96,19 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       ROLLBACK;
   END;
 
+  PROCEDURE lp_registrar_sql_ejecucion(i_id_servicio IN NUMBER,
+                                       i_sql         IN CLOB) IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
+  BEGIN
+    UPDATE t_servicios
+       SET sql_ultima_ejecucion = i_sql
+     WHERE id_servicio = i_id_servicio;
+    COMMIT;
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+  END;
+
   FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
                                 i_parametros  IN CLOB,
                                 i_contexto    IN CLOB DEFAULT NULL)

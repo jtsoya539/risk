@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_SERVICIOS">
  <META name="description" content="Servicios Web">
- <META name="columns" content="ID_SERVICIO TIPO CANTIDAD_EJECUCIONES FECHA_ULTIMA_EJECUCION">
+ <META name="columns" content="ID_SERVICIO TIPO CANTIDAD_EJECUCIONES FECHA_ULTIMA_EJECUCION CONSULTA_SQL SQL_ULTIMA_EJECUCION">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -113,6 +113,40 @@ Y
 Fecha de la ultima ejecucion del servicio
 </TD>
 </TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+CONSULTA_SQL
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+CLOB
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Consulta SQL del servicio
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+SQL_ULTIMA_EJECUCION
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+CLOB
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+SQL de la ultima ejecucion del servicio
+</TD>
+</TR>
 </TABLE>
 <HR>
 <A NAME="Primary Key"></A>
@@ -175,6 +209,31 @@ T_OPERACIONES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ID_OPERACION
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Check Constraints"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Check Constraints
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Condition
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+CK_SERVICIOS_TIPO_CONSULTA_SQL
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+TIPO <> 'C' OR (TIPO = 'C' AND CONSULTA_SQL IS NOT NULL)
 </TD>
 </TR>
 </TABLE>

@@ -30,8 +30,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-/** Versión del objeto. */
-  version VARCHAR2(10),
+/** Objeto serializado en formato JSON. */
+  json CLOB,
 
 /**
 Retorna el objeto deserializado a partir de un JSON.

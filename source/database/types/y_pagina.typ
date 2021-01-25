@@ -132,7 +132,8 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
       l_json_array := NEW json_array_t();
       i            := self.elementos.first;
       WHILE i IS NOT NULL LOOP
-        l_json_array.append(json_object_t.parse(self.elementos(i).to_json));
+        l_json_array.append(json_object_t.parse(nvl(self.elementos(i).json,
+                                                    self.elementos(i).to_json)));
         i := self.elementos.next(i);
       END LOOP;
       l_json_object.put('elementos', l_json_array);
