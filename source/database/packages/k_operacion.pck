@@ -52,6 +52,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB) RETURN y_parametros;
 
+  FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB;
+
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,
                              i_nombre     IN VARCHAR2) RETURN anydata;
 
@@ -351,6 +353,65 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       l_parametros(l_parametros.count) := l_parametro;
     END LOOP;
     RETURN l_parametros;
+  END;
+
+  FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB IS
+    l_filtros_sql CLOB;
+    i             INTEGER;
+    l_typeinfo    anytype;
+    l_typecode    PLS_INTEGER;
+  BEGIN
+    IF i_parametros IS NOT NULL THEN
+      i := i_parametros.first;
+      WHILE i IS NOT NULL LOOP
+      
+        IF i_parametros(i).nombre NOT IN ('formato', 'pagina_parametros') THEN
+          l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i)
+                          .nombre || ' = ';
+        
+          IF i_parametros(i).valor IS NULL THEN
+            l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+          ELSE
+            l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
+            IF l_typecode = dbms_types.typecode_varchar2 THEN
+              IF anydata.accessvarchar2(i_parametros(i).valor) IS NULL THEN
+                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              ELSE
+                l_filtros_sql := l_filtros_sql || '''' ||
+                                 REPLACE(anydata.accessvarchar2(i_parametros(i)
+                                                                .valor),
+                                         '''',
+                                         '''''') || '''';
+              END IF;
+            ELSIF l_typecode = dbms_types.typecode_number THEN
+              IF anydata.accessnumber(i_parametros(i).valor) IS NULL THEN
+                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              ELSE
+                l_filtros_sql := l_filtros_sql ||
+                                 to_char(anydata.accessnumber(i_parametros(i)
+                                                              .valor));
+              END IF;
+            ELSIF l_typecode = dbms_types.typecode_date THEN
+              IF anydata.accessdate(i_parametros(i).valor) IS NULL THEN
+                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              ELSE
+                l_filtros_sql := l_filtros_sql || 'to_date(''' ||
+                                 to_char(anydata.accessdate(i_parametros(i)
+                                                            .valor),
+                                         'YYYY-MM-DD') ||
+                                 ''', ''YYYY-MM-DD'') ';
+              END IF;
+            ELSE
+              l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+            END IF;
+          END IF;
+        END IF;
+      
+        i := i_parametros.next(i);
+      END LOOP;
+    END IF;
+  
+    RETURN l_filtros_sql;
   END;
 
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,

@@ -46,8 +46,6 @@ CREATE OR REPLACE PACKAGE k_reporte IS
                            i_formato   IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo;
 
-  FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB;
-
   FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
                          i_parametros IN y_parametros) RETURN y_archivo;
 
@@ -370,62 +368,6 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     RETURN l_archivo;
   END;
 
-  FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB IS
-    l_filtros_sql CLOB;
-    i             INTEGER;
-    l_typeinfo    anytype;
-    l_typecode    PLS_INTEGER;
-  BEGIN
-    IF i_parametros IS NOT NULL THEN
-      i := i_parametros.first;
-      WHILE i IS NOT NULL LOOP
-      
-        IF i_parametros(i).nombre <> 'formato' THEN
-          l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i).nombre ||
-                           ' = ';
-        
-          IF i_parametros(i).valor IS NULL THEN
-            l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-          ELSE
-            l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
-            IF l_typecode = dbms_types.typecode_varchar2 THEN
-              IF anydata.accessvarchar2(i_parametros(i).valor) IS NULL THEN
-                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-              ELSE
-                l_filtros_sql := l_filtros_sql || '''' ||
-                                 REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
-                                         '''',
-                                         '''''') || '''';
-              END IF;
-            ELSIF l_typecode = dbms_types.typecode_number THEN
-              IF anydata.accessnumber(i_parametros(i).valor) IS NULL THEN
-                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-              ELSE
-                l_filtros_sql := l_filtros_sql ||
-                                 to_char(anydata.accessnumber(i_parametros(i).valor));
-              END IF;
-            ELSIF l_typecode = dbms_types.typecode_date THEN
-              IF anydata.accessdate(i_parametros(i).valor) IS NULL THEN
-                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-              ELSE
-                l_filtros_sql := l_filtros_sql || 'to_date(''' ||
-                                 to_char(anydata.accessdate(i_parametros(i).valor),
-                                         'YYYY-MM-DD') ||
-                                 ''', ''YYYY-MM-DD'') ';
-              END IF;
-            ELSE
-              l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-            END IF;
-          END IF;
-        END IF;
-      
-        i := i_parametros.next(i);
-      END LOOP;
-    END IF;
-  
-    RETURN l_filtros_sql;
-  END;
-
   FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
                          i_parametros IN y_parametros) RETURN y_archivo IS
     l_rsp             y_respuesta;
@@ -475,7 +417,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     END IF;
   
     l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql ||
-                      ') WHERE 1 = 1' || f_filtros_sql(i_parametros);
+                      ') WHERE 1 = 1' ||
+                      k_operacion.f_filtros_sql(i_parametros);
     -- Registra SQL
     lp_registrar_sql_ejecucion(i_id_reporte, l_consulta_sql);
   
@@ -634,7 +577,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_reporte,
                                 i_parametros,
@@ -657,7 +601,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_reporte,
                                 i_parametros,
