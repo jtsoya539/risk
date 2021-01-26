@@ -3,6 +3,7 @@ CREATE OR REPLACE TRIGGER gb_reportes
   FOR EACH ROW
 DECLARE
   l_tipo_operacion t_operaciones.tipo%TYPE;
+  l_cursor         PLS_INTEGER;
 BEGIN
   /*
   --------------------------------- MIT License ---------------------------------
@@ -46,8 +47,20 @@ BEGIN
       raise_application_error(-20000, 'Operación no es de tipo Reporte');
     END IF;
   
+    -- Valida consulta SQL
+    IF :new.consulta_sql IS NOT NULL THEN
+      BEGIN
+        l_cursor := dbms_sql.open_cursor;
+        dbms_sql.parse(l_cursor, :new.consulta_sql, dbms_sql.native);
+        dbms_sql.close_cursor(l_cursor);
+      EXCEPTION
+        WHEN OTHERS THEN
+          raise_application_error(-20000,
+                                  'Consulta SQL no válida: ' || SQLERRM);
+      END;
+    END IF;
+  
   END IF;
 
 END;
 /
-
