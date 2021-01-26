@@ -96,7 +96,7 @@ namespace Risk.API.Helpers
             Respuesta<Pagina<Correo>> mensajesPendientes = null;
             try
             {
-                mensajesPendientes = _msjService.ListarCorreosPendientes(new PaginaParametros { NoPaginar = "S" });
+                mensajesPendientes = _msjService.ListarCorreosPendientes(new PaginaParametros { NoPaginar = true });
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace Risk.API.Helpers
             Respuesta<Pagina<Notificacion>> mensajesPendientes = null;
             try
             {
-                mensajesPendientes = _msjService.ListarNotificacionesPendientes(new PaginaParametros { NoPaginar = "S" });
+                mensajesPendientes = _msjService.ListarNotificacionesPendientes(new PaginaParametros { NoPaginar = true });
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace Risk.API.Helpers
             Respuesta<Pagina<Mensaje>> mensajesPendientes = null;
             try
             {
-                mensajesPendientes = _msjService.ListarMensajesPendientes(new PaginaParametros { NoPaginar = "S" });
+                mensajesPendientes = _msjService.ListarMensajesPendientes(new PaginaParametros { NoPaginar = true });
             }
             catch (Exception ex)
             {

@@ -136,7 +136,7 @@ namespace Risk.API.Mappers
                 {
                     Pagina = model.Pagina,
                     PorPagina = model.PorPagina,
-                    NoPaginar = model.NoPaginar
+                    NoPaginar = GetValueFromBool(model.NoPaginar)
                 };
             }
             return entity;

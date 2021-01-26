@@ -98,7 +98,7 @@ namespace Risk.API.Controllers
         public IActionResult ListarSignificados([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -120,7 +120,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
         public IActionResult ListarPaises([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -143,7 +143,7 @@ namespace Risk.API.Controllers
         public IActionResult ListarDepartamentos([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -167,7 +167,7 @@ namespace Risk.API.Controllers
             [FromQuery, SwaggerParameter(Description = "Identificador del departamento", Required = false)] int? idDepartamento,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -192,7 +192,7 @@ namespace Risk.API.Controllers
             [FromQuery, SwaggerParameter(Description = "Identificador de la ciudad", Required = false)] int? idCiudad,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -215,7 +215,7 @@ namespace Risk.API.Controllers
         public IActionResult ListarErrores([FromQuery, SwaggerParameter(Description = "Identificador del error", Required = false)] string idError,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-            [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {

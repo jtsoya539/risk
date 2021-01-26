@@ -28,6 +28,6 @@ namespace Risk.API.Models
     {
         public int? Pagina { get; set; }
         public int? PorPagina { get; set; }
-        public string NoPaginar { get; set; }
+        public bool NoPaginar { get; set; }
     }
 }

@@ -22,7 +22,6 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -75,8 +74,8 @@ namespace Risk.API.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Mensaje>>))]
         public IActionResult ListarMensajesPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
-        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -96,8 +95,8 @@ namespace Risk.API.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Correo>>))]
         public IActionResult ListarCorreosPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
-        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
@@ -117,8 +116,8 @@ namespace Risk.API.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Notificacion>>))]
         public IActionResult ListarNotificacionesPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
-        [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
-        [FromQuery, SwaggerParameter(Description = "No paginar? (S/N)", Required = false)] string noPaginar)
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
         {
             PaginaParametros paginaParametros = new PaginaParametros
             {
