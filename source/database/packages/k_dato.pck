@@ -86,6 +86,8 @@ CREATE OR REPLACE PACKAGE k_dato IS
                                   i_campo      IN VARCHAR2,
                                   i_referencia IN VARCHAR2,
                                   i_dato       IN y_objeto);
+  PRAGMA deprecate(p_guardar_dato_object,
+                   'No usar! Siempre da error ORA-22370 por el campo json de y_objeto');
 
 END;
 /
