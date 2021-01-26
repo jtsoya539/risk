@@ -504,11 +504,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     -- ========================================================
     DECLARE
-      l_cursor      PLS_INTEGER;
-      l_row_cnt     PLS_INTEGER;
-      l_col_cnt     PLS_INTEGER;
-      l_desc_tab    dbms_sql.desc_tab2;
-      l_buffer      VARCHAR2(32767);
+      l_cursor   PLS_INTEGER;
+      l_row_cnt  PLS_INTEGER;
+      l_col_cnt  PLS_INTEGER;
+      l_desc_tab dbms_sql.desc_tab2;
+      --
+      l_buffer_varchar2  VARCHAR2(32767);
+      l_buffer_number    NUMBER;
+      l_buffer_date      DATE;
+      l_buffer_timestamp TIMESTAMP;
+      --
       l_json_object json_object_t;
     BEGIN
       l_cursor := dbms_sql.open_cursor;
@@ -516,7 +521,21 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       dbms_sql.describe_columns2(l_cursor, l_col_cnt, l_desc_tab);
     
       FOR i IN 1 .. l_col_cnt LOOP
-        dbms_sql.define_column(l_cursor, i, l_buffer, 32767);
+        IF l_desc_tab(i).col_type IN (dbms_types.typecode_varchar,
+                         dbms_types.typecode_varchar2,
+                         dbms_types.typecode_char,
+                         dbms_types.typecode_clob,
+                         dbms_types.typecode_nvarchar2,
+                         dbms_types.typecode_nchar,
+                         dbms_types.typecode_nclob) THEN
+          dbms_sql.define_column(l_cursor, i, l_buffer_varchar2, 32767);
+        ELSIF l_desc_tab(i).col_type IN (dbms_types.typecode_number) THEN
+          dbms_sql.define_column(l_cursor, i, l_buffer_number);
+        ELSIF l_desc_tab(i).col_type IN (dbms_types.typecode_date) THEN
+          dbms_sql.define_column(l_cursor, i, l_buffer_date);
+        ELSIF l_desc_tab(i).col_type IN (dbms_types.typecode_timestamp) THEN
+          dbms_sql.define_column(l_cursor, i, l_buffer_timestamp);
+        END IF;
       END LOOP;
     
       l_row_cnt := dbms_sql.execute(l_cursor);
@@ -527,13 +546,29 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         l_json_object := NEW json_object_t();
       
         FOR i IN 1 .. l_col_cnt LOOP
-          IF l_desc_tab(i).col_type IN (dbms_types.typecode_blob) THEN
-            l_buffer := NULL;
-          ELSE
-            dbms_sql.column_value(l_cursor, i, l_buffer);
+          IF l_desc_tab(i)
+           .col_type IN (dbms_types.typecode_varchar,
+                           dbms_types.typecode_varchar2,
+                           dbms_types.typecode_char,
+                           dbms_types.typecode_clob,
+                           dbms_types.typecode_nvarchar2,
+                           dbms_types.typecode_nchar,
+                           dbms_types.typecode_nclob) THEN
+            dbms_sql.column_value(l_cursor, i, l_buffer_varchar2);
+            l_json_object.put(lower(l_desc_tab(i).col_name),
+                              l_buffer_varchar2);
+          ELSIF l_desc_tab(i).col_type IN (dbms_types.typecode_number) THEN
+            dbms_sql.column_value(l_cursor, i, l_buffer_number);
+            l_json_object.put(lower(l_desc_tab(i).col_name),
+                              l_buffer_number);
+          ELSIF l_desc_tab(i).col_type IN (dbms_types.typecode_date) THEN
+            dbms_sql.column_value(l_cursor, i, l_buffer_date);
+            l_json_object.put(lower(l_desc_tab(i).col_name), l_buffer_date);
+          ELSIF l_desc_tab(i).col_type IN (dbms_types.typecode_timestamp) THEN
+            dbms_sql.column_value(l_cursor, i, l_buffer_timestamp);
+            l_json_object.put(lower(l_desc_tab(i).col_name),
+                              l_buffer_timestamp);
           END IF;
-        
-          l_json_object.put(lower(l_desc_tab(i).col_name), l_buffer);
         END LOOP;
       
         l_elemento      := NEW y_dato();
