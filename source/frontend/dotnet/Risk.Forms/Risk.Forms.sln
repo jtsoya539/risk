@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Risk.Forms.Android", "Risk.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Risk.Forms.UWP", "Risk.Forms\Risk.Forms.UWP\Risk.Forms.UWP.csproj", "{C3577EF3-8034-48EB-9186-EA6FCB6E3A18}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Risk.API.Client", "..\..\..\backend\Risk.API.Client\Risk.API.Client\src\Risk.API.Client\Risk.API.Client.csproj", "{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,22 @@ Global
 		{C3577EF3-8034-48EB-9186-EA6FCB6E3A18}.Release|x86.ActiveCfg = Release|x86
 		{C3577EF3-8034-48EB-9186-EA6FCB6E3A18}.Release|x86.Build.0 = Release|x86
 		{C3577EF3-8034-48EB-9186-EA6FCB6E3A18}.Release|x86.Deploy.0 = Release|x86
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|x64.Build.0 = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Debug|x86.Build.0 = Debug|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|ARM.Build.0 = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|x64.Build.0 = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{C9AB3D00-693F-4133-9BE9-8B75BF3EB8F2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

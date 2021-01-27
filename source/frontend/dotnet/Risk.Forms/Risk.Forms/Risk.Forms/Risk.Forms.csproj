@@ -11,4 +11,8 @@
     <PackageReference Include="Prism.DryIoc.Forms" Version="8.0.0.1909" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\backend\Risk.API.Client\Risk.API.Client\src\Risk.API.Client\Risk.API.Client.csproj" />
+  </ItemGroup>
+
 </Project>
