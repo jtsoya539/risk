@@ -1,12 +1,12 @@
-# Risk.API.Client.Model.Departamento
-Agrupa datos de Departamentos
+# Risk.API.Client.Model.ErrorPaginaRespuesta
+Respuesta de un servicio o proceso
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IdDepartamento** | **int** | Identificador del departamento | [optional] 
-**Nombre** | **string** | Nombre del departamento | [optional] 
-**IdPais** | **int** | País del departamento | [optional] 
+**Codigo** | **string** | Código de la respuesta | [optional] 
+**Mensaje** | **string** | Mensaje de la respuesta | [optional] 
+**Datos** | [**ErrorPagina**](ErrorPagina.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

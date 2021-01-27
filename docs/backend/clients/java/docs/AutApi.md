@@ -661,7 +661,7 @@ Name | Type | Description  | Notes
 
 ## guardarAvatarUsuario
 
-> DatoRespuesta guardarAvatarUsuario(usuario, archivo, nombre, extension)
+> DatoRespuesta guardarAvatarUsuario(usuario, archivo, url, nombre, extension)
 
 GuardarAvatarUsuario
 
@@ -696,10 +696,11 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
         File archivo = new File("/path/to/file"); // File | 
+        String url = "url_example"; // String | 
         String nombre = "nombre_example"; // String | 
         String extension = "extension_example"; // String | 
         try {
-            DatoRespuesta result = apiInstance.guardarAvatarUsuario(usuario, archivo, nombre, extension);
+            DatoRespuesta result = apiInstance.guardarAvatarUsuario(usuario, archivo, url, nombre, extension);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#guardarAvatarUsuario");
@@ -719,6 +720,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
  **archivo** | **File**|  | [optional]
+ **url** | **String**|  | [optional]
  **nombre** | **String**|  | [optional]
  **extension** | **String**|  | [optional]
 
@@ -858,7 +860,7 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
-        Integer version = 56; // Integer | Version
+        Integer version = 56; // Integer | Versión
         try {
             File result = apiInstance.recuperarAvatarUsuario(usuario, version);
             System.out.println(result);
@@ -879,7 +881,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
- **version** | **Integer**| Version | [optional]
+ **version** | **Integer**| Versión | [optional]
 
 ### Return type
 

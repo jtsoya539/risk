@@ -4,16 +4,16 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idUsuario** | **kotlin.Int** |  |  [optional]
-**alias** | **kotlin.String** |  |  [optional]
-**nombre** | **kotlin.String** |  |  [optional]
-**apellido** | **kotlin.String** |  |  [optional]
-**tipoPersona** | **kotlin.String** |  |  [optional]
-**estado** | **kotlin.String** |  |  [optional]
-**direccionCorreo** | **kotlin.String** |  |  [optional]
-**numeroTelefono** | **kotlin.String** |  |  [optional]
-**versionAvatar** | **kotlin.Int** |  |  [optional]
-**roles** | [**kotlin.Array&lt;Rol&gt;**](Rol.md) |  |  [optional]
+**idUsuario** | **kotlin.Int** | Identificador del usuario |  [optional]
+**alias** | **kotlin.String** | Alias del usuario (identificador para autenticacion) |  [optional]
+**nombre** | **kotlin.String** | Nombre de la persona |  [optional]
+**apellido** | **kotlin.String** | Apellido de la persona |  [optional]
+**tipoPersona** | **kotlin.String** | Tipo de la persona |  [optional]
+**estado** | **kotlin.String** | Estado del usuario |  [optional]
+**direccionCorreo** | **kotlin.String** | Direccion de correo electronico principal del usuario |  [optional]
+**numeroTelefono** | **kotlin.String** | Numero de telefono principal del usuario |  [optional]
+**versionAvatar** | **kotlin.Int** | Version del avatar del usuario |  [optional]
+**roles** | [**kotlin.Array&lt;Rol&gt;**](Rol.md) | Roles del usuario |  [optional]
 
 
 

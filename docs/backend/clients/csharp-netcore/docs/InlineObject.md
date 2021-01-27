@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Archivo** | **System.IO.Stream** |  | [optional] 
+**Url** | **string** |  | [optional] 
 **Nombre** | **string** |  | [optional] 
 **Extension** | **string** |  | [optional] 
 

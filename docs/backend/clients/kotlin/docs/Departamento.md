@@ -4,9 +4,9 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idDepartamento** | **kotlin.Int** |  |  [optional]
-**nombre** | **kotlin.String** |  |  [optional]
-**idPais** | **kotlin.Int** |  |  [optional]
+**idDepartamento** | **kotlin.Int** | Identificador del departamento |  [optional]
+**nombre** | **kotlin.String** | Nombre del departamento |  [optional]
+**idPais** | **kotlin.Int** | País del departamento |  [optional]
 
 
 

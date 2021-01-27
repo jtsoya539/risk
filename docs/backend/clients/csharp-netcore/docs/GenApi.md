@@ -4,21 +4,120 @@ All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**GuardarArchivo**](GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 [**ListarBarrios**](GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 [**ListarCiudades**](GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 [**ListarDepartamentos**](GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
+[**ListarErrores**](GenApi.md#listarerrores) | **GET** /Api/Gen/ListarErrores | ListarErrores
 [**ListarPaises**](GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 [**ListarSignificados**](GenApi.md#listarsignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+[**RecuperarArchivo**](GenApi.md#recuperararchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo
 [**RecuperarTexto**](GenApi.md#recuperartexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
+[**ReporteListarSignificados**](GenApi.md#reportelistarsignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
+[**ReporteVersionSistema**](GenApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
 [**SignificadoCodigo**](GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 [**ValorParametro**](GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
 [**VersionServicio**](GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
 [**VersionSistema**](GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema
 
 
+<a name="guardararchivo"></a>
+# **GuardarArchivo**
+> DatoRespuesta GuardarArchivo (string tabla, string campo, string referencia, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
+
+GuardarArchivo
+
+Permite guardar un archivo
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class GuardarArchivoExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var tabla = tabla_example;  // string | Tabla
+            var campo = campo_example;  // string | Campo
+            var referencia = referencia_example;  // string | Referencia
+            var archivo = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
+            var url = url_example;  // string |  (optional) 
+            var nombre = nombre_example;  // string |  (optional) 
+            var extension = extension_example;  // string |  (optional) 
+
+            try
+            {
+                // GuardarArchivo
+                DatoRespuesta result = apiInstance.GuardarArchivo(tabla, campo, referencia, archivo, url, nombre, extension);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.GuardarArchivo: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tabla** | **string**| Tabla | 
+ **campo** | **string**| Campo | 
+ **referencia** | **string**| Referencia | 
+ **archivo** | **System.IO.Stream****System.IO.Stream**|  | [optional] 
+ **url** | **string**|  | [optional] 
+ **nombre** | **string**|  | [optional] 
+ **extension** | **string**|  | [optional] 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="listarbarrios"></a>
 # **ListarBarrios**
-> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
+> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
 
 ListarBarrios
 
@@ -51,7 +150,7 @@ namespace Example
             var idCiudad = 56;  // int? | Identificador de la ciudad (optional) 
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
-            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
 
             try
             {
@@ -79,7 +178,7 @@ Name | Type | Description  | Notes
  **idCiudad** | **int?**| Identificador de la ciudad | [optional] 
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
 
 ### Return type
 
@@ -107,7 +206,7 @@ Name | Type | Description  | Notes
 
 <a name="listarciudades"></a>
 # **ListarCiudades**
-> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
+> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
 
 ListarCiudades
 
@@ -139,7 +238,7 @@ namespace Example
             var idDepartamento = 56;  // int? | Identificador del departamento (optional) 
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
-            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
 
             try
             {
@@ -166,7 +265,7 @@ Name | Type | Description  | Notes
  **idDepartamento** | **int?**| Identificador del departamento | [optional] 
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
 
 ### Return type
 
@@ -194,7 +293,7 @@ Name | Type | Description  | Notes
 
 <a name="listardepartamentos"></a>
 # **ListarDepartamentos**
-> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, string noPaginar = null)
+> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
 
 ListarDepartamentos
 
@@ -225,7 +324,7 @@ namespace Example
             var idPais = 56;  // int? | Identificador del país (optional) 
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
-            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
 
             try
             {
@@ -251,7 +350,7 @@ Name | Type | Description  | Notes
  **idPais** | **int?**| Identificador del país | [optional] 
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
 
 ### Return type
 
@@ -277,9 +376,94 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="listarerrores"></a>
+# **ListarErrores**
+> ErrorPaginaRespuesta ListarErrores (string idError = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+
+ListarErrores
+
+Obtiene una lista de errores
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ListarErroresExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var idError = idError_example;  // string | Identificador del error (optional) 
+            var pagina = 56;  // int? | Número de la página (optional) 
+            var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
+
+            try
+            {
+                // ListarErrores
+                ErrorPaginaRespuesta result = apiInstance.ListarErrores(idError, pagina, porPagina, noPaginar);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.ListarErrores: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idError** | **string**| Identificador del error | [optional] 
+ **pagina** | **int?**| Número de la página | [optional] 
+ **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
+
+### Return type
+
+[**ErrorPaginaRespuesta**](ErrorPaginaRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="listarpaises"></a>
 # **ListarPaises**
-> PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, string noPaginar = null)
+> PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, bool? noPaginar = null)
 
 ListarPaises
 
@@ -309,7 +493,7 @@ namespace Example
             var apiInstance = new GenApi(config);
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
-            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
 
             try
             {
@@ -334,7 +518,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
 
 ### Return type
 
@@ -362,7 +546,7 @@ Name | Type | Description  | Notes
 
 <a name="listarsignificados"></a>
 # **ListarSignificados**
-> SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, string noPaginar = null)
+> SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
 
 ListarSignificados
 
@@ -395,7 +579,7 @@ namespace Example
             var dominio = dominio_example;  // string | Dominio
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
-            var noPaginar = noPaginar_example;  // string | No paginar? (S/N) (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
 
             try
             {
@@ -421,7 +605,7 @@ Name | Type | Description  | Notes
  **dominio** | **string**| Dominio | 
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **string**| No paginar? (S/N) | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
 
 ### Return type
 
@@ -435,6 +619,94 @@ Name | Type | Description  | Notes
 
  - **Content-Type**: Not defined
  - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="recuperararchivo"></a>
+# **RecuperarArchivo**
+> System.IO.Stream RecuperarArchivo (string tabla, string campo, string referencia, int? version = null)
+
+RecuperarArchivo
+
+Permite recuperar un archivo
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class RecuperarArchivoExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var tabla = tabla_example;  // string | Tabla
+            var campo = campo_example;  // string | Campo
+            var referencia = referencia_example;  // string | Referencia
+            var version = 56;  // int? | Versión (optional) 
+
+            try
+            {
+                // RecuperarArchivo
+                System.IO.Stream result = apiInstance.RecuperarArchivo(tabla, campo, referencia, version);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.RecuperarArchivo: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **tabla** | **string**| Tabla | 
+ **campo** | **string**| Campo | 
+ **referencia** | **string**| Referencia | 
+ **version** | **int?**| Versión | [optional] 
+
+### Return type
+
+**System.IO.Stream**
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -521,6 +793,172 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 | **200** | Operación exitosa |  -  |
 | **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="reportelistarsignificados"></a>
+# **ReporteListarSignificados**
+> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null)
+
+ReporteListarSignificados
+
+Obtiene un reporte con los significados dentro de un dominio
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ReporteListarSignificadosExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var formato = ;  // FormatoReporte | Formato del reporte
+            var dominio = dominio_example;  // string | Dominio (optional) 
+
+            try
+            {
+                // ReporteListarSignificados
+                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.ReporteListarSignificados: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formato** | **FormatoReporte**| Formato del reporte | 
+ **dominio** | **string**| Dominio | [optional] 
+
+### Return type
+
+**System.IO.Stream**
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/octet-stream, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="reporteversionsistema"></a>
+# **ReporteVersionSistema**
+> System.IO.Stream ReporteVersionSistema (FormatoReporte formato)
+
+ReporteVersionSistema
+
+Obtiene un reporte con la versión actual del sistema
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ReporteVersionSistemaExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var formato = ;  // FormatoReporte | Formato del reporte
+
+            try
+            {
+                // ReporteVersionSistema
+                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.ReporteVersionSistema: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **formato** | **FormatoReporte**| Formato del reporte | 
+
+### Return type
+
+**System.IO.Stream**
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, application/octet-stream, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
 | **400** | Operación con error |  -  |
 | **500** | Error inesperado |  -  |
 | **501** | Servicio no implementado o inactivo |  -  |

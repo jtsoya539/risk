@@ -2,9 +2,9 @@
 
 Risk.API
 
-- API version: v1
+- API version: v0.1.0
 
-- Build date: 2020-12-02T14:12:51.469-03:00[America/Asuncion]
+- Build date: 2021-01-27T13:52:52.208-03:00[America/Asuncion]
 
 Risk Web API
 
@@ -43,7 +43,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>v1</version>
+  <version>v0.1.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -53,7 +53,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:v1"
+compile "org.openapitools:openapi-java-client:v0.1.0"
 ```
 
 ### Others
@@ -66,7 +66,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-- `target/openapi-java-client-v1.jar`
+- `target/openapi-java-client-v0.1.0.jar`
 - `target/lib/*.jar`
 
 ## Getting Started
@@ -127,20 +127,29 @@ Class | Method | HTTP request | Description
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
+*GenApi* | [**guardarArchivo**](docs/GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 *GenApi* | [**listarBarrios**](docs/GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 *GenApi* | [**listarCiudades**](docs/GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**listarDepartamentos**](docs/GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
+*GenApi* | [**listarErrores**](docs/GenApi.md#listarErrores) | **GET** /Api/Gen/ListarErrores | ListarErrores
 *GenApi* | [**listarPaises**](docs/GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 *GenApi* | [**listarSignificados**](docs/GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
+*GenApi* | [**recuperarArchivo**](docs/GenApi.md#recuperarArchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo
 *GenApi* | [**recuperarTexto**](docs/GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
+*GenApi* | [**reporteListarSignificados**](docs/GenApi.md#reporteListarSignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
+*GenApi* | [**reporteVersionSistema**](docs/GenApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
 *GenApi* | [**significadoCodigo**](docs/GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
 *GenApi* | [**valorParametro**](docs/GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
 *GenApi* | [**versionServicio**](docs/GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
 *GenApi* | [**versionSistema**](docs/GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
+*MsjApi* | [**activarMensajeria**](docs/MsjApi.md#activarMensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria
 *MsjApi* | [**cambiarEstadoMensajeria**](docs/MsjApi.md#cambiarEstadoMensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
+*MsjApi* | [**desactivarMensajeria**](docs/MsjApi.md#desactivarMensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria
 *MsjApi* | [**listarCorreosPendientes**](docs/MsjApi.md#listarCorreosPendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes
 *MsjApi* | [**listarMensajesPendientes**](docs/MsjApi.md#listarMensajesPendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes
 *MsjApi* | [**listarNotificacionesPendientes**](docs/MsjApi.md#listarNotificacionesPendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes
+*RepApi* | [**reporteListarSignificados**](docs/RepApi.md#reporteListarSignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
+*RepApi* | [**reporteVersionSistema**](docs/RepApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
 
 
 ## Documentation for Models
@@ -166,10 +175,15 @@ Class | Method | HTTP request | Description
  - [Dispositivo](docs/Dispositivo.md)
  - [EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
+ - [Error](docs/Error.md)
+ - [ErrorPagina](docs/ErrorPagina.md)
+ - [ErrorPaginaRespuesta](docs/ErrorPaginaRespuesta.md)
  - [EstadoMensajeria](docs/EstadoMensajeria.md)
  - [FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
+ - [FormatoReporte](docs/FormatoReporte.md)
  - [IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [InlineObject](docs/InlineObject.md)
+ - [InlineObject1](docs/InlineObject1.md)
  - [Mensaje](docs/Mensaje.md)
  - [MensajePagina](docs/MensajePagina.md)
  - [MensajePaginaRespuesta](docs/MensajePaginaRespuesta.md)

@@ -4,10 +4,10 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idCiudad** | **kotlin.Int** |  |  [optional]
-**nombre** | **kotlin.String** |  |  [optional]
-**idPais** | **kotlin.Int** |  |  [optional]
-**idDepartamento** | **kotlin.Int** |  |  [optional]
+**idCiudad** | **kotlin.Int** | Identificador de la ciudad |  [optional]
+**nombre** | **kotlin.String** | Nombre de la ciudad |  [optional]
+**idPais** | **kotlin.Int** | País de la ciudad |  [optional]
+**idDepartamento** | **kotlin.Int** | Departamento de la ciudad |  [optional]
 
 
 

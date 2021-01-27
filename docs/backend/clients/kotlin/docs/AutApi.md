@@ -439,7 +439,7 @@ Configure RiskAppKey:
 
 <a name="guardarAvatarUsuario"></a>
 # **guardarAvatarUsuario**
-> DatoRespuesta guardarAvatarUsuario(usuario, archivo, nombre, extension)
+> DatoRespuesta guardarAvatarUsuario(usuario, archivo, url, nombre, extension)
 
 GuardarAvatarUsuario
 
@@ -454,10 +454,11 @@ Permite guardar el avatar de un usuario
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
 val archivo : java.io.File = BINARY_DATA_HERE // java.io.File | 
+val url : kotlin.String = url_example // kotlin.String | 
 val nombre : kotlin.String = nombre_example // kotlin.String | 
 val extension : kotlin.String = extension_example // kotlin.String | 
 try {
-    val result : DatoRespuesta = apiInstance.guardarAvatarUsuario(usuario, archivo, nombre, extension)
+    val result : DatoRespuesta = apiInstance.guardarAvatarUsuario(usuario, archivo, url, nombre, extension)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#guardarAvatarUsuario")
@@ -474,6 +475,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
  **archivo** | **java.io.File**|  | [optional]
+ **url** | **kotlin.String**|  | [optional]
  **nombre** | **kotlin.String**|  | [optional]
  **extension** | **kotlin.String**|  | [optional]
 
@@ -561,7 +563,7 @@ Permite recuperar el avatar de un usuario
 
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
-val version : kotlin.Int = 56 // kotlin.Int | Version
+val version : kotlin.Int = 56 // kotlin.Int | Versión
 try {
     val result : java.io.File = apiInstance.recuperarAvatarUsuario(usuario, version)
     println(result)
@@ -579,7 +581,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
- **version** | **kotlin.Int**| Version | [optional]
+ **version** | **kotlin.Int**| Versión | [optional]
 
 ### Return type
 

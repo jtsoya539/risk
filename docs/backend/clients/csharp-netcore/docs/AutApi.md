@@ -674,7 +674,7 @@ Name | Type | Description  | Notes
 
 <a name="guardaravatarusuario"></a>
 # **GuardarAvatarUsuario**
-> DatoRespuesta GuardarAvatarUsuario (string usuario, System.IO.Stream archivo = null, string nombre = null, string extension = null)
+> DatoRespuesta GuardarAvatarUsuario (string usuario, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
 GuardarAvatarUsuario
 
@@ -706,13 +706,14 @@ namespace Example
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
             var archivo = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
+            var url = url_example;  // string |  (optional) 
             var nombre = nombre_example;  // string |  (optional) 
             var extension = extension_example;  // string |  (optional) 
 
             try
             {
                 // GuardarAvatarUsuario
-                DatoRespuesta result = apiInstance.GuardarAvatarUsuario(usuario, archivo, nombre, extension);
+                DatoRespuesta result = apiInstance.GuardarAvatarUsuario(usuario, archivo, url, nombre, extension);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -732,6 +733,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
  **archivo** | **System.IO.Stream****System.IO.Stream**|  | [optional] 
+ **url** | **string**|  | [optional] 
  **nombre** | **string**|  | [optional] 
  **extension** | **string**|  | [optional] 
 
@@ -872,7 +874,7 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
-            var version = 56;  // int? | Version (optional) 
+            var version = 56;  // int? | Versión (optional) 
 
             try
             {
@@ -896,7 +898,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
- **version** | **int?**| Version | [optional] 
+ **version** | **int?**| Versión | [optional] 
 
 ### Return type
 
