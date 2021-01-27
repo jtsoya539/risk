@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.475" />
     <PackageReference Include="Xamarin.CommunityToolkit" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1931" />
     <PackageReference Include="Xamarin.Essentials.Interfaces" Version="1.6.1" />
