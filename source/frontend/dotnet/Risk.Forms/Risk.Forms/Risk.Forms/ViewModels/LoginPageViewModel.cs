@@ -2,13 +2,16 @@
 using Prism.Commands;
 using Prism.Navigation;
 using Risk.API.Client.Api;
-using System.Threading.Tasks;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+using Xamarin.Essentials.Interfaces;
 
 namespace Risk.Forms.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IAutApi _autApi;
+        private readonly ISecureStorage _secureStorage;
 
         private string usuario;
         public string Usuario
@@ -51,19 +54,29 @@ namespace Risk.Forms.ViewModels
 
         async void ExecuteIniciarSesionCommand()
         {
-            //_autApi.IniciarSesion(new API.Client.Model.IniciarSesionRequestBody { Usuario = Usuario, Clave = Clave });
-            if (Usuario.Equals(Clave))
+            UserDialogs.Instance.ShowLoading("Cargando...");
+            SesionRespuesta sesionRespuesta = await _autApi.IniciarSesionAsync(new IniciarSesionRequestBody
             {
-                UserDialogs.Instance.ShowLoading("Cargando...");
-                await Task.Delay(2000);
+                Usuario = Usuario,
+                Clave = Clave
+            });
+
+            if (sesionRespuesta.Codigo.Equals("0"))
+            {
+                await _secureStorage.SetAsync("ACCESS_TOKEN", sesionRespuesta.Datos.AccessToken);
+                await _secureStorage.SetAsync("REFRESH_TOKEN", sesionRespuesta.Datos.RefreshToken);
+
+                var config = (Configuration)_autApi.Configuration;
+                config.AccessToken = sesionRespuesta.Datos.AccessToken;
+
                 App.IsUserLoggedIn = true;
                 await NavigationService.NavigateAsync("/NavigationPage/MainPage");
-                UserDialogs.Instance.HideLoading();
             }
             else
             {
                 IsErrorVisible = true;
             }
+            UserDialogs.Instance.HideLoading();
         }
 
         bool CanExecuteIniciarSesionCommand()
@@ -110,9 +123,10 @@ namespace Risk.Forms.ViewModels
             return true;
         }
 
-        public LoginPageViewModel(INavigationService navigationService, IAutApi autApi) : base(navigationService)
+        public LoginPageViewModel(INavigationService navigationService, IAutApi autApi, ISecureStorage secureStorage) : base(navigationService)
         {
             _autApi = autApi;
+            _secureStorage = secureStorage;
         }
     }
 }
