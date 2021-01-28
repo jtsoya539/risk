@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Risk.API.Client.Api;
 using Risk.API.Client.Model;
+using Risk.Forms.Helpers;
 using System;
 using Xamarin.Essentials.Interfaces;
 
@@ -32,7 +33,7 @@ namespace Risk.Forms.ViewModels
             string accessToken;
             try
             {
-                accessToken = await _secureStorage.GetAsync("ACCESS_TOKEN");
+                accessToken = await _secureStorage.GetAsync(RiskConstants.ACCESS_TOKEN);
             }
             catch (Exception ex)
             {
@@ -43,8 +44,8 @@ namespace Risk.Forms.ViewModels
 
             if (datoRespuesta.Codigo.Equals("0"))
             {
-                _secureStorage.Remove("ACCESS_TOKEN");
-                _secureStorage.Remove("REFRESH_TOKEN");
+                _secureStorage.Remove(RiskConstants.ACCESS_TOKEN);
+                _secureStorage.Remove(RiskConstants.REFRESH_TOKEN);
 
                 App.IsUserLoggedIn = false;
                 await NavigationService.NavigateAsync("/LoginPage");

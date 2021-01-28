@@ -4,6 +4,7 @@ using Prism.Navigation;
 using Risk.API.Client.Api;
 using Risk.API.Client.Client;
 using Risk.API.Client.Model;
+using Risk.Forms.Helpers;
 using Xamarin.Essentials.Interfaces;
 
 namespace Risk.Forms.ViewModels
@@ -12,6 +13,12 @@ namespace Risk.Forms.ViewModels
     {
         private readonly IAutApi _autApi;
         private readonly ISecureStorage _secureStorage;
+
+        public LoginPageViewModel(INavigationService navigationService, IAutApi autApi, ISecureStorage secureStorage) : base(navigationService)
+        {
+            _autApi = autApi;
+            _secureStorage = secureStorage;
+        }
 
         private string usuario;
         public string Usuario
@@ -63,8 +70,8 @@ namespace Risk.Forms.ViewModels
 
             if (sesionRespuesta.Codigo.Equals("0"))
             {
-                await _secureStorage.SetAsync("ACCESS_TOKEN", sesionRespuesta.Datos.AccessToken);
-                await _secureStorage.SetAsync("REFRESH_TOKEN", sesionRespuesta.Datos.RefreshToken);
+                await _secureStorage.SetAsync(RiskConstants.ACCESS_TOKEN, sesionRespuesta.Datos.AccessToken);
+                await _secureStorage.SetAsync(RiskConstants.REFRESH_TOKEN, sesionRespuesta.Datos.RefreshToken);
 
                 var config = (Configuration)_autApi.Configuration;
                 config.AccessToken = sesionRespuesta.Datos.AccessToken;
@@ -121,12 +128,6 @@ namespace Risk.Forms.ViewModels
         bool CanExecuteValidateClaveCommand()
         {
             return true;
-        }
-
-        public LoginPageViewModel(INavigationService navigationService, IAutApi autApi, ISecureStorage secureStorage) : base(navigationService)
-        {
-            _autApi = autApi;
-            _secureStorage = secureStorage;
         }
     }
 }
