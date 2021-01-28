@@ -14,7 +14,9 @@ namespace Risk.Forms.ViewModels
         private readonly IAutApi _autApi;
         private readonly ISecureStorage _secureStorage;
 
-        public LoginPageViewModel(INavigationService navigationService, IAutApi autApi, ISecureStorage secureStorage) : base(navigationService)
+        public LoginPageViewModel(INavigationService navigationService,
+            IAutApi autApi,
+            ISecureStorage secureStorage) : base(navigationService)
         {
             _autApi = autApi;
             _secureStorage = secureStorage;
@@ -48,13 +50,6 @@ namespace Risk.Forms.ViewModels
             set { SetProperty(ref isClaveInvalid, value); }
         }
 
-        private bool isErrorVisible;
-        public bool IsErrorVisible
-        {
-            get { return isErrorVisible; }
-            set { SetProperty(ref isErrorVisible, value); }
-        }
-
         private DelegateCommand iniciarSesionCommand;
         public DelegateCommand IniciarSesionCommand =>
             iniciarSesionCommand ?? (iniciarSesionCommand = new DelegateCommand(ExecuteIniciarSesionCommand, CanExecuteIniciarSesionCommand));
@@ -67,6 +62,7 @@ namespace Risk.Forms.ViewModels
                 Usuario = Usuario,
                 Clave = Clave
             });
+            UserDialogs.Instance.HideLoading();
 
             if (sesionRespuesta.Codigo.Equals("0"))
             {
@@ -81,9 +77,8 @@ namespace Risk.Forms.ViewModels
             }
             else
             {
-                IsErrorVisible = true;
+                await UserDialogs.Instance.AlertAsync(sesionRespuesta.Mensaje);
             }
-            UserDialogs.Instance.HideLoading();
         }
 
         bool CanExecuteIniciarSesionCommand()

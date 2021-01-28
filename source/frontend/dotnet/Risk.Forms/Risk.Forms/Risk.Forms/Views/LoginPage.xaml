@@ -7,14 +7,6 @@
     prism:ViewModelLocator.AutowireViewModel="True">
 
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-        <Label
-            BackgroundColor="Red"
-            FontSize="20"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsErrorVisible}"
-            Text="Credenciales inválidas"
-            TextColor="#000" />
-
         <StackLayout Orientation="Horizontal">
             <Label
                 FontSize="20"
