@@ -56,7 +56,8 @@ namespace Risk.Forms.ViewModels
             {
                 UserDialogs.Instance.ShowLoading("Cargando...");
                 await Task.Delay(2000);
-                await NavigationService.NavigateAsync("MainPage");
+                App.IsUserLoggedIn = true;
+                await NavigationService.NavigateAsync("/NavigationPage/MainPage");
                 UserDialogs.Instance.HideLoading();
             }
             else

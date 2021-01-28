@@ -1,10 +1,7 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using Acr.UserDialogs;
+using Prism.Commands;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Risk.Forms.ViewModels
 {
@@ -14,6 +11,24 @@ namespace Risk.Forms.ViewModels
             : base(navigationService)
         {
             Title = "Main Page";
+        }
+
+        private DelegateCommand finalizarSesionCommand;
+        public DelegateCommand FinalizarSesionCommand =>
+            finalizarSesionCommand ?? (finalizarSesionCommand = new DelegateCommand(ExecuteFinalizarSesionCommand, CanExecuteFinalizarSesionCommand));
+
+        async void ExecuteFinalizarSesionCommand()
+        {
+            UserDialogs.Instance.ShowLoading("Cargando...");
+            await Task.Delay(2000);
+            App.IsUserLoggedIn = false;
+            await NavigationService.NavigateAsync("/LoginPage");
+            UserDialogs.Instance.HideLoading();
+        }
+
+        bool CanExecuteFinalizarSesionCommand()
+        {
+            return true;
         }
     }
 }

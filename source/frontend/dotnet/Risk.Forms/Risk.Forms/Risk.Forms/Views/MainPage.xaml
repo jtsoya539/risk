@@ -5,8 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Title="{Binding Title}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding FinalizarSesionCommand}" Text="Cerrar sesión" />
+    </ContentPage.ToolbarItems>
+
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+        <Label Text="Bienvenido/a!" />
         <Label FontFamily="FontAwesomeSolid" Text="{StaticResource IconCoffee}" />
     </StackLayout>
 

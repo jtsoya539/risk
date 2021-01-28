@@ -12,6 +12,8 @@ namespace Risk.Forms
 {
     public partial class App
     {
+        public static bool IsUserLoggedIn { get; set; }
+
         public App(IPlatformInitializer initializer)
             : base(initializer)
         {
@@ -21,7 +23,14 @@ namespace Risk.Forms
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
+            if (IsUserLoggedIn)
+            {
+                await NavigationService.NavigateAsync("/NavigationPage/MainPage");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("/LoginPage");
+            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
