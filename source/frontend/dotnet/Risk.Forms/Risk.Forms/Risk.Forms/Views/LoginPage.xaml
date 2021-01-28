@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Risk.Forms.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Label
+            BackgroundColor="Red"
+            FontSize="20"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsErrorVisible}"
+            Text="Credenciales inválidas"
+            TextColor="#000" />
+
+        <StackLayout Orientation="Horizontal">
+            <Label
+                FontSize="20"
+                HorizontalTextAlignment="Start"
+                Text="Usuario:"
+                TextColor="#000"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+            <Entry
+                FontSize="18"
+                Placeholder="Usuario"
+                Text="{Binding Usuario, Mode=TwoWay}"
+                VerticalOptions="Center"
+                WidthRequest="200">
+                <Entry.Behaviors>
+                    <prism:EventToCommandBehavior Command="{Binding ValidateUsuarioCommand}" EventName="TextChanged" />
+                </Entry.Behaviors>
+            </Entry>
+        </StackLayout>
+        <Label
+            FontAttributes="Italic"
+            FontSize="12"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsUsuarioInvalid}"
+            Text="Debe ingresar Usuario"
+            TextColor="Red" />
+
+        <StackLayout Orientation="Horizontal">
+            <Label
+                FontSize="20"
+                HorizontalTextAlignment="Start"
+                Text="Clave:"
+                TextColor="#000"
+                VerticalOptions="Center"
+                WidthRequest="100" />
+            <Entry
+                FontSize="18"
+                IsPassword="True"
+                Placeholder="Clave"
+                Text="{Binding Clave, Mode=TwoWay}"
+                VerticalOptions="Center"
+                WidthRequest="200">
+                <Entry.Behaviors>
+                    <prism:EventToCommandBehavior Command="{Binding ValidateClaveCommand}" EventName="TextChanged" />
+                </Entry.Behaviors>
+            </Entry>
+        </StackLayout>
+        <Label
+            FontAttributes="Italic"
+            FontSize="12"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsClaveInvalid}"
+            Text="Debe ingresar Clave"
+            TextColor="Red" />
+
+        <StackLayout Margin="0,10" HorizontalOptions="Center">
+            <Button
+                BackgroundColor="#09C"
+                Command="{Binding IniciarSesionCommand}"
+                Text="Iniciar Sesión"
+                TextColor="#FFF"
+                WidthRequest="150" />
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
