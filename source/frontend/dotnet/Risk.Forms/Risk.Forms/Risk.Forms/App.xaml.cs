@@ -41,7 +41,7 @@ namespace Risk.Forms
                 deviceToken = string.Empty;
             }
 
-            DatoRespuesta datoRespuesta = await autApi.RegistrarDispositivoAsync(new RegistrarDispositivoRequestBody
+            DatoRespuesta datoRespuesta = autApi.RegistrarDispositivo(new RegistrarDispositivoRequestBody
             {
                 Dispositivo = new Dispositivo
                 {
