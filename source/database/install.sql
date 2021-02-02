@@ -86,7 +86,6 @@ prompt
 @@tables/t_usuarios.tab
 @@tables/t_roles.tab
 @@tables/t_parametros.tab
-@@tables/t_rol_parametros.tab
 @@tables/t_permisos.tab
 @@tables/t_rol_permisos.tab
 @@tables/t_rol_usuarios.tab
@@ -193,6 +192,7 @@ prompt
 @@triggers/gs_correo_adjuntos.trg
 @@triggers/gs_mensajes.trg
 @@triggers/gs_notificaciones.trg
+@@triggers/gb_operaciones.trg
 @@triggers/gb_reportes.trg
 @@triggers/gb_servicios.trg
 @@triggers/gb_trabajos.trg

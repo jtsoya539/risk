@@ -84,7 +84,6 @@ plugin plsqldoc generate t_permisos;
 plugin plsqldoc generate t_personas;
 plugin plsqldoc generate t_reportes;
 plugin plsqldoc generate t_roles;
-plugin plsqldoc generate t_rol_parametros;
 plugin plsqldoc generate t_rol_permisos;
 plugin plsqldoc generate t_rol_usuarios;
 plugin plsqldoc generate t_servicios;
@@ -163,6 +162,7 @@ prompt
 plugin plsqldoc generate gb_archivos;
 plugin plsqldoc generate gb_datos;
 plugin plsqldoc generate gb_mensajes;
+plugin plsqldoc generate gb_operaciones;
 plugin plsqldoc generate gb_personas;
 plugin plsqldoc generate gb_reportes;
 plugin plsqldoc generate gb_servicios;
