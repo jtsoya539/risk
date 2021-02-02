@@ -366,48 +366,39 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       WHILE i IS NOT NULL LOOP
       
         IF i_parametros(i).nombre NOT IN ('formato', 'pagina_parametros') THEN
-          l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i)
-                          .nombre || ' = ';
-        
-          IF i_parametros(i).valor IS NULL THEN
-            l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-          ELSE
+          IF i_parametros(i).valor IS NOT NULL THEN
             l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
+          
             IF l_typecode = dbms_types.typecode_varchar2 THEN
-              IF anydata.accessvarchar2(i_parametros(i).valor) IS NULL THEN
-                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-              ELSE
-                l_filtros_sql := l_filtros_sql ||
+              IF anydata.accessvarchar2(i_parametros(i).valor) IS NOT NULL THEN
+                l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i).nombre ||
+                                 ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                                            .valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
                                                                      '''',
                                                                      '''''') || '''');
               END IF;
             ELSIF l_typecode = dbms_types.typecode_number THEN
-              IF anydata.accessnumber(i_parametros(i).valor) IS NULL THEN
-                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-              ELSE
-                -- TODO
-                l_filtros_sql := l_filtros_sql ||
-                                 to_char(anydata.accessnumber(i_parametros(i)
-                                                              .valor),
-                                         'TM',
-                                         'NLS_NUMERIC_CHARACTERS = ''.,''');
+              IF anydata.accessnumber(i_parametros(i).valor) IS NOT NULL THEN
+                l_filtros_sql := l_filtros_sql || ' AND to_char(' || i_parametros(i).nombre ||
+                                 ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
+                                 dbms_assert.enquote_literal('''' ||
+                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
+                                                                     'TM',
+                                                                     'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
               END IF;
             ELSIF l_typecode = dbms_types.typecode_date THEN
-              IF anydata.accessdate(i_parametros(i).valor) IS NULL THEN
-                l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
-              ELSE
-                l_filtros_sql := l_filtros_sql || 'to_date(' ||
+              IF anydata.accessdate(i_parametros(i).valor) IS NOT NULL THEN
+                l_filtros_sql := l_filtros_sql || ' AND to_char(' || i_parametros(i).nombre ||
+                                 ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i)
-                                                                                        .valor),
-                                                                     'YYYY-MM-DD') || '''') ||
-                                 ', ''YYYY-MM-DD'')';
+                                                             to_char(anydata.accessdate(i_parametros(i).valor),
+                                                                     'YYYY-MM-DD') || '''');
               END IF;
             ELSE
-              l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
+              raise_application_error(-20000,
+                                      'Tipo de dato de filtro ' || i_parametros(i).nombre ||
+                                      ' no soportado');
             END IF;
           END IF;
         END IF;
@@ -417,6 +408,9 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     END IF;
   
     RETURN l_filtros_sql;
+  EXCEPTION
+    WHEN value_error THEN
+      raise_application_error(-20000, 'Valor no permitido');
   END;
 
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,
