@@ -377,29 +377,34 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               IF anydata.accessvarchar2(i_parametros(i).valor) IS NULL THEN
                 l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
               ELSE
-                l_filtros_sql := l_filtros_sql || '''' ||
-                                 REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                .valor),
-                                         '''',
-                                         '''''') || '''';
+                l_filtros_sql := l_filtros_sql ||
+                                 dbms_assert.enquote_literal('''' ||
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
+                                                                                            .valor),
+                                                                     '''',
+                                                                     '''''') || '''');
               END IF;
             ELSIF l_typecode = dbms_types.typecode_number THEN
               IF anydata.accessnumber(i_parametros(i).valor) IS NULL THEN
                 l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
               ELSE
+                -- TODO
                 l_filtros_sql := l_filtros_sql ||
                                  to_char(anydata.accessnumber(i_parametros(i)
-                                                              .valor));
+                                                              .valor),
+                                         'TM',
+                                         'NLS_NUMERIC_CHARACTERS = ''.,''');
               END IF;
             ELSIF l_typecode = dbms_types.typecode_date THEN
               IF anydata.accessdate(i_parametros(i).valor) IS NULL THEN
                 l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
               ELSE
-                l_filtros_sql := l_filtros_sql || 'to_date(''' ||
-                                 to_char(anydata.accessdate(i_parametros(i)
-                                                            .valor),
-                                         'YYYY-MM-DD') ||
-                                 ''', ''YYYY-MM-DD'') ';
+                l_filtros_sql := l_filtros_sql || 'to_date(' ||
+                                 dbms_assert.enquote_literal('''' ||
+                                                             to_char(anydata.accessdate(i_parametros(i)
+                                                                                        .valor),
+                                                                     'YYYY-MM-DD') || '''') ||
+                                 ', ''YYYY-MM-DD'')';
               END IF;
             ELSE
               l_filtros_sql := l_filtros_sql || i_parametros(i).nombre;
