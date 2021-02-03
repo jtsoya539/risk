@@ -46,6 +46,7 @@ namespace Risk.API.Services
         private const string NOMBRE_LISTAR_CIUDADES = "LISTAR_CIUDADES";
         private const string NOMBRE_LISTAR_BARRIOS = "LISTAR_BARRIOS";
         private const string NOMBRE_LISTAR_ERRORES = "LISTAR_ERRORES";
+        private const string NOMBRE_LISTAR_APLICACIONES = "LISTAR_APLICACIONES";
         private const string NOMBRE_RECUPERAR_ARCHIVO = "RECUPERAR_ARCHIVO";
         private const string NOMBRE_GUARDAR_ARCHIVO = "GUARDAR_ARCHIVO";
         private const string NOMBRE_RECUPERAR_TEXTO = "RECUPERAR_TEXTO";
@@ -266,6 +267,32 @@ namespace Risk.API.Services
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Error>, YPagina<YError>>(entityRsp, datos);
+        }
+
+        public Respuesta<Pagina<Aplicacion>> ListarAplicaciones(string idAplicacion = null, string claveAplicacion = null, PaginaParametros paginaParametros = null)
+        {
+            JObject prms = new JObject();
+            prms.Add("id_aplicacion", idAplicacion);
+            prms.Add("clave", claveAplicacion);
+
+            if (paginaParametros != null)
+            {
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetYPaginaParametrosFromModel(paginaParametros)));
+            }
+
+            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+                NOMBRE_LISTAR_APLICACIONES,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<SqlAplicacion>>>(rsp);
+
+            Pagina<Aplicacion> datos = null;
+            if (entityRsp.Datos != null)
+            {
+                datos = EntitiesMapper.GetPaginaFromEntity<Aplicacion, SqlAplicacion>(entityRsp.Datos, EntitiesMapper.GetAplicacionListFromEntity(entityRsp.Datos.Elementos));
+            }
+
+            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Aplicacion>, YPagina<SqlAplicacion>>(entityRsp, datos);
         }
 
         public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version = null)

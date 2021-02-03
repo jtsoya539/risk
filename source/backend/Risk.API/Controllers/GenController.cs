@@ -230,6 +230,30 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [AllowAnonymous]
+        [HttpGet("ListarAplicaciones")]
+        [SwaggerOperation(OperationId = "ListarAplicaciones", Summary = "ListarAplicaciones", Description = "Obtiene una lista de aplicaciones")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Aplicacion>>))]
+        public IActionResult ListarAplicaciones([FromQuery, SwaggerParameter(Description = "Identificador de la aplicacion", Required = false)] string idAplicacion,
+            [FromQuery, SwaggerParameter(Description = "Clave de la aplicacion", Required = false)] string claveAplicacion,
+            [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
+            [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
+            [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
+        {
+            PaginaParametros paginaParametros = new PaginaParametros
+            {
+                Pagina = pagina,
+                PorPagina = porPagina,
+                NoPaginar = noPaginar
+            };
+            var respuesta = _genService.ListarAplicaciones(idAplicacion, claveAplicacion, paginaParametros);
+
+            respuesta.Datos = ProcesarPagina(respuesta.Datos);
+
+            return ProcesarRespuesta(respuesta);
+        }
+
         [HttpGet("RecuperarArchivo")]
         [SwaggerOperation(OperationId = "RecuperarArchivo", Summary = "RecuperarArchivo", Description = "Permite recuperar un archivo")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
