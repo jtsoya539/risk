@@ -41,7 +41,12 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_FECHA_ACTUAL">f_fecha_actual</A>&nbsp;&nbsp;
+<A HREF="#F_FECHA">f_fecha</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_USUARIO">f_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -264,12 +269,21 @@ FUNCTION f_es_produccion RETURN BOOLEAN
 
 </PRE>
 <HR>
-<A NAME="F_FECHA_ACTUAL"></A>
+<A NAME="F_FECHA"></A>
 <P CLASS="TYPE_TITLE">
-f_fecha_actual
+f_fecha
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_fecha_actual RETURN DATE
+FUNCTION f_fecha RETURN DATE
+
+</PRE>
+<HR>
+<A NAME="F_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_usuario RETURN VARCHAR2
 
 </PRE>
 <HR>

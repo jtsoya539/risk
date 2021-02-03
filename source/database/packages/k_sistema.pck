@@ -45,7 +45,9 @@ CREATE OR REPLACE PACKAGE k_sistema IS
 
   FUNCTION f_es_produccion RETURN BOOLEAN;
 
-  FUNCTION f_fecha_actual RETURN DATE;
+  FUNCTION f_fecha RETURN DATE;
+
+  FUNCTION f_usuario RETURN VARCHAR2;
 
   /**
   Retorna el valor de un parámetro en la sesión, si no existe retorna null
@@ -128,9 +130,14 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
     RETURN upper(k_util.f_valor_parametro('BASE_DATOS_PRODUCCION')) = upper(k_util.f_base_datos);
   END;
 
-  FUNCTION f_fecha_actual RETURN DATE IS
+  FUNCTION f_fecha RETURN DATE IS
   BEGIN
     RETURN f_valor_parametro_date(c_fecha);
+  END;
+
+  FUNCTION f_usuario RETURN VARCHAR2 IS
+  BEGIN
+    RETURN f_valor_parametro_string(c_usuario);
   END;
 
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata IS
