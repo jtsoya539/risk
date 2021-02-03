@@ -496,8 +496,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       RAISE ex_error_parametro;
     END IF;
   
-    l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql ||
-                      ') WHERE 1 = 1' ||
+    l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ') WHERE ' ||
                       k_operacion.f_filtros_sql(i_parametros);
     -- Registra SQL
     lp_registrar_sql_ejecucion(i_id_servicio, l_consulta_sql);

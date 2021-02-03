@@ -360,45 +360,68 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     i             INTEGER;
     l_typeinfo    anytype;
     l_typecode    PLS_INTEGER;
+    l_seen_one    BOOLEAN := FALSE;
   BEGIN
     IF i_parametros IS NOT NULL THEN
       i := i_parametros.first;
       WHILE i IS NOT NULL LOOP
       
-        IF i_parametros(i).nombre NOT IN ('formato', 'pagina_parametros') THEN
+        IF lower(i_parametros(i).nombre) NOT IN
+           ('formato', 'pagina_parametros') THEN
           IF i_parametros(i).valor IS NOT NULL THEN
             l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
           
             IF l_typecode = dbms_types.typecode_varchar2 THEN
               IF anydata.accessvarchar2(i_parametros(i).valor) IS NOT NULL THEN
-                l_filtros_sql := l_filtros_sql || ' AND ' || i_parametros(i).nombre ||
-                                 ' = ' ||
+                l_filtros_sql := l_filtros_sql || CASE l_seen_one
+                                   WHEN TRUE THEN
+                                    ' AND '
+                                   ELSE
+                                    ' '
+                                 END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
+                                                                                            .valor),
                                                                      '''',
                                                                      '''''') || '''');
+                l_seen_one    := TRUE;
               END IF;
             ELSIF l_typecode = dbms_types.typecode_number THEN
               IF anydata.accessnumber(i_parametros(i).valor) IS NOT NULL THEN
-                l_filtros_sql := l_filtros_sql || ' AND to_char(' || i_parametros(i).nombre ||
+                l_filtros_sql := l_filtros_sql || CASE l_seen_one
+                                   WHEN TRUE THEN
+                                    ' AND '
+                                   ELSE
+                                    ' '
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i)
+                                                                                          .valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
+                l_seen_one    := TRUE;
               END IF;
             ELSIF l_typecode = dbms_types.typecode_date THEN
               IF anydata.accessdate(i_parametros(i).valor) IS NOT NULL THEN
-                l_filtros_sql := l_filtros_sql || ' AND to_char(' || i_parametros(i).nombre ||
-                                 ', ''YYYY-MM-DD'') = ' ||
+                l_filtros_sql := l_filtros_sql || CASE l_seen_one
+                                   WHEN TRUE THEN
+                                    ' AND '
+                                   ELSE
+                                    ' '
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre || ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i).valor),
+                                                             to_char(anydata.accessdate(i_parametros(i)
+                                                                                        .valor),
                                                                      'YYYY-MM-DD') || '''');
+                l_seen_one    := TRUE;
               END IF;
             ELSE
               raise_application_error(-20000,
-                                      'Tipo de dato de filtro ' || i_parametros(i).nombre ||
-                                      ' no soportado');
+                                      'Tipo de dato de filtro ' || i_parametros(i)
+                                      .nombre || ' no soportado');
             END IF;
           END IF;
         END IF;
