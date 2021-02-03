@@ -254,7 +254,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   PROCEDURE p_limpiar_historial IS
   BEGIN
     UPDATE t_reportes
-       SET cantidad_ejecuciones = NULL, fecha_ultima_ejecucion = NULL;
+       SET cantidad_ejecuciones   = NULL,
+           fecha_ultima_ejecucion = NULL,
+           sql_ultima_ejecucion   = NULL;
   END;
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,

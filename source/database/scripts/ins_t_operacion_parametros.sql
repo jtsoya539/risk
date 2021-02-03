@@ -1,7 +1,6 @@
 prompt Importing table t_operacion_parametros...
 set feedback off
 set define off
-
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (0, 'DIRECCION_IP', 1, 'S', 'S', null, null, 'N', null, null, null);
 
@@ -283,5 +282,14 @@ values (51, 'ID_ERROR', 1, 'S', 'S', null, null, 'N', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (51, 'PAGINA_PARAMETROS', 10, 'S', 'O', 'Y_PAGINA_PARAMETROS', null, 'N', null, null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (59, 'ID_APLICACION', 1, 'S', 'S', null, 5, 'N', null, 'Identificador de la aplicación', null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (59, 'CLAVE', 2, 'S', 'S', null, 50, 'N', null, 'Clave de la aplicación', null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (59, 'PAGINA_PARAMETROS', 10, 'S', 'O', 'Y_PAGINA_PARAMETROS', null, 'N', null, null, null);
 
 prompt Done.

@@ -275,7 +275,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   PROCEDURE p_limpiar_historial IS
   BEGIN
     UPDATE t_servicios
-       SET cantidad_ejecuciones = NULL, fecha_ultima_ejecucion = NULL;
+       SET cantidad_ejecuciones   = NULL,
+           fecha_ultima_ejecucion = NULL,
+           sql_ultima_ejecucion   = NULL;
   END;
 
   PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,

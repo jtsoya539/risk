@@ -1,7 +1,6 @@
 prompt Importing table t_rol_permisos...
 set feedback off
 set define off
-
 insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)
 values (2, 'REPORTE:GEN:LISTAR_SIGNIFICADOS', 'N', 'N', 'N', 'N');
 
@@ -64,6 +63,9 @@ values (2, 'SERVICIO:AUT:VALIDAR_SESION', 'N', 'N', 'N', 'N');
 
 insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)
 values (2, 'SERVICIO:GEN:GUARDAR_ARCHIVO', 'N', 'N', 'N', 'N');
+
+insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)
+values (2, 'SERVICIO:GEN:LISTAR_APLICACIONES', 'N', 'N', 'N', 'N');
 
 insert into t_rol_permisos (ID_ROL, ID_PERMISO, CONSULTAR, INSERTAR, ACTUALIZAR, ELIMINAR)
 values (2, 'SERVICIO:GEN:LISTAR_BARRIOS', 'N', 'N', 'N', 'N');

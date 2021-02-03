@@ -110,4 +110,7 @@ values (50, 'T', null, null);
 insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION)
 values (51, 'T', null, null);
 
+insert into t_servicios (ID_SERVICIO, TIPO, CANTIDAD_EJECUCIONES, FECHA_ULTIMA_EJECUCION, CONSULTA_SQL, SQL_ULTIMA_EJECUCION)
+values (59, 'C', null, null, 'SELECT * FROM t_aplicaciones', null);
+
 prompt Done.
