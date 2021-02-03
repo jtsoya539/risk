@@ -416,7 +416,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       RAISE k_servicio.ex_error_parametro;
     END IF;
   
-    l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ') WHERE ' ||
+    l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ')' ||
                       k_operacion.f_filtros_sql(i_parametros);
     -- Registra SQL
     lp_registrar_sql_ejecucion(i_id_reporte, l_consulta_sql);

@@ -377,7 +377,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                    WHEN TRUE THEN
                                     ' AND '
                                    ELSE
-                                    ' '
+                                    ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
                                                              REPLACE(anydata.accessvarchar2(i_parametros(i)
@@ -392,7 +392,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                    WHEN TRUE THEN
                                     ' AND '
                                    ELSE
-                                    ' '
+                                    ' WHERE '
                                  END || 'to_char(' || i_parametros(i)
                                 .nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
@@ -409,7 +409,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                    WHEN TRUE THEN
                                     ' AND '
                                    ELSE
-                                    ' '
+                                    ' WHERE '
                                  END || 'to_char(' || i_parametros(i)
                                 .nombre || ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
