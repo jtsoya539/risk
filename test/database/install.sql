@@ -55,9 +55,22 @@ prompt
 prompt Creando tests de paquetes...
 prompt -----------------------------------
 prompt
+@@packages/test_k_aplicacion.pck
+@@packages/test_k_archivo.pck
+@@packages/test_k_auditoria.pck
+@@packages/test_k_autenticacion.pck
+@@packages/test_k_autorizacion.pck
 @@packages/test_k_dato.pck
+@@packages/test_k_dispositivo.pck
+@@packages/test_k_error.pck
+@@packages/test_k_mensajeria.pck
 @@packages/test_k_operacion.pck
+@@packages/test_k_reporte.pck
+@@packages/test_k_servicio.pck
+@@packages/test_k_sesion.pck
 @@packages/test_k_sistema.pck
+@@packages/test_k_trabajo.pck
+@@packages/test_k_usuario.pck
 @@packages/test_k_util.pck
 
 prompt

@@ -55,9 +55,22 @@ prompt
 prompt Borrando tests de paquetes...
 prompt -----------------------------------
 prompt
+drop package test_k_aplicacion;
+drop package test_k_archivo;
+drop package test_k_auditoria;
+drop package test_k_autenticacion;
+drop package test_k_autorizacion;
 drop package test_k_dato;
+drop package test_k_dispositivo;
+drop package test_k_error;
+drop package test_k_mensajeria;
 drop package test_k_operacion;
+drop package test_k_reporte;
+drop package test_k_servicio;
+drop package test_k_sesion;
 drop package test_k_sistema;
+drop package test_k_trabajo;
+drop package test_k_usuario;
 drop package test_k_util;
 
 prompt
