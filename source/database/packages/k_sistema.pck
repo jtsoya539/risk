@@ -43,28 +43,73 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   c_id_sesion        CONSTANT VARCHAR2(50) := 'ID_SESION';
   c_id_usuario       CONSTANT VARCHAR2(50) := 'ID_USUARIO';
 
+  /**
+  Indica si el ambiente de Base de Datos es de producción
+  
+  %author jtsoya539 4/2/2021 08:56:25
+  %return Indicador de si el ambiente de Base de Datos es de producción
+  */
   FUNCTION f_es_produccion RETURN BOOLEAN;
 
+  /**
+  Retorna el valor del parámetro FECHA en la sesión
+  
+  %author jtsoya539 4/2/2021 08:54:38
+  %return Valor del parámetro FECHA
+  */
   FUNCTION f_fecha RETURN DATE;
 
+  /**
+  Retorna el valor del parámetro USUARIO en la sesión
+  
+  %author jtsoya539 4/2/2021 08:54:38
+  %return Valor del parámetro USUARIO
+  */
   FUNCTION f_usuario RETURN VARCHAR2;
 
   /**
-  Retorna el valor de un parámetro en la sesión, si no existe retorna null
+  Retorna el valor de un parámetro en la sesión
   
   %author jtsoya539 27/3/2020 16:59:44
   %param i_parametro Nombre del parámetro
-  %return Valor del parámetro
-  %raises <exception>
+  %return Valor del parámetro, si no existe retorna null
   */
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata;
 
+  /**
+  Retorna el valor de un parámetro de tipo string en la sesión
+  
+  %author jtsoya539 4/2/2021 08:36:10
+  %param i_parametro Nombre del parámetro
+  %return Valor del parámetro de tipo string, si no existe retorna null
+  */
   FUNCTION f_valor_parametro_string(i_parametro IN VARCHAR2) RETURN VARCHAR2;
 
+  /**
+  Retorna el valor de un parámetro de tipo number en la sesión
+  
+  %author jtsoya539 4/2/2021 08:36:10
+  %param i_parametro Nombre del parámetro
+  %return Valor del parámetro de tipo number, si no existe retorna null
+  */
   FUNCTION f_valor_parametro_number(i_parametro IN VARCHAR2) RETURN NUMBER;
 
+  /**
+  Retorna el valor de un parámetro de tipo boolean en la sesión
+  
+  %author jtsoya539 4/2/2021 08:36:10
+  %param i_parametro Nombre del parámetro
+  %return Valor del parámetro de tipo boolean, si no existe retorna null
+  */
   FUNCTION f_valor_parametro_boolean(i_parametro IN VARCHAR2) RETURN BOOLEAN;
 
+  /**
+  Retorna el valor de un parámetro de tipo date en la sesión
+  
+  %author jtsoya539 4/2/2021 08:36:10
+  %param i_parametro Nombre del parámetro
+  %return Valor del parámetro de tipo date, si no existe retorna null
+  */
   FUNCTION f_valor_parametro_date(i_parametro IN VARCHAR2) RETURN DATE;
 
   /**
@@ -73,38 +118,68 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   %author jtsoya539 27/3/2020 17:00:28
   %param i_parametro Nombre del parámetro
   %param i_valor Valor del parámetro
-  %raises <exception>
   */
   PROCEDURE p_definir_parametro(i_parametro IN VARCHAR2,
                                 i_valor     IN anydata);
 
+  /**
+  Define el valor de un parámetro de tipo string en la sesión
+  
+  %author jtsoya539 4/2/2021 08:42:00
+  %param i_parametro Nombre del parámetro de tipo string
+  %param i_valor Valor del parámetro de tipo string
+  */
   PROCEDURE p_definir_parametro_string(i_parametro IN VARCHAR2,
                                        i_valor     IN VARCHAR2);
 
+  /**
+  Define el valor de un parámetro de tipo number en la sesión
+  
+  %author jtsoya539 4/2/2021 08:42:00
+  %param i_parametro Nombre del parámetro de tipo number
+  %param i_valor Valor del parámetro de tipo number
+  */
   PROCEDURE p_definir_parametro_number(i_parametro IN VARCHAR2,
                                        i_valor     IN NUMBER);
 
+  /**
+  Define el valor de un parámetro de tipo boolean en la sesión
+  
+  %author jtsoya539 4/2/2021 08:42:00
+  %param i_parametro Nombre del parámetro de tipo boolean
+  %param i_valor Valor del parámetro de tipo boolean
+  */
   PROCEDURE p_definir_parametro_boolean(i_parametro IN VARCHAR2,
                                         i_valor     IN BOOLEAN);
 
+  /**
+  Define el valor de un parámetro de tipo date en la sesión
+  
+  %author jtsoya539 4/2/2021 08:42:00
+  %param i_parametro Nombre del parámetro de tipo date
+  %param i_valor Valor del parámetro de tipo date
+  */
   PROCEDURE p_definir_parametro_date(i_parametro IN VARCHAR2,
                                      i_valor     IN DATE);
+
+  /**
+  Define el valor de los parámetros por defecto de la sesión
+  
+  %author jtsoya539 4/2/2021 08:48:40
+  */
+  PROCEDURE p_inicializar_parametros;
 
   /**
   Define el valor de todos los parámetros de la sesión a null
   
   %author jtsoya539 27/3/2020 17:01:24
-  %raises <exception>
   */
-  PROCEDURE p_inicializar_parametros;
-
   PROCEDURE p_limpiar_parametros;
 
   /**
   Elimina todos los parámetros definidos en la sesión
   
   %author jtsoya539 27/3/2020 17:02:14
-  %raises <exception>
   */
   PROCEDURE p_eliminar_parametros;
 
@@ -112,7 +187,6 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   Imprime todos los parámetros definidos en la sesión
   
   %author jtsoya539 27/3/2020 17:02:58
-  %raises <exception>
   */
   PROCEDURE p_imprimir_parametros;
 

@@ -38,42 +38,42 @@ Program units
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ES_PRODUCCION">f_es_produccion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Indica si el ambiente de Base de Datos es de producci&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_FECHA">f_fecha</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el valor del par&#225;metro FECHA en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_USUARIO">f_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el valor del par&#225;metro USUARIO en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO">f_valor_parametro</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Retorna el valor de un par&#225;metro en la sesi&#243;n, si no existe retorna null
+Retorna el valor de un par&#225;metro en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO_STRING">f_valor_parametro_string</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el valor de un par&#225;metro de tipo string en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO_NUMBER">f_valor_parametro_number</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el valor de un par&#225;metro de tipo number en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO_BOOLEAN">f_valor_parametro_boolean</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el valor de un par&#225;metro de tipo boolean en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO_DATE">f_valor_parametro_date</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Retorna el valor de un par&#225;metro de tipo date en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO">p_definir_parametro</A>&nbsp;&nbsp;
@@ -83,32 +83,32 @@ Define el valor de un par&#225;metro en la sesi&#243;n
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO_STRING">p_definir_parametro_string</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Define el valor de un par&#225;metro de tipo string en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO_NUMBER">p_definir_parametro_number</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Define el valor de un par&#225;metro de tipo number en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO_BOOLEAN">p_definir_parametro_boolean</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Define el valor de un par&#225;metro de tipo boolean en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DEFINIR_PARAMETRO_DATE">p_definir_parametro_date</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Define el valor de un par&#225;metro de tipo date en la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_INICIALIZAR_PARAMETROS">p_inicializar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Define el valor de todos los par&#225;metros de la sesi&#243;n a null
+Define el valor de los par&#225;metros por defecto de la sesi&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_LIMPIAR_PARAMETROS">p_limpiar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
+Define el valor de todos los par&#225;metros de la sesi&#243;n a null
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_ELIMINAR_PARAMETROS">p_eliminar_parametros</A>&nbsp;&nbsp;
@@ -268,6 +268,35 @@ f_es_produccion
 FUNCTION f_es_produccion RETURN BOOLEAN
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Indica si el ambiente de Base de Datos es de producci&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:56:25<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Indicador de si el ambiente de Base de Datos es de producci&#243;n<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_FECHA"></A>
 <P CLASS="TYPE_TITLE">
@@ -277,6 +306,35 @@ f_fecha
 FUNCTION f_fecha RETURN DATE
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor del par&#225;metro FECHA en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:54:38<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro FECHA<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_USUARIO"></A>
 <P CLASS="TYPE_TITLE">
@@ -286,6 +344,35 @@ f_usuario
 FUNCTION f_usuario RETURN VARCHAR2
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor del par&#225;metro USUARIO en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:54:38<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro USUARIO<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_VALOR_PARAMETRO"></A>
 <P CLASS="TYPE_TITLE">
@@ -296,7 +383,7 @@ FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Retorna el valor de un par&#225;metro en la sesi&#243;n, si no existe retorna null<br>
+Retorna el valor de un par&#225;metro en la sesi&#243;n<br>
 
 <BR>
 </P>
@@ -326,19 +413,6 @@ Nombre del par&#225;metro<br>
 </TD></TR>
 </TABLE>
 <BR>
-<A NAME="Raises"></A>
-<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
-Raises
-</TD></TR></TABLE>
-<TABLE CLASS="LIST_TABLE">
-<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-<exception>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-</TABLE>
-<BR>
 <A NAME="Returns"></A>
 <TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
 Returns
@@ -346,7 +420,7 @@ Returns
 <TABLE CLASS="LIST_TABLE">
 <TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Valor del par&#225;metro<br>
+Valor del par&#225;metro, si no existe retorna null<br>
 
 </TD></TR>
 </TABLE>
@@ -360,6 +434,49 @@ f_valor_parametro_string
 FUNCTION f_valor_parametro_string(i_parametro IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor de un par&#225;metro de tipo string en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:36:10<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo string, si no existe retorna null<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_VALOR_PARAMETRO_NUMBER"></A>
 <P CLASS="TYPE_TITLE">
@@ -369,6 +486,49 @@ f_valor_parametro_number
 FUNCTION f_valor_parametro_number(i_parametro IN VARCHAR2) RETURN NUMBER
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor de un par&#225;metro de tipo number en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:36:10<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo number, si no existe retorna null<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_VALOR_PARAMETRO_BOOLEAN"></A>
 <P CLASS="TYPE_TITLE">
@@ -378,6 +538,49 @@ f_valor_parametro_boolean
 FUNCTION f_valor_parametro_boolean(i_parametro IN VARCHAR2) RETURN BOOLEAN
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor de un par&#225;metro de tipo boolean en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:36:10<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo boolean, si no existe retorna null<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_VALOR_PARAMETRO_DATE"></A>
 <P CLASS="TYPE_TITLE">
@@ -387,6 +590,49 @@ f_valor_parametro_date
 FUNCTION f_valor_parametro_date(i_parametro IN VARCHAR2) RETURN DATE
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor de un par&#225;metro de tipo date en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:36:10<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo date, si no existe retorna null<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_DEFINIR_PARAMETRO"></A>
 <P CLASS="TYPE_TITLE">
@@ -435,19 +681,6 @@ Valor del par&#225;metro<br>
 </TD></TR>
 </TABLE>
 <BR>
-<A NAME="Raises"></A>
-<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
-Raises
-</TD></TR></TABLE>
-<TABLE CLASS="LIST_TABLE">
-<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-<exception>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-</TABLE>
-<BR>
 <HR>
 <A NAME="P_DEFINIR_PARAMETRO_STRING"></A>
 <P CLASS="TYPE_TITLE">
@@ -458,6 +691,44 @@ PROCEDURE p_definir_parametro_string(i_parametro IN VARCHAR2,
                                      i_valor     IN VARCHAR2)
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de un par&#225;metro de tipo string en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:42:00<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro de tipo string<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_valor&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo string<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_DEFINIR_PARAMETRO_NUMBER"></A>
 <P CLASS="TYPE_TITLE">
@@ -468,6 +739,44 @@ PROCEDURE p_definir_parametro_number(i_parametro IN VARCHAR2,
                                      i_valor     IN NUMBER)
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de un par&#225;metro de tipo number en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:42:00<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro de tipo number<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_valor&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo number<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_DEFINIR_PARAMETRO_BOOLEAN"></A>
 <P CLASS="TYPE_TITLE">
@@ -478,6 +787,44 @@ PROCEDURE p_definir_parametro_boolean(i_parametro IN VARCHAR2,
                                       i_valor     IN BOOLEAN)
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de un par&#225;metro de tipo boolean en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:42:00<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro de tipo boolean<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_valor&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo boolean<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_DEFINIR_PARAMETRO_DATE"></A>
 <P CLASS="TYPE_TITLE">
@@ -488,6 +835,44 @@ PROCEDURE p_definir_parametro_date(i_parametro IN VARCHAR2,
                                    i_valor     IN DATE)
 
 </PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de un par&#225;metro de tipo date en la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:42:00<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_parametro&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Nombre del par&#225;metro de tipo date<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_valor&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor del par&#225;metro de tipo date<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_INICIALIZAR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">
@@ -495,6 +880,32 @@ p_inicializar_parametros
 </P>
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_inicializar_parametros
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Define el valor de los par&#225;metros por defecto de la sesi&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 4/2/2021 08:48:40<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_LIMPIAR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+p_limpiar_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_limpiar_parametros
 
 </PRE>
 <P CLASS="DESC_TEXT">
@@ -514,28 +925,6 @@ jtsoya539 27/3/2020 17:01:24<br>
 </TD></TR>
 </TABLE>
 <BR>
-<A NAME="Raises"></A>
-<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
-Raises
-</TD></TR></TABLE>
-<TABLE CLASS="LIST_TABLE">
-<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-<exception>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-</TABLE>
-<BR>
-<HR>
-<A NAME="P_LIMPIAR_PARAMETROS"></A>
-<P CLASS="TYPE_TITLE">
-p_limpiar_parametros
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_limpiar_parametros
-
-</PRE>
 <HR>
 <A NAME="P_ELIMINAR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">
@@ -562,19 +951,6 @@ jtsoya539 27/3/2020 17:02:14<br>
 </TD></TR>
 </TABLE>
 <BR>
-<A NAME="Raises"></A>
-<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
-Raises
-</TD></TR></TABLE>
-<TABLE CLASS="LIST_TABLE">
-<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-<exception>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-</TABLE>
-<BR>
 <HR>
 <A NAME="P_IMPRIMIR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">
@@ -597,19 +973,6 @@ Author
 <TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 jtsoya539 27/3/2020 17:02:58<br>
-
-</TD></TR>
-</TABLE>
-<BR>
-<A NAME="Raises"></A>
-<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
-Raises
-</TD></TR></TABLE>
-<TABLE CLASS="LIST_TABLE">
-<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-<exception>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 </TABLE>
