@@ -73,8 +73,7 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
   FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2 IS
     l_tipo_error VARCHAR2(3);
   BEGIN
-    /*IF i_sqlcode >= -20999 AND i_sqlcode <= -20000 THEN*/
-    IF i_sqlcode >= 20000 AND i_sqlcode <= 20999 THEN
+    IF abs(i_sqlcode) BETWEEN 20000 AND 20999 THEN
       l_tipo_error := c_user_defined_error;
     ELSE
       l_tipo_error := c_oracle_predefined_error;

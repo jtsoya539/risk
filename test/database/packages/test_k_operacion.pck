@@ -76,7 +76,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
     l_parametro.valor  := anydata.convertdate(SYSDATE);
     l_parametros.extend;
     l_parametros(l_parametros.count) := l_parametro;
-    ut.expect(k_operacion.f_filtros_sql(l_parametros)).to_be_like('%to_char(campo, ''YYYY-MM-DD'') = ''2021-02-03''%');
+    ut.expect(k_operacion.f_filtros_sql(l_parametros)).to_be_like('%to_char(campo, ''YYYY-MM-DD'') = ''%-%-%''%');
   END;
 
   PROCEDURE f_filtros_sql_parametro_number IS
