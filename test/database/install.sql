@@ -56,6 +56,8 @@ prompt Creando tests de paquetes...
 prompt -----------------------------------
 prompt
 @@packages/test_k_dato.pck
+@@packages/test_k_operacion.pck
+@@packages/test_k_sistema.pck
 @@packages/test_k_util.pck
 
 prompt
