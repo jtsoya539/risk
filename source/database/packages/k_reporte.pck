@@ -157,7 +157,6 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
-    k_sistema.p_inicializar_parametros;
     k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'direccion_ip'));
@@ -575,8 +574,12 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
     l_rsp CLOB;
   BEGIN
+    -- Inicializa parámetros de la sesión
+    k_sistema.p_inicializar_parametros;
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
+    -- Reserva identificador para log
+    k_operacion.p_reservar_id_log(i_id_reporte);
     -- Procesa reporte
     l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto)
              .to_json;
@@ -595,12 +598,16 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_rsp        CLOB;
     l_id_reporte t_reportes.id_reporte%TYPE;
   BEGIN
+    -- Inicializa parámetros de la sesión
+    k_sistema.p_inicializar_parametros;
     -- Busca reporte
     l_id_reporte := k_operacion.f_id_operacion(k_operacion.c_tipo_reporte,
                                                i_nombre,
                                                i_dominio);
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_reporte);
+    -- Reserva identificador para log
+    k_operacion.p_reservar_id_log(l_id_reporte);
     -- Procesa reporte
     l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto)
              .to_json;

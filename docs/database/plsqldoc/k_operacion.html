@@ -36,6 +36,11 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_RESERVAR_ID_LOG">p_reservar_id_log</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_REGISTRAR_LOG">p_registrar_log</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -118,6 +123,11 @@ Constants
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_LOG">c_id_log</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_ID_OPERACION_CONTEXTO">c_id_operacion_contexto</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -157,12 +167,29 @@ c_tipo_parametros
 c_tipo_parametros CONSTANT CHAR(1) := 'P';
 </PRE>
 <HR>
+<A NAME="C_ID_LOG"></A>
+<P CLASS="TYPE_TITLE">
+c_id_log
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_log CONSTANT VARCHAR2(50) := 'ID_LOG';
+</PRE>
+<HR>
 <A NAME="C_ID_OPERACION_CONTEXTO"></A>
 <P CLASS="TYPE_TITLE">
 c_id_operacion_contexto
 </P>
 <PRE CLASS="DECL_TEXT">
 c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
+</PRE>
+<HR>
+<A NAME="P_RESERVAR_ID_LOG"></A>
+<P CLASS="TYPE_TITLE">
+p_reservar_id_log
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER)
+
 </PRE>
 <HR>
 <A NAME="P_REGISTRAR_LOG"></A>

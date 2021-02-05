@@ -180,7 +180,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
-    k_sistema.p_inicializar_parametros;
     k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'direccion_ip'));
@@ -609,8 +608,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     RETURN CLOB IS
     l_rsp CLOB;
   BEGIN
+    -- Inicializa parámetros de la sesión
+    k_sistema.p_inicializar_parametros;
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
+    -- Reserva identificador para log
+    k_operacion.p_reservar_id_log(i_id_servicio);
     -- Procesa servicio
     l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
              .to_json;
@@ -629,12 +632,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp         CLOB;
     l_id_servicio t_servicios.id_servicio%TYPE;
   BEGIN
+    -- Inicializa parámetros de la sesión
+    k_sistema.p_inicializar_parametros;
     -- Busca servicio
     l_id_servicio := k_operacion.f_id_operacion(k_operacion.c_tipo_servicio,
                                                 i_nombre,
                                                 i_dominio);
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_servicio);
+    -- Reserva identificador para log
+    k_operacion.p_reservar_id_log(l_id_servicio);
     -- Procesa servicio
     l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto)
              .to_json;

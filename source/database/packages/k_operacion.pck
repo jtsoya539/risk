@@ -36,7 +36,11 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
   c_tipo_parametros CONSTANT CHAR(1) := 'P';
 
+  c_id_log CONSTANT VARCHAR2(50) := 'ID_LOG';
+
   c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
+
+  PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER);
 
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
@@ -76,6 +80,28 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_operacion IS
 
+  PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER) IS
+    l_log_activo t_operaciones.log_activo%TYPE;
+  BEGIN
+    BEGIN
+      SELECT log_activo
+        INTO l_log_activo
+        FROM t_operaciones
+       WHERE id_operacion = i_id_operacion;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_log_activo := 'N';
+    END;
+  
+    IF l_log_activo = 'S' THEN
+      k_sistema.p_definir_parametro_number(c_id_log,
+                                           s_id_operacion_log.nextval);
+    END IF;
+  EXCEPTION
+    WHEN OTHERS THEN
+      NULL;
+  END;
+
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
                             i_respuesta    IN CLOB,
@@ -95,9 +121,13 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   
     IF l_log_activo = 'S' THEN
       INSERT INTO t_operacion_logs
-        (id_operacion, contexto, parametros, respuesta)
+        (id_operacion_log, id_operacion, contexto, parametros, respuesta)
       VALUES
-        (i_id_operacion, i_contexto, i_parametros, i_respuesta);
+        (k_sistema.f_valor_parametro_number(c_id_log),
+         i_id_operacion,
+         i_contexto,
+         i_parametros,
+         i_respuesta);
     END IF;
   
     COMMIT;
