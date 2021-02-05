@@ -41,16 +41,13 @@ CREATE OR REPLACE PACKAGE k_error IS
   FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2;
 
   /**
-  Retorna el mensaje de una excepcion de Oracle
+  Retorna el mensaje de error de una excepcion de Oracle
   
   %author jtsoya539 27/3/2020 16:23:08
-  %param i_sqlerrm Mensaje de excepcion
-  %param i_sqlcode Codigo de excepcion
+  %param i_sqlerrm Mensaje de la excepcion (SQLERRM)
   %return Mensaje de error
   */
-  FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2,
-                               i_sqlcode IN NUMBER DEFAULT NULL)
-    RETURN VARCHAR2;
+  FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2) RETURN VARCHAR2;
 
   FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
                            i_cadenas   IN t_cadenas,
@@ -81,21 +78,30 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     RETURN l_tipo_error;
   END;
 
-  FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2,
-                               i_sqlcode IN NUMBER DEFAULT NULL)
-    RETURN VARCHAR2 IS
-    l_posicion NUMBER := instr(i_sqlerrm, 'ORA-', 1, 2);
+  FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2) RETURN VARCHAR2 IS
+    l_posicion INTEGER;
+    l_mensaje  VARCHAR2(32767);
   BEGIN
-    IF l_posicion > 12 THEN
-      RETURN REPLACE(substr(REPLACE(i_sqlerrm, '"', ' '),
-                            1,
-                            l_posicion - 2),
-                     'ORA' || to_char(nvl(i_sqlcode, -20000)) || ':',
-                     '');
+    l_mensaje := i_sqlerrm;
+  
+    -- ORA-NNNNN:
+    l_posicion := regexp_instr(l_mensaje, 'ORA-[0-9]{5}:', 1, 2);
+    IF l_posicion > length('ORA-NNNNN:') THEN
+      l_mensaje := regexp_replace(substr(l_mensaje, 1, l_posicion - 2),
+                                  'ORA-[0-9]{5}:');
     ELSE
-      RETURN TRIM(REPLACE(REPLACE(i_sqlerrm, '"', ' '),
-                          'ORA' || to_char(nvl(i_sqlcode, -20000)) || ':'));
+      l_mensaje := regexp_replace(l_mensaje, 'ORA-[0-9]{5}:');
     END IF;
+  
+    -- PL/SQL:
+    l_posicion := instr(l_mensaje, 'PL/SQL:', 1, 2);
+    IF l_posicion > length('PL/SQL:') THEN
+      l_mensaje := REPLACE(substr(l_mensaje, 1, l_posicion - 2), 'PL/SQL:');
+    ELSE
+      l_mensaje := REPLACE(l_mensaje, 'PL/SQL:');
+    END IF;
+  
+    RETURN TRIM(l_mensaje);
   END;
 
   FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,

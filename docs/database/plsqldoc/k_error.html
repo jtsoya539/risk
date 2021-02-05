@@ -43,7 +43,7 @@ Program units
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_MENSAJE_EXCEPCION">f_mensaje_excepcion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Retorna el mensaje de una excepcion de Oracle
+Retorna el mensaje de error de una excepcion de Oracle
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_MENSAJE_ERROR">f_mensaje_error</A>&nbsp;&nbsp;
@@ -138,13 +138,11 @@ FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2
 f_mensaje_excepcion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2,
-                             i_sqlcode IN NUMBER DEFAULT NULL)
-  RETURN VARCHAR2
+FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <P CLASS="DESC_TEXT">
-Retorna el mensaje de una excepcion de Oracle<br>
+Retorna el mensaje de error de una excepcion de Oracle<br>
 
 <BR>
 </P>
@@ -169,14 +167,7 @@ Parameters
 </TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
 i_sqlerrm&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Mensaje de excepcion<br>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
-i_sqlcode&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-Codigo de excepcion<br>
+Mensaje de la excepcion (SQLERRM)<br>
 
 </TD></TR>
 </TABLE>

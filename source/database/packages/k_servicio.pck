@@ -308,12 +308,13 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL) IS
   BEGIN
     IF i_codigo = c_ok THEN
-      io_respuesta.codigo  := c_error_inesperado;
-      io_respuesta.mensaje := k_error.f_mensaje_error(io_respuesta.codigo);
+      io_respuesta.codigo := c_error_general;
     ELSE
-      io_respuesta.codigo  := substr(i_codigo, 1, 10);
-      io_respuesta.mensaje := substr(i_mensaje, 1, 4000);
+      io_respuesta.codigo := substr(i_codigo, 1, 10);
     END IF;
+    io_respuesta.mensaje    := substr(k_error.f_mensaje_excepcion(i_mensaje),
+                                      1,
+                                      4000);
     io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
     io_respuesta.datos      := NULL;
   END;
