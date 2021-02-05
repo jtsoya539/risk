@@ -87,7 +87,7 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     -- ORA-NNNNN:
     l_posicion := regexp_instr(l_mensaje, 'ORA-[0-9]{5}:', 1, 2);
     IF l_posicion > length('ORA-NNNNN:') THEN
-      l_mensaje := regexp_replace(substr(l_mensaje, 1, l_posicion - 2),
+      l_mensaje := regexp_replace(substr(l_mensaje, 1, l_posicion - 1),
                                   'ORA-[0-9]{5}:');
     ELSE
       l_mensaje := regexp_replace(l_mensaje, 'ORA-[0-9]{5}:');
@@ -96,7 +96,7 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     -- PL/SQL:
     l_posicion := instr(l_mensaje, 'PL/SQL:', 1, 2);
     IF l_posicion > length('PL/SQL:') THEN
-      l_mensaje := REPLACE(substr(l_mensaje, 1, l_posicion - 2), 'PL/SQL:');
+      l_mensaje := REPLACE(substr(l_mensaje, 1, l_posicion - 1), 'PL/SQL:');
     ELSE
       l_mensaje := REPLACE(l_mensaje, 'PL/SQL:');
     END IF;

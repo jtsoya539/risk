@@ -243,10 +243,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       RETURN l_rsp;
     WHEN OTHERS THEN
       ROLLBACK;
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_inesperado,
-                                   k_error.f_mensaje_error(k_servicio.c_error_inesperado),
-                                   dbms_utility.format_error_stack);
+      k_servicio.p_respuesta_excepcion(l_rsp,
+                                       utl_call_stack.error_number(1),
+                                       utl_call_stack.error_msg(1),
+                                       dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
