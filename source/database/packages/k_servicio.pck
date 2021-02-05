@@ -334,7 +334,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
           k_error.c_oracle_predefined_error THEN
       p_respuesta_error(io_respuesta,
                         c_error_inesperado,
-                        k_error.f_mensaje_error(c_error_inesperado),
+                        k_error.f_mensaje_error(c_error_inesperado,
+                                                to_char(nvl(k_sistema.f_valor_parametro_number(k_operacion.c_id_log),
+                                                            0))),
                         i_error_stack);
     END IF;
   END;

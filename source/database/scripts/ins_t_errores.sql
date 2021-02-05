@@ -26,6 +26,6 @@ insert into t_errores (ID_ERROR, MENSAJE)
 values ('ser0003', 'Operación no autorizada');
 
 insert into t_errores (ID_ERROR, MENSAJE)
-values ('ser9999', 'Error inesperado');
+values ('ser9999', 'Error inesperado [@1@]');
 
 prompt Done.
