@@ -21,6 +21,8 @@ CREATE OR REPLACE PACKAGE test_k_error IS
   PROCEDURE f_mensaje_excepcion_ude;
   --%test()
   PROCEDURE f_mensaje_excepcion_ope;
+  --%test()
+  PROCEDURE f_mensaje_excepcion_ope_sin_plsql;
   --%endcontext
 
   --%context(Tests unitarios de f_mensaje_error)
@@ -60,7 +62,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_error IS
       raise_application_error(-20000, 'Este es un mensaje de error');
     EXCEPTION
       WHEN OTHERS THEN
-        l_mensaje_excepcion := k_error.f_mensaje_excepcion(SQLERRM, SQLCODE);
+        l_mensaje_excepcion := k_error.f_mensaje_excepcion(SQLERRM);
     END;
     ut.expect(l_mensaje_excepcion).to_equal('Este es un mensaje de error');
   END;
@@ -74,9 +76,24 @@ CREATE OR REPLACE PACKAGE BODY test_k_error IS
     EXCEPTION
       WHEN OTHERS THEN
         l_error_msg         := utl_call_stack.error_msg(1);
-        l_mensaje_excepcion := k_error.f_mensaje_excepcion(SQLERRM, SQLCODE);
+        l_mensaje_excepcion := k_error.f_mensaje_excepcion(SQLERRM);
     END;
     ut.expect(l_mensaje_excepcion).to_equal(l_error_msg);
+  END;
+
+  PROCEDURE f_mensaje_excepcion_ope_sin_plsql IS
+    l_mensaje_excepcion VARCHAR2(4000);
+    l_error_msg         VARCHAR2(4000);
+  BEGIN
+    BEGIN
+      RAISE program_error;
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_error_msg         := utl_call_stack.error_msg(1);
+        l_mensaje_excepcion := k_error.f_mensaje_excepcion(SQLERRM);
+    END;
+    ut.expect(l_mensaje_excepcion).to_equal(REPLACE(l_error_msg,
+                                                    'PL/SQL: '));
   END;
 
   PROCEDURE f_mensaje_error_default_wrap_char IS
