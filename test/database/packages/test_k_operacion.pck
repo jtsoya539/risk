@@ -39,6 +39,29 @@ CREATE OR REPLACE PACKAGE test_k_operacion IS
   PROCEDURE f_filtros_sql_tipo_no_soportado;
   --%endcontext
 
+  --%context(Tests unitarios de f_valor_parametro_*)
+  --%name(f_valor_parametro_*)
+
+  --%test()
+  PROCEDURE f_valor_parametro_lista_null;
+  --%test()
+  PROCEDURE f_valor_parametro_lista_vacia;
+  --%test() 
+  PROCEDURE f_valor_parametro_nombre_con_diferente_case;
+  --%test() 
+  PROCEDURE f_valor_parametro_nombre_inexistente;
+  --%test()
+  PROCEDURE f_valor_parametro_string;
+  --%test()
+  PROCEDURE f_valor_parametro_number;
+  --%test()
+  PROCEDURE f_valor_parametro_boolean;
+  --%test()
+  PROCEDURE f_valor_parametro_date;
+  --%test()
+  PROCEDURE f_valor_parametro_object;
+  --%endcontext
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
@@ -184,6 +207,143 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
     l_parametros.extend;
     l_parametros(l_parametros.count) := l_parametro;
     l_resultado := k_operacion.f_filtros_sql(l_parametros);
+  END;
+
+  PROCEDURE f_valor_parametro_lista_null IS
+    l_parametros y_parametros;
+  BEGIN
+    -- Act
+    -- Assert
+    ut.expect(anydata.accessvarchar2(k_operacion.f_valor_parametro(i_parametros => l_parametros,
+                                                                   i_nombre     => 'parametro'))).to_be_null();
+  END;
+
+  PROCEDURE f_valor_parametro_lista_vacia IS
+    l_parametros y_parametros;
+  BEGIN
+    l_parametros := NEW y_parametros();
+    -- Act
+    -- Assert
+    ut.expect(anydata.accessvarchar2(k_operacion.f_valor_parametro(i_parametros => l_parametros,
+                                                                   i_nombre     => 'parametro'))).to_be_null();
+  END;
+
+  PROCEDURE f_valor_parametro_nombre_con_diferente_case IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertvarchar2('hola');
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    -- Assert
+    ut.expect(anydata.accessvarchar2(k_operacion.f_valor_parametro(i_parametros => l_parametros,
+                                                                   i_nombre     => 'PARAMETRO'))).to_equal('hola');
+  END;
+
+  PROCEDURE f_valor_parametro_nombre_inexistente IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertvarchar2('hola');
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    -- Assert
+    ut.expect(anydata.accessvarchar2(k_operacion.f_valor_parametro(i_parametros => l_parametros,
+                                                                   i_nombre     => 'no_existe'))).to_be_null();
+  END;
+
+  PROCEDURE f_valor_parametro_string IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertvarchar2('hola');
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    -- Assert
+    ut.expect(k_operacion.f_valor_parametro_string(i_parametros => l_parametros,
+                                                   i_nombre     => 'parametro')).to_equal('hola');
+  END;
+
+  PROCEDURE f_valor_parametro_number IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertnumber(1234);
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    -- Assert
+    ut.expect(k_operacion.f_valor_parametro_number(i_parametros => l_parametros,
+                                                   i_nombre     => 'parametro')).to_equal(1234);
+  END;
+
+  PROCEDURE f_valor_parametro_boolean IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertnumber(sys.diutil.bool_to_int(TRUE));
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    -- Assert
+    ut.expect(k_operacion.f_valor_parametro_boolean(i_parametros => l_parametros,
+                                                    i_nombre     => 'parametro')).to_equal(TRUE);
+  END;
+
+  PROCEDURE f_valor_parametro_date IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertdate(trunc(SYSDATE));
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    -- Assert
+    ut.expect(k_operacion.f_valor_parametro_date(i_parametros => l_parametros,
+                                                 i_nombre     => 'parametro')).to_equal(trunc(SYSDATE));
+  END;
+
+  PROCEDURE f_valor_parametro_object IS
+    l_parametros y_parametros;
+    l_parametro  y_parametro;
+    l_dato       y_dato;
+    l_resultado  y_dato;
+  BEGIN
+    l_parametros       := NEW y_parametros();
+    l_parametro        := NEW y_parametro();
+    l_dato             := NEW y_dato();
+    l_dato.contenido   := 'hola';
+    l_parametro.nombre := 'parametro';
+    l_parametro.valor  := anydata.convertobject(l_dato);
+    l_parametros.extend;
+    l_parametros(l_parametros.count) := l_parametro;
+    -- Act
+    l_resultado := treat(k_operacion.f_valor_parametro_object(i_parametros => l_parametros,
+                                                              i_nombre     => 'parametro') AS
+                         y_dato);
+    -- Assert
+    ut.expect(l_resultado.contenido).to_equal(l_dato.contenido);
   END;
 
 END;
