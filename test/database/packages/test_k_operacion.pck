@@ -39,8 +39,8 @@ CREATE OR REPLACE PACKAGE test_k_operacion IS
   PROCEDURE f_filtros_sql_tipo_no_soportado;
   --%endcontext
 
-  --%context(Tests unitarios de f_valor_parametro_*)
-  --%name(f_valor_parametro_*)
+  --%context(Tests unitarios de f_valor_parametro)
+  --%name(f_valor_parametro)
 
   --%test()
   PROCEDURE f_valor_parametro_lista_null;
