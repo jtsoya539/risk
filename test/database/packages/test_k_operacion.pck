@@ -3,6 +3,24 @@ CREATE OR REPLACE PACKAGE test_k_operacion IS
   --%suite(Tests unitarios del paquete k_operacion)
   --%tags(package)
 
+  --%context(Tests unitarios de p_reservar_id_log)
+  --%name(p_reservar_id_log)
+
+  --%test()
+  PROCEDURE p_reservar_id_log_activo;
+  --%test()
+  PROCEDURE p_reservar_id_log_inactivo;
+  --%endcontext
+
+  --%context(Tests unitarios de f_id_operacion)
+  --%name(f_id_operacion)
+
+  --%test()
+  PROCEDURE f_id_operacion_existente;
+  --%test()
+  PROCEDURE f_id_operacion_inexistente;
+  --%endcontext
+
   --%context(Tests unitarios de f_filtros_sql)
   --%name(f_filtros_sql)
 
@@ -24,6 +42,68 @@ CREATE OR REPLACE PACKAGE test_k_operacion IS
 END;
 /
 CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
+
+  PROCEDURE p_reservar_id_log_activo IS
+    l_id_operacion t_operaciones.id_operacion%TYPE;
+  BEGIN
+    -- Arrange
+    INSERT INTO t_operaciones
+      (tipo, nombre, dominio, activo, log_activo)
+    VALUES
+      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', 'S')
+    RETURNING id_operacion INTO l_id_operacion;
+    k_sistema.p_inicializar_parametros;
+    -- Act
+    k_operacion.p_reservar_id_log(l_id_operacion);
+    -- Assert
+    ut.expect(k_sistema.f_valor_parametro_number(k_operacion.c_id_log)).to_be_not_null();
+  END;
+
+  PROCEDURE p_reservar_id_log_inactivo IS
+    l_id_operacion t_operaciones.id_operacion%TYPE;
+  BEGIN
+    -- Arrange
+    INSERT INTO t_operaciones
+      (tipo, nombre, dominio, activo, log_activo)
+    VALUES
+      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', 'N')
+    RETURNING id_operacion INTO l_id_operacion;
+    k_sistema.p_inicializar_parametros;
+    -- Act
+    k_operacion.p_reservar_id_log(l_id_operacion);
+    -- Assert
+    ut.expect(k_sistema.f_valor_parametro_number(k_operacion.c_id_log)).to_be_null();
+  END;
+
+  PROCEDURE f_id_operacion_existente IS
+    l_id_operacion t_operaciones.id_operacion%TYPE;
+    l_resultado    t_operaciones.id_operacion%TYPE;
+  BEGIN
+    -- Arrange
+    INSERT INTO t_operaciones
+      (tipo, nombre, dominio, activo, log_activo)
+    VALUES
+      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', 'S')
+    RETURNING id_operacion INTO l_id_operacion;
+    -- Act
+    l_resultado := k_operacion.f_id_operacion(i_tipo    => 'S',
+                                              i_nombre  => 'OPERACION_DE_PRUEBA',
+                                              i_dominio => 'GEN');
+    -- Assert
+    ut.expect(l_resultado).to_equal(l_id_operacion);
+  END;
+
+  PROCEDURE f_id_operacion_inexistente IS
+    l_resultado t_operaciones.id_operacion%TYPE;
+  BEGIN
+    -- Arrange
+    -- Act
+    l_resultado := k_operacion.f_id_operacion(i_tipo    => 'S',
+                                              i_nombre  => 'OPERACION_QUE_NO_EXISTE',
+                                              i_dominio => 'GEN');
+    -- Assert
+    ut.expect(l_resultado).to_be_null();
+  END;
 
   PROCEDURE f_filtros_sql_sin_parametros IS
     l_parametros y_parametros;
