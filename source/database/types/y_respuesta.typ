@@ -73,8 +73,11 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
   END;
 
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
-    l_respuesta   y_respuesta;
-    l_json_object json_object_t;
+    l_respuesta    y_respuesta;
+    l_json_object  json_object_t;
+    l_json_element json_element_t;
+    l_anydata      anydata;
+    l_result       PLS_INTEGER;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
@@ -83,7 +86,16 @@ CREATE OR REPLACE TYPE BODY y_respuesta IS
     l_respuesta.mensaje    := l_json_object.get_string('mensaje');
     l_respuesta.mensaje_bd := l_json_object.get_string('mensaje_bd');
     l_respuesta.lugar      := l_json_object.get_string('lugar');
-    l_respuesta.datos      := NULL; -- TODO
+  
+    l_json_element := l_json_object.get('datos');
+  
+    IF l_json_element IS NULL OR l_json_element.is_null THEN
+      l_respuesta.datos := NULL;
+    ELSE
+      l_anydata := k_util.json_to_objeto(l_json_element.to_clob,
+                                         k_sistema.f_valor_parametro_string(k_sistema.c_nombre_tipo));
+      l_result  := l_anydata.getobject(l_respuesta.datos);
+    END IF;
   
     RETURN l_respuesta;
   END;

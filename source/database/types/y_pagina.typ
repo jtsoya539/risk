@@ -84,6 +84,8 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
     l_objeto      y_objeto;
     l_objetos     y_objetos;
     l_json_array  json_array_t;
+    l_anydata     anydata;
+    l_result      PLS_INTEGER;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
@@ -94,21 +96,23 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
     l_pagina.numero_primera     := l_json_object.get_number('numero_primera');
     l_pagina.numero_anterior    := l_json_object.get_number('numero_anterior');
     l_pagina.cantidad_elementos := l_json_object.get_number('cantidad_elementos');
-    l_pagina.elementos          := NULL; -- TODO
   
-    /*l_json_array := l_json_object.get_array('elementos');
-    
+    l_json_array := l_json_object.get_array('elementos');
+  
     IF l_json_array IS NULL THEN
-      l_pagina.elementos := NULL;
+      l_pagina.elementos := NEW y_objetos();
     ELSE
       l_objetos := NEW y_objetos();
       FOR i IN 0 .. l_json_array.get_size - 1 LOOP
-        l_objeto := y_objeto.parse_json(l_json_array.get(i).to_clob);
+        l_objeto  := NULL;
+        l_anydata := k_util.json_to_objeto(l_json_array.get(i).to_clob,
+                                           k_sistema.f_valor_parametro_string(k_sistema.c_nombre_tipo));
+        l_result  := l_anydata.getobject(l_objeto);
         l_objetos.extend;
         l_objetos(l_objetos.count) := l_objeto;
       END LOOP;
       l_pagina.elementos := l_objetos;
-    END IF;*/
+    END IF;
   
     RETURN l_pagina;
   END;
@@ -133,7 +137,8 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
       i            := self.elementos.first;
       WHILE i IS NOT NULL LOOP
         l_json_array.append(json_object_t.parse(nvl(self.elementos(i).json,
-                                                    self.elementos(i).to_json)));
+                                                    self.elementos(i)
+                                                    .to_json)));
         i := self.elementos.next(i);
       END LOOP;
       l_json_object.put('elementos', l_json_array);

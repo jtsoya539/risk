@@ -30,6 +30,10 @@ CREATE OR REPLACE PACKAGE k_util IS
   -------------------------------------------------------------------------------
   */
 
+  -- Excepciones
+  ex_tipo_inexistente EXCEPTION;
+  PRAGMA EXCEPTION_INIT(ex_tipo_inexistente, -6550);
+
   /**
   Genera trigger de secuencia para un campo de una tabla
   
@@ -731,11 +735,20 @@ END;';
     l_objeto  y_objeto;
   BEGIN
     IF i_json IS NOT NULL AND i_nombre_tipo IS NOT NULL THEN
-      EXECUTE IMMEDIATE 'BEGIN :1 := ' || lower(i_nombre_tipo) ||
-                        '.parse_json(i_json => :2); END;'
-        USING OUT l_objeto, IN i_json;
-      l_retorno := anydata.convertobject(l_objeto);
+      BEGIN
+        EXECUTE IMMEDIATE 'BEGIN :1 := ' || lower(i_nombre_tipo) ||
+                          '.parse_json(i_json => :2); END;'
+          USING OUT l_objeto, IN i_json;
+      EXCEPTION
+        WHEN ex_tipo_inexistente THEN
+          raise_application_error(-20000,
+                                  'Tipo ' || lower(i_nombre_tipo) ||
+                                  ' no existe');
+      END;
     END IF;
+  
+    l_retorno := anydata.convertobject(l_objeto);
+  
     RETURN l_retorno;
   END;
 
