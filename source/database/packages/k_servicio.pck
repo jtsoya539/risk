@@ -116,6 +116,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                 i_parametros  IN CLOB,
                                 i_contexto    IN CLOB DEFAULT NULL)
     RETURN y_respuesta IS
+    PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp              y_respuesta;
     l_prms             y_parametros;
     l_ctx              y_parametros;
@@ -618,8 +619,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_servicio,
                                 i_parametros,
@@ -646,8 +646,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(l_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto)
-             .to_json;
+    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto).to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,

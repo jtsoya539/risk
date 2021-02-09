@@ -2,7 +2,6 @@ CREATE OR REPLACE PACKAGE test_k_servicio IS
 
   --%suite(Tests unitarios del paquete k_servicio)
   --%tags(package)
-  --%rollback(manual)
 
   --%context(Tests unitarios de f_procesar_servicio)
   --%name(f_procesar_servicio)
