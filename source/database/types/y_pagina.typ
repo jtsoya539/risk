@@ -81,11 +81,7 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
   STATIC FUNCTION parse_json(i_json IN CLOB) RETURN y_objeto IS
     l_pagina      y_pagina;
     l_json_object json_object_t;
-    l_objeto      y_objeto;
-    l_objetos     y_objetos;
     l_json_array  json_array_t;
-    l_anydata     anydata;
-    l_result      PLS_INTEGER;
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
@@ -99,19 +95,41 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
   
     l_json_array := l_json_object.get_array('elementos');
   
-    IF l_json_array IS NULL THEN
+    IF l_json_array IS NULL OR l_json_array.is_null OR
+       l_json_array.get_size = 0 THEN
       l_pagina.elementos := NEW y_objetos();
     ELSE
-      l_objetos := NEW y_objetos();
-      FOR i IN 0 .. l_json_array.get_size - 1 LOOP
-        l_objeto  := NULL;
-        l_anydata := k_util.json_to_objeto(l_json_array.get(i).to_clob,
-                                           k_sistema.f_valor_parametro_string(k_sistema.c_nombre_tipo));
-        l_result  := l_anydata.getobject(l_objeto);
-        l_objetos.extend;
-        l_objetos(l_objetos.count) := l_objeto;
-      END LOOP;
-      l_pagina.elementos := l_objetos;
+      DECLARE
+        l_anydata anydata;
+        l_result  PLS_INTEGER;
+        l_tipos   y_cadenas;
+        l_tipo    VARCHAR2(100);
+        l_objeto  y_objeto;
+        l_objetos y_objetos;
+      BEGIN
+        -- Busca nombre del tipo para hacer el parse
+        l_anydata := k_sistema.f_valor_parametro(k_sistema.c_nombre_tipo);
+        l_result  := l_anydata.getcollection(l_tipos);
+        l_tipo    := l_tipos(l_tipos.first);
+        l_tipos.delete(l_tipos.first);
+        k_sistema.p_definir_parametro(k_sistema.c_nombre_tipo,
+                                      anydata.convertcollection(l_tipos));
+        --
+      
+        l_objetos := NEW y_objetos();
+        FOR i IN 0 .. l_json_array.get_size - 1 LOOP
+          l_objeto  := NULL;
+          l_anydata := k_util.json_to_objeto(l_json_array.get(i).to_clob,
+                                             l_tipo);
+          l_result  := l_anydata.getobject(l_objeto);
+          l_objetos.extend;
+          l_objetos(l_objetos.count) := l_objeto;
+        END LOOP;
+        l_pagina.elementos := l_objetos;
+      EXCEPTION
+        WHEN OTHERS THEN
+          l_pagina.elementos := NEW y_objetos();
+      END;
     END IF;
   
     RETURN l_pagina;
