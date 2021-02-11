@@ -192,14 +192,22 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   */
   PROCEDURE p_imprimir_parametros;
 
+  --
+  PROCEDURE p_iniciar_cola;
+  PROCEDURE p_encolar(i_valor IN VARCHAR2);
+  FUNCTION f_desencolar RETURN VARCHAR2;
+  --
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_sistema IS
 
   TYPE ly_parametros IS TABLE OF anydata INDEX BY VARCHAR2(50);
+  TYPE ly_cola IS TABLE OF VARCHAR2(32767);
 
-  g_parametros ly_parametros;
   g_indice     VARCHAR2(50);
+  g_parametros ly_parametros;
+  g_cola       ly_cola;
 
   FUNCTION f_es_produccion RETURN BOOLEAN IS
   BEGIN
@@ -347,6 +355,23 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
       g_indice := g_parametros.next(g_indice);
     END LOOP;
   END;
+
+  --
+  PROCEDURE p_iniciar_cola IS
+  BEGIN
+    NULL;
+  END;
+
+  PROCEDURE p_encolar(i_valor IN VARCHAR2) IS
+  BEGIN
+    NULL;
+  END;
+
+  FUNCTION f_desencolar RETURN VARCHAR2 IS
+  BEGIN
+    RETURN NULL;
+  END;
+  --
 
 BEGIN
   -- Define parámetros por defecto
