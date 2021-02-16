@@ -36,8 +36,6 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   c_fecha   CONSTANT VARCHAR2(50) := 'FECHA';
   c_usuario CONSTANT VARCHAR2(50) := 'USUARIO';
   --
-  c_nombre_tipo CONSTANT VARCHAR2(50) := 'NOMBRE_TIPO';
-  --
   c_direccion_ip     CONSTANT VARCHAR2(50) := 'DIRECCION_IP';
   c_id_operacion     CONSTANT VARCHAR2(50) := 'ID_OPERACION';
   c_nombre_operacion CONSTANT VARCHAR2(50) := 'NOMBRE_OPERACION';
@@ -194,8 +192,11 @@ CREATE OR REPLACE PACKAGE k_sistema IS
 
   --
   PROCEDURE p_inicializar_cola;
+
   PROCEDURE p_encolar(i_valor IN VARCHAR2);
+
   FUNCTION f_desencolar RETURN VARCHAR2;
+
   PROCEDURE p_imprimir_cola;
   --
 
@@ -360,15 +361,14 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   --
   PROCEDURE p_inicializar_cola IS
   BEGIN
-    IF g_cola IS NULL THEN
-      g_cola := NEW ly_cola();
-    ELSE
-      g_cola.delete;
-    END IF;
+    g_cola := NEW ly_cola();
   END;
 
   PROCEDURE p_encolar(i_valor IN VARCHAR2) IS
   BEGIN
+    IF g_cola IS NULL THEN
+      p_inicializar_cola;
+    END IF;
     g_cola.extend;
     g_cola(g_cola.count) := i_valor;
   END;
@@ -376,8 +376,13 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   FUNCTION f_desencolar RETURN VARCHAR2 IS
     l_valor VARCHAR2(32767);
   BEGIN
-    l_valor := g_cola(g_cola.first);
-    g_cola.delete(g_cola.first);
+    IF g_cola IS NULL THEN
+      p_inicializar_cola;
+    END IF;
+    IF g_cola.exists(g_cola.first) THEN
+      l_valor := g_cola(g_cola.first);
+      g_cola.delete(g_cola.first);
+    END IF;
     RETURN l_valor;
   END;
 

@@ -28,11 +28,13 @@ CREATE OR REPLACE PACKAGE BODY test_k_sistema IS
       INTO l_fecha_actual
       FROM t_sistemas
      WHERE id_sistema = 'RISK';
+    k_sistema.p_inicializar_parametros;
     ut.expect(k_sistema.f_fecha).to_equal(l_fecha_actual);
   END;
 
   PROCEDURE f_usuario_por_defecto IS
   BEGIN
+    k_sistema.p_inicializar_parametros;
     ut.expect(k_sistema.f_usuario).to_equal(USER);
   END;
 

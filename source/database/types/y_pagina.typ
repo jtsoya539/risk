@@ -102,20 +102,13 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
       DECLARE
         l_anydata anydata;
         l_result  PLS_INTEGER;
-        l_tipos   y_cadenas;
         l_tipo    VARCHAR2(100);
         l_objeto  y_objeto;
         l_objetos y_objetos;
       BEGIN
         -- Busca nombre del tipo para hacer el parse
-        l_anydata := k_sistema.f_valor_parametro(k_sistema.c_nombre_tipo);
-        l_result  := l_anydata.getcollection(l_tipos);
-        l_tipo    := l_tipos(l_tipos.first);
-        l_tipos.delete(l_tipos.first);
-        k_sistema.p_definir_parametro(k_sistema.c_nombre_tipo,
-                                      anydata.convertcollection(l_tipos));
+        l_tipo := k_sistema.f_desencolar;
         --
-      
         l_objetos := NEW y_objetos();
         FOR i IN 0 .. l_json_array.get_size - 1 LOOP
           l_objeto  := NULL;
@@ -155,8 +148,7 @@ CREATE OR REPLACE TYPE BODY y_pagina IS
       i            := self.elementos.first;
       WHILE i IS NOT NULL LOOP
         l_json_array.append(json_object_t.parse(nvl(self.elementos(i).json,
-                                                    self.elementos(i)
-                                                    .to_json)));
+                                                    self.elementos(i).to_json)));
         i := self.elementos.next(i);
       END LOOP;
       l_json_object.put('elementos', l_json_array);

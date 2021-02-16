@@ -120,6 +120,26 @@ Elimina todos los par&#225;metros definidos en la sesi&#243;n
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Imprime todos los par&#225;metros definidos en la sesi&#243;n
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_INICIALIZAR_COLA">p_inicializar_cola</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ENCOLAR">p_encolar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DESENCOLAR">f_desencolar</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_IMPRIMIR_COLA">p_imprimir_cola</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Constants"></A>
@@ -144,11 +164,6 @@ Constants
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_USUARIO">c_usuario</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#C_NOMBRE_TIPO">c_nombre_tipo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -215,14 +230,6 @@ c_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 c_usuario CONSTANT VARCHAR2(50) := 'USUARIO';
-</PRE>
-<HR>
-<A NAME="C_NOMBRE_TIPO"></A>
-<P CLASS="TYPE_TITLE">
-c_nombre_tipo
-</P>
-<PRE CLASS="DECL_TEXT">
-c_nombre_tipo CONSTANT VARCHAR2(50) := 'NOMBRE_TIPO';
 </PRE>
 <HR>
 <A NAME="C_DIRECCION_IP"></A>
@@ -990,6 +997,42 @@ jtsoya539 27/3/2020 17:02:58<br>
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="P_INICIALIZAR_COLA"></A>
+<P CLASS="TYPE_TITLE">
+p_inicializar_cola
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_inicializar_cola
+
+</PRE>
+<HR>
+<A NAME="P_ENCOLAR"></A>
+<P CLASS="TYPE_TITLE">
+p_encolar
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_encolar(i_valor IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="F_DESENCOLAR"></A>
+<P CLASS="TYPE_TITLE">
+f_desencolar
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_desencolar RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="P_IMPRIMIR_COLA"></A>
+<P CLASS="TYPE_TITLE">
+p_imprimir_cola
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_imprimir_cola
+
+</PRE>
 <P>&nbsp;</P>
 <P>&nbsp;</P>
 </BODY>
