@@ -193,9 +193,10 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   PROCEDURE p_imprimir_parametros;
 
   --
-  PROCEDURE p_iniciar_cola;
+  PROCEDURE p_inicializar_cola;
   PROCEDURE p_encolar(i_valor IN VARCHAR2);
   FUNCTION f_desencolar RETURN VARCHAR2;
+  PROCEDURE p_imprimir_cola;
   --
 
 END;
@@ -357,19 +358,39 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   END;
 
   --
-  PROCEDURE p_iniciar_cola IS
+  PROCEDURE p_inicializar_cola IS
   BEGIN
-    NULL;
+    IF g_cola IS NULL THEN
+      g_cola := NEW ly_cola();
+    ELSE
+      g_cola.delete;
+    END IF;
   END;
 
   PROCEDURE p_encolar(i_valor IN VARCHAR2) IS
   BEGIN
-    NULL;
+    g_cola.extend;
+    g_cola(g_cola.count) := i_valor;
   END;
 
   FUNCTION f_desencolar RETURN VARCHAR2 IS
+    l_valor VARCHAR2(32767);
   BEGIN
-    RETURN NULL;
+    l_valor := g_cola(g_cola.first);
+    g_cola.delete(g_cola.first);
+    RETURN l_valor;
+  END;
+
+  PROCEDURE p_imprimir_cola IS
+    i PLS_INTEGER;
+  BEGIN
+    IF g_cola IS NOT NULL THEN
+      i := g_cola.first;
+      WHILE i IS NOT NULL LOOP
+        dbms_output.put_line(to_char(i) || ': ' || g_cola(i));
+        i := g_cola.next(i);
+      END LOOP;
+    END IF;
   END;
   --
 
