@@ -37,6 +37,8 @@ namespace Risk.API.Filters
     {
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
+            var securityRequirement = new OpenApiSecurityRequirement();
+
             var content = new Dictionary<string, OpenApiMediaType>
             {
                 [MediaTypeNames.Text.Plain] = new OpenApiMediaType
@@ -52,22 +54,12 @@ namespace Risk.API.Filters
 
             if (!allowAnyClientAttributes.Any())
             {
-                // Add OpenApi Security Requirement
-                if (operation.Security == null)
+                // Add OpenApi Security Scheme
+                securityRequirement.Add(new OpenApiSecurityScheme
                 {
-                    operation.Security = new List<OpenApiSecurityRequirement>();
-                }
-
-                operation.Security.Add(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = RiskConstants.SECURITY_SCHEME_RISK_APP_KEY }
-                        },
-                        new string[] { }
-                    }
-                });
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = RiskConstants.SECURITY_SCHEME_RISK_APP_KEY }
+                },
+                new List<string>());
 
                 // Add Http Response
                 if (!operation.Responses.ContainsKey("403"))
@@ -85,22 +77,12 @@ namespace Risk.API.Filters
 
             if (authorizeAttributes.Any() && !allowAnonymousAttributes.Any())
             {
-                // Add OpenApi Security Requirement
-                if (operation.Security == null)
+                // Add OpenApi Security Scheme
+                securityRequirement.Add(new OpenApiSecurityScheme
                 {
-                    operation.Security = new List<OpenApiSecurityRequirement>();
-                }
-
-                operation.Security.Add(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type =  ReferenceType.SecurityScheme, Id = RiskConstants.SECURITY_SCHEME_ACCESS_TOKEN }
-                        },
-                        new string[] { }
-                    }
-                });
+                    Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = RiskConstants.SECURITY_SCHEME_ACCESS_TOKEN }
+                },
+                new List<string>());
 
                 // Add Http Response
                 if (!operation.Responses.ContainsKey("401"))
@@ -112,6 +94,13 @@ namespace Risk.API.Filters
                     });
                 }
             }
+
+            // Add OpenApi Security Requirement
+            if (operation.Security == null)
+            {
+                operation.Security = new List<OpenApiSecurityRequirement>();
+            }
+            operation.Security.Add(securityRequirement);
         }
     }
 }
