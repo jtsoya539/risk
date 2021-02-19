@@ -22,8 +22,11 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Risk.API.Models
 {
+    [SwaggerSchema("Tipos de Mensajería")]
     public enum TipoMensajeria
     {
         Mail,
