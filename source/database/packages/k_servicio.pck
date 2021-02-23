@@ -642,7 +642,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     k_operacion.p_registrar_log(i_id_servicio,
                                 i_parametros,
                                 l_rsp,
-                                i_contexto);
+                                i_contexto,
+                                i_version);
     RETURN l_rsp;
   END;
 
@@ -672,7 +673,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,
                                 l_rsp,
-                                i_contexto);
+                                i_contexto,
+                                i_version);
     RETURN l_rsp;
   END;
 

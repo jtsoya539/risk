@@ -45,7 +45,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
                             i_respuesta    IN CLOB,
-                            i_contexto     IN CLOB DEFAULT NULL);
+                            i_contexto     IN CLOB DEFAULT NULL,
+                            i_version      IN VARCHAR2 DEFAULT NULL);
 
   FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
                           i_nombre  IN VARCHAR2,
@@ -107,7 +108,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
                             i_respuesta    IN CLOB,
-                            i_contexto     IN CLOB DEFAULT NULL) IS
+                            i_contexto     IN CLOB DEFAULT NULL,
+                            i_version      IN VARCHAR2 DEFAULT NULL) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_log_activo t_operaciones.log_activo%TYPE;
   BEGIN
@@ -123,11 +125,17 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   
     IF l_log_activo = 'S' THEN
       INSERT INTO t_operacion_logs
-        (id_operacion_log, id_operacion, contexto, parametros, respuesta)
+        (id_operacion_log,
+         id_operacion,
+         contexto,
+         version,
+         parametros,
+         respuesta)
       VALUES
         (k_sistema.f_valor_parametro_number(c_id_log),
          i_id_operacion,
          i_contexto,
+         substr(i_version, 1, 100),
          i_parametros,
          i_respuesta);
     END IF;
