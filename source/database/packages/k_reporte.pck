@@ -213,7 +213,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                        l_nombre_reporte || '(:2); END;';
       ELSE
         l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
-                       l_nombre_reporte || '_V' ||
+                       l_nombre_reporte || '_' ||
                        REPLACE(i_version, '.', '_') || '(:2); END;';
       END IF;
     

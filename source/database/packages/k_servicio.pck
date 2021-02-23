@@ -235,7 +235,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                        l_nombre_servicio || '(:2); END;';
       ELSE
         l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
-                       l_nombre_servicio || '_V' ||
+                       l_nombre_servicio || '_' ||
                        REPLACE(i_version, '.', '_') || '(:2); END;';
       END IF;
     
