@@ -156,5 +156,31 @@ namespace Risk.API.Helpers
 
             return accessToken;
         }
+
+        public static string ObtenerVersionDeHeaders(IHeaderDictionary headers)
+        {
+            string version = string.Empty;
+
+            string riskServiceVersionHeader = null;
+            if (headers.Keys.Contains(RiskConstants.HEADER_RISK_SERVICE_VERSION))
+            {
+                riskServiceVersionHeader = headers[RiskConstants.HEADER_RISK_SERVICE_VERSION];
+            }
+            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_SERVICE_VERSION.ToLower()))
+            {
+                riskServiceVersionHeader = headers[RiskConstants.HEADER_RISK_SERVICE_VERSION.ToLower()];
+            }
+            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_SERVICE_VERSION.ToUpper()))
+            {
+                riskServiceVersionHeader = headers[RiskConstants.HEADER_RISK_SERVICE_VERSION.ToUpper()];
+            }
+
+            if (!string.IsNullOrEmpty(riskServiceVersionHeader))
+            {
+                version = riskServiceVersionHeader;
+            }
+
+            return version;
+        }
     }
 }

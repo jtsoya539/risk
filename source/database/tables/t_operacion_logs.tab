@@ -3,6 +3,7 @@ create table T_OPERACION_LOGS
   id_operacion_log NUMBER not null,
   id_operacion     NUMBER,
   contexto         CLOB,
+  version          VARCHAR2(100),
   parametros       CLOB,
   respuesta        CLOB
 )
@@ -15,6 +16,8 @@ comment on column T_OPERACION_LOGS.id_operacion
   is 'Identificador de la operación';
 comment on column T_OPERACION_LOGS.contexto
   is 'Contexto de la operación';
+comment on column T_OPERACION_LOGS.version
+  is 'Versión de la operación';
 comment on column T_OPERACION_LOGS.parametros
   is 'Parámetros recibidos';
 comment on column T_OPERACION_LOGS.respuesta

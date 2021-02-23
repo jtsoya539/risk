@@ -200,7 +200,8 @@ p_registrar_log
 PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                           i_parametros   IN CLOB,
                           i_respuesta    IN CLOB,
-                          i_contexto     IN CLOB DEFAULT NULL)
+                          i_contexto     IN CLOB DEFAULT NULL,
+                          i_version      IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <HR>
@@ -230,7 +231,9 @@ f_procesar_parametros
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
-                               i_parametros   IN CLOB) RETURN y_parametros
+                               i_parametros   IN CLOB,
+                               i_version      IN VARCHAR2 DEFAULT NULL)
+  RETURN y_parametros
 
 </PRE>
 <HR>

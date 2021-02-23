@@ -45,7 +45,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
                             i_respuesta    IN CLOB,
-                            i_contexto     IN CLOB DEFAULT NULL);
+                            i_contexto     IN CLOB DEFAULT NULL,
+                            i_version      IN VARCHAR2 DEFAULT NULL);
 
   FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
                           i_nombre  IN VARCHAR2,
@@ -54,7 +55,9 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
-                                 i_parametros   IN CLOB) RETURN y_parametros;
+                                 i_parametros   IN CLOB,
+                                 i_version      IN VARCHAR2 DEFAULT NULL)
+    RETURN y_parametros;
 
   FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB;
 
@@ -105,7 +108,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
                             i_parametros   IN CLOB,
                             i_respuesta    IN CLOB,
-                            i_contexto     IN CLOB DEFAULT NULL) IS
+                            i_contexto     IN CLOB DEFAULT NULL,
+                            i_version      IN VARCHAR2 DEFAULT NULL) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_log_activo t_operaciones.log_activo%TYPE;
   BEGIN
@@ -121,11 +125,17 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   
     IF l_log_activo = 'S' THEN
       INSERT INTO t_operacion_logs
-        (id_operacion_log, id_operacion, contexto, parametros, respuesta)
+        (id_operacion_log,
+         id_operacion,
+         contexto,
+         version,
+         parametros,
+         respuesta)
       VALUES
         (k_sistema.f_valor_parametro_number(c_id_log),
          i_id_operacion,
          i_contexto,
+         substr(i_version, 1, 100),
          i_parametros,
          i_respuesta);
     END IF;
@@ -178,27 +188,31 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
-                                 i_parametros   IN CLOB) RETURN y_parametros IS
+                                 i_parametros   IN CLOB,
+                                 i_version      IN VARCHAR2 DEFAULT NULL)
+    RETURN y_parametros IS
     l_parametros   y_parametros;
     l_parametro    y_parametro;
     l_json_object  json_object_t;
     l_json_element json_element_t;
   
     CURSOR cr_parametros IS
-      SELECT id_operacion,
-             lower(nombre) nombre,
-             orden,
-             activo,
-             tipo_dato,
-             formato,
-             longitud_maxima,
-             obligatorio,
-             valor_defecto,
-             etiqueta,
-             detalle
-        FROM t_operacion_parametros
-       WHERE activo = 'S'
-         AND id_operacion = i_id_operacion
+      SELECT op.id_operacion,
+             lower(op.nombre) nombre,
+             op.orden,
+             op.activo,
+             op.tipo_dato,
+             op.formato,
+             op.longitud_maxima,
+             op.obligatorio,
+             op.valor_defecto,
+             op.etiqueta,
+             op.detalle
+        FROM t_operacion_parametros op, t_operaciones o
+       WHERE o.id_operacion = op.id_operacion
+         AND op.activo = 'S'
+         AND op.id_operacion = i_id_operacion
+         AND op.version = nvl(i_version, o.version_actual)
        ORDER BY orden;
   BEGIN
     -- Inicializa respuesta

@@ -74,13 +74,16 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
                                i_parametros  IN CLOB,
-                               i_contexto    IN CLOB DEFAULT NULL)
+                               i_contexto    IN CLOB DEFAULT NULL,
+                               i_version     IN VARCHAR2 DEFAULT NULL)
     RETURN CLOB;
 
   FUNCTION f_procesar_servicio(i_nombre     IN VARCHAR2,
                                i_dominio    IN VARCHAR2,
                                i_parametros IN CLOB,
-                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
+                               i_contexto   IN CLOB DEFAULT NULL,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB;
 
 END;
 /
@@ -114,7 +117,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   FUNCTION lf_procesar_servicio(i_id_servicio IN NUMBER,
                                 i_parametros  IN CLOB,
-                                i_contexto    IN CLOB DEFAULT NULL)
+                                i_contexto    IN CLOB DEFAULT NULL,
+                                i_version     IN VARCHAR2 DEFAULT NULL)
     RETURN y_respuesta IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp              y_respuesta;
@@ -122,6 +126,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_ctx              y_parametros;
     l_nombre_servicio  t_operaciones.nombre%TYPE;
     l_dominio_servicio t_operaciones.dominio%TYPE;
+    l_version_actual   t_operaciones.version_actual%TYPE;
     l_tipo_servicio    t_servicios.tipo%TYPE;
     l_sentencia        VARCHAR2(4000);
   BEGIN
@@ -130,8 +135,11 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
   
     l_rsp.lugar := 'Buscando datos del servicio';
     BEGIN
-      SELECT upper(o.nombre), upper(o.dominio), s.tipo
-        INTO l_nombre_servicio, l_dominio_servicio, l_tipo_servicio
+      SELECT upper(o.nombre), upper(o.dominio), o.version_actual, s.tipo
+        INTO l_nombre_servicio,
+             l_dominio_servicio,
+             l_version_actual,
+             l_tipo_servicio
         FROM t_servicios s, t_operaciones o
        WHERE o.id_operacion = s.id_servicio
          AND o.activo = 'S'
@@ -147,7 +155,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_rsp.lugar := 'Procesando parámetros del servicio';
     BEGIN
       l_prms := k_operacion.f_procesar_parametros(i_id_servicio,
-                                                  i_parametros);
+                                                  i_parametros,
+                                                  nvl(i_version,
+                                                      l_version_actual));
     EXCEPTION
       WHEN OTHERS THEN
         p_respuesta_error(l_rsp,
@@ -220,8 +230,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
-                     l_nombre_servicio || '(:2); END;';
+      IF nvl(i_version, l_version_actual) = l_version_actual THEN
+        l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
+                       l_nombre_servicio || '(:2); END;';
+      ELSE
+        l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
+                       l_nombre_servicio || '_' ||
+                       REPLACE(i_version, '.', '_') || '(:2); END;';
+      END IF;
     
       l_rsp.lugar := 'Procesando servicio';
       BEGIN
@@ -608,7 +624,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   FUNCTION f_procesar_servicio(i_id_servicio IN NUMBER,
                                i_parametros  IN CLOB,
-                               i_contexto    IN CLOB DEFAULT NULL)
+                               i_contexto    IN CLOB DEFAULT NULL,
+                               i_version     IN VARCHAR2 DEFAULT NULL)
     RETURN CLOB IS
     l_rsp CLOB;
   BEGIN
@@ -619,19 +636,23 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto, i_version)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_servicio,
                                 i_parametros,
                                 l_rsp,
-                                i_contexto);
+                                i_contexto,
+                                i_version);
     RETURN l_rsp;
   END;
 
   FUNCTION f_procesar_servicio(i_nombre     IN VARCHAR2,
                                i_dominio    IN VARCHAR2,
                                i_parametros IN CLOB,
-                               i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
+                               i_contexto   IN CLOB DEFAULT NULL,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB IS
     l_rsp         CLOB;
     l_id_servicio t_servicios.id_servicio%TYPE;
   BEGIN
@@ -646,12 +667,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(l_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto, i_version)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,
                                 l_rsp,
-                                i_contexto);
+                                i_contexto,
+                                i_version);
     RETURN l_rsp;
   END;
 

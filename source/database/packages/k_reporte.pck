@@ -51,12 +51,16 @@ CREATE OR REPLACE PACKAGE k_reporte IS
 
   FUNCTION f_procesar_reporte(i_id_reporte IN NUMBER,
                               i_parametros IN CLOB,
-                              i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
+                              i_contexto   IN CLOB DEFAULT NULL,
+                              i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB;
 
   FUNCTION f_procesar_reporte(i_nombre     IN VARCHAR2,
                               i_dominio    IN VARCHAR2,
                               i_parametros IN CLOB,
-                              i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB;
+                              i_contexto   IN CLOB DEFAULT NULL,
+                              i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB;
 
 END;
 /
@@ -90,7 +94,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
 
   FUNCTION lf_procesar_reporte(i_id_reporte IN NUMBER,
                                i_parametros IN CLOB,
-                               i_contexto   IN CLOB DEFAULT NULL)
+                               i_contexto   IN CLOB DEFAULT NULL,
+                               i_version    IN VARCHAR2 DEFAULT NULL)
     RETURN y_respuesta IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp             y_respuesta;
@@ -99,6 +104,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_archivo         y_archivo;
     l_nombre_reporte  t_operaciones.nombre%TYPE;
     l_dominio_reporte t_operaciones.dominio%TYPE;
+    l_version_actual  t_operaciones.version_actual%TYPE;
     l_tipo_reporte    t_reportes.tipo%TYPE;
     l_sentencia       VARCHAR2(4000);
   BEGIN
@@ -107,8 +113,11 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   
     l_rsp.lugar := 'Buscando datos del reporte';
     BEGIN
-      SELECT upper(o.nombre), upper(o.dominio), r.tipo
-        INTO l_nombre_reporte, l_dominio_reporte, l_tipo_reporte
+      SELECT upper(o.nombre), upper(o.dominio), o.version_actual, r.tipo
+        INTO l_nombre_reporte,
+             l_dominio_reporte,
+             l_version_actual,
+             l_tipo_reporte
         FROM t_reportes r, t_operaciones o
        WHERE o.id_operacion = r.id_reporte
          AND o.activo = 'S'
@@ -124,7 +133,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_rsp.lugar := 'Procesando parámetros del reporte';
     BEGIN
       l_prms := k_operacion.f_procesar_parametros(i_id_reporte,
-                                                  i_parametros);
+                                                  i_parametros,
+                                                  nvl(i_version,
+                                                      l_version_actual));
     EXCEPTION
       WHEN OTHERS THEN
         k_servicio.p_respuesta_error(l_rsp,
@@ -197,8 +208,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
-                     l_nombre_reporte || '(:2); END;';
+      IF nvl(i_version, l_version_actual) = l_version_actual THEN
+        l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
+                       l_nombre_reporte || '(:2); END;';
+      ELSE
+        l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
+                       l_nombre_reporte || '_' ||
+                       REPLACE(i_version, '.', '_') || '(:2); END;';
+      END IF;
     
       l_rsp.lugar := 'Procesando reporte';
       BEGIN
@@ -572,7 +589,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
 
   FUNCTION f_procesar_reporte(i_id_reporte IN NUMBER,
                               i_parametros IN CLOB,
-                              i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
+                              i_contexto   IN CLOB DEFAULT NULL,
+                              i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB IS
     l_rsp CLOB;
   BEGIN
     -- Inicializa parámetros de la sesión
@@ -582,19 +601,23 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(i_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_reporte(i_id_reporte, i_parametros, i_contexto, i_version)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_reporte,
                                 i_parametros,
                                 l_rsp,
-                                i_contexto);
+                                i_contexto,
+                                i_version);
     RETURN l_rsp;
   END;
 
   FUNCTION f_procesar_reporte(i_nombre     IN VARCHAR2,
                               i_dominio    IN VARCHAR2,
                               i_parametros IN CLOB,
-                              i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB IS
+                              i_contexto   IN CLOB DEFAULT NULL,
+                              i_version    IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB IS
     l_rsp        CLOB;
     l_id_reporte t_reportes.id_reporte%TYPE;
   BEGIN
@@ -609,12 +632,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(l_id_reporte);
     -- Procesa reporte
-    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto).to_json;
+    l_rsp := lf_procesar_reporte(l_id_reporte, i_parametros, i_contexto, i_version)
+             .to_json;
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_reporte,
                                 i_parametros,
                                 l_rsp,
-                                i_contexto);
+                                i_contexto,
+                                i_version);
     RETURN l_rsp;
   END;
 
