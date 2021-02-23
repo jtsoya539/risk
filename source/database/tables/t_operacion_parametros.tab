@@ -2,6 +2,7 @@ create table T_OPERACION_PARAMETROS
 (
   id_operacion    NUMBER not null,
   nombre          VARCHAR2(100) not null,
+  version         VARCHAR2(100) not null,
   orden           NUMBER(3) not null,
   activo          VARCHAR2(1) default 'N' not null,
   tipo_dato       VARCHAR2(1) not null,
@@ -19,6 +20,8 @@ comment on column T_OPERACION_PARAMETROS.id_operacion
   is 'Identificador de la operación';
 comment on column T_OPERACION_PARAMETROS.nombre
   is 'Nombre del parámetro';
+comment on column T_OPERACION_PARAMETROS.version
+  is 'Versión de la operación';
 comment on column T_OPERACION_PARAMETROS.orden
   is 'Número de orden del parámetro';
 comment on column T_OPERACION_PARAMETROS.activo
@@ -38,9 +41,9 @@ comment on column T_OPERACION_PARAMETROS.etiqueta
 comment on column T_OPERACION_PARAMETROS.detalle
   is 'Detalles adicionales del parámetro';
 alter table T_OPERACION_PARAMETROS
-  add constraint PK_OPERACION_PARAMETROS primary key (ID_OPERACION, NOMBRE);
+  add constraint PK_OPERACION_PARAMETROS primary key (ID_OPERACION, NOMBRE, VERSION);
 alter table T_OPERACION_PARAMETROS
-  add constraint UK_OPE_PAR_ID_OPERACION_ORDEN unique (ID_OPERACION, ORDEN);
+  add constraint UK_OPE_PAR_ID_OPE_ORD_VERSION unique (ID_OPERACION, ORDEN, VERSION);
 alter table T_OPERACION_PARAMETROS
   add constraint FK_OPE_PARAMETROS_OPERACIONES foreign key (ID_OPERACION)
   references T_OPERACIONES (ID_OPERACION);

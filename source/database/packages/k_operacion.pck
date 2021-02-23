@@ -54,7 +54,9 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
-                                 i_parametros   IN CLOB) RETURN y_parametros;
+                                 i_parametros   IN CLOB,
+                                 i_version      IN VARCHAR2 DEFAULT NULL)
+    RETURN y_parametros;
 
   FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB;
 
@@ -178,27 +180,31 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
-                                 i_parametros   IN CLOB) RETURN y_parametros IS
+                                 i_parametros   IN CLOB,
+                                 i_version      IN VARCHAR2 DEFAULT NULL)
+    RETURN y_parametros IS
     l_parametros   y_parametros;
     l_parametro    y_parametro;
     l_json_object  json_object_t;
     l_json_element json_element_t;
   
     CURSOR cr_parametros IS
-      SELECT id_operacion,
-             lower(nombre) nombre,
-             orden,
-             activo,
-             tipo_dato,
-             formato,
-             longitud_maxima,
-             obligatorio,
-             valor_defecto,
-             etiqueta,
-             detalle
-        FROM t_operacion_parametros
-       WHERE activo = 'S'
-         AND id_operacion = i_id_operacion
+      SELECT op.id_operacion,
+             lower(op.nombre) nombre,
+             op.orden,
+             op.activo,
+             op.tipo_dato,
+             op.formato,
+             op.longitud_maxima,
+             op.obligatorio,
+             op.valor_defecto,
+             op.etiqueta,
+             op.detalle
+        FROM t_operacion_parametros op, t_operaciones o
+       WHERE o.id_operacion = op.id_operacion
+         AND op.activo = 'S'
+         AND op.id_operacion = i_id_operacion
+         AND op.version = nvl(i_version, o.version_actual)
        ORDER BY orden;
   BEGIN
     -- Inicializa respuesta

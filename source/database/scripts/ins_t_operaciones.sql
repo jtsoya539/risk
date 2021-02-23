@@ -2,7 +2,7 @@ prompt Importing table t_operaciones...
 set feedback off
 set define off
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
-values (0, 'P', 'CONTEXTO', null, 'S', null, null, 'N');
+values (0, 'P', 'CONTEXTO', null, 'S', null, '0.1.0', 'N');
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, LOG_ACTIVO)
 values (1, 'S', 'VALIDAR_CREDENCIALES', 'AUT', 'S', null, '0.1.0', 'N');
