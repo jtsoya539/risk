@@ -91,16 +91,17 @@ BEGIN
   RETURN bitor(p1, p2) - bitand(p1, p2);
 END;
 
-FUNCTION bin2dec(binval varchar2) RETURN pls_integer IS
-  result            NUMBER := 0;
+FUNCTION bin2dec(p_binval varchar2) RETURN pls_integer IS
+  lnResult number := 0;
 BEGIN
-  FOR t IN 1 .. length(binval) LOOP
-     result := (result * 2) + to_number(substr(binval, t, 1));
-  END LOOP;
+    FOR t IN 1 .. length(p_binval) LOOP
+        lnResult := (lnResult * 2) + to_number(substr(p_binval, t, 1));
+    END LOOP;
   
-  RETURN result;
+    RETURN lnResult;
 END bin2dec;
 
+/*
 FUNCTION f_integer_2_binary(p_integer pls_integer) RETURN varchar2 IS
     lcBinary varchar2(100);
 BEGIN
@@ -111,8 +112,26 @@ BEGIN
 
     RETURN lcBinary;
 END;
+*/
 
+--function changed to pure PL/SQL version 
+--also compatible with older databases (10g)
+FUNCTION f_integer_2_binary(p_integer pls_integer) RETURN varchar2 IS
+    lcBinary varchar2(100);
+    lnTemp number := p_integer;
+   
+BEGIN
+    if p_integer <> 0 then
+        WHILE ( lnTemp > 0 ) LOOP
+            lcBinary := mod(lnTemp, 2) || lcBinary;
+            lnTemp := trunc( lnTemp / 2 );
+        END LOOP;
+    else
+        lcBinary := '0';
+    end if;
 
+    RETURN lcBinary;
+END f_integer_2_binary;
 
 
 --INIT FUNCS AND PROCS
@@ -722,7 +741,7 @@ BEGIN
     
     
     RETURN lcIndicator;
-END;
+END f_char_count_indicator;
 
 
 /*
@@ -756,6 +775,32 @@ FUNCTION f_get_version(
     lnElements pls_integer;
     lnPosition pls_integer;
 
+
+    FUNCTION f_explode(
+        p_text varchar2,
+        p_delimiter varchar2
+    ) RETURN t_numbers IS
+    
+        lrList t_numbers := t_numbers();
+        lnCounter pls_integer := 0;
+        lcText varchar2(32000) := p_text;
+    
+    BEGIN
+        LOOP
+            lnCounter := instr(lcText, p_delimiter);
+
+            if lnCounter > 0 then
+                lrList.extend(1);
+                lrList(lrList.count) := substr(lcText, 1, lnCounter - 1);
+                lcText := substr(lcText, lnCounter + length(p_delimiter));
+            else
+                lrList.extend(1);
+                lrList(lrList.count) := lcText;
+                RETURN lrList;
+            end if;
+            
+        END LOOP;
+    END f_explode;
     
 BEGIN
     --initial values to determine version
@@ -826,9 +871,15 @@ BEGIN
     FOR t IN 1 .. 40 LOOP
         p_debug(lrValues(t), 4);
         
+        /*
         SELECT to_number(column_value) a
         BULK COLLECT INTO lrData
         FROM XMLTABLE(lrValues(t));
+        */
+        lrData := f_explode(
+            p_text => lrValues(t),
+            p_delimiter => ','
+        );
 
         p_debug('Value on position ' || lnPosition || ': ' || lrData(lnPosition), 2);
         
@@ -902,7 +953,7 @@ BEGIN
     --data encoding - different for different modes 
     if gpnMode = cNumericMode then
         LOOP
-            lcSub := ltrim(substr(p_data, lnCounter, 3), '0');
+            lcSub := substr(p_data, lnCounter, 3);
             
             p_debug(lcSub, 2);
             
@@ -954,14 +1005,16 @@ BEGIN
     --terminator zeros
     lnReqNumOfBits := gprErrCorInfo(gpnVersion || '-' || p_error_correction).total_no_of_data_cw * 8;
     p_debug('Required number of bits: ' || lnReqNumOfBits, 2);
+
+    p_debug('Terminator zeros to add: ' || (lnReqNumOfBits - lengthb(lcData)), 2);
     
-    if lnReqNumOfBits - lengthb(p_data) >= 4 then
+    if lnReqNumOfBits - lengthb(lcData) >= 4 then
         lcData := lcData || '0000';
-        p_debug('Terminator zeros: 0000', 2);
     else
-        lcData := rpad(lcData, lnReqNumOfBits - lengthb(p_data), '0');
-        p_debug('Terminator zeros: ' || rpad(null, lnReqNumOfBits - lengthb(p_data), '0'), 2);
+        lcData := rpad(lcData, lnReqNumOfBits, '0');
     end if;
+
+    p_debug('Data with right padding (number of bits ' || length(lcData) || '): ' || lcData, 2);
 
     --additional right padding with 0 to reach a string length multiple of 8
      LOOP
@@ -1788,7 +1841,7 @@ END;
 PROCEDURE p_generate_qr_data(
     p_data varchar2,  --data going to be encoded into QR code
     p_error_correction varchar2, --L, M, Q or H (see bellow)
-    p_qr OUT varchar2, --generated QR code data in format row || newline (chr 10) || row || newline...; 1 for black module, 0 for white
+    p_qr OUT NOCOPY varchar2, --generated QR code data in format row || newline (chr 10) || row || newline...; 1 for black module, 0 for white
     p_matrix_size OUT pls_integer --matrix size in modules (21, 25, 29...)
     ) IS
     
@@ -1815,7 +1868,7 @@ PROCEDURE p_qr_debug(
     p_debug boolean default true,  --should DBMS OUTPUT be printed
     p_debug_level pls_integer default 1,  --debug level (1, 2, 3...) - details to be printed in debug output
     p_masking_out pls_integer default null,
-    p_qr OUT varchar2,
+    p_qr OUT NOCOPY varchar2,
     p_matrix_size OUT pls_integer
     ) IS
     
@@ -1932,6 +1985,29 @@ BEGIN
 END f_qr_as_html_table;
 
 
+PROCEDURE p_print_clob_htp(
+    p_clob IN OUT NOCOPY clob
+) IS
+
+    lnFrom pls_integer := 1;
+    lnTo pls_integer;
+
+BEGIN
+    LOOP
+        lnTo := instr(p_clob, chr(10), lnFrom);
+        if lnTo = 0 then
+            lnTo := length(p_clob);
+        end if;
+    
+        htp.p(substr(p_clob, lnFrom, lnTo - lnFrom));
+        
+        lnFrom := lnTo + 1;
+        
+        EXIT WHEN lnTo = length(p_clob);
+    END LOOP;
+
+END p_print_clob_htp;
+
 
 
 PROCEDURE p_qr_as_html_table(
@@ -1942,8 +2018,6 @@ PROCEDURE p_qr_as_html_table(
     ) IS
     
     lcClob clob;
-    lnFrom pls_integer := 1;
-    lnTo pls_integer;
     
 BEGIN
     if p_data is null then
@@ -1953,6 +2027,9 @@ BEGIN
 
     lcClob := f_qr_as_html_table(p_data, p_error_correction, p_module_size_in_px, p_margines);
     
+    p_print_clob_htp(lcClob);
+    
+    /*
     LOOP
         lnTo := instr(lcClob, chr(10), lnFrom);
         if lnTo = 0 then
@@ -1965,6 +2042,7 @@ BEGIN
         
         EXIT WHEN lnTo = length(lcClob);
     END LOOP;
+    */
     
 END p_qr_as_html_table;
 
@@ -2004,9 +2082,9 @@ FUNCTION f_qr_as_bmp(
     lrLine raw(500);
     
 BEGIN
+    --if no data passed then return null
     if p_data is null then
         return null;
-        RAISE_APPLICATION_ERROR(-20000, 'no data to display.');
     end if;
 
     p_generate_qr_data(
@@ -2113,6 +2191,127 @@ END f_qr_as_bmp;
 
 
 
+FUNCTION f_qr_as_long_raw(
+    p_data varchar2,  --data going to be encoded into QR code
+    p_error_correction varchar2, --L, M, Q or H
+    p_margines varchar2 default 'N' --margines around QR code (4 modules) - values Y or N
+    ) RETURN long raw IS
+    
+    lcQR varchar2(32727);
+    lnMatrixSize pls_integer;
+    lnZeros pls_integer;
+    lnImageBytes pls_integer;
+    lnWidthHeight pls_integer;
+
+    lbBlob long raw;
+    lrLine raw(500);
+    
+BEGIN
+    --if no data passed then return
+    if p_data is null then
+        return null;
+    end if;
+
+    p_generate_qr_data(
+        p_data => p_data,
+        p_error_correction => p_error_correction, 
+        p_qr => lcQR,
+        p_matrix_size => lnMatrixSize
+        );
+
+    --Header
+    lnWidthHeight := lnMatrixSize + (CASE WHEN p_margines = 'Y' THEN 8 ELSE 0 END);
+    lnImageBytes := lnWidthHeight * lnWidthHeight * 8;
+    
+    lbBlob := utl_raw.concat(lbBlob, utl_raw.cast_to_raw('BM')); -- Pos  0 - fixed
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(14 + 40 + 8 + lnImageBytes));    -- Pos  2 - file size (62 as header size + data size + color pallete)
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));      -- Pos 6, unused / reserved, value 0
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(14 + 40 + 8));      -- Pos 10, offset to image data - header size + information size + color pallete
+
+    -- Information
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(40));    -- Pos 14 - size of information header (always 40)
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(lnWidthHeight * 8));    -- Pos 18 - width
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(lnWidthHeight * 8));   -- Pos 22 - height
+    lbBlob := utl_raw.concat(lbBlob, unsigned_short(1));        -- Pos 26, planes
+    lbBlob := utl_raw.concat(lbBlob, unsigned_short(1));        -- Pos 28, bits per pixel
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));        -- Pos 30, no compression
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(lnImageBytes)); -- Pos 34 - image data size
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));      -- Pos 38, x pixels/meter
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));      -- Pos 42, y pixels/meter
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));         -- Pos 46, Number of colors
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));         -- Pos 50, Important colors
+
+    --Colors
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(16777215));  -- White (FF FF FF 00)
+    lbBlob := utl_raw.concat(lbBlob, unsigned_int(0));         -- Black (00 00 00 00)
+    
+    
+    
+    --Data
+    
+    --zeros at the end of the scan line (scan line in bytes must be mod 4)
+    lnZeros := 0;
+    LOOP
+        EXIT WHEN (lnWidthHeight + lnZeros) mod 4 = 0;
+        lnZeros := lnZeros + 1;
+    END LOOP;
+    
+    --bottom margine
+    if p_margines = 'Y' then
+        lrLine := utl_raw.copies( utl_raw.cast_to_raw(chr(0)), lnWidthHeight + lnZeros);
+        
+        FOR t IN 1 .. 32 LOOP
+            lbBlob := utl_raw.concat(lbBlob, utl_raw.substr(lrLine, 1, lnWidthHeight + lnZeros));
+        END LOOP;
+    end if;
+    
+    --data for scan lines
+    FOR r IN REVERSE 1 .. lnMatrixSize LOOP
+        --first prepare scan line as raw data
+        if p_margines = 'Y' then
+            --left margine
+            lrLine := utl_raw.copies( utl_raw.cast_to_raw(chr(0)), 4);
+        else
+            --no margines
+            lrLine := null;
+        end if;
+        
+        --data from matrix
+        FOR c IN 1 .. lnMatrixSize LOOP
+            lrLine := lrLine || utl_raw.cast_to_raw(chr(
+                CASE WHEN substr(lcQR, (r - 1) * (lnMatrixSize + 1) + c, 1) = '1' THEN 255 ELSE 0 END
+                ));
+        END LOOP;
+
+        --right margine
+        if p_margines = 'Y' then
+            lrLine := lrLine || utl_raw.copies( utl_raw.cast_to_raw(chr(0)), 4);
+        end if;
+
+        --trailing zeroes (mod 4)
+        FOR c IN 1 .. lnZeros LOOP
+            lrLine := lrLine || utl_raw.cast_to_raw(chr(0));
+        END LOOP;
+        
+        --8 scan lines in file because module is 8x8 pixels
+        FOR t IN 1 .. 8 LOOP
+            lbBlob := utl_raw.concat(lbBlob, utl_raw.substr(lrLine, 1, lnWidthHeight + lnZeros));
+        END LOOP;
+    END LOOP;
+
+    --top margine (4 modules)
+    if p_margines = 'Y' then
+        lrLine := utl_raw.copies( utl_raw.cast_to_raw(chr(0)), lnWidthHeight + lnZeros);
+        
+        FOR t IN 1 .. 32 LOOP
+            lbBlob := utl_raw.concat(lbBlob, utl_raw.substr(lrLine, 1, lnWidthHeight + lnZeros));
+        END LOOP;
+    end if;
+
+    RETURN lbBlob;
+END f_qr_as_long_raw;
+
+
 
 PROCEDURE p_qr_as_img_tag_base64(
     p_data varchar2,  --data going to be encoded into QR code
@@ -2136,6 +2335,108 @@ BEGIN
     htp.prn('" alt="qr code" width="' || p_image_size_px || 'px" height = "' || p_image_size_px || 'px" />');
     
 END;
+
+
+
+FUNCTION f_qr_as_svg(
+    p_data varchar2,  --data going to be encoded into QR code
+    p_error_correction varchar2, --L, M, Q or H
+    p_module_size_px pls_integer default 8,  --modul size in pixels
+    p_margines_yn varchar2 default 'N', --margines around QR code (4 modules) - values Y or N
+    p_module_color varchar2 default 'black',  --colors are defined as SVG named colors OR rgb (with # or rgb function)
+    p_background_color varchar2 default 'white',
+    p_module_rounded_px pls_integer default 0  --0 - sharp corners; > 0 - rounded in pixels
+) RETURN clob IS
+
+    lcQR varchar2(32727);
+    lnMatrixSize pls_integer;
+    
+    lnCanvasSize pls_integer;
+    lnX pls_integer;
+    lnY pls_integer;
+    
+    lcClob clob;
+
+    PROCEDURE p_add_clob(lcText varchar2) IS
+    BEGIN
+        lcClob := lcClob || lcText; -- || chr(10);
+    END;
+    
+BEGIN
+    if p_data is null then
+        lcClob := 'no data to display.';
+        RETURN lcClob;
+    end if;
+
+
+    p_generate_qr_data(
+        p_data => p_data,
+        p_error_correction => p_error_correction, 
+        p_qr => lcQR,
+        p_matrix_size => lnMatrixSize
+    );
+
+    --canvas size and top left coordinate of first module (dependent of margins parameter)
+    lnCanvasSize := (lnMatrixSize + (CASE WHEN p_margines_yn = 'Y' THEN 8 ELSE 0 END) ) * p_module_size_px;
+    lnX := CASE WHEN p_margines_yn = 'Y' THEN 4 * p_module_size_px ELSE 0 END;
+    lnY := lnX;
+
+    --init SVG tag
+    p_add_clob('<svg width="' || lnCanvasSize || '" height="' || lnCanvasSize || '" style="background-color: ' || nvl(p_background_color, 'white') || ';" xmlns="http://www.w3.org/2000/svg">');
+    
+    --draw black modules (background is already white)
+    FOR t IN 1 .. length(lcQR) LOOP
+        
+        if substr(lcQR, t, 1) = '1' then
+            p_add_clob('<rect x="' || lnX || '" y="' || lnY || '" width="' || p_module_size_px || '" height="' || p_module_size_px || '" fill="' || nvl(p_module_color, 'black') || '" ' || CASE WHEN p_module_rounded_px > 0 THEN 'rx="' || p_module_rounded_px || '"' ELSE null END || '/>');
+            lnX := lnX + p_module_size_px;
+            
+        elsif substr(lcQR, t, 1) = chr(10) then
+            lnX := CASE WHEN p_margines_yn = 'Y' THEN 4 * p_module_size_px ELSE 0 END;
+            lnY := lnY + p_module_size_px;
+            
+        else 
+            lnX := lnX + p_module_size_px;
+        
+        end if;
+        
+    END LOOP;
+    
+    --finish SVG
+    p_add_clob('</svg>');
+    
+    RETURN lcClob;
+
+END f_qr_as_svg;
+
+
+PROCEDURE p_qr_as_svg(
+    p_data varchar2,  --data going to be encoded into QR code
+    p_error_correction varchar2, --L, M, Q or H
+    p_module_size_px pls_integer default 8,  --modul size in pixels
+    p_margines_yn varchar2 default 'N', --margines around QR code (4 modules) - values Y or N
+    p_module_color varchar2 default 'black',  --colors are defined as SVG named colors OR rgb (with # or rgb function)
+    p_background_color varchar2 default 'white',
+    p_module_rounded_px pls_integer default 0  --0 - sharp corners; > 0 - rounded in pixels
+) IS
+
+    lcClob clob;
+    
+BEGIN
+    lcClob := ZT_QR.f_qr_as_svg(
+        p_data => p_data,
+        p_error_correction => p_error_correction,
+        p_margines_yn => p_margines_yn,
+        p_module_size_px => p_module_size_px,
+        p_module_color => p_module_color,
+        p_background_color => p_background_color,
+        p_module_rounded_px => p_module_rounded_px
+    );
+    
+    p_print_clob_htp(lcClob);
+    
+END p_qr_as_svg;
+
 
 PROCEDURE p_save_file(
     p_document blob,

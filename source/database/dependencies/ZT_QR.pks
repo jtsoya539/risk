@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE ZT_QR AS
+create or replace PACKAGE      ZT_QR AUTHID DEFINER AS
 /******************************************************************************
     Author:     Zoran Tica
                 ZT-TECH, racunalniške storitve s.p.
@@ -11,6 +11,13 @@ CREATE OR REPLACE PACKAGE ZT_QR AS
     ---------  ----------  ---------------  ------------------------------------
     1.0        18/08/2018  Zoran Tica       First version of package.
     1.1        26/05/2019  Zoran Tica       Added UTF-8 support, fixed minor BUGs for debug display
+    1.2        15/12/2019  Zoran Tica       Fixed "_" and "%" BUG
+    1.3        13/03/2020  Zoran Tica       Added function f_qr_as_long_raw
+    1.4        07/01/2021  Zoran Tica       Terminator BUG
+    1.5        05/02/2021  Zoran Tica       older databases compatibility (10g)
+                                            f_integer_2_binary - LISTAGG replaced with pure PL SQL
+                                            f_get_version - XMLTABLE replaced with local function f_explode
+    2.0        09/02/2021  Zoran Tica       SVG files support
 
 
     ----------------------------------------------------------------------------
@@ -62,9 +69,9 @@ p_matrix_size - matrix size in modules (21, 25, 29...)
 PROCEDURE p_generate_qr_data(
     p_data varchar2,
     p_error_correction varchar2, 
-    p_qr OUT varchar2,
+    p_qr OUT NOCOPY varchar2,
     p_matrix_size OUT pls_integer
-    );
+);
 
 
 /*
@@ -79,10 +86,29 @@ p_data - data that is going to be encoded into QR code
 p_error_correction - error correction level (values L, M, Q or H)
 p_debug - should DBMS OUTPUT be printed
 p_debug_level - debug level (1, 2, 3...) - details to be printed in debug output
+p_masking_out - which masking (values 0-7) should be displayed; null -> the best masking will be calculated and selected automatically 
 
 OUT parameters:
 p_qr - generated QR code data in format "row (1110100010100) || newline (chr 10) || row || newline..."
 p_matrix_size - matrix size in modules (21, 25, 29...)
+
+
+Testing code (enable DBMS OUTPUT for debug!):
+DECLARE
+    lcQR varchar2(32727);
+    lnMatrixSize pls_integer;
+BEGIN
+    ZT_QR.p_qr_debug(
+        p_data => 'http://www.zt-tech.eu',
+        p_error_correction => 'Q', 
+        p_debug => true,
+        p_debug_level => 2,
+        p_qr => lcQR,
+        p_matrix_size => lnMatrixSize
+    );
+END;
+/
+
 */
 PROCEDURE p_qr_debug(
     p_data varchar2,
@@ -90,9 +116,9 @@ PROCEDURE p_qr_debug(
     p_debug boolean default true,
     p_debug_level pls_integer default 1,
     p_masking_out pls_integer default null,
-    p_qr OUT varchar2,
+    p_qr OUT NOCOPY varchar2,
     p_matrix_size OUT pls_integer
-    );
+);
 
 
 
@@ -112,7 +138,7 @@ FUNCTION f_qr_as_html_table(
     p_error_correction varchar2, --L, M, Q or H
     p_module_size_in_px pls_integer default 8, --module size in pixels
     p_margines boolean default false --margines around QR code (4 modules)
-    ) RETURN clob;
+) RETURN clob;
 
 /*
 Procedure prints HTML code for HTML table element using HTP.P procedure
@@ -129,11 +155,11 @@ PROCEDURE p_qr_as_html_table(
     p_error_correction varchar2, --L, M, Q or H
     p_module_size_in_px pls_integer default 8, --module size in pixels
     p_margines boolean default false --margines around QR code (4 modules)
-    );
+);
 
 
 /*
-Function return black and white BMP image with QR code
+Function returns black and white BMP image with QR code
 Modules are 8x8 pixels large
 
 IN parameters:
@@ -145,7 +171,13 @@ FUNCTION f_qr_as_bmp(
     p_data varchar2,  --data going to be encoded into QR code
     p_error_correction varchar2, --L, M, Q or H
     p_margines varchar2 default 'N' --margines around QR code (4 modules) - values Y or N
-    ) RETURN blob;
+) RETURN blob;
+
+FUNCTION f_qr_as_long_raw(
+    p_data varchar2,  --data going to be encoded into QR code
+    p_error_correction varchar2, --L, M, Q or H
+    p_margines varchar2 default 'N' --margines around QR code (4 modules) - values Y or N
+) RETURN long raw;
 
 
 /*
@@ -163,7 +195,44 @@ PROCEDURE p_qr_as_img_tag_base64(
     p_error_correction varchar2, --L, M, Q or H
     p_image_size_px pls_integer,
     p_margines varchar2 default 'N' --margines around QR code (4 modules) - values Y or N
-    );
+);
+
+
+
+/*
+Function returns SVG image with QR code
+
+IN parameters:
+p_data - data that is going to be encoded into QR code
+p_error_correction - error correction level (values L, M, Q or H)
+p_margines_yn - should white margine around QR code (4 modules wide) be generated; values 'Y' or 'N'
+p_module_size_px - width and height of one module
+p_module_color - module color; colors can be defined as named colors (for example black, red, white...), using rgb function (for example rgb(255, 0, 0) ) or HEX values (for example #FF0000)
+p_background_color - background color; colors can be defined as named colors (for example black, red white...), using rgb function (for example rgb(255, 0, 0) ) or HEX values (for example #FF0000)
+p_module_rounded_px - if modules should have rounded edges (if size of this parameter is half the module size (or larger) then modules are represented as circles)
+
+Procedure prints SVG image using HTP.P procedure (can be used to print SVG image directly in HTML code)
+*/
+FUNCTION f_qr_as_svg(
+    p_data varchar2,  --data going to be encoded into QR code
+    p_error_correction varchar2, --L, M, Q or H
+    p_module_size_px pls_integer default 8,  --modul size in pixels
+    p_margines_yn varchar2 default 'N', --margines around QR code (4 modules) - values Y or N
+    p_module_color varchar2 default 'black',  --colors are defined as SVG named colors OR rgb (with # or rgb function)
+    p_background_color varchar2 default 'white',
+    p_module_rounded_px pls_integer default 0  --0 - sharp corners; > 0 - rounded in pixels
+) RETURN clob;
+
+PROCEDURE p_qr_as_svg(
+    p_data varchar2,  --data going to be encoded into QR code
+    p_error_correction varchar2, --L, M, Q or H
+    p_module_size_px pls_integer default 8,  --modul size in pixels
+    p_margines_yn varchar2 default 'N', --margines around QR code (4 modules) - values Y or N
+    p_module_color varchar2 default 'black',  --colors are defined as SVG named colors OR rgb (with # or rgb function)
+    p_background_color varchar2 default 'white',
+    p_module_rounded_px pls_integer default 0  --0 - sharp corners; > 0 - rounded in pixels
+);
+
 
 
 /*
@@ -173,7 +242,7 @@ PROCEDURE p_save_file(
     p_document blob,
     p_file_name varchar2,
     p_folder varchar2
-    );
+);
 
 END ZT_QR;
 /
