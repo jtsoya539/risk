@@ -64,16 +64,19 @@ namespace Risk.API.Services
             string accessToken = string.Empty; // access_token
             string usuario = string.Empty; // usuario
 
-            try
+            if (_httpContextAccessor.HttpContext != null)
             {
-                direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
-                accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
-                usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogDebug($"Error al obtener contexto: {ex.Message}");
+                try
+                {
+                    direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+                    claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                    accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                    usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug($"Error al obtener contexto: {ex.Message}");
+                }
             }
 
             ctx.Add("direccion_ip", direccionIp);
@@ -82,6 +85,25 @@ namespace Risk.API.Services
             ctx.Add("usuario", usuario);
 
             return ctx.ToString(Formatting.None);
+        }
+
+        protected string ObtenerVersion()
+        {
+            string version = string.Empty;
+
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                try
+                {
+                    version = TokenHelper.ObtenerVersionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug($"Error al obtener versión: {ex.Message}");
+                }
+            }
+
+            return version;
         }
 
         protected string ProcesarOperacion(string tipo, string nombre, string dominio, string parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
@@ -130,7 +152,7 @@ namespace Risk.API.Services
                             string contexto = ObtenerContexto();
                             iContexto.Write(contexto.ToCharArray(), 0, contexto.Length);
 
-                            string version = string.Empty;
+                            string version = ObtenerVersion();
 
                             cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
                             cmd.Parameters.Add("i_nombre", OracleDbType.Varchar2, nombre, ParameterDirection.Input);

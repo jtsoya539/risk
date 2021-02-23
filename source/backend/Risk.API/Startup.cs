@@ -193,6 +193,7 @@ namespace Risk.API
                 c.DocumentFilter<ServersDocumentFilter>();
                 c.OperationFilter<SecurityRequirementsOperationFilter>();
                 c.OperationFilter<ServiceErrorsOperationFilter>();
+                c.OperationFilter<ServiceVersionOperationFilter>();
                 c.SchemaFilter<NotNullableSchemaFilter>();
             });
             services.AddSwaggerGenNewtonsoftSupport();

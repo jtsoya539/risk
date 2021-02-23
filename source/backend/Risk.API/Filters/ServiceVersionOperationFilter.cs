@@ -22,30 +22,33 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Helpers
+using System.Collections.Generic;
+using Microsoft.OpenApi.Models;
+using Risk.API.Helpers;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
+namespace Risk.API.Filters
 {
-    public static class RiskConstants
+    public class ServiceVersionOperationFilter : IOperationFilter
     {
-        // Códigos de respuesta para excepciones en API
-        public const string CODIGO_DB_EXCEPTION = "api0001";
-        public const string CODIGO_API_EXCEPTION = "api0002";
-        public const string CODIGO_EXCEPTION = "api9999";
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            if (operation.Parameters == null)
+            {
+                operation.Parameters = new List<OpenApiParameter>();
+            }
 
-        // Códigos de respuesta de Base de Datos
-        public const string CODIGO_OK = "0";
-        public const string CODIGO_SERVICIO_NO_IMPLEMENTADO = "ser0001";
-        public const string CODIGO_ERROR_PARAMETRO = "ser0002";
-        public const string CODIGO_ERROR_PERMISO = "ser0003";
-        public const string CODIGO_ERROR_GENERAL = "ser0099";
-        public const string CODIGO_ERROR_INESPERADO = "ser9999";
-
-        // OpenApi Security Schemes
-        public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";
-        public const string SECURITY_SCHEME_ACCESS_TOKEN = "AccessToken";
-
-        // Http Headers
-        public const string HEADER_RISK_APP_KEY = "Risk-App-Key";
-        public const string HEADER_AUTHORIZATION = "Authorization";
-        public const string HEADER_RISK_SERVICE_VERSION = "Risk-Service-Version";
+            operation.Parameters.Add(new OpenApiParameter
+            {
+                Name = RiskConstants.HEADER_RISK_SERVICE_VERSION,
+                Description = "Versión del Servicio",
+                In = ParameterLocation.Header,
+                Required = false,
+                Schema = new OpenApiSchema()
+                {
+                    Type = "string"
+                }
+            });
+        }
     }
 }
