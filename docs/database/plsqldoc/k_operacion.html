@@ -230,7 +230,9 @@ f_procesar_parametros
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
-                               i_parametros   IN CLOB) RETURN y_parametros
+                               i_parametros   IN CLOB,
+                               i_version      IN VARCHAR2 DEFAULT NULL)
+  RETURN y_parametros
 
 </PRE>
 <HR>

@@ -175,7 +175,9 @@ f_procesar_reporte
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_procesar_reporte(i_id_reporte IN NUMBER,
                             i_parametros IN CLOB,
-                            i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB
+                            i_contexto   IN CLOB DEFAULT NULL,
+                            i_version    IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
 
 </PRE>
 <HR>
@@ -187,7 +189,9 @@ f_procesar_reporte
 FUNCTION f_procesar_reporte(i_nombre     IN VARCHAR2,
                             i_dominio    IN VARCHAR2,
                             i_parametros IN CLOB,
-                            i_contexto   IN CLOB DEFAULT NULL) RETURN CLOB
+                            i_contexto   IN CLOB DEFAULT NULL,
+                            i_version    IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
 
 </PRE>
 <P>&nbsp;</P>
