@@ -33,7 +33,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
-using Risk.API.Entities;
 using Risk.API.Exceptions;
 using Risk.API.Helpers;
 
@@ -131,18 +130,22 @@ namespace Risk.API.Services
                             string contexto = ObtenerContexto();
                             iContexto.Write(contexto.ToCharArray(), 0, contexto.Length);
 
+                            string version = string.Empty;
+
                             cmd.Parameters.Add("result", OracleDbType.Clob, result, ParameterDirection.ReturnValue);
                             cmd.Parameters.Add("i_nombre", OracleDbType.Varchar2, nombre, ParameterDirection.Input);
                             cmd.Parameters.Add("i_dominio", OracleDbType.Varchar2, dominio, ParameterDirection.Input);
                             cmd.Parameters.Add("i_parametros", OracleDbType.Clob, iParametros, ParameterDirection.Input);
                             cmd.Parameters.Add("i_contexto", OracleDbType.Clob, iContexto, ParameterDirection.Input);
+                            cmd.Parameters.Add("i_version", OracleDbType.Varchar2, version, ParameterDirection.Input);
 
-                            _logger.LogDebug("Ejecutando el SP [{0}] con parámetros i_nombre=[{1}], i_dominio=[{2}], i_parametros=[{3}], i_contexto=[{4}]",
+                            _logger.LogDebug("Ejecutando el SP [{0}] con parámetros i_nombre=[{1}], i_dominio=[{2}], i_parametros=[{3}], i_contexto=[{4}], i_version=[{5}]",
                                 cmd.CommandText,
                                 nombre,
                                 dominio,
                                 parametros,
-                                contexto);
+                                contexto,
+                                version);
                             cmd.ExecuteNonQuery();
 
                             result = (OracleClob)cmd.Parameters["result"].Value;
