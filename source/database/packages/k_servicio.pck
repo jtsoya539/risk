@@ -230,8 +230,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
-                     l_nombre_servicio || '(:2); END;';
+      IF nvl(i_version, l_version_actual) = l_version_actual THEN
+        l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
+                       l_nombre_servicio || '(:2); END;';
+      ELSE
+        l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
+                       l_nombre_servicio || '_V' ||
+                       REPLACE(i_version, '.', '_') || '(:2); END;';
+      END IF;
     
       l_rsp.lugar := 'Procesando servicio';
       BEGIN

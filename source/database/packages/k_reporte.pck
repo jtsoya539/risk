@@ -208,8 +208,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
-                     l_nombre_reporte || '(:2); END;';
+      IF nvl(i_version, l_version_actual) = l_version_actual THEN
+        l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
+                       l_nombre_reporte || '(:2); END;';
+      ELSE
+        l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
+                       l_nombre_reporte || '_V' ||
+                       REPLACE(i_version, '.', '_') || '(:2); END;';
+      END IF;
     
       l_rsp.lugar := 'Procesando reporte';
       BEGIN
