@@ -1,6 +1,6 @@
 # Risk.API.Client.Api.AutApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 <a name="activarusuario"></a>
 # **ActivarUsuario**
-> DatoRespuesta ActivarUsuario (string key)
+> DatoRespuesta ActivarUsuario (string key, string riskServiceVersion = null)
 
 ActivarUsuario
 
@@ -47,14 +47,15 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             var apiInstance = new AutApi(config);
             var key = key_example;  // string | Clave para la activación
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ActivarUsuario
-                DatoRespuesta result = apiInstance.ActivarUsuario(key);
+                DatoRespuesta result = apiInstance.ActivarUsuario(key, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -73,6 +74,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **string**| Clave para la activación | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -99,7 +101,7 @@ No authorization required
 
 <a name="cambiarclaveacceso"></a>
 # **CambiarClaveAcceso**
-> DatoRespuesta CambiarClaveAcceso (CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = null)
+> DatoRespuesta CambiarClaveAcceso (string riskServiceVersion = null, CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = null)
 
 CambiarClaveAcceso
 
@@ -120,7 +122,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -129,12 +131,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var cambiarClaveAccesoRequestBody = new CambiarClaveAccesoRequestBody(); // CambiarClaveAccesoRequestBody |  (optional) 
 
             try
             {
                 // CambiarClaveAcceso
-                DatoRespuesta result = apiInstance.CambiarClaveAcceso(cambiarClaveAccesoRequestBody);
+                DatoRespuesta result = apiInstance.CambiarClaveAcceso(riskServiceVersion, cambiarClaveAccesoRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -152,6 +155,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -181,7 +185,7 @@ Name | Type | Description  | Notes
 
 <a name="cambiarclavetransaccional"></a>
 # **CambiarClaveTransaccional**
-> DatoRespuesta CambiarClaveTransaccional (CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = null)
+> DatoRespuesta CambiarClaveTransaccional (string riskServiceVersion = null, CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = null)
 
 CambiarClaveTransaccional
 
@@ -202,7 +206,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -211,12 +215,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var cambiarClaveTransaccionalRequestBody = new CambiarClaveTransaccionalRequestBody(); // CambiarClaveTransaccionalRequestBody |  (optional) 
 
             try
             {
                 // CambiarClaveTransaccional
-                DatoRespuesta result = apiInstance.CambiarClaveTransaccional(cambiarClaveTransaccionalRequestBody);
+                DatoRespuesta result = apiInstance.CambiarClaveTransaccional(riskServiceVersion, cambiarClaveTransaccionalRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -234,6 +239,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -263,7 +269,7 @@ Name | Type | Description  | Notes
 
 <a name="datosusuario"></a>
 # **DatosUsuario**
-> UsuarioRespuesta DatosUsuario (string usuario)
+> UsuarioRespuesta DatosUsuario (string usuario, string riskServiceVersion = null)
 
 DatosUsuario
 
@@ -284,7 +290,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -294,11 +300,12 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // DatosUsuario
-                UsuarioRespuesta result = apiInstance.DatosUsuario(usuario);
+                UsuarioRespuesta result = apiInstance.DatosUsuario(usuario, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -317,6 +324,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -345,7 +353,7 @@ Name | Type | Description  | Notes
 
 <a name="editarusuario"></a>
 # **EditarUsuario**
-> DatoRespuesta EditarUsuario (string usuario, EditarUsuarioRequestBody editarUsuarioRequestBody = null)
+> DatoRespuesta EditarUsuario (string usuario, string riskServiceVersion = null, EditarUsuarioRequestBody editarUsuarioRequestBody = null)
 
 EditarUsuario
 
@@ -366,7 +374,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -376,12 +384,13 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var editarUsuarioRequestBody = new EditarUsuarioRequestBody(); // EditarUsuarioRequestBody |  (optional) 
 
             try
             {
                 // EditarUsuario
-                DatoRespuesta result = apiInstance.EditarUsuario(usuario, editarUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.EditarUsuario(usuario, riskServiceVersion, editarUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -400,6 +409,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -429,7 +439,7 @@ Name | Type | Description  | Notes
 
 <a name="eliminarusuario"></a>
 # **EliminarUsuario**
-> DatoRespuesta EliminarUsuario (EliminarUsuarioRequestBody eliminarUsuarioRequestBody = null)
+> DatoRespuesta EliminarUsuario (string riskServiceVersion = null, EliminarUsuarioRequestBody eliminarUsuarioRequestBody = null)
 
 EliminarUsuario
 
@@ -450,7 +460,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -459,12 +469,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var eliminarUsuarioRequestBody = new EliminarUsuarioRequestBody(); // EliminarUsuarioRequestBody |  (optional) 
 
             try
             {
                 // EliminarUsuario
-                DatoRespuesta result = apiInstance.EliminarUsuario(eliminarUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.EliminarUsuario(riskServiceVersion, eliminarUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -482,6 +493,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -511,7 +523,7 @@ Name | Type | Description  | Notes
 
 <a name="finalizarsesion"></a>
 # **FinalizarSesion**
-> DatoRespuesta FinalizarSesion (FinalizarSesionRequestBody finalizarSesionRequestBody = null)
+> DatoRespuesta FinalizarSesion (string riskServiceVersion = null, FinalizarSesionRequestBody finalizarSesionRequestBody = null)
 
 FinalizarSesion
 
@@ -532,7 +544,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -541,12 +553,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var finalizarSesionRequestBody = new FinalizarSesionRequestBody(); // FinalizarSesionRequestBody |  (optional) 
 
             try
             {
                 // FinalizarSesion
-                DatoRespuesta result = apiInstance.FinalizarSesion(finalizarSesionRequestBody);
+                DatoRespuesta result = apiInstance.FinalizarSesion(riskServiceVersion, finalizarSesionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -564,6 +577,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -593,7 +607,7 @@ Name | Type | Description  | Notes
 
 <a name="generarotp"></a>
 # **GenerarOtp**
-> DatoRespuesta GenerarOtp (TipoMensajeria tipoMensajeria, string destino)
+> DatoRespuesta GenerarOtp (TipoMensajeria tipoMensajeria, string destino, string riskServiceVersion = null)
 
 GenerarOtp
 
@@ -614,7 +628,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -623,11 +637,12 @@ namespace Example
             var apiInstance = new AutApi(config);
             var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
             var destino = destino_example;  // string | Destino de la mensajería
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // GenerarOtp
-                DatoRespuesta result = apiInstance.GenerarOtp(tipoMensajeria, destino);
+                DatoRespuesta result = apiInstance.GenerarOtp(tipoMensajeria, destino, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -647,6 +662,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería (Mail/SMS/Push) | 
  **destino** | **string**| Destino de la mensajería | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -674,7 +690,7 @@ Name | Type | Description  | Notes
 
 <a name="guardaravatarusuario"></a>
 # **GuardarAvatarUsuario**
-> DatoRespuesta GuardarAvatarUsuario (string usuario, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
+> DatoRespuesta GuardarAvatarUsuario (string usuario, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
 GuardarAvatarUsuario
 
@@ -695,7 +711,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -705,15 +721,16 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
-            var archivo = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
-            var url = url_example;  // string |  (optional) 
-            var nombre = nombre_example;  // string |  (optional) 
-            var extension = extension_example;  // string |  (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var archivo = BINARY_DATA_HERE;  // System.IO.Stream | Contenido del archivo (optional) 
+            var url = url_example;  // string | URL del archivo (optional) 
+            var nombre = nombre_example;  // string | Nombre del archivo (optional) 
+            var extension = extension_example;  // string | Extensión del archivo (optional) 
 
             try
             {
                 // GuardarAvatarUsuario
-                DatoRespuesta result = apiInstance.GuardarAvatarUsuario(usuario, archivo, url, nombre, extension);
+                DatoRespuesta result = apiInstance.GuardarAvatarUsuario(usuario, riskServiceVersion, archivo, url, nombre, extension);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -732,10 +749,11 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
- **archivo** | **System.IO.Stream****System.IO.Stream**|  | [optional] 
- **url** | **string**|  | [optional] 
- **nombre** | **string**|  | [optional] 
- **extension** | **string**|  | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **archivo** | **System.IO.Stream****System.IO.Stream**| Contenido del archivo | [optional] 
+ **url** | **string**| URL del archivo | [optional] 
+ **nombre** | **string**| Nombre del archivo | [optional] 
+ **extension** | **string**| Extensión del archivo | [optional] 
 
 ### Return type
 
@@ -764,7 +782,7 @@ Name | Type | Description  | Notes
 
 <a name="iniciarsesion"></a>
 # **IniciarSesion**
-> SesionRespuesta IniciarSesion (IniciarSesionRequestBody iniciarSesionRequestBody = null)
+> SesionRespuesta IniciarSesion (string riskServiceVersion = null, IniciarSesionRequestBody iniciarSesionRequestBody = null)
 
 IniciarSesion
 
@@ -785,19 +803,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var iniciarSesionRequestBody = new IniciarSesionRequestBody(); // IniciarSesionRequestBody |  (optional) 
 
             try
             {
                 // IniciarSesion
-                SesionRespuesta result = apiInstance.IniciarSesion(iniciarSesionRequestBody);
+                SesionRespuesta result = apiInstance.IniciarSesion(riskServiceVersion, iniciarSesionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -815,6 +834,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -843,7 +863,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperaravatarusuario"></a>
 # **RecuperarAvatarUsuario**
-> System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null)
+> System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null, string riskServiceVersion = null)
 
 RecuperarAvatarUsuario
 
@@ -864,7 +884,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -875,11 +895,12 @@ namespace Example
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
             var version = 56;  // int? | Versión (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // RecuperarAvatarUsuario
-                System.IO.Stream result = apiInstance.RecuperarAvatarUsuario(usuario, version);
+                System.IO.Stream result = apiInstance.RecuperarAvatarUsuario(usuario, version, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -899,6 +920,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
  **version** | **int?**| Versión | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -927,7 +949,7 @@ Name | Type | Description  | Notes
 
 <a name="refrescarsesion"></a>
 # **RefrescarSesion**
-> SesionRespuesta RefrescarSesion (RefrescarSesionRequestBody refrescarSesionRequestBody = null)
+> SesionRespuesta RefrescarSesion (string riskServiceVersion = null, RefrescarSesionRequestBody refrescarSesionRequestBody = null)
 
 RefrescarSesion
 
@@ -948,19 +970,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var refrescarSesionRequestBody = new RefrescarSesionRequestBody(); // RefrescarSesionRequestBody |  (optional) 
 
             try
             {
                 // RefrescarSesion
-                SesionRespuesta result = apiInstance.RefrescarSesion(refrescarSesionRequestBody);
+                SesionRespuesta result = apiInstance.RefrescarSesion(riskServiceVersion, refrescarSesionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -978,6 +1001,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1006,7 +1030,7 @@ Name | Type | Description  | Notes
 
 <a name="registrarclavetransaccional"></a>
 # **RegistrarClaveTransaccional**
-> DatoRespuesta RegistrarClaveTransaccional (RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = null)
+> DatoRespuesta RegistrarClaveTransaccional (string riskServiceVersion = null, RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = null)
 
 RegistrarClaveTransaccional
 
@@ -1027,7 +1051,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -1036,12 +1060,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var registrarClaveTransaccionalRequestBody = new RegistrarClaveTransaccionalRequestBody(); // RegistrarClaveTransaccionalRequestBody |  (optional) 
 
             try
             {
                 // RegistrarClaveTransaccional
-                DatoRespuesta result = apiInstance.RegistrarClaveTransaccional(registrarClaveTransaccionalRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarClaveTransaccional(riskServiceVersion, registrarClaveTransaccionalRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1059,6 +1084,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1088,7 +1114,7 @@ Name | Type | Description  | Notes
 
 <a name="registrardispositivo"></a>
 # **RegistrarDispositivo**
-> DatoRespuesta RegistrarDispositivo (RegistrarDispositivoRequestBody registrarDispositivoRequestBody = null)
+> DatoRespuesta RegistrarDispositivo (string riskServiceVersion = null, RegistrarDispositivoRequestBody registrarDispositivoRequestBody = null)
 
 RegistrarDispositivo
 
@@ -1109,19 +1135,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var registrarDispositivoRequestBody = new RegistrarDispositivoRequestBody(); // RegistrarDispositivoRequestBody |  (optional) 
 
             try
             {
                 // RegistrarDispositivo
-                DatoRespuesta result = apiInstance.RegistrarDispositivo(registrarDispositivoRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarDispositivo(riskServiceVersion, registrarDispositivoRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1139,6 +1166,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1167,7 +1195,7 @@ Name | Type | Description  | Notes
 
 <a name="registrarubicacion"></a>
 # **RegistrarUbicacion**
-> DatoRespuesta RegistrarUbicacion (RegistrarUbicacionRequestBody registrarUbicacionRequestBody = null)
+> DatoRespuesta RegistrarUbicacion (string riskServiceVersion = null, RegistrarUbicacionRequestBody registrarUbicacionRequestBody = null)
 
 RegistrarUbicacion
 
@@ -1188,19 +1216,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var registrarUbicacionRequestBody = new RegistrarUbicacionRequestBody(); // RegistrarUbicacionRequestBody |  (optional) 
 
             try
             {
                 // RegistrarUbicacion
-                DatoRespuesta result = apiInstance.RegistrarUbicacion(registrarUbicacionRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarUbicacion(riskServiceVersion, registrarUbicacionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1218,6 +1247,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1246,7 +1276,7 @@ Name | Type | Description  | Notes
 
 <a name="registrarusuario"></a>
 # **RegistrarUsuario**
-> DatoRespuesta RegistrarUsuario (RegistrarUsuarioRequestBody registrarUsuarioRequestBody = null)
+> DatoRespuesta RegistrarUsuario (string riskServiceVersion = null, RegistrarUsuarioRequestBody registrarUsuarioRequestBody = null)
 
 RegistrarUsuario
 
@@ -1267,19 +1297,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var registrarUsuarioRequestBody = new RegistrarUsuarioRequestBody(); // RegistrarUsuarioRequestBody |  (optional) 
 
             try
             {
                 // RegistrarUsuario
-                DatoRespuesta result = apiInstance.RegistrarUsuario(registrarUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarUsuario(riskServiceVersion, registrarUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1297,6 +1328,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1325,7 +1357,7 @@ Name | Type | Description  | Notes
 
 <a name="validarotp"></a>
 # **ValidarOtp**
-> DatoRespuesta ValidarOtp (string secret, int otp)
+> DatoRespuesta ValidarOtp (string secret, int otp, string riskServiceVersion = null)
 
 ValidarOtp
 
@@ -1346,7 +1378,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1355,11 +1387,12 @@ namespace Example
             var apiInstance = new AutApi(config);
             var secret = secret_example;  // string | Secret recibido al generar el código OTP
             var otp = 56;  // int | Código OTP a validar
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ValidarOtp
-                DatoRespuesta result = apiInstance.ValidarOtp(secret, otp);
+                DatoRespuesta result = apiInstance.ValidarOtp(secret, otp, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1379,6 +1412,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **secret** | **string**| Secret recibido al generar el código OTP | 
  **otp** | **int**| Código OTP a validar | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -1406,7 +1440,7 @@ Name | Type | Description  | Notes
 
 <a name="validarsesion"></a>
 # **ValidarSesion**
-> DatoRespuesta ValidarSesion (string accessToken)
+> DatoRespuesta ValidarSesion (string accessToken, string riskServiceVersion = null)
 
 ValidarSesion
 
@@ -1427,7 +1461,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -1437,11 +1471,12 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var accessToken = accessToken_example;  // string | Access Token de la sesión
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ValidarSesion
-                DatoRespuesta result = apiInstance.ValidarSesion(accessToken);
+                DatoRespuesta result = apiInstance.ValidarSesion(accessToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1460,6 +1495,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accessToken** | **string**| Access Token de la sesión | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 

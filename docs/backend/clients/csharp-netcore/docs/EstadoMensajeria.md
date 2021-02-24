@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.EstadoMensajeria
+Estados de Mensajería
 ## Properties
 
 Name | Type | Description | Notes

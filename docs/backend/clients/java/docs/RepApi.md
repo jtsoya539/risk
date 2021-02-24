@@ -1,6 +1,6 @@
 # RepApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## reporteListarSignificados
 
-> File reporteListarSignificados(formato, dominio)
+> File reporteListarSignificados(formato, dominio, riskServiceVersion)
 
 ReporteListarSignificados
 
@@ -31,7 +31,7 @@ import org.openapitools.client.api.RepApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -46,8 +46,9 @@ public class Example {
         RepApi apiInstance = new RepApi(defaultClient);
         FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
         String dominio = "dominio_example"; // String | Dominio
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            File result = apiInstance.reporteListarSignificados(formato, dominio);
+            File result = apiInstance.reporteListarSignificados(formato, dominio, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling RepApi#reporteListarSignificados");
@@ -67,6 +68,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
  **dominio** | **String**| Dominio | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -94,7 +96,7 @@ Name | Type | Description  | Notes
 
 ## reporteVersionSistema
 
-> File reporteVersionSistema(formato)
+> File reporteVersionSistema(formato, riskServiceVersion)
 
 ReporteVersionSistema
 
@@ -114,7 +116,7 @@ import org.openapitools.client.api.RepApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -128,8 +130,9 @@ public class Example {
 
         RepApi apiInstance = new RepApi(defaultClient);
         FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            File result = apiInstance.reporteVersionSistema(formato);
+            File result = apiInstance.reporteVersionSistema(formato, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling RepApi#reporteVersionSistema");
@@ -148,6 +151,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 

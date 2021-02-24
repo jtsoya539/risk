@@ -1,10 +1,11 @@
 # GenApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**guardarArchivo**](GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
+[**listarAplicaciones**](GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
 [**listarBarrios**](GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 [**listarCiudades**](GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 [**listarDepartamentos**](GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
@@ -23,7 +24,7 @@ Method | HTTP request | Description
 
 <a name="guardarArchivo"></a>
 # **guardarArchivo**
-> DatoRespuesta guardarArchivo(tabla, campo, referencia, archivo, url, nombre, extension)
+> DatoRespuesta guardarArchivo(tabla, campo, referencia, riskMinusServiceMinusVersion, archivo, url, nombre, extension)
 
 GuardarArchivo
 
@@ -39,12 +40,13 @@ val apiInstance = GenApi()
 val tabla : kotlin.String = tabla_example // kotlin.String | Tabla
 val campo : kotlin.String = campo_example // kotlin.String | Campo
 val referencia : kotlin.String = referencia_example // kotlin.String | Referencia
-val archivo : java.io.File = BINARY_DATA_HERE // java.io.File | 
-val url : kotlin.String = url_example // kotlin.String | 
-val nombre : kotlin.String = nombre_example // kotlin.String | 
-val extension : kotlin.String = extension_example // kotlin.String | 
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val archivo : java.io.File = BINARY_DATA_HERE // java.io.File | Contenido del archivo
+val url : kotlin.String = url_example // kotlin.String | URL del archivo
+val nombre : kotlin.String = nombre_example // kotlin.String | Nombre del archivo
+val extension : kotlin.String = extension_example // kotlin.String | Extensión del archivo
 try {
-    val result : DatoRespuesta = apiInstance.guardarArchivo(tabla, campo, referencia, archivo, url, nombre, extension)
+    val result : DatoRespuesta = apiInstance.guardarArchivo(tabla, campo, referencia, riskMinusServiceMinusVersion, archivo, url, nombre, extension)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#guardarArchivo")
@@ -62,10 +64,11 @@ Name | Type | Description  | Notes
  **tabla** | **kotlin.String**| Tabla |
  **campo** | **kotlin.String**| Campo |
  **referencia** | **kotlin.String**| Referencia |
- **archivo** | **java.io.File**|  | [optional]
- **url** | **kotlin.String**|  | [optional]
- **nombre** | **kotlin.String**|  | [optional]
- **extension** | **kotlin.String**|  | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **archivo** | **java.io.File**| Contenido del archivo | [optional]
+ **url** | **kotlin.String**| URL del archivo | [optional]
+ **nombre** | **kotlin.String**| Nombre del archivo | [optional]
+ **extension** | **kotlin.String**| Extensión del archivo | [optional]
 
 ### Return type
 
@@ -85,9 +88,69 @@ Configure RiskAppKey:
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json, text/plain
 
+<a name="listarAplicaciones"></a>
+# **listarAplicaciones**
+> AplicacionPaginaRespuesta listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
+
+ListarAplicaciones
+
+Obtiene una lista de aplicaciones
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = GenApi()
+val idAplicacion : kotlin.String = idAplicacion_example // kotlin.String | Identificador de la aplicacion
+val claveAplicacion : kotlin.String = claveAplicacion_example // kotlin.String | Clave de la aplicacion
+val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
+val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
+val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+try {
+    val result : AplicacionPaginaRespuesta = apiInstance.listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling GenApi#listarAplicaciones")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling GenApi#listarAplicaciones")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idAplicacion** | **kotlin.String**| Identificador de la aplicacion | [optional]
+ **claveAplicacion** | **kotlin.String**| Clave de la aplicacion | [optional]
+ **pagina** | **kotlin.Int**| Número de la página | [optional]
+ **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+
+### Return type
+
+[**AplicacionPaginaRespuesta**](AplicacionPaginaRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
 <a name="listarBarrios"></a>
 # **listarBarrios**
-> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar)
+> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
 
 ListarBarrios
 
@@ -106,8 +169,9 @@ val idCiudad : kotlin.Int = 56 // kotlin.Int | Identificador de la ciudad
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : BarrioPaginaRespuesta = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar)
+    val result : BarrioPaginaRespuesta = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#listarBarrios")
@@ -128,6 +192,7 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -147,7 +212,7 @@ Configure RiskAppKey:
 
 <a name="listarCiudades"></a>
 # **listarCiudades**
-> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar)
+> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
 
 ListarCiudades
 
@@ -165,8 +230,9 @@ val idDepartamento : kotlin.Int = 56 // kotlin.Int | Identificador del departame
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : CiudadPaginaRespuesta = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar)
+    val result : CiudadPaginaRespuesta = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#listarCiudades")
@@ -186,6 +252,7 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -205,7 +272,7 @@ Configure RiskAppKey:
 
 <a name="listarDepartamentos"></a>
 # **listarDepartamentos**
-> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar)
+> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
 
 ListarDepartamentos
 
@@ -222,8 +289,9 @@ val idPais : kotlin.Int = 56 // kotlin.Int | Identificador del país
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DepartamentoPaginaRespuesta = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar)
+    val result : DepartamentoPaginaRespuesta = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#listarDepartamentos")
@@ -242,6 +310,7 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -261,7 +330,7 @@ Configure RiskAppKey:
 
 <a name="listarErrores"></a>
 # **listarErrores**
-> ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar)
+> ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
 
 ListarErrores
 
@@ -278,8 +347,9 @@ val idError : kotlin.String = idError_example // kotlin.String | Identificador d
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : ErrorPaginaRespuesta = apiInstance.listarErrores(idError, pagina, porPagina, noPaginar)
+    val result : ErrorPaginaRespuesta = apiInstance.listarErrores(idError, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#listarErrores")
@@ -298,6 +368,7 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -317,7 +388,7 @@ Configure RiskAppKey:
 
 <a name="listarPaises"></a>
 # **listarPaises**
-> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar)
+> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
 
 ListarPaises
 
@@ -333,8 +404,9 @@ val apiInstance = GenApi()
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : PaisPaginaRespuesta = apiInstance.listarPaises(pagina, porPagina, noPaginar)
+    val result : PaisPaginaRespuesta = apiInstance.listarPaises(pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#listarPaises")
@@ -352,6 +424,7 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -371,7 +444,7 @@ Configure RiskAppKey:
 
 <a name="listarSignificados"></a>
 # **listarSignificados**
-> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar)
+> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
 
 ListarSignificados
 
@@ -388,8 +461,9 @@ val dominio : kotlin.String = dominio_example // kotlin.String | Dominio
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : SignificadoPaginaRespuesta = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar)
+    val result : SignificadoPaginaRespuesta = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#listarSignificados")
@@ -408,6 +482,7 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -429,7 +504,7 @@ Configure RiskAppKey:
 
 <a name="recuperarArchivo"></a>
 # **recuperarArchivo**
-> java.io.File recuperarArchivo(tabla, campo, referencia, version)
+> java.io.File recuperarArchivo(tabla, campo, referencia, version, riskMinusServiceMinusVersion)
 
 RecuperarArchivo
 
@@ -446,8 +521,9 @@ val tabla : kotlin.String = tabla_example // kotlin.String | Tabla
 val campo : kotlin.String = campo_example // kotlin.String | Campo
 val referencia : kotlin.String = referencia_example // kotlin.String | Referencia
 val version : kotlin.Int = 56 // kotlin.Int | Versión
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : java.io.File = apiInstance.recuperarArchivo(tabla, campo, referencia, version)
+    val result : java.io.File = apiInstance.recuperarArchivo(tabla, campo, referencia, version, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#recuperarArchivo")
@@ -466,6 +542,7 @@ Name | Type | Description  | Notes
  **campo** | **kotlin.String**| Campo |
  **referencia** | **kotlin.String**| Referencia |
  **version** | **kotlin.Int**| Versión | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -487,7 +564,7 @@ Configure RiskAppKey:
 
 <a name="recuperarTexto"></a>
 # **recuperarTexto**
-> DatoRespuesta recuperarTexto(referencia)
+> DatoRespuesta recuperarTexto(referencia, riskMinusServiceMinusVersion)
 
 RecuperarTexto
 
@@ -501,8 +578,9 @@ Obtiene un texto definido en el sistema
 
 val apiInstance = GenApi()
 val referencia : kotlin.String = referencia_example // kotlin.String | Referencia del texto
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.recuperarTexto(referencia)
+    val result : DatoRespuesta = apiInstance.recuperarTexto(referencia, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#recuperarTexto")
@@ -518,6 +596,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **referencia** | **kotlin.String**| Referencia del texto |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -537,7 +616,7 @@ Configure RiskAppKey:
 
 <a name="reporteListarSignificados"></a>
 # **reporteListarSignificados**
-> java.io.File reporteListarSignificados(formato, dominio)
+> java.io.File reporteListarSignificados(formato, dominio, riskMinusServiceMinusVersion)
 
 ReporteListarSignificados
 
@@ -552,8 +631,9 @@ Obtiene un reporte con los significados dentro de un dominio
 val apiInstance = GenApi()
 val formato : FormatoReporte =  // FormatoReporte | Formato del reporte
 val dominio : kotlin.String = dominio_example // kotlin.String | Dominio
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : java.io.File = apiInstance.reporteListarSignificados(formato, dominio)
+    val result : java.io.File = apiInstance.reporteListarSignificados(formato, dominio, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#reporteListarSignificados")
@@ -570,6 +650,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
  **dominio** | **kotlin.String**| Dominio | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -591,7 +672,7 @@ Configure RiskAppKey:
 
 <a name="reporteVersionSistema"></a>
 # **reporteVersionSistema**
-> java.io.File reporteVersionSistema(formato)
+> java.io.File reporteVersionSistema(formato, riskMinusServiceMinusVersion)
 
 ReporteVersionSistema
 
@@ -605,8 +686,9 @@ Obtiene un reporte con la versión actual del sistema
 
 val apiInstance = GenApi()
 val formato : FormatoReporte =  // FormatoReporte | Formato del reporte
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : java.io.File = apiInstance.reporteVersionSistema(formato)
+    val result : java.io.File = apiInstance.reporteVersionSistema(formato, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#reporteVersionSistema")
@@ -622,6 +704,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -643,7 +726,7 @@ Configure RiskAppKey:
 
 <a name="significadoCodigo"></a>
 # **significadoCodigo**
-> DatoRespuesta significadoCodigo(dominio, codigo)
+> DatoRespuesta significadoCodigo(dominio, codigo, riskMinusServiceMinusVersion)
 
 SignificadoCodigo
 
@@ -658,8 +741,9 @@ Obtiene el significado de un código dentro de un dominio
 val apiInstance = GenApi()
 val dominio : kotlin.String = dominio_example // kotlin.String | Dominio
 val codigo : kotlin.String = codigo_example // kotlin.String | Código
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.significadoCodigo(dominio, codigo)
+    val result : DatoRespuesta = apiInstance.significadoCodigo(dominio, codigo, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#significadoCodigo")
@@ -676,6 +760,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dominio** | **kotlin.String**| Dominio |
  **codigo** | **kotlin.String**| Código |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -697,7 +782,7 @@ Configure RiskAppKey:
 
 <a name="valorParametro"></a>
 # **valorParametro**
-> DatoRespuesta valorParametro(parametro)
+> DatoRespuesta valorParametro(parametro, riskMinusServiceMinusVersion)
 
 ValorParametro
 
@@ -711,8 +796,9 @@ Obtiene el valor de un parámetro
 
 val apiInstance = GenApi()
 val parametro : kotlin.String = parametro_example // kotlin.String | Identificador del parámetro
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.valorParametro(parametro)
+    val result : DatoRespuesta = apiInstance.valorParametro(parametro, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#valorParametro")
@@ -728,6 +814,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **parametro** | **kotlin.String**| Identificador del parámetro |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -749,7 +836,7 @@ Configure RiskAppKey:
 
 <a name="versionServicio"></a>
 # **versionServicio**
-> DatoRespuesta versionServicio(servicio)
+> DatoRespuesta versionServicio(servicio, riskMinusServiceMinusVersion)
 
 VersionServicio
 
@@ -763,8 +850,9 @@ Obtiene la versión actual del servicio
 
 val apiInstance = GenApi()
 val servicio : kotlin.String = servicio_example // kotlin.String | Nombre del servicio
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.versionServicio(servicio)
+    val result : DatoRespuesta = apiInstance.versionServicio(servicio, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#versionServicio")
@@ -780,6 +868,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **servicio** | **kotlin.String**| Nombre del servicio |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -799,7 +888,7 @@ Configure RiskAppKey:
 
 <a name="versionSistema"></a>
 # **versionSistema**
-> DatoRespuesta versionSistema()
+> DatoRespuesta versionSistema(riskMinusServiceMinusVersion)
 
 VersionSistema
 
@@ -812,8 +901,9 @@ Obtiene la versión actual del sistema
 //import py.com.risk.client.models.*
 
 val apiInstance = GenApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.versionSistema()
+    val result : DatoRespuesta = apiInstance.versionSistema(riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GenApi#versionSistema")
@@ -825,7 +915,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 

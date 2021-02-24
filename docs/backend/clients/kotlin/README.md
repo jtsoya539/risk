@@ -31,7 +31,7 @@ This runs all tests and packages the library.
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -54,6 +54,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**guardarArchivo**](docs/GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
+*GenApi* | [**listarAplicaciones**](docs/GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
 *GenApi* | [**listarBarrios**](docs/GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 *GenApi* | [**listarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**listarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
@@ -81,6 +82,9 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [py.com.risk.client.models.Aplicacion](docs/Aplicacion.md)
+ - [py.com.risk.client.models.AplicacionPagina](docs/AplicacionPagina.md)
+ - [py.com.risk.client.models.AplicacionPaginaRespuesta](docs/AplicacionPaginaRespuesta.md)
  - [py.com.risk.client.models.Archivo](docs/Archivo.md)
  - [py.com.risk.client.models.Barrio](docs/Barrio.md)
  - [py.com.risk.client.models.BarrioPagina](docs/BarrioPagina.md)

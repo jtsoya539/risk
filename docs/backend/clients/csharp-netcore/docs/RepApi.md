@@ -1,6 +1,6 @@
 # Risk.API.Client.Api.RepApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 <a name="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
-> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null)
+> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskServiceVersion = null)
 
 ReporteListarSignificados
 
@@ -31,7 +31,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -42,11 +42,12 @@ namespace Example
             var apiInstance = new RepApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
             var dominio = dominio_example;  // string | Dominio (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ReporteListarSignificados
-                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio);
+                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -66,6 +67,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
  **dominio** | **string**| Dominio | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -94,7 +96,7 @@ Name | Type | Description  | Notes
 
 <a name="reporteversionsistema"></a>
 # **ReporteVersionSistema**
-> System.IO.Stream ReporteVersionSistema (FormatoReporte formato)
+> System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskServiceVersion = null)
 
 ReporteVersionSistema
 
@@ -115,7 +117,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -125,11 +127,12 @@ namespace Example
 
             var apiInstance = new RepApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ReporteVersionSistema
-                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato);
+                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -148,6 +151,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 

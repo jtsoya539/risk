@@ -1,6 +1,6 @@
 # RepApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 <a name="reporteListarSignificados"></a>
 # **reporteListarSignificados**
-> java.io.File reporteListarSignificados(formato, dominio)
+> java.io.File reporteListarSignificados(formato, dominio, riskMinusServiceMinusVersion)
 
 ReporteListarSignificados
 
@@ -25,8 +25,9 @@ Obtiene un reporte con los significados dentro de un dominio
 val apiInstance = RepApi()
 val formato : FormatoReporte =  // FormatoReporte | Formato del reporte
 val dominio : kotlin.String = dominio_example // kotlin.String | Dominio
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : java.io.File = apiInstance.reporteListarSignificados(formato, dominio)
+    val result : java.io.File = apiInstance.reporteListarSignificados(formato, dominio, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling RepApi#reporteListarSignificados")
@@ -43,6 +44,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
  **dominio** | **kotlin.String**| Dominio | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -64,7 +66,7 @@ Configure RiskAppKey:
 
 <a name="reporteVersionSistema"></a>
 # **reporteVersionSistema**
-> java.io.File reporteVersionSistema(formato)
+> java.io.File reporteVersionSistema(formato, riskMinusServiceMinusVersion)
 
 ReporteVersionSistema
 
@@ -78,8 +80,9 @@ Obtiene un reporte con la versión actual del sistema
 
 val apiInstance = RepApi()
 val formato : FormatoReporte =  // FormatoReporte | Formato del reporte
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : java.io.File = apiInstance.reporteVersionSistema(formato)
+    val result : java.io.File = apiInstance.reporteVersionSistema(formato, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling RepApi#reporteVersionSistema")
@@ -95,6 +98,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 

@@ -1,6 +1,6 @@
 # AutApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -26,7 +26,7 @@ Method | HTTP request | Description
 
 <a name="activarUsuario"></a>
 # **activarUsuario**
-> DatoRespuesta activarUsuario(key)
+> DatoRespuesta activarUsuario(key, riskMinusServiceMinusVersion)
 
 ActivarUsuario
 
@@ -40,8 +40,9 @@ Permite activar un usuario
 
 val apiInstance = AutApi()
 val key : kotlin.String = key_example // kotlin.String | Clave para la activación
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.activarUsuario(key)
+    val result : DatoRespuesta = apiInstance.activarUsuario(key, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#activarUsuario")
@@ -57,6 +58,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **kotlin.String**| Clave para la activación |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -73,7 +75,7 @@ No authorization required
 
 <a name="cambiarClaveAcceso"></a>
 # **cambiarClaveAcceso**
-> DatoRespuesta cambiarClaveAcceso(cambiarClaveAccesoRequestBody)
+> DatoRespuesta cambiarClaveAcceso(riskMinusServiceMinusVersion, cambiarClaveAccesoRequestBody)
 
 CambiarClaveAcceso
 
@@ -86,9 +88,10 @@ Permite cambiar la clave de acceso de un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val cambiarClaveAccesoRequestBody : CambiarClaveAccesoRequestBody =  // CambiarClaveAccesoRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.cambiarClaveAcceso(cambiarClaveAccesoRequestBody)
+    val result : DatoRespuesta = apiInstance.cambiarClaveAcceso(riskMinusServiceMinusVersion, cambiarClaveAccesoRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#cambiarClaveAcceso")
@@ -103,6 +106,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional]
 
 ### Return type
@@ -125,7 +129,7 @@ Configure RiskAppKey:
 
 <a name="cambiarClaveTransaccional"></a>
 # **cambiarClaveTransaccional**
-> DatoRespuesta cambiarClaveTransaccional(cambiarClaveTransaccionalRequestBody)
+> DatoRespuesta cambiarClaveTransaccional(riskMinusServiceMinusVersion, cambiarClaveTransaccionalRequestBody)
 
 CambiarClaveTransaccional
 
@@ -138,9 +142,10 @@ Permite cambiar la clave transaccional de un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val cambiarClaveTransaccionalRequestBody : CambiarClaveTransaccionalRequestBody =  // CambiarClaveTransaccionalRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.cambiarClaveTransaccional(cambiarClaveTransaccionalRequestBody)
+    val result : DatoRespuesta = apiInstance.cambiarClaveTransaccional(riskMinusServiceMinusVersion, cambiarClaveTransaccionalRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#cambiarClaveTransaccional")
@@ -155,6 +160,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional]
 
 ### Return type
@@ -177,7 +183,7 @@ Configure RiskAppKey:
 
 <a name="datosUsuario"></a>
 # **datosUsuario**
-> UsuarioRespuesta datosUsuario(usuario)
+> UsuarioRespuesta datosUsuario(usuario, riskMinusServiceMinusVersion)
 
 DatosUsuario
 
@@ -191,8 +197,9 @@ Permite obtener los datos de un usuario
 
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : UsuarioRespuesta = apiInstance.datosUsuario(usuario)
+    val result : UsuarioRespuesta = apiInstance.datosUsuario(usuario, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#datosUsuario")
@@ -208,6 +215,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -229,7 +237,7 @@ Configure RiskAppKey:
 
 <a name="editarUsuario"></a>
 # **editarUsuario**
-> DatoRespuesta editarUsuario(usuario, editarUsuarioRequestBody)
+> DatoRespuesta editarUsuario(usuario, riskMinusServiceMinusVersion, editarUsuarioRequestBody)
 
 EditarUsuario
 
@@ -243,9 +251,10 @@ Permite editar un usuario
 
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val editarUsuarioRequestBody : EditarUsuarioRequestBody =  // EditarUsuarioRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.editarUsuario(usuario, editarUsuarioRequestBody)
+    val result : DatoRespuesta = apiInstance.editarUsuario(usuario, riskMinusServiceMinusVersion, editarUsuarioRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#editarUsuario")
@@ -261,6 +270,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -283,7 +293,7 @@ Configure RiskAppKey:
 
 <a name="eliminarUsuario"></a>
 # **eliminarUsuario**
-> DatoRespuesta eliminarUsuario(eliminarUsuarioRequestBody)
+> DatoRespuesta eliminarUsuario(riskMinusServiceMinusVersion, eliminarUsuarioRequestBody)
 
 EliminarUsuario
 
@@ -296,9 +306,10 @@ Permite eliminar un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val eliminarUsuarioRequestBody : EliminarUsuarioRequestBody =  // EliminarUsuarioRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.eliminarUsuario(eliminarUsuarioRequestBody)
+    val result : DatoRespuesta = apiInstance.eliminarUsuario(riskMinusServiceMinusVersion, eliminarUsuarioRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#eliminarUsuario")
@@ -313,6 +324,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -335,7 +347,7 @@ Configure RiskAppKey:
 
 <a name="finalizarSesion"></a>
 # **finalizarSesion**
-> DatoRespuesta finalizarSesion(finalizarSesionRequestBody)
+> DatoRespuesta finalizarSesion(riskMinusServiceMinusVersion, finalizarSesionRequestBody)
 
 FinalizarSesion
 
@@ -348,9 +360,10 @@ Permite finalizar la sesión de un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val finalizarSesionRequestBody : FinalizarSesionRequestBody =  // FinalizarSesionRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.finalizarSesion(finalizarSesionRequestBody)
+    val result : DatoRespuesta = apiInstance.finalizarSesion(riskMinusServiceMinusVersion, finalizarSesionRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#finalizarSesion")
@@ -365,6 +378,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -387,7 +401,7 @@ Configure RiskAppKey:
 
 <a name="generarOtp"></a>
 # **generarOtp**
-> DatoRespuesta generarOtp(tipoMensajeria, destino)
+> DatoRespuesta generarOtp(tipoMensajeria, destino, riskMinusServiceMinusVersion)
 
 GenerarOtp
 
@@ -402,8 +416,9 @@ Permite generar un código OTP
 val apiInstance = AutApi()
 val tipoMensajeria : TipoMensajeria =  // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
 val destino : kotlin.String = destino_example // kotlin.String | Destino de la mensajería
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.generarOtp(tipoMensajeria, destino)
+    val result : DatoRespuesta = apiInstance.generarOtp(tipoMensajeria, destino, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#generarOtp")
@@ -420,6 +435,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería (Mail/SMS/Push) | [enum: Mail, SMS, Push]
  **destino** | **kotlin.String**| Destino de la mensajería |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -439,7 +455,7 @@ Configure RiskAppKey:
 
 <a name="guardarAvatarUsuario"></a>
 # **guardarAvatarUsuario**
-> DatoRespuesta guardarAvatarUsuario(usuario, archivo, url, nombre, extension)
+> DatoRespuesta guardarAvatarUsuario(usuario, riskMinusServiceMinusVersion, archivo, url, nombre, extension)
 
 GuardarAvatarUsuario
 
@@ -453,12 +469,13 @@ Permite guardar el avatar de un usuario
 
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
-val archivo : java.io.File = BINARY_DATA_HERE // java.io.File | 
-val url : kotlin.String = url_example // kotlin.String | 
-val nombre : kotlin.String = nombre_example // kotlin.String | 
-val extension : kotlin.String = extension_example // kotlin.String | 
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val archivo : java.io.File = BINARY_DATA_HERE // java.io.File | Contenido del archivo
+val url : kotlin.String = url_example // kotlin.String | URL del archivo
+val nombre : kotlin.String = nombre_example // kotlin.String | Nombre del archivo
+val extension : kotlin.String = extension_example // kotlin.String | Extensión del archivo
 try {
-    val result : DatoRespuesta = apiInstance.guardarAvatarUsuario(usuario, archivo, url, nombre, extension)
+    val result : DatoRespuesta = apiInstance.guardarAvatarUsuario(usuario, riskMinusServiceMinusVersion, archivo, url, nombre, extension)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#guardarAvatarUsuario")
@@ -474,10 +491,11 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
- **archivo** | **java.io.File**|  | [optional]
- **url** | **kotlin.String**|  | [optional]
- **nombre** | **kotlin.String**|  | [optional]
- **extension** | **kotlin.String**|  | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **archivo** | **java.io.File**| Contenido del archivo | [optional]
+ **url** | **kotlin.String**| URL del archivo | [optional]
+ **nombre** | **kotlin.String**| Nombre del archivo | [optional]
+ **extension** | **kotlin.String**| Extensión del archivo | [optional]
 
 ### Return type
 
@@ -499,7 +517,7 @@ Configure RiskAppKey:
 
 <a name="iniciarSesion"></a>
 # **iniciarSesion**
-> SesionRespuesta iniciarSesion(iniciarSesionRequestBody)
+> SesionRespuesta iniciarSesion(riskMinusServiceMinusVersion, iniciarSesionRequestBody)
 
 IniciarSesion
 
@@ -512,9 +530,10 @@ Permite iniciar la sesión de un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val iniciarSesionRequestBody : IniciarSesionRequestBody =  // IniciarSesionRequestBody | 
 try {
-    val result : SesionRespuesta = apiInstance.iniciarSesion(iniciarSesionRequestBody)
+    val result : SesionRespuesta = apiInstance.iniciarSesion(riskMinusServiceMinusVersion, iniciarSesionRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#iniciarSesion")
@@ -529,6 +548,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -549,7 +569,7 @@ Configure RiskAppKey:
 
 <a name="recuperarAvatarUsuario"></a>
 # **recuperarAvatarUsuario**
-> java.io.File recuperarAvatarUsuario(usuario, version)
+> java.io.File recuperarAvatarUsuario(usuario, version, riskMinusServiceMinusVersion)
 
 RecuperarAvatarUsuario
 
@@ -564,8 +584,9 @@ Permite recuperar el avatar de un usuario
 val apiInstance = AutApi()
 val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
 val version : kotlin.Int = 56 // kotlin.Int | Versión
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : java.io.File = apiInstance.recuperarAvatarUsuario(usuario, version)
+    val result : java.io.File = apiInstance.recuperarAvatarUsuario(usuario, version, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#recuperarAvatarUsuario")
@@ -582,6 +603,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **kotlin.String**| Usuario |
  **version** | **kotlin.Int**| Versión | [optional]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -603,7 +625,7 @@ Configure RiskAppKey:
 
 <a name="refrescarSesion"></a>
 # **refrescarSesion**
-> SesionRespuesta refrescarSesion(refrescarSesionRequestBody)
+> SesionRespuesta refrescarSesion(riskMinusServiceMinusVersion, refrescarSesionRequestBody)
 
 RefrescarSesion
 
@@ -616,9 +638,10 @@ Permite refrescar la sesión de un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val refrescarSesionRequestBody : RefrescarSesionRequestBody =  // RefrescarSesionRequestBody | 
 try {
-    val result : SesionRespuesta = apiInstance.refrescarSesion(refrescarSesionRequestBody)
+    val result : SesionRespuesta = apiInstance.refrescarSesion(riskMinusServiceMinusVersion, refrescarSesionRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#refrescarSesion")
@@ -633,6 +656,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -653,7 +677,7 @@ Configure RiskAppKey:
 
 <a name="registrarClaveTransaccional"></a>
 # **registrarClaveTransaccional**
-> DatoRespuesta registrarClaveTransaccional(registrarClaveTransaccionalRequestBody)
+> DatoRespuesta registrarClaveTransaccional(riskMinusServiceMinusVersion, registrarClaveTransaccionalRequestBody)
 
 RegistrarClaveTransaccional
 
@@ -666,9 +690,10 @@ Permite registrar una clave transaccional para un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val registrarClaveTransaccionalRequestBody : RegistrarClaveTransaccionalRequestBody =  // RegistrarClaveTransaccionalRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.registrarClaveTransaccional(registrarClaveTransaccionalRequestBody)
+    val result : DatoRespuesta = apiInstance.registrarClaveTransaccional(riskMinusServiceMinusVersion, registrarClaveTransaccionalRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#registrarClaveTransaccional")
@@ -683,6 +708,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional]
 
 ### Return type
@@ -705,7 +731,7 @@ Configure RiskAppKey:
 
 <a name="registrarDispositivo"></a>
 # **registrarDispositivo**
-> DatoRespuesta registrarDispositivo(registrarDispositivoRequestBody)
+> DatoRespuesta registrarDispositivo(riskMinusServiceMinusVersion, registrarDispositivoRequestBody)
 
 RegistrarDispositivo
 
@@ -718,9 +744,10 @@ Permite registrar un dispositivo
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val registrarDispositivoRequestBody : RegistrarDispositivoRequestBody =  // RegistrarDispositivoRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.registrarDispositivo(registrarDispositivoRequestBody)
+    val result : DatoRespuesta = apiInstance.registrarDispositivo(riskMinusServiceMinusVersion, registrarDispositivoRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#registrarDispositivo")
@@ -735,6 +762,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional]
 
 ### Return type
@@ -755,7 +783,7 @@ Configure RiskAppKey:
 
 <a name="registrarUbicacion"></a>
 # **registrarUbicacion**
-> DatoRespuesta registrarUbicacion(registrarUbicacionRequestBody)
+> DatoRespuesta registrarUbicacion(riskMinusServiceMinusVersion, registrarUbicacionRequestBody)
 
 RegistrarUbicacion
 
@@ -768,9 +796,10 @@ Permite registrar la ubicación (coordenadas geográficas) de un dispositivo
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val registrarUbicacionRequestBody : RegistrarUbicacionRequestBody =  // RegistrarUbicacionRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.registrarUbicacion(registrarUbicacionRequestBody)
+    val result : DatoRespuesta = apiInstance.registrarUbicacion(riskMinusServiceMinusVersion, registrarUbicacionRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#registrarUbicacion")
@@ -785,6 +814,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -805,7 +835,7 @@ Configure RiskAppKey:
 
 <a name="registrarUsuario"></a>
 # **registrarUsuario**
-> DatoRespuesta registrarUsuario(registrarUsuarioRequestBody)
+> DatoRespuesta registrarUsuario(riskMinusServiceMinusVersion, registrarUsuarioRequestBody)
 
 RegistrarUsuario
 
@@ -818,9 +848,10 @@ Permite registrar un usuario
 //import py.com.risk.client.models.*
 
 val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 val registrarUsuarioRequestBody : RegistrarUsuarioRequestBody =  // RegistrarUsuarioRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.registrarUsuario(registrarUsuarioRequestBody)
+    val result : DatoRespuesta = apiInstance.registrarUsuario(riskMinusServiceMinusVersion, registrarUsuarioRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#registrarUsuario")
@@ -835,6 +866,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -855,7 +887,7 @@ Configure RiskAppKey:
 
 <a name="validarOtp"></a>
 # **validarOtp**
-> DatoRespuesta validarOtp(secret, otp)
+> DatoRespuesta validarOtp(secret, otp, riskMinusServiceMinusVersion)
 
 ValidarOtp
 
@@ -870,8 +902,9 @@ Permite validar un código OTP
 val apiInstance = AutApi()
 val secret : kotlin.String = secret_example // kotlin.String | Secret recibido al generar el código OTP
 val otp : kotlin.Int = 56 // kotlin.Int | Código OTP a validar
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.validarOtp(secret, otp)
+    val result : DatoRespuesta = apiInstance.validarOtp(secret, otp, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#validarOtp")
@@ -888,6 +921,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **secret** | **kotlin.String**| Secret recibido al generar el código OTP |
  **otp** | **kotlin.Int**| Código OTP a validar |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -907,7 +941,7 @@ Configure RiskAppKey:
 
 <a name="validarSesion"></a>
 # **validarSesion**
-> DatoRespuesta validarSesion(accessToken)
+> DatoRespuesta validarSesion(accessToken, riskMinusServiceMinusVersion)
 
 ValidarSesion
 
@@ -921,8 +955,9 @@ Permite validar si una sesión está activa o no
 
 val apiInstance = AutApi()
 val accessToken : kotlin.String = accessToken_example // kotlin.String | Access Token de la sesión
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
 try {
-    val result : DatoRespuesta = apiInstance.validarSesion(accessToken)
+    val result : DatoRespuesta = apiInstance.validarSesion(accessToken, riskMinusServiceMinusVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling AutApi#validarSesion")
@@ -938,6 +973,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accessToken** | **kotlin.String**| Access Token de la sesión |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type
 

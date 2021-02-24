@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.TipoMensajeria
+Tipos de Mensajería
 ## Properties
 
 Name | Type | Description | Notes

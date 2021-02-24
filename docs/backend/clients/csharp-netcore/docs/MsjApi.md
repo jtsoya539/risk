@@ -1,6 +1,6 @@
 # Risk.API.Client.Api.MsjApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 <a name="activarmensajeria"></a>
 # **ActivarMensajeria**
-> DatoRespuesta ActivarMensajeria (TipoMensajeria tipoMensajeria)
+> DatoRespuesta ActivarMensajeria (TipoMensajeria tipoMensajeria, string riskServiceVersion = null)
 
 ActivarMensajeria
 
@@ -35,7 +35,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -45,11 +45,12 @@ namespace Example
 
             var apiInstance = new MsjApi(config);
             var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería a activar
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ActivarMensajeria
-                DatoRespuesta result = apiInstance.ActivarMensajeria(tipoMensajeria);
+                DatoRespuesta result = apiInstance.ActivarMensajeria(tipoMensajeria, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -68,6 +69,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería a activar | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -96,7 +98,7 @@ Name | Type | Description  | Notes
 
 <a name="cambiarestadomensajeria"></a>
 # **CambiarEstadoMensajeria**
-> DatoRespuesta CambiarEstadoMensajeria (CambiarEstadoMensajeriaRequestBody cambiarEstadoMensajeriaRequestBody = null)
+> DatoRespuesta CambiarEstadoMensajeria (string riskServiceVersion = null, CambiarEstadoMensajeriaRequestBody cambiarEstadoMensajeriaRequestBody = null)
 
 CambiarEstadoMensajeria
 
@@ -117,7 +119,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -126,12 +128,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new MsjApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
             var cambiarEstadoMensajeriaRequestBody = new CambiarEstadoMensajeriaRequestBody(); // CambiarEstadoMensajeriaRequestBody |  (optional) 
 
             try
             {
                 // CambiarEstadoMensajeria
-                DatoRespuesta result = apiInstance.CambiarEstadoMensajeria(cambiarEstadoMensajeriaRequestBody);
+                DatoRespuesta result = apiInstance.CambiarEstadoMensajeria(riskServiceVersion, cambiarEstadoMensajeriaRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -149,6 +152,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -178,7 +182,7 @@ Name | Type | Description  | Notes
 
 <a name="desactivarmensajeria"></a>
 # **DesactivarMensajeria**
-> DatoRespuesta DesactivarMensajeria (TipoMensajeria tipoMensajeria)
+> DatoRespuesta DesactivarMensajeria (TipoMensajeria tipoMensajeria, string riskServiceVersion = null)
 
 DesactivarMensajeria
 
@@ -199,7 +203,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -209,11 +213,12 @@ namespace Example
 
             var apiInstance = new MsjApi(config);
             var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería a desactivar
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // DesactivarMensajeria
-                DatoRespuesta result = apiInstance.DesactivarMensajeria(tipoMensajeria);
+                DatoRespuesta result = apiInstance.DesactivarMensajeria(tipoMensajeria, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -232,6 +237,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería a desactivar | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -260,7 +266,7 @@ Name | Type | Description  | Notes
 
 <a name="listarcorreospendientes"></a>
 # **ListarCorreosPendientes**
-> CorreoPaginaRespuesta ListarCorreosPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> CorreoPaginaRespuesta ListarCorreosPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarCorreosPendientes
 
@@ -281,7 +287,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -293,11 +299,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarCorreosPendientes
-                CorreoPaginaRespuesta result = apiInstance.ListarCorreosPendientes(pagina, porPagina, noPaginar);
+                CorreoPaginaRespuesta result = apiInstance.ListarCorreosPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -318,6 +325,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -346,7 +354,7 @@ Name | Type | Description  | Notes
 
 <a name="listarmensajespendientes"></a>
 # **ListarMensajesPendientes**
-> MensajePaginaRespuesta ListarMensajesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> MensajePaginaRespuesta ListarMensajesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarMensajesPendientes
 
@@ -367,7 +375,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -379,11 +387,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarMensajesPendientes
-                MensajePaginaRespuesta result = apiInstance.ListarMensajesPendientes(pagina, porPagina, noPaginar);
+                MensajePaginaRespuesta result = apiInstance.ListarMensajesPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -404,6 +413,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -432,7 +442,7 @@ Name | Type | Description  | Notes
 
 <a name="listarnotificacionespendientes"></a>
 # **ListarNotificacionesPendientes**
-> NotificacionPaginaRespuesta ListarNotificacionesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> NotificacionPaginaRespuesta ListarNotificacionesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarNotificacionesPendientes
 
@@ -453,7 +463,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -465,11 +475,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarNotificacionesPendientes
-                NotificacionPaginaRespuesta result = apiInstance.ListarNotificacionesPendientes(pagina, porPagina, noPaginar);
+                NotificacionPaginaRespuesta result = apiInstance.ListarNotificacionesPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -490,6 +501,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 

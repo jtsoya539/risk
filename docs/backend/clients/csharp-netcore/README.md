@@ -61,14 +61,15 @@ namespace Example
         {
 
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             var apiInstance = new AutApi(config);
             var key = key_example;  // string | Clave para la activación
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ActivarUsuario
-                DatoRespuesta result = apiInstance.ActivarUsuario(key);
+                DatoRespuesta result = apiInstance.ActivarUsuario(key, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -86,7 +87,7 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -109,6 +110,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**ValidarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**ValidarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**GuardarArchivo**](docs/GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
+*GenApi* | [**ListarAplicaciones**](docs/GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
 *GenApi* | [**ListarBarrios**](docs/GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 *GenApi* | [**ListarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**ListarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
@@ -136,6 +138,9 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.Aplicacion](docs/Aplicacion.md)
+ - [Model.AplicacionPagina](docs/AplicacionPagina.md)
+ - [Model.AplicacionPaginaRespuesta](docs/AplicacionPaginaRespuesta.md)
  - [Model.Archivo](docs/Archivo.md)
  - [Model.Barrio](docs/Barrio.md)
  - [Model.BarrioPagina](docs/BarrioPagina.md)

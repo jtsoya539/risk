@@ -1,6 +1,6 @@
 # AutApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -27,7 +27,7 @@ Method | HTTP request | Description
 
 ## activarUsuario
 
-> DatoRespuesta activarUsuario(key)
+> DatoRespuesta activarUsuario(key, riskServiceVersion)
 
 ActivarUsuario
 
@@ -46,12 +46,13 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
 
         AutApi apiInstance = new AutApi(defaultClient);
         String key = "key_example"; // String | Clave para la activación
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.activarUsuario(key);
+            DatoRespuesta result = apiInstance.activarUsuario(key, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#activarUsuario");
@@ -70,6 +71,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **String**| Clave para la activación |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -95,7 +97,7 @@ No authorization required
 
 ## cambiarClaveAcceso
 
-> DatoRespuesta cambiarClaveAcceso(cambiarClaveAccesoRequestBody)
+> DatoRespuesta cambiarClaveAcceso(riskServiceVersion, cambiarClaveAccesoRequestBody)
 
 CambiarClaveAcceso
 
@@ -115,7 +117,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -128,9 +130,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = new CambiarClaveAccesoRequestBody(); // CambiarClaveAccesoRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.cambiarClaveAcceso(cambiarClaveAccesoRequestBody);
+            DatoRespuesta result = apiInstance.cambiarClaveAcceso(riskServiceVersion, cambiarClaveAccesoRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#cambiarClaveAcceso");
@@ -148,6 +151,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional]
 
 ### Return type
@@ -176,7 +180,7 @@ Name | Type | Description  | Notes
 
 ## cambiarClaveTransaccional
 
-> DatoRespuesta cambiarClaveTransaccional(cambiarClaveTransaccionalRequestBody)
+> DatoRespuesta cambiarClaveTransaccional(riskServiceVersion, cambiarClaveTransaccionalRequestBody)
 
 CambiarClaveTransaccional
 
@@ -196,7 +200,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -209,9 +213,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = new CambiarClaveTransaccionalRequestBody(); // CambiarClaveTransaccionalRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.cambiarClaveTransaccional(cambiarClaveTransaccionalRequestBody);
+            DatoRespuesta result = apiInstance.cambiarClaveTransaccional(riskServiceVersion, cambiarClaveTransaccionalRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#cambiarClaveTransaccional");
@@ -229,6 +234,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional]
 
 ### Return type
@@ -257,7 +263,7 @@ Name | Type | Description  | Notes
 
 ## datosUsuario
 
-> UsuarioRespuesta datosUsuario(usuario)
+> UsuarioRespuesta datosUsuario(usuario, riskServiceVersion)
 
 DatosUsuario
 
@@ -277,7 +283,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -291,8 +297,9 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            UsuarioRespuesta result = apiInstance.datosUsuario(usuario);
+            UsuarioRespuesta result = apiInstance.datosUsuario(usuario, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#datosUsuario");
@@ -311,6 +318,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -338,7 +346,7 @@ Name | Type | Description  | Notes
 
 ## editarUsuario
 
-> DatoRespuesta editarUsuario(usuario, editarUsuarioRequestBody)
+> DatoRespuesta editarUsuario(usuario, riskServiceVersion, editarUsuarioRequestBody)
 
 EditarUsuario
 
@@ -358,7 +366,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -372,9 +380,10 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         EditarUsuarioRequestBody editarUsuarioRequestBody = new EditarUsuarioRequestBody(); // EditarUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.editarUsuario(usuario, editarUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.editarUsuario(usuario, riskServiceVersion, editarUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#editarUsuario");
@@ -393,6 +402,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -421,7 +431,7 @@ Name | Type | Description  | Notes
 
 ## eliminarUsuario
 
-> DatoRespuesta eliminarUsuario(eliminarUsuarioRequestBody)
+> DatoRespuesta eliminarUsuario(riskServiceVersion, eliminarUsuarioRequestBody)
 
 EliminarUsuario
 
@@ -441,7 +451,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -454,9 +464,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         EliminarUsuarioRequestBody eliminarUsuarioRequestBody = new EliminarUsuarioRequestBody(); // EliminarUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.eliminarUsuario(eliminarUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.eliminarUsuario(riskServiceVersion, eliminarUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#eliminarUsuario");
@@ -474,6 +485,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -502,7 +514,7 @@ Name | Type | Description  | Notes
 
 ## finalizarSesion
 
-> DatoRespuesta finalizarSesion(finalizarSesionRequestBody)
+> DatoRespuesta finalizarSesion(riskServiceVersion, finalizarSesionRequestBody)
 
 FinalizarSesion
 
@@ -522,7 +534,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -535,9 +547,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         FinalizarSesionRequestBody finalizarSesionRequestBody = new FinalizarSesionRequestBody(); // FinalizarSesionRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.finalizarSesion(finalizarSesionRequestBody);
+            DatoRespuesta result = apiInstance.finalizarSesion(riskServiceVersion, finalizarSesionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#finalizarSesion");
@@ -555,6 +568,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -583,7 +597,7 @@ Name | Type | Description  | Notes
 
 ## generarOtp
 
-> DatoRespuesta generarOtp(tipoMensajeria, destino)
+> DatoRespuesta generarOtp(tipoMensajeria, destino, riskServiceVersion)
 
 GenerarOtp
 
@@ -603,7 +617,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -614,8 +628,9 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         TipoMensajeria tipoMensajeria = new TipoMensajeria(); // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
         String destino = "destino_example"; // String | Destino de la mensajería
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.generarOtp(tipoMensajeria, destino);
+            DatoRespuesta result = apiInstance.generarOtp(tipoMensajeria, destino, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#generarOtp");
@@ -635,6 +650,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería (Mail/SMS/Push) | [enum: Mail, SMS, Push]
  **destino** | **String**| Destino de la mensajería |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -661,7 +677,7 @@ Name | Type | Description  | Notes
 
 ## guardarAvatarUsuario
 
-> DatoRespuesta guardarAvatarUsuario(usuario, archivo, url, nombre, extension)
+> DatoRespuesta guardarAvatarUsuario(usuario, riskServiceVersion, archivo, url, nombre, extension)
 
 GuardarAvatarUsuario
 
@@ -681,7 +697,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -695,12 +711,13 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
-        File archivo = new File("/path/to/file"); // File | 
-        String url = "url_example"; // String | 
-        String nombre = "nombre_example"; // String | 
-        String extension = "extension_example"; // String | 
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        File archivo = new File("/path/to/file"); // File | Contenido del archivo
+        String url = "url_example"; // String | URL del archivo
+        String nombre = "nombre_example"; // String | Nombre del archivo
+        String extension = "extension_example"; // String | Extensión del archivo
         try {
-            DatoRespuesta result = apiInstance.guardarAvatarUsuario(usuario, archivo, url, nombre, extension);
+            DatoRespuesta result = apiInstance.guardarAvatarUsuario(usuario, riskServiceVersion, archivo, url, nombre, extension);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#guardarAvatarUsuario");
@@ -719,10 +736,11 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
- **archivo** | **File**|  | [optional]
- **url** | **String**|  | [optional]
- **nombre** | **String**|  | [optional]
- **extension** | **String**|  | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **archivo** | **File**| Contenido del archivo | [optional]
+ **url** | **String**| URL del archivo | [optional]
+ **nombre** | **String**| Nombre del archivo | [optional]
+ **extension** | **String**| Extensión del archivo | [optional]
 
 ### Return type
 
@@ -750,7 +768,7 @@ Name | Type | Description  | Notes
 
 ## iniciarSesion
 
-> SesionRespuesta iniciarSesion(iniciarSesionRequestBody)
+> SesionRespuesta iniciarSesion(riskServiceVersion, iniciarSesionRequestBody)
 
 IniciarSesion
 
@@ -770,7 +788,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -779,9 +797,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         IniciarSesionRequestBody iniciarSesionRequestBody = new IniciarSesionRequestBody(); // IniciarSesionRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.iniciarSesion(iniciarSesionRequestBody);
+            SesionRespuesta result = apiInstance.iniciarSesion(riskServiceVersion, iniciarSesionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#iniciarSesion");
@@ -799,6 +818,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -826,7 +846,7 @@ Name | Type | Description  | Notes
 
 ## recuperarAvatarUsuario
 
-> File recuperarAvatarUsuario(usuario, version)
+> File recuperarAvatarUsuario(usuario, version, riskServiceVersion)
 
 RecuperarAvatarUsuario
 
@@ -846,7 +866,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -861,8 +881,9 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
         Integer version = 56; // Integer | Versión
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            File result = apiInstance.recuperarAvatarUsuario(usuario, version);
+            File result = apiInstance.recuperarAvatarUsuario(usuario, version, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#recuperarAvatarUsuario");
@@ -882,6 +903,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
  **version** | **Integer**| Versión | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -909,7 +931,7 @@ Name | Type | Description  | Notes
 
 ## refrescarSesion
 
-> SesionRespuesta refrescarSesion(refrescarSesionRequestBody)
+> SesionRespuesta refrescarSesion(riskServiceVersion, refrescarSesionRequestBody)
 
 RefrescarSesion
 
@@ -929,7 +951,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -938,9 +960,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         RefrescarSesionRequestBody refrescarSesionRequestBody = new RefrescarSesionRequestBody(); // RefrescarSesionRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.refrescarSesion(refrescarSesionRequestBody);
+            SesionRespuesta result = apiInstance.refrescarSesion(riskServiceVersion, refrescarSesionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#refrescarSesion");
@@ -958,6 +981,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -985,7 +1009,7 @@ Name | Type | Description  | Notes
 
 ## registrarClaveTransaccional
 
-> DatoRespuesta registrarClaveTransaccional(registrarClaveTransaccionalRequestBody)
+> DatoRespuesta registrarClaveTransaccional(riskServiceVersion, registrarClaveTransaccionalRequestBody)
 
 RegistrarClaveTransaccional
 
@@ -1005,7 +1029,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -1018,9 +1042,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = new RegistrarClaveTransaccionalRequestBody(); // RegistrarClaveTransaccionalRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarClaveTransaccional(registrarClaveTransaccionalRequestBody);
+            DatoRespuesta result = apiInstance.registrarClaveTransaccional(riskServiceVersion, registrarClaveTransaccionalRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarClaveTransaccional");
@@ -1038,6 +1063,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1066,7 +1092,7 @@ Name | Type | Description  | Notes
 
 ## registrarDispositivo
 
-> DatoRespuesta registrarDispositivo(registrarDispositivoRequestBody)
+> DatoRespuesta registrarDispositivo(riskServiceVersion, registrarDispositivoRequestBody)
 
 RegistrarDispositivo
 
@@ -1086,7 +1112,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -1095,9 +1121,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         RegistrarDispositivoRequestBody registrarDispositivoRequestBody = new RegistrarDispositivoRequestBody(); // RegistrarDispositivoRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarDispositivo(registrarDispositivoRequestBody);
+            DatoRespuesta result = apiInstance.registrarDispositivo(riskServiceVersion, registrarDispositivoRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarDispositivo");
@@ -1115,6 +1142,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1142,7 +1170,7 @@ Name | Type | Description  | Notes
 
 ## registrarUbicacion
 
-> DatoRespuesta registrarUbicacion(registrarUbicacionRequestBody)
+> DatoRespuesta registrarUbicacion(riskServiceVersion, registrarUbicacionRequestBody)
 
 RegistrarUbicacion
 
@@ -1162,7 +1190,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -1171,9 +1199,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         RegistrarUbicacionRequestBody registrarUbicacionRequestBody = new RegistrarUbicacionRequestBody(); // RegistrarUbicacionRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarUbicacion(registrarUbicacionRequestBody);
+            DatoRespuesta result = apiInstance.registrarUbicacion(riskServiceVersion, registrarUbicacionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarUbicacion");
@@ -1191,6 +1220,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1218,7 +1248,7 @@ Name | Type | Description  | Notes
 
 ## registrarUsuario
 
-> DatoRespuesta registrarUsuario(registrarUsuarioRequestBody)
+> DatoRespuesta registrarUsuario(riskServiceVersion, registrarUsuarioRequestBody)
 
 RegistrarUsuario
 
@@ -1238,7 +1268,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -1247,9 +1277,10 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         RegistrarUsuarioRequestBody registrarUsuarioRequestBody = new RegistrarUsuarioRequestBody(); // RegistrarUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarUsuario(registrarUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.registrarUsuario(riskServiceVersion, registrarUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarUsuario");
@@ -1267,6 +1298,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1294,7 +1326,7 @@ Name | Type | Description  | Notes
 
 ## validarOtp
 
-> DatoRespuesta validarOtp(secret, otp)
+> DatoRespuesta validarOtp(secret, otp, riskServiceVersion)
 
 ValidarOtp
 
@@ -1314,7 +1346,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -1325,8 +1357,9 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         String secret = "secret_example"; // String | Secret recibido al generar el código OTP
         Integer otp = 56; // Integer | Código OTP a validar
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.validarOtp(secret, otp);
+            DatoRespuesta result = apiInstance.validarOtp(secret, otp, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#validarOtp");
@@ -1346,6 +1379,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **secret** | **String**| Secret recibido al generar el código OTP |
  **otp** | **Integer**| Código OTP a validar |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -1372,7 +1406,7 @@ Name | Type | Description  | Notes
 
 ## validarSesion
 
-> DatoRespuesta validarSesion(accessToken)
+> DatoRespuesta validarSesion(accessToken, riskServiceVersion)
 
 ValidarSesion
 
@@ -1392,7 +1426,7 @@ import org.openapitools.client.api.AutApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -1406,8 +1440,9 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String accessToken = "accessToken_example"; // String | Access Token de la sesión
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.validarSesion(accessToken);
+            DatoRespuesta result = apiInstance.validarSesion(accessToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#validarSesion");
@@ -1426,6 +1461,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accessToken** | **String**| Access Token de la sesión |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 

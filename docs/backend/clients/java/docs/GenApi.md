@@ -1,10 +1,11 @@
 # GenApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**guardarArchivo**](GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
+[**listarAplicaciones**](GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
 [**listarBarrios**](GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 [**listarCiudades**](GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 [**listarDepartamentos**](GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
@@ -24,7 +25,7 @@ Method | HTTP request | Description
 
 ## guardarArchivo
 
-> DatoRespuesta guardarArchivo(tabla, campo, referencia, archivo, url, nombre, extension)
+> DatoRespuesta guardarArchivo(tabla, campo, referencia, riskServiceVersion, archivo, url, nombre, extension)
 
 GuardarArchivo
 
@@ -44,7 +45,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -60,12 +61,13 @@ public class Example {
         String tabla = "tabla_example"; // String | Tabla
         String campo = "campo_example"; // String | Campo
         String referencia = "referencia_example"; // String | Referencia
-        File archivo = new File("/path/to/file"); // File | 
-        String url = "url_example"; // String | 
-        String nombre = "nombre_example"; // String | 
-        String extension = "extension_example"; // String | 
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        File archivo = new File("/path/to/file"); // File | Contenido del archivo
+        String url = "url_example"; // String | URL del archivo
+        String nombre = "nombre_example"; // String | Nombre del archivo
+        String extension = "extension_example"; // String | Extensión del archivo
         try {
-            DatoRespuesta result = apiInstance.guardarArchivo(tabla, campo, referencia, archivo, url, nombre, extension);
+            DatoRespuesta result = apiInstance.guardarArchivo(tabla, campo, referencia, riskServiceVersion, archivo, url, nombre, extension);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#guardarArchivo");
@@ -86,10 +88,11 @@ Name | Type | Description  | Notes
  **tabla** | **String**| Tabla |
  **campo** | **String**| Campo |
  **referencia** | **String**| Referencia |
- **archivo** | **File**|  | [optional]
- **url** | **String**|  | [optional]
- **nombre** | **String**|  | [optional]
- **extension** | **String**|  | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **archivo** | **File**| Contenido del archivo | [optional]
+ **url** | **String**| URL del archivo | [optional]
+ **nombre** | **String**| Nombre del archivo | [optional]
+ **extension** | **String**| Extensión del archivo | [optional]
 
 ### Return type
 
@@ -115,9 +118,95 @@ Name | Type | Description  | Notes
 | **501** | Servicio no implementado o inactivo |  -  |
 
 
+## listarAplicaciones
+
+> AplicacionPaginaRespuesta listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskServiceVersion)
+
+ListarAplicaciones
+
+Obtiene una lista de aplicaciones
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.GenApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost:5000");
+        
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        GenApi apiInstance = new GenApi(defaultClient);
+        String idAplicacion = "idAplicacion_example"; // String | Identificador de la aplicacion
+        String claveAplicacion = "claveAplicacion_example"; // String | Clave de la aplicacion
+        Integer pagina = 56; // Integer | Número de la página
+        Integer porPagina = 56; // Integer | Cantidad de elementos por página
+        Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        try {
+            AplicacionPaginaRespuesta result = apiInstance.listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskServiceVersion);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling GenApi#listarAplicaciones");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idAplicacion** | **String**| Identificador de la aplicacion | [optional]
+ **claveAplicacion** | **String**| Clave de la aplicacion | [optional]
+ **pagina** | **Integer**| Número de la página | [optional]
+ **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
+ **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+
+### Return type
+
+[**AplicacionPaginaRespuesta**](AplicacionPaginaRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
 ## listarBarrios
 
-> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar)
+> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion)
 
 ListarBarrios
 
@@ -137,7 +226,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -152,8 +241,9 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            BarrioPaginaRespuesta result = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar);
+            BarrioPaginaRespuesta result = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarBarrios");
@@ -177,6 +267,7 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -203,7 +294,7 @@ Name | Type | Description  | Notes
 
 ## listarCiudades
 
-> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar)
+> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion)
 
 ListarCiudades
 
@@ -223,7 +314,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -237,8 +328,9 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            CiudadPaginaRespuesta result = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar);
+            CiudadPaginaRespuesta result = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarCiudades");
@@ -261,6 +353,7 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -287,7 +380,7 @@ Name | Type | Description  | Notes
 
 ## listarDepartamentos
 
-> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar)
+> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion)
 
 ListarDepartamentos
 
@@ -307,7 +400,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -320,8 +413,9 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DepartamentoPaginaRespuesta result = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar);
+            DepartamentoPaginaRespuesta result = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarDepartamentos");
@@ -343,6 +437,7 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -369,7 +464,7 @@ Name | Type | Description  | Notes
 
 ## listarErrores
 
-> ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar)
+> ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar, riskServiceVersion)
 
 ListarErrores
 
@@ -389,7 +484,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -402,8 +497,9 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            ErrorPaginaRespuesta result = apiInstance.listarErrores(idError, pagina, porPagina, noPaginar);
+            ErrorPaginaRespuesta result = apiInstance.listarErrores(idError, pagina, porPagina, noPaginar, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarErrores");
@@ -425,6 +521,7 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -451,7 +548,7 @@ Name | Type | Description  | Notes
 
 ## listarPaises
 
-> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar)
+> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskServiceVersion)
 
 ListarPaises
 
@@ -471,7 +568,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -483,8 +580,9 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            PaisPaginaRespuesta result = apiInstance.listarPaises(pagina, porPagina, noPaginar);
+            PaisPaginaRespuesta result = apiInstance.listarPaises(pagina, porPagina, noPaginar, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarPaises");
@@ -505,6 +603,7 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -531,7 +630,7 @@ Name | Type | Description  | Notes
 
 ## listarSignificados
 
-> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar)
+> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar, riskServiceVersion)
 
 ListarSignificados
 
@@ -551,7 +650,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -568,8 +667,9 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            SignificadoPaginaRespuesta result = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar);
+            SignificadoPaginaRespuesta result = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarSignificados");
@@ -591,6 +691,7 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -618,7 +719,7 @@ Name | Type | Description  | Notes
 
 ## recuperarArchivo
 
-> File recuperarArchivo(tabla, campo, referencia, version)
+> File recuperarArchivo(tabla, campo, referencia, version, riskServiceVersion)
 
 RecuperarArchivo
 
@@ -638,7 +739,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -655,8 +756,9 @@ public class Example {
         String campo = "campo_example"; // String | Campo
         String referencia = "referencia_example"; // String | Referencia
         Integer version = 56; // Integer | Versión
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            File result = apiInstance.recuperarArchivo(tabla, campo, referencia, version);
+            File result = apiInstance.recuperarArchivo(tabla, campo, referencia, version, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#recuperarArchivo");
@@ -678,6 +780,7 @@ Name | Type | Description  | Notes
  **campo** | **String**| Campo |
  **referencia** | **String**| Referencia |
  **version** | **Integer**| Versión | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -705,7 +808,7 @@ Name | Type | Description  | Notes
 
 ## recuperarTexto
 
-> DatoRespuesta recuperarTexto(referencia)
+> DatoRespuesta recuperarTexto(referencia, riskServiceVersion)
 
 RecuperarTexto
 
@@ -725,7 +828,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -735,8 +838,9 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         String referencia = "referencia_example"; // String | Referencia del texto
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.recuperarTexto(referencia);
+            DatoRespuesta result = apiInstance.recuperarTexto(referencia, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#recuperarTexto");
@@ -755,6 +859,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **referencia** | **String**| Referencia del texto |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -781,7 +886,7 @@ Name | Type | Description  | Notes
 
 ## reporteListarSignificados
 
-> File reporteListarSignificados(formato, dominio)
+> File reporteListarSignificados(formato, dominio, riskServiceVersion)
 
 ReporteListarSignificados
 
@@ -801,7 +906,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -816,8 +921,9 @@ public class Example {
         GenApi apiInstance = new GenApi(defaultClient);
         FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
         String dominio = "dominio_example"; // String | Dominio
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            File result = apiInstance.reporteListarSignificados(formato, dominio);
+            File result = apiInstance.reporteListarSignificados(formato, dominio, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#reporteListarSignificados");
@@ -837,6 +943,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
  **dominio** | **String**| Dominio | [optional]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -864,7 +971,7 @@ Name | Type | Description  | Notes
 
 ## reporteVersionSistema
 
-> File reporteVersionSistema(formato)
+> File reporteVersionSistema(formato, riskServiceVersion)
 
 ReporteVersionSistema
 
@@ -884,7 +991,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -898,8 +1005,9 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            File result = apiInstance.reporteVersionSistema(formato);
+            File result = apiInstance.reporteVersionSistema(formato, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#reporteVersionSistema");
@@ -918,6 +1026,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -945,7 +1054,7 @@ Name | Type | Description  | Notes
 
 ## significadoCodigo
 
-> DatoRespuesta significadoCodigo(dominio, codigo)
+> DatoRespuesta significadoCodigo(dominio, codigo, riskServiceVersion)
 
 SignificadoCodigo
 
@@ -965,7 +1074,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -980,8 +1089,9 @@ public class Example {
         GenApi apiInstance = new GenApi(defaultClient);
         String dominio = "dominio_example"; // String | Dominio
         String codigo = "codigo_example"; // String | Código
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.significadoCodigo(dominio, codigo);
+            DatoRespuesta result = apiInstance.significadoCodigo(dominio, codigo, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#significadoCodigo");
@@ -1001,6 +1111,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dominio** | **String**| Dominio |
  **codigo** | **String**| Código |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -1028,7 +1139,7 @@ Name | Type | Description  | Notes
 
 ## valorParametro
 
-> DatoRespuesta valorParametro(parametro)
+> DatoRespuesta valorParametro(parametro, riskServiceVersion)
 
 ValorParametro
 
@@ -1048,7 +1159,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -1062,8 +1173,9 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         String parametro = "parametro_example"; // String | Identificador del parámetro
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.valorParametro(parametro);
+            DatoRespuesta result = apiInstance.valorParametro(parametro, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#valorParametro");
@@ -1082,6 +1194,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **parametro** | **String**| Identificador del parámetro |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -1109,7 +1222,7 @@ Name | Type | Description  | Notes
 
 ## versionServicio
 
-> DatoRespuesta versionServicio(servicio)
+> DatoRespuesta versionServicio(servicio, riskServiceVersion)
 
 VersionServicio
 
@@ -1129,7 +1242,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -1139,8 +1252,9 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         String servicio = "servicio_example"; // String | Nombre del servicio
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.versionServicio(servicio);
+            DatoRespuesta result = apiInstance.versionServicio(servicio, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#versionServicio");
@@ -1159,6 +1273,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **servicio** | **String**| Nombre del servicio |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 
@@ -1185,7 +1300,7 @@ Name | Type | Description  | Notes
 
 ## versionSistema
 
-> DatoRespuesta versionSistema()
+> DatoRespuesta versionSistema(riskServiceVersion)
 
 VersionSistema
 
@@ -1204,11 +1319,12 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
 
         GenApi apiInstance = new GenApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.versionSistema();
+            DatoRespuesta result = apiInstance.versionSistema(riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#versionSistema");
@@ -1223,7 +1339,10 @@ public class Example {
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
 

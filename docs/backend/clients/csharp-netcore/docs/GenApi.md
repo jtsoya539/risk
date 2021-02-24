@@ -1,10 +1,11 @@
 # Risk.API.Client.Api.GenApi
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GuardarArchivo**](GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
+[**ListarAplicaciones**](GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
 [**ListarBarrios**](GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 [**ListarCiudades**](GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 [**ListarDepartamentos**](GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
@@ -23,7 +24,7 @@ Method | HTTP request | Description
 
 <a name="guardararchivo"></a>
 # **GuardarArchivo**
-> DatoRespuesta GuardarArchivo (string tabla, string campo, string referencia, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
+> DatoRespuesta GuardarArchivo (string tabla, string campo, string referencia, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
 GuardarArchivo
 
@@ -44,7 +45,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -56,15 +57,16 @@ namespace Example
             var tabla = tabla_example;  // string | Tabla
             var campo = campo_example;  // string | Campo
             var referencia = referencia_example;  // string | Referencia
-            var archivo = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
-            var url = url_example;  // string |  (optional) 
-            var nombre = nombre_example;  // string |  (optional) 
-            var extension = extension_example;  // string |  (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var archivo = BINARY_DATA_HERE;  // System.IO.Stream | Contenido del archivo (optional) 
+            var url = url_example;  // string | URL del archivo (optional) 
+            var nombre = nombre_example;  // string | Nombre del archivo (optional) 
+            var extension = extension_example;  // string | Extensión del archivo (optional) 
 
             try
             {
                 // GuardarArchivo
-                DatoRespuesta result = apiInstance.GuardarArchivo(tabla, campo, referencia, archivo, url, nombre, extension);
+                DatoRespuesta result = apiInstance.GuardarArchivo(tabla, campo, referencia, riskServiceVersion, archivo, url, nombre, extension);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -85,10 +87,11 @@ Name | Type | Description  | Notes
  **tabla** | **string**| Tabla | 
  **campo** | **string**| Campo | 
  **referencia** | **string**| Referencia | 
- **archivo** | **System.IO.Stream****System.IO.Stream**|  | [optional] 
- **url** | **string**|  | [optional] 
- **nombre** | **string**|  | [optional] 
- **extension** | **string**|  | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **archivo** | **System.IO.Stream****System.IO.Stream**| Contenido del archivo | [optional] 
+ **url** | **string**| URL del archivo | [optional] 
+ **nombre** | **string**| Nombre del archivo | [optional] 
+ **extension** | **string**| Extensión del archivo | [optional] 
 
 ### Return type
 
@@ -115,9 +118,98 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="listaraplicaciones"></a>
+# **ListarAplicaciones**
+> AplicacionPaginaRespuesta ListarAplicaciones (string idAplicacion = null, string claveAplicacion = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+
+ListarAplicaciones
+
+Obtiene una lista de aplicaciones
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ListarAplicacionesExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "http://localhost:5000";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new GenApi(config);
+            var idAplicacion = idAplicacion_example;  // string | Identificador de la aplicacion (optional) 
+            var claveAplicacion = claveAplicacion_example;  // string | Clave de la aplicacion (optional) 
+            var pagina = 56;  // int? | Número de la página (optional) 
+            var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
+            var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+
+            try
+            {
+                // ListarAplicaciones
+                AplicacionPaginaRespuesta result = apiInstance.ListarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskServiceVersion);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling GenApi.ListarAplicaciones: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idAplicacion** | **string**| Identificador de la aplicacion | [optional] 
+ **claveAplicacion** | **string**| Clave de la aplicacion | [optional] 
+ **pagina** | **int?**| Número de la página | [optional] 
+ **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
+ **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+
+### Return type
+
+[**AplicacionPaginaRespuesta**](AplicacionPaginaRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="listarbarrios"></a>
 # **ListarBarrios**
-> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarBarrios
 
@@ -138,7 +230,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -151,11 +243,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarBarrios
-                BarrioPaginaRespuesta result = apiInstance.ListarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar);
+                BarrioPaginaRespuesta result = apiInstance.ListarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -179,6 +272,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -206,7 +300,7 @@ Name | Type | Description  | Notes
 
 <a name="listarciudades"></a>
 # **ListarCiudades**
-> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarCiudades
 
@@ -227,7 +321,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -239,11 +333,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarCiudades
-                CiudadPaginaRespuesta result = apiInstance.ListarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar);
+                CiudadPaginaRespuesta result = apiInstance.ListarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -266,6 +361,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -293,7 +389,7 @@ Name | Type | Description  | Notes
 
 <a name="listardepartamentos"></a>
 # **ListarDepartamentos**
-> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarDepartamentos
 
@@ -314,7 +410,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -325,11 +421,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarDepartamentos
-                DepartamentoPaginaRespuesta result = apiInstance.ListarDepartamentos(idPais, pagina, porPagina, noPaginar);
+                DepartamentoPaginaRespuesta result = apiInstance.ListarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -351,6 +448,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -378,7 +476,7 @@ Name | Type | Description  | Notes
 
 <a name="listarerrores"></a>
 # **ListarErrores**
-> ErrorPaginaRespuesta ListarErrores (string idError = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> ErrorPaginaRespuesta ListarErrores (string idError = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarErrores
 
@@ -399,7 +497,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -410,11 +508,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarErrores
-                ErrorPaginaRespuesta result = apiInstance.ListarErrores(idError, pagina, porPagina, noPaginar);
+                ErrorPaginaRespuesta result = apiInstance.ListarErrores(idError, pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -436,6 +535,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -463,7 +563,7 @@ Name | Type | Description  | Notes
 
 <a name="listarpaises"></a>
 # **ListarPaises**
-> PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarPaises
 
@@ -484,7 +584,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -494,11 +594,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarPaises
-                PaisPaginaRespuesta result = apiInstance.ListarPaises(pagina, porPagina, noPaginar);
+                PaisPaginaRespuesta result = apiInstance.ListarPaises(pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -519,6 +620,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -546,7 +648,7 @@ Name | Type | Description  | Notes
 
 <a name="listarsignificados"></a>
 # **ListarSignificados**
-> SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, bool? noPaginar = null)
+> SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
 
 ListarSignificados
 
@@ -567,7 +669,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -580,11 +682,12 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ListarSignificados
-                SignificadoPaginaRespuesta result = apiInstance.ListarSignificados(dominio, pagina, porPagina, noPaginar);
+                SignificadoPaginaRespuesta result = apiInstance.ListarSignificados(dominio, pagina, porPagina, noPaginar, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -606,6 +709,7 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -634,7 +738,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperararchivo"></a>
 # **RecuperarArchivo**
-> System.IO.Stream RecuperarArchivo (string tabla, string campo, string referencia, int? version = null)
+> System.IO.Stream RecuperarArchivo (string tabla, string campo, string referencia, int? version = null, string riskServiceVersion = null)
 
 RecuperarArchivo
 
@@ -655,7 +759,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -668,11 +772,12 @@ namespace Example
             var campo = campo_example;  // string | Campo
             var referencia = referencia_example;  // string | Referencia
             var version = 56;  // int? | Versión (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // RecuperarArchivo
-                System.IO.Stream result = apiInstance.RecuperarArchivo(tabla, campo, referencia, version);
+                System.IO.Stream result = apiInstance.RecuperarArchivo(tabla, campo, referencia, version, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -694,6 +799,7 @@ Name | Type | Description  | Notes
  **campo** | **string**| Campo | 
  **referencia** | **string**| Referencia | 
  **version** | **int?**| Versión | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -722,7 +828,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperartexto"></a>
 # **RecuperarTexto**
-> DatoRespuesta RecuperarTexto (string referencia)
+> DatoRespuesta RecuperarTexto (string referencia, string riskServiceVersion = null)
 
 RecuperarTexto
 
@@ -743,7 +849,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -751,11 +857,12 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var referencia = referencia_example;  // string | Referencia del texto
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // RecuperarTexto
-                DatoRespuesta result = apiInstance.RecuperarTexto(referencia);
+                DatoRespuesta result = apiInstance.RecuperarTexto(referencia, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -774,6 +881,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **referencia** | **string**| Referencia del texto | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -801,7 +909,7 @@ Name | Type | Description  | Notes
 
 <a name="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
-> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null)
+> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskServiceVersion = null)
 
 ReporteListarSignificados
 
@@ -822,7 +930,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -833,11 +941,12 @@ namespace Example
             var apiInstance = new GenApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
             var dominio = dominio_example;  // string | Dominio (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ReporteListarSignificados
-                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio);
+                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -857,6 +966,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
  **dominio** | **string**| Dominio | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -885,7 +995,7 @@ Name | Type | Description  | Notes
 
 <a name="reporteversionsistema"></a>
 # **ReporteVersionSistema**
-> System.IO.Stream ReporteVersionSistema (FormatoReporte formato)
+> System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskServiceVersion = null)
 
 ReporteVersionSistema
 
@@ -906,7 +1016,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -916,11 +1026,12 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ReporteVersionSistema
-                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato);
+                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -939,6 +1050,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -967,7 +1079,7 @@ Name | Type | Description  | Notes
 
 <a name="significadocodigo"></a>
 # **SignificadoCodigo**
-> DatoRespuesta SignificadoCodigo (string dominio, string codigo)
+> DatoRespuesta SignificadoCodigo (string dominio, string codigo, string riskServiceVersion = null)
 
 SignificadoCodigo
 
@@ -988,7 +1100,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -999,11 +1111,12 @@ namespace Example
             var apiInstance = new GenApi(config);
             var dominio = dominio_example;  // string | Dominio
             var codigo = codigo_example;  // string | Código
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // SignificadoCodigo
-                DatoRespuesta result = apiInstance.SignificadoCodigo(dominio, codigo);
+                DatoRespuesta result = apiInstance.SignificadoCodigo(dominio, codigo, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1023,6 +1136,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dominio** | **string**| Dominio | 
  **codigo** | **string**| Código | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -1051,7 +1165,7 @@ Name | Type | Description  | Notes
 
 <a name="valorparametro"></a>
 # **ValorParametro**
-> DatoRespuesta ValorParametro (string parametro)
+> DatoRespuesta ValorParametro (string parametro, string riskServiceVersion = null)
 
 ValorParametro
 
@@ -1072,7 +1186,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -1082,11 +1196,12 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var parametro = parametro_example;  // string | Identificador del parámetro
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // ValorParametro
-                DatoRespuesta result = apiInstance.ValorParametro(parametro);
+                DatoRespuesta result = apiInstance.ValorParametro(parametro, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1105,6 +1220,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **parametro** | **string**| Identificador del parámetro | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -1133,7 +1249,7 @@ Name | Type | Description  | Notes
 
 <a name="versionservicio"></a>
 # **VersionServicio**
-> DatoRespuesta VersionServicio (string servicio)
+> DatoRespuesta VersionServicio (string servicio, string riskServiceVersion = null)
 
 VersionServicio
 
@@ -1154,7 +1270,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1162,11 +1278,12 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var servicio = servicio_example;  // string | Nombre del servicio
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // VersionServicio
-                DatoRespuesta result = apiInstance.VersionServicio(servicio);
+                DatoRespuesta result = apiInstance.VersionServicio(servicio, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1185,6 +1302,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **servicio** | **string**| Nombre del servicio | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 
@@ -1212,7 +1330,7 @@ Name | Type | Description  | Notes
 
 <a name="versionsistema"></a>
 # **VersionSistema**
-> DatoRespuesta VersionSistema ()
+> DatoRespuesta VersionSistema (string riskServiceVersion = null)
 
 VersionSistema
 
@@ -1233,13 +1351,14 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://localhost:5001";
+            config.BasePath = "http://localhost:5000";
             var apiInstance = new GenApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
 
             try
             {
                 // VersionSistema
-                DatoRespuesta result = apiInstance.VersionSistema();
+                DatoRespuesta result = apiInstance.VersionSistema(riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1254,7 +1373,10 @@ namespace Example
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
 
 ### Return type
 

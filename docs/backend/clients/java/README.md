@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-01-27T13:52:52.208-03:00[America/Asuncion]
+- Build date: 2021-02-24T11:00:39.719-03:00[America/Asuncion]
 
 Risk Web API
 
@@ -84,12 +84,13 @@ public class AutApiExample {
 
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("https://localhost:5001");
+        defaultClient.setBasePath("http://localhost:5000");
         
         AutApi apiInstance = new AutApi(defaultClient);
         String key = "key_example"; // String | Clave para la activación
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
-            DatoRespuesta result = apiInstance.activarUsuario(key);
+            DatoRespuesta result = apiInstance.activarUsuario(key, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#activarUsuario");
@@ -105,7 +106,7 @@ public class AutApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://localhost:5001*
+All URIs are relative to *http://localhost:5000*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -128,6 +129,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**guardarArchivo**](docs/GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
+*GenApi* | [**listarAplicaciones**](docs/GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
 *GenApi* | [**listarBarrios**](docs/GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
 *GenApi* | [**listarCiudades**](docs/GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
 *GenApi* | [**listarDepartamentos**](docs/GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
@@ -154,6 +156,9 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [Aplicacion](docs/Aplicacion.md)
+ - [AplicacionPagina](docs/AplicacionPagina.md)
+ - [AplicacionPaginaRespuesta](docs/AplicacionPaginaRespuesta.md)
  - [Archivo](docs/Archivo.md)
  - [Barrio](docs/Barrio.md)
  - [BarrioPagina](docs/BarrioPagina.md)
