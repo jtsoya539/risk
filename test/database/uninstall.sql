@@ -78,6 +78,7 @@ prompt Borrando tests de types...
 prompt -----------------------------------
 prompt
 drop package test_y_dato;
+drop package test_y_respuesta;
 
 prompt
 prompt Vaciando papelera de reciclaje...

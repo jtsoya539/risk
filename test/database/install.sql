@@ -50,6 +50,7 @@ prompt Creando tests de types...
 prompt -----------------------------------
 prompt
 @@types/test_y_dato.pck
+@@types/test_y_respuesta.pck
 
 prompt
 prompt Creando tests de paquetes...
