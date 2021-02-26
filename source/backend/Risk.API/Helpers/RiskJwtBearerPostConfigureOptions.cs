@@ -22,25 +22,25 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Data;
-using Oracle.ManagedDataAccess.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Risk.API.Helpers
 {
-    public class RiskDbConnectionFactory : IDbConnectionFactory
+    public class RiskJwtBearerPostConfigureOptions : IPostConfigureOptions<JwtBearerOptions>
     {
-        private readonly string _connectionString;
+        private readonly ISecurityTokenValidator _securityTokenValidator;
 
-        public RiskDbConnectionFactory(string connectionString)
+        public RiskJwtBearerPostConfigureOptions(ISecurityTokenValidator securityTokenValidator)
         {
-            _connectionString = connectionString;
+            _securityTokenValidator = securityTokenValidator;
         }
 
-        public IDbConnection CreateConnection()
+        public void PostConfigure(string name, JwtBearerOptions options)
         {
-            var con = new OracleConnection(_connectionString);
-            //con.KeepAlive = true;
-            return con;
+            options.SecurityTokenValidators.Clear();
+            options.SecurityTokenValidators.Add(_securityTokenValidator);
         }
     }
 }

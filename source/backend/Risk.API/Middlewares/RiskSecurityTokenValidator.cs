@@ -39,6 +39,13 @@ namespace Risk.API.Middlewares
         private readonly IGenService _genService;
         private JwtSecurityTokenHandler _tokenHandler;
 
+        public RiskSecurityTokenValidator(IAutService autService, IGenService genService)
+        {
+            _autService = autService;
+            _genService = genService;
+            _tokenHandler = new JwtSecurityTokenHandler();
+        }
+
         public bool CanValidateToken
         {
             get
@@ -57,13 +64,6 @@ namespace Risk.API.Middlewares
             {
                 _maximumTokenSizeInBytes = value;
             }
-        }
-
-        public RiskSecurityTokenValidator(IAutService autService, IGenService genService)
-        {
-            _autService = autService;
-            _genService = genService;
-            _tokenHandler = new JwtSecurityTokenHandler();
         }
 
         public bool CanReadToken(string securityToken)

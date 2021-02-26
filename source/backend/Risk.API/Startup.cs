@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -81,8 +82,6 @@ namespace Risk.API
                 });
             });
 
-            services.AddHttpContextAccessor();
-
             string oracleLocation = Configuration["OracleConfiguration:OracleLocation"];
             if (!oracleLocation.Equals(string.Empty))
             {
@@ -109,15 +108,14 @@ namespace Risk.API
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
             //connStrBuilder.ValidateConnection = true;
 
-            //oracleConnection = new OracleConnection(connStrBuilder.ToString());
-            //oracleConnection.KeepAlive = true;
+            services.AddHttpContextAccessor();
 
             //services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
-            services.AddScoped<IDbConnectionFactory>(sp => new RiskDbConnectionFactory(connStrBuilder.ToString()));
-            services.AddScoped<INotificationHubClientConnection, NotificationHubClientConnection>();
-            services.AddScoped<IAutService, AutService>();
-            services.AddScoped<IGenService, GenService>();
-            services.AddScoped<IMsjService, MsjService>();
+            services.AddSingleton<IDbConnectionFactory>(sp => new RiskDbConnectionFactory(connStrBuilder.ToString()));
+            services.AddSingleton<INotificationHubClientConnection, NotificationHubClientConnection>();
+            services.AddSingleton<IAutService, AutService>();
+            services.AddSingleton<IGenService, GenService>();
+            services.AddSingleton<IMsjService, MsjService>();
 
             // Add Msj helper and senders
             services.AddSingleton<IMsjHelper, MsjHelper>();
@@ -125,9 +123,8 @@ namespace Risk.API
             services.AddSingleton<IMsjSender<Notificacion>, NotificationHubSender>();
             services.AddSingleton<IMsjSender<Mensaje>, TwilioSender>();
 
-            var serviceProvider = services.BuildServiceProvider();
-            IAutService autService = serviceProvider.GetService<IAutService>();
-            IGenService genService = serviceProvider.GetService<IGenService>();
+            services.AddSingleton<ISecurityTokenValidator, RiskSecurityTokenValidator>();
+            services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, RiskJwtBearerPostConfigureOptions>();
 
             //var signingKey = Encoding.ASCII.GetBytes(Configuration["JwtSigningKey"]);
 
@@ -137,8 +134,6 @@ namespace Risk.API
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
-                x.SecurityTokenValidators.Clear();
-                x.SecurityTokenValidators.Add(new RiskSecurityTokenValidator(autService, genService));
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
