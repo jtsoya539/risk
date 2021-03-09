@@ -30,16 +30,18 @@ BEGIN
 
   IF inserting OR updating THEN
   
-    -- Valida nombre
-    BEGIN
-      l_resultado := dbms_assert.simple_sql_name(:new.nombre);
-    EXCEPTION
-      WHEN OTHERS THEN
-        raise_application_error(-20000, 'Nombre no válido');
-    END;
+    IF :new.tipo IN ('S', 'R') THEN
+      -- SERVICIO, REPORTE
+      -- Valida nombre
+      BEGIN
+        l_resultado := dbms_assert.simple_sql_name(:new.nombre);
+      EXCEPTION
+        WHEN OTHERS THEN
+          raise_application_error(-20000, 'Nombre no válido');
+      END;
+    END IF;
   
   END IF;
 
 END;
 /
-
