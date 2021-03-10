@@ -71,9 +71,9 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
   BEGIN
     -- Arrange
     INSERT INTO t_operaciones
-      (tipo, nombre, dominio, activo, version_actual, log_activo)
+      (tipo, nombre, dominio, activo, version_actual, nivel_log)
     VALUES
-      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', '0.1.0', 'S')
+      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', '0.1.0', 2)
     RETURNING id_operacion INTO l_id_operacion;
     k_sistema.p_inicializar_parametros;
     -- Act
@@ -87,9 +87,9 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
   BEGIN
     -- Arrange
     INSERT INTO t_operaciones
-      (tipo, nombre, dominio, activo, version_actual, log_activo)
+      (tipo, nombre, dominio, activo, version_actual, nivel_log)
     VALUES
-      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', '0.1.0', 'N')
+      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', '0.1.0', 0)
     RETURNING id_operacion INTO l_id_operacion;
     k_sistema.p_inicializar_parametros;
     -- Act
@@ -104,9 +104,9 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
   BEGIN
     -- Arrange
     INSERT INTO t_operaciones
-      (tipo, nombre, dominio, activo, version_actual, log_activo)
+      (tipo, nombre, dominio, activo, version_actual, nivel_log)
     VALUES
-      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', '0.1.0', 'S')
+      ('S', 'OPERACION_DE_PRUEBA', 'GEN', 'S', '0.1.0', 2)
     RETURNING id_operacion INTO l_id_operacion;
     -- Act
     l_resultado := k_operacion.f_id_operacion(i_tipo    => 'S',

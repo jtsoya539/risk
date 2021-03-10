@@ -197,11 +197,12 @@ PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER)
 p_registrar_log
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
-                          i_parametros   IN CLOB,
-                          i_respuesta    IN CLOB,
-                          i_contexto     IN CLOB DEFAULT NULL,
-                          i_version      IN VARCHAR2 DEFAULT NULL)
+PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
+                          i_parametros       IN CLOB,
+                          i_codigo_respuesta IN VARCHAR2,
+                          i_respuesta        IN CLOB,
+                          i_contexto         IN CLOB DEFAULT NULL,
+                          i_version          IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <HR>

@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_OPERACIONES">
  <META name="description" content="Operaciones">
- <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL LOG_ACTIVO">
+ <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL NIVEL_LOG">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -166,19 +166,19 @@ Versi&#243;n actual de la operaci&#243;n
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-LOG_ACTIVO
+NIVEL_LOG
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(1)
+NUMBER(1)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-'N'
+0
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-El log de la operaci&#243;n est&#225; activo? (S/N)
+Nivel log de la operaci&#243;n. (0-Off, 1-Error, 2-Info)
 </TD>
 </TR>
 </TABLE>
@@ -258,10 +258,10 @@ ACTIVO IN ('S', 'N')
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-CK_OPERACIONES_LOG_ACTIVO
+CK_OPERACIONES_NIVEL_LOG
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-LOG_ACTIVO IN ('S', 'N')
+NIVEL_LOG IN (0, 1, 2)
 </TD>
 </TR>
 </TABLE>
