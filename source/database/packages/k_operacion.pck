@@ -44,7 +44,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
                             i_parametros       IN CLOB,
-                            i_codigo_respuesta IN CLOB,
+                            i_codigo_respuesta IN VARCHAR2,
                             i_respuesta        IN CLOB,
                             i_contexto         IN CLOB DEFAULT NULL,
                             i_version          IN VARCHAR2 DEFAULT NULL);
@@ -108,7 +108,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
 
   PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
                             i_parametros       IN CLOB,
-                            i_codigo_respuesta IN CLOB,
+                            i_codigo_respuesta IN VARCHAR2,
                             i_respuesta        IN CLOB,
                             i_contexto         IN CLOB DEFAULT NULL,
                             i_version          IN VARCHAR2 DEFAULT NULL) IS
