@@ -7,7 +7,7 @@ create table T_OPERACIONES
   activo         VARCHAR2(1) default 'N' not null,
   detalle        VARCHAR2(4000),
   version_actual VARCHAR2(100) not null,
-  log_activo     VARCHAR2(1) default 'N' not null
+  nivel_log      NUMBER(1) default 0 not null
 )
 ;
 comment on table T_OPERACIONES
@@ -26,8 +26,8 @@ comment on column T_OPERACIONES.detalle
   is 'Detalles adicionales de la operación';
 comment on column T_OPERACIONES.version_actual
   is 'Versión actual de la operación';
-comment on column T_OPERACIONES.log_activo
-  is 'El log de la operación está activo? (S/N)';
+comment on column T_OPERACIONES.nivel_log
+  is 'Nivel log de la operación. (0-Off, 1-Error, 2-Info)';
 alter table T_OPERACIONES
   add constraint PK_OPERACIONES primary key (ID_OPERACION);
 alter table T_OPERACIONES
@@ -36,6 +36,5 @@ alter table T_OPERACIONES
   add constraint CK_OPERACIONES_ACTIVO
   check (ACTIVO IN ('S', 'N'));
 alter table T_OPERACIONES
-  add constraint CK_OPERACIONES_LOG_ACTIVO
-  check (LOG_ACTIVO IN ('S', 'N'));
-
+  add constraint CK_OPERACIONES_NIVEL_LOG
+  check (NIVEL_LOG IN (0, 1, 2));
