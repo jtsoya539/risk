@@ -42,11 +42,12 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER);
 
-  PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
-                            i_parametros   IN CLOB,
-                            i_respuesta    IN CLOB,
-                            i_contexto     IN CLOB DEFAULT NULL,
-                            i_version      IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
+                            i_parametros       IN CLOB,
+                            i_codigo_respuesta IN CLOB,
+                            i_respuesta        IN CLOB,
+                            i_contexto         IN CLOB DEFAULT NULL,
+                            i_version          IN VARCHAR2 DEFAULT NULL);
 
   FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
                           i_nombre  IN VARCHAR2,
@@ -84,19 +85,19 @@ END;
 CREATE OR REPLACE PACKAGE BODY k_operacion IS
 
   PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER) IS
-    l_log_activo t_operaciones.log_activo%TYPE;
+    l_nivel_log t_operaciones.nivel_log%TYPE;
   BEGIN
     BEGIN
-      SELECT log_activo
-        INTO l_log_activo
+      SELECT nivel_log
+        INTO l_nivel_log
         FROM t_operaciones
        WHERE id_operacion = i_id_operacion;
     EXCEPTION
       WHEN OTHERS THEN
-        l_log_activo := 'N';
+        l_nivel_log := 0;
     END;
   
-    IF l_log_activo = 'S' THEN
+    IF l_nivel_log > 0 THEN
       k_sistema.p_definir_parametro_number(c_id_log,
                                            s_id_operacion_log.nextval);
     END IF;
@@ -105,25 +106,27 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       NULL;
   END;
 
-  PROCEDURE p_registrar_log(i_id_operacion IN NUMBER,
-                            i_parametros   IN CLOB,
-                            i_respuesta    IN CLOB,
-                            i_contexto     IN CLOB DEFAULT NULL,
-                            i_version      IN VARCHAR2 DEFAULT NULL) IS
+  PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
+                            i_parametros       IN CLOB,
+                            i_codigo_respuesta IN CLOB,
+                            i_respuesta        IN CLOB,
+                            i_contexto         IN CLOB DEFAULT NULL,
+                            i_version          IN VARCHAR2 DEFAULT NULL) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
-    l_log_activo t_operaciones.log_activo%TYPE;
+    l_nivel_log t_operaciones.nivel_log%TYPE;
   BEGIN
     BEGIN
-      SELECT log_activo
-        INTO l_log_activo
+      SELECT nivel_log
+        INTO l_nivel_log
         FROM t_operaciones
        WHERE id_operacion = i_id_operacion;
     EXCEPTION
       WHEN OTHERS THEN
-        l_log_activo := 'N';
+        l_nivel_log := 0;
     END;
   
-    IF l_log_activo = 'S' THEN
+    IF ((l_nivel_log > 1 AND i_codigo_respuesta = k_servicio.c_ok) OR
+       (l_nivel_log > 0 AND i_codigo_respuesta != k_servicio.c_ok)) THEN
       INSERT INTO t_operacion_logs
         (id_operacion_log,
          id_operacion,

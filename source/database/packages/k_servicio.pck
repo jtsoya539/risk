@@ -627,7 +627,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                i_contexto    IN CLOB DEFAULT NULL,
                                i_version     IN VARCHAR2 DEFAULT NULL)
     RETURN CLOB IS
-    l_rsp CLOB;
+    l_rsp y_respuesta;
   BEGIN
     -- Inicializa parámetros de la sesión
     k_sistema.p_inicializar_parametros;
@@ -636,15 +636,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(i_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(i_id_servicio, i_parametros, i_contexto, i_version)
-             .to_json;
+    l_rsp := lf_procesar_servicio(i_id_servicio,
+                                  i_parametros,
+                                  i_contexto,
+                                  i_version);
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(i_id_servicio,
                                 i_parametros,
-                                l_rsp,
+                                l_rsp.codigo,
+                                l_rsp.to_json,
                                 i_contexto,
                                 i_version);
-    RETURN l_rsp;
+    RETURN l_rsp.to_json;
   END;
 
   FUNCTION f_procesar_servicio(i_nombre     IN VARCHAR2,
@@ -653,7 +656,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                i_contexto   IN CLOB DEFAULT NULL,
                                i_version    IN VARCHAR2 DEFAULT NULL)
     RETURN CLOB IS
-    l_rsp         CLOB;
+    l_rsp         y_respuesta;
     l_id_servicio t_servicios.id_servicio%TYPE;
   BEGIN
     -- Inicializa parámetros de la sesión
@@ -667,15 +670,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- Reserva identificador para log
     k_operacion.p_reservar_id_log(l_id_servicio);
     -- Procesa servicio
-    l_rsp := lf_procesar_servicio(l_id_servicio, i_parametros, i_contexto, i_version)
-             .to_json;
+    l_rsp := lf_procesar_servicio(l_id_servicio,
+                                  i_parametros,
+                                  i_contexto,
+                                  i_version);
     -- Registra log con datos de entrada y salida
     k_operacion.p_registrar_log(l_id_servicio,
                                 i_parametros,
-                                l_rsp,
+                                l_rsp.codigo,
+                                l_rsp.to_json,
                                 i_contexto,
                                 i_version);
-    RETURN l_rsp;
+    RETURN l_rsp.to_json;
   END;
 
 END;
