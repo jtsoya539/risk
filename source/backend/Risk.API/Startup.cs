@@ -125,12 +125,12 @@ namespace Risk.API
             services.AddSingleton<IMsjSender<Mensaje>, TwilioSender>();
 
             // Add Msj workers
-            if (Configuration.GetValue<bool>("MsjConfiguration:EnableWorkers"))
-            {
+            if (Configuration.GetValue<bool>("MsjConfiguration:EnableMailWorker"))
                 services.AddHostedService<MailWorker>();
+            if (Configuration.GetValue<bool>("MsjConfiguration:EnablePushWorker"))
                 services.AddHostedService<PushWorker>();
+            if (Configuration.GetValue<bool>("MsjConfiguration:EnableSMSWorker"))
                 services.AddHostedService<SMSWorker>();
-            }
 
             services.AddSingleton<ISecurityTokenValidator, RiskSecurityTokenValidator>();
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, RiskJwtBearerPostConfigureOptions>();

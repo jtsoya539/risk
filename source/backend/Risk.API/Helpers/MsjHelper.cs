@@ -24,7 +24,6 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Risk.API.Models;
 using Risk.API.Services;
@@ -34,20 +33,14 @@ namespace Risk.API.Helpers
     public class MsjHelper : IMsjHelper
     {
         private readonly ILogger<MsjHelper> _logger;
-        private readonly IServiceScopeFactory _serviceScopeFactory;
         private readonly IGenService _genService;
         private readonly IMsjService _msjService;
 
-        public MsjHelper(ILogger<MsjHelper> logger, IServiceScopeFactory serviceScopeFactory)
+        public MsjHelper(ILogger<MsjHelper> logger, IGenService genService, IMsjService msjService)
         {
             _logger = logger;
-            _serviceScopeFactory = serviceScopeFactory;
-
-            using (var scope = _serviceScopeFactory.CreateScope())
-            {
-                _genService = scope.ServiceProvider.GetService<IGenService>();
-                _msjService = scope.ServiceProvider.GetService<IMsjService>();
-            }
+            _genService = genService;
+            _msjService = msjService;
         }
 
         public bool EnvioCorreosActivo()

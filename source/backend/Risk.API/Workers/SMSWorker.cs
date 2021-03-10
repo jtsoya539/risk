@@ -53,34 +53,31 @@ namespace Risk.API.Workers
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_msjHelper.EnvioMensajesActivo())
+                _logger.LogInformation($"Ejecutando {this.GetType().Name}");
+
+                var mensajes = _msjHelper.ListarMensajesPendientes();
+
+                if (mensajes.Any())
                 {
-                    _logger.LogInformation($"Ejecutando {this.GetType().Name}");
+                    await _msjSender.Configurar();
 
-                    var mensajes = _msjHelper.ListarMensajesPendientes();
-
-                    if (mensajes.Any())
+                    foreach (var item in mensajes)
                     {
-                        await _msjSender.Configurar();
-
-                        foreach (var item in mensajes)
+                        try
                         {
-                            try
-                            {
-                                await _msjSender.Enviar(item);
+                            await _msjSender.Enviar(item);
 
-                                // Cambia estado de la mensajería a E-ENVIADO
-                                _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.Enviado, "OK");
-                            }
-                            catch (Exception e)
-                            {
-                                // Cambia estado de la mensajería a R-PROCESADO CON ERROR
-                                _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.ProcesadoError, e.Message);
-                            }
+                            // Cambia estado de la mensajería a E-ENVIADO
+                            _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.Enviado, "OK");
                         }
-
-                        await _msjSender.Desconfigurar();
+                        catch (Exception e)
+                        {
+                            // Cambia estado de la mensajería a R-PROCESADO CON ERROR
+                            _msjHelper.CambiarEstadoMensajeria(TipoMensajeria.SMS, item.IdMensaje, EstadoMensajeria.ProcesadoError, e.Message);
+                        }
                     }
+
+                    await _msjSender.Desconfigurar();
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(_configuration.GetValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds")), stoppingToken);
