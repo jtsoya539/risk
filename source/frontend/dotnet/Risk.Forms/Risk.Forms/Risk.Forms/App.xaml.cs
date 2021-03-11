@@ -8,6 +8,7 @@ using Risk.Forms.Helpers;
 using Risk.Forms.ViewModels;
 using Risk.Forms.Views;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
@@ -17,6 +18,7 @@ namespace Risk.Forms
     public partial class App : PrismApplication
     {
         public static bool IsUserLoggedIn { get; set; }
+        public static bool IsConnected { get; set; }
 
         public App(IPlatformInitializer initializer)
             : base(initializer)
@@ -30,6 +32,15 @@ namespace Risk.Forms
             var autApi = Container.Resolve<IAutApi>();
             var deviceInfo = Container.Resolve<IDeviceInfo>();
             var secureStorage = Container.Resolve<ISecureStorage>();
+            var connectivity = Container.Resolve<IConnectivity>();
+
+            connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
+
+            if (connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                await NavigationService.NavigateAsync("/NoConnectionPage");
+                return;
+            }
 
             string deviceToken;
             try
@@ -68,11 +79,32 @@ namespace Risk.Forms
             }
         }
 
+        private void Connectivity_ConnectivityChanged(object sender, ConnectivityChangedEventArgs e)
+        {
+            var connectivity = Container.Resolve<IConnectivity>();
+
+            if (connectivity.NetworkAccess != NetworkAccess.Internet)
+            {
+                _ = NavigationService.NavigateAsync("/NoConnectionPage");
+                return;
+            }
+
+            if (IsUserLoggedIn)
+            {
+                _ = NavigationService.NavigateAsync("/NavigationPage/MainPage");
+            }
+            else
+            {
+                _ = NavigationService.NavigateAsync("/LoginPage");
+            }
+        }
+
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
             containerRegistry.RegisterSingleton<IDeviceInfo, DeviceInfoImplementation>();
             containerRegistry.RegisterSingleton<ISecureStorage, SecureStorageImplementation>();
+            containerRegistry.RegisterSingleton<IConnectivity, ConnectivityImplementation>();
 
             Configuration config = new Configuration();
             config.BasePath = "http://192.168.100.4";
@@ -90,6 +122,7 @@ namespace Risk.Forms
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
+            containerRegistry.RegisterForNavigation<NoConnectionPage, NoConnectionPageViewModel>();
         }
 
         protected override void OnSleep()
