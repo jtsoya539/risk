@@ -41,7 +41,7 @@ namespace Risk.Forms
                 deviceToken = string.Empty;
             }
 
-            DatoRespuesta datoRespuesta = autApi.RegistrarDispositivo(new RegistrarDispositivoRequestBody
+            DatoRespuesta datoRespuesta = autApi.RegistrarDispositivo(null, new RegistrarDispositivoRequestBody
             {
                 Dispositivo = new Dispositivo
                 {
@@ -75,7 +75,7 @@ namespace Risk.Forms
             containerRegistry.RegisterSingleton<ISecureStorage, SecureStorageImplementation>();
 
             Configuration config = new Configuration();
-            config.BasePath = "https://cred-project-api.azurewebsites.net";
+            config.BasePath = "http://192.168.100.4";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = string.Empty;
             // Configure API key authorization: RiskAppKey

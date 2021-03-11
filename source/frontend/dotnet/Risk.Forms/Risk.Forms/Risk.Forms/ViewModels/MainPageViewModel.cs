@@ -40,7 +40,7 @@ namespace Risk.Forms.ViewModels
                 accessToken = string.Empty;
             }
 
-            DatoRespuesta datoRespuesta = await _autApi.FinalizarSesionAsync(new FinalizarSesionRequestBody { AccessToken = accessToken });
+            DatoRespuesta datoRespuesta = await _autApi.FinalizarSesionAsync(null, new FinalizarSesionRequestBody { AccessToken = accessToken });
 
             if (datoRespuesta.Codigo.Equals("0"))
             {

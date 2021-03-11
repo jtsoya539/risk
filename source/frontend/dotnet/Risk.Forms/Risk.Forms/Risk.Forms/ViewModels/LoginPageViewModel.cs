@@ -57,7 +57,7 @@ namespace Risk.Forms.ViewModels
         async void ExecuteIniciarSesionCommand()
         {
             UserDialogs.Instance.ShowLoading("Cargando...");
-            SesionRespuesta sesionRespuesta = await _autApi.IniciarSesionAsync(new IniciarSesionRequestBody
+            SesionRespuesta sesionRespuesta = await _autApi.IniciarSesionAsync(null, new IniciarSesionRequestBody
             {
                 Usuario = Usuario,
                 Clave = Clave
