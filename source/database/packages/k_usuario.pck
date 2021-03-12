@@ -230,12 +230,52 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
 
   PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,
                              i_estado     IN VARCHAR2) IS
+    l_estado_anterior t_usuarios.estado%TYPE;
   BEGIN
+    -- Obtiene estado anterior del usuario
+    SELECT estado
+      INTO l_estado_anterior
+      FROM t_usuarios
+     WHERE id_usuario = i_id_usuario;
+  
     -- Actualiza usuario
     UPDATE t_usuarios
        SET estado = i_estado
      WHERE id_usuario = i_id_usuario
        AND estado <> i_estado;
+  
+    -- Actualiza rol por defecto para el nuevo estado
+    UPDATE t_rol_usuarios a
+       SET a.id_rol =
+           (SELECT id_rol
+              FROM t_roles
+             WHERE nombre =
+                   nvl(k_util.f_referencia_codigo('ESTADO_USUARIO', i_estado),
+                       k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO')))
+     WHERE a.id_usuario = i_id_usuario
+       AND a.id_rol =
+           (SELECT id_rol
+              FROM t_roles
+             WHERE nombre =
+                   nvl(k_util.f_referencia_codigo('ESTADO_USUARIO',
+                                                  l_estado_anterior),
+                       k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO')));
+  
+    -- Si no existe, inserta rol por defecto para el nuevo estado
+    IF SQL%NOTFOUND THEN
+      BEGIN
+        INSERT INTO t_rol_usuarios
+          (id_rol, id_usuario)
+          SELECT id_rol, i_id_usuario
+            FROM t_roles
+           WHERE nombre =
+                 nvl(k_util.f_referencia_codigo('ESTADO_USUARIO', i_estado),
+                     k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO'));
+      EXCEPTION
+        WHEN dup_val_on_index THEN
+          NULL;
+      END;
+    END IF;
   END;
 
 END;
