@@ -150,7 +150,7 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_APLICACION', 'D', 'DESKTOP', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('ESTADO_USUARIO', 'A', 'ACTIVO', null, 'S');
+values ('ESTADO_USUARIO', 'A', 'ACTIVO', 'USUARIO', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_USUARIO', 'I', 'INACTIVO', null, 'S');
@@ -243,7 +243,7 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_REPORTE', 'TXT', 'REPORTE TXT', 'text/plain', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('ESTADO_USUARIO', 'P', 'PENDIENTE DE ACTIVACIÓN', null, 'S');
+values ('ESTADO_USUARIO', 'P', 'PENDIENTE DE ACTIVACIÓN', 'USUARIO_NUEVO', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_OPERACION', 'S', 'SERVICIO', null, 'S');
