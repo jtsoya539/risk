@@ -41,13 +41,16 @@ CREATE OR REPLACE PACKAGE k_util IS
   %param i_tabla Tabla
   %param i_campo Campo
   %param i_trigger Trigger
+  %param i_ejecutar Ejecutar la(s) sentencia(s)?
   */
-  PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
-                                        i_campo   IN VARCHAR2,
-                                        i_trigger IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_generar_trigger_secuencia(i_tabla    IN VARCHAR2,
+                                        i_campo    IN VARCHAR2,
+                                        i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                        i_ejecutar IN BOOLEAN DEFAULT TRUE);
 
-  PROCEDURE p_generar_type_objeto(i_tabla IN VARCHAR2,
-                                  i_type  IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_generar_type_objeto(i_tabla    IN VARCHAR2,
+                                  i_type     IN VARCHAR2 DEFAULT NULL,
+                                  i_ejecutar IN BOOLEAN DEFAULT TRUE);
 
   /**
   Retorna una tabla de cadenas delimitadas por un separador
@@ -139,9 +142,10 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_util IS
 
-  PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
-                                        i_campo   IN VARCHAR2,
-                                        i_trigger IN VARCHAR2 DEFAULT NULL) IS
+  PROCEDURE p_generar_trigger_secuencia(i_tabla    IN VARCHAR2,
+                                        i_campo    IN VARCHAR2,
+                                        i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                        i_ejecutar IN BOOLEAN DEFAULT TRUE) IS
     l_sentencia VARCHAR2(4000);
     l_trigger   VARCHAR2(30);
   BEGIN
@@ -149,7 +153,11 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
   
     -- Genera secuencia
     l_sentencia := 'CREATE SEQUENCE s_' || lower(i_campo);
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   
     -- Genera trigger
     l_sentencia := 'CREATE OR REPLACE TRIGGER ' || l_trigger || '
@@ -185,11 +193,16 @@ BEGIN
                    lower(i_campo) || '.nextval;
   END IF;
 END;';
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   END;
 
-  PROCEDURE p_generar_type_objeto(i_tabla IN VARCHAR2,
-                                  i_type  IN VARCHAR2 DEFAULT NULL) IS
+  PROCEDURE p_generar_type_objeto(i_tabla    IN VARCHAR2,
+                                  i_type     IN VARCHAR2 DEFAULT NULL,
+                                  i_ejecutar IN BOOLEAN DEFAULT TRUE) IS
     l_sentencia VARCHAR2(4000);
     l_type      VARCHAR2(30);
     l_comments  VARCHAR2(4000);
@@ -297,8 +310,11 @@ SOFTWARE.
 
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )';
-    dbms_output.put_line(l_sentencia);
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   
     -- Genera type body
     l_campos1 := '';
@@ -356,8 +372,11 @@ SOFTWARE.
   END;
 
 END;';
-    dbms_output.put_line(l_sentencia);
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   END;
 
   FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,

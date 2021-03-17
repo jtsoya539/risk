@@ -193,9 +193,10 @@ ex_tipo_inexistente EXCEPTION;
 p_generar_trigger_secuencia
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_generar_trigger_secuencia(i_tabla   IN VARCHAR2,
-                                      i_campo   IN VARCHAR2,
-                                      i_trigger IN VARCHAR2 DEFAULT NULL)
+PROCEDURE p_generar_trigger_secuencia(i_tabla    IN VARCHAR2,
+                                      i_campo    IN VARCHAR2,
+                                      i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                      i_ejecutar IN BOOLEAN DEFAULT TRUE)
 
 </PRE>
 <P CLASS="DESC_TEXT">
@@ -241,6 +242,13 @@ i_trigger&nbsp;&nbsp;
 Trigger<br>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_ejecutar&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Ejecutar la(s) sentencia(s)?<br>
+
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -249,8 +257,9 @@ Trigger<br>
 p_generar_type_objeto
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_generar_type_objeto(i_tabla IN VARCHAR2,
-                                i_type  IN VARCHAR2 DEFAULT NULL)
+PROCEDURE p_generar_type_objeto(i_tabla    IN VARCHAR2,
+                                i_type     IN VARCHAR2 DEFAULT NULL,
+                                i_ejecutar IN BOOLEAN DEFAULT TRUE)
 
 </PRE>
 <HR>

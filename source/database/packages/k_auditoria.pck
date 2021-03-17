@@ -34,23 +34,28 @@ CREATE OR REPLACE PACKAGE k_auditoria IS
   Genera campos de auditoria para una tabla
   
   %param i_tabla Tabla
+  %param i_ejecutar Ejecutar la(s) sentencia(s)?
   */
-  PROCEDURE p_generar_campos_auditoria(i_tabla IN VARCHAR2);
+  PROCEDURE p_generar_campos_auditoria(i_tabla    IN VARCHAR2,
+                                       i_ejecutar IN BOOLEAN DEFAULT TRUE);
 
   /**
   Genera trigger de auditoria para una tabla
   
   %param i_tabla Tabla
   %param i_trigger Trigger
+  %param i_ejecutar Ejecutar la(s) sentencia(s)?
   */
-  PROCEDURE p_generar_trigger_auditoria(i_tabla   IN VARCHAR2,
-                                        i_trigger IN VARCHAR2 DEFAULT NULL);
+  PROCEDURE p_generar_trigger_auditoria(i_tabla    IN VARCHAR2,
+                                        i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                        i_ejecutar IN BOOLEAN DEFAULT TRUE);
 
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_auditoria IS
 
-  PROCEDURE p_generar_campos_auditoria(i_tabla IN VARCHAR2) IS
+  PROCEDURE p_generar_campos_auditoria(i_tabla    IN VARCHAR2,
+                                       i_ejecutar IN BOOLEAN DEFAULT TRUE) IS
     l_sentencia VARCHAR2(4000);
   BEGIN
     -- Genera campos
@@ -61,28 +66,49 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
   usuario_modificacion VARCHAR2(10) DEFAULT SUBSTR(USER, 1, 10),
   fecha_modificacion   DATE DEFAULT SYSDATE
 )';
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   
     -- Genera comentarios
     l_sentencia := 'comment on column ' || i_tabla ||
                    '.usuario_insercion is ''Usuario que realizo la insercion del registro''';
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   
     l_sentencia := 'comment on column ' || i_tabla ||
                    '.fecha_insercion is ''Fecha en que se realizo la insercion del registro''';
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   
     l_sentencia := 'comment on column ' || i_tabla ||
                    '.usuario_modificacion is ''Usuario que realizo la ultima modificacion en el registro''';
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   
     l_sentencia := 'comment on column ' || i_tabla ||
                    '.fecha_modificacion is ''Fecha en que se realizo la ultima modificacion en el registro''';
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   END;
 
-  PROCEDURE p_generar_trigger_auditoria(i_tabla   IN VARCHAR2,
-                                        i_trigger IN VARCHAR2 DEFAULT NULL) IS
+  PROCEDURE p_generar_trigger_auditoria(i_tabla    IN VARCHAR2,
+                                        i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                        i_ejecutar IN BOOLEAN DEFAULT TRUE) IS
     l_sentencia VARCHAR2(4000);
     l_trigger   VARCHAR2(30);
   BEGIN
@@ -141,7 +167,11 @@ BEGIN
   END IF;
 END;';
   
-    EXECUTE IMMEDIATE l_sentencia;
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
   END;
 
 END;
