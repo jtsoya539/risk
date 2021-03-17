@@ -61,9 +61,9 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
     -- Genera campos
     l_sentencia := 'alter table ' || i_tabla || ' add
 (
-  usuario_insercion    VARCHAR2(10) DEFAULT SUBSTR(USER, 1, 10),
+  usuario_insercion    VARCHAR2(30) DEFAULT SUBSTR(USER, 1, 30),
   fecha_insercion      DATE DEFAULT SYSDATE,
-  usuario_modificacion VARCHAR2(10) DEFAULT SUBSTR(USER, 1, 10),
+  usuario_modificacion VARCHAR2(30) DEFAULT SUBSTR(USER, 1, 30),
   fecha_modificacion   DATE DEFAULT SYSDATE
 )';
     IF i_ejecutar THEN
@@ -147,14 +147,14 @@ DECLARE
   -- Auditoria para insercion de registros
   PROCEDURE lp_insercion IS
   BEGIN
-    :new.usuario_insercion := substr(USER, 1, 10);
+    :new.usuario_insercion := substr(USER, 1, 30);
     :new.fecha_insercion   := SYSDATE;
   END;
 
   -- Auditoria para modificacion de registros
   PROCEDURE lp_modificacion IS
   BEGIN
-    :new.usuario_modificacion := substr(USER, 1, 10);
+    :new.usuario_modificacion := substr(USER, 1, 30);
     :new.fecha_modificacion   := SYSDATE;
   END;
 BEGIN
