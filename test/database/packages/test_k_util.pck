@@ -199,7 +199,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_util IS
     l_html CLOB;
   BEGIN
     -- Arrange
-    owa.init_cgi_env(NEW owa.vc_arr());
+    k_util.p_inicializar_html;
     htp.htmlopen; -- generates <HTML>
     htp.headopen; -- generates <HEAD>
     htp.title('Hello'); -- generates <TITLE>Hello</TITLE>

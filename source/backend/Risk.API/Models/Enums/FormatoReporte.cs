@@ -32,6 +32,7 @@ namespace Risk.API.Models
         Pdf,
         Docx,
         Xlsx,
-        Txt
+        Csv,
+        Html
     }
 }

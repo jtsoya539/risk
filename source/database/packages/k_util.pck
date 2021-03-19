@@ -107,6 +107,8 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_hash(i_data      IN VARCHAR2,
                   i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC;
 
+  PROCEDURE p_inicializar_html;
+
   FUNCTION f_html RETURN CLOB;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2;
@@ -601,6 +603,13 @@ END;';
   BEGIN
     RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
                                              i_hash_type)));
+  END;
+
+  PROCEDURE p_inicializar_html IS
+  BEGIN
+    owa.init_cgi_env(NEW owa.vc_arr());
+    htp.init;
+    htp.adddefaulthtmlhdr(FALSE);
   END;
 
   FUNCTION f_html RETURN CLOB IS

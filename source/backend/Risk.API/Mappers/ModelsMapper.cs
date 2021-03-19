@@ -152,8 +152,10 @@ namespace Risk.API.Mappers
                     return "DOCX";
                 case FormatoReporte.Xlsx:
                     return "XLSX";
-                case FormatoReporte.Txt:
-                    return "TXT";
+                case FormatoReporte.Csv:
+                    return "CSV";
+                case FormatoReporte.Html:
+                    return "HTML";
                 default:
                     return string.Empty;
             }

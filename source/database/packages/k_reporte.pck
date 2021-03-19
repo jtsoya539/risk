@@ -34,7 +34,8 @@ CREATE OR REPLACE PACKAGE k_reporte IS
   c_formato_pdf  CONSTANT VARCHAR2(10) := 'PDF';
   c_formato_docx CONSTANT VARCHAR2(10) := 'DOCX';
   c_formato_xlsx CONSTANT VARCHAR2(10) := 'XLSX';
-  c_formato_txt  CONSTANT VARCHAR2(10) := 'TXT';
+  c_formato_csv  CONSTANT VARCHAR2(10) := 'CSV';
+  c_formato_html CONSTANT VARCHAR2(10) := 'HTML';
 
   PROCEDURE p_limpiar_historial;
 
@@ -360,8 +361,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         -- as_xlsx.set_column_width(2, 100);
         l_archivo.contenido := as_xlsx.finish;
       
-      WHEN c_formato_txt THEN
-        -- TXT
+      WHEN c_formato_csv THEN
+        -- CSV
         DECLARE
           l_txt CLOB;
         BEGIN
@@ -370,6 +371,19 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                  i_respuesta.mensaje;
           l_archivo.contenido := k_util.clob_to_blob(l_txt);
         END;
+      
+      WHEN c_formato_html THEN
+        -- HTML
+        k_util.p_inicializar_html;
+        htp.htmlopen;
+        htp.bodyopen;
+        htp.header(1, 'Código');
+        htp.p(i_respuesta.codigo);
+        htp.header(1, 'Mensaje');
+        htp.p(i_respuesta.mensaje);
+        htp.bodyclose;
+        htp.htmlclose;
+        l_archivo.contenido := k_util.clob_to_blob(k_util.f_html);
       
       ELSE
         raise_application_error(-20000, 'Formato de salida no soportado');
@@ -422,7 +436,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                    (c_formato_pdf,
                                     c_formato_docx,
                                     c_formato_xlsx,
-                                    c_formato_txt),
+                                    c_formato_csv,
+                                    c_formato_html),
                                    'Formato de salida no soportado');
   
     l_formato := k_operacion.f_valor_parametro_string(i_parametros,
@@ -566,10 +581,20 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         as_xlsx.query2sheet(l_consulta_sql);
         l_contenido := as_xlsx.finish;
       
-      WHEN c_formato_txt THEN
-        -- TXT
+      WHEN c_formato_csv THEN
+        -- CSV
         csv.generate_clob(l_consulta_sql);
         l_contenido := k_util.clob_to_blob(csv.get_clob);
+      
+      WHEN c_formato_html THEN
+        -- HTML
+        k_util.p_inicializar_html;
+        htp.htmlopen;
+        htp.bodyopen;
+        htp.p('A implementar');
+        htp.bodyclose;
+        htp.htmlclose;
+        l_contenido := k_util.clob_to_blob(k_util.f_html);
       
     END CASE;
   

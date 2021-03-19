@@ -52,7 +52,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
                                    (k_reporte.c_formato_pdf,
                                     k_reporte.c_formato_docx,
                                     k_reporte.c_formato_xlsx,
-                                    k_reporte.c_formato_txt),
+                                    k_reporte.c_formato_csv,
+                                    k_reporte.c_formato_html),
                                    'Formato de salida no soportado');
   
     l_formato := k_operacion.f_valor_parametro_string(i_parametros,
@@ -101,14 +102,24 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         as_xlsx.cell(1, 1, l_version_actual);
         l_contenido := as_xlsx.finish;
       
-      WHEN k_reporte.c_formato_txt THEN
-        -- TXT
+      WHEN k_reporte.c_formato_csv THEN
+        -- CSV
         DECLARE
           l_txt CLOB;
         BEGIN
           l_txt       := l_version_actual;
           l_contenido := k_util.clob_to_blob(l_txt);
         END;
+      
+      WHEN k_reporte.c_formato_html THEN
+        -- HTML
+        k_util.p_inicializar_html;
+        htp.htmlopen;
+        htp.bodyopen;
+        htp.p(l_version_actual);
+        htp.bodyclose;
+        htp.htmlclose;
+        l_contenido := k_util.clob_to_blob(k_util.f_html);
       
       ELSE
         k_servicio.p_respuesta_error(l_rsp,
