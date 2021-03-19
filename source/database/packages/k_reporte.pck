@@ -377,13 +377,18 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         k_util.p_inicializar_html;
         htp.htmlopen;
         htp.headopen;
+        htp.p('<meta charset="utf-8">');
+        htp.meta(NULL, 'author', k_sistema.f_usuario);
+        htp.meta(NULL, 'description', '');
         htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
         htp.headclose;
         htp.bodyopen;
-        htp.header(1, 'Código');
-        htp.p('<p>' || i_respuesta.codigo || '</p>');
-        htp.header(1, 'Mensaje');
-        htp.p('<p>' || i_respuesta.mensaje || '</p>');
+        htp.header(1, k_util.f_escapar_texto('Código'));
+        htp.p('<p>' || k_util.f_escapar_texto(i_respuesta.codigo) ||
+              '</p>');
+        htp.header(1, k_util.f_escapar_texto('Mensaje'));
+        htp.p('<p>' || k_util.f_escapar_texto(i_respuesta.mensaje) ||
+              '</p>');
         htp.bodyclose;
         htp.htmlclose;
         l_archivo.contenido := k_util.clob_to_blob(k_util.f_html);
@@ -631,6 +636,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           k_util.p_inicializar_html;
           htp.htmlopen;
           htp.headopen;
+          htp.p('<meta charset="utf-8">');
+          htp.meta(NULL, 'author', k_sistema.f_usuario);
+          htp.meta(NULL, 'description', '');
           htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
           htp.headclose;
           htp.bodyopen;

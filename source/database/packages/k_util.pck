@@ -82,6 +82,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2;
 
+  FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB;
+
   FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
     DETERMINISTIC;
 
@@ -450,6 +452,37 @@ END;';
     RETURN translate(i_cadena,
                      'áéíóúàèìòùâêîôûäëïöüçãõÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÇÃÕ',
                      'aeiouaeiouaeiouaeioucaoAEIOUAEIOUAEIOUAEIOUCAO');
+  END;
+
+  FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB IS
+    l_tmp CLOB;
+  BEGIN
+    l_tmp := i_texto;
+    --
+    l_tmp := REPLACE(l_tmp, '&', '&' || 'amp;');
+    l_tmp := REPLACE(l_tmp, '''', '&' || 'apos;');
+    l_tmp := REPLACE(l_tmp, '"', '&' || 'quot;');
+    l_tmp := REPLACE(l_tmp, '>', '&' || 'gt;');
+    l_tmp := REPLACE(l_tmp, '<', '&' || 'lt;');
+    --
+    l_tmp := REPLACE(l_tmp, 'Á', '&' || 'Aacute;');
+    l_tmp := REPLACE(l_tmp, 'É', '&' || 'Eacute;');
+    l_tmp := REPLACE(l_tmp, 'Í', '&' || 'Iacute;');
+    l_tmp := REPLACE(l_tmp, 'Ó', '&' || 'Oacute;');
+    l_tmp := REPLACE(l_tmp, 'Ú', '&' || 'Uacute;');
+    l_tmp := REPLACE(l_tmp, 'Ñ', '&' || 'Ntilde;');
+    l_tmp := REPLACE(l_tmp, 'Ü', '&' || 'Uuml;');
+    l_tmp := REPLACE(l_tmp, 'Ç', '&' || 'Ccedil;');
+    --
+    l_tmp := REPLACE(l_tmp, 'á', '&' || 'aacute;');
+    l_tmp := REPLACE(l_tmp, 'é', '&' || 'eacute;');
+    l_tmp := REPLACE(l_tmp, 'í', '&' || 'iacute;');
+    l_tmp := REPLACE(l_tmp, 'ó', '&' || 'oacute;');
+    l_tmp := REPLACE(l_tmp, 'ú', '&' || 'uacute;');
+    l_tmp := REPLACE(l_tmp, 'ñ', '&' || 'ntilde;');
+    l_tmp := REPLACE(l_tmp, 'ü', '&' || 'uuml;');
+    l_tmp := REPLACE(l_tmp, 'ç', '&' || 'ccedil;');
+    RETURN l_tmp;
   END;
 
   FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2

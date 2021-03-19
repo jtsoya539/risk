@@ -61,6 +61,11 @@ Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ESCAPAR_TEXTO">f_escapar_texto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_FORMATEAR_TITULO">f_formatear_titulo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -404,6 +409,15 @@ f_reemplazar_acentos
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_ESCAPAR_TEXTO"></A>
+<P CLASS="TYPE_TITLE">
+f_escapar_texto
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB
 
 </PRE>
 <HR>
