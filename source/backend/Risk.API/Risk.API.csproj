@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Auth" Version="1.49.0" />
+    <PackageReference Include="itext7.pdfhtml" Version="3.0.3" />
     <PackageReference Include="MailKit" Version="2.10.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />

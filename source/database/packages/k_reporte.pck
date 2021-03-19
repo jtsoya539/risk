@@ -376,11 +376,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         -- HTML
         k_util.p_inicializar_html;
         htp.htmlopen;
+        htp.headopen;
+        htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
+        htp.headclose;
         htp.bodyopen;
         htp.header(1, 'Código');
-        htp.p(i_respuesta.codigo);
+        htp.p('<p>' || i_respuesta.codigo || '</p>');
         htp.header(1, 'Mensaje');
-        htp.p(i_respuesta.mensaje);
+        htp.p('<p>' || i_respuesta.mensaje || '</p>');
         htp.bodyclose;
         htp.htmlclose;
         l_archivo.contenido := k_util.clob_to_blob(k_util.f_html);
@@ -627,6 +630,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           --
           k_util.p_inicializar_html;
           htp.htmlopen;
+          htp.headopen;
+          htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
+          htp.headclose;
           htp.bodyopen;
           htp.p(l_table);
           htp.bodyclose;

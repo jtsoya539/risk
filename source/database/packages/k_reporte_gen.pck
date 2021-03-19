@@ -115,8 +115,11 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         -- HTML
         k_util.p_inicializar_html;
         htp.htmlopen;
+        htp.headopen;
+        htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
+        htp.headclose;
         htp.bodyopen;
-        htp.p(l_version_actual);
+        htp.p('<p>' || l_version_actual || '</p>');
         htp.bodyclose;
         htp.htmlclose;
         l_contenido := k_util.clob_to_blob(k_util.f_html);

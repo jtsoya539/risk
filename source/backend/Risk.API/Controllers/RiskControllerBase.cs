@@ -25,7 +25,10 @@ SOFTWARE.
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Mime;
 using System.Web;
+using iText.Html2pdf;
+using iText.Html2pdf.Attach.Impl;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -83,6 +86,20 @@ namespace Risk.API.Controllers
                 using (var webClient = new WebClient())
                 {
                     contenido = webClient.DownloadData(archivo.Url);
+                }
+            }
+
+            if (archivo.Extension.Equals("html") && archivo.TipoMime.Equals(MediaTypeNames.Application.Pdf))
+            {
+                archivo.Extension = "pdf";
+
+                ConverterProperties properties = new ConverterProperties();
+                // properties.SetBaseUri("");
+                properties.SetOutlineHandler(OutlineHandler.CreateStandardHandler());
+                using (var ms = new MemoryStream())
+                {
+                    HtmlConverter.ConvertToPdf(new MemoryStream(contenido), ms, properties);
+                    contenido = ms.ToArray();
                 }
             }
 
