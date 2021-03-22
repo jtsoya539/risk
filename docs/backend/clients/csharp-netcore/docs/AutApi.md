@@ -1,6 +1,6 @@
 # Risk.API.Client.Api.AutApi
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -47,7 +47,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             var apiInstance = new AutApi(config);
             var key = key_example;  // string | Clave para la activación
             var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
@@ -122,7 +122,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -206,7 +206,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -290,7 +290,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -374,7 +374,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -460,7 +460,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -544,7 +544,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -628,7 +628,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -711,7 +711,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -803,7 +803,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -884,7 +884,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -970,7 +970,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1051,7 +1051,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -1135,7 +1135,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1216,7 +1216,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1297,7 +1297,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1378,7 +1378,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure API key authorization: RiskAppKey
             config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -1461,7 +1461,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey

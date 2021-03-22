@@ -1,6 +1,6 @@
 # MsjApi
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -35,7 +35,7 @@ import org.openapitools.client.api.MsjApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -118,7 +118,7 @@ import org.openapitools.client.api.MsjApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -201,7 +201,7 @@ import org.openapitools.client.api.MsjApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -284,7 +284,7 @@ import org.openapitools.client.api.MsjApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -371,7 +371,7 @@ import org.openapitools.client.api.MsjApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -458,7 +458,7 @@ import org.openapitools.client.api.MsjApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");

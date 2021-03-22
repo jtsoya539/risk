@@ -1,6 +1,6 @@
 # GenApi
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -45,7 +45,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -140,7 +140,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -226,7 +226,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -314,7 +314,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -400,7 +400,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -484,7 +484,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -568,7 +568,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -650,7 +650,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -739,7 +739,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -828,7 +828,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -906,7 +906,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -941,7 +941,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **dominio** | **String**| Dominio | [optional]
  **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
@@ -991,7 +991,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -1025,7 +1025,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **riskServiceVersion** | **String**| Versión del Servicio | [optional]
 
 ### Return type
@@ -1074,7 +1074,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -1159,7 +1159,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure HTTP bearer authorization: AccessToken
         HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
@@ -1242,7 +1242,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         // Configure API key authorization: RiskAppKey
         ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
@@ -1319,7 +1319,7 @@ import org.openapitools.client.api.GenApi;
 public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
 
         GenApi apiInstance = new GenApi(defaultClient);
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio

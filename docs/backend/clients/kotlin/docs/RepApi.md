@@ -1,6 +1,6 @@
 # RepApi
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -42,7 +42,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **dominio** | **kotlin.String**| Dominio | [optional]
  **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
@@ -97,7 +97,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Txt]
+ **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
 
 ### Return type

@@ -10,7 +10,9 @@
 
     * `xlsx` (value: `"Xlsx"`)
 
-    * `txt` (value: `"Txt"`)
+    * `csv` (value: `"Csv"`)
+
+    * `html` (value: `"Html"`)
 
 
 

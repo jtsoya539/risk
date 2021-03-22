@@ -11,7 +11,9 @@
 
 * `XLSX` (value: `"Xlsx"`)
 
-* `TXT` (value: `"Txt"`)
+* `CSV` (value: `"Csv"`)
+
+* `HTML` (value: `"Html"`)
 
 
 

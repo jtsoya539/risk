@@ -61,7 +61,7 @@ namespace Example
         {
 
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             var apiInstance = new AutApi(config);
             var key = key_example;  // string | Clave para la activación
             var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
@@ -87,7 +87,7 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

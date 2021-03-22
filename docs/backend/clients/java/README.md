@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-02-24T11:00:39.719-03:00[America/Asuncion]
+- Build date: 2021-03-22T15:59:24.830-03:00[America/Asuncion]
 
 Risk Web API
 
@@ -84,7 +84,7 @@ public class AutApiExample {
 
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:5000");
+        defaultClient.setBasePath("https://localhost:5001");
         
         AutApi apiInstance = new AutApi(defaultClient);
         String key = "key_example"; // String | Clave para la activación
@@ -106,7 +106,7 @@ public class AutApiExample {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

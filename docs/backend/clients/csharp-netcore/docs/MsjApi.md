@@ -1,6 +1,6 @@
 # Risk.API.Client.Api.MsjApi
 
-All URIs are relative to *http://localhost:5000*
+All URIs are relative to *https://localhost:5001*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -35,7 +35,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -119,7 +119,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -203,7 +203,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -287,7 +287,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -375,7 +375,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
@@ -463,7 +463,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost:5000";
+            config.BasePath = "https://localhost:5001";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = "YOUR_BEARER_TOKEN";
             // Configure API key authorization: RiskAppKey
