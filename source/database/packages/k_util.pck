@@ -60,10 +60,12 @@ CREATE OR REPLACE PACKAGE k_util IS
   %param i_separador Caracter separador. Por defecto '~'
   %return Tabla de cadenas
   */
-  FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
-                             i_separador VARCHAR2 DEFAULT '~')
+  FUNCTION f_separar_cadenas(i_cadena    IN VARCHAR2,
+                             i_separador IN VARCHAR2 DEFAULT '~')
     RETURN y_cadenas
     PIPELINED;
+
+  FUNCTION f_clob_to_cadenas(i_clob IN CLOB) RETURN y_cadenas;
 
   /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
@@ -383,13 +385,14 @@ END;';
     END IF;
   END;
 
-  FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
-                             i_separador VARCHAR2 DEFAULT '~')
+  FUNCTION f_separar_cadenas(i_cadena    IN VARCHAR2,
+                             i_separador IN VARCHAR2 DEFAULT '~')
     RETURN y_cadenas
     PIPELINED IS
     l_idx    PLS_INTEGER;
-    l_cadena VARCHAR2(32767) := i_cadena;
+    l_cadena VARCHAR2(32767);
   BEGIN
+    l_cadena := i_cadena;
     LOOP
       l_idx := instr(l_cadena, i_separador);
       IF l_idx > 0 THEN
@@ -401,6 +404,26 @@ END;';
       END IF;
     END LOOP;
     RETURN;
+  END;
+
+  FUNCTION f_clob_to_cadenas(i_clob IN CLOB) RETURN y_cadenas IS
+    l_cadenas y_cadenas;
+    l_length  INTEGER;
+    j         NUMBER := 32767; -- 4000
+    k         NUMBER;
+  BEGIN
+    l_cadenas := NEW y_cadenas();
+  
+    l_length := dbms_lob.getlength(i_clob);
+    IF l_length > 0 THEN
+      k := ceil(l_length / j);
+      l_cadenas.extend(k);
+      FOR i IN 1 .. k LOOP
+        l_cadenas(i) := dbms_lob.substr(i_clob, j, 1 + j * (i - 1));
+      END LOOP;
+    END IF;
+  
+    RETURN l_cadenas;
   END;
 
   FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,

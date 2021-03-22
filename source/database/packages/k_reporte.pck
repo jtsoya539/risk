@@ -598,9 +598,11 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         -- HTML
         DECLARE
           -- https://dba.stackexchange.com/a/6780
-          l_ctx   dbms_xmlgen.ctxhandle;
-          l_xml   xmltype;
-          l_table CLOB;
+          l_ctx     dbms_xmlgen.ctxhandle;
+          l_xml     xmltype;
+          l_table   CLOB;
+          l_cadenas y_cadenas;
+          i         INTEGER;
         BEGIN
           l_ctx := dbms_xmlgen.newcontext(l_consulta_sql);
           dbms_xmlgen.setnullhandling(l_ctx, dbms_xmlgen.empty_tag);
@@ -642,7 +644,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
           htp.headclose;
           htp.bodyopen;
-          htp.p(l_table);
+          --
+          l_cadenas := k_util.f_clob_to_cadenas(l_table);
+          i         := l_cadenas.first;
+          WHILE i IS NOT NULL LOOP
+            htp.prn(l_cadenas(i));
+            i := l_cadenas.next(i);
+          END LOOP;
+          --
           htp.bodyclose;
           htp.htmlclose;
           l_contenido := k_util.clob_to_blob(k_util.f_html);

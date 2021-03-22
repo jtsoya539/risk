@@ -51,6 +51,11 @@ Genera trigger de secuencia para un campo de una tabla
 Retorna una tabla de cadenas delimitadas por un separador
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_CLOB_TO_CADENAS">f_clob_to_cadenas</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_POSICION">f_valor_posicion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
@@ -278,8 +283,8 @@ PROCEDURE p_generar_type_objeto(i_tabla    IN VARCHAR2,
 f_separar_cadenas
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_separar_cadenas(i_cadena    VARCHAR2,
-                           i_separador VARCHAR2 DEFAULT '~')
+FUNCTION f_separar_cadenas(i_cadena    IN VARCHAR2,
+                           i_separador IN VARCHAR2 DEFAULT '~')
   RETURN y_cadenas
 
 </PRE>
@@ -333,6 +338,15 @@ Tabla de cadenas<br>
 </TD></TR>
 </TABLE>
 <BR>
+<HR>
+<A NAME="F_CLOB_TO_CADENAS"></A>
+<P CLASS="TYPE_TITLE">
+f_clob_to_cadenas
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_clob_to_cadenas(i_clob IN CLOB) RETURN y_cadenas
+
+</PRE>
 <HR>
 <A NAME="F_VALOR_POSICION"></A>
 <P CLASS="TYPE_TITLE">
