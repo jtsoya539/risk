@@ -65,7 +65,9 @@ CREATE OR REPLACE PACKAGE k_util IS
     RETURN y_cadenas
     PIPELINED;
 
-  FUNCTION f_clob_to_cadenas(i_clob IN CLOB) RETURN y_cadenas;
+  FUNCTION f_clob_to_cadenas(i_clob          IN CLOB,
+                             i_buffer_length IN NUMBER DEFAULT 32767)
+    RETURN y_cadenas;
 
   /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
@@ -406,20 +408,23 @@ END;';
     RETURN;
   END;
 
-  FUNCTION f_clob_to_cadenas(i_clob IN CLOB) RETURN y_cadenas IS
+  FUNCTION f_clob_to_cadenas(i_clob          IN CLOB,
+                             i_buffer_length IN NUMBER DEFAULT 32767)
+    RETURN y_cadenas IS
     l_cadenas y_cadenas;
     l_length  INTEGER;
-    j         NUMBER := 32767; -- 4000
     k         NUMBER;
   BEGIN
     l_cadenas := NEW y_cadenas();
   
     l_length := dbms_lob.getlength(i_clob);
-    IF l_length > 0 THEN
-      k := ceil(l_length / j);
+    IF l_length > 0 AND i_buffer_length > 0 THEN
+      k := ceil(l_length / i_buffer_length);
       l_cadenas.extend(k);
       FOR i IN 1 .. k LOOP
-        l_cadenas(i) := dbms_lob.substr(i_clob, j, 1 + j * (i - 1));
+        l_cadenas(i) := dbms_lob.substr(i_clob,
+                                        i_buffer_length,
+                                        1 + i_buffer_length * (i - 1));
       END LOOP;
     END IF;
   
@@ -663,7 +668,10 @@ END;';
 
   PROCEDURE p_inicializar_html IS
   BEGIN
-    owa.init_cgi_env(NEW owa.vc_arr());
+    -- owa.init_cgi_env(NEW owa.vc_arr());
+    owa.num_cgi_vars := 0;
+    -- https://forums.allroundautomations.com/ubb/ubbthreads.php?ubb=showflat&Number=60068
+    htp.htbuf_len := floor(255 / 4);
     htp.init;
     htp.adddefaulthtmlhdr(FALSE);
   END;

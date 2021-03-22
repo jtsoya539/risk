@@ -344,7 +344,9 @@ Tabla de cadenas<br>
 f_clob_to_cadenas
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_clob_to_cadenas(i_clob IN CLOB) RETURN y_cadenas
+FUNCTION f_clob_to_cadenas(i_clob          IN CLOB,
+                           i_buffer_length IN NUMBER DEFAULT 32767)
+  RETURN y_cadenas
 
 </PRE>
 <HR>
