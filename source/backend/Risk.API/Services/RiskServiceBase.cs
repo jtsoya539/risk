@@ -171,7 +171,7 @@ namespace Risk.API.Services
                             cmd.ExecuteNonQuery();
 
                             result = (OracleClob)cmd.Parameters["result"].Value;
-                            respuesta = result.Value;
+                            respuesta = EncodingHelper.ConvertToUTF8(result.Value, _configuration["OracleConfiguration:CharacterSet"]);
                             _logger.LogDebug("El SP [{0}] retornó [{1}]", cmd.CommandText, respuesta);
 
                             result.Dispose();

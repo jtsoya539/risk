@@ -80,6 +80,10 @@ namespace Risk.API.Controllers
             if (archivo.Contenido != null)
             {
                 contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
+                if (archivo.TipoMime.Contains("text/", StringComparison.OrdinalIgnoreCase))
+                {
+                    contenido = EncodingHelper.ConvertToUTF8(contenido, _configuration["OracleConfiguration:CharacterSet"]);
+                }
             }
             else if (archivo.Url != null)
             {
@@ -89,18 +93,12 @@ namespace Risk.API.Controllers
                 }
             }
 
-            if (archivo.Extension.Equals("html") && archivo.TipoMime.Equals(MediaTypeNames.Application.Pdf))
+            if (archivo.Extension.Equals(RiskConstants.FORMATO_HTML, StringComparison.OrdinalIgnoreCase) &&
+                archivo.TipoMime.Equals(MediaTypeNames.Application.Pdf))
             {
-                archivo.Extension = "pdf";
-
-                ConverterProperties properties = new ConverterProperties();
-                // properties.SetBaseUri("");
-                properties.SetOutlineHandler(OutlineHandler.CreateStandardHandler());
-                using (var ms = new MemoryStream())
-                {
-                    HtmlConverter.ConvertToPdf(new MemoryStream(contenido), ms, properties);
-                    contenido = ms.ToArray();
-                }
+                contenido = PdfHelper.ConvertToPdf(contenido);
+                archivo.Extension = RiskConstants.FORMATO_PDF.ToLower();
+                archivo.TipoMime = MediaTypeNames.Application.Pdf;
             }
 
             return File(contenido, archivo.TipoMime, string.Concat(archivo.Nombre, ".", archivo.Extension));

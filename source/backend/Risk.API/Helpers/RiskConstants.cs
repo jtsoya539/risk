@@ -47,5 +47,12 @@ namespace Risk.API.Helpers
         public const string HEADER_RISK_APP_KEY = "Risk-App-Key";
         public const string HEADER_AUTHORIZATION = "Authorization";
         public const string HEADER_RISK_SERVICE_VERSION = "Risk-Service-Version";
+
+        // Formatos de salida de reportes
+        public const string FORMATO_PDF = "PDF";
+        public const string FORMATO_DOCX = "DOCX";
+        public const string FORMATO_XLSX = "XLSX";
+        public const string FORMATO_CSV = "CSV";
+        public const string FORMATO_HTML = "HTML";
     }
 }
