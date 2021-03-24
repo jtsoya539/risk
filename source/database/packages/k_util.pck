@@ -136,6 +136,8 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_esquema_actual RETURN VARCHAR2;
 
+  FUNCTION f_charset RETURN VARCHAR2;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_util IS
@@ -817,6 +819,21 @@ END;'
   FUNCTION f_esquema_actual RETURN VARCHAR2 IS
   BEGIN
     RETURN sys_context('USERENV', 'CURRENT_SCHEMA');
+  END;
+
+  FUNCTION f_charset RETURN VARCHAR2 IS
+    l_characterset nls_database_parameters.value%TYPE;
+  BEGIN
+    BEGIN
+      SELECT VALUE
+        INTO l_characterset
+        FROM nls_database_parameters
+       WHERE parameter = 'NLS_CHARACTERSET';
+    EXCEPTION
+      WHEN OTHERS THEN
+        l_characterset := NULL;
+    END;
+    RETURN utl_i18n.map_charset(l_characterset);
   END;
 
 END;
