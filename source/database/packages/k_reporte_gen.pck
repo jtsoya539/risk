@@ -113,7 +113,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
       
       WHEN k_reporte.c_formato_html THEN
         -- HTML
-        k_util.p_inicializar_html;
+        k_html.p_inicializar;
         htp.htmlopen;
         htp.headopen;
         htp.p('<meta charset="utf-8">');
@@ -122,10 +122,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
         htp.headclose;
         htp.bodyopen;
-        htp.p('<p>' || k_util.f_escapar_texto(l_version_actual) || '</p>');
+        htp.p('<p>' || k_html.f_escapar_texto(l_version_actual) || '</p>');
         htp.bodyclose;
         htp.htmlclose;
-        l_contenido := k_util.clob_to_blob(k_util.f_html);
+        l_contenido := k_util.clob_to_blob(k_html.f_html);
       
       ELSE
         k_servicio.p_respuesta_error(l_rsp,

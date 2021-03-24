@@ -65,10 +65,6 @@ CREATE OR REPLACE PACKAGE k_util IS
     RETURN y_cadenas
     PIPELINED;
 
-  FUNCTION f_clob_to_cadenas(i_clob          IN CLOB,
-                             i_buffer_length IN NUMBER DEFAULT 32767)
-    RETURN y_cadenas;
-
   /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
   Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
@@ -85,8 +81,6 @@ CREATE OR REPLACE PACKAGE k_util IS
     RETURN VARCHAR2;
 
   FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2;
-
-  FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB;
 
   FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
     DETERMINISTIC;
@@ -112,10 +106,6 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_hash(i_data      IN VARCHAR2,
                   i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC;
-
-  PROCEDURE p_inicializar_html;
-
-  FUNCTION f_html RETURN CLOB;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2;
 
@@ -408,29 +398,6 @@ END;';
     RETURN;
   END;
 
-  FUNCTION f_clob_to_cadenas(i_clob          IN CLOB,
-                             i_buffer_length IN NUMBER DEFAULT 32767)
-    RETURN y_cadenas IS
-    l_cadenas y_cadenas;
-    l_length  INTEGER;
-    k         NUMBER;
-  BEGIN
-    l_cadenas := NEW y_cadenas();
-  
-    l_length := dbms_lob.getlength(i_clob);
-    IF l_length > 0 AND i_buffer_length > 0 THEN
-      k := ceil(l_length / i_buffer_length);
-      l_cadenas.extend(k);
-      FOR i IN 1 .. k LOOP
-        l_cadenas(i) := dbms_lob.substr(i_clob,
-                                        i_buffer_length,
-                                        1 + i_buffer_length * (i - 1));
-      END LOOP;
-    END IF;
-  
-    RETURN l_cadenas;
-  END;
-
   FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,
                             i_posicion  IN NUMBER,
                             i_separador IN VARCHAR2 DEFAULT '~')
@@ -480,37 +447,6 @@ END;';
     RETURN translate(i_cadena,
                      'áéíóúàèìòùâêîôûäëïöüçãõÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÄËÏÖÜÇÃÕ',
                      'aeiouaeiouaeiouaeioucaoAEIOUAEIOUAEIOUAEIOUCAO');
-  END;
-
-  FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB IS
-    l_tmp CLOB;
-  BEGIN
-    l_tmp := i_texto;
-    --
-    l_tmp := REPLACE(l_tmp, '&', '&' || 'amp;');
-    l_tmp := REPLACE(l_tmp, '''', '&' || 'apos;');
-    l_tmp := REPLACE(l_tmp, '"', '&' || 'quot;');
-    l_tmp := REPLACE(l_tmp, '>', '&' || 'gt;');
-    l_tmp := REPLACE(l_tmp, '<', '&' || 'lt;');
-    --
-    l_tmp := REPLACE(l_tmp, 'Á', '&' || 'Aacute;');
-    l_tmp := REPLACE(l_tmp, 'É', '&' || 'Eacute;');
-    l_tmp := REPLACE(l_tmp, 'Í', '&' || 'Iacute;');
-    l_tmp := REPLACE(l_tmp, 'Ó', '&' || 'Oacute;');
-    l_tmp := REPLACE(l_tmp, 'Ú', '&' || 'Uacute;');
-    l_tmp := REPLACE(l_tmp, 'Ñ', '&' || 'Ntilde;');
-    l_tmp := REPLACE(l_tmp, 'Ü', '&' || 'Uuml;');
-    l_tmp := REPLACE(l_tmp, 'Ç', '&' || 'Ccedil;');
-    --
-    l_tmp := REPLACE(l_tmp, 'á', '&' || 'aacute;');
-    l_tmp := REPLACE(l_tmp, 'é', '&' || 'eacute;');
-    l_tmp := REPLACE(l_tmp, 'í', '&' || 'iacute;');
-    l_tmp := REPLACE(l_tmp, 'ó', '&' || 'oacute;');
-    l_tmp := REPLACE(l_tmp, 'ú', '&' || 'uacute;');
-    l_tmp := REPLACE(l_tmp, 'ñ', '&' || 'ntilde;');
-    l_tmp := REPLACE(l_tmp, 'ü', '&' || 'uuml;');
-    l_tmp := REPLACE(l_tmp, 'ç', '&' || 'ccedil;');
-    RETURN l_tmp;
   END;
 
   FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
@@ -664,33 +600,6 @@ END;';
   BEGIN
     RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
                                              i_hash_type)));
-  END;
-
-  PROCEDURE p_inicializar_html IS
-  BEGIN
-    -- owa.init_cgi_env(NEW owa.vc_arr());
-    owa.num_cgi_vars := 0;
-    -- https://forums.allroundautomations.com/ubb/ubbthreads.php?ubb=showflat&Number=60068
-    htp.htbuf_len := floor(255 / 4);
-    htp.init;
-    htp.adddefaulthtmlhdr(FALSE);
-  END;
-
-  FUNCTION f_html RETURN CLOB IS
-    l_html CLOB;
-    l_page htp.htbuf_arr;
-    l_rows INTEGER := 999999;
-    i      BINARY_INTEGER;
-  BEGIN
-    htp.get_page(l_page, l_rows);
-  
-    i := l_page.first;
-    WHILE i IS NOT NULL LOOP
-      l_html := l_html || l_page(i);
-      i      := l_page.next(i);
-    END LOOP;
-  
-    RETURN l_html;
   END;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2 IS

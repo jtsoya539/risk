@@ -141,6 +141,7 @@ plugin plsqldoc generate k_autorizacion;
 plugin plsqldoc generate k_dato;
 plugin plsqldoc generate k_dispositivo;
 plugin plsqldoc generate k_error;
+plugin plsqldoc generate k_html;
 plugin plsqldoc generate k_mensajeria;
 plugin plsqldoc generate k_operacion;
 plugin plsqldoc generate k_reporte;

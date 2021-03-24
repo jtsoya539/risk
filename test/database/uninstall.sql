@@ -63,6 +63,7 @@ drop package test_k_autorizacion;
 drop package test_k_dato;
 drop package test_k_dispositivo;
 drop package test_k_error;
+drop package test_k_html;
 drop package test_k_mensajeria;
 drop package test_k_operacion;
 drop package test_k_reporte;

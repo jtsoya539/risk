@@ -51,22 +51,12 @@ Genera trigger de secuencia para un campo de una tabla
 Retorna una tabla de cadenas delimitadas por un separador
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_CLOB_TO_CADENAS">f_clob_to_cadenas</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_POSICION">f_valor_posicion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REEMPLAZAR_ACENTOS">f_reemplazar_acentos</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_ESCAPAR_TEXTO">f_escapar_texto</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -97,16 +87,6 @@ Retorna el significado de un codigo dentro de un dominio
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_HASH">f_hash</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_INICIALIZAR_HTML">p_inicializar_html</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_HTML">f_html</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -339,17 +319,6 @@ Tabla de cadenas<br>
 </TABLE>
 <BR>
 <HR>
-<A NAME="F_CLOB_TO_CADENAS"></A>
-<P CLASS="TYPE_TITLE">
-f_clob_to_cadenas
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_clob_to_cadenas(i_clob          IN CLOB,
-                           i_buffer_length IN NUMBER DEFAULT 32767)
-  RETURN y_cadenas
-
-</PRE>
-<HR>
 <A NAME="F_VALOR_POSICION"></A>
 <P CLASS="TYPE_TITLE">
 f_valor_posicion
@@ -425,15 +394,6 @@ f_reemplazar_acentos
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2
-
-</PRE>
-<HR>
-<A NAME="F_ESCAPAR_TEXTO"></A>
-<P CLASS="TYPE_TITLE">
-f_escapar_texto
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB
 
 </PRE>
 <HR>
@@ -542,24 +502,6 @@ f_hash
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_hash(i_data      IN VARCHAR2,
                 i_hash_type IN PLS_INTEGER) RETURN VARCHAR2
-
-</PRE>
-<HR>
-<A NAME="P_INICIALIZAR_HTML"></A>
-<P CLASS="TYPE_TITLE">
-p_inicializar_html
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_inicializar_html
-
-</PRE>
-<HR>
-<A NAME="F_HTML"></A>
-<P CLASS="TYPE_TITLE">
-f_html
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_html RETURN CLOB
 
 </PRE>
 <HR>

@@ -64,6 +64,7 @@ prompt
 @@packages/test_k_dato.pck
 @@packages/test_k_dispositivo.pck
 @@packages/test_k_error.pck
+@@packages/test_k_html.pck
 @@packages/test_k_mensajeria.pck
 @@packages/test_k_operacion.pck
 @@packages/test_k_reporte.pck

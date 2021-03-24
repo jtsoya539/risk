@@ -374,7 +374,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       
       WHEN c_formato_html THEN
         -- HTML
-        k_util.p_inicializar_html;
+        k_html.p_inicializar;
         htp.htmlopen;
         htp.headopen;
         htp.p('<meta charset="utf-8">');
@@ -383,15 +383,15 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
         htp.headclose;
         htp.bodyopen;
-        htp.header(1, k_util.f_escapar_texto('Código'));
-        htp.p('<p>' || k_util.f_escapar_texto(i_respuesta.codigo) ||
+        htp.header(1, k_html.f_escapar_texto('Código'));
+        htp.p('<p>' || k_html.f_escapar_texto(i_respuesta.codigo) ||
               '</p>');
-        htp.header(1, k_util.f_escapar_texto('Mensaje'));
-        htp.p('<p>' || k_util.f_escapar_texto(i_respuesta.mensaje) ||
+        htp.header(1, k_html.f_escapar_texto('Mensaje'));
+        htp.p('<p>' || k_html.f_escapar_texto(i_respuesta.mensaje) ||
               '</p>');
         htp.bodyclose;
         htp.htmlclose;
-        l_archivo.contenido := k_util.clob_to_blob(k_util.f_html);
+        l_archivo.contenido := k_util.clob_to_blob(k_html.f_html);
       
       ELSE
         raise_application_error(-20000, 'Formato de salida no soportado');
@@ -598,11 +598,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         -- HTML
         DECLARE
           -- https://dba.stackexchange.com/a/6780
-          l_ctx     dbms_xmlgen.ctxhandle;
-          l_xml     xmltype;
-          l_table   CLOB;
-          l_cadenas y_cadenas;
-          i         INTEGER;
+          l_ctx   dbms_xmlgen.ctxhandle;
+          l_xml   xmltype;
+          l_table CLOB;
         BEGIN
           l_ctx := dbms_xmlgen.newcontext(l_consulta_sql);
           dbms_xmlgen.setnullhandling(l_ctx, dbms_xmlgen.empty_tag);
@@ -635,7 +633,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         
           dbms_xmlgen.closecontext(l_ctx);
           --
-          k_util.p_inicializar_html;
+          k_html.p_inicializar;
           htp.htmlopen;
           htp.headopen;
           htp.p('<meta charset="utf-8">');
@@ -645,16 +643,11 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           htp.headclose;
           htp.bodyopen;
           --
-          l_cadenas := k_util.f_clob_to_cadenas(l_table);
-          i         := l_cadenas.first;
-          WHILE i IS NOT NULL LOOP
-            htp.prn(l_cadenas(i));
-            i := l_cadenas.next(i);
-          END LOOP;
+          k_html.p_print(l_table);
           --
           htp.bodyclose;
           htp.htmlclose;
-          l_contenido := k_util.clob_to_blob(k_util.f_html);
+          l_contenido := k_util.clob_to_blob(k_html.f_html);
         END;
       
     END CASE;
