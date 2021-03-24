@@ -54,5 +54,9 @@ namespace Risk.API.Helpers
         public const string FORMATO_XLSX = "XLSX";
         public const string FORMATO_CSV = "CSV";
         public const string FORMATO_HTML = "HTML";
+
+        // Orientaciones de reportes
+        public const string ORIENTACION_VERTICAL = "PORTRAIT";
+        public const string ORIENTACION_HORIZONTAL = "LANDSCAPE";
     }
 }

@@ -94,7 +94,7 @@ namespace Risk.API.Controllers
             }
 
             if (archivo.Extension.Equals(RiskConstants.FORMATO_HTML, StringComparison.OrdinalIgnoreCase) &&
-                archivo.TipoMime.Equals(MediaTypeNames.Application.Pdf))
+                HtmlHelper.ObtenerMetaContent(contenido, "risk:format").Equals(RiskConstants.FORMATO_PDF, StringComparison.OrdinalIgnoreCase))
             {
                 contenido = PdfHelper.ConvertToPdf(contenido);
                 archivo.Extension = RiskConstants.FORMATO_PDF.ToLower();

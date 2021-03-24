@@ -24,42 +24,32 @@ SOFTWARE.
 
 using System;
 using System.IO;
-using iText.Html2pdf;
-using iText.Html2pdf.Attach.Impl;
-using iText.Kernel.Geom;
-using iText.Kernel.Pdf;
-using iText.Layout;
+using HtmlAgilityPack;
 
 namespace Risk.API.Helpers
 {
-    public static class PdfHelper
+    public static class HtmlHelper
     {
-        public static byte[] ConvertToPdf(byte[] data)
+        public static string ObtenerMetaContent(byte[] html, string metaName)
         {
-            byte[] resultado = data;
+            string content = string.Empty;
 
-            using (var ms = new MemoryStream())
+            if (html != null && !string.IsNullOrEmpty(metaName))
             {
-                ConverterProperties properties = new ConverterProperties();
-                // properties.SetBaseUri("");
-                properties.SetOutlineHandler(OutlineHandler.CreateStandardHandler());
+                var doc = new HtmlDocument();
+                doc.Load(new MemoryStream(html));
 
-                PdfDocument pdf = new PdfDocument(new PdfWriter(ms));
-
-                PageSize size = PageSize.A4;
-                if (HtmlHelper.ObtenerMetaContent(data, "risk:page_orientation").Equals(RiskConstants.ORIENTACION_HORIZONTAL, StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    size = size.Rotate();
+                    content = doc.DocumentNode.SelectSingleNode($"/html/head/meta[@name='{metaName}']").Attributes["content"].Value;
                 }
-
-                pdf.SetDefaultPageSize(size);
-                Document document = HtmlConverter.ConvertToDocument(new MemoryStream(data), pdf, properties);
-                document.Close();
-
-                resultado = ms.ToArray();
+                catch (Exception)
+                {
+                    content = string.Empty;
+                }
             }
 
-            return resultado;
+            return content;
         }
     }
 }
