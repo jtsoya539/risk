@@ -34,7 +34,7 @@ CREATE OR REPLACE PACKAGE k_html IS
 
   FUNCTION f_html RETURN CLOB;
 
-  PROCEDURE p_inicializar;
+  PROCEDURE p_inicializar(i_doctype IN BOOLEAN DEFAULT TRUE);
 
   PROCEDURE p_print(i_clob IN CLOB);
 
@@ -114,13 +114,17 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
     RETURN l_html;
   END;
 
-  PROCEDURE p_inicializar IS
+  PROCEDURE p_inicializar(i_doctype IN BOOLEAN DEFAULT TRUE) IS
   BEGIN
     owa.num_cgi_vars := 0;
     -- https://forums.allroundautomations.com/ubb/ubbthreads.php?ubb=showflat&Number=60068
     htp.htbuf_len := floor(255 / c_charset_bytes);
     htp.init;
     htp.adddefaulthtmlhdr(FALSE);
+  
+    IF i_doctype THEN
+      htp.p('<!DOCTYPE html>');
+    END IF;
   END;
 
   PROCEDURE p_print(i_clob IN CLOB) IS
