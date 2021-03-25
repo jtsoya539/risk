@@ -41,6 +41,11 @@ CREATE OR REPLACE PACKAGE k_reporte IS
   c_orientacion_vertical   CONSTANT VARCHAR2(10) := 'PORTRAIT';
   c_orientacion_horizontal CONSTANT VARCHAR2(10) := 'LANDSCAPE';
 
+  -- Nombres de metadatos para conversión de reportes HTML a PDF
+  c_meta_format           CONSTANT VARCHAR2(30) := 'risk:format';
+  c_meta_page_size        CONSTANT VARCHAR2(30) := 'risk:page_size';
+  c_meta_page_orientation CONSTANT VARCHAR2(30) := 'risk:page_orientation';
+
   PROCEDURE p_limpiar_historial;
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
@@ -382,9 +387,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         htp.htmlopen;
         htp.headopen;
         htp.p('<meta charset="utf-8">');
-        htp.meta(NULL, 'risk:format', c_formato_pdf);
-        htp.meta(NULL, 'risk:page_format', '');
-        htp.meta(NULL, 'risk:page_orientation', c_orientacion_vertical);
+        htp.meta(NULL, c_meta_format, c_formato_pdf);
+        htp.meta(NULL, c_meta_page_size, 'A4');
+        htp.meta(NULL, c_meta_page_orientation, c_orientacion_vertical);
         htp.meta(NULL, 'author', k_sistema.f_usuario);
         htp.meta(NULL, 'description', '');
         htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));
@@ -644,9 +649,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           htp.htmlopen;
           htp.headopen;
           htp.p('<meta charset="utf-8">');
-          htp.meta(NULL, 'risk:format', c_formato_pdf);
-          htp.meta(NULL, 'risk:page_format', '');
-          htp.meta(NULL, 'risk:page_orientation', c_orientacion_horizontal);
+          htp.meta(NULL, c_meta_format, c_formato_pdf);
+          htp.meta(NULL, c_meta_page_size, 'A4');
+          htp.meta(NULL, c_meta_page_orientation, c_orientacion_horizontal);
           htp.meta(NULL, 'author', k_sistema.f_usuario);
           htp.meta(NULL, 'description', '');
           htp.title(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion));

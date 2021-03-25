@@ -27,8 +27,6 @@ using System.IO;
 using System.Net;
 using System.Net.Mime;
 using System.Web;
-using iText.Html2pdf;
-using iText.Html2pdf.Attach.Impl;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -94,7 +92,7 @@ namespace Risk.API.Controllers
             }
 
             if (archivo.Extension.Equals(RiskConstants.FORMATO_HTML, StringComparison.OrdinalIgnoreCase) &&
-                HtmlHelper.ObtenerMetaContent(contenido, "risk:format").Equals(RiskConstants.FORMATO_PDF, StringComparison.OrdinalIgnoreCase))
+                HtmlHelper.ObtenerMetaContent(contenido, RiskConstants.META_FORMAT).Equals(RiskConstants.FORMATO_PDF, StringComparison.OrdinalIgnoreCase))
             {
                 contenido = PdfHelper.ConvertToPdf(contenido);
                 archivo.Extension = RiskConstants.FORMATO_PDF.ToLower();

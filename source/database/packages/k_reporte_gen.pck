@@ -117,10 +117,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         htp.htmlopen;
         htp.headopen;
         htp.p('<meta charset="utf-8">');
-        htp.meta(NULL, 'risk:format', k_reporte.c_formato_pdf);
-        htp.meta(NULL, 'risk:page_format', '');
+        htp.meta(NULL, k_reporte.c_meta_format, k_reporte.c_formato_pdf);
+        htp.meta(NULL, k_reporte.c_meta_page_size, 'A4');
         htp.meta(NULL,
-                 'risk:page_orientation',
+                 k_reporte.c_meta_page_orientation,
                  k_reporte.c_orientacion_vertical);
         htp.meta(NULL, 'author', k_sistema.f_usuario);
         htp.meta(NULL, 'description', '');

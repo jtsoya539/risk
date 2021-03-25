@@ -58,5 +58,10 @@ namespace Risk.API.Helpers
         // Orientaciones de reportes
         public const string ORIENTACION_VERTICAL = "PORTRAIT";
         public const string ORIENTACION_HORIZONTAL = "LANDSCAPE";
+
+        // Nombres de metadatos para conversión de reportes HTML a PDF
+        public const string META_FORMAT = "risk:format";
+        public const string META_PAGE_SIZE = "risk:page_size";
+        public const string META_PAGE_ORIENTATION = "risk:page_orientation";
     }
 }

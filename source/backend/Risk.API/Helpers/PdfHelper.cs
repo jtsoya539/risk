@@ -34,9 +34,9 @@ namespace Risk.API.Helpers
 {
     public static class PdfHelper
     {
-        public static byte[] ConvertToPdf(byte[] data)
+        public static byte[] ConvertToPdf(byte[] html)
         {
-            byte[] resultado = data;
+            byte[] pdf = null;
 
             using (var ms = new MemoryStream())
             {
@@ -44,22 +44,52 @@ namespace Risk.API.Helpers
                 // properties.SetBaseUri("");
                 properties.SetOutlineHandler(OutlineHandler.CreateStandardHandler());
 
-                PdfDocument pdf = new PdfDocument(new PdfWriter(ms));
+                PdfDocument pdfDocument = new PdfDocument(new PdfWriter(ms));
+                PageSize pageSize = PageSize.Default;
 
-                PageSize size = PageSize.A4;
-                if (HtmlHelper.ObtenerMetaContent(data, "risk:page_orientation").Equals(RiskConstants.ORIENTACION_HORIZONTAL, StringComparison.OrdinalIgnoreCase))
+                string metaPageSize = HtmlHelper.ObtenerMetaContent(html, RiskConstants.META_PAGE_SIZE);
+                switch (metaPageSize.ToUpper())
                 {
-                    size = size.Rotate();
+                    case "A3":
+                        pageSize = PageSize.A3;
+                        break;
+                    case "A4":
+                        pageSize = PageSize.A4;
+                        break;
+                    case "A5":
+                        pageSize = PageSize.A5;
+                        break;
+                    case "A6":
+                        pageSize = PageSize.A6;
+                        break;
+                    case "LEGAL":
+                        pageSize = PageSize.LEGAL;
+                        break;
+                    case "LETTER":
+                        pageSize = PageSize.LETTER;
+                        break;
+                    case "EXECUTIVE":
+                        pageSize = PageSize.EXECUTIVE;
+                        break;
+                    default:
+                        pageSize = PageSize.Default;
+                        break;
                 }
 
-                pdf.SetDefaultPageSize(size);
-                Document document = HtmlConverter.ConvertToDocument(new MemoryStream(data), pdf, properties);
+                string metaPageOrientation = HtmlHelper.ObtenerMetaContent(html, RiskConstants.META_PAGE_ORIENTATION);
+                if (metaPageOrientation.Equals(RiskConstants.ORIENTACION_HORIZONTAL, StringComparison.OrdinalIgnoreCase))
+                {
+                    pageSize = pageSize.Rotate();
+                }
+
+                pdfDocument.SetDefaultPageSize(pageSize);
+                Document document = HtmlConverter.ConvertToDocument(new MemoryStream(html), pdfDocument, properties);
                 document.Close();
 
-                resultado = ms.ToArray();
+                pdf = ms.ToArray();
             }
 
-            return resultado;
+            return pdf;
         }
     }
 }
