@@ -316,4 +316,10 @@ values ('EXTENSION_REPORTE', 'HTML', 'REPORTE HTML', 'text/html', 'S');
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_REPORTE', 'CSV', 'REPORTE CSV', 'text/csv', 'S');
 
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_FUENTE', 'WOFF', 'FUENTE WEB OPEN FONT FORMAT', 'font/woff', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('EXTENSION_FUENTE', 'WOFF2', 'FUENTE WEB OPEN FONT FORMAT 2', 'font/woff2', 'S');
+
 prompt Done.

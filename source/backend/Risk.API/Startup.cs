@@ -230,7 +230,7 @@ namespace Risk.API
                 c.SwaggerEndpoint($"/swagger/{Configuration["SwaggerConfiguration:Version"]}/swagger.json",
                                   $"{Configuration["SwaggerConfiguration:Title"]} {Configuration["SwaggerConfiguration:Version"]}");
                 c.DocExpansion(DocExpansion.None);
-                c.InjectStylesheet("/swagger-ui/custom.css");
+                c.InjectStylesheet("/css/swagger-ui.css");
             });
 
             app.UseRouting();
