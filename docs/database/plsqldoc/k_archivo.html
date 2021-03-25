@@ -60,6 +60,11 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DATA_URL">f_data_url</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Constants"></A>
@@ -163,6 +168,18 @@ f_version_archivo
 FUNCTION f_version_archivo(i_tabla      IN VARCHAR2,
                            i_campo      IN VARCHAR2,
                            i_referencia IN VARCHAR2) RETURN NUMBER
+
+</PRE>
+<HR>
+<A NAME="F_DATA_URL"></A>
+<P CLASS="TYPE_TITLE">
+f_data_url
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_data_url(i_tabla      IN VARCHAR2,
+                    i_campo      IN VARCHAR2,
+                    i_referencia IN VARCHAR2,
+                    i_version    IN VARCHAR2 DEFAULT NULL) RETURN CLOB
 
 </PRE>
 <P>&nbsp;</P>

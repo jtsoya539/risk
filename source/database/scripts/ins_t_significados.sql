@@ -1,7 +1,6 @@
 prompt Importing table t_significados...
 set feedback off
 set define off
-
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('POLITICA_VALIDACION_CLAVE_ACCESO', 'LONGITUD_MINIMA', '8', 'A', 'S');
 
@@ -222,10 +221,10 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_SERVICIO', 'C', 'CONSULTA', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TRUETYPE', null, 'S');
+values ('EXTENSION_FUENTE', 'TTF', 'FUENTE TRUETYPE', 'font/ttf', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('EXTENSION_FUENTE', 'OTF', 'FUENTE OPENTYPE', null, 'S');
+values ('EXTENSION_FUENTE', 'OTF', 'FUENTE OPENTYPE', 'font/otf', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('EXTENSION_IMAGEN', 'JPG', 'IMAGEN JPG', 'image/jpeg', 'S');

@@ -137,6 +137,8 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
       htp.prn(l_htbuf_arr(i));
       i := l_htbuf_arr.next(i);
     END LOOP;
+    -- Agrega un salto de línea
+    htp.p;
   END;
 
 END;

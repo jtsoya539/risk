@@ -57,6 +57,11 @@ CREATE OR REPLACE PACKAGE k_archivo IS
                              i_campo      IN VARCHAR2,
                              i_referencia IN VARCHAR2) RETURN NUMBER;
 
+  FUNCTION f_data_url(i_tabla      IN VARCHAR2,
+                      i_campo      IN VARCHAR2,
+                      i_referencia IN VARCHAR2,
+                      i_version    IN VARCHAR2 DEFAULT NULL) RETURN CLOB;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_archivo IS
@@ -188,6 +193,32 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
   EXCEPTION
     WHEN OTHERS THEN
       RETURN NULL;
+  END;
+
+  -- https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+  FUNCTION f_data_url(i_tabla      IN VARCHAR2,
+                      i_campo      IN VARCHAR2,
+                      i_referencia IN VARCHAR2,
+                      i_version    IN VARCHAR2 DEFAULT NULL) RETURN CLOB IS
+    l_data_url CLOB;
+    l_base64   CLOB;
+    l_archivo  y_archivo;
+  BEGIN
+    -- Recupera el archivo
+    l_archivo := f_recuperar_archivo(i_tabla,
+                                     i_campo,
+                                     i_referencia,
+                                     i_version);
+  
+    -- Codifica en formato Base64
+    l_base64 := k_util.base64encode(l_archivo.contenido);
+    -- Elimina caracteres de nueva línea
+    l_base64 := REPLACE(l_base64, utl_tcp.crlf);
+  
+    l_data_url := 'data:' || l_archivo.tipo_mime || ';charset=' ||
+                  k_util.f_charset || ';base64,' || l_base64;
+  
+    RETURN l_data_url;
   END;
 
 END;
