@@ -30,6 +30,8 @@ CREATE OR REPLACE PACKAGE k_html IS
   -------------------------------------------------------------------------------
   */
 
+  FUNCTION f_query2table(i_query IN CLOB) RETURN CLOB;
+
   FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB;
 
   FUNCTION f_html RETURN CLOB;
@@ -64,6 +66,49 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
     END IF;
   
     RETURN l_htbuf_arr;
+  END;
+
+  -- https://dba.stackexchange.com/a/6780
+  -- https://stackoverflow.com/a/7755800
+  FUNCTION f_query2table(i_query IN CLOB) RETURN CLOB IS
+    l_table     CLOB;
+    l_ctx       dbms_xmlgen.ctxhandle;
+    l_xml_query xmltype;
+    l_xml_table xmltype;
+  BEGIN
+    l_ctx := dbms_xmlgen.newcontext(i_query);
+    dbms_xmlgen.setnullhandling(l_ctx, dbms_xmlgen.empty_tag);
+    dbms_xmlgen.setprettyprinting(l_ctx, FALSE);
+    l_xml_query := dbms_xmlgen.getxmltype(l_ctx);
+  
+    IF dbms_xmlgen.getnumrowsprocessed(l_ctx) > 0 AND
+       l_xml_query IS NOT NULL THEN
+      l_xml_table := l_xml_query.transform(xmltype('<?xml version="1.0" encoding="UTF-8"?>
+  <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output method="html"/>
+  <xsl:template match="/">
+    <table border="1" cellspacing="0">
+      <tr bgcolor="lightgray">
+        <xsl:for-each select="/ROWSET/ROW[1]/*">
+          <th><xsl:value-of select="name()"/></th>
+        </xsl:for-each>
+      </tr>
+      <xsl:for-each select="/ROWSET/*">
+        <tr>
+          <xsl:for-each select="./*">
+            <td><xsl:value-of select="text()"/></td>
+          </xsl:for-each>
+        </tr>
+      </xsl:for-each>
+    </table>
+  </xsl:template>
+  </xsl:stylesheet>'));
+      l_table     := l_xml_table.getclobval;
+    END IF;
+  
+    dbms_xmlgen.closecontext(l_ctx);
+  
+    RETURN l_table;
   END;
 
   FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB IS

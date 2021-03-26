@@ -609,41 +609,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       WHEN c_formato_html THEN
         -- HTML
         DECLARE
-          -- https://dba.stackexchange.com/a/6780
-          l_ctx   dbms_xmlgen.ctxhandle;
-          l_xml   xmltype;
           l_table CLOB;
         BEGIN
-          l_ctx := dbms_xmlgen.newcontext(l_consulta_sql);
-          dbms_xmlgen.setnullhandling(l_ctx, dbms_xmlgen.empty_tag);
-          dbms_xmlgen.setprettyprinting(l_ctx, FALSE);
-          l_xml := dbms_xmlgen.getxmltype(l_ctx);
-        
-          IF dbms_xmlgen.getnumrowsprocessed(l_ctx) > 0 AND
-             l_xml IS NOT NULL THEN
-            l_table := l_xml.transform(xmltype('<?xml version="1.0" encoding="UTF-8"?>
-  <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <xsl:output method="html"/>
-  <xsl:template match="/">
-    <table border="1" cellspacing="0">
-      <tr bgcolor="lightgray">
-        <xsl:for-each select="/ROWSET/ROW[1]/*">
-          <th><xsl:value-of select="name()"/></th>
-        </xsl:for-each>
-      </tr>
-      <xsl:for-each select="/ROWSET/*">
-        <tr>
-          <xsl:for-each select="./*">
-            <td><xsl:value-of select="text()"/></td>
-          </xsl:for-each>
-        </tr>
-      </xsl:for-each>
-    </table>
-  </xsl:template>
-  </xsl:stylesheet>')).getclobval;
-          END IF;
-        
-          dbms_xmlgen.closecontext(l_ctx);
+          l_table := k_html.f_query2table(l_consulta_sql);
           --
           k_html.p_inicializar;
           htp.htmlopen;
