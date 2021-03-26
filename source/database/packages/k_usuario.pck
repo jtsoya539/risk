@@ -63,7 +63,8 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
       SELECT id_usuario
         INTO l_id_usuario
         FROM t_usuarios
-       WHERE (alias = i_usuario OR direccion_correo = i_usuario);
+       WHERE (upper(alias) = upper(i_usuario) OR
+             upper(direccion_correo) = upper(i_usuario));
     EXCEPTION
       WHEN no_data_found THEN
         l_id_usuario := NULL;
@@ -80,7 +81,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
       SELECT id_usuario
         INTO l_id_usuario
         FROM t_usuarios
-       WHERE alias = i_alias;
+       WHERE upper(alias) = upper(i_alias);
     EXCEPTION
       WHEN no_data_found THEN
         l_id_usuario := NULL;
@@ -155,7 +156,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
       SELECT k_archivo.f_version_archivo('T_USUARIOS', 'AVATAR', alias)
         INTO l_version
         FROM t_usuarios
-       WHERE alias = i_alias;
+       WHERE upper(alias) = upper(i_alias);
     EXCEPTION
       WHEN no_data_found THEN
         l_version := NULL;

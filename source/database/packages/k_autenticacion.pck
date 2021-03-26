@@ -30,8 +30,13 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   -------------------------------------------------------------------------------
   */
 
+  -- Tipos de clave
   c_clave_acceso        CONSTANT CHAR(1) := 'A';
   c_clave_transaccional CONSTANT CHAR(1) := 'T';
+
+  -- Métodos de validación de credenciales
+  c_metodo_validacion_risk   CONSTANT VARCHAR2(10) := 'RISK';
+  c_metodo_validacion_oracle CONSTANT VARCHAR2(10) := 'ORACLE';
 
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
                             i_clave      IN VARCHAR2,
@@ -617,8 +622,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     EXECUTE IMMEDIATE 'CREATE DATABASE LINK password_test_loopback CONNECT TO ' ||
                       i_usuario || ' IDENTIFIED BY ' || i_clave ||
-                      ' USING ''' ||
-                      k_util.f_valor_parametro('BASE_DATOS_PRODUCCION') || '''';
+                      ' USING ''' || k_util.f_base_datos || '''';
   
     EXECUTE IMMEDIATE 'SELECT * FROM dual@password_test_loopback';
   
@@ -644,12 +648,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END IF;
   
     CASE k_util.f_valor_parametro('METODO_VALIDACION_CREDENCIALES')
-      WHEN 'RISK' THEN
+      WHEN c_metodo_validacion_risk THEN
         IF NOT
             f_validar_credenciales_risk(l_id_usuario, i_clave, i_tipo_clave) THEN
           RAISE ex_credenciales_invalidas;
         END IF;
-      WHEN 'ORACLE' THEN
+      WHEN c_metodo_validacion_oracle THEN
         IF NOT f_validar_credenciales_oracle(i_usuario, i_clave) THEN
           RAISE ex_credenciales_invalidas;
         END IF;
