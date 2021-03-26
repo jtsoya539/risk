@@ -40,6 +40,8 @@ CREATE OR REPLACE PACKAGE k_html IS
 
   PROCEDURE p_print(i_clob IN CLOB);
 
+  PROCEDURE p_font_face(i_fuentes IN VARCHAR2);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_html IS
@@ -184,6 +186,38 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
     END LOOP;
     -- Agrega un salto de línea
     htp.p;
+  END;
+
+  -- https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face
+  PROCEDURE p_font_face(i_fuentes IN VARCHAR2) IS
+    CURSOR c_fuentes IS
+      SELECT a.tabla,
+             a.campo,
+             a.referencia,
+             a.nombre,
+             decode(upper(a.extension),
+                    'TTF',
+                    'truetype',
+                    'OTF',
+                    'opentype',
+                    'WOFF',
+                    'woff',
+                    'WOFF2',
+                    'woff2') format
+        FROM t_archivos a
+       WHERE a.tabla = k_archivo.c_carpeta_fuentes
+         AND a.campo = 'ARCHIVO'
+         AND a.contenido IS NOT NULL
+         AND a.nombre IS NOT NULL
+         AND a.extension IS NOT NULL
+         AND a.referencia IN
+             (SELECT * FROM k_util.f_separar_cadenas(i_fuentes, ','));
+  BEGIN
+    FOR c IN c_fuentes LOOP
+      p_print('@font-face { font-family: "' || c.nombre || '"; src: url("' ||
+              k_archivo.f_data_url(c.tabla, c.campo, c.referencia) ||
+              '") format("' || c.format || '"); }');
+    END LOOP;
   END;
 
 END;
