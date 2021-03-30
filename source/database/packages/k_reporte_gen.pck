@@ -46,15 +46,15 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parámetros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'formato') IN
-                                   (k_reporte.c_formato_pdf,
-                                    k_reporte.c_formato_docx,
-                                    k_reporte.c_formato_xlsx,
-                                    k_reporte.c_formato_csv,
-                                    k_reporte.c_formato_html),
-                                   'Formato de salida no soportado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'formato') IN
+                                    (k_reporte.c_formato_pdf,
+                                     k_reporte.c_formato_docx,
+                                     k_reporte.c_formato_xlsx,
+                                     k_reporte.c_formato_csv,
+                                     k_reporte.c_formato_html),
+                                    'Formato de salida no soportado');
   
     l_formato := k_operacion.f_valor_parametro_string(i_parametros,
                                                       'formato');
@@ -67,10 +67,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
        WHERE id_sistema = 'RISK';
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'gen0001',
-                                     'Error al obtener versión del sistema');
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      'gen0001',
+                                      'Error al obtener versión del sistema');
+        RAISE k_operacion.ex_error_general;
     END;
   
     CASE l_formato
@@ -133,23 +133,23 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
         l_contenido := k_util.clob_to_blob(k_html.f_html);
       
       ELSE
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'gen0002',
-                                     'Formato de salida no implementado');
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      'gen0002',
+                                      'Formato de salida no implementado');
+        RAISE k_operacion.ex_error_general;
     END CASE;
   
     RETURN k_reporte.f_archivo_ok(l_contenido, l_formato);
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN k_reporte.f_archivo_error(l_rsp, l_formato);
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN k_reporte.f_archivo_error(l_rsp, l_formato);
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN k_reporte.f_archivo_error(l_rsp, l_formato);
   END;
 

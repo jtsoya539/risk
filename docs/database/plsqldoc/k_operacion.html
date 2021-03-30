@@ -46,6 +46,26 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_RESPUESTA_OK">p_respuesta_ok</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_RESPUESTA_ERROR">p_respuesta_error</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_RESPUESTA_EXCEPCION">p_respuesta_excepcion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_VALIDAR_PARAMETRO">p_validar_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ID_OPERACION">f_id_operacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -97,6 +117,28 @@ Program units
 </TD></TR>
 </TABLE>
 <BR>
+<A NAME="Exceptions"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Exceptions
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_SERVICIO_NO_IMPLEMENTADO">ex_servicio_no_implementado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_ERROR_PARAMETRO">ex_error_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_ERROR_GENERAL">ex_error_general</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
 <A NAME="Constants"></A>
 <TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
 Constants
@@ -124,6 +166,31 @@ Constants
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_OK">c_ok</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_SERVICIO_NO_IMPLEMENTADO">c_servicio_no_implementado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ERROR_PARAMETRO">c_error_parametro</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ERROR_PERMISO">c_error_permiso</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ERROR_GENERAL">c_error_general</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ERROR_INESPERADO">c_error_inesperado</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -177,7 +244,47 @@ c_tipo_parametros CONSTANT CHAR(1) := 'P';
 c_ok
 </P>
 <PRE CLASS="DECL_TEXT">
-c_ok CONSTANT VARCHAR2(10) := '0';
+c_ok                       CONSTANT VARCHAR2(10) := '0';
+</PRE>
+<HR>
+<A NAME="C_SERVICIO_NO_IMPLEMENTADO"></A>
+<P CLASS="TYPE_TITLE">
+c_servicio_no_implementado
+</P>
+<PRE CLASS="DECL_TEXT">
+c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'ser0001';
+</PRE>
+<HR>
+<A NAME="C_ERROR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+c_error_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+c_error_parametro          CONSTANT VARCHAR2(10) := 'ser0002';
+</PRE>
+<HR>
+<A NAME="C_ERROR_PERMISO"></A>
+<P CLASS="TYPE_TITLE">
+c_error_permiso
+</P>
+<PRE CLASS="DECL_TEXT">
+c_error_permiso            CONSTANT VARCHAR2(10) := 'ser0003';
+</PRE>
+<HR>
+<A NAME="C_ERROR_GENERAL"></A>
+<P CLASS="TYPE_TITLE">
+c_error_general
+</P>
+<PRE CLASS="DECL_TEXT">
+c_error_general            CONSTANT VARCHAR2(10) := 'ser0099';
+</PRE>
+<HR>
+<A NAME="C_ERROR_INESPERADO"></A>
+<P CLASS="TYPE_TITLE">
+c_error_inesperado
+</P>
+<PRE CLASS="DECL_TEXT">
+c_error_inesperado         CONSTANT VARCHAR2(10) := 'ser9999';
 </PRE>
 <HR>
 <A NAME="C_ID_LOG"></A>
@@ -185,7 +292,7 @@ c_ok CONSTANT VARCHAR2(10) := '0';
 c_id_log
 </P>
 <PRE CLASS="DECL_TEXT">
-c_id_log CONSTANT VARCHAR2(50) := 'ID_LOG';
+c_id_log                CONSTANT VARCHAR2(50) := 'ID_LOG';
 </PRE>
 <HR>
 <A NAME="C_ID_OPERACION_CONTEXTO"></A>
@@ -194,6 +301,30 @@ c_id_operacion_contexto
 </P>
 <PRE CLASS="DECL_TEXT">
 c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
+</PRE>
+<HR>
+<A NAME="EX_SERVICIO_NO_IMPLEMENTADO"></A>
+<P CLASS="TYPE_TITLE">
+ex_servicio_no_implementado
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_servicio_no_implementado EXCEPTION;
+</PRE>
+<HR>
+<A NAME="EX_ERROR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+ex_error_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_error_parametro          EXCEPTION;
+</PRE>
+<HR>
+<A NAME="EX_ERROR_GENERAL"></A>
+<P CLASS="TYPE_TITLE">
+ex_error_general
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_error_general            EXCEPTION;
 </PRE>
 <HR>
 <A NAME="P_RESERVAR_ID_LOG"></A>
@@ -216,6 +347,51 @@ PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
                           i_respuesta        IN CLOB,
                           i_contexto         IN CLOB DEFAULT NULL,
                           i_version          IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_RESPUESTA_OK"></A>
+<P CLASS="TYPE_TITLE">
+p_respuesta_ok
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_respuesta_ok(io_respuesta IN OUT NOCOPY y_respuesta,
+                         i_datos      IN y_objeto DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_RESPUESTA_ERROR"></A>
+<P CLASS="TYPE_TITLE">
+p_respuesta_error
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
+                            i_codigo     IN VARCHAR2,
+                            i_mensaje    IN VARCHAR2,
+                            i_mensaje_bd IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<HR>
+<A NAME="P_RESPUESTA_EXCEPCION"></A>
+<P CLASS="TYPE_TITLE">
+p_respuesta_excepcion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
+                                i_error_number IN NUMBER,
+                                i_error_msg    IN VARCHAR2,
+                                i_error_stack  IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_VALIDAR_PARAMETRO"></A>
+<P CLASS="TYPE_TITLE">
+p_validar_parametro
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
+                              i_expresion  IN BOOLEAN,
+                              i_mensaje    IN VARCHAR2)
 
 </PRE>
 <HR>

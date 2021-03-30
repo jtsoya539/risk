@@ -134,10 +134,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
          AND r.id_reporte = i_id_reporte;
     EXCEPTION
       WHEN no_data_found THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     k_servicio.c_servicio_no_implementado,
-                                     'Reporte inexistente o inactivo');
-        RAISE k_servicio.ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_servicio_no_implementado,
+                                      'Reporte inexistente o inactivo');
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Procesando parámetros del reporte';
@@ -148,16 +148,16 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                                       l_version_actual));
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     k_servicio.c_error_parametro,
-                                     CASE
-                                     k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                     k_error.c_user_defined_error THEN
-                                     utl_call_stack.error_msg(1) WHEN
-                                     k_error.c_oracle_predefined_error THEN
-                                     k_error.f_mensaje_error(k_servicio.c_error_parametro) END,
-                                     dbms_utility.format_error_stack);
-        RAISE k_servicio.ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      CASE
+                                      k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                      k_error.c_user_defined_error THEN
+                                      utl_call_stack.error_msg(1) WHEN
+                                      k_error.c_oracle_predefined_error THEN
+                                      k_error.f_mensaje_error(k_operacion.c_error_parametro) END,
+                                      dbms_utility.format_error_stack);
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Procesando contexto';
@@ -166,16 +166,16 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                                  i_contexto);
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     k_servicio.c_error_parametro,
-                                     CASE
-                                     k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                     k_error.c_user_defined_error THEN
-                                     utl_call_stack.error_msg(1) WHEN
-                                     k_error.c_oracle_predefined_error THEN
-                                     k_error.f_mensaje_error(k_servicio.c_error_parametro) END,
-                                     dbms_utility.format_error_stack);
-        RAISE k_servicio.ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      CASE
+                                      k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                      k_error.c_user_defined_error THEN
+                                      utl_call_stack.error_msg(1) WHEN
+                                      k_error.c_oracle_predefined_error THEN
+                                      k_error.f_mensaje_error(k_operacion.c_error_parametro) END,
+                                      dbms_utility.format_error_stack);
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
@@ -205,10 +205,10 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       IF NOT
           k_autorizacion.f_validar_permiso(k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario),
                                            k_operacion.f_id_permiso(i_id_reporte)) THEN
-        k_servicio. p_respuesta_error(l_rsp,
-                                      k_servicio.c_error_permiso,
-                                      k_error.f_mensaje_error(k_servicio.c_error_permiso));
-        RAISE k_servicio.ex_error_general;
+        k_operacion. p_respuesta_error(l_rsp,
+                                       k_operacion.c_error_permiso,
+                                       k_error.f_mensaje_error(k_operacion.c_error_permiso));
+        RAISE k_operacion.ex_error_general;
       END IF;
     END IF;
   
@@ -232,49 +232,49 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
         EXECUTE IMMEDIATE l_sentencia
           USING OUT l_archivo, IN l_prms;
       EXCEPTION
-        WHEN k_servicio.ex_servicio_no_implementado THEN
-          k_servicio.p_respuesta_error(l_rsp,
-                                       k_servicio.c_servicio_no_implementado,
-                                       'Servicio no implementado',
-                                       dbms_utility.format_error_stack);
-          RAISE k_servicio.ex_error_general;
+        WHEN k_operacion.ex_servicio_no_implementado THEN
+          k_operacion.p_respuesta_error(l_rsp,
+                                        k_operacion.c_servicio_no_implementado,
+                                        'Servicio no implementado',
+                                        dbms_utility.format_error_stack);
+          RAISE k_operacion.ex_error_general;
         WHEN OTHERS THEN
-          k_servicio.p_respuesta_error(l_rsp,
-                                       k_servicio.c_error_general,
-                                       CASE
-                                       k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                                       k_error.c_user_defined_error THEN
-                                       utl_call_stack.error_msg(1) WHEN
-                                       k_error.c_oracle_predefined_error THEN
-                                       'Error al procesar servicio' END,
-                                       dbms_utility.format_error_stack);
-          RAISE k_servicio.ex_error_general;
+          k_operacion.p_respuesta_error(l_rsp,
+                                        k_operacion.c_error_general,
+                                        CASE
+                                        k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                        k_error.c_user_defined_error THEN
+                                        utl_call_stack.error_msg(1) WHEN
+                                        k_error.c_oracle_predefined_error THEN
+                                        'Error al procesar servicio' END,
+                                        dbms_utility.format_error_stack);
+          RAISE k_operacion.ex_error_general;
       END;
     
     END IF;
   
     l_rsp.datos := l_archivo;
   
-    IF l_rsp.codigo = k_servicio.c_ok THEN
+    IF l_rsp.codigo = k_operacion.c_ok THEN
       COMMIT;
     ELSE
-      RAISE k_servicio.ex_error_general;
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_rsp.datos);
+    k_operacion.p_respuesta_ok(l_rsp, l_rsp.datos);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       ROLLBACK;
       RETURN l_rsp;
     WHEN OTHERS THEN
       ROLLBACK;
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -443,31 +443,31 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
          AND r.id_reporte = i_id_reporte;
     EXCEPTION
       WHEN no_data_found THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     k_servicio.c_error_parametro,
-                                     'Reporte inexistente o inactivo');
-        RAISE k_servicio.ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      'Reporte inexistente o inactivo');
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Validando parámetros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'formato') IN
-                                   (c_formato_pdf,
-                                    c_formato_docx,
-                                    c_formato_xlsx,
-                                    c_formato_csv,
-                                    c_formato_html),
-                                   'Formato de salida no soportado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'formato') IN
+                                    (c_formato_pdf,
+                                     c_formato_docx,
+                                     c_formato_xlsx,
+                                     c_formato_csv,
+                                     c_formato_html),
+                                    'Formato de salida no soportado');
   
     l_formato := k_operacion.f_valor_parametro_string(i_parametros,
                                                       'formato');
   
     IF l_consulta_sql IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   k_servicio.c_error_general,
-                                   'Consulta SQL no definida');
-      RAISE k_servicio.ex_error_parametro;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    k_operacion.c_error_general,
+                                    'Consulta SQL no definida');
+      RAISE k_operacion.ex_error_parametro;
     END IF;
   
     l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ')' ||
@@ -638,15 +638,15 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   
     RETURN f_archivo_ok(l_contenido, l_formato);
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN f_archivo_error(l_rsp, l_formato);
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN f_archivo_error(l_rsp, l_formato);
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN f_archivo_error(l_rsp, l_formato);
   END;
 
