@@ -79,24 +79,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
        WHERE id_sistema = 'RISK';
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'gen0001',
-                                     'Error al obtener versión del sistema');
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      'gen0001',
+                                      'Error al obtener versión del sistema');
+        RAISE k_operacion.ex_error_general;
     END;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -115,9 +115,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                         'servicio');
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   l_servicio IS NOT NULL,
-                                   'Debe ingresar servicio');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    l_servicio IS NOT NULL,
+                                    'Debe ingresar servicio');
   
     l_rsp.lugar := 'Obteniendo versión del servicio ' || l_servicio;
     BEGIN
@@ -127,25 +127,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
        WHERE nombre = upper(l_servicio);
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'gen0001',
-                                     'Error al obtener versión del servicio ' ||
-                                     l_servicio);
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      'gen0001',
+                                      'Error al obtener versión del servicio ' ||
+                                      l_servicio);
+        RAISE k_operacion.ex_error_general;
     END;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -158,34 +158,34 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'parametro') IS NOT NULL,
-                                   'Debe ingresar parametro');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'parametro') IS NOT NULL,
+                                    'Debe ingresar parametro');
   
     l_rsp.lugar      := 'Obteniendo valor del parametro';
     l_dato.contenido := k_util.f_valor_parametro(k_operacion.f_valor_parametro_string(i_parametros,
                                                                                       'parametro'));
   
     IF l_dato.contenido IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'gen0001',
-                                   'Parametro inexistente');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'gen0001',
+                                    'Parametro inexistente');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -199,15 +199,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'dominio') IS NOT NULL,
-                                   'Debe ingresar dominio');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'dominio') IS NOT NULL,
+                                    'Debe ingresar dominio');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'codigo') IS NOT NULL,
-                                   'Debe ingresar codigo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'codigo') IS NOT NULL,
+                                    'Debe ingresar codigo');
   
     l_rsp.lugar      := 'Obteniendo significado';
     l_dato.contenido := k_util.f_significado_codigo(k_operacion.f_valor_parametro_string(i_parametros,
@@ -216,24 +216,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                                                          'codigo'));
   
     IF l_dato.contenido IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'gen0001',
-                                   'Significado inexistente');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'gen0001',
+                                    'Significado inexistente');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -257,10 +257,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -283,18 +283,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -321,10 +321,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -347,18 +347,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -384,10 +384,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -410,18 +410,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -448,10 +448,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -477,18 +477,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -521,10 +521,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -553,18 +553,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -587,10 +587,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -610,18 +610,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -633,20 +633,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tabla') IS NOT NULL,
-                                   'Debe ingresar tabla');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tabla') IS NOT NULL,
+                                    'Debe ingresar tabla');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'campo') IS NOT NULL,
-                                   'Debe ingresar campo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'campo') IS NOT NULL,
+                                    'Debe ingresar campo');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'referencia') IS NOT NULL,
-                                   'Debe ingresar referencia');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'referencia') IS NOT NULL,
+                                    'Debe ingresar referencia');
   
     l_rsp.lugar := 'Recuperando archivo';
     l_archivo   := k_archivo.f_recuperar_archivo(k_operacion.f_valor_parametro_string(i_parametros,
@@ -661,22 +661,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     IF (l_archivo.contenido IS NULL OR
        dbms_lob.getlength(l_archivo.contenido) = 0) AND
        l_archivo.url IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Archivo inexistente');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'gen0001',
+                                    'Archivo inexistente');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_archivo);
+    k_operacion.p_respuesta_ok(l_rsp, l_archivo);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -688,25 +690,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tabla') IS NOT NULL,
-                                   'Debe ingresar tabla');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tabla') IS NOT NULL,
+                                    'Debe ingresar tabla');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'campo') IS NOT NULL,
-                                   'Debe ingresar campo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'campo') IS NOT NULL,
+                                    'Debe ingresar campo');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'referencia') IS NOT NULL,
-                                   'Debe ingresar referencia');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'referencia') IS NOT NULL,
+                                    'Debe ingresar referencia');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'archivo') IS NOT NULL,
-                                   'Debe ingresar archivo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'archivo') IS NOT NULL,
+                                    'Debe ingresar archivo');
     l_archivo := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                             'archivo') AS
                        y_archivo);
@@ -720,18 +722,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                                                      'referencia'),
                                 l_archivo);
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -745,10 +747,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'referencia') IS NOT NULL,
-                                   'Debe ingresar referencia');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'referencia') IS NOT NULL,
+                                    'Debe ingresar referencia');
   
     l_rsp.lugar := 'Recuperando texto';
     l_archivo   := k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_textos,
@@ -758,24 +760,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
   
     IF l_archivo.contenido IS NULL OR
        dbms_lob.getlength(l_archivo.contenido) = 0 THEN
-      k_servicio.p_respuesta_error(l_rsp, 'gen0001', 'Texto inexistente');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp, 'gen0001', 'Texto inexistente');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
     l_dato.contenido := k_util.blob_to_clob(l_archivo.contenido);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 

@@ -84,30 +84,30 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'usuario') IS NOT NULL,
-                                   'Debe ingresar usuario');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'clave') IS NOT NULL,
-                                   'Debe ingresar clave');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'clave') IS NOT NULL,
+                                    'Debe ingresar clave');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'nombre') IS NOT NULL,
-                                   'Debe ingresar nombre');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'nombre') IS NOT NULL,
+                                    'Debe ingresar nombre');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'apellido') IS NOT NULL,
-                                   'Debe ingresar apellido');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'apellido') IS NOT NULL,
+                                    'Debe ingresar apellido');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'direccion_correo') IS NOT NULL,
-                                   'Debe ingresar direccion_correo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'direccion_correo') IS NOT NULL,
+                                    'Debe ingresar direccion_correo');
   
     l_rsp.lugar := 'Registrando usuario';
     k_autenticacion.p_registrar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
@@ -123,18 +123,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         k_operacion.f_valor_parametro_string(i_parametros,
                                                                              'numero_telefono'));
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -146,15 +146,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'usuario') IS NOT NULL,
-                                   'Debe ingresar usuario');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'estado') IS NOT NULL,
-                                   'Debe ingresar estado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'estado') IS NOT NULL,
+                                    'Debe ingresar estado');
   
     l_rsp.lugar := 'Cambiando estado de usuario';
     k_usuario.p_cambiar_estado(k_usuario.f_buscar_id(k_operacion.f_valor_parametro_string(i_parametros,
@@ -162,18 +162,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                k_operacion.f_valor_parametro_string(i_parametros,
                                                                     'estado'));
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -193,18 +193,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                       k_operacion.f_valor_parametro_string(i_parametros,
                                                                            'tipo_clave'));
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -226,18 +226,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                     k_operacion.f_valor_parametro_string(i_parametros,
                                                                          'tipo_clave'));
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -249,15 +249,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'usuario') IS NOT NULL,
-                                   'Debe ingresar usuario');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'clave') IS NOT NULL,
-                                   'Debe ingresar clave');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'clave') IS NOT NULL,
+                                    'Debe ingresar clave');
   
     l_rsp.lugar := 'Validando credenciales';
     IF NOT
@@ -267,24 +267,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                                     'clave'),
                                                k_operacion.f_valor_parametro_string(i_parametros,
                                                                                     'tipo_clave')) THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'aut0003',
-                                   'Credenciales inválidas');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'aut0003',
+                                    'Credenciales inválidas');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -296,33 +296,33 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'clave_aplicacion') IS NOT NULL,
-                                   'Debe ingresar clave_aplicacion');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'clave_aplicacion') IS NOT NULL,
+                                    'Debe ingresar clave_aplicacion');
   
     l_rsp.lugar := 'Validando clave de aplicacion';
     IF NOT
         k_aplicacion.f_validar_clave(k_operacion.f_valor_parametro_string(i_parametros,
                                                                           'clave_aplicacion')) THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'aut0002',
-                                   'Clave de aplicacion invalida');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'aut0002',
+                                    'Clave de aplicacion invalida');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -333,33 +333,33 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'access_token') IS NOT NULL,
-                                   'Debe ingresar access_token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'access_token') IS NOT NULL,
+                                    'Debe ingresar access_token');
   
     l_rsp.lugar := 'Validando sesion';
     IF NOT
         k_sesion.f_validar_sesion(k_operacion.f_valor_parametro_string(i_parametros,
                                                                        'access_token')) THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'aut0002',
-                                   'Sesion finalizada o expirada');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'aut0002',
+                                    'Sesion finalizada o expirada');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -372,20 +372,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'usuario') IS NOT NULL,
-                                   'Debe ingresar usuario');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'access_token') IS NOT NULL,
-                                   'Debe ingresar access_token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'access_token') IS NOT NULL,
+                                    'Debe ingresar access_token');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'refresh_token') IS NOT NULL,
-                                   'Debe ingresar refresh_token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'refresh_token') IS NOT NULL,
+                                    'Debe ingresar refresh_token');
   
     l_rsp.lugar := 'Iniciando sesion';
     l_id_sesion := k_autenticacion.f_iniciar_sesion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
@@ -401,18 +401,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp.lugar := 'Cargando datos de la sesion';
     l_sesion    := k_sesion.f_datos_sesion(l_id_sesion);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_sesion);
+    k_operacion.p_respuesta_ok(l_rsp, l_sesion);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -425,25 +425,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'access_token_antiguo') IS NOT NULL,
-                                   'Debe ingresar antiguo Access Token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'access_token_antiguo') IS NOT NULL,
+                                    'Debe ingresar antiguo Access Token');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'refresh_token_antiguo') IS NOT NULL,
-                                   'Debe ingresar antiguo Refresh Token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'refresh_token_antiguo') IS NOT NULL,
+                                    'Debe ingresar antiguo Refresh Token');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'access_token_nuevo') IS NOT NULL,
-                                   'Debe ingresar nuevo Access Token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'access_token_nuevo') IS NOT NULL,
+                                    'Debe ingresar nuevo Access Token');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'refresh_token_nuevo') IS NOT NULL,
-                                   'Debe ingresar nuevo Refresh Token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'refresh_token_nuevo') IS NOT NULL,
+                                    'Debe ingresar nuevo Refresh Token');
   
     l_rsp.lugar := 'Refrescando sesion';
     l_id_sesion := k_autenticacion.f_refrescar_sesion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
@@ -459,18 +459,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp.lugar := 'Cargando datos de la sesion';
     l_sesion    := k_sesion.f_datos_sesion(l_id_sesion);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_sesion);
+    k_operacion.p_respuesta_ok(l_rsp, l_sesion);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -482,15 +482,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'access_token') IS NOT NULL,
-                                   'Debe ingresar access_token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'access_token') IS NOT NULL,
+                                    'Debe ingresar access_token');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'estado') IS NOT NULL,
-                                   'Debe ingresar estado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'estado') IS NOT NULL,
+                                    'Debe ingresar estado');
   
     l_rsp.lugar := 'Cambiando estado de sesion';
     k_sesion.p_cambiar_estado(k_operacion.f_valor_parametro_string(i_parametros,
@@ -498,18 +498,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                               k_operacion.f_valor_parametro_string(i_parametros,
                                                                    'estado'));
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -521,27 +521,27 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'usuario') IS NOT NULL,
-                                   'Debe ingresar usuario');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
   
     l_rsp.lugar := 'Cargando datos del usuario';
     l_usuario   := k_usuario.f_datos_usuario(k_usuario.f_buscar_id(k_operacion.f_valor_parametro_string(i_parametros,
                                                                                                         'usuario')));
   
-    k_servicio.p_respuesta_ok(l_rsp, l_usuario);
+    k_operacion.p_respuesta_ok(l_rsp, l_usuario);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -558,10 +558,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'dispositivo') IS NOT NULL,
-                                   'Debe ingresar dispositivo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'dispositivo') IS NOT NULL,
+                                    'Debe ingresar dispositivo');
     l_dispositivo := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                 'dispositivo') AS
                            y_dispositivo);
@@ -593,24 +593,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
        WHERE id_dispositivo = l_id_dispositivo;
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp,
-                                     'aut0001',
-                                     'Error al obtener token del dispositivo');
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      'aut0001',
+                                      'Error al obtener token del dispositivo');
+        RAISE k_operacion.ex_error_general;
     END;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -622,27 +622,27 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parámetros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'token_dispositivo') IS NOT NULL,
-                                   'Debe ingresar token_dispositivo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'token_dispositivo') IS NOT NULL,
+                                    'Debe ingresar token_dispositivo');
   
     l_rsp.lugar   := 'Cargando datos del dispositivo';
     l_dispositivo := k_dispositivo.f_datos_dispositivo(k_dispositivo.f_id_dispositivo(k_operacion.f_valor_parametro_string(i_parametros,
                                                                                                                            'token_dispositivo')));
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dispositivo);
+    k_operacion.p_respuesta_ok(l_rsp, l_dispositivo);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -654,10 +654,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parámetros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'token_dispositivo') IS NOT NULL,
-                                   'Debe ingresar token_dispositivo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'token_dispositivo') IS NOT NULL,
+                                    'Debe ingresar token_dispositivo');
   
     l_rsp.lugar := 'Registrando ubicación del dispositivo';
     k_dispositivo.p_registrar_ubicacion(k_dispositivo.f_id_dispositivo(k_operacion.f_valor_parametro_string(i_parametros,
@@ -667,18 +667,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         k_operacion.f_valor_parametro_number(i_parametros,
                                                                              'longitud'));
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -692,10 +692,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_token') IS NOT NULL,
-                                   'Debe ingresar tipo_token');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_token') IS NOT NULL,
+                                    'Debe ingresar tipo_token');
   
     l_rsp.lugar      := 'Obteniendo tiempo de expiración';
     l_dato.contenido := to_char(k_sesion.f_tiempo_expiracion_token(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
@@ -703,24 +703,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                                                         'tipo_token')));
   
     IF l_dato.contenido IS NULL THEN
-      k_servicio.p_respuesta_error(l_rsp,
-                                   'aut0003',
-                                   'Error al obtener tiempo de expiración');
-      RAISE k_servicio.ex_error_general;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    'aut0003',
+                                    'Error al obtener tiempo de expiración');
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -734,10 +734,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_rsp.lugar := 'Validando parámetros';
     /* TODO: text="Implementar validación de parámetros" */
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'usuario_antiguo') IS NOT NULL,
-                                   'Debe ingresar usuario_antiguo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario_antiguo') IS NOT NULL,
+                                    'Debe ingresar usuario_antiguo');
   
     l_rsp.lugar := 'Editando usuario';
     k_autenticacion.p_editar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
@@ -753,18 +753,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                      k_operacion.f_valor_parametro_string(i_parametros,
                                                                           'numero_telefono'));
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -780,21 +780,21 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_mensajeria') IS NOT NULL,
-                                   'Debe ingresar tipo_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_mensajeria') IS NOT NULL,
+                                    'Debe ingresar tipo_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_mensajeria') IN
-                                   ('M', 'S', 'P'),
-                                   'Valor no válido para tipo_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_mensajeria') IN
+                                    ('M', 'S', 'P'),
+                                    'Valor no válido para tipo_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'destino') IS NOT NULL,
-                                   'Debe ingresar destino');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'destino') IS NOT NULL,
+                                    'Debe ingresar destino');
   
     l_rsp.lugar := 'Generando secret';
     l_secret    := oos_util_totp.generate_secret;
@@ -824,10 +824,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         NULL,
                                         k_mensajeria.c_prioridad_urgente) <>
            k_mensajeria.c_ok THEN
-          k_servicio.p_respuesta_error(l_rsp,
-                                       'aut0001',
-                                       'Error al enviar Mail');
-          RAISE k_servicio.ex_error_general;
+          k_operacion.p_respuesta_error(l_rsp,
+                                        'aut0001',
+                                        'Error al enviar Mail');
+          RAISE k_operacion.ex_error_general;
         END IF;
       
       WHEN 'S' THEN
@@ -839,10 +839,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                               'destino'),
                                          k_mensajeria.c_prioridad_urgente) <>
            k_mensajeria.c_ok THEN
-          k_servicio.p_respuesta_error(l_rsp,
-                                       'aut0002',
-                                       'Error al enviar SMS');
-          RAISE k_servicio.ex_error_general;
+          k_operacion.p_respuesta_error(l_rsp,
+                                        'aut0002',
+                                        'Error al enviar SMS');
+          RAISE k_operacion.ex_error_general;
         END IF;
       
       WHEN 'P' THEN
@@ -853,18 +853,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
   
     l_dato.contenido := l_secret;
   
-    k_servicio.p_respuesta_ok(l_rsp, l_dato);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -875,15 +875,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'secret') IS NOT NULL,
-                                   'Debe ingresar secret');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'secret') IS NOT NULL,
+                                    'Debe ingresar secret');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_number(i_parametros,
-                                                                        'otp') IS NOT NULL,
-                                   'Debe ingresar otp');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_number(i_parametros,
+                                                                         'otp') IS NOT NULL,
+                                    'Debe ingresar otp');
   
     l_rsp.lugar := 'Validando OTP';
     BEGIN
@@ -892,27 +892,27 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                     k_operacion.f_valor_parametro_number(i_parametros,
                                                                          'otp'),
                                     to_number(k_util.f_valor_parametro('TIEMPO_TOLERANCIA_VALIDAR_OTP'))) <> 1 THEN
-        k_servicio.p_respuesta_error(l_rsp, 'aut0001', 'OTP inválido');
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp, 'aut0001', 'OTP inválido');
+        RAISE k_operacion.ex_error_general;
       END IF;
     EXCEPTION
       WHEN OTHERS THEN
-        k_servicio.p_respuesta_error(l_rsp, 'aut0002', 'OTP inválido');
-        RAISE k_servicio.ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp, 'aut0002', 'OTP inválido');
+        RAISE k_operacion.ex_error_general;
     END;
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 

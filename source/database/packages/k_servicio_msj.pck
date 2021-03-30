@@ -114,10 +114,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -147,18 +147,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -186,10 +186,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -213,18 +213,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -252,10 +252,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') IS NOT NULL,
-                                   'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
@@ -280,18 +280,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                l_pagina_parametros.por_pagina,
                                                l_pagina_parametros.no_paginar);
   
-    k_servicio.p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -303,31 +303,31 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parámetros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_mensajeria') IS NOT NULL,
-                                   'Debe ingresar tipo_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_mensajeria') IS NOT NULL,
+                                    'Debe ingresar tipo_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_mensajeria') IN
-                                   ('M', 'S', 'P'),
-                                   'Valor no válido para tipo_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_mensajeria') IN
+                                    ('M', 'S', 'P'),
+                                    'Valor no válido para tipo_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_number(i_parametros,
-                                                                        'id_mensajeria') IS NOT NULL,
-                                   'Debe ingresar id_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_number(i_parametros,
+                                                                         'id_mensajeria') IS NOT NULL,
+                                    'Debe ingresar id_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'estado') IS NOT NULL,
-                                   'Debe ingresar estado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'estado') IS NOT NULL,
+                                    'Debe ingresar estado');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'respuesta_envio') IS NOT NULL,
-                                   'Debe ingresar respuesta_envio');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'respuesta_envio') IS NOT NULL,
+                                    'Debe ingresar respuesta_envio');
   
     l_rsp.lugar := 'Cambiando estado de mensajería';
     CASE
@@ -416,18 +416,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
       
     END CASE;
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -439,27 +439,27 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Validando parámetros';
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_mensajeria') IS NOT NULL,
-                                   'Debe ingresar tipo_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_mensajeria') IS NOT NULL,
+                                    'Debe ingresar tipo_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'tipo_mensajeria') IN
-                                   ('M', 'S', 'P'),
-                                   'Valor no válido para tipo_mensajeria');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'tipo_mensajeria') IN
+                                    ('M', 'S', 'P'),
+                                    'Valor no válido para tipo_mensajeria');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'estado') IS NOT NULL,
-                                   'Debe ingresar estado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'estado') IS NOT NULL,
+                                    'Debe ingresar estado');
   
-    k_servicio.p_validar_parametro(l_rsp,
-                                   k_operacion.f_valor_parametro_string(i_parametros,
-                                                                        'estado') IN
-                                   ('S', 'N'),
-                                   'Valor no válido para estado');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'estado') IN
+                                    ('S', 'N'),
+                                    'Valor no válido para estado');
   
     l_rsp.lugar := 'Cambiando valor del parámetro';
     UPDATE t_parametros
@@ -475,18 +475,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                   'P',
                   'ENVIO_NOTIFICACIONES_ACTIVO');
   
-    k_servicio.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
-    WHEN k_servicio.ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN k_servicio.ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      k_servicio.p_respuesta_excepcion(l_rsp,
-                                       utl_call_stack.error_number(1),
-                                       utl_call_stack.error_msg(1),
-                                       dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
