@@ -153,9 +153,9 @@ prompt
 prompt Creando paquetes...
 prompt -----------------------------------
 prompt
-@@packages/k_html.pck
 @@packages/k_auditoria.pck
 @@packages/k_archivo.pck
+@@packages/k_html.pck
 @@packages/k_aplicacion.pck
 @@packages/k_usuario.pck
 @@packages/k_dispositivo.pck
