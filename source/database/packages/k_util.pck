@@ -512,16 +512,16 @@ END;';
       -- Inicial
       v_pinicial := instr(v_palabra, '.', v_final);
       v_einicial := instr(v_palabra, ' ', v_final);
-      IF v_pinicial != 0 AND v_einicial != 0 THEN
+      IF v_pinicial <> 0 AND v_einicial <> 0 THEN
         v_inicial := least(v_pinicial, v_einicial);
       ELSE
         v_inicial := greatest(v_pinicial, v_einicial);
       END IF;
       -- Final
-      IF v_inicial != 0 THEN
+      IF v_inicial <> 0 THEN
         v_pfinal := instr(v_palabra, '.', v_inicial + 1);
         v_efinal := instr(v_palabra, ' ', v_inicial + 1);
-        IF v_pfinal != 0 AND v_efinal != 0 THEN
+        IF v_pfinal <> 0 AND v_efinal <> 0 THEN
           v_final := least(v_pfinal, v_efinal);
         ELSE
           v_final := greatest(v_pfinal, v_efinal);
@@ -532,7 +532,7 @@ END;';
       IF v_final = 0 THEN
         v_final := v_longitud;
       END IF;
-      IF v_inicial != 0 THEN
+      IF v_inicial <> 0 THEN
         v_inicial := v_inicial + 1;
       END IF;
     END LOOP;

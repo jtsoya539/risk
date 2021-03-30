@@ -36,6 +36,9 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
   c_tipo_parametros CONSTANT CHAR(1) := 'P';
 
+  -- Códigos de respuesta
+  c_ok CONSTANT VARCHAR2(10) := '0';
+
   c_id_log CONSTANT VARCHAR2(50) := 'ID_LOG';
 
   c_id_operacion_contexto CONSTANT PLS_INTEGER := 0;
@@ -125,8 +128,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         l_nivel_log := 0;
     END;
   
-    IF ((l_nivel_log > 1 AND i_codigo_respuesta = k_servicio.c_ok) OR
-       (l_nivel_log > 0 AND i_codigo_respuesta != k_servicio.c_ok)) THEN
+    IF (l_nivel_log > 1 AND i_codigo_respuesta = c_ok) OR
+       (l_nivel_log > 0 AND i_codigo_respuesta <> c_ok) THEN
       INSERT INTO t_operacion_logs
         (id_operacion_log,
          id_operacion,
