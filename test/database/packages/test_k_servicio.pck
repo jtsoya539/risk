@@ -36,7 +36,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_servicio IS
     k_sistema.p_inicializar_cola;
     k_sistema.p_encolar('Y_DATO');
     l_respuesta := treat(y_respuesta.parse_json(l_resultado) AS y_respuesta);
-    ut.expect(l_respuesta.codigo).to_equal(k_servicio.c_servicio_no_implementado);
+    ut.expect(l_respuesta.codigo).to_equal(k_operacion.c_servicio_no_implementado);
   END;
 
   PROCEDURE f_procesar_servicio_error_json_parametros IS
@@ -53,7 +53,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_servicio IS
     k_sistema.p_inicializar_cola;
     k_sistema.p_encolar('Y_DATO');
     l_respuesta := treat(y_respuesta.parse_json(l_resultado) AS y_respuesta);
-    ut.expect(l_respuesta.codigo).to_equal(k_servicio.c_error_parametro);
+    ut.expect(l_respuesta.codigo).to_equal(k_operacion.c_error_parametro);
   END;
 
   PROCEDURE f_procesar_servicio_error_json_contexto IS
@@ -70,7 +70,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_servicio IS
     k_sistema.p_inicializar_cola;
     k_sistema.p_encolar('Y_DATO');
     l_respuesta := treat(y_respuesta.parse_json(l_resultado) AS y_respuesta);
-    ut.expect(l_respuesta.codigo).to_equal(k_servicio.c_error_parametro);
+    ut.expect(l_respuesta.codigo).to_equal(k_operacion.c_error_parametro);
   END;
 
   PROCEDURE f_procesar_servicio_error_tipo_contexto IS
@@ -87,7 +87,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_servicio IS
     k_sistema.p_inicializar_cola;
     k_sistema.p_encolar('Y_DATO');
     l_respuesta := treat(y_respuesta.parse_json(l_resultado) AS y_respuesta);
-    ut.expect(l_respuesta.codigo).to_equal(k_servicio.c_error_parametro);
+    ut.expect(l_respuesta.codigo).to_equal(k_operacion.c_error_parametro);
   END;
 
   PROCEDURE f_procesar_servicio_version_sistema IS
@@ -104,7 +104,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_servicio IS
     k_sistema.p_inicializar_cola;
     k_sistema.p_encolar('Y_DATO');
     l_respuesta := treat(y_respuesta.parse_json(l_resultado) AS y_respuesta);
-    ut.expect(l_respuesta.codigo).to_equal(k_servicio.c_ok);
+    ut.expect(l_respuesta.codigo).to_equal(k_operacion.c_ok);
   END;
 
 END;
