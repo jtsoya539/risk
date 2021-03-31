@@ -30,38 +30,7 @@ CREATE OR REPLACE PACKAGE k_servicio IS
   -------------------------------------------------------------------------------
   */
 
-  -- Códigos de respuesta
-  c_ok                       CONSTANT VARCHAR2(10) := '0';
-  c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'ser0001';
-  c_error_parametro          CONSTANT VARCHAR2(10) := 'ser0002';
-  c_error_permiso            CONSTANT VARCHAR2(10) := 'ser0003';
-  c_error_general            CONSTANT VARCHAR2(10) := 'ser0099';
-  c_error_inesperado         CONSTANT VARCHAR2(10) := 'ser9999';
-
-  -- Excepciones
-  ex_servicio_no_implementado EXCEPTION;
-  ex_error_parametro          EXCEPTION;
-  ex_error_general            EXCEPTION;
-  PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
-
   PROCEDURE p_limpiar_historial;
-
-  PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
-                                i_expresion  IN BOOLEAN,
-                                i_mensaje    IN VARCHAR2);
-
-  PROCEDURE p_respuesta_ok(io_respuesta IN OUT NOCOPY y_respuesta,
-                           i_datos      IN y_objeto DEFAULT NULL);
-
-  PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
-                              i_codigo     IN VARCHAR2,
-                              i_mensaje    IN VARCHAR2,
-                              i_mensaje_bd IN VARCHAR2 DEFAULT NULL);
-
-  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
-                                  i_error_number IN NUMBER,
-                                  i_error_msg    IN VARCHAR2,
-                                  i_error_stack  IN VARCHAR2);
 
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                                i_numero_pagina       IN INTEGER DEFAULT NULL,
@@ -146,10 +115,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
          AND s.id_servicio = i_id_servicio;
     EXCEPTION
       WHEN no_data_found THEN
-        p_respuesta_error(l_rsp,
-                          c_servicio_no_implementado,
-                          'Servicio inexistente o inactivo');
-        RAISE ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_servicio_no_implementado,
+                                      'Servicio inexistente o inactivo');
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Procesando parámetros del servicio';
@@ -160,16 +129,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                       l_version_actual));
     EXCEPTION
       WHEN OTHERS THEN
-        p_respuesta_error(l_rsp,
-                          c_error_parametro,
-                          CASE
-                          k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                          k_error.c_user_defined_error THEN
-                          utl_call_stack.error_msg(1) WHEN
-                          k_error.c_oracle_predefined_error THEN
-                          k_error.f_mensaje_error(c_error_parametro) END,
-                          dbms_utility.format_error_stack);
-        RAISE ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      CASE
+                                      k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                      k_error.c_user_defined_error THEN
+                                      utl_call_stack.error_msg(1) WHEN
+                                      k_error.c_oracle_predefined_error THEN
+                                      k_error.f_mensaje_error(k_operacion.c_error_parametro) END,
+                                      dbms_utility.format_error_stack);
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Procesando contexto';
@@ -178,16 +147,16 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                  i_contexto);
     EXCEPTION
       WHEN OTHERS THEN
-        p_respuesta_error(l_rsp,
-                          c_error_parametro,
-                          CASE
-                          k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                          k_error.c_user_defined_error THEN
-                          utl_call_stack.error_msg(1) WHEN
-                          k_error.c_oracle_predefined_error THEN
-                          k_error.f_mensaje_error(c_error_parametro) END,
-                          dbms_utility.format_error_stack);
-        RAISE ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      CASE
+                                      k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                      k_error.c_user_defined_error THEN
+                                      utl_call_stack.error_msg(1) WHEN
+                                      k_error.c_oracle_predefined_error THEN
+                                      k_error.f_mensaje_error(k_operacion.c_error_parametro) END,
+                                      dbms_utility.format_error_stack);
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
@@ -217,10 +186,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
       IF NOT
           k_autorizacion.f_validar_permiso(k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario),
                                            k_operacion.f_id_permiso(i_id_servicio)) THEN
-        p_respuesta_error(l_rsp,
-                          c_error_permiso,
-                          k_error.f_mensaje_error(c_error_permiso));
-        RAISE ex_error_general;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_permiso,
+                                      k_error.f_mensaje_error(k_operacion.c_error_permiso));
+        RAISE k_operacion.ex_error_general;
       END IF;
     END IF;
   
@@ -244,47 +213,47 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
         EXECUTE IMMEDIATE l_sentencia
           USING OUT l_rsp, IN l_prms;
       EXCEPTION
-        WHEN ex_servicio_no_implementado THEN
-          p_respuesta_error(l_rsp,
-                            c_servicio_no_implementado,
-                            'Servicio no implementado',
-                            dbms_utility.format_error_stack);
-          RAISE ex_error_general;
+        WHEN k_operacion.ex_servicio_no_implementado THEN
+          k_operacion.p_respuesta_error(l_rsp,
+                                        k_operacion.c_servicio_no_implementado,
+                                        'Servicio no implementado',
+                                        dbms_utility.format_error_stack);
+          RAISE k_operacion.ex_error_general;
         WHEN OTHERS THEN
-          p_respuesta_error(l_rsp,
-                            c_error_general,
-                            CASE
-                            k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
-                            k_error.c_user_defined_error THEN
-                            utl_call_stack.error_msg(1) WHEN
-                            k_error.c_oracle_predefined_error THEN
-                            'Error al procesar servicio' END,
-                            dbms_utility.format_error_stack);
-          RAISE ex_error_general;
+          k_operacion.p_respuesta_error(l_rsp,
+                                        k_operacion.c_error_general,
+                                        CASE
+                                        k_error.f_tipo_excepcion(utl_call_stack.error_number(1)) WHEN
+                                        k_error.c_user_defined_error THEN
+                                        utl_call_stack.error_msg(1) WHEN
+                                        k_error.c_oracle_predefined_error THEN
+                                        'Error al procesar servicio' END,
+                                        dbms_utility.format_error_stack);
+          RAISE k_operacion.ex_error_general;
       END;
     
     END IF;
   
-    IF l_rsp.codigo = c_ok THEN
+    IF l_rsp.codigo = k_operacion.c_ok THEN
       COMMIT;
     ELSE
-      RAISE ex_error_general;
+      RAISE k_operacion.ex_error_general;
     END IF;
   
-    p_respuesta_ok(l_rsp, l_rsp.datos);
+    k_operacion.p_respuesta_ok(l_rsp, l_rsp.datos);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       ROLLBACK;
       RETURN l_rsp;
     WHEN OTHERS THEN
       ROLLBACK;
-      p_respuesta_excepcion(l_rsp,
-                            utl_call_stack.error_number(1),
-                            utl_call_stack.error_msg(1),
-                            dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
@@ -294,68 +263,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
        SET cantidad_ejecuciones   = NULL,
            fecha_ultima_ejecucion = NULL,
            sql_ultima_ejecucion   = NULL;
-  END;
-
-  PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
-                                i_expresion  IN BOOLEAN,
-                                i_mensaje    IN VARCHAR2) IS
-  BEGIN
-    IF NOT nvl(i_expresion, FALSE) THEN
-      p_respuesta_error(io_respuesta,
-                        c_error_parametro,
-                        nvl(i_mensaje,
-                            k_error.f_mensaje_error(c_error_parametro)));
-      RAISE ex_error_parametro;
-    END IF;
-  END;
-
-  PROCEDURE p_respuesta_ok(io_respuesta IN OUT NOCOPY y_respuesta,
-                           i_datos      IN y_objeto DEFAULT NULL) IS
-  BEGIN
-    io_respuesta.codigo     := c_ok;
-    io_respuesta.mensaje    := 'OK';
-    io_respuesta.mensaje_bd := NULL;
-    io_respuesta.lugar      := NULL;
-    io_respuesta.datos      := i_datos;
-  END;
-
-  PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
-                              i_codigo     IN VARCHAR2,
-                              i_mensaje    IN VARCHAR2,
-                              i_mensaje_bd IN VARCHAR2 DEFAULT NULL) IS
-  BEGIN
-    IF i_codigo = c_ok THEN
-      io_respuesta.codigo := c_error_general;
-    ELSE
-      io_respuesta.codigo := substr(i_codigo, 1, 10);
-    END IF;
-    io_respuesta.mensaje    := substr(k_error.f_mensaje_excepcion(i_mensaje),
-                                      1,
-                                      4000);
-    io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
-    io_respuesta.datos      := NULL;
-  END;
-
-  PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
-                                  i_error_number IN NUMBER,
-                                  i_error_msg    IN VARCHAR2,
-                                  i_error_stack  IN VARCHAR2) IS
-  BEGIN
-    IF k_error.f_tipo_excepcion(i_error_number) =
-       k_error.c_user_defined_error THEN
-      p_respuesta_error(io_respuesta,
-                        c_error_general,
-                        i_error_msg,
-                        i_error_stack);
-    ELSIF k_error.f_tipo_excepcion(i_error_number) =
-          k_error.c_oracle_predefined_error THEN
-      p_respuesta_error(io_respuesta,
-                        c_error_inesperado,
-                        k_error.f_mensaje_error(c_error_inesperado,
-                                                to_char(nvl(k_sistema.f_valor_parametro_number(k_operacion.c_id_log),
-                                                            0))),
-                        i_error_stack);
-    END IF;
   END;
 
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
@@ -497,24 +404,26 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
          AND s.id_servicio = i_id_servicio;
     EXCEPTION
       WHEN no_data_found THEN
-        p_respuesta_error(l_rsp,
-                          c_error_parametro,
-                          'Servicio inexistente o inactivo');
-        RAISE ex_error_parametro;
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      'Servicio inexistente o inactivo');
+        RAISE k_operacion.ex_error_parametro;
     END;
   
     l_rsp.lugar := 'Validando parametros';
-    p_validar_parametro(l_rsp,
-                        k_operacion.f_valor_parametro_object(i_parametros,
-                                                             'pagina_parametros') IS NOT NULL,
-                        'Debe ingresar pagina_parametros');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_object(i_parametros,
+                                                                         'pagina_parametros') IS NOT NULL,
+                                    'Debe ingresar pagina_parametros');
     l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
   
     IF l_consulta_sql IS NULL THEN
-      p_respuesta_error(l_rsp, c_error_general, 'Consulta SQL no definida');
-      RAISE ex_error_parametro;
+      k_operacion.p_respuesta_error(l_rsp,
+                                    k_operacion.c_error_general,
+                                    'Consulta SQL no definida');
+      RAISE k_operacion.ex_error_parametro;
     END IF;
   
     l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ')' ||
@@ -607,18 +516,18 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                     l_pagina_parametros.por_pagina,
                                     l_pagina_parametros.no_paginar);
   
-    p_respuesta_ok(l_rsp, l_pagina);
+    k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
   EXCEPTION
-    WHEN ex_error_parametro THEN
+    WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
-    WHEN ex_error_general THEN
+    WHEN k_operacion.ex_error_general THEN
       RETURN l_rsp;
     WHEN OTHERS THEN
-      p_respuesta_excepcion(l_rsp,
-                            utl_call_stack.error_number(1),
-                            utl_call_stack.error_msg(1),
-                            dbms_utility.format_error_stack);
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
       RETURN l_rsp;
   END;
 
