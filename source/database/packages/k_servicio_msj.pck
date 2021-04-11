@@ -122,25 +122,28 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos LOOP
-      l_elemento                  := NEW y_correo();
-      l_elemento.id_correo        := ele.id_correo;
-      l_elemento.mensaje_to       := ele.mensaje_to;
-      l_elemento.mensaje_subject  := ele.mensaje_subject;
-      l_elemento.mensaje_body     := ele.mensaje_body;
-      l_elemento.mensaje_from     := ele.mensaje_from;
-      l_elemento.mensaje_reply_to := ele.mensaje_reply_to;
-      l_elemento.mensaje_cc       := ele.mensaje_cc;
-      l_elemento.mensaje_bcc      := ele.mensaje_bcc;
-      l_elemento.adjuntos         := lf_adjuntos(ele.id_correo);
-    
-      l_elementos.extend;
-      l_elementos(l_elementos.count) := l_elemento;
-    
-      UPDATE t_correos
-         SET estado = 'N' -- N-EN PROCESO DE ENVÍO
-       WHERE CURRENT OF cr_elementos;
-    END LOOP;
+    -- Sólo si está activo el envío
+    IF k_util.string_to_bool(k_util.f_valor_parametro('ENVIO_CORREOS_ACTIVO')) THEN
+      FOR ele IN cr_elementos LOOP
+        l_elemento                  := NEW y_correo();
+        l_elemento.id_correo        := ele.id_correo;
+        l_elemento.mensaje_to       := ele.mensaje_to;
+        l_elemento.mensaje_subject  := ele.mensaje_subject;
+        l_elemento.mensaje_body     := ele.mensaje_body;
+        l_elemento.mensaje_from     := ele.mensaje_from;
+        l_elemento.mensaje_reply_to := ele.mensaje_reply_to;
+        l_elemento.mensaje_cc       := ele.mensaje_cc;
+        l_elemento.mensaje_bcc      := ele.mensaje_bcc;
+        l_elemento.adjuntos         := lf_adjuntos(ele.id_correo);
+      
+        l_elementos.extend;
+        l_elementos(l_elementos.count) := l_elemento;
+      
+        UPDATE t_correos
+           SET estado = 'N' -- N-EN PROCESO DE ENVÍO
+         WHERE CURRENT OF cr_elementos;
+      END LOOP;
+    END IF;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
                                                l_pagina_parametros.pagina,
@@ -194,19 +197,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos LOOP
-      l_elemento                 := NEW y_mensaje();
-      l_elemento.id_mensaje      := ele.id_mensaje;
-      l_elemento.numero_telefono := ele.numero_telefono;
-      l_elemento.contenido       := ele.contenido;
-    
-      l_elementos.extend;
-      l_elementos(l_elementos.count) := l_elemento;
-    
-      UPDATE t_mensajes
-         SET estado = 'N' -- N-EN PROCESO DE ENVÍO
-       WHERE CURRENT OF cr_elementos;
-    END LOOP;
+    -- Sólo si está activo el envío
+    IF k_util.string_to_bool(k_util.f_valor_parametro('ENVIO_MENSAJES_ACTIVO')) THEN
+      FOR ele IN cr_elementos LOOP
+        l_elemento                 := NEW y_mensaje();
+        l_elemento.id_mensaje      := ele.id_mensaje;
+        l_elemento.numero_telefono := ele.numero_telefono;
+        l_elemento.contenido       := ele.contenido;
+      
+        l_elementos.extend;
+        l_elementos(l_elementos.count) := l_elemento;
+      
+        UPDATE t_mensajes
+           SET estado = 'N' -- N-EN PROCESO DE ENVÍO
+         WHERE CURRENT OF cr_elementos;
+      END LOOP;
+    END IF;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
                                                l_pagina_parametros.pagina,
@@ -260,20 +266,23 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                                       'pagina_parametros') AS
                                  y_pagina_parametros);
   
-    FOR ele IN cr_elementos LOOP
-      l_elemento                 := NEW y_notificacion();
-      l_elemento.id_notificacion := ele.id_notificacion;
-      l_elemento.suscripcion     := ele.suscripcion;
-      l_elemento.titulo          := ele.titulo;
-      l_elemento.contenido       := ele.contenido;
-    
-      l_elementos.extend;
-      l_elementos(l_elementos.count) := l_elemento;
-    
-      UPDATE t_notificaciones
-         SET estado = 'N' -- N-EN PROCESO DE ENVÍO
-       WHERE CURRENT OF cr_elementos;
-    END LOOP;
+    -- Sólo si está activo el envío
+    IF k_util.string_to_bool(k_util.f_valor_parametro('ENVIO_NOTIFICACIONES_ACTIVO')) THEN
+      FOR ele IN cr_elementos LOOP
+        l_elemento                 := NEW y_notificacion();
+        l_elemento.id_notificacion := ele.id_notificacion;
+        l_elemento.suscripcion     := ele.suscripcion;
+        l_elemento.titulo          := ele.titulo;
+        l_elemento.contenido       := ele.contenido;
+      
+        l_elementos.extend;
+        l_elementos(l_elementos.count) := l_elemento;
+      
+        UPDATE t_notificaciones
+           SET estado = 'N' -- N-EN PROCESO DE ENVÍO
+         WHERE CURRENT OF cr_elementos;
+      END LOOP;
+    END IF;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
                                                l_pagina_parametros.pagina,
