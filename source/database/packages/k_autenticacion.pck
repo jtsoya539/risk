@@ -60,6 +60,10 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                               i_clave      IN VARCHAR2,
                               i_tipo_clave IN CHAR DEFAULT 'A');
 
+  PROCEDURE p_restablecer_clave(i_alias      IN VARCHAR2,
+                                i_clave      IN VARCHAR2,
+                                i_tipo_clave IN CHAR DEFAULT 'A');
+
   PROCEDURE p_cambiar_clave(i_alias         IN VARCHAR2,
                             i_clave_antigua IN VARCHAR2,
                             i_clave_nueva   IN VARCHAR2,
@@ -477,15 +481,15 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_hash       t_usuario_claves.hash%TYPE;
     l_salt       t_usuario_claves.salt%TYPE;
   BEGIN
-    -- Valida clave
-    p_validar_clave(i_alias, i_clave, i_tipo_clave);
-  
     -- Busca usuario
     l_id_usuario := k_usuario.f_id_usuario(i_alias);
   
     IF l_id_usuario IS NULL THEN
       RAISE k_usuario.ex_usuario_inexistente;
     END IF;
+  
+    -- Valida clave
+    p_validar_clave(i_alias, i_clave, i_tipo_clave);
   
     -- Genera salt
     l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
@@ -521,6 +525,48 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                               'Usuario ya tiene una clave registrada');
   END;
 
+  PROCEDURE p_restablecer_clave(i_alias      IN VARCHAR2,
+                                i_clave      IN VARCHAR2,
+                                i_tipo_clave IN CHAR DEFAULT 'A') IS
+    l_id_usuario t_usuarios.id_usuario%TYPE;
+    l_hash       t_usuario_claves.hash%TYPE;
+    l_salt       t_usuario_claves.salt%TYPE;
+  BEGIN
+    -- Busca usuario
+    l_id_usuario := k_usuario.f_id_usuario(i_alias);
+  
+    IF l_id_usuario IS NULL THEN
+      RAISE k_usuario.ex_usuario_inexistente;
+    END IF;
+  
+    -- Valida clave
+    p_validar_clave(i_alias, i_clave, i_tipo_clave);
+  
+    -- Genera salt
+    l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+    -- Genera hash
+    l_hash := pbkdf2(i_clave, l_salt, c_iteraciones, c_longitud_bytes);
+  
+    -- Actualiza clave de usuario
+    UPDATE t_usuario_claves
+       SET HASH                       = l_hash,
+           salt                       = l_salt,
+           algoritmo                  = c_algoritmo,
+           iteraciones                = c_iteraciones,
+           estado                     = 'N',
+           cantidad_intentos_fallidos = 0,
+           fecha_ultima_autenticacion = NULL
+     WHERE id_usuario = l_id_usuario
+       AND tipo = i_tipo_clave;
+  
+    IF SQL%NOTFOUND THEN
+      raise_application_error(-20000, 'Usuario sin clave registrada');
+    END IF;
+  EXCEPTION
+    WHEN k_usuario.ex_usuario_inexistente THEN
+      raise_application_error(-20000, 'Usuario inexistente');
+  END;
+
   PROCEDURE p_cambiar_clave(i_alias         IN VARCHAR2,
                             i_clave_antigua IN VARCHAR2,
                             i_clave_nueva   IN VARCHAR2,
@@ -529,9 +575,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_hash       t_usuario_claves.hash%TYPE;
     l_salt       t_usuario_claves.salt%TYPE;
   BEGIN
-    -- Valida clave
-    p_validar_clave(i_alias, i_clave_nueva, i_tipo_clave);
-  
     -- Busca usuario
     l_id_usuario := k_usuario.f_id_usuario(i_alias);
   
@@ -542,6 +585,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     IF NOT f_validar_credenciales(i_alias, i_clave_antigua, i_tipo_clave) THEN
       RAISE ex_credenciales_invalidas;
     END IF;
+  
+    -- Valida clave
+    p_validar_clave(i_alias, i_clave_nueva, i_tipo_clave);
   
     -- Genera salt
     l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
@@ -560,16 +606,14 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
      WHERE id_usuario = l_id_usuario
        AND tipo = i_tipo_clave
        AND estado IN ('N', 'A');
-    /*IF SQL%NOTFOUND THEN
-      RAISE ex_credenciales_invalidas;
-    END IF;*/
+  
+    IF SQL%NOTFOUND THEN
+      raise_application_error(-20000, 'Usuario sin clave activa');
+    END IF;
   EXCEPTION
     WHEN k_usuario.ex_usuario_inexistente THEN
       raise_application_error(-20000, 'Credenciales inválidas');
     WHEN ex_credenciales_invalidas THEN
-      raise_application_error(-20000, 'Credenciales inválidas');
-    WHEN OTHERS THEN
-      lp_registrar_intento_fallido(l_id_usuario, i_tipo_clave);
       raise_application_error(-20000, 'Credenciales inválidas');
   END;
 
