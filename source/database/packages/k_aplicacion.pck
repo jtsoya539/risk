@@ -34,8 +34,6 @@ CREATE OR REPLACE PACKAGE k_aplicacion IS
                            i_activo           IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2;
 
-  FUNCTION f_generar_clave RETURN VARCHAR2;
-
   FUNCTION f_validar_clave(i_clave_aplicacion IN VARCHAR2) RETURN BOOLEAN;
 
   PROCEDURE p_validar_clave(i_clave_aplicacion IN VARCHAR2);
@@ -62,11 +60,6 @@ CREATE OR REPLACE PACKAGE BODY k_aplicacion IS
         l_id_aplicacion := NULL;
     END;
     RETURN l_id_aplicacion;
-  END;
-
-  FUNCTION f_generar_clave RETURN VARCHAR2 IS
-  BEGIN
-    RETURN utl_raw.cast_to_varchar2(utl_encode.base64_encode(dbms_crypto.randombytes(number_bytes => 32)));
   END;
 
   FUNCTION f_validar_clave(i_clave_aplicacion IN VARCHAR2) RETURN BOOLEAN IS

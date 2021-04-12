@@ -604,8 +604,8 @@ END;';
   FUNCTION f_hash(i_data      IN VARCHAR2,
                   i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC IS
   BEGIN
-    RETURN to_char(rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
-                                             i_hash_type)));
+    RETURN rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
+                                     i_hash_type));
   END;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2 IS

@@ -38,6 +38,10 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   c_metodo_validacion_risk   CONSTANT VARCHAR2(10) := 'RISK';
   c_metodo_validacion_oracle CONSTANT VARCHAR2(10) := 'ORACLE';
 
+  FUNCTION f_randombytes_hex RETURN VARCHAR2;
+
+  FUNCTION f_randombytes_base64 RETURN VARCHAR2;
+
   FUNCTION f_salt RETURN VARCHAR2;
 
   FUNCTION f_hash(i_clave IN VARCHAR2,
@@ -205,9 +209,19 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       ROLLBACK;
   END;
 
-  FUNCTION f_salt RETURN VARCHAR2 IS
+  FUNCTION f_randombytes_hex RETURN VARCHAR2 IS
   BEGIN
     RETURN rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+  END;
+
+  FUNCTION f_randombytes_base64 RETURN VARCHAR2 IS
+  BEGIN
+    RETURN utl_raw.cast_to_varchar2(utl_encode.base64_encode(dbms_crypto.randombytes(c_longitud_bytes)));
+  END;
+
+  FUNCTION f_salt RETURN VARCHAR2 IS
+  BEGIN
+    RETURN f_randombytes_hex;
   END;
 
   FUNCTION f_hash(i_clave IN VARCHAR2,
