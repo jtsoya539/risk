@@ -26,6 +26,9 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('CANTIDAD_MAXIMA_SESIONES_USUARIO', 'Cantidad máxima permitida de sesiones activas por usuario', '2');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('CLAVE_ENCRIPTACION_DESENCRIPTACION', 'Clave para encriptación y desencriptación', '26B9257BF16323A5919FAA48ABB7C575A50996698A0576C0DE0EE312AF6D2D60');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('CLAVE_VALIDACION_ACCESS_TOKEN', 'Clave de validación del Access Token', '9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
