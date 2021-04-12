@@ -38,6 +38,11 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   c_metodo_validacion_risk   CONSTANT VARCHAR2(10) := 'RISK';
   c_metodo_validacion_oracle CONSTANT VARCHAR2(10) := 'ORACLE';
 
+  FUNCTION f_salt RETURN VARCHAR2;
+
+  FUNCTION f_hash(i_clave IN VARCHAR2,
+                  i_salt  IN VARCHAR2) RETURN VARCHAR2;
+
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A');
@@ -198,6 +203,17 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   EXCEPTION
     WHEN OTHERS THEN
       ROLLBACK;
+  END;
+
+  FUNCTION f_salt RETURN VARCHAR2 IS
+  BEGIN
+    RETURN rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+  END;
+
+  FUNCTION f_hash(i_clave IN VARCHAR2,
+                  i_salt  IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN pbkdf2(i_clave, i_salt, c_iteraciones, c_longitud_bytes);
   END;
 
   PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
@@ -492,9 +508,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     p_validar_clave(i_alias, i_clave, i_tipo_clave);
   
     -- Genera salt
-    l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+    l_salt := f_salt;
     -- Genera hash
-    l_hash := pbkdf2(i_clave, l_salt, c_iteraciones, c_longitud_bytes);
+    l_hash := f_hash(i_clave, l_salt);
   
     -- Inserta clave de usuario
     INSERT INTO t_usuario_claves
@@ -543,9 +559,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     p_validar_clave(i_alias, i_clave, i_tipo_clave);
   
     -- Genera salt
-    l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+    l_salt := f_salt;
     -- Genera hash
-    l_hash := pbkdf2(i_clave, l_salt, c_iteraciones, c_longitud_bytes);
+    l_hash := f_hash(i_clave, l_salt);
   
     -- Actualiza clave de usuario
     UPDATE t_usuario_claves
@@ -590,9 +606,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     p_validar_clave(i_alias, i_clave_nueva, i_tipo_clave);
   
     -- Genera salt
-    l_salt := rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+    l_salt := f_salt;
     -- Genera hash
-    l_hash := pbkdf2(i_clave_nueva, l_salt, c_iteraciones, c_longitud_bytes);
+    l_hash := f_hash(i_clave_nueva, l_salt);
   
     -- Actualiza clave de usuario
     UPDATE t_usuario_claves

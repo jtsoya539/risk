@@ -36,6 +36,16 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SALT">f_salt</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_HASH">f_hash</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -160,6 +170,25 @@ c_metodo_validacion_oracle
 </P>
 <PRE CLASS="DECL_TEXT">
 c_metodo_validacion_oracle CONSTANT VARCHAR2(10) := 'ORACLE';
+</PRE>
+<HR>
+<A NAME="F_SALT"></A>
+<P CLASS="TYPE_TITLE">
+f_salt
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_salt RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_HASH"></A>
+<P CLASS="TYPE_TITLE">
+f_hash
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_hash(i_clave IN VARCHAR2,
+                i_salt  IN VARCHAR2) RETURN VARCHAR2
+
 </PRE>
 <HR>
 <A NAME="P_VALIDAR_CLAVE"></A>

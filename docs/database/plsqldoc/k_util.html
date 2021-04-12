@@ -121,6 +121,16 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#ENCRYPT">encrypt</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#DECRYPT">decrypt</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#JSON_TO_OBJETO">json_to_objeto</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -560,7 +570,25 @@ FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB
 base64decode
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION base64decode(i_clob CLOB) RETURN BLOB
+FUNCTION base64decode(i_clob IN CLOB) RETURN BLOB
+
+</PRE>
+<HR>
+<A NAME="ENCRYPT"></A>
+<P CLASS="TYPE_TITLE">
+encrypt
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION encrypt(i_src IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="DECRYPT"></A>
+<P CLASS="TYPE_TITLE">
+decrypt
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION decrypt(i_src IN VARCHAR2) RETURN VARCHAR2
 
 </PRE>
 <HR>

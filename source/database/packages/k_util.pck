@@ -117,7 +117,11 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION base64encode(i_blob IN BLOB) RETURN CLOB;
 
-  FUNCTION base64decode(i_clob CLOB) RETURN BLOB;
+  FUNCTION base64decode(i_clob IN CLOB) RETURN BLOB;
+
+  FUNCTION encrypt(i_src IN VARCHAR2) RETURN VARCHAR2;
+
+  FUNCTION decrypt(i_src IN VARCHAR2) RETURN VARCHAR2;
 
   FUNCTION json_to_objeto(i_json        IN CLOB,
                           i_nombre_tipo IN VARCHAR2) RETURN anydata;
@@ -704,7 +708,7 @@ END;';
     RETURN l_clob;
   END;
 
-  FUNCTION base64decode(i_clob CLOB) RETURN BLOB IS
+  FUNCTION base64decode(i_clob IN CLOB) RETURN BLOB IS
     -- -----------------------------------------------------------------------------------
     -- File Name    : https://oracle-base.com/dba/miscellaneous/base64decode.sql
     -- Author       : Tim Hall
@@ -730,6 +734,22 @@ END;';
         NULL;
     END;
     RETURN l_blob;
+  END;
+
+  FUNCTION encrypt(i_src IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN rawtohex(dbms_crypto.encrypt(src => utl_i18n.string_to_raw(i_src,
+                                                                      'AL32UTF8'),
+                                        typ => dbms_crypto.des_cbc_pkcs5,
+                                        key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))));
+  END;
+
+  FUNCTION decrypt(i_src IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN utl_i18n.raw_to_char(dbms_crypto.decrypt(src => hextoraw(i_src),
+                                                    typ => dbms_crypto.des_cbc_pkcs5,
+                                                    key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))),
+                                'AL32UTF8');
   END;
 
   FUNCTION json_to_objeto(i_json        IN CLOB,
