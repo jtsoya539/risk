@@ -5,7 +5,9 @@ create table T_USUARIOS
   id_persona       NUMBER(10),
   estado           VARCHAR2(1),
   direccion_correo VARCHAR2(320),
-  numero_telefono  VARCHAR2(160)
+  numero_telefono  VARCHAR2(160),
+  origen           VARCHAR2(1),
+  id_externo       VARCHAR2(160)
 )
 ;
 comment on table T_USUARIOS
@@ -22,6 +24,10 @@ comment on column T_USUARIOS.direccion_correo
   is 'Direccion de correo electronico principal del usuario';
 comment on column T_USUARIOS.numero_telefono
   is 'Numero de telefono principal del usuario';
+comment on column T_USUARIOS.origen
+  is 'Origen del usuario';
+comment on column T_USUARIOS.id_externo
+  is 'Identificador externo del usuario';
 alter table T_USUARIOS
   add constraint PK_USUARIOS primary key (ID_USUARIO);
 alter table T_USUARIOS
@@ -31,4 +37,3 @@ alter table T_USUARIOS
 alter table T_USUARIOS
   add constraint FK_USUARIOS_PERSONAS foreign key (ID_PERSONA)
   references T_PERSONAS (ID_PERSONA);
-

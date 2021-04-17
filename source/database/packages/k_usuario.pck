@@ -43,6 +43,8 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_estado(i_id_usuario IN NUMBER) RETURN VARCHAR2;
 
+  FUNCTION f_origen(i_id_usuario IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN;
 
   FUNCTION f_version_avatar(i_alias IN VARCHAR2) RETURN NUMBER;
@@ -64,7 +66,8 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
         INTO l_id_usuario
         FROM t_usuarios
        WHERE (upper(alias) = upper(i_usuario) OR
-             upper(direccion_correo) = upper(i_usuario));
+             upper(direccion_correo) = upper(i_usuario) OR
+             id_externo = i_usuario);
     EXCEPTION
       WHEN no_data_found THEN
         l_id_usuario := NULL;
@@ -140,6 +143,23 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
         l_estado := NULL;
     END;
     RETURN l_estado;
+  END;
+
+  FUNCTION f_origen(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS
+    l_origen t_usuarios.origen%TYPE;
+  BEGIN
+    BEGIN
+      SELECT u.origen
+        INTO l_origen
+        FROM t_usuarios u
+       WHERE u.id_usuario = i_id_usuario;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_origen := NULL;
+      WHEN OTHERS THEN
+        l_origen := NULL;
+    END;
+    RETURN l_origen;
   END;
 
   FUNCTION f_validar_alias(i_alias VARCHAR2) RETURN BOOLEAN IS

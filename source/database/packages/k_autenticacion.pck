@@ -34,6 +34,10 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   c_clave_acceso        CONSTANT CHAR(1) := 'A';
   c_clave_transaccional CONSTANT CHAR(1) := 'T';
 
+  -- Origenes de usuario
+  c_origen_risk   CONSTANT CHAR(1) := 'R';
+  c_origen_google CONSTANT CHAR(1) := 'G';
+
   -- Métodos de validación de credenciales
   c_metodo_validacion_risk   CONSTANT VARCHAR2(10) := 'RISK';
   c_metodo_validacion_oracle CONSTANT VARCHAR2(10) := 'ORACLE';
@@ -56,7 +60,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                                 i_nombre           IN VARCHAR2,
                                 i_apellido         IN VARCHAR2,
                                 i_direccion_correo IN VARCHAR2,
-                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL);
+                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
+                                i_origen           IN VARCHAR2 DEFAULT NULL,
+                                i_id_externo       IN VARCHAR2 DEFAULT NULL);
 
   PROCEDURE p_editar_usuario(i_alias_antiguo    IN VARCHAR2,
                              i_alias_nuevo      IN VARCHAR2,
@@ -375,15 +381,20 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                 i_nombre           IN VARCHAR2,
                                 i_apellido         IN VARCHAR2,
                                 i_direccion_correo IN VARCHAR2,
-                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL) IS
+                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
+                                i_origen           IN VARCHAR2 DEFAULT NULL,
+                                i_id_externo       IN VARCHAR2 DEFAULT NULL) IS
     l_id_persona          t_personas.id_persona%TYPE;
     l_id_usuario          t_usuarios.id_usuario%TYPE;
     l_confirmacion_activa VARCHAR2(1);
     l_estado_usuario      t_usuarios.estado%TYPE;
     l_body                CLOB;
+    l_origen              VARCHAR2(1) := nvl(i_origen, c_origen_risk);
   BEGIN
     -- Valida clave
-    p_validar_clave(i_alias, i_clave, c_clave_acceso);
+    IF l_origen = c_origen_risk THEN
+      p_validar_clave(i_alias, i_clave, c_clave_acceso);
+    END IF;
   
     -- Inserta persona
     INSERT INTO t_personas
@@ -406,8 +417,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        NULL)
     RETURNING id_persona INTO l_id_persona;
   
-    l_confirmacion_activa := nvl(k_util.f_valor_parametro('CONFIRMACION_DIRECCION_CORREO'),
-                                 'N');
+    l_confirmacion_activa := CASE l_origen
+                               WHEN c_origen_risk THEN
+                                nvl(k_util.f_valor_parametro('CONFIRMACION_DIRECCION_CORREO'),
+                                    'N')
+                               ELSE
+                                'N'
+                             END;
     l_estado_usuario      := CASE l_confirmacion_activa
                                WHEN 'S' THEN
                                 'P' -- PENDIENTE DE ACTIVACIÓN
@@ -417,13 +433,21 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Inserta usuario
     INSERT INTO t_usuarios
-      (alias, id_persona, estado, direccion_correo, numero_telefono)
+      (alias,
+       id_persona,
+       estado,
+       direccion_correo,
+       numero_telefono,
+       origen,
+       id_externo)
     VALUES
       (i_alias,
        l_id_persona,
        l_estado_usuario,
        i_direccion_correo,
-       i_numero_telefono)
+       i_numero_telefono,
+       l_origen,
+       i_id_externo)
     RETURNING id_usuario INTO l_id_usuario;
   
     INSERT INTO t_rol_usuarios
@@ -435,7 +459,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                             l_estado_usuario),
                  k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO'));
   
-    p_registrar_clave(i_alias, i_clave, c_clave_acceso);
+    -- Registra clave
+    IF l_origen = c_origen_risk THEN
+      p_registrar_clave(i_alias, i_clave, c_clave_acceso);
+    END IF;
   
     IF l_confirmacion_activa = 'S' THEN
       -- Envía correo de verificación
