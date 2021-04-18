@@ -377,5 +377,40 @@ namespace Risk.API.Controllers
             var respuesta = _autService.ValidarOtp(secret, otp);
             return ProcesarRespuesta(respuesta);
         }
+
+        [AllowAnonymous]
+        [HttpPost("IniciarSesionGoogle")]
+        [SwaggerOperation(OperationId = "IniciarSesionGoogle", Summary = "IniciarSesionGoogle", Description = "Permite iniciar la sesión de un usuario con su cuenta de google")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        public IActionResult IniciarSesionGoogle([FromBody] IniciarSesionGoogleRequestBody requestBody)
+        {
+            //TODO: Validar JWT
+            //Recomendaciones: https://developers.google.com/identity/sign-in/web/backend-auth
+
+            // Obtener datos del JWT
+            Usuario usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken);
+
+            // Registrar el usuario
+            var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, OrigenSesion.Google, usuario.Alias);
+
+            /*if (!respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                return ProcesarRespuesta(respRegistrarUsuario);
+            }*/
+
+            var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+            //var refreshToken = TokenHelper.GenerarRefreshToken();
+
+            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, OrigenSesion.Google, requestBody.IdToken);
+
+            if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
+            }
+
+            return ProcesarRespuesta(respIniciarSesion);
+        }
     }
 }

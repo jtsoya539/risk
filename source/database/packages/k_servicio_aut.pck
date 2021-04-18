@@ -78,21 +78,29 @@ END;
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
 
   FUNCTION registrar_usuario(i_parametros IN y_parametros) RETURN y_respuesta IS
-    l_rsp y_respuesta;
+    l_rsp    y_respuesta;
+    l_origen VARCHAR2(1);
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'usuario') IS NOT NULL,
-                                    'Debe ingresar usuario');
+    l_rsp.lugar := 'Obteniendo origen';
+    l_origen    := nvl(k_operacion.f_valor_parametro_string(i_parametros,
+                                                            'origen'),
+                       k_autenticacion.c_origen_risk);
   
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'clave') IS NOT NULL,
-                                    'Debe ingresar clave');
+    l_rsp.lugar := 'Validando parametros';
+    IF l_origen = k_autenticacion.c_origen_risk THEN
+      k_operacion.p_validar_parametro(l_rsp,
+                                      k_operacion.f_valor_parametro_string(i_parametros,
+                                                                           'usuario') IS NOT NULL,
+                                      'Debe ingresar usuario');
+    
+      k_operacion.p_validar_parametro(l_rsp,
+                                      k_operacion.f_valor_parametro_string(i_parametros,
+                                                                           'clave') IS NOT NULL,
+                                      'Debe ingresar clave');
+    END IF;
   
     k_operacion.p_validar_parametro(l_rsp,
                                     k_operacion.f_valor_parametro_string(i_parametros,
@@ -121,7 +129,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                         k_operacion.f_valor_parametro_string(i_parametros,
                                                                              'direccion_correo'),
                                         k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'numero_telefono'));
+                                                                             'numero_telefono'),
+                                        l_origen,
+                                        k_operacion.f_valor_parametro_string(i_parametros,
+                                                                             'id_externo'));
   
     k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
@@ -367,9 +378,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp       y_respuesta;
     l_sesion    y_sesion;
     l_id_sesion t_sesiones.id_sesion%TYPE;
+    l_origen    VARCHAR2(1);
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Obteniendo origen';
+    l_origen    := nvl(k_operacion.f_valor_parametro_string(i_parametros,
+                                                            'origen'),
+                       k_autenticacion.c_origen_risk);
   
     l_rsp.lugar := 'Validando parametros';
     k_operacion.p_validar_parametro(l_rsp,
@@ -382,10 +399,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                          'access_token') IS NOT NULL,
                                     'Debe ingresar access_token');
   
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'refresh_token') IS NOT NULL,
-                                    'Debe ingresar refresh_token');
+    IF l_origen = k_autenticacion.c_origen_risk THEN
+      k_operacion.p_validar_parametro(l_rsp,
+                                      k_operacion.f_valor_parametro_string(i_parametros,
+                                                                           'refresh_token') IS NOT NULL,
+                                      'Debe ingresar refresh_token');
+    END IF;
   
     l_rsp.lugar := 'Iniciando sesion';
     l_id_sesion := k_autenticacion.f_iniciar_sesion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
@@ -396,7 +415,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                     k_operacion.f_valor_parametro_string(i_parametros,
                                                                                          'refresh_token'),
                                                     k_operacion.f_valor_parametro_string(i_parametros,
-                                                                                         'token_dispositivo'));
+                                                                                         'token_dispositivo'),
+                                                    l_origen,
+                                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                         'dato_externo'));
   
     l_rsp.lugar := 'Cargando datos de la sesion';
     l_sesion    := k_sesion.f_datos_sesion(l_id_sesion);
@@ -420,9 +442,15 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp       y_respuesta;
     l_sesion    y_sesion;
     l_id_sesion t_sesiones.id_sesion%TYPE;
+    l_origen    VARCHAR2(1);
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Obteniendo origen';
+    l_origen    := nvl(k_operacion.f_valor_parametro_string(i_parametros,
+                                                            'origen'),
+                       k_autenticacion.c_origen_risk);
   
     l_rsp.lugar := 'Validando parametros';
     k_operacion.p_validar_parametro(l_rsp,
@@ -430,20 +458,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                          'access_token_antiguo') IS NOT NULL,
                                     'Debe ingresar antiguo Access Token');
   
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'refresh_token_antiguo') IS NOT NULL,
-                                    'Debe ingresar antiguo Refresh Token');
+    IF l_origen = k_autenticacion.c_origen_risk THEN
+      k_operacion.p_validar_parametro(l_rsp,
+                                      k_operacion.f_valor_parametro_string(i_parametros,
+                                                                           'refresh_token_antiguo') IS NOT NULL,
+                                      'Debe ingresar antiguo Refresh Token');
+    END IF;
   
     k_operacion.p_validar_parametro(l_rsp,
                                     k_operacion.f_valor_parametro_string(i_parametros,
                                                                          'access_token_nuevo') IS NOT NULL,
                                     'Debe ingresar nuevo Access Token');
   
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'refresh_token_nuevo') IS NOT NULL,
-                                    'Debe ingresar nuevo Refresh Token');
+    IF l_origen = k_autenticacion.c_origen_risk THEN
+      k_operacion.p_validar_parametro(l_rsp,
+                                      k_operacion.f_valor_parametro_string(i_parametros,
+                                                                           'refresh_token_nuevo') IS NOT NULL,
+                                      'Debe ingresar nuevo Refresh Token');
+    END IF;
   
     l_rsp.lugar := 'Refrescando sesion';
     l_id_sesion := k_autenticacion.f_refrescar_sesion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
@@ -454,7 +486,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                       k_operacion.f_valor_parametro_string(i_parametros,
                                                                                            'access_token_nuevo'),
                                                       k_operacion.f_valor_parametro_string(i_parametros,
-                                                                                           'refresh_token_nuevo'));
+                                                                                           'refresh_token_nuevo'),
+                                                      l_origen,
+                                                      k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                           'dato_externo'));
   
     l_rsp.lugar := 'Cargando datos de la sesion';
     l_sesion    := k_sesion.f_datos_sesion(l_id_sesion);

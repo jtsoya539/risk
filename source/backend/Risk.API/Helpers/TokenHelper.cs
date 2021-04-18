@@ -182,5 +182,30 @@ namespace Risk.API.Helpers
 
             return version;
         }
+
+        public static Usuario ObtenerUsuarioDeTokenGoogle(string idToken)
+        {
+            Usuario usuario = null;
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            if (tokenHandler.CanReadToken(idToken))
+            {
+                JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(idToken);
+                string idExterno = jwtToken.Claims.First(claim => claim.Type == "sub").Value;
+                string nombre = jwtToken.Claims.First(claim => claim.Type == "given_name").Value;
+                string apellido = jwtToken.Claims.First(claim => claim.Type == "family_name").Value;
+                string direccionCorreo = jwtToken.Claims.First(claim => claim.Type == "email").Value;
+
+                usuario = new Usuario
+                {
+                    Alias = idExterno,
+                    Nombre = nombre,
+                    Apellido = apellido,
+                    DireccionCorreo = direccionCorreo
+                };
+            }
+
+            return usuario;
+        }
     }
 }
