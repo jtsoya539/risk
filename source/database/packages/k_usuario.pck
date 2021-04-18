@@ -51,6 +51,9 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario;
 
+  FUNCTION f_existe_usuario_externo(i_origen     IN VARCHAR2,
+                                    i_id_externo IN VARCHAR2) RETURN BOOLEAN;
+
   PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,
                              i_estado     IN VARCHAR2);
 
@@ -247,6 +250,23 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
     l_usuario.roles := l_roles;
   
     RETURN l_usuario;
+  END;
+
+  FUNCTION f_existe_usuario_externo(i_origen     IN VARCHAR2,
+                                    i_id_externo IN VARCHAR2) RETURN BOOLEAN IS
+    l_existe_usuario VARCHAR2(1) := 'N';
+  BEGIN
+    SELECT decode(nvl(COUNT(1), 0), 0, 'N', 'S')
+      INTO l_existe_usuario
+      FROM t_usuarios us
+     WHERE us.origen = i_origen
+       AND us.id_externo = i_id_externo;
+  
+    IF l_existe_usuario = 'S' THEN
+      RETURN TRUE;
+    ELSE
+      RETURN FALSE;
+    END IF;
   END;
 
   PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,

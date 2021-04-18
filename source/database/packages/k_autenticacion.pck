@@ -400,6 +400,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       p_validar_clave(i_alias, i_clave, c_clave_acceso);
     END IF;
   
+    -- Valida que no exista el usuario externo
+    IF l_origen <> c_origen_risk THEN
+      IF k_usuario.f_existe_usuario_externo(l_origen, i_id_externo) THEN
+        raise_application_error(-20000, 'Usuario externo ya existe');
+      END IF;
+    END IF;
+  
     -- Inserta persona
     INSERT INTO t_personas
       (nombre,
