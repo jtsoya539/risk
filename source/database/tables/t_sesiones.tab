@@ -13,7 +13,9 @@ create table T_SESIONES
   direccion_ip                   VARCHAR2(50),
   host                           VARCHAR2(50),
   terminal                       VARCHAR2(50),
-  id_dispositivo                 NUMBER(15)
+  id_dispositivo                 NUMBER(15),
+  origen                         VARCHAR2(1),
+  dato_externo                   VARCHAR2(1000)
 )
 ;
 comment on table T_SESIONES
@@ -46,6 +48,10 @@ comment on column T_SESIONES.terminal
   is 'Terminal de la sesion';
 comment on column T_SESIONES.id_dispositivo
   is 'Dispositivo relacionado a la sesion';
+comment on column T_SESIONES.origen
+  is 'Origen de la sesion';
+comment on column T_SESIONES.dato_externo
+  is 'Dato externo de la sesion';
 alter table T_SESIONES
   add constraint PK_SESIONES primary key (ID_SESION);
 alter table T_SESIONES
@@ -59,4 +65,3 @@ alter table T_SESIONES
 alter table T_SESIONES
   add constraint FK_SESIONES_USUARIOS foreign key (ID_USUARIO)
   references T_USUARIOS (ID_USUARIO);
-

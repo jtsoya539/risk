@@ -106,14 +106,18 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                             i_usuario           IN VARCHAR2,
                             i_access_token      IN VARCHAR2,
                             i_refresh_token     IN VARCHAR2,
-                            i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
+                            i_token_dispositivo IN VARCHAR2 DEFAULT NULL,
+                            i_origen            IN VARCHAR2 DEFAULT NULL,
+                            i_dato_externo      IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
   FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                               i_access_token_antiguo  IN VARCHAR2,
                               i_refresh_token_antiguo IN VARCHAR2,
                               i_access_token_nuevo    IN VARCHAR2,
-                              i_refresh_token_nuevo   IN VARCHAR2)
+                              i_refresh_token_nuevo   IN VARCHAR2,
+                              i_origen                IN VARCHAR2 DEFAULT NULL,
+                              i_dato_externo          IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
   FUNCTION f_generar_url_activacion(i_alias IN VARCHAR2) RETURN VARCHAR2;
@@ -788,7 +792,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                             i_usuario           IN VARCHAR2,
                             i_access_token      IN VARCHAR2,
                             i_refresh_token     IN VARCHAR2,
-                            i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
+                            i_token_dispositivo IN VARCHAR2 DEFAULT NULL,
+                            i_origen            IN VARCHAR2 DEFAULT NULL,
+                            i_dato_externo      IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER IS
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_id_usuario                     t_usuarios.id_usuario%TYPE;
@@ -798,6 +804,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_cantidad                       NUMBER(3);
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
+    --
+    l_origen VARCHAR2(1) := nvl(i_origen, c_origen_risk);
   BEGIN
     -- Valida aplicacion
     IF i_id_aplicacion IS NULL THEN
@@ -846,28 +854,31 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     -- Cambia estado de las sesiones expiradas
     k_sesion.p_expirar_sesiones(l_id_usuario);
   
-    IF l_tipo_aplicacion <> 'S' THEN
-      -- Si es de tipo S-SERVICIO no valida cantidad de sesiones activas
-    
-      -- Obtiene cantidad de sesiones activas del usuario
-      SELECT COUNT(id_sesion)
-        INTO l_cantidad
-        FROM t_sesiones
-       WHERE estado = 'A'
-         AND id_usuario = l_id_usuario;
-    
-      IF l_cantidad >=
-         to_number(k_util.f_valor_parametro('CANTIDAD_MAXIMA_SESIONES_USUARIO')) THEN
-        raise_application_error(-20000,
-                                'Usuario ha alcanzado la cantidad máxima de sesiones activas');
+    IF l_origen = c_origen_risk THEN
+      -- Si el origen de la sesion es R-RISK
+      IF l_tipo_aplicacion <> 'S' THEN
+        -- Si es de tipo S-SERVICIO no valida cantidad de sesiones activas
+      
+        -- Obtiene cantidad de sesiones activas del usuario
+        SELECT COUNT(id_sesion)
+          INTO l_cantidad
+          FROM t_sesiones
+         WHERE estado = 'A'
+           AND id_usuario = l_id_usuario;
+      
+        IF l_cantidad >=
+           to_number(k_util.f_valor_parametro('CANTIDAD_MAXIMA_SESIONES_USUARIO')) THEN
+          raise_application_error(-20000,
+                                  'Usuario ha alcanzado la cantidad máxima de sesiones activas');
+        END IF;
+      
       END IF;
     
-    END IF;
-  
-    -- Obtiene la fecha de expiracion del Access Token y Refresh Token
-    l_fecha_expiracion_access_token := k_sesion.f_fecha_expiracion_access_token(i_access_token);
-    IF i_refresh_token IS NOT NULL THEN
-      l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+      -- Obtiene la fecha de expiracion del Access Token y Refresh Token
+      l_fecha_expiracion_access_token := k_sesion.f_fecha_expiracion_access_token(i_access_token);
+      IF i_refresh_token IS NOT NULL THEN
+        l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+      END IF;
     END IF;
   
     -- Inserta sesion
@@ -883,7 +894,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        direccion_ip,
        host,
        terminal,
-       id_dispositivo)
+       id_dispositivo,
+       origen,
+       dato_externo)
     VALUES
       (l_id_usuario,
        i_id_aplicacion,
@@ -896,7 +909,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        k_sistema.f_valor_parametro_string(k_sistema.c_direccion_ip),
        k_util.f_host,
        k_util.f_terminal,
-       l_id_dispositivo)
+       l_id_dispositivo,
+       l_origen,
+       i_dato_externo)
     RETURNING id_sesion INTO l_id_sesion;
   
     IF l_id_dispositivo IS NOT NULL THEN
@@ -916,11 +931,15 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                               i_access_token_antiguo  IN VARCHAR2,
                               i_refresh_token_antiguo IN VARCHAR2,
                               i_access_token_nuevo    IN VARCHAR2,
-                              i_refresh_token_nuevo   IN VARCHAR2)
+                              i_refresh_token_nuevo   IN VARCHAR2,
+                              i_origen                IN VARCHAR2 DEFAULT NULL,
+                              i_dato_externo          IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER IS
     l_id_sesion                      t_sesiones.id_sesion%TYPE;
     l_fecha_expiracion_access_token  DATE;
     l_fecha_expiracion_refresh_token DATE;
+    --
+    l_origen VARCHAR2(1) := nvl(i_origen, c_origen_risk);
   BEGIN
     -- Valida aplicacion
     IF i_id_aplicacion IS NULL THEN
@@ -934,27 +953,46 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RAISE ex_tokens_invalidos;
     END IF;
   
-    -- Obtiene la fecha de expiracion del Access Token y Refresh Token
-    l_fecha_expiracion_access_token := k_sesion.f_fecha_expiracion_access_token(i_access_token_nuevo);
-    IF i_refresh_token_nuevo IS NOT NULL THEN
-      l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
-    END IF;
-  
-    -- Actualiza sesion
-    UPDATE t_sesiones
-       SET access_token                   = i_access_token_nuevo,
-           refresh_token                  = i_refresh_token_nuevo,
-           fecha_expiracion_access_token  = l_fecha_expiracion_access_token,
-           fecha_expiracion_refresh_token = l_fecha_expiracion_refresh_token,
-           estado                         = 'A',
-           fecha_estado                   = SYSDATE
-     WHERE id_sesion = l_id_sesion
-       AND access_token = i_access_token_antiguo
-       AND refresh_token = i_refresh_token_antiguo
-       AND estado IN ('A', 'X')
-       AND fecha_expiracion_refresh_token >= SYSDATE;
-    IF SQL%NOTFOUND THEN
-      RAISE ex_tokens_invalidos;
+    IF l_origen = c_origen_risk THEN
+      -- Obtiene la fecha de expiracion del Access Token y Refresh Token
+      l_fecha_expiracion_access_token := k_sesion.f_fecha_expiracion_access_token(i_access_token_nuevo);
+      IF i_refresh_token_nuevo IS NOT NULL THEN
+        l_fecha_expiracion_refresh_token := k_sesion.f_fecha_expiracion_refresh_token(i_id_aplicacion);
+      END IF;
+    
+      -- Actualiza sesion
+      UPDATE t_sesiones
+         SET access_token                   = i_access_token_nuevo,
+             refresh_token                  = i_refresh_token_nuevo,
+             fecha_expiracion_access_token  = l_fecha_expiracion_access_token,
+             fecha_expiracion_refresh_token = l_fecha_expiracion_refresh_token,
+             estado                         = 'A',
+             fecha_estado                   = SYSDATE
+       WHERE id_sesion = l_id_sesion
+         AND access_token = i_access_token_antiguo
+         AND refresh_token = i_refresh_token_antiguo
+         AND estado IN ('A', 'X')
+         AND fecha_expiracion_refresh_token >= SYSDATE;
+      IF SQL%NOTFOUND THEN
+        RAISE ex_tokens_invalidos;
+      END IF;
+    
+    ELSE
+    
+      -- Actualiza sesion
+      UPDATE t_sesiones
+         SET access_token = i_access_token_nuevo,
+             estado       = 'A',
+             fecha_estado = SYSDATE,
+             dato_externo = i_dato_externo
+       WHERE id_sesion = l_id_sesion
+         AND access_token = i_access_token_antiguo
+         AND estado IN ('A', 'X')
+         AND origen = l_origen;
+      IF SQL%NOTFOUND THEN
+        RAISE ex_tokens_invalidos;
+      END IF;
+    
     END IF;
   
     RETURN l_id_sesion;
