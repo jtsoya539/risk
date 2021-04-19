@@ -15,7 +15,7 @@ create table T_SESIONES
   terminal                       VARCHAR2(50),
   id_dispositivo                 NUMBER(15),
   origen                         VARCHAR2(1),
-  dato_externo                   VARCHAR2(1000)
+  dato_externo                   VARCHAR2(2000)
 )
 ;
 comment on table T_SESIONES
