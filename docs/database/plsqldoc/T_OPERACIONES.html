@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_OPERACIONES">
  <META name="description" content="Operaciones">
- <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL NIVEL_LOG">
+ <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL NIVEL_LOG TIENE_PAGINACION">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -178,7 +178,24 @@ NUMBER(1)
 0
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Nivel log de la operaci&#243;n. (0-Off, 1-Error, 2-Info)
+Nivel de log de la operaci&#243;n (0-Off, 1-Error, 2-Info)
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+TIENE_PAGINACION
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(1)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+'N'
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+La operaci&#243;n tiene paginaci&#243;n de elementos? (S/N)
 </TD>
 </TR>
 </TABLE>
@@ -262,6 +279,14 @@ CK_OPERACIONES_NIVEL_LOG
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 NIVEL_LOG IN (0, 1, 2)
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+CK_OPE_TIENE_PAGINACION
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+TIENE_PAGINACION IN ('S', 'N')
 </TD>
 </TR>
 </TABLE>
