@@ -51,6 +51,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_FORMATO">f_formato</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REPORTE_SQL">f_reporte_sql</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -233,6 +238,15 @@ f_archivo_error
 FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
                          i_formato   IN VARCHAR2 DEFAULT NULL)
   RETURN y_archivo
+
+</PRE>
+<HR>
+<A NAME="F_FORMATO"></A>
+<P CLASS="TYPE_TITLE">
+f_formato
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2
 
 </PRE>
 <HR>

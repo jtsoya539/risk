@@ -152,9 +152,6 @@ insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO
 values (19, 'ARCHIVO', '0.1.0', 4, 'S', 'O', 'Y_ARCHIVO', null, 'S', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
-values (20, 'FORMATO', '0.1.0', 1, 'S', 'S', null, 4, 'S', 'PDF', null, null);
-
-insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (21, 'TOKEN_DISPOSITIVO', '0.1.0', 1, 'S', 'S', null, null, 'S', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
@@ -227,9 +224,6 @@ insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO
 values (34, 'ESTADO', '0.1.0', 2, 'S', 'S', null, 1, 'S', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
-values (36, 'FORMATO', '0.1.0', 1, 'S', 'S', null, 4, 'S', 'PDF', null, null);
-
-insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (36, 'DOMINIO', '0.1.0', 2, 'S', 'S', null, null, 'N', null, null, null);
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
@@ -264,5 +258,8 @@ values (59, 'CLAVE', '0.1.0', 2, 'S', 'S', null, 50, 'N', null, 'Clave de la apl
 
 insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
 values (1000, 'PAGINA_PARAMETROS', '0.1.0', 100, 'S', 'O', 'Y_PAGINA_PARAMETROS', null, 'N', null, null, null);
+
+insert into t_operacion_parametros (ID_OPERACION, NOMBRE, VERSION, ORDEN, ACTIVO, TIPO_DATO, FORMATO, LONGITUD_MAXIMA, OBLIGATORIO, VALOR_DEFECTO, ETIQUETA, DETALLE)
+values (1001, 'FORMATO', '0.1.0', 100, 'S', 'S', null, 4, 'S', 'PDF', null, null);
 
 prompt Done.

@@ -124,4 +124,7 @@ values (59, 'S', 'LISTAR_APLICACIONES', 'GEN', 'S', null, '0.1.0', 0, 'S');
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, NIVEL_LOG, TIENE_PAGINACION)
 values (1000, 'P', 'PAGINA_PARAMETROS', null, 'S', 'Parámetros para paginación de elementos', '0.1.0', 0, 'N');
 
+insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, NIVEL_LOG, TIENE_PAGINACION)
+values (1001, 'P', 'FORMATO', null, 'S', 'Formato de salida de reporte', '0.1.0', 0, 'N');
+
 prompt Done.

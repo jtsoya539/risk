@@ -48,6 +48,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   c_id_log                   CONSTANT VARCHAR2(50) := 'ID_LOG';
   c_id_operacion_contexto    CONSTANT PLS_INTEGER := 0;
   c_id_ope_pagina_parametros CONSTANT PLS_INTEGER := 1000;
+  c_id_operacion_formato     CONSTANT PLS_INTEGER := 1001;
 
   -- Excepciones
   ex_servicio_no_implementado EXCEPTION;
@@ -310,6 +311,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
          AND op.activo = 'S'
          AND op.id_operacion = i_id_operacion
          AND op.version = nvl(i_version, o.version_actual)
+      -- Parámetros automáticos
       UNION
       SELECT op.id_operacion,
              lower(op.nombre) nombre,
@@ -328,6 +330,25 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
          AND EXISTS (SELECT 1
                 FROM t_operaciones o
                WHERE o.tiene_paginacion = 'S'
+                 AND o.id_operacion = i_id_operacion)
+      UNION
+      SELECT op.id_operacion,
+             lower(op.nombre) nombre,
+             op.orden,
+             op.activo,
+             op.tipo_dato,
+             op.formato,
+             op.longitud_maxima,
+             op.obligatorio,
+             op.valor_defecto,
+             op.etiqueta,
+             op.detalle
+        FROM t_operacion_parametros op
+       WHERE op.activo = 'S'
+         AND op.id_operacion = c_id_operacion_formato
+         AND EXISTS (SELECT 1
+                FROM t_operaciones o
+               WHERE o.tipo = 'R'
                  AND o.id_operacion = i_id_operacion)
        ORDER BY orden;
   BEGIN
