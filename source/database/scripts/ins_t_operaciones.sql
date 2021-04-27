@@ -2,7 +2,7 @@ prompt Importing table t_operaciones...
 set feedback off
 set define off
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, NIVEL_LOG)
-values (0, 'P', 'CONTEXTO', null, 'S', null, '0.1.0', 0);
+values (0, 'P', 'CONTEXTO', null, 'S', 'Parámetros de contexto de la ejecución', '0.1.0', 0);
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, NIVEL_LOG)
 values (1, 'S', 'VALIDAR_CREDENCIALES', 'AUT', 'S', null, '0.1.0', 0);
@@ -120,5 +120,8 @@ values (51, 'S', 'LISTAR_ERRORES', 'GEN', 'S', null, '0.1.0', 0);
 
 insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, NIVEL_LOG)
 values (59, 'S', 'LISTAR_APLICACIONES', 'GEN', 'S', null, '0.1.0', 0);
+
+insert into t_operaciones (ID_OPERACION, TIPO, NOMBRE, DOMINIO, ACTIVO, DETALLE, VERSION_ACTUAL, NIVEL_LOG)
+values (1000, 'P', 'PAGINA_PARAMETROS', null, 'S', 'Parámetros para paginación de elementos', '0.1.0', 0);
 
 prompt Done.

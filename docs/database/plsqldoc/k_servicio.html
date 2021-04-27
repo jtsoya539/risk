@@ -41,7 +41,17 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PAGINA_PARAMETROS">f_pagina_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PAGINAR_ELEMENTOS">f_paginar_elementos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PAGINAR_ELEMENTOS2">f_paginar_elementos</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -72,6 +82,16 @@ PROCEDURE p_limpiar_historial
 
 </PRE>
 <HR>
+<A NAME="F_PAGINA_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+f_pagina_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_pagina_parametros(i_parametros IN y_parametros)
+  RETURN y_pagina_parametros
+
+</PRE>
+<HR>
 <A NAME="F_PAGINAR_ELEMENTOS"></A>
 <P CLASS="TYPE_TITLE">
 f_paginar_elementos
@@ -81,6 +101,17 @@ FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                              i_numero_pagina       IN INTEGER DEFAULT NULL,
                              i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
                              i_no_paginar          IN VARCHAR2 DEFAULT NULL)
+  RETURN y_pagina
+
+</PRE>
+<HR>
+<A NAME="F_PAGINAR_ELEMENTOS2"></A>
+<P CLASS="TYPE_TITLE">
+f_paginar_elementos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_paginar_elementos(i_elementos         IN y_objetos,
+                             i_pagina_parametros IN y_pagina_parametros)
   RETURN y_pagina
 
 </PRE>

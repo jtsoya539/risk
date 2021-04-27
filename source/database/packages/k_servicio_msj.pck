@@ -86,8 +86,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos y_objetos;
     l_elemento  y_correo;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos IS
       SELECT id_correo,
              id_usuario,
@@ -114,13 +112,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     -- Sólo si está activo el envío
     IF k_util.string_to_bool(k_util.f_valor_parametro('ENVIO_CORREOS_ACTIVO')) THEN
@@ -146,9 +137,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     END IF;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -172,8 +161,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos y_objetos;
     l_elemento  y_mensaje;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos IS
       SELECT id_mensaje, numero_telefono, contenido, estado
         FROM t_mensajes
@@ -189,13 +176,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     -- Sólo si está activo el envío
     IF k_util.string_to_bool(k_util.f_valor_parametro('ENVIO_MENSAJES_ACTIVO')) THEN
@@ -215,9 +195,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     END IF;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -241,8 +219,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos y_objetos;
     l_elemento  y_notificacion;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos IS
       SELECT id_notificacion, suscripcion, titulo, contenido, estado
         FROM t_notificaciones
@@ -258,13 +234,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elementos := NEW y_objetos();
   
     l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     -- Sólo si está activo el envío
     IF k_util.string_to_bool(k_util.f_valor_parametro('ENVIO_NOTIFICACIONES_ACTIVO')) THEN
@@ -285,9 +254,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     END IF;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;

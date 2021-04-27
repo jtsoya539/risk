@@ -32,10 +32,17 @@ CREATE OR REPLACE PACKAGE k_servicio IS
 
   PROCEDURE p_limpiar_historial;
 
+  FUNCTION f_pagina_parametros(i_parametros IN y_parametros)
+    RETURN y_pagina_parametros;
+
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                                i_numero_pagina       IN INTEGER DEFAULT NULL,
                                i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
                                i_no_paginar          IN VARCHAR2 DEFAULT NULL)
+    RETURN y_pagina;
+
+  FUNCTION f_paginar_elementos(i_elementos         IN y_objetos,
+                               i_pagina_parametros IN y_pagina_parametros)
     RETURN y_pagina;
 
   FUNCTION f_servicio_sql(i_id_servicio IN NUMBER,
@@ -265,6 +272,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
            sql_ultima_ejecucion   = NULL;
   END;
 
+  FUNCTION f_pagina_parametros(i_parametros IN y_parametros)
+    RETURN y_pagina_parametros IS
+    l_pagina_parametros y_pagina_parametros;
+  BEGIN
+    IF k_operacion.f_valor_parametro_object(i_parametros,
+                                            'pagina_parametros') IS NOT NULL THEN
+      l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                                        'pagina_parametros') AS
+                                   y_pagina_parametros);
+    ELSE
+      l_pagina_parametros := NEW y_pagina_parametros();
+    END IF;
+  
+    RETURN l_pagina_parametros;
+  END;
+
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
                                i_numero_pagina       IN INTEGER DEFAULT NULL,
                                i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
@@ -377,14 +400,22 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     RETURN l_pagina;
   END;
 
+  FUNCTION f_paginar_elementos(i_elementos         IN y_objetos,
+                               i_pagina_parametros IN y_pagina_parametros)
+    RETURN y_pagina IS
+  BEGIN
+    RETURN f_paginar_elementos(i_elementos,
+                               i_pagina_parametros.pagina,
+                               i_pagina_parametros.por_pagina,
+                               i_pagina_parametros.no_paginar);
+  END;
+
   FUNCTION f_servicio_sql(i_id_servicio IN NUMBER,
                           i_parametros  IN y_parametros) RETURN y_respuesta IS
     l_rsp       y_respuesta;
     l_pagina    y_pagina;
     l_elementos y_objetos;
     l_elemento  y_dato;
-  
-    l_pagina_parametros y_pagina_parametros;
   
     l_nombre_servicio  t_operaciones.nombre%TYPE;
     l_dominio_servicio t_operaciones.dominio%TYPE;
@@ -411,14 +442,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END;
   
     l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
-  
     IF l_consulta_sql IS NULL THEN
       k_operacion.p_respuesta_error(l_rsp,
                                     k_operacion.c_error_general,
@@ -512,9 +535,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     -- ========================================================
   
     l_pagina := f_paginar_elementos(l_elementos,
-                                    l_pagina_parametros.pagina,
-                                    l_pagina_parametros.por_pagina,
-                                    l_pagina_parametros.no_paginar);
+                                    f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;

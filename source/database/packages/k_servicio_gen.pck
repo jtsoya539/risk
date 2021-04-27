@@ -244,8 +244,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_significado;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos(i_dominio IN VARCHAR2) IS
       SELECT a.dominio, a.codigo, a.significado, a.referencia, a.activo
         FROM t_significados a
@@ -255,15 +253,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
-  
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_string(i_parametros,
                                                                  'dominio')) LOOP
@@ -279,9 +268,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -304,8 +291,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_pais;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos(i_id_pais IN NUMBER) IS
       SELECT p.id_pais,
              p.nombre,
@@ -319,15 +304,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
-  
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
                                                                  'id_pais')) LOOP
@@ -343,9 +319,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -369,8 +343,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_departamento;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos(i_id_departamento IN NUMBER,
                         i_id_pais         IN NUMBER) IS
       SELECT a.id_departamento, a.nombre, a.id_pais
@@ -382,15 +354,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
-  
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
                                                                  'id_departamento'),
@@ -406,9 +369,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -431,8 +392,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_ciudad;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos(i_id_ciudad       IN NUMBER,
                         i_id_pais         IN NUMBER,
                         i_id_departamento IN NUMBER) IS
@@ -446,15 +405,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
-  
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
                                                                  'id_ciudad'),
@@ -473,9 +423,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -498,8 +446,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_barrio;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos(i_id_barrio       IN NUMBER,
                         i_id_pais         IN NUMBER,
                         i_id_departamento IN NUMBER,
@@ -519,15 +465,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
-  
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_number(i_parametros,
                                                                  'id_barrio'),
@@ -549,9 +486,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
@@ -574,8 +509,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_elementos y_objetos;
     l_elemento  y_error;
   
-    l_pagina_parametros y_pagina_parametros;
-  
     CURSOR cr_elementos(i_id_error IN VARCHAR2) IS
       SELECT a.id_error, a.mensaje
         FROM t_errores a
@@ -585,15 +518,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     -- Inicializa respuesta
     l_rsp       := NEW y_respuesta();
     l_elementos := NEW y_objetos();
-  
-    l_rsp.lugar := 'Validando parametros';
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_object(i_parametros,
-                                                                         'pagina_parametros') IS NOT NULL,
-                                    'Debe ingresar pagina_parametros');
-    l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                      'pagina_parametros') AS
-                                 y_pagina_parametros);
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_string(i_parametros,
                                                                  'id_error')) LOOP
@@ -606,9 +530,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     END LOOP;
   
     l_pagina := k_servicio.f_paginar_elementos(l_elementos,
-                                               l_pagina_parametros.pagina,
-                                               l_pagina_parametros.por_pagina,
-                                               l_pagina_parametros.no_paginar);
+                                               k_servicio.f_pagina_parametros(i_parametros));
   
     k_operacion.p_respuesta_ok(l_rsp, l_pagina);
     RETURN l_rsp;
