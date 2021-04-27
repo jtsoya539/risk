@@ -427,14 +427,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_formato VARCHAR2(10);
   BEGIN
     IF k_operacion.f_valor_parametro_string(i_parametros, 'formato') IS NOT NULL THEN
-      l_formato := substr(k_operacion.f_valor_parametro_string(i_parametros,
-                                                               'formato'),
-                          1,
-                          10);
+      l_formato := upper(substr(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                     'formato'),
+                                1,
+                                10));
     ELSE
-      l_formato := substr(k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO'),
-                          1,
-                          10);
+      l_formato := upper(substr(k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO'),
+                                1,
+                                10));
     END IF;
   
     RETURN l_formato;

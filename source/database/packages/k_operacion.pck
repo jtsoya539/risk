@@ -506,7 +506,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                                                 par.nombre)));
           END IF;
         
-          IF l_json_element IS NOT NULL THEN
+          IF l_json_element IS NOT NULL AND l_json_element.is_object THEN
             l_parametro.valor := k_util.json_to_objeto(l_json_element.to_clob,
                                                        par.formato);
           END IF;
