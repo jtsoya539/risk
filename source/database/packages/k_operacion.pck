@@ -328,8 +328,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
          AND op.id_operacion = c_id_ope_par_automaticos
          AND EXISTS (SELECT 1
                 FROM t_operaciones o
-               WHERE op.nombre IN
-                     (SELECT TRIM(column_value)
+               WHERE lower(op.nombre) IN
+                     (SELECT lower(TRIM(column_value))
                         FROM k_util.f_separar_cadenas(o.parametros_automaticos,
                                                       ','))
                  AND o.id_operacion = i_id_operacion)
