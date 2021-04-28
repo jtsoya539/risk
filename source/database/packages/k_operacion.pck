@@ -45,10 +45,9 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   c_error_inesperado         CONSTANT VARCHAR2(10) := 'ser9999';
 
   -- Otras constantes
-  c_id_log                   CONSTANT VARCHAR2(50) := 'ID_LOG';
-  c_id_operacion_contexto    CONSTANT PLS_INTEGER := 0;
-  c_id_ope_pagina_parametros CONSTANT PLS_INTEGER := 1000;
-  c_id_operacion_formato     CONSTANT PLS_INTEGER := 1001;
+  c_id_log                 CONSTANT VARCHAR2(50) := 'ID_LOG';
+  c_id_operacion_contexto  CONSTANT PLS_INTEGER := 0;
+  c_id_ope_par_automaticos CONSTANT PLS_INTEGER := 1000;
 
   -- Excepciones
   ex_servicio_no_implementado EXCEPTION;
@@ -311,8 +310,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
          AND op.activo = 'S'
          AND op.id_operacion = i_id_operacion
          AND op.version = nvl(i_version, o.version_actual)
+      UNION
       -- Parámetros automáticos
-      UNION
       SELECT op.id_operacion,
              lower(op.nombre) nombre,
              op.orden,
@@ -326,29 +325,13 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
              op.detalle
         FROM t_operacion_parametros op
        WHERE op.activo = 'S'
-         AND op.id_operacion = c_id_ope_pagina_parametros
+         AND op.id_operacion = c_id_ope_par_automaticos
          AND EXISTS (SELECT 1
                 FROM t_operaciones o
-               WHERE o.tiene_paginacion = 'S'
-                 AND o.id_operacion = i_id_operacion)
-      UNION
-      SELECT op.id_operacion,
-             lower(op.nombre) nombre,
-             op.orden,
-             op.activo,
-             op.tipo_dato,
-             op.formato,
-             op.longitud_maxima,
-             op.obligatorio,
-             op.valor_defecto,
-             op.etiqueta,
-             op.detalle
-        FROM t_operacion_parametros op
-       WHERE op.activo = 'S'
-         AND op.id_operacion = c_id_operacion_formato
-         AND EXISTS (SELECT 1
-                FROM t_operaciones o
-               WHERE o.tipo = 'R'
+               WHERE op.nombre IN
+                     (SELECT TRIM(column_value)
+                        FROM k_util.f_separar_cadenas(o.parametros_automaticos,
+                                                      ','))
                  AND o.id_operacion = i_id_operacion)
        ORDER BY orden;
   BEGIN

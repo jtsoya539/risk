@@ -1,14 +1,14 @@
 create table T_OPERACIONES
 (
-  id_operacion     NUMBER not null,
-  tipo             VARCHAR2(1) not null,
-  nombre           VARCHAR2(1000) not null,
-  dominio          VARCHAR2(30),
-  activo           VARCHAR2(1) default 'N' not null,
-  detalle          VARCHAR2(4000),
-  version_actual   VARCHAR2(100) not null,
-  nivel_log        NUMBER(1) default 0 not null,
-  tiene_paginacion VARCHAR2(1) default 'N' not null
+  id_operacion           NUMBER not null,
+  tipo                   VARCHAR2(1) not null,
+  nombre                 VARCHAR2(1000) not null,
+  dominio                VARCHAR2(30),
+  activo                 VARCHAR2(1) default 'N' not null,
+  detalle                VARCHAR2(4000),
+  version_actual         VARCHAR2(100) not null,
+  nivel_log              NUMBER(1) default 0 not null,
+  parametros_automaticos VARCHAR2(1000)
 )
 ;
 comment on table T_OPERACIONES
@@ -29,8 +29,8 @@ comment on column T_OPERACIONES.version_actual
   is 'Versión actual de la operación';
 comment on column T_OPERACIONES.nivel_log
   is 'Nivel de log de la operación (0-Off, 1-Error, 2-Info)';
-comment on column T_OPERACIONES.tiene_paginacion
-  is 'La operación tiene paginación de elementos? (S/N)';
+comment on column T_OPERACIONES.parametros_automaticos
+  is 'Nombres de los parámetros automáticos de la operación, separados por coma. Ej.: PARAM1,PARAM2,PARAM3';
 alter table T_OPERACIONES
   add constraint PK_OPERACIONES primary key (ID_OPERACION);
 alter table T_OPERACIONES
@@ -41,7 +41,4 @@ alter table T_OPERACIONES
 alter table T_OPERACIONES
   add constraint CK_OPERACIONES_NIVEL_LOG
   check (NIVEL_LOG IN (0, 1, 2));
-alter table T_OPERACIONES
-  add constraint CK_OPE_TIENE_PAGINACION
-  check (TIENE_PAGINACION IN ('S', 'N'));
 
