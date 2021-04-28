@@ -274,18 +274,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
 
   FUNCTION f_pagina_parametros(i_parametros IN y_parametros)
     RETURN y_pagina_parametros IS
-    l_pagina_parametros y_pagina_parametros;
   BEGIN
-    IF k_operacion.f_valor_parametro_object(i_parametros,
-                                            'pagina_parametros') IS NOT NULL THEN
-      l_pagina_parametros := treat(k_operacion.f_valor_parametro_object(i_parametros,
-                                                                        'pagina_parametros') AS
-                                   y_pagina_parametros);
-    ELSE
-      l_pagina_parametros := NEW y_pagina_parametros();
-    END IF;
-  
-    RETURN l_pagina_parametros;
+    RETURN nvl(treat(k_operacion.f_valor_parametro_object(i_parametros,
+                                                          'pagina_parametros') AS
+                     y_pagina_parametros),
+               NEW y_pagina_parametros());
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NEW y_pagina_parametros();
   END;
 
   FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,

@@ -424,20 +424,18 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   END;
 
   FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2 IS
-    l_formato VARCHAR2(10);
   BEGIN
-    IF k_operacion.f_valor_parametro_string(i_parametros, 'formato') IS NOT NULL THEN
-      l_formato := upper(substr(k_operacion.f_valor_parametro_string(i_parametros,
-                                                                     'formato'),
-                                1,
-                                10));
-    ELSE
-      l_formato := upper(substr(k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO'),
-                                1,
-                                10));
-    END IF;
+    RETURN upper(substr(nvl(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'formato'),
+                            k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO')),
+                        1,
+                        10));
   
-    RETURN l_formato;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN upper(substr(k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO'),
+                          1,
+                          10));
   END;
 
   FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
