@@ -390,10 +390,10 @@ namespace Risk.API.Controllers
             //Recomendaciones: https://developers.google.com/identity/sign-in/web/backend-auth
 
             // Obtener datos del JWT
-            Usuario usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken);
 
             // Registrar el usuario
-            var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, OrigenSesion.Google, usuario.Alias);
+            var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
 
             /*if (!respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
             {

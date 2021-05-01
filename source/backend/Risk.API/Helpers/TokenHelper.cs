@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -183,9 +184,9 @@ namespace Risk.API.Helpers
             return version;
         }
 
-        public static Usuario ObtenerUsuarioDeTokenGoogle(string idToken)
+        public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken)
         {
-            Usuario usuario = null;
+            UsuarioExterno usuario = null;
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             if (tokenHandler.CanReadToken(idToken))
@@ -196,12 +197,18 @@ namespace Risk.API.Helpers
                 string apellido = jwtToken.Claims.First(claim => claim.Type == "family_name").Value;
                 string direccionCorreo = jwtToken.Claims.First(claim => claim.Type == "email").Value;
 
-                usuario = new Usuario
+                MailAddress addr = new MailAddress(direccionCorreo);
+                string username = addr.User;
+                string domain = addr.Host;
+
+                usuario = new UsuarioExterno
                 {
-                    Alias = idExterno,
+                    Alias = username,
                     Nombre = nombre,
                     Apellido = apellido,
-                    DireccionCorreo = direccionCorreo
+                    DireccionCorreo = direccionCorreo,
+                    Origen = OrigenSesion.Google,
+                    IdExterno = idExterno
                 };
             }
 
