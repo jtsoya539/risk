@@ -93,14 +93,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     IF l_origen = k_autenticacion.c_origen_risk THEN
       k_operacion.p_validar_parametro(l_rsp,
                                       k_operacion.f_valor_parametro_string(i_parametros,
-                                                                           'usuario') IS NOT NULL,
-                                      'Debe ingresar usuario');
-    
-      k_operacion.p_validar_parametro(l_rsp,
-                                      k_operacion.f_valor_parametro_string(i_parametros,
                                                                            'clave') IS NOT NULL,
                                       'Debe ingresar clave');
     END IF;
+  
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
   
     k_operacion.p_validar_parametro(l_rsp,
                                     k_operacion.f_valor_parametro_string(i_parametros,

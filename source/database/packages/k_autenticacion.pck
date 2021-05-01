@@ -390,21 +390,29 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                 i_id_externo       IN VARCHAR2 DEFAULT NULL) IS
     l_id_persona          t_personas.id_persona%TYPE;
     l_id_usuario          t_usuarios.id_usuario%TYPE;
+    l_alias               t_usuarios.alias%TYPE := i_alias;
     l_confirmacion_activa VARCHAR2(1);
     l_estado_usuario      t_usuarios.estado%TYPE;
     l_body                CLOB;
     l_origen              VARCHAR2(1) := nvl(i_origen, c_origen_risk);
   BEGIN
-    -- Valida clave
-    IF l_origen = c_origen_risk THEN
-      p_validar_clave(i_alias, i_clave, c_clave_acceso);
-    END IF;
-  
     -- Valida que no exista el usuario externo
     IF l_origen <> c_origen_risk THEN
       IF k_usuario.f_existe_usuario_externo(l_origen, i_id_externo) THEN
         raise_application_error(-20000, 'Usuario externo ya existe');
       END IF;
+    
+      SELECT i_alias ||
+             to_char(MAX(to_number(nvl(regexp_substr(a.alias, '\d+'), '0'))) + 1) alias
+        INTO l_alias
+        FROM t_usuarios a
+       WHERE (upper(a.alias) = upper(i_alias) OR
+             regexp_like(a.alias, '(' || i_alias || ')\d+', 'i'));
+    END IF;
+  
+    -- Valida clave
+    IF l_origen = c_origen_risk THEN
+      p_validar_clave(l_alias, i_clave, c_clave_acceso);
     END IF;
   
     -- Inserta persona
@@ -452,7 +460,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        origen,
        id_externo)
     VALUES
-      (i_alias,
+      (l_alias,
        l_id_persona,
        l_estado_usuario,
        i_direccion_correo,
@@ -472,7 +480,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Registra clave
     IF l_origen = c_origen_risk THEN
-      p_registrar_clave(i_alias, i_clave, c_clave_acceso);
+      p_registrar_clave(l_alias, i_clave, c_clave_acceso);
     END IF;
   
     IF l_confirmacion_activa = 'S' THEN
@@ -483,12 +491,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                            utl_tcp.crlf ||
                                            'Confirma tu dirección de correo con el botón o con la siguiente URL:' ||
                                            utl_tcp.crlf ||
-                                           f_generar_url_activacion(i_alias),
+                                           f_generar_url_activacion(l_alias),
                                            'Confirmación de correo',
                                            'Confirmación de correo',
                                            NULL,
                                            'Confirmar',
-                                           f_generar_url_activacion(i_alias));
+                                           f_generar_url_activacion(l_alias));
     
       IF k_mensajeria.f_enviar_correo('Confirmación de correo',
                                       l_body,
