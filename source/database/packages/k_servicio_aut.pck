@@ -144,6 +144,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
       k_operacion.p_respuesta_error(l_rsp,
                                     c_usuario_externo_existente,
                                     'Usuario externo ya existe');
+      RETURN l_rsp;
     WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
     WHEN k_operacion.ex_error_general THEN
