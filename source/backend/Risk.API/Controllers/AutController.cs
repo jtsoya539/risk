@@ -395,13 +395,12 @@ namespace Risk.API.Controllers
             // Registrar el usuario
             var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
 
-            /*if (!respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
+            if (!respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_OK) && !respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_ERROR_USUARIO_EXTERNO_EXISTENTE))
             {
                 return ProcesarRespuesta(respRegistrarUsuario);
-            }*/
+            }
 
             var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
-            //var refreshToken = TokenHelper.GenerarRefreshToken();
 
             var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, OrigenSesion.Google, requestBody.IdToken);
 

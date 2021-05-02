@@ -30,6 +30,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
   -------------------------------------------------------------------------------
   */
 
+  -- Códigos de respuesta
+  c_usuario_externo_existente CONSTANT VARCHAR2(10) := 'aut0010';
+
   FUNCTION registrar_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION cambiar_estado_usuario(i_parametros IN y_parametros)
@@ -137,6 +140,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
   EXCEPTION
+    WHEN k_usuario.ex_usuario_existente THEN
+      k_operacion.p_respuesta_error(l_rsp,
+                                    c_usuario_externo_existente,
+                                    'Usuario externo ya existe');
     WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;
     WHEN k_operacion.ex_error_general THEN

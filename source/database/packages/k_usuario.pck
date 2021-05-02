@@ -32,6 +32,7 @@ CREATE OR REPLACE PACKAGE k_usuario IS
 
   -- Excepciones
   ex_usuario_inexistente EXCEPTION;
+  ex_usuario_existente   EXCEPTION;
 
   FUNCTION f_buscar_id(i_usuario IN VARCHAR2) RETURN NUMBER;
 

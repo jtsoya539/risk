@@ -399,7 +399,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     -- Valida que no exista el usuario externo
     IF l_origen <> c_origen_risk THEN
       IF k_usuario.f_existe_usuario_externo(l_origen, i_id_externo) THEN
-        raise_application_error(-20000, 'Usuario externo ya existe');
+        RAISE k_usuario.ex_usuario_existente;
       END IF;
     
       SELECT i_alias ||
