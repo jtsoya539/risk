@@ -26,11 +26,11 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
-    public class IniciarSesionGoogleRequestBody
+    public class RefrescarSesionGoogleRequestBody
     {
+        [SwaggerSchema("Token de acceso")]
+        public string AccessToken { get; set; }
         [SwaggerSchema("Token de la sesión en Google")]
         public string IdToken { get; set; }
-        [SwaggerSchema("Token del dispositivo")]
-        public string TokenDispositivo { get; set; }
     }
 }

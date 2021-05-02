@@ -411,5 +411,25 @@ namespace Risk.API.Controllers
 
             return ProcesarRespuesta(respIniciarSesion);
         }
+
+        [AllowAnonymous]
+        [HttpPost("RefrescarSesionGoogle")]
+        [SwaggerOperation(OperationId = "RefrescarSesionGoogle", Summary = "RefrescarSesionGoogle", Description = "Permite refrescar la sesión de un usuario con su cuenta de google")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        public IActionResult RefrescarSesionGoogle([FromBody] RefrescarSesionGoogleRequestBody requestBody)
+        {
+            //TODO: Validar JWT
+            //Recomendaciones: https://developers.google.com/identity/sign-in/web/backend-auth
+
+            // Obtener datos del JWT
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken);
+
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, OrigenSesion.Google, requestBody.IdToken);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }
