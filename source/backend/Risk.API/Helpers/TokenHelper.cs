@@ -57,6 +57,7 @@ namespace Risk.API.Helpers
             claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? ""));
             claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? ""));
             //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
+            claims.Add(new Claim(ClaimTypes.GroupSid, datosUsuario.Origen.ToString() ?? ""));
 
             // Agrega los roles del usuario a la lista de claims
             foreach (var rol in datosUsuario.Roles)

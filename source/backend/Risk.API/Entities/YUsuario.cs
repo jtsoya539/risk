@@ -47,6 +47,8 @@ namespace Risk.API.Entities
         public string NumeroTelefono { get; set; }
         [JsonProperty("version_avatar")]
         public int? VersionAvatar { get; set; }
+        [JsonProperty("origen")]
+        public string Origen { get; set; }
         [JsonProperty("roles")]
         public List<YRol> Roles { get; set; }
     }

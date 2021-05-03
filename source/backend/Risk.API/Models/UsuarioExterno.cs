@@ -29,8 +29,6 @@ namespace Risk.API.Models
     [SwaggerSchema("Agrupa datos de un usuario externo")]
     public class UsuarioExterno : Usuario
     {
-        [SwaggerSchema("Origen del usuario externo")]
-        public OrigenSesion Origen { get; set; }
         [SwaggerSchema("Identificador del usuario externo")]
         public string IdExterno { get; set; }
     }
