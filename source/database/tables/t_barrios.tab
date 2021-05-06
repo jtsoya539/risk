@@ -16,7 +16,7 @@ comment on column T_BARRIOS.nombre
 comment on column T_BARRIOS.id_pais
   is 'País del barrio';
 comment on column T_BARRIOS.id_departamento
-  is 'Departamento del barrio';
+  is 'Departamento, estado o provincia del barrio';
 comment on column T_BARRIOS.id_ciudad
   is 'Ciudad del barrio';
 alter table T_BARRIOS

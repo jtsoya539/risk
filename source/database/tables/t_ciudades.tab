@@ -15,7 +15,7 @@ comment on column T_CIUDADES.nombre
 comment on column T_CIUDADES.id_pais
   is 'País de la ciudad';
 comment on column T_CIUDADES.id_departamento
-  is 'Departamento de la ciudad';
+  is 'Departamento, estado o provincia de la ciudad';
 alter table T_CIUDADES
   add constraint PK_CIUDADES primary key (ID_CIUDAD);
 alter table T_CIUDADES

@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE y_departamento UNDER y_objeto
 (
 /**
-Agrupa datos de Departamentos.
+Agrupa datos de Departamentos, estados o provincias.
 
 %author jtsoya539 30/3/2020 10:54:26
 */
@@ -30,11 +30,11 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-/** Identificador del departamento */
+/** Identificador del departamento, estado o provincia */
   id_departamento NUMBER(3),
-/** Nombre del departamento */
+/** Nombre del departamento, estado o provincia */
   nombre VARCHAR2(100),
-/** País del departamento */
+/** País del departamento, estado o provincia */
   id_pais NUMBER(3),
 
   CONSTRUCTOR FUNCTION y_departamento RETURN SELF AS RESULT,

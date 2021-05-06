@@ -6,13 +6,13 @@ create table T_DEPARTAMENTOS
 )
 ;
 comment on table T_DEPARTAMENTOS
-  is 'Departamentos';
+  is 'Departamentos, estados o provincias';
 comment on column T_DEPARTAMENTOS.id_departamento
-  is 'Identificador del departamento';
+  is 'Identificador del departamento, estado o provincia';
 comment on column T_DEPARTAMENTOS.nombre
-  is 'Nombre del departamento';
+  is 'Nombre del departamento, estado o provincia';
 comment on column T_DEPARTAMENTOS.id_pais
-  is 'País del departamento';
+  is 'País del departamento, estado o provincia';
 alter table T_DEPARTAMENTOS
   add constraint PK_DEPARTAMENTOS primary key (ID_DEPARTAMENTO);
 alter table T_DEPARTAMENTOS

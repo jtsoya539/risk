@@ -36,7 +36,7 @@ SOFTWARE.
   nombre VARCHAR2(100),
 /** País de la ciudad */
   id_pais NUMBER(3),
-/** Departamento de la ciudad */
+/** Departamento, estado o provincia de la ciudad */
   id_departamento NUMBER(3),
 
   CONSTRUCTOR FUNCTION y_ciudad RETURN SELF AS RESULT,

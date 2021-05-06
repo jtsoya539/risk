@@ -36,7 +36,7 @@ SOFTWARE.
   nombre VARCHAR2(100),
 /** País del barrio */
   id_pais NUMBER(3),
-/** Departamento del barrio */
+/** Departamento, estado o provincia del barrio */
   id_departamento NUMBER(3),
 /** Ciudad del barrio */
   id_ciudad NUMBER(3),
