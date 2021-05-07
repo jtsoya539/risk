@@ -36,9 +36,10 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MimeKit;
+using Risk.API.Helpers;
 using Risk.API.Models;
 
-namespace Risk.API.Helpers
+namespace Risk.API.Senders
 {
     public class GmailSender : IMsjSender<Correo>
     {

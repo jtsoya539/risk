@@ -24,7 +24,7 @@ SOFTWARE.
 
 using System.Threading.Tasks;
 
-namespace Risk.API.Helpers
+namespace Risk.API.Senders
 {
     public interface IMsjSender<T>
     {

@@ -31,6 +31,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.API.Senders;
 
 namespace Risk.API.Workers
 {

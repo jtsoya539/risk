@@ -22,24 +22,25 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Risk.API.Models;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
-namespace Risk.API.Helpers
+namespace Risk.API.Senders
 {
-    public class NotificationHubSender : IMsjSender<Notificacion>
+    public class TwilioSender : IMsjSender<Mensaje>
     {
-        private readonly ILogger<NotificationHubSender> _logger;
+        private readonly ILogger<TwilioSender> _logger;
         private readonly IConfiguration _configuration;
 
-        // Notification Hub Configuration
-        private NotificationHubClient hubClient;
+        // Twilio Configuration
+        private string phoneNumberFrom;
 
-        public NotificationHubSender(ILogger<NotificationHubSender> logger, IConfiguration configuration)
+        public TwilioSender(ILogger<TwilioSender> logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
@@ -47,10 +48,8 @@ namespace Risk.API.Helpers
 
         public Task Configurar()
         {
-            hubClient = NotificationHubClient.CreateClientFromConnectionString(
-                _configuration["MsjConfiguration:NotificationHub:ConnectionString"],
-                _configuration["MsjConfiguration:NotificationHub:NotificationHubPath"]
-            );
+            TwilioClient.Init(_configuration["MsjConfiguration:Twilio:AccountSid"], _configuration["MsjConfiguration:Twilio:AuthToken"]);
+            phoneNumberFrom = _configuration["MsjConfiguration:Twilio:PhoneNumberFrom"];
             return Task.CompletedTask;
         }
 
@@ -59,10 +58,13 @@ namespace Risk.API.Helpers
             return Task.CompletedTask;
         }
 
-        public async Task Enviar(Notificacion msj)
+        public async Task Enviar(Mensaje msj)
         {
-            var properties = new Dictionary<string, string> { { "titulo", msj.Titulo }, { "contenido", msj.Contenido } };
-            await hubClient.SendTemplateNotificationAsync(properties, msj.Suscripcion);
+            var message = await MessageResource.CreateAsync(
+                from: new PhoneNumber(phoneNumberFrom),
+                to: new PhoneNumber(msj.NumeroTelefono),
+                body: msj.Contenido
+            );
         }
     }
 }
