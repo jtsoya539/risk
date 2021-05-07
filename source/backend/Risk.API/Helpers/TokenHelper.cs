@@ -34,6 +34,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using Risk.API.Models;
 using Risk.API.Services;
+using Google.Apis.Auth;
 
 namespace Risk.API.Helpers
 {
@@ -187,6 +188,10 @@ namespace Risk.API.Helpers
 
         public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken)
         {
+            var validPayload = GoogleJsonWebSignature.ValidateAsync(idToken);
+            if(validPayload == null)
+                throw new SecurityTokenValidationException("no valido JWT");
+
             UsuarioExterno usuario = null;
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
