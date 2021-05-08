@@ -186,22 +186,36 @@ namespace Risk.API.Helpers
             return version;
         }
 
-        public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken)
+        public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken, IGenService genService)
         {
+            // Validamos firma del token
             var validPayload = GoogleJsonWebSignature.ValidateAsync(idToken);
             if(validPayload == null)
-                throw new SecurityTokenValidationException("no valido JWT");
+                throw new SecurityTokenValidationException("Firma de token no válida.");
 
             UsuarioExterno usuario = null;
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             if (tokenHandler.CanReadToken(idToken))
             {
+                // Obtenemos datos de claims del payload
                 JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(idToken);
                 string idExterno = jwtToken.Claims.First(claim => claim.Type == "sub").Value;
                 string nombre = jwtToken.Claims.First(claim => claim.Type == "given_name").Value;
                 string apellido = jwtToken.Claims.First(claim => claim.Type == "family_name").Value;
                 string direccionCorreo = jwtToken.Claims.First(claim => claim.Type == "email").Value;
+                string emisorToken = jwtToken.Claims.First(claim => claim.Type == "iss").Value;
+                string audiencia = jwtToken.Claims.First(claim => claim.Type == "aud").Value;
+
+                // Validamos el emisor del token
+                var respValorEmisor = genService.ValorParametro("GOOGLE_EMISOR_TOKEN");
+                if (!respValorEmisor.Codigo.Equals(RiskConstants.CODIGO_OK) || respValorEmisor.Datos.Contenido != emisorToken)
+                    throw new SecurityTokenValidationException("Emisor de token no válido.");
+
+                // Validamos el cliente del token
+                var respValorCliente = genService.ValorParametro("GOOGLE_IDENTIFICADOR_CLIENTE");
+                if (!respValorCliente.Codigo.Equals(RiskConstants.CODIGO_OK) || respValorCliente.Datos.Contenido != audiencia)
+                    throw new SecurityTokenValidationException("Cliente de token no válido.");
 
                 MailAddress addr = new MailAddress(direccionCorreo);
                 string username = addr.User;

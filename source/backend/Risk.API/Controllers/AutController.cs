@@ -386,11 +386,8 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
         public IActionResult IniciarSesionGoogle([FromBody] IniciarSesionGoogleRequestBody requestBody)
         {
-            //TODO: Validar JWT
-            //Recomendaciones: https://developers.google.com/identity/sign-in/web/backend-auth
-
             // Obtener datos del JWT
-            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
 
             // Registrar el usuario
             var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
@@ -420,11 +417,8 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
         public IActionResult RefrescarSesionGoogle([FromBody] RefrescarSesionGoogleRequestBody requestBody)
         {
-            //TODO: Validar JWT
-            //Recomendaciones: https://developers.google.com/identity/sign-in/web/backend-auth
-
             // Obtener datos del JWT
-            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
 
             var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
 
