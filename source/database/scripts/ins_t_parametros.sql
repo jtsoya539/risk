@@ -68,7 +68,7 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('NUMERO_TELEFONO_REMITENTE', 'Número de teléfono del remitente para mensajería', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
-values ('GOOGLE_IDENTIFICADOR_CLIENTE', 'Identificador del cliente de los Servicios Web de Google', '5075483791-mulmg4dad8ij89ekt6d79docn606l78p.apps.googleusercontent.com');
+values ('GOOGLE_IDENTIFICADOR_CLIENTE', 'Identificador del cliente de los Servicios Web de Google', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('GOOGLE_EMISOR_TOKEN', 'Emisor del token de Google', 'accounts.google.com');
