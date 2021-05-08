@@ -209,7 +209,7 @@ namespace Risk.API.Helpers
 
                 // Validamos el emisor del token
                 var respValorEmisor = genService.ValorParametro("GOOGLE_EMISOR_TOKEN");
-                if (!respValorEmisor.Codigo.Equals(RiskConstants.CODIGO_OK) || respValorEmisor.Datos.Contenido != emisorToken)
+                if (!respValorEmisor.Codigo.Equals(RiskConstants.CODIGO_OK) || !respValorEmisor.Datos.Contenido.Contains(emisorToken, StringComparison.OrdinalIgnoreCase))
                     throw new SecurityTokenValidationException("Emisor de token no válido.");
 
                 // Validamos el cliente del token
