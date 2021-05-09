@@ -81,6 +81,11 @@ Retorna el significado de un codigo dentro de un dominio
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_EXISTE_CODIGO">f_existe_codigo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_ACTUALIZAR_VALOR_PARAMETRO">p_actualizar_valor_parametro</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -497,6 +502,16 @@ f_valor_parametro
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_EXISTE_CODIGO"></A>
+<P CLASS="TYPE_TITLE">
+f_existe_codigo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_existe_codigo(i_dominio IN VARCHAR2,
+                         i_codigo  IN VARCHAR2) RETURN BOOLEAN
 
 </PRE>
 <HR>

@@ -194,6 +194,7 @@ prompt
 @@triggers/gs_mensajes.trg
 @@triggers/gs_notificaciones.trg
 @@triggers/gb_operaciones.trg
+@@triggers/gb_operacion_parametros.trg
 @@triggers/gb_reportes.trg
 @@triggers/gb_servicios.trg
 @@triggers/gb_trabajos.trg
