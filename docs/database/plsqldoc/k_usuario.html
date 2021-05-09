@@ -61,6 +61,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ORIGEN">f_origen</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALIDAR_ALIAS">f_validar_alias</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -72,6 +77,11 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_DATOS_USUARIO">f_datos_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_EXISTE_USUARIO_EXTERNO">f_existe_usuario_externo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -92,6 +102,11 @@ Exceptions
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_USUARIO_EXISTENTE">ex_usuario_existente</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -101,6 +116,14 @@ ex_usuario_inexistente
 </P>
 <PRE CLASS="DECL_TEXT">
 ex_usuario_inexistente EXCEPTION;
+</PRE>
+<HR>
+<A NAME="EX_USUARIO_EXISTENTE"></A>
+<P CLASS="TYPE_TITLE">
+ex_usuario_existente
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_usuario_existente   EXCEPTION;
 </PRE>
 <HR>
 <A NAME="F_BUSCAR_ID"></A>
@@ -148,6 +171,15 @@ FUNCTION f_estado(i_id_usuario IN NUMBER) RETURN VARCHAR2
 
 </PRE>
 <HR>
+<A NAME="F_ORIGEN"></A>
+<P CLASS="TYPE_TITLE">
+f_origen
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_origen(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
 <A NAME="F_VALIDAR_ALIAS"></A>
 <P CLASS="TYPE_TITLE">
 f_validar_alias
@@ -172,6 +204,16 @@ f_datos_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_datos_usuario(i_id_usuario IN NUMBER) RETURN y_usuario
+
+</PRE>
+<HR>
+<A NAME="F_EXISTE_USUARIO_EXTERNO"></A>
+<P CLASS="TYPE_TITLE">
+f_existe_usuario_externo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_existe_usuario_externo(i_origen     IN VARCHAR2,
+                                  i_id_externo IN VARCHAR2) RETURN BOOLEAN
 
 </PRE>
 <HR>

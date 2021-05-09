@@ -134,6 +134,12 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_SESION', 'F', 'FINALIZADO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ORIGEN_SESION', 'R', 'RISK', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ORIGEN_SESION', 'G', 'GOOGLE', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_PERSONA', 'F', 'FÍSICA', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
@@ -156,6 +162,12 @@ values ('ESTADO_USUARIO', 'I', 'INACTIVO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_USUARIO', 'B', 'BLOQUEADO', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ORIGEN_USUARIO', 'R', 'RISK', null, 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('ORIGEN_USUARIO', 'G', 'GOOGLE', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_SERVICIO', 'T', 'TRANSACCIÓN', null, 'S');

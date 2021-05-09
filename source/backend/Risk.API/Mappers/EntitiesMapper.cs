@@ -209,6 +209,7 @@ namespace Risk.API.Mappers
                     DireccionCorreo = entity.DireccionCorreo,
                     NumeroTelefono = entity.NumeroTelefono,
                     VersionAvatar = entity.VersionAvatar,
+                    Origen = GetOrigenSesionEnumFromValue(entity.Origen),
                     Roles = GetRolListFromEntity(entity.Roles)
                 };
             }
@@ -580,6 +581,20 @@ namespace Risk.API.Mappers
                     return TipoDispositivo.Watch;
                 default:
                     return TipoDispositivo.Mobile;
+            }
+        }
+
+        public static OrigenSesion GetOrigenSesionEnumFromValue(string value)
+        {
+            if (value == null)
+                return OrigenSesion.Risk;
+
+            switch (value.ToUpper())
+            {
+                case "G":
+                    return OrigenSesion.Google;
+                default:
+                    return OrigenSesion.Risk;
             }
         }
 

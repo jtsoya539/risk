@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,6 +34,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using Risk.API.Models;
 using Risk.API.Services;
+using Google.Apis.Auth;
 
 namespace Risk.API.Helpers
 {
@@ -56,6 +58,7 @@ namespace Risk.API.Helpers
             claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? ""));
             claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? ""));
             //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
+            claims.Add(new Claim(ClaimTypes.GroupSid, datosUsuario.Origen.ToString() ?? ""));
 
             // Agrega los roles del usuario a la lista de claims
             foreach (var rol in datosUsuario.Roles)
@@ -181,6 +184,55 @@ namespace Risk.API.Helpers
             }
 
             return version;
+        }
+
+        public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken, IGenService genService)
+        {
+            // Validamos firma del token
+            var validPayload = GoogleJsonWebSignature.ValidateAsync(idToken);
+            if(validPayload == null)
+                throw new SecurityTokenValidationException("Firma de token no válida.");
+
+            UsuarioExterno usuario = null;
+
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            if (tokenHandler.CanReadToken(idToken))
+            {
+                // Obtenemos datos de claims del payload
+                JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(idToken);
+                string idExterno = jwtToken.Claims.First(claim => claim.Type == "sub").Value;
+                string nombre = jwtToken.Claims.First(claim => claim.Type == "given_name").Value;
+                string apellido = jwtToken.Claims.First(claim => claim.Type == "family_name").Value;
+                string direccionCorreo = jwtToken.Claims.First(claim => claim.Type == "email").Value;
+                string emisorToken = jwtToken.Claims.First(claim => claim.Type == "iss").Value;
+                string audiencia = jwtToken.Claims.First(claim => claim.Type == "aud").Value;
+
+                // Validamos el emisor del token
+                var respValorEmisor = genService.ValorParametro("GOOGLE_EMISOR_TOKEN");
+                if (!respValorEmisor.Codigo.Equals(RiskConstants.CODIGO_OK) || !emisorToken.Contains(respValorEmisor.Datos.Contenido, StringComparison.OrdinalIgnoreCase))
+                    throw new SecurityTokenValidationException("Emisor de token no válido.");
+
+                // Validamos el cliente del token
+                var respValorCliente = genService.ValorParametro("GOOGLE_IDENTIFICADOR_CLIENTE");
+                if (!respValorCliente.Codigo.Equals(RiskConstants.CODIGO_OK) || respValorCliente.Datos.Contenido != audiencia)
+                    throw new SecurityTokenValidationException("Cliente de token no válido.");
+
+                MailAddress addr = new MailAddress(direccionCorreo);
+                string username = addr.User;
+                string domain = addr.Host;
+
+                usuario = new UsuarioExterno
+                {
+                    Alias = username,
+                    Nombre = nombre,
+                    Apellido = apellido,
+                    DireccionCorreo = direccionCorreo,
+                    Origen = OrigenSesion.Google,
+                    IdExterno = idExterno
+                };
+            }
+
+            return usuario;
         }
     }
 }

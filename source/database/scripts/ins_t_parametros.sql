@@ -68,6 +68,12 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('NUMERO_TELEFONO_REMITENTE', 'Número de teléfono del remitente para mensajería', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('GOOGLE_IDENTIFICADOR_CLIENTE', 'Identificador del cliente de los Servicios Web de Google', null);
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
+values ('GOOGLE_EMISOR_TOKEN', 'Emisor del token de Google', 'accounts.google.com');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)
 values ('REPORTE_FORMATO_SALIDA_DEFECTO', 'Formato de salida por defecto para reportes', 'PDF');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR)

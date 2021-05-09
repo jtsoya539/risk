@@ -22,34 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 
-namespace Risk.API.Entities
+namespace Risk.API.Models
 {
-    public class YUsuario
+    [SwaggerSchema("Origen de Sesión")]
+    public enum OrigenSesion
     {
-        [JsonProperty("id_usuario")]
-        public int IdUsuario { get; set; }
-        [JsonProperty("alias")]
-        public string Alias { get; set; }
-        [JsonProperty("nombre")]
-        public string Nombre { get; set; }
-        [JsonProperty("apellido")]
-        public string Apellido { get; set; }
-        [JsonProperty("tipo_persona")]
-        public string TipoPersona { get; set; }
-        [JsonProperty("estado")]
-        public string Estado { get; set; }
-        [JsonProperty("direccion_correo")]
-        public string DireccionCorreo { get; set; }
-        [JsonProperty("numero_telefono")]
-        public string NumeroTelefono { get; set; }
-        [JsonProperty("version_avatar")]
-        public int? VersionAvatar { get; set; }
-        [JsonProperty("origen")]
-        public string Origen { get; set; }
-        [JsonProperty("roles")]
-        public List<YRol> Roles { get; set; }
+        Google,
+        Risk
     }
 }

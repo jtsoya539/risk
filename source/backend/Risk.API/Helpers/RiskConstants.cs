@@ -38,6 +38,7 @@ namespace Risk.API.Helpers
         public const string CODIGO_ERROR_PERMISO = "ser0003";
         public const string CODIGO_ERROR_GENERAL = "ser0099";
         public const string CODIGO_ERROR_INESPERADO = "ser9999";
+        public const string CODIGO_ERROR_USUARIO_EXTERNO_EXISTENTE = "aut0010";
 
         // OpenApi Security Schemes
         public const string SECURITY_SCHEME_RISK_APP_KEY = "RiskAppKey";

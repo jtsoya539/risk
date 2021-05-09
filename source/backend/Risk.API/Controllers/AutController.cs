@@ -377,5 +377,53 @@ namespace Risk.API.Controllers
             var respuesta = _autService.ValidarOtp(secret, otp);
             return ProcesarRespuesta(respuesta);
         }
+
+        [AllowAnonymous]
+        [HttpPost("IniciarSesionGoogle")]
+        [SwaggerOperation(OperationId = "IniciarSesionGoogle", Summary = "IniciarSesionGoogle", Description = "Permite iniciar la sesión de un usuario con su cuenta de google")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        public IActionResult IniciarSesionGoogle([FromBody] IniciarSesionGoogleRequestBody requestBody)
+        {
+            // Obtener datos del JWT
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
+
+            // Registrar el usuario
+            var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
+
+            if (!respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_OK) && !respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_ERROR_USUARIO_EXTERNO_EXISTENTE))
+            {
+                return ProcesarRespuesta(respRegistrarUsuario);
+            }
+
+            var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+
+            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, OrigenSesion.Google, requestBody.IdToken);
+
+            if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
+            }
+
+            return ProcesarRespuesta(respIniciarSesion);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("RefrescarSesionGoogle")]
+        [SwaggerOperation(OperationId = "RefrescarSesionGoogle", Summary = "RefrescarSesionGoogle", Description = "Permite refrescar la sesión de un usuario con su cuenta de google")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        public IActionResult RefrescarSesionGoogle([FromBody] RefrescarSesionGoogleRequestBody requestBody)
+        {
+            // Obtener datos del JWT
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
+
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, OrigenSesion.Google, requestBody.IdToken);
+            return ProcesarRespuesta(respuesta);
+        }
     }
 }

@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_USUARIOS">
  <META name="description" content="Usuarios">
- <META name="columns" content="ID_USUARIO ALIAS ID_PERSONA ESTADO DIRECCION_CORREO NUMERO_TELEFONO">
+ <META name="columns" content="ID_USUARIO ALIAS ID_PERSONA ESTADO DIRECCION_CORREO NUMERO_TELEFONO ORIGEN ID_EXTERNO">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -145,6 +145,40 @@ Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Numero de telefono principal del usuario
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ORIGEN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(1)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Origen del usuario
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ID_EXTERNO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(160)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Identificador externo del usuario
 </TD>
 </TR>
 </TABLE>
