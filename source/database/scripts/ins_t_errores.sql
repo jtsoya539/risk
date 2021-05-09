@@ -1,6 +1,7 @@
 prompt Importing table t_errores...
 set feedback off
 set define off
+
 insert into t_errores (ID_ERROR, MENSAJE)
 values ('ora0001', 'Valor no permitido');
 
@@ -18,6 +19,9 @@ values ('ora0005', 'Parámetro @1@ de tipo incorrecto');
 
 insert into t_errores (ID_ERROR, MENSAJE)
 values ('ora0006', 'Longitud del parámetro @1@ no debe ser superior a @2@');
+
+insert into t_errores (ID_ERROR, MENSAJE)
+values ('ora0007', 'Valor del parámetro @1@ no permitido');
 
 insert into t_errores (ID_ERROR, MENSAJE)
 values ('ser0002', 'Error al procesar parámetros del servicio');
