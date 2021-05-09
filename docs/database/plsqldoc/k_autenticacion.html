@@ -138,6 +138,16 @@ Constants
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ORIGEN_RISK">c_origen_risk</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ORIGEN_GOOGLE">c_origen_google</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_METODO_VALIDACION_RISK">c_metodo_validacion_risk</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -164,6 +174,22 @@ c_clave_transaccional
 </P>
 <PRE CLASS="DECL_TEXT">
 c_clave_transaccional CONSTANT CHAR(1) := 'T';
+</PRE>
+<HR>
+<A NAME="C_ORIGEN_RISK"></A>
+<P CLASS="TYPE_TITLE">
+c_origen_risk
+</P>
+<PRE CLASS="DECL_TEXT">
+c_origen_risk   CONSTANT CHAR(1) := 'R';
+</PRE>
+<HR>
+<A NAME="C_ORIGEN_GOOGLE"></A>
+<P CLASS="TYPE_TITLE">
+c_origen_google
+</P>
+<PRE CLASS="DECL_TEXT">
+c_origen_google CONSTANT CHAR(1) := 'G';
 </PRE>
 <HR>
 <A NAME="C_METODO_VALIDACION_RISK"></A>
@@ -240,7 +266,9 @@ PROCEDURE p_registrar_usuario(i_alias            IN VARCHAR2,
                               i_nombre           IN VARCHAR2,
                               i_apellido         IN VARCHAR2,
                               i_direccion_correo IN VARCHAR2,
-                              i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
+                              i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
+                              i_origen           IN VARCHAR2 DEFAULT NULL,
+                              i_id_externo       IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <HR>
@@ -347,7 +375,9 @@ FUNCTION f_iniciar_sesion(i_id_aplicacion     IN VARCHAR2,
                           i_usuario           IN VARCHAR2,
                           i_access_token      IN VARCHAR2,
                           i_refresh_token     IN VARCHAR2,
-                          i_token_dispositivo IN VARCHAR2 DEFAULT NULL)
+                          i_token_dispositivo IN VARCHAR2 DEFAULT NULL,
+                          i_origen            IN VARCHAR2 DEFAULT NULL,
+                          i_dato_externo      IN VARCHAR2 DEFAULT NULL)
   RETURN NUMBER
 
 </PRE>
@@ -361,7 +391,9 @@ FUNCTION f_refrescar_sesion(i_id_aplicacion         IN VARCHAR2,
                             i_access_token_antiguo  IN VARCHAR2,
                             i_refresh_token_antiguo IN VARCHAR2,
                             i_access_token_nuevo    IN VARCHAR2,
-                            i_refresh_token_nuevo   IN VARCHAR2)
+                            i_refresh_token_nuevo   IN VARCHAR2,
+                            i_origen                IN VARCHAR2 DEFAULT NULL,
+                            i_dato_externo          IN VARCHAR2 DEFAULT NULL)
   RETURN NUMBER
 
 </PRE>
