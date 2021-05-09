@@ -29,10 +29,10 @@ namespace Risk.API.Services
     public interface IAutService
     {
         Respuesta<Dato> ValidarCredenciales(string usuario, string clave, TipoClave tipoClave);
-        Respuesta<Sesion> IniciarSesion(string usuario, string accessToken, string refreshToken, string tokenDispositivo);
-        Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo);
+        Respuesta<Sesion> IniciarSesion(string usuario, string accessToken, string refreshToken, string tokenDispositivo, OrigenSesion? origen = null, string datoExterno = null);
+        Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo, OrigenSesion? origen = null, string datoExterno = null);
         Respuesta<Dato> CambiarEstadoSesion(string accessToken, EstadoSesion estado);
-        Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
+        Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono, OrigenSesion? origen = null, string idExterno = null);
         Respuesta<Dato> RegistrarClave(string usuario, string clave, TipoClave tipoClave);
         Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, TipoClave tipoClave);
         Respuesta<Dato> ValidarSesion(string accessToken);

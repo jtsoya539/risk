@@ -93,13 +93,15 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> IniciarSesion(string usuario, string accessToken, string refreshToken, string tokenDispositivo)
+        public Respuesta<Sesion> IniciarSesion(string usuario, string accessToken, string refreshToken, string tokenDispositivo, OrigenSesion? origen = null, string datoExterno = null)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
             prms.Add("token_dispositivo", tokenDispositivo);
+            prms.Add("origen",  ModelsMapper.GetValueFromOrigenSesionEnum(origen));
+            prms.Add("dato_externo", datoExterno);
 
             string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
                 NOMBRE_INICIAR_SESION,
@@ -110,13 +112,15 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetSesionFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo)
+        public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo, OrigenSesion? origen = null, string datoExterno = null)
         {
             JObject prms = new JObject();
             prms.Add("access_token_antiguo", accessTokenAntiguo);
             prms.Add("refresh_token_antiguo", refreshTokenAntiguo);
             prms.Add("access_token_nuevo", accessTokenNuevo);
             prms.Add("refresh_token_nuevo", refreshTokenNuevo);
+            prms.Add("origen",  ModelsMapper.GetValueFromOrigenSesionEnum(origen));
+            prms.Add("dato_externo", datoExterno);
 
             string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
                 NOMBRE_REFRESCAR_SESION,
@@ -143,7 +147,7 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetDatoFromEntity(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
+        public Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono, OrigenSesion? origen = null, string idExterno = null)
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
@@ -152,6 +156,8 @@ namespace Risk.API.Services
             prms.Add("apellido", apellido);
             prms.Add("direccion_correo", direccionCorreo);
             prms.Add("numero_telefono", numeroTelefono);
+            prms.Add("origen",  ModelsMapper.GetValueFromOrigenSesionEnum(origen));
+            prms.Add("id_externo", idExterno);
 
             string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
                 NOMBRE_REGISTRAR_USUARIO,

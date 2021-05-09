@@ -195,6 +195,19 @@ namespace Risk.API.Mappers
             }
         }
 
+        public static string GetValueFromOrigenSesionEnum(OrigenSesion? enumeration)
+        {
+            switch (enumeration)
+            {
+                case OrigenSesion.Google:
+                    return "G";
+                case OrigenSesion.Risk:
+                    return "R";
+                default:
+                    return string.Empty;
+            }
+        }
+
         public static string GetValueFromTipoClaveEnum(TipoClave enumeration)
         {
             switch (enumeration)
