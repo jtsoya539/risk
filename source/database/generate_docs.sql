@@ -164,6 +164,7 @@ plugin plsqldoc generate gb_archivos;
 plugin plsqldoc generate gb_datos;
 plugin plsqldoc generate gb_mensajes;
 plugin plsqldoc generate gb_operaciones;
+plugin plsqldoc generate gb_operacion_parametros;
 plugin plsqldoc generate gb_personas;
 plugin plsqldoc generate gb_reportes;
 plugin plsqldoc generate gb_servicios;
