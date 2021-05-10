@@ -45,8 +45,10 @@ Class | Method | HTTP request | Description
 *AutApi* | [**generarOtp**](docs/AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 *AutApi* | [**guardarAvatarUsuario**](docs/AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 *AutApi* | [**iniciarSesion**](docs/AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+*AutApi* | [**iniciarSesionGoogle**](docs/AutApi.md#iniciarsesiongoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 *AutApi* | [**recuperarAvatarUsuario**](docs/AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 *AutApi* | [**refrescarSesion**](docs/AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+*AutApi* | [**refrescarSesionGoogle**](docs/AutApi.md#refrescarsesiongoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 *AutApi* | [**registrarClaveTransaccional**](docs/AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**registrarDispositivo**](docs/AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 *AutApi* | [**registrarUbicacion**](docs/AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
@@ -112,6 +114,7 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.EstadoMensajeria](docs/EstadoMensajeria.md)
  - [py.com.risk.client.models.FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [py.com.risk.client.models.FormatoReporte](docs/FormatoReporte.md)
+ - [py.com.risk.client.models.IniciarSesionGoogleRequestBody](docs/IniciarSesionGoogleRequestBody.md)
  - [py.com.risk.client.models.IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [py.com.risk.client.models.InlineObject](docs/InlineObject.md)
  - [py.com.risk.client.models.InlineObject1](docs/InlineObject1.md)
@@ -121,9 +124,11 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.Notificacion](docs/Notificacion.md)
  - [py.com.risk.client.models.NotificacionPagina](docs/NotificacionPagina.md)
  - [py.com.risk.client.models.NotificacionPaginaRespuesta](docs/NotificacionPaginaRespuesta.md)
+ - [py.com.risk.client.models.OrigenSesion](docs/OrigenSesion.md)
  - [py.com.risk.client.models.Pais](docs/Pais.md)
  - [py.com.risk.client.models.PaisPagina](docs/PaisPagina.md)
  - [py.com.risk.client.models.PaisPaginaRespuesta](docs/PaisPaginaRespuesta.md)
+ - [py.com.risk.client.models.RefrescarSesionGoogleRequestBody](docs/RefrescarSesionGoogleRequestBody.md)
  - [py.com.risk.client.models.RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [py.com.risk.client.models.RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)
  - [py.com.risk.client.models.RegistrarDispositivoRequestBody](docs/RegistrarDispositivoRequestBody.md)

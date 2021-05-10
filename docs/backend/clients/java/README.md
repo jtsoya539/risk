@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-03-22T15:59:24.830-03:00[America/Asuncion]
+- Build date: 2021-05-10T17:46:01.745-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -120,8 +120,10 @@ Class | Method | HTTP request | Description
 *AutApi* | [**generarOtp**](docs/AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 *AutApi* | [**guardarAvatarUsuario**](docs/AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 *AutApi* | [**iniciarSesion**](docs/AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+*AutApi* | [**iniciarSesionGoogle**](docs/AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 *AutApi* | [**recuperarAvatarUsuario**](docs/AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 *AutApi* | [**refrescarSesion**](docs/AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+*AutApi* | [**refrescarSesionGoogle**](docs/AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 *AutApi* | [**registrarClaveTransaccional**](docs/AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**registrarDispositivo**](docs/AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 *AutApi* | [**registrarUbicacion**](docs/AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
@@ -186,6 +188,7 @@ Class | Method | HTTP request | Description
  - [EstadoMensajeria](docs/EstadoMensajeria.md)
  - [FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [FormatoReporte](docs/FormatoReporte.md)
+ - [IniciarSesionGoogleRequestBody](docs/IniciarSesionGoogleRequestBody.md)
  - [IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [InlineObject](docs/InlineObject.md)
  - [InlineObject1](docs/InlineObject1.md)
@@ -195,9 +198,11 @@ Class | Method | HTTP request | Description
  - [Notificacion](docs/Notificacion.md)
  - [NotificacionPagina](docs/NotificacionPagina.md)
  - [NotificacionPaginaRespuesta](docs/NotificacionPaginaRespuesta.md)
+ - [OrigenSesion](docs/OrigenSesion.md)
  - [Pais](docs/Pais.md)
  - [PaisPagina](docs/PaisPagina.md)
  - [PaisPaginaRespuesta](docs/PaisPaginaRespuesta.md)
+ - [RefrescarSesionGoogleRequestBody](docs/RefrescarSesionGoogleRequestBody.md)
  - [RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)
  - [RegistrarDispositivoRequestBody](docs/RegistrarDispositivoRequestBody.md)

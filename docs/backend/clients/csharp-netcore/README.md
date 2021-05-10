@@ -101,8 +101,10 @@ Class | Method | HTTP request | Description
 *AutApi* | [**GenerarOtp**](docs/AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 *AutApi* | [**GuardarAvatarUsuario**](docs/AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 *AutApi* | [**IniciarSesion**](docs/AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+*AutApi* | [**IniciarSesionGoogle**](docs/AutApi.md#iniciarsesiongoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 *AutApi* | [**RecuperarAvatarUsuario**](docs/AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 *AutApi* | [**RefrescarSesion**](docs/AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+*AutApi* | [**RefrescarSesionGoogle**](docs/AutApi.md#refrescarsesiongoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 *AutApi* | [**RegistrarClaveTransaccional**](docs/AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**RegistrarDispositivo**](docs/AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 *AutApi* | [**RegistrarUbicacion**](docs/AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
@@ -168,6 +170,7 @@ Class | Method | HTTP request | Description
  - [Model.EstadoMensajeria](docs/EstadoMensajeria.md)
  - [Model.FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [Model.FormatoReporte](docs/FormatoReporte.md)
+ - [Model.IniciarSesionGoogleRequestBody](docs/IniciarSesionGoogleRequestBody.md)
  - [Model.IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [Model.InlineObject](docs/InlineObject.md)
  - [Model.InlineObject1](docs/InlineObject1.md)
@@ -177,9 +180,11 @@ Class | Method | HTTP request | Description
  - [Model.Notificacion](docs/Notificacion.md)
  - [Model.NotificacionPagina](docs/NotificacionPagina.md)
  - [Model.NotificacionPaginaRespuesta](docs/NotificacionPaginaRespuesta.md)
+ - [Model.OrigenSesion](docs/OrigenSesion.md)
  - [Model.Pais](docs/Pais.md)
  - [Model.PaisPagina](docs/PaisPagina.md)
  - [Model.PaisPaginaRespuesta](docs/PaisPaginaRespuesta.md)
+ - [Model.RefrescarSesionGoogleRequestBody](docs/RefrescarSesionGoogleRequestBody.md)
  - [Model.RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [Model.RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)
  - [Model.RegistrarDispositivoRequestBody](docs/RegistrarDispositivoRequestBody.md)

@@ -14,8 +14,10 @@ Method | HTTP request | Description
 [**GenerarOtp**](AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**GuardarAvatarUsuario**](AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**IniciarSesion**](AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+[**IniciarSesionGoogle**](AutApi.md#iniciarsesiongoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 [**RecuperarAvatarUsuario**](AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 [**RefrescarSesion**](AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+[**RefrescarSesionGoogle**](AutApi.md#refrescarsesiongoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 [**RegistrarClaveTransaccional**](AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**RegistrarDispositivo**](AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 [**RegistrarUbicacion**](AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
@@ -861,6 +863,87 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="iniciarsesiongoogle"></a>
+# **IniciarSesionGoogle**
+> SesionRespuesta IniciarSesionGoogle (string riskServiceVersion = null, IniciarSesionGoogleRequestBody iniciarSesionGoogleRequestBody = null)
+
+IniciarSesionGoogle
+
+Permite iniciar la sesión de un usuario con su cuenta de google
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class IniciarSesionGoogleExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var iniciarSesionGoogleRequestBody = new IniciarSesionGoogleRequestBody(); // IniciarSesionGoogleRequestBody |  (optional) 
+
+            try
+            {
+                // IniciarSesionGoogle
+                SesionRespuesta result = apiInstance.IniciarSesionGoogle(riskServiceVersion, iniciarSesionGoogleRequestBody);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.IniciarSesionGoogle: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **iniciarSesionGoogleRequestBody** | [**IniciarSesionGoogleRequestBody**](IniciarSesionGoogleRequestBody.md)|  | [optional] 
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="recuperaravatarusuario"></a>
 # **RecuperarAvatarUsuario**
 > System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null, string riskServiceVersion = null)
@@ -1003,6 +1086,87 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional] 
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="refrescarsesiongoogle"></a>
+# **RefrescarSesionGoogle**
+> SesionRespuesta RefrescarSesionGoogle (string riskServiceVersion = null, RefrescarSesionGoogleRequestBody refrescarSesionGoogleRequestBody = null)
+
+RefrescarSesionGoogle
+
+Permite refrescar la sesión de un usuario con su cuenta de google
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class RefrescarSesionGoogleExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var refrescarSesionGoogleRequestBody = new RefrescarSesionGoogleRequestBody(); // RefrescarSesionGoogleRequestBody |  (optional) 
+
+            try
+            {
+                // RefrescarSesionGoogle
+                SesionRespuesta result = apiInstance.RefrescarSesionGoogle(riskServiceVersion, refrescarSesionGoogleRequestBody);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.RefrescarSesionGoogle: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **refrescarSesionGoogleRequestBody** | [**RefrescarSesionGoogleRequestBody**](RefrescarSesionGoogleRequestBody.md)|  | [optional] 
 
 ### Return type
 

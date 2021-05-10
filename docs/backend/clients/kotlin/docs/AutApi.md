@@ -14,8 +14,10 @@ Method | HTTP request | Description
 [**generarOtp**](AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**guardarAvatarUsuario**](AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**iniciarSesion**](AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+[**iniciarSesionGoogle**](AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 [**recuperarAvatarUsuario**](AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 [**refrescarSesion**](AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+[**refrescarSesionGoogle**](AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 [**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
 [**registrarUbicacion**](AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
@@ -567,6 +569,58 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json, text/plain
 
+<a name="iniciarSesionGoogle"></a>
+# **iniciarSesionGoogle**
+> SesionRespuesta iniciarSesionGoogle(riskMinusServiceMinusVersion, iniciarSesionGoogleRequestBody)
+
+IniciarSesionGoogle
+
+Permite iniciar la sesión de un usuario con su cuenta de google
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val iniciarSesionGoogleRequestBody : IniciarSesionGoogleRequestBody =  // IniciarSesionGoogleRequestBody | 
+try {
+    val result : SesionRespuesta = apiInstance.iniciarSesionGoogle(riskMinusServiceMinusVersion, iniciarSesionGoogleRequestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#iniciarSesionGoogle")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#iniciarSesionGoogle")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **iniciarSesionGoogleRequestBody** | [**IniciarSesionGoogleRequestBody**](IniciarSesionGoogleRequestBody.md)|  | [optional]
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
 <a name="recuperarAvatarUsuario"></a>
 # **recuperarAvatarUsuario**
 > java.io.File recuperarAvatarUsuario(usuario, version, riskMinusServiceMinusVersion)
@@ -658,6 +712,58 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+<a name="refrescarSesionGoogle"></a>
+# **refrescarSesionGoogle**
+> SesionRespuesta refrescarSesionGoogle(riskMinusServiceMinusVersion, refrescarSesionGoogleRequestBody)
+
+RefrescarSesionGoogle
+
+Permite refrescar la sesión de un usuario con su cuenta de google
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val refrescarSesionGoogleRequestBody : RefrescarSesionGoogleRequestBody =  // RefrescarSesionGoogleRequestBody | 
+try {
+    val result : SesionRespuesta = apiInstance.refrescarSesionGoogle(riskMinusServiceMinusVersion, refrescarSesionGoogleRequestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#refrescarSesionGoogle")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#refrescarSesionGoogle")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **refrescarSesionGoogleRequestBody** | [**RefrescarSesionGoogleRequestBody**](RefrescarSesionGoogleRequestBody.md)|  | [optional]
 
 ### Return type
 

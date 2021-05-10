@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **DireccionCorreo** | **string** | Direccion de correo electronico principal del usuario | [optional] 
 **NumeroTelefono** | **string** | Numero de telefono principal del usuario | [optional] 
 **VersionAvatar** | **int** | Version del avatar del usuario | [optional] 
+**Origen** | **OrigenSesion** |  | [optional] 
 **Roles** | [**List&lt;Rol&gt;**](Rol.md) | Roles del usuario | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

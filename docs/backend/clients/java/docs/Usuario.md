@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **direccionCorreo** | **String** | Direccion de correo electronico principal del usuario |  [optional]
 **numeroTelefono** | **String** | Numero de telefono principal del usuario |  [optional]
 **versionAvatar** | **Integer** | Version del avatar del usuario |  [optional]
+**origen** | [**OrigenSesion**](OrigenSesion.md) |  |  [optional]
 **roles** | [**List&lt;Rol&gt;**](Rol.md) | Roles del usuario |  [optional]
 
 
