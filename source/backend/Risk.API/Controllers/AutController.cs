@@ -399,7 +399,7 @@ namespace Risk.API.Controllers
 
             var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
 
-            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, OrigenSesion.Google, requestBody.IdToken);
+            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.IdToken);
 
             if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
@@ -423,6 +423,54 @@ namespace Risk.API.Controllers
             var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, OrigenSesion.Google, requestBody.IdToken);
+            return ProcesarRespuesta(respuesta);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("IniciarSesionFacebook")]
+        [SwaggerOperation(OperationId = "IniciarSesionFacebook", Summary = "IniciarSesionFacebook", Description = "Permite iniciar la sesión de un usuario con su cuenta de facebook")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        public IActionResult IniciarSesionFacebook([FromBody] IniciarSesionFacebookRequestBody requestBody)
+        {
+            // Obtener datos del JWT
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _genService);
+
+            // Registrar el usuario
+            var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
+
+            if (!respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_OK) && !respRegistrarUsuario.Codigo.Equals(RiskConstants.CODIGO_ERROR_USUARIO_EXTERNO_EXISTENTE))
+            {
+                return ProcesarRespuesta(respRegistrarUsuario);
+            }
+
+            var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+
+            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.FbToken);
+
+            if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
+            }
+
+            return ProcesarRespuesta(respIniciarSesion);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("RefrescarSesionFacebook")]
+        [SwaggerOperation(OperationId = "RefrescarSesionFacebook", Summary = "RefrescarSesionFacebook", Description = "Permite refrescar la sesión de un usuario con su cuenta de facebook")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        public IActionResult RefrescarSesionFacebook([FromBody] RefrescarSesionFacebookRequestBody requestBody)
+        {
+            // Obtener datos del JWT
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _genService);
+
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, OrigenSesion.Google, requestBody.FbToken);
             return ProcesarRespuesta(respuesta);
         }
     }

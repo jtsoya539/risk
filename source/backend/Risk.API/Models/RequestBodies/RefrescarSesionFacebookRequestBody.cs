@@ -26,11 +26,11 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
-    [SwaggerSchema("Origen de Sesión")]
-    public enum OrigenSesion
+    public class RefrescarSesionFacebookRequestBody
     {
-        Google,
-        Facebook,
-        Risk
+        [SwaggerSchema("Token de acceso")]
+        public string AccessToken { get; set; }
+        [SwaggerSchema("Token de acceso en Facebook")]
+        public string FbToken { get; set; }
     }
 }

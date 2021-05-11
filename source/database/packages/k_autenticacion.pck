@@ -35,8 +35,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
   c_clave_transaccional CONSTANT CHAR(1) := 'T';
 
   -- Origenes de usuario
-  c_origen_risk   CONSTANT CHAR(1) := 'R';
-  c_origen_google CONSTANT CHAR(1) := 'G';
+  c_origen_risk     CONSTANT CHAR(1) := 'R';
+  c_origen_google   CONSTANT CHAR(1) := 'G';
+  c_origen_facebook CONSTANT CHAR(1) := 'F';
 
   -- Métodos de validación de credenciales
   c_metodo_validacion_risk   CONSTANT VARCHAR2(10) := 'RISK';

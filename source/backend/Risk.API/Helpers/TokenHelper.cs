@@ -35,6 +35,8 @@ using Microsoft.IdentityModel.Tokens;
 using Risk.API.Models;
 using Risk.API.Services;
 using Google.Apis.Auth;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Risk.API.Helpers
 {
@@ -230,6 +232,50 @@ namespace Risk.API.Helpers
                     Origen = OrigenSesion.Google,
                     IdExterno = idExterno
                 };
+            }
+
+            return usuario;
+        }
+
+        public static UsuarioExterno ObtenerUsuarioDeTokenFacebook(string accessToken, IGenService genService)
+        {
+            UsuarioExterno usuario = null;
+            try
+            {
+                // Validamos el token a través del Graph de facebook
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://graph.facebook.com");
+                    HttpResponseMessage response = client.GetAsync($"me?fields=id,name,email,first_name,last_name&access_token={accessToken}").Result;
+
+                    response.EnsureSuccessStatusCode();
+                    string result = response.Content.ReadAsStringAsync().Result;
+                    var jsonRes = JsonConvert.DeserializeObject<dynamic>(result);
+
+                    // Obtenemos datos recibidos del usuario en la respuesta del Graph de facebook
+                    string idExterno = jsonRes["id"].ToString();
+                    string nombre = jsonRes["first_name"].ToString();
+                    string apellido = jsonRes["last_name"].ToString();
+                    string direccionCorreo = jsonRes["email"].ToString();
+
+                    MailAddress addr = new MailAddress(direccionCorreo);
+                    string username = addr.User;
+                    string domain = addr.Host;
+
+                    usuario = new UsuarioExterno
+                    {
+                        Alias = username,
+                        Nombre = nombre,
+                        Apellido = apellido,
+                        DireccionCorreo = direccionCorreo,
+                        Origen = OrigenSesion.Facebook,
+                        IdExterno = idExterno
+                    };
+                }
+            }
+            catch (Exception e)
+            {
+                throw new SecurityTokenValidationException("Token no válido.");
             }
 
             return usuario;
