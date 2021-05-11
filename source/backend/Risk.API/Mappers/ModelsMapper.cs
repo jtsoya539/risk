@@ -201,6 +201,8 @@ namespace Risk.API.Mappers
             {
                 case OrigenSesion.Google:
                     return "G";
+                case OrigenSesion.Facebook:
+                    return "F";
                 case OrigenSesion.Risk:
                     return "R";
                 default:
