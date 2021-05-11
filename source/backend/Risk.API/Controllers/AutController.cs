@@ -470,7 +470,7 @@ namespace Risk.API.Controllers
 
             var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
 
-            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, OrigenSesion.Google, requestBody.FbToken);
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, usuario.Origen, requestBody.FbToken);
             return ProcesarRespuesta(respuesta);
         }
     }
