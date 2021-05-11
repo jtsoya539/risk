@@ -422,7 +422,7 @@ namespace Risk.API.Controllers
 
             var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
 
-            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, OrigenSesion.Google, requestBody.IdToken);
+            var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, usuario.Origen, requestBody.IdToken);
             return ProcesarRespuesta(respuesta);
         }
 
