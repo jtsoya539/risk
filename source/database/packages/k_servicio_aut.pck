@@ -123,7 +123,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                     'Debe ingresar direccion_correo');
   
     l_rsp.lugar      := 'Registrando usuario';
-    l_dato.contenido := k_autenticacion.p_registrar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
+    l_dato.contenido := k_autenticacion.f_registrar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
                                                                                                  'usuario'),
                                                             k_operacion.f_valor_parametro_string(i_parametros,
                                                                                                  'clave'),
