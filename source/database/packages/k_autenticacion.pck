@@ -56,14 +56,15 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A');
 
-  PROCEDURE p_registrar_usuario(i_alias            IN VARCHAR2,
-                                i_clave            IN VARCHAR2,
-                                i_nombre           IN VARCHAR2,
-                                i_apellido         IN VARCHAR2,
-                                i_direccion_correo IN VARCHAR2,
-                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
-                                i_origen           IN VARCHAR2 DEFAULT NULL,
-                                i_id_externo       IN VARCHAR2 DEFAULT NULL);
+  FUNCTION f_registrar_usuario(i_alias            IN VARCHAR2,
+                               i_clave            IN VARCHAR2,
+                               i_nombre           IN VARCHAR2,
+                               i_apellido         IN VARCHAR2,
+                               i_direccion_correo IN VARCHAR2,
+                               i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
+                               i_origen           IN VARCHAR2 DEFAULT NULL,
+                               i_id_externo       IN VARCHAR2 DEFAULT NULL)
+    RETURN VARCHAR2;
 
   PROCEDURE p_editar_usuario(i_alias_antiguo    IN VARCHAR2,
                              i_alias_nuevo      IN VARCHAR2,
@@ -381,14 +382,15 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END LOOP;
   END;
 
-  PROCEDURE p_registrar_usuario(i_alias            IN VARCHAR2,
-                                i_clave            IN VARCHAR2,
-                                i_nombre           IN VARCHAR2,
-                                i_apellido         IN VARCHAR2,
-                                i_direccion_correo IN VARCHAR2,
-                                i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
-                                i_origen           IN VARCHAR2 DEFAULT NULL,
-                                i_id_externo       IN VARCHAR2 DEFAULT NULL) IS
+  FUNCTION f_registrar_usuario(i_alias            IN VARCHAR2,
+                               i_clave            IN VARCHAR2,
+                               i_nombre           IN VARCHAR2,
+                               i_apellido         IN VARCHAR2,
+                               i_direccion_correo IN VARCHAR2,
+                               i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
+                               i_origen           IN VARCHAR2 DEFAULT NULL,
+                               i_id_externo       IN VARCHAR2 DEFAULT NULL)
+    RETURN VARCHAR2 IS
     l_id_persona          t_personas.id_persona%TYPE;
     l_id_usuario          t_usuarios.id_usuario%TYPE;
     l_alias               t_usuarios.alias%TYPE := i_alias;
@@ -513,6 +515,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                 'Error al enviar correo de verificación');
       END IF;
     END IF;
+  
+    RETURN l_alias;
   EXCEPTION
     WHEN dup_val_on_index THEN
       raise_application_error(-20000, 'Usuario ya existe');

@@ -82,10 +82,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
 
   FUNCTION registrar_usuario(i_parametros IN y_parametros) RETURN y_respuesta IS
     l_rsp    y_respuesta;
+    l_dato   y_dato;
     l_origen VARCHAR2(1);
   BEGIN
     -- Inicializa respuesta
-    l_rsp := NEW y_respuesta();
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
   
     l_rsp.lugar := 'Obteniendo origen';
     l_origen    := nvl(k_operacion.f_valor_parametro_string(i_parametros,
@@ -120,24 +122,24 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                          'direccion_correo') IS NOT NULL,
                                     'Debe ingresar direccion_correo');
   
-    l_rsp.lugar := 'Registrando usuario';
-    k_autenticacion.p_registrar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'usuario'),
-                                        k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'clave'),
-                                        k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'nombre'),
-                                        k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'apellido'),
-                                        k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'direccion_correo'),
-                                        k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'numero_telefono'),
-                                        l_origen,
-                                        k_operacion.f_valor_parametro_string(i_parametros,
-                                                                             'id_externo'));
+    l_rsp.lugar      := 'Registrando usuario';
+    l_dato.contenido := k_autenticacion.p_registrar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'usuario'),
+                                                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'clave'),
+                                                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'nombre'),
+                                                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'apellido'),
+                                                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'direccion_correo'),
+                                                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'numero_telefono'),
+                                                            l_origen,
+                                                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                 'id_externo'));
   
-    k_operacion.p_respuesta_ok(l_rsp);
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;
   EXCEPTION
     WHEN k_usuario.ex_usuario_existente THEN
