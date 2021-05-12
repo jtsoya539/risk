@@ -397,9 +397,9 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respRegistrarUsuario);
             }
 
-            var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+            var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _genService);
 
-            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.IdToken);
+            var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.IdToken);
 
             if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
@@ -445,9 +445,9 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respRegistrarUsuario);
             }
 
-            var accessToken = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+            var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _genService);
 
-            var respIniciarSesion = _autService.IniciarSesion(usuario.Alias, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.FbToken);
+            var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.FbToken);
 
             if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
