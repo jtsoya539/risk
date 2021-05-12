@@ -143,9 +143,17 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     RETURN l_rsp;
   EXCEPTION
     WHEN k_usuario.ex_usuario_existente THEN
+      IF l_origen <> k_autenticacion.c_origen_risk THEN
+        l_dato.contenido := k_usuario.f_alias(k_usuario.f_buscar_id(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                         'id_externo')));
+      ELSE
+        l_dato := NULL;
+      END IF;
       k_operacion.p_respuesta_error(l_rsp,
                                     c_usuario_externo_existente,
-                                    'Usuario externo ya existe');
+                                    'Usuario externo ya existe',
+                                    NULL,
+                                    l_dato);
       RETURN l_rsp;
     WHEN k_operacion.ex_error_parametro THEN
       RETURN l_rsp;

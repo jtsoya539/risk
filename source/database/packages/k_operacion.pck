@@ -70,7 +70,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_codigo     IN VARCHAR2,
                               i_mensaje    IN VARCHAR2,
-                              i_mensaje_bd IN VARCHAR2 DEFAULT NULL);
+                              i_mensaje_bd IN VARCHAR2 DEFAULT NULL,
+                              i_datos      IN y_objeto DEFAULT NULL);
 
   PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
                                   i_error_number IN NUMBER,
@@ -194,7 +195,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_codigo     IN VARCHAR2,
                               i_mensaje    IN VARCHAR2,
-                              i_mensaje_bd IN VARCHAR2 DEFAULT NULL) IS
+                              i_mensaje_bd IN VARCHAR2 DEFAULT NULL,
+                              i_datos      IN y_objeto DEFAULT NULL) IS
   BEGIN
     IF i_codigo = c_ok THEN
       io_respuesta.codigo := c_error_general;
@@ -205,7 +207,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                       1,
                                       4000);
     io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
-    io_respuesta.datos      := NULL;
+    io_respuesta.datos      := i_datos;
   END;
 
   PROCEDURE p_respuesta_excepcion(io_respuesta   IN OUT NOCOPY y_respuesta,
