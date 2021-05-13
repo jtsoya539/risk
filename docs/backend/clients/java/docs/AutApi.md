@@ -14,9 +14,11 @@ Method | HTTP request | Description
 [**generarOtp**](AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**guardarAvatarUsuario**](AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**iniciarSesion**](AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+[**iniciarSesionFacebook**](AutApi.md#iniciarSesionFacebook) | **POST** /Api/Aut/IniciarSesionFacebook | IniciarSesionFacebook
 [**iniciarSesionGoogle**](AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 [**recuperarAvatarUsuario**](AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 [**refrescarSesion**](AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+[**refrescarSesionFacebook**](AutApi.md#refrescarSesionFacebook) | **POST** /Api/Aut/RefrescarSesionFacebook | RefrescarSesionFacebook
 [**refrescarSesionGoogle**](AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 [**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
@@ -846,6 +848,84 @@ Name | Type | Description  | Notes
 | **501** | Servicio no implementado o inactivo |  -  |
 
 
+## iniciarSesionFacebook
+
+> SesionRespuesta iniciarSesionFacebook(riskServiceVersion, iniciarSesionFacebookRequestBody)
+
+IniciarSesionFacebook
+
+Permite iniciar la sesión de un usuario con su cuenta de facebook
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.AutApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        IniciarSesionFacebookRequestBody iniciarSesionFacebookRequestBody = new IniciarSesionFacebookRequestBody(); // IniciarSesionFacebookRequestBody | 
+        try {
+            SesionRespuesta result = apiInstance.iniciarSesionFacebook(riskServiceVersion, iniciarSesionFacebookRequestBody);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AutApi#iniciarSesionFacebook");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional]
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
 ## iniciarSesionGoogle
 
 > SesionRespuesta iniciarSesionGoogle(riskServiceVersion, iniciarSesionGoogleRequestBody)
@@ -1063,6 +1143,84 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **riskServiceVersion** | **String**| Versión del Servicio | [optional]
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
+## refrescarSesionFacebook
+
+> SesionRespuesta refrescarSesionFacebook(riskServiceVersion, refrescarSesionFacebookRequestBody)
+
+RefrescarSesionFacebook
+
+Permite refrescar la sesión de un usuario con su cuenta de facebook
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.AutApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        AutApi apiInstance = new AutApi(defaultClient);
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        RefrescarSesionFacebookRequestBody refrescarSesionFacebookRequestBody = new RefrescarSesionFacebookRequestBody(); // RefrescarSesionFacebookRequestBody | 
+        try {
+            SesionRespuesta result = apiInstance.refrescarSesionFacebook(riskServiceVersion, refrescarSesionFacebookRequestBody);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AutApi#refrescarSesionFacebook");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional]
 
 ### Return type
 

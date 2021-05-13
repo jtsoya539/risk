@@ -14,9 +14,11 @@ Method | HTTP request | Description
 [**generarOtp**](AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**guardarAvatarUsuario**](AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**iniciarSesion**](AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+[**iniciarSesionFacebook**](AutApi.md#iniciarSesionFacebook) | **POST** /Api/Aut/IniciarSesionFacebook | IniciarSesionFacebook
 [**iniciarSesionGoogle**](AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 [**recuperarAvatarUsuario**](AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 [**refrescarSesion**](AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+[**refrescarSesionFacebook**](AutApi.md#refrescarSesionFacebook) | **POST** /Api/Aut/RefrescarSesionFacebook | RefrescarSesionFacebook
 [**refrescarSesionGoogle**](AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 [**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
@@ -569,6 +571,58 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json, text/plain
 
+<a name="iniciarSesionFacebook"></a>
+# **iniciarSesionFacebook**
+> SesionRespuesta iniciarSesionFacebook(riskMinusServiceMinusVersion, iniciarSesionFacebookRequestBody)
+
+IniciarSesionFacebook
+
+Permite iniciar la sesión de un usuario con su cuenta de facebook
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val iniciarSesionFacebookRequestBody : IniciarSesionFacebookRequestBody =  // IniciarSesionFacebookRequestBody | 
+try {
+    val result : SesionRespuesta = apiInstance.iniciarSesionFacebook(riskMinusServiceMinusVersion, iniciarSesionFacebookRequestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#iniciarSesionFacebook")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#iniciarSesionFacebook")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional]
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
 <a name="iniciarSesionGoogle"></a>
 # **iniciarSesionGoogle**
 > SesionRespuesta iniciarSesionGoogle(riskMinusServiceMinusVersion, iniciarSesionGoogleRequestBody)
@@ -712,6 +766,58 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+<a name="refrescarSesionFacebook"></a>
+# **refrescarSesionFacebook**
+> SesionRespuesta refrescarSesionFacebook(riskMinusServiceMinusVersion, refrescarSesionFacebookRequestBody)
+
+RefrescarSesionFacebook
+
+Permite refrescar la sesión de un usuario con su cuenta de facebook
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val refrescarSesionFacebookRequestBody : RefrescarSesionFacebookRequestBody =  // RefrescarSesionFacebookRequestBody | 
+try {
+    val result : SesionRespuesta = apiInstance.refrescarSesionFacebook(riskMinusServiceMinusVersion, refrescarSesionFacebookRequestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#refrescarSesionFacebook")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#refrescarSesionFacebook")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional]
 
 ### Return type
 

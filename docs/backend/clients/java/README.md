@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-05-10T17:46:01.745-04:00[America/Asuncion]
+- Build date: 2021-05-13T14:31:40.054-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -120,9 +120,11 @@ Class | Method | HTTP request | Description
 *AutApi* | [**generarOtp**](docs/AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 *AutApi* | [**guardarAvatarUsuario**](docs/AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 *AutApi* | [**iniciarSesion**](docs/AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+*AutApi* | [**iniciarSesionFacebook**](docs/AutApi.md#iniciarSesionFacebook) | **POST** /Api/Aut/IniciarSesionFacebook | IniciarSesionFacebook
 *AutApi* | [**iniciarSesionGoogle**](docs/AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 *AutApi* | [**recuperarAvatarUsuario**](docs/AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 *AutApi* | [**refrescarSesion**](docs/AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+*AutApi* | [**refrescarSesionFacebook**](docs/AutApi.md#refrescarSesionFacebook) | **POST** /Api/Aut/RefrescarSesionFacebook | RefrescarSesionFacebook
 *AutApi* | [**refrescarSesionGoogle**](docs/AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 *AutApi* | [**registrarClaveTransaccional**](docs/AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 *AutApi* | [**registrarDispositivo**](docs/AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
@@ -188,6 +190,7 @@ Class | Method | HTTP request | Description
  - [EstadoMensajeria](docs/EstadoMensajeria.md)
  - [FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [FormatoReporte](docs/FormatoReporte.md)
+ - [IniciarSesionFacebookRequestBody](docs/IniciarSesionFacebookRequestBody.md)
  - [IniciarSesionGoogleRequestBody](docs/IniciarSesionGoogleRequestBody.md)
  - [IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
  - [InlineObject](docs/InlineObject.md)
@@ -202,6 +205,7 @@ Class | Method | HTTP request | Description
  - [Pais](docs/Pais.md)
  - [PaisPagina](docs/PaisPagina.md)
  - [PaisPaginaRespuesta](docs/PaisPaginaRespuesta.md)
+ - [RefrescarSesionFacebookRequestBody](docs/RefrescarSesionFacebookRequestBody.md)
  - [RefrescarSesionGoogleRequestBody](docs/RefrescarSesionGoogleRequestBody.md)
  - [RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
  - [RegistrarClaveTransaccionalRequestBody](docs/RegistrarClaveTransaccionalRequestBody.md)

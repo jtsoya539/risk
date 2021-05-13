@@ -14,9 +14,11 @@ Method | HTTP request | Description
 [**GenerarOtp**](AutApi.md#generarotp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
 [**GuardarAvatarUsuario**](AutApi.md#guardaravatarusuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
 [**IniciarSesion**](AutApi.md#iniciarsesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
+[**IniciarSesionFacebook**](AutApi.md#iniciarsesionfacebook) | **POST** /Api/Aut/IniciarSesionFacebook | IniciarSesionFacebook
 [**IniciarSesionGoogle**](AutApi.md#iniciarsesiongoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
 [**RecuperarAvatarUsuario**](AutApi.md#recuperaravatarusuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
 [**RefrescarSesion**](AutApi.md#refrescarsesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
+[**RefrescarSesionFacebook**](AutApi.md#refrescarsesionfacebook) | **POST** /Api/Aut/RefrescarSesionFacebook | RefrescarSesionFacebook
 [**RefrescarSesionGoogle**](AutApi.md#refrescarsesiongoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
 [**RegistrarClaveTransaccional**](AutApi.md#registrarclavetransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
 [**RegistrarDispositivo**](AutApi.md#registrardispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
@@ -863,6 +865,87 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="iniciarsesionfacebook"></a>
+# **IniciarSesionFacebook**
+> SesionRespuesta IniciarSesionFacebook (string riskServiceVersion = null, IniciarSesionFacebookRequestBody iniciarSesionFacebookRequestBody = null)
+
+IniciarSesionFacebook
+
+Permite iniciar la sesión de un usuario con su cuenta de facebook
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class IniciarSesionFacebookExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var iniciarSesionFacebookRequestBody = new IniciarSesionFacebookRequestBody(); // IniciarSesionFacebookRequestBody |  (optional) 
+
+            try
+            {
+                // IniciarSesionFacebook
+                SesionRespuesta result = apiInstance.IniciarSesionFacebook(riskServiceVersion, iniciarSesionFacebookRequestBody);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.IniciarSesionFacebook: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional] 
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="iniciarsesiongoogle"></a>
 # **IniciarSesionGoogle**
 > SesionRespuesta IniciarSesionGoogle (string riskServiceVersion = null, IniciarSesionGoogleRequestBody iniciarSesionGoogleRequestBody = null)
@@ -1086,6 +1169,87 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional] 
+
+### Return type
+
+[**SesionRespuesta**](SesionRespuesta.md)
+
+### Authorization
+
+[RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="refrescarsesionfacebook"></a>
+# **RefrescarSesionFacebook**
+> SesionRespuesta RefrescarSesionFacebook (string riskServiceVersion = null, RefrescarSesionFacebookRequestBody refrescarSesionFacebookRequestBody = null)
+
+RefrescarSesionFacebook
+
+Permite refrescar la sesión de un usuario con su cuenta de facebook
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class RefrescarSesionFacebookExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var refrescarSesionFacebookRequestBody = new RefrescarSesionFacebookRequestBody(); // RefrescarSesionFacebookRequestBody |  (optional) 
+
+            try
+            {
+                // RefrescarSesionFacebook
+                SesionRespuesta result = apiInstance.RefrescarSesionFacebook(riskServiceVersion, refrescarSesionFacebookRequestBody);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.RefrescarSesionFacebook: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional] 
 
 ### Return type
 
