@@ -593,6 +593,8 @@ namespace Risk.API.Mappers
             {
                 case "G":
                     return OrigenSesion.Google;
+                case "F":
+                    return OrigenSesion.Facebook;
                 default:
                     return OrigenSesion.Risk;
             }
