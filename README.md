@@ -1,7 +1,6 @@
 # Proyecto RISK
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jtsoya539_risk&metric=alert_status)](https://sonarcloud.io/dashboard?id=jtsoya539_risk)
-![Nuget](https://img.shields.io/nuget/v/Risk.API.Client)
 
 Bienvenido/a al repositorio del Proyecto RISK.
 
