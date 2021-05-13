@@ -61,7 +61,7 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_REGISTRAR_USUARIO">p_registrar_usuario</A>&nbsp;&nbsp;
+<A HREF="#F_REGISTRAR_USUARIO">f_registrar_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -148,6 +148,11 @@ Constants
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ORIGEN_FACEBOOK">c_origen_facebook</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_METODO_VALIDACION_RISK">c_metodo_validacion_risk</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -181,7 +186,7 @@ c_clave_transaccional CONSTANT CHAR(1) := 'T';
 c_origen_risk
 </P>
 <PRE CLASS="DECL_TEXT">
-c_origen_risk   CONSTANT CHAR(1) := 'R';
+c_origen_risk     CONSTANT CHAR(1) := 'R';
 </PRE>
 <HR>
 <A NAME="C_ORIGEN_GOOGLE"></A>
@@ -189,7 +194,15 @@ c_origen_risk   CONSTANT CHAR(1) := 'R';
 c_origen_google
 </P>
 <PRE CLASS="DECL_TEXT">
-c_origen_google CONSTANT CHAR(1) := 'G';
+c_origen_google   CONSTANT CHAR(1) := 'G';
+</PRE>
+<HR>
+<A NAME="C_ORIGEN_FACEBOOK"></A>
+<P CLASS="TYPE_TITLE">
+c_origen_facebook
+</P>
+<PRE CLASS="DECL_TEXT">
+c_origen_facebook CONSTANT CHAR(1) := 'F';
 </PRE>
 <HR>
 <A NAME="C_METODO_VALIDACION_RISK"></A>
@@ -256,19 +269,20 @@ PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
 
 </PRE>
 <HR>
-<A NAME="P_REGISTRAR_USUARIO"></A>
+<A NAME="F_REGISTRAR_USUARIO"></A>
 <P CLASS="TYPE_TITLE">
-p_registrar_usuario
+f_registrar_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_registrar_usuario(i_alias            IN VARCHAR2,
-                              i_clave            IN VARCHAR2,
-                              i_nombre           IN VARCHAR2,
-                              i_apellido         IN VARCHAR2,
-                              i_direccion_correo IN VARCHAR2,
-                              i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
-                              i_origen           IN VARCHAR2 DEFAULT NULL,
-                              i_id_externo       IN VARCHAR2 DEFAULT NULL)
+FUNCTION f_registrar_usuario(i_alias            IN VARCHAR2,
+                             i_clave            IN VARCHAR2,
+                             i_nombre           IN VARCHAR2,
+                             i_apellido         IN VARCHAR2,
+                             i_direccion_correo IN VARCHAR2,
+                             i_numero_telefono  IN VARCHAR2 DEFAULT NULL,
+                             i_origen           IN VARCHAR2 DEFAULT NULL,
+                             i_id_externo       IN VARCHAR2 DEFAULT NULL)
+  RETURN VARCHAR2
 
 </PRE>
 <HR>
