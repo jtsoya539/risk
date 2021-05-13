@@ -47,7 +47,7 @@ namespace Risk.Forms.ViewModels
                 _secureStorage.Remove(RiskConstants.ACCESS_TOKEN);
                 _secureStorage.Remove(RiskConstants.REFRESH_TOKEN);
 
-                App.IsUserLoggedIn = false;
+                App.Current.Properties[RiskConstants.IS_USER_LOGGED_IN] = false;
                 await NavigationService.NavigateAsync("/LoginPage");
             }
 

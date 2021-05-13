@@ -1,3 +1,4 @@
+using Acr.UserDialogs;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -17,11 +18,7 @@ namespace Risk.Forms
 {
     public partial class App : PrismApplication
     {
-        public static bool IsUserLoggedIn { get; set; }
-        public static bool IsConnected { get; set; }
-
-        public App(IPlatformInitializer initializer)
-            : base(initializer)
+        public App(IPlatformInitializer initializer) : base(initializer)
         {
         }
 
@@ -29,19 +26,66 @@ namespace Risk.Forms
         {
             InitializeComponent();
 
+            Properties[RiskConstants.IS_USER_LOGGED_IN] = false;
+            Properties[RiskConstants.IS_CONNECTED] = false;
+
             var autApi = Container.Resolve<IAutApi>();
+            var genApi = Container.Resolve<IGenApi>();
+            var appInfo = Container.Resolve<IAppInfo>();
             var deviceInfo = Container.Resolve<IDeviceInfo>();
             var secureStorage = Container.Resolve<ISecureStorage>();
             var connectivity = Container.Resolve<IConnectivity>();
 
+            // Registra evento ConnectivityChanged
             connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
 
+            // Valida conexión a Internet
             if (connectivity.NetworkAccess != NetworkAccess.Internet)
             {
                 await NavigationService.NavigateAsync("/NoConnectionPage");
                 return;
             }
 
+            AplicacionPaginaRespuesta respuestaListarAplicaciones = null;
+            try
+            {
+                respuestaListarAplicaciones = genApi.ListarAplicaciones(null, "azVd94zazPu/+q5ZHqoL1v6wccamHV3oWoALYWQK0Z8=");
+            }
+            catch (Exception)
+            {
+                await UserDialogs.Instance.AlertAsync("La aplicación no está activa");
+            }
+
+            if (respuestaListarAplicaciones.Codigo.Equals("0"))
+            {
+                var aplicacion = respuestaListarAplicaciones.Datos.Elementos[0];
+
+                // Valida si la aplicación está activa
+                if (!aplicacion.Activo)
+                {
+                    await UserDialogs.Instance.AlertAsync("La aplicación no está activa");
+                }
+
+                // Valida versión de la aplicación
+                Version versionAplicacion = new Version(appInfo.VersionString);
+                Version versionServidor = new Version(aplicacion.VersionActual);
+
+                switch (versionAplicacion.CompareTo(versionServidor))
+                {
+                    case 0:
+                        //Console.Write("the same as");
+                        break;
+                    case 1:
+                        //Console.Write("later than");
+                        break;
+                    case -1:
+                        //Console.Write("earlier than");
+                        await UserDialogs.Instance.AlertAsync("Es necesaria una actualización de la aplicación");
+                        break;
+                }
+            }
+
+            // Registra dispositivo
             string deviceToken;
             try
             {
@@ -69,7 +113,7 @@ namespace Risk.Forms
                 await secureStorage.SetAsync(RiskConstants.DEVICE_TOKEN, datoRespuesta.Datos.Contenido);
             }
 
-            if (IsUserLoggedIn)
+            if ((bool)Properties[RiskConstants.IS_USER_LOGGED_IN])
             {
                 await NavigationService.NavigateAsync("/NavigationPage/MainPage");
             }
@@ -89,7 +133,7 @@ namespace Risk.Forms
                 return;
             }
 
-            if (IsUserLoggedIn)
+            if ((bool)Properties[RiskConstants.IS_USER_LOGGED_IN])
             {
                 _ = NavigationService.NavigateAsync("/NavigationPage/MainPage");
             }
@@ -107,7 +151,7 @@ namespace Risk.Forms
             containerRegistry.RegisterSingleton<IConnectivity, ConnectivityImplementation>();
 
             Configuration config = new Configuration();
-            config.BasePath = "http://192.168.100.4";
+            config.BasePath = "http://10.0.2.2:5000";
             // Configure Bearer token for authorization: AccessToken
             config.AccessToken = string.Empty;
             // Configure API key authorization: RiskAppKey

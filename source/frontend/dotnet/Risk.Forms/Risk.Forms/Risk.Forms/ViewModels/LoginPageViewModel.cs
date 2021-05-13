@@ -72,7 +72,7 @@ namespace Risk.Forms.ViewModels
                 var config = (Configuration)_autApi.Configuration;
                 config.AccessToken = sesionRespuesta.Datos.AccessToken;
 
-                App.IsUserLoggedIn = true;
+                App.Current.Properties[RiskConstants.IS_USER_LOGGED_IN] = true;
                 await NavigationService.NavigateAsync("/NavigationPage/MainPage");
             }
             else
