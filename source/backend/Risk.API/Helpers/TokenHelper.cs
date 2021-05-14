@@ -192,7 +192,7 @@ namespace Risk.API.Helpers
         {
             // Validamos firma del token
             var validPayload = GoogleJsonWebSignature.ValidateAsync(idToken);
-            if(validPayload == null)
+            if (validPayload == null)
                 throw new SecurityTokenValidationException("Firma de token no válida.");
 
             UsuarioExterno usuario = null;
@@ -275,7 +275,7 @@ namespace Risk.API.Helpers
             }
             catch (Exception e)
             {
-                throw new SecurityTokenValidationException("Token no válido.");
+                throw new SecurityTokenValidationException("Token no válido.", e);
             }
 
             return usuario;
