@@ -64,7 +64,7 @@ namespace Risk.Forms.ViewModels
             });
             UserDialogs.Instance.HideLoading();
 
-            if (sesionRespuesta.Codigo.Equals("0"))
+            if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 await _secureStorage.SetAsync(RiskConstants.ACCESS_TOKEN, sesionRespuesta.Datos.AccessToken);
                 await _secureStorage.SetAsync(RiskConstants.REFRESH_TOKEN, sesionRespuesta.Datos.RefreshToken);

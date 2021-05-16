@@ -42,7 +42,7 @@ namespace Risk.Forms.ViewModels
 
             DatoRespuesta datoRespuesta = await _autApi.FinalizarSesionAsync(null, new FinalizarSesionRequestBody { AccessToken = accessToken });
 
-            if (datoRespuesta.Codigo.Equals("0"))
+            if (datoRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 _secureStorage.Remove(RiskConstants.ACCESS_TOKEN);
                 _secureStorage.Remove(RiskConstants.REFRESH_TOKEN);

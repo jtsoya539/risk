@@ -56,7 +56,7 @@ namespace Risk.Forms
                 await UserDialogs.Instance.AlertAsync("La aplicación no está activa");
             }
 
-            if (respuestaListarAplicaciones.Codigo.Equals("0"))
+            if (respuestaListarAplicaciones.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 var aplicacion = respuestaListarAplicaciones.Datos.Elementos[0];
 
@@ -108,7 +108,7 @@ namespace Risk.Forms
                 }
             });
 
-            if (datoRespuesta.Codigo.Equals("0"))
+            if (datoRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 await secureStorage.SetAsync(RiskConstants.DEVICE_TOKEN, datoRespuesta.Datos.Contenido);
             }
