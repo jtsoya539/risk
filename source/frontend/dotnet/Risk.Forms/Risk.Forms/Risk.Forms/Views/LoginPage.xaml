@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:resources="clr-namespace:Risk.Forms.Resources.Resx"
     prism:ViewModelLocator.AutowireViewModel="True">
 
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
@@ -66,7 +67,7 @@
             <Button
                 BackgroundColor="#09C"
                 Command="{Binding IniciarSesionCommand}"
-                Text="Iniciar Sesión"
+                Text="{x:Static resources:AppResources.BotonIniciarSesion}"
                 TextColor="#FFF"
                 WidthRequest="150" />
         </StackLayout>

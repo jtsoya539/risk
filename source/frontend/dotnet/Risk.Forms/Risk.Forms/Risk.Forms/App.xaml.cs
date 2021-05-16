@@ -26,8 +26,11 @@ namespace Risk.Forms
         {
             InitializeComponent();
 
-            Properties[RiskConstants.IS_USER_LOGGED_IN] = false;
-            Properties[RiskConstants.IS_CONNECTED] = false;
+            if (!this.Properties.ContainsKey(RiskConstants.IS_USER_LOGGED_IN))
+                this.Properties[RiskConstants.IS_USER_LOGGED_IN] = false;
+
+            if (!this.Properties.ContainsKey(RiskConstants.IS_CONNECTED))
+                this.Properties[RiskConstants.IS_CONNECTED] = false;
 
             var autApi = Container.Resolve<IAutApi>();
             var genApi = Container.Resolve<IGenApi>();
@@ -42,6 +45,7 @@ namespace Risk.Forms
             // Valida conexión a Internet
             if (connectivity.NetworkAccess != NetworkAccess.Internet)
             {
+                this.Properties[RiskConstants.IS_CONNECTED] = false;
                 await NavigationService.NavigateAsync("/NoConnectionPage");
                 return;
             }
@@ -113,7 +117,7 @@ namespace Risk.Forms
                 await secureStorage.SetAsync(RiskConstants.DEVICE_TOKEN, datoRespuesta.Datos.Contenido);
             }
 
-            if ((bool)Properties[RiskConstants.IS_USER_LOGGED_IN])
+            if ((bool)this.Properties[RiskConstants.IS_USER_LOGGED_IN])
             {
                 await NavigationService.NavigateAsync("/NavigationPage/MainPage");
             }
@@ -133,7 +137,7 @@ namespace Risk.Forms
                 return;
             }
 
-            if ((bool)Properties[RiskConstants.IS_USER_LOGGED_IN])
+            if ((bool)this.Properties[RiskConstants.IS_USER_LOGGED_IN])
             {
                 _ = NavigationService.NavigateAsync("/NavigationPage/MainPage");
             }

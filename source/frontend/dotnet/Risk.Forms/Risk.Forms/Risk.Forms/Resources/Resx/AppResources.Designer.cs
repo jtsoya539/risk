@@ -61,6 +61,24 @@ namespace Risk.Forms.Resources.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cerrar sesión.
+        /// </summary>
+        internal static string BotonFinalizarSesion {
+            get {
+                return ResourceManager.GetString("BotonFinalizarSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iniciar sesión.
+        /// </summary>
+        internal static string BotonIniciarSesion {
+            get {
+                return ResourceManager.GetString("BotonIniciarSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cargando....
         /// </summary>
         internal static string ShowLoadingTitle {

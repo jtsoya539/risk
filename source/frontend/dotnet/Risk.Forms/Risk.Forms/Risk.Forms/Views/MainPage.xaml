@@ -3,10 +3,11 @@
     x:Class="Risk.Forms.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:resources="clr-namespace:Risk.Forms.Resources.Resx"
     Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding FinalizarSesionCommand}" Text="Cerrar sesión" />
+        <ToolbarItem Command="{Binding FinalizarSesionCommand}" Text="{x:Static resources:AppResources.BotonFinalizarSesion}" />
     </ContentPage.ToolbarItems>
 
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
