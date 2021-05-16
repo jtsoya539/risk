@@ -4,6 +4,7 @@ using Prism.Navigation;
 using Risk.API.Client.Api;
 using Risk.API.Client.Model;
 using Risk.Forms.Helpers;
+using Risk.Forms.Resources.Resx;
 using System;
 using Xamarin.Essentials.Interfaces;
 
@@ -28,7 +29,7 @@ namespace Risk.Forms.ViewModels
 
         async void ExecuteFinalizarSesionCommand()
         {
-            UserDialogs.Instance.ShowLoading("Cargando...");
+            UserDialogs.Instance.ShowLoading(AppResources.ShowLoadingTitle);
 
             string accessToken;
             try

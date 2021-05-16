@@ -5,6 +5,7 @@ using Risk.API.Client.Api;
 using Risk.API.Client.Client;
 using Risk.API.Client.Model;
 using Risk.Forms.Helpers;
+using Risk.Forms.Resources.Resx;
 using Xamarin.Essentials.Interfaces;
 
 namespace Risk.Forms.ViewModels
@@ -56,7 +57,7 @@ namespace Risk.Forms.ViewModels
 
         async void ExecuteIniciarSesionCommand()
         {
-            UserDialogs.Instance.ShowLoading("Cargando...");
+            UserDialogs.Instance.ShowLoading(AppResources.ShowLoadingTitle);
             SesionRespuesta sesionRespuesta = await _autApi.IniciarSesionAsync(null, new IniciarSesionRequestBody
             {
                 Usuario = Usuario,
