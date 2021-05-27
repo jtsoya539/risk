@@ -1,4 +1,4 @@
-# Proyecto RISK
+![RISK](docs/logo/logo.png)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jtsoya539_risk&metric=alert_status)](https://sonarcloud.io/dashboard?id=jtsoya539_risk)
 
