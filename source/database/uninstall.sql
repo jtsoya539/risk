@@ -145,7 +145,7 @@ drop table t_paises cascade constraints;
 drop table t_significados cascade constraints;
 drop table t_errores cascade constraints;
 drop table t_aplicaciones cascade constraints;
-drop table t_sistemas cascade constraints;
+drop table t_modulos cascade constraints;
 
 prompt
 prompt Borrando secuencias...

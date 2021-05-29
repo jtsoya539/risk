@@ -40,7 +40,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
     l_rsp            y_respuesta;
     l_contenido      BLOB;
     l_formato        VARCHAR2(10);
-    l_version_actual t_sistemas.version_actual%TYPE;
+    l_version_actual t_modulos.version_actual%TYPE;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
@@ -52,8 +52,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
     BEGIN
       SELECT version_actual
         INTO l_version_actual
-        FROM t_sistemas
-       WHERE id_sistema = 'RISK';
+        FROM t_modulos
+       WHERE id_modulo = 'RISK';
     EXCEPTION
       WHEN OTHERS THEN
         k_operacion.p_respuesta_error(l_rsp,

@@ -2,11 +2,11 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Table T_SISTEMAS</TITLE>
+ <TITLE>Table T_MODULOS</TITLE>
  <META name="object" content="TABLE">
- <META name="name" content="T_SISTEMAS">
- <META name="description" content="Sistemas">
- <META name="columns" content="ID_SISTEMA NOMBRE DETALLE ACTIVO FECHA_ACTUAL VERSION_ACTUAL">
+ <META name="name" content="T_MODULOS">
+ <META name="description" content="M&#243;dulos">
+ <META name="columns" content="ID_MODULO NOMBRE DETALLE ACTIVO FECHA_ACTUAL VERSION_ACTUAL">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,8 +14,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Table T_SISTEMAS</P>
-Sistemas
+<P CLASS="MAIN_TITLE">Table T_MODULOS</P>
+M&#243;dulos
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -47,7 +47,7 @@ Comments
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ID_SISTEMA
+ID_MODULO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 VARCHAR2(5)
@@ -59,7 +59,7 @@ VARCHAR2(5)
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Identificador del sistema
+Identificador del m&#243;dulo
 </TD>
 </TR>
 <TR>
@@ -76,7 +76,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Nombre del sistema
+Nombre del m&#243;dulo
 </TD>
 </TR>
 <TR>
@@ -93,7 +93,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Detalles adicionales del sistema
+Detalles adicionales del m&#243;dulo
 </TD>
 </TR>
 <TR>
@@ -110,7 +110,7 @@ VARCHAR2(1)
 'N'
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-El sistema esta activo? (S/N)
+El m&#243;dulo est&#225; activo? (S/N)
 </TD>
 </TR>
 <TR>
@@ -127,7 +127,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Fecha actual del sistema
+Fecha actual del m&#243;dulo
 </TD>
 </TR>
 <TR>
@@ -144,7 +144,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Version actual del sistema
+Version actual del m&#243;dulo
 </TD>
 </TR>
 </TABLE>
@@ -166,10 +166,10 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_SISTEMAS
+PK_MODULOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_SISTEMA
+ID_MODULO
 </TD>
 </TR>
 </TABLE>
@@ -191,7 +191,7 @@ Condition
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-CK_SISTEMAS_ACTIVO
+CK_MODULOS_ACTIVO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ACTIVO IN ('S', 'N')
@@ -220,10 +220,10 @@ Type
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_SISTEMAS
+PK_MODULOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_SISTEMA
+ID_MODULO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

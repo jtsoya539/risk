@@ -75,8 +75,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     BEGIN
       SELECT version_actual
         INTO l_dato.contenido
-        FROM t_sistemas
-       WHERE id_sistema = 'RISK';
+        FROM t_modulos
+       WHERE id_modulo = 'RISK';
     EXCEPTION
       WHEN OTHERS THEN
         k_operacion.p_respuesta_error(l_rsp,
