@@ -74,7 +74,7 @@ prompt
 prompt Creando tablas...
 prompt -----------------------------------
 prompt
-@@tables/t_sistemas.tab
+@@tables/t_modulos.tab
 @@tables/t_aplicaciones.tab
 @@tables/t_errores.tab
 @@tables/t_significados.tab
@@ -212,7 +212,7 @@ prompt -----------------------------------
 prompt
 @@install_audit.sql
 @@compile_schema.sql
-@@scripts/ins_t_sistemas.sql
+@@scripts/ins_t_modulos.sql
 @@scripts/ins_t_aplicaciones.sql
 @@scripts/ins_t_significados.sql
 @@scripts/ins_t_errores.sql

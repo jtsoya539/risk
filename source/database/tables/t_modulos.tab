@@ -1,0 +1,30 @@
+create table T_MODULOS
+(
+  id_modulo      VARCHAR2(5) not null,
+  nombre         VARCHAR2(100),
+  detalle        VARCHAR2(2000),
+  activo         VARCHAR2(1) default 'N' not null,
+  fecha_actual   DATE,
+  version_actual VARCHAR2(100)
+)
+;
+comment on table T_MODULOS
+  is 'Módulos';
+comment on column T_MODULOS.id_modulo
+  is 'Identificador del módulo';
+comment on column T_MODULOS.nombre
+  is 'Nombre del módulo';
+comment on column T_MODULOS.detalle
+  is 'Detalles adicionales del módulo';
+comment on column T_MODULOS.activo
+  is 'El módulo está activo? (S/N)';
+comment on column T_MODULOS.fecha_actual
+  is 'Fecha actual del módulo';
+comment on column T_MODULOS.version_actual
+  is 'Version actual del módulo';
+alter table T_MODULOS
+  add constraint PK_MODULOS primary key (ID_MODULO);
+alter table T_MODULOS
+  add constraint CK_MODULOS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+

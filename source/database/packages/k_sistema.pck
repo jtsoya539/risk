@@ -301,14 +301,14 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
   
     -- Define parámetros por defecto
     DECLARE
-      l_nombre         t_sistemas.nombre%TYPE;
-      l_version_actual t_sistemas.version_actual%TYPE;
-      l_fecha_actual   t_sistemas.fecha_actual%TYPE;
+      l_nombre         t_modulos.nombre%TYPE;
+      l_version_actual t_modulos.version_actual%TYPE;
+      l_fecha_actual   t_modulos.fecha_actual%TYPE;
     BEGIN
       SELECT nombre, version_actual, fecha_actual
         INTO l_nombre, l_version_actual, l_fecha_actual
-        FROM t_sistemas
-       WHERE id_sistema = 'RISK';
+        FROM t_modulos
+       WHERE id_modulo = 'RISK';
       p_definir_parametro_string(c_sistema, l_nombre);
       p_definir_parametro_string(c_version, l_version_actual);
       p_definir_parametro_date(c_fecha, l_fecha_actual);
