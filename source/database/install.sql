@@ -204,6 +204,7 @@ prompt
 @@triggers/gb_datos.trg
 @@triggers/gb_archivos.trg
 @@triggers/gb_mensajes.trg
+@@triggers/gf_operaciones.trg
 
 prompt
 prompt Ejecutando scripts...
@@ -221,7 +222,6 @@ prompt
 @@scripts/ins_t_reportes.sql
 @@scripts/ins_t_servicios.sql
 @@scripts/ins_t_roles.sql
-@@scripts/ins_t_permisos.sql
 @@scripts/ins_t_rol_permisos.sql
 @@scripts/ins_t_paises.sql
 @@scripts/ins_t_departamentos.sql
