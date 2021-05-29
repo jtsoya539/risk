@@ -25,8 +25,8 @@ CREATE OR REPLACE PACKAGE BODY test_k_dato IS
 
   PROCEDURE lp_insertar_sistema IS
   BEGIN
-    INSERT INTO t_sistemas
-      (id_sistema, nombre, activo)
+    INSERT INTO t_modulos
+      (id_modulo, nombre, activo)
     VALUES
       ('TEST', 'SISTEMA DE PRUEBA', 'S');
   END;
