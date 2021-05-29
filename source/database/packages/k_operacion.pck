@@ -46,8 +46,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   -- Otras constantes
   c_id_log                 CONSTANT VARCHAR2(50) := 'ID_LOG';
-  c_id_operacion_contexto  CONSTANT PLS_INTEGER := 0;
   c_id_ope_par_automaticos CONSTANT PLS_INTEGER := 1000;
+  c_id_operacion_contexto  CONSTANT PLS_INTEGER := 1001;
 
   -- Excepciones
   ex_servicio_no_implementado EXCEPTION;
