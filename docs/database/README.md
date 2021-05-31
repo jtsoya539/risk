@@ -1,9 +1,10 @@
 # Base de Datos
 
 ## Contenido
-* [Dependencias](#dependencias)
-* [Guía de estilo para Desarrollo](styleguide.md)
 * [API PL/SQL](plsqldoc/index.html)
+* [Guía de estilo para Desarrollo](styleguide.md)
+* [Dependencias](#dependencias)
+* [Configuración de PL/SQL Documentation (plsqldoc)](#configuraci%C3%B3n-de-plsql-documentation-plsqldoc)
 
 ## Dependencias
 
@@ -16,3 +17,15 @@ csv|Genera archivos en formato CSV|https://oracle-base.com/dba/script?category=m
 oos_util_totp|Genera y valida códigos con el algoritmo TOTP|https://github.com/OraOpenSource/oos-utils
 zt_qr|Genera códigos QR|https://github.com/zorantica/plsql-qr-code
 zt_word|Genera archivos en formato DOCX|https://github.com/zorantica/plsql-word
+
+## Configuración de PL/SQL Documentation (plsqldoc)
+
+Para configurar el Plug-In PL/SQL Documentation (plsqldoc) en PL/SQL Developer seguir estos pasos:
+
+1. Ir al menú *Plug-Ins* y en el apartado *plsqldoc* dar click en *Configure...*
+
+![](plugins_configure.png)
+
+2. Usar la siguiente configuración:
+
+![](plsqldoc_config.png)
