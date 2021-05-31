@@ -4,7 +4,7 @@
 * [API PL/SQL](plsqldoc/index.html)
 * [Guía de estilo para Desarrollo](styleguide.md)
 * [Dependencias](#dependencias)
-* [Configuración de PL/SQL Documentation (plsqldoc)](#configuraci%C3%B3n-de-plsql-documentation-%28plsqldoc%29)
+* [Configuración de PL/SQL Documentation (plsqldoc)](#configuraci%C3%B3n-de-plsql-documentation-plsqldoc)
 
 ## Dependencias
 
