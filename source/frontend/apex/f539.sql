@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   00:58 Sunday May 30, 2021
+--   Date and Time:   17:04 Monday May 31, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -61,6 +61,7 @@ prompt APPLICATION 539 - RISK ADMIN
 --           Report:              11
 --         LOVs:                   1
 --         Shortcuts:              1
+--         Plug-ins:               2
 --       Globalization:
 --       Reports:
 --       E-Mail:
@@ -114,7 +115,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210530005722'
+,p_last_upd_yyyymmddhh24miss=>'20210531170240'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -10842,6 +10843,40 @@ wwv_flow_api.create_authentication(
 );
 end;
 /
+prompt --application/shared_components/plugins/authentication_type/com_risk_authentication_scheme
+begin
+wwv_flow_api.create_plugin(
+ p_id=>wwv_flow_api.id(115400822496682583)
+,p_plugin_type=>'AUTHENTICATION TYPE'
+,p_name=>'COM.RISK.AUTHENTICATION_SCHEME'
+,p_display_name=>'RISK Authentication Scheme'
+,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
+,p_image_prefix => nvl(wwv_flow_application_install.get_static_plugin_file_prefix('AUTHENTICATION TYPE','COM.RISK.AUTHENTICATION_SCHEME'),'')
+,p_api_version=>2
+,p_substitute_attributes=>true
+,p_subscribe_plugin_settings=>true
+,p_version_identifier=>'v0.1.0'
+,p_about_url=>'https://jtsoya539.github.io/risk/'
+);
+end;
+/
+prompt --application/shared_components/plugins/authorization_type/com_risk_authorization_scheme
+begin
+wwv_flow_api.create_plugin(
+ p_id=>wwv_flow_api.id(115500696919685442)
+,p_plugin_type=>'AUTHORIZATION TYPE'
+,p_name=>'COM.RISK.AUTHORIZATION_SCHEME'
+,p_display_name=>'RISK Authorization Scheme'
+,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
+,p_image_prefix => nvl(wwv_flow_application_install.get_static_plugin_file_prefix('AUTHORIZATION TYPE','COM.RISK.AUTHORIZATION_SCHEME'),'')
+,p_api_version=>2
+,p_substitute_attributes=>true
+,p_subscribe_plugin_settings=>true
+,p_version_identifier=>'v0.1.0'
+,p_about_url=>'https://jtsoya539.github.io/risk/'
+);
+end;
+/
 prompt --application/user_interfaces
 begin
 wwv_flow_api.create_user_interface(
@@ -11191,7 +11226,41 @@ end;
 /
 prompt --application/deployment/definition
 begin
-null;
+wwv_flow_api.create_install(
+ p_id=>wwv_flow_api.id(68800168468508175)
+,p_welcome_message=>'This application installer will guide you through the process of creating your database objects and seed data.'
+,p_license_message=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'MIT License',
+'',
+'Copyright (c) 2019 jtsoya539',
+'',
+'Permission is hereby granted, free of charge, to any person obtaining a copy',
+'of this software and associated documentation files (the "Software"), to deal',
+'in the Software without restriction, including without limitation the rights',
+'to use, copy, modify, merge, publish, distribute, sublicense, and/or sell',
+'copies of the Software, and to permit persons to whom the Software is',
+'furnished to do so, subject to the following conditions:',
+'',
+'The above copyright notice and this permission notice shall be included in all',
+'copies or substantial portions of the Software.',
+'',
+'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR',
+'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,',
+'FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE',
+'AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER',
+'LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,',
+'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE',
+'SOFTWARE.'))
+,p_configuration_message=>'You can configure the following attributes of your application.'
+,p_build_options_message=>'You can choose to include the following build options.'
+,p_validation_message=>'The following validations will be performed to ensure your system is compatible with this application.'
+,p_install_message=>'Please confirm that you would like to install this application''s supporting objects.'
+,p_upgrade_message=>'The application installer has detected that this application''s supporting objects were previously installed.  This wizard will guide you through the process of upgrading these supporting objects.'
+,p_upgrade_confirm_message=>'Please confirm that you would like to install this application''s supporting objects.'
+,p_upgrade_success_message=>'Your application''s supporting objects have been installed.'
+,p_upgrade_failure_message=>'Installation of database objects and seed data has failed.'
+,p_deinstall_success_message=>'Deinstallation complete.'
+);
 end;
 /
 prompt --application/deployment/checks
