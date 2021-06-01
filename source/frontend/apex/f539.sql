@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   17:11 Tuesday June 1, 2021
+--   Date and Time:   17:33 Tuesday June 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -67,7 +67,7 @@ prompt APPLICATION 539 - RISK ADMIN
 --       Reports:
 --       E-Mail:
 --     Supporting Objects:  Included
---       Install scripts:          1
+--       Install scripts:          3
 --       Validations:              1
 --   Version:         20.2.0.00.20
 --   Instance ID:     500134684140051
@@ -121,7 +121,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210601171040'
+,p_last_upd_yyyymmddhh24miss=>'20210601173328'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -342,6 +342,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
+,p_value=>'A2jRONtjLO9bq80KU+9HhUH8dkbQkpkAZ1Ba3MZL2Xo='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -11284,7 +11285,10 @@ wwv_flow_api.create_install(
 ,p_upgrade_success_message=>'Your application''s supporting objects have been installed.'
 ,p_upgrade_failure_message=>'Installation of database objects and seed data has failed.'
 ,p_deinstall_success_message=>'Deinstallation complete.'
-,p_deinstall_script_clob=>'DELETE t_aplicaciones WHERE clave = apex_app_setting.get_value(''RISK_APP_KEY'');'
+,p_deinstall_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DELETE t_rol_permisos WHERE id_permiso LIKE ''PAGE:%'';',
+'DELETE t_permisos WHERE id_permiso LIKE ''PAGE:%'';',
+'DELETE t_aplicaciones WHERE clave = apex_app_setting.get_value(''RISK_APP_KEY'');'))
 );
 end;
 /
@@ -11315,6 +11319,51 @@ unistr('     ''Aplicaci\00F3n Web para administrar el sistema'','),
 '',
 '  apex_app_setting.set_value(''RISK_APP_KEY'', l_clave_aplicacion);',
 'END;'))
+);
+end;
+/
+prompt --application/deployment/install/install_ins_t_permisos
+begin
+wwv_flow_api.create_install_script(
+ p_id=>wwv_flow_api.id(72700129390251490)
+,p_install_id=>wwv_flow_api.id(68800168468508175)
+,p_name=>'ins_t_permisos'
+,p_sequence=>20
+,p_script_type=>'INSTALL'
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'INSERT INTO t_permisos',
+'  (id_permiso, descripcion, detalle)',
+'  SELECT ''PAGE:'' || upper(a.alias) || '':'' || upper(ap.page_alias),',
+'         NULL,',
+'         NULL',
+'    FROM apex_application_pages ap, apex_applications a',
+'   WHERE a.application_id = ap.application_id',
+'     AND ap.page_alias IS NOT NULL',
+'     AND a.alias = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));'))
+);
+end;
+/
+prompt --application/deployment/install/install_ins_t_rol_permisos
+begin
+wwv_flow_api.create_install_script(
+ p_id=>wwv_flow_api.id(72700292115267259)
+,p_install_id=>wwv_flow_api.id(68800168468508175)
+,p_name=>'ins_t_rol_permisos'
+,p_sequence=>30
+,p_script_type=>'INSTALL'
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'INSERT INTO t_rol_permisos',
+'  (id_rol, id_permiso, consultar, insertar, actualizar, eliminar)',
+'  SELECT 1,',
+'         ''PAGE:'' || upper(a.alias) || '':'' || upper(ap.page_alias),',
+'         ''N'',',
+'         ''N'',',
+'         ''N'',',
+'         ''N''',
+'    FROM apex_application_pages ap, apex_applications a',
+'   WHERE a.application_id = ap.application_id',
+'     AND ap.page_alias IS NOT NULL',
+'     AND a.alias = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));'))
 );
 end;
 /
