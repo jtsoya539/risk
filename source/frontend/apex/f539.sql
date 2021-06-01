@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   21:06 Monday May 31, 2021
+--   Date and Time:   16:30 Tuesday June 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -66,6 +66,7 @@ prompt APPLICATION 539 - RISK ADMIN
 --       Reports:
 --       E-Mail:
 --     Supporting Objects:  Included
+--       Validations:              1
 --   Version:         20.2.0.00.20
 --   Instance ID:     500134684140051
 --
@@ -118,7 +119,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210531210610'
+,p_last_upd_yyyymmddhh24miss=>'20210601140046'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -11281,7 +11282,15 @@ end;
 /
 prompt --application/deployment/checks
 begin
-null;
+wwv_flow_api.create_install_check(
+ p_id=>wwv_flow_api.id(71800139937742179)
+,p_install_id=>wwv_flow_api.id(68800168468508175)
+,p_name=>'Proyecto RISK instalado'
+,p_sequence=>10
+,p_check_type=>'EXISTS'
+,p_check_condition=>'SELECT * FROM t_modulos WHERE id_modulo = ''RISK'';'
+,p_failure_message=>'El Proyecto RISK debe estar instalado'
+);
 end;
 /
 prompt --application/deployment/buildoptions
