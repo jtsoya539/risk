@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   16:30 Tuesday June 1, 2021
+--   Date and Time:   17:11 Tuesday June 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -39,6 +39,7 @@ prompt APPLICATION 539 - RISK ADMIN
 --       Buttons:                  1
 --     Shared Components:
 --       Logic:
+--         App Settings:           1
 --         Build Options:          1
 --       Navigation:
 --         Lists:                  2
@@ -66,6 +67,7 @@ prompt APPLICATION 539 - RISK ADMIN
 --       Reports:
 --       E-Mail:
 --     Supporting Objects:  Included
+--       Install scripts:          1
 --       Validations:              1
 --   Version:         20.2.0.00.20
 --   Instance ID:     500134684140051
@@ -106,7 +108,7 @@ wwv_flow_api.create_flow(
 ,p_public_user=>'APEX_PUBLIC_USER'
 ,p_proxy_server=>nvl(wwv_flow_application_install.get_proxy,'')
 ,p_no_proxy_domains=>nvl(wwv_flow_application_install.get_no_proxy_domains,'')
-,p_flow_version=>'Release 1.0'
+,p_flow_version=>'0.1.0'
 ,p_flow_status=>'AVAILABLE_W_EDIT_LINK'
 ,p_flow_unavailable_text=>'This application is currently unavailable at this time.'
 ,p_exact_substitutions_only=>'Y'
@@ -119,7 +121,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210601140046'
+,p_last_upd_yyyymmddhh24miss=>'20210601171040'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -337,7 +339,12 @@ end;
 /
 prompt --application/shared_components/logic/application_settings
 begin
-null;
+wwv_flow_api.create_app_setting(
+ p_id=>wwv_flow_api.id(72100223987977625)
+,p_name=>'RISK_APP_KEY'
+,p_is_required=>'N'
+,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
+);
 end;
 /
 prompt --application/shared_components/navigation/tabs/standard
@@ -11277,6 +11284,37 @@ wwv_flow_api.create_install(
 ,p_upgrade_success_message=>'Your application''s supporting objects have been installed.'
 ,p_upgrade_failure_message=>'Installation of database objects and seed data has failed.'
 ,p_deinstall_success_message=>'Deinstallation complete.'
+,p_deinstall_script_clob=>'DELETE t_aplicaciones WHERE clave = apex_app_setting.get_value(''RISK_APP_KEY'');'
+);
+end;
+/
+prompt --application/deployment/install/install_ins_t_aplicaciones
+begin
+wwv_flow_api.create_install_script(
+ p_id=>wwv_flow_api.id(72200304069136814)
+,p_install_id=>wwv_flow_api.id(68800168468508175)
+,p_name=>'ins_t_aplicaciones'
+,p_sequence=>10
+,p_script_type=>'INSTALL'
+,p_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'  l_clave_aplicacion t_aplicaciones.clave%TYPE;',
+'BEGIN',
+'  l_clave_aplicacion := k_autenticacion.f_randombytes_base64;',
+'',
+'  INSERT INTO t_aplicaciones',
+'    (id_aplicacion, nombre, tipo, activo, clave, detalle, version_actual)',
+'  VALUES',
+'    (''ADMIN'',',
+'     ''RISK ADMIN'',',
+'     ''W'',',
+'     ''S'',',
+'     l_clave_aplicacion,',
+unistr('     ''Aplicaci\00F3n Web para administrar el sistema'','),
+'     ''0.1.0'');',
+'',
+'  apex_app_setting.set_value(''RISK_APP_KEY'', l_clave_aplicacion);',
+'END;'))
 );
 end;
 /
