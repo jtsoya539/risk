@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   17:33 Tuesday June 1, 2021
+--   Date and Time:   18:12 Tuesday June 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -121,7 +121,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210601173328'
+,p_last_upd_yyyymmddhh24miss=>'20210601181222'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -342,7 +342,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'A2jRONtjLO9bq80KU+9HhUH8dkbQkpkAZ1Ba3MZL2Xo='
+,p_value=>'fnS9378U4mtL1XzFQJn6Xy2fT2hHu/uRKj3A+qs4lh0='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -10863,7 +10863,59 @@ wwv_flow_api.create_plugin(
 ,p_display_name=>'RISK Authentication Scheme'
 ,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
 ,p_image_prefix => nvl(wwv_flow_application_install.get_static_plugin_file_prefix('AUTHENTICATION TYPE','COM.RISK.AUTHENTICATION_SCHEME'),'')
+,p_plsql_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'FUNCTION authentication_sentry(p_authentication IN apex_plugin.t_authentication,',
+'                               p_plugin         IN apex_plugin.t_plugin,',
+'                               p_is_public_page IN BOOLEAN)',
+'  RETURN apex_plugin.t_authentication_sentry_result IS',
+'  l_result apex_plugin.t_authentication_sentry_result;',
+'BEGIN',
+'',
+'  RETURN l_result;',
+'END;',
+'',
+'FUNCTION authentication_inval(p_authentication IN apex_plugin.t_authentication,',
+'                              p_plugin         IN apex_plugin.t_plugin)',
+'  RETURN apex_plugin.t_authentication_inval_result IS',
+'  l_result apex_plugin.t_authentication_inval_result;',
+'BEGIN',
+'',
+'  RETURN l_result;',
+'END;',
+'',
+'FUNCTION authentication_auth(p_authentication IN apex_plugin.t_authentication,',
+'                             p_plugin         IN apex_plugin.t_plugin,',
+'                             p_password       IN VARCHAR2)',
+'  RETURN apex_plugin.t_authentication_auth_result IS',
+'  l_result apex_plugin.t_authentication_auth_result;',
+'BEGIN',
+'',
+'  RETURN l_result;',
+'END;',
+'',
+'FUNCTION authentication_logout(p_authentication IN apex_plugin.t_authentication,',
+'                               p_plugin         IN apex_plugin.t_plugin)',
+'  RETURN apex_plugin.t_authentication_logout_result IS',
+'  l_result apex_plugin.t_authentication_logout_result;',
+'BEGIN',
+'',
+'  RETURN l_result;',
+'END;',
+'',
+'FUNCTION authentication_ajax(p_authentication IN apex_plugin.t_authentication,',
+'                             p_plugin         IN apex_plugin.t_plugin)',
+'  RETURN apex_plugin.t_authentication_ajax_result IS',
+'  l_result apex_plugin.t_authentication_ajax_result;',
+'BEGIN',
+'',
+'  RETURN l_result;',
+'END;'))
 ,p_api_version=>2
+,p_ajax_function=>'authentication_ajax'
+,p_session_sentry_function=>'authentication_sentry'
+,p_invalid_session_function=>'authentication_inval'
+,p_authentication_function=>'authentication_auth'
+,p_post_logout_function=>'authentication_logout'
 ,p_substitute_attributes=>true
 ,p_subscribe_plugin_settings=>true
 ,p_version_identifier=>'v0.1.0'
