@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   17:57 Monday May 31, 2021
+--   Date and Time:   21:06 Monday May 31, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -102,6 +102,7 @@ wwv_flow_api.create_flow(
 ,p_logo_type=>'T'
 ,p_logo_text=>'RISK ADMIN'
 ,p_app_builder_icon_name=>'app-icon.svg'
+,p_public_user=>'APEX_PUBLIC_USER'
 ,p_proxy_server=>nvl(wwv_flow_application_install.get_proxy,'')
 ,p_no_proxy_domains=>nvl(wwv_flow_application_install.get_no_proxy_domains,'')
 ,p_flow_version=>'Release 1.0'
@@ -110,13 +111,14 @@ wwv_flow_api.create_flow(
 ,p_exact_substitutions_only=>'Y'
 ,p_browser_cache=>'N'
 ,p_browser_frame=>'D'
+,p_security_scheme=>wwv_flow_api.id(69700204787934650)
 ,p_rejoin_existing_sessions=>'N'
 ,p_csv_encoding=>'Y'
 ,p_auto_time_zone=>'N'
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210531175747'
+,p_last_upd_yyyymmddhh24miss=>'20210531210610'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -316,14 +318,13 @@ wwv_flow_api.create_plugin_setting(
 );
 end;
 /
-prompt --application/shared_components/security/authorizations/administration_rights
+prompt --application/shared_components/security/authorizations/risk_authorization_scheme
 begin
 wwv_flow_api.create_security_scheme(
- p_id=>wwv_flow_api.id(67645859248621241)
-,p_name=>'Administration Rights'
-,p_scheme_type=>'NATIVE_FUNCTION_BODY'
-,p_attribute_01=>'return true;'
-,p_error_message=>'Insufficient privileges, user is not an Administrator'
+ p_id=>wwv_flow_api.id(69700204787934650)
+,p_name=>'RISK Authorization Scheme'
+,p_scheme_type=>'PLUGIN_COM.RISK.AUTHORIZATION_SCHEME'
+,p_error_message=>'Privilegios insuficientes'
 ,p_caching=>'BY_USER_BY_PAGE_VIEW'
 );
 end;
