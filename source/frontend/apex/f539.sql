@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   17:04 Monday May 31, 2021
+--   Date and Time:   17:57 Monday May 31, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -81,7 +81,7 @@ wwv_flow_api.create_flow(
  p_id=>wwv_flow.g_flow_id
 ,p_owner=>nvl(wwv_flow_application_install.get_schema,'RISK')
 ,p_name=>nvl(wwv_flow_application_install.get_application_name,'RISK ADMIN')
-,p_alias=>nvl(wwv_flow_application_install.get_application_alias,'RISK-ADMIN')
+,p_alias=>nvl(wwv_flow_application_install.get_application_alias,'ADMIN')
 ,p_page_view_logging=>'YES'
 ,p_page_protection_enabled_y_n=>'Y'
 ,p_checksum_salt=>'6E6631CFEC0894F716437B09C169E70E801EE567262892F008D27677C755ACC8'
@@ -106,6 +106,7 @@ wwv_flow_api.create_flow(
 ,p_no_proxy_domains=>nvl(wwv_flow_application_install.get_no_proxy_domains,'')
 ,p_flow_version=>'Release 1.0'
 ,p_flow_status=>'AVAILABLE_W_EDIT_LINK'
+,p_flow_unavailable_text=>'This application is currently unavailable at this time.'
 ,p_exact_substitutions_only=>'Y'
 ,p_browser_cache=>'N'
 ,p_browser_frame=>'D'
@@ -115,7 +116,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210531170240'
+,p_last_upd_yyyymmddhh24miss=>'20210531175747'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -10869,7 +10870,21 @@ wwv_flow_api.create_plugin(
 ,p_display_name=>'RISK Authorization Scheme'
 ,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
 ,p_image_prefix => nvl(wwv_flow_application_install.get_static_plugin_file_prefix('AUTHORIZATION TYPE','COM.RISK.AUTHORIZATION_SCHEME'),'')
+,p_plsql_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'FUNCTION is_authorized(p_authorization IN apex_plugin.t_authorization,',
+'                       p_plugin        IN apex_plugin.t_plugin)',
+'  RETURN apex_plugin.t_authorization_exec_result IS',
+'  l_result     apex_plugin.t_authorization_exec_result;',
+'  l_id_permiso t_permisos.id_permiso%TYPE;',
+'BEGIN',
+'  l_id_permiso           := ''PAGE:'' || upper(:app_alias) || '':'' ||',
+'                            upper(:app_page_alias);',
+'  l_result.is_authorized := k_autorizacion.f_validar_permiso(k_usuario.f_buscar_id(:app_user),',
+'                                                             l_id_permiso);',
+'  RETURN l_result;',
+'END;'))
 ,p_api_version=>2
+,p_execution_function=>'is_authorized'
 ,p_substitute_attributes=>true
 ,p_subscribe_plugin_settings=>true
 ,p_version_identifier=>'v0.1.0'
