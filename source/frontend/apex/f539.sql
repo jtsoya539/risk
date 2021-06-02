@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   18:12 Tuesday June 1, 2021
+--   Date and Time:   21:09 Tuesday June 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -100,7 +100,7 @@ wwv_flow_api.create_flow(
 ,p_flow_image_prefix => nvl(wwv_flow_application_install.get_image_prefix,'')
 ,p_documentation_banner=>'Application created from create application wizard 2021.05.30.'
 ,p_authentication=>'PLUGIN'
-,p_authentication_id=>wwv_flow_api.id(67502779622620894)
+,p_authentication_id=>wwv_flow_api.id(73602347171434537)
 ,p_application_tab_set=>1
 ,p_logo_type=>'T'
 ,p_logo_text=>'RISK ADMIN'
@@ -121,7 +121,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210601181222'
+,p_last_upd_yyyymmddhh24miss=>'20210601210643'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -342,7 +342,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'fnS9378U4mtL1XzFQJn6Xy2fT2hHu/uRKj3A+qs4lh0='
+,p_value=>'XwA1D+K8YuzNf3mtBE8t+mUF4m8OZh+IT4C6tJjh3e8='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -10842,13 +10842,12 @@ wwv_flow_api.create_shortcut(
 );
 end;
 /
-prompt --application/shared_components/security/authentications/application_express_accounts
+prompt --application/shared_components/security/authentications/risk_authentication_scheme
 begin
 wwv_flow_api.create_authentication(
- p_id=>wwv_flow_api.id(67502779622620894)
-,p_name=>'Application Express Accounts'
-,p_scheme_type=>'NATIVE_APEX_ACCOUNTS'
-,p_invalid_session_type=>'LOGIN'
+ p_id=>wwv_flow_api.id(73602347171434537)
+,p_name=>'RISK Authentication Scheme'
+,p_scheme_type=>'PLUGIN_COM.RISK.AUTHENTICATION_SCHEME'
 ,p_use_secure_cookie_yn=>'N'
 ,p_ras_mode=>0
 );
@@ -10870,6 +10869,7 @@ wwv_flow_api.create_plugin(
 '  RETURN apex_plugin.t_authentication_sentry_result IS',
 '  l_result apex_plugin.t_authentication_sentry_result;',
 'BEGIN',
+'  l_result.is_valid := k_sesion.f_validar_sesion(to_char(p_authentication.session_id));',
 '',
 '  RETURN l_result;',
 'END;',
@@ -10879,6 +10879,9 @@ wwv_flow_api.create_plugin(
 '  RETURN apex_plugin.t_authentication_inval_result IS',
 '  l_result apex_plugin.t_authentication_inval_result;',
 'BEGIN',
+unistr('  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''I''); -- INV\00C1LIDO'),
+'',
+'  l_result.redirect_url := p_authentication.invalid_session_url;',
 '',
 '  RETURN l_result;',
 'END;',
@@ -10887,8 +10890,21 @@ wwv_flow_api.create_plugin(
 '                             p_plugin         IN apex_plugin.t_plugin,',
 '                             p_password       IN VARCHAR2)',
 '  RETURN apex_plugin.t_authentication_auth_result IS',
-'  l_result apex_plugin.t_authentication_auth_result;',
+'  l_result    apex_plugin.t_authentication_auth_result;',
+'  l_id_sesion t_sesiones.id_sesion%TYPE;',
 'BEGIN',
+'  l_result.is_authenticated := k_autenticacion.f_validar_credenciales(p_authentication.username,',
+'                                                                      p_password,',
+'                                                                      k_autenticacion.c_clave_acceso);',
+'',
+'  IF l_result.is_authenticated THEN',
+'    l_id_sesion := k_autenticacion.f_iniciar_sesion(k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY'')),',
+'                                                    p_authentication.username,',
+'                                                    to_char(p_authentication.session_id),',
+'                                                    NULL);',
+'  ELSE',
+unistr('    l_result.display_text := ''Credenciales inv\00E1lidas'';'),
+'  END IF;',
 '',
 '  RETURN l_result;',
 'END;',
@@ -10898,6 +10914,9 @@ wwv_flow_api.create_plugin(
 '  RETURN apex_plugin.t_authentication_logout_result IS',
 '  l_result apex_plugin.t_authentication_logout_result;',
 'BEGIN',
+'  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''F''); -- FINALIZADO',
+'',
+'  l_result.redirect_url := p_authentication.logout_url;',
 '',
 '  RETURN l_result;',
 'END;',
@@ -11340,6 +11359,7 @@ wwv_flow_api.create_install(
 ,p_deinstall_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'DELETE t_rol_permisos WHERE id_permiso LIKE ''PAGE:%'';',
 'DELETE t_permisos WHERE id_permiso LIKE ''PAGE:%'';',
+'DELETE t_sesiones WHERE id_aplicacion = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));',
 'DELETE t_aplicaciones WHERE clave = apex_app_setting.get_value(''RISK_APP_KEY'');'))
 );
 end;
