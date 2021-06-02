@@ -28,15 +28,16 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   21:09 Tuesday June 1, 2021
+--   Date and Time:   02:10 Wednesday June 2, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                      5
 --       Items:                    4
---       Processes:                4
+--       Processes:                5
 --       Regions:                  5
 --       Buttons:                  1
+--       Dynamic Actions:          1
 --     Shared Components:
 --       Logic:
 --         App Settings:           1
@@ -121,7 +122,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210601210643'
+,p_last_upd_yyyymmddhh24miss=>'20210602021003'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -342,7 +343,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'XwA1D+K8YuzNf3mtBE8t+mUF4m8OZh+IT4C6tJjh3e8='
+,p_value=>'q/GP3bp8IC9MA7eefJDUAVqOBNSUz0Tq/GC+igNlnLw='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -11064,7 +11065,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210530005721'
+,p_last_upd_yyyymmddhh24miss=>'20210602021002'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(67647397002621286)
@@ -11175,6 +11176,38 @@ wwv_flow_api.create_page_item(
 '</p>'))
 ,p_attribute_01=>'1'
 );
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(75201472289960914)
+,p_name=>'REGISTRAR_DISPOSITIVO'
+,p_event_sequence=>10
+,p_bind_type=>'bind'
+,p_bind_event_type=>'ready'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(75201577104960915)
+,p_event_id=>wwv_flow_api.id(75201472289960914)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'var deviceToken = apex.storage.getCookie("DEVICE_TOKEN");',
+'',
+'apex.server.process("REGISTRAR_DISPOSITIVO", {',
+'    x01: deviceToken,',
+'    x02: window.navigator.appName,',
+'    x03: window.navigator.appVersion',
+'}, {',
+'    success: function (data) {',
+'        // do something here',
+'        apex.storage.setCookie("DEVICE_TOKEN", data.device_token);',
+'    },',
+'    error: function (jqXHR, textStatus, errorThrown) {',
+'        // handle error',
+'        console.log("Error al registrar dispositivo: ", errorThrown);',
+'    }',
+'});'))
+);
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(67650880159621315)
 ,p_process_sequence=>10
@@ -11220,6 +11253,44 @@ wwv_flow_api.create_page_process(
 ':P9999_USERNAME := apex_authentication.get_login_username_cookie;',
 ':P9999_REMEMBER := case when :P9999_USERNAME is not null then ''Y'' end;'))
 ,p_process_clob_language=>'PLSQL'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(75201391397960913)
+,p_process_sequence=>10
+,p_process_point=>'ON_DEMAND'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'REGISTRAR_DISPOSITIVO'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'  l_id_dispositivo    t_dispositivos.id_dispositivo%TYPE;',
+'  l_token_dispositivo t_dispositivos.token_dispositivo%TYPE;',
+'  l_nombre_navegador  t_dispositivos.nombre_navegador%TYPE;',
+'  l_version_navegador t_dispositivos.version_navegador%TYPE;',
+'BEGIN',
+'  l_token_dispositivo := apex_application.g_x01;',
+'  l_nombre_navegador  := apex_application.g_x02;',
+'  l_version_navegador := apex_application.g_x03;',
+'',
+'  IF l_token_dispositivo IS NULL THEN',
+'    l_token_dispositivo := k_autenticacion.f_randombytes_hex;',
+'  END IF;',
+'',
+'  l_id_dispositivo := k_dispositivo.f_registrar_dispositivo(i_id_aplicacion             => k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY'')),',
+'                                                            i_token_dispositivo         => l_token_dispositivo,',
+'                                                            i_token_notificacion        => NULL,',
+'                                                            i_nombre_sistema_operativo  => NULL,',
+'                                                            i_version_sistema_operativo => NULL,',
+'                                                            i_tipo                      => ''D'', -- DESKTOP',
+'                                                            i_nombre_navegador          => l_nombre_navegador,',
+'                                                            i_version_navegador         => l_version_navegador);',
+'',
+'  apex_json.open_object;',
+'  apex_json.write(''device_id'', l_id_dispositivo);',
+'  apex_json.write(''device_token'', l_token_dispositivo);',
+'  apex_json.close_object;',
+'END;'))
+,p_process_clob_language=>'PLSQL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
 end;
 /
