@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   23:06 Wednesday June 2, 2021
+--   Date and Time:   23:21 Wednesday June 2, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -122,7 +122,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210602230602'
+,p_last_upd_yyyymmddhh24miss=>'20210602232110'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -1496,7 +1496,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'98fnukUOboHKWtFVJmL8f9wTtvFoqYnsEI9V8tirpTs='
+,p_value=>'5A+XZc5Gxp3DXRISb0tupE6OXaIyOdv/HoRWnkXbCwQ='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -12044,18 +12044,28 @@ unistr('  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''I'')
 '                             p_plugin         IN apex_plugin.t_plugin,',
 '                             p_password       IN VARCHAR2)',
 '  RETURN apex_plugin.t_authentication_auth_result IS',
-'  l_result    apex_plugin.t_authentication_auth_result;',
-'  l_id_sesion t_sesiones.id_sesion%TYPE;',
+'  l_result            apex_plugin.t_authentication_auth_result;',
+'  l_id_sesion         t_sesiones.id_sesion%TYPE;',
+'  l_token_dispositivo t_dispositivos.token_dispositivo%TYPE;',
+'  l_cookie            owa_cookie.cookie;',
 'BEGIN',
 '  l_result.is_authenticated := k_autenticacion.f_validar_credenciales(p_authentication.username,',
 '                                                                      p_password,',
 '                                                                      k_autenticacion.c_clave_acceso);',
 '',
 '  IF l_result.is_authenticated THEN',
+'    l_cookie := owa_cookie.get(''DEVICE_TOKEN'');',
+'  ',
+'    IF l_cookie.vals.first IS NOT NULL THEN',
+'      l_token_dispositivo := l_cookie.vals.first;',
+'    END IF;',
+'  ',
 '    l_id_sesion := k_autenticacion.f_iniciar_sesion(k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY'')),',
 '                                                    p_authentication.username,',
 '                                                    to_char(p_authentication.session_id),',
-'                                                    NULL);',
+'                                                    NULL,',
+'                                                    l_token_dispositivo,',
+'                                                    k_autenticacion.c_origen_risk);',
 '  ELSE',
 unistr('    l_result.display_text := ''Credenciales inv\00E1lidas'';'),
 '  END IF;',
