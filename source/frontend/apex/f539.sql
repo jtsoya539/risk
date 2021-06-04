@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   23:21 Wednesday June 2, 2021
+--   Date and Time:   21:54 Thursday June 3, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -122,7 +122,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210602232110'
+,p_last_upd_yyyymmddhh24miss=>'20210603215416'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -1496,7 +1496,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'5A+XZc5Gxp3DXRISb0tupE6OXaIyOdv/HoRWnkXbCwQ='
+,p_value=>'DwvS5NcqSsnbezBW/7ptv8G+OyVIKMJOLtAUizmvzOM='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -12055,10 +12055,12 @@ unistr('  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''I'')
 '',
 '  IF l_result.is_authenticated THEN',
 '    l_cookie := owa_cookie.get(''DEVICE_TOKEN'');',
-'  ',
-'    IF l_cookie.vals.first IS NOT NULL THEN',
-'      l_token_dispositivo := l_cookie.vals.first;',
-'    END IF;',
+'    BEGIN',
+'      l_token_dispositivo := l_cookie.vals(1);',
+'    EXCEPTION',
+'      WHEN OTHERS THEN',
+'        l_token_dispositivo := NULL;',
+'    END;',
 '  ',
 '    l_id_sesion := k_autenticacion.f_iniciar_sesion(k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY'')),',
 '                                                    p_authentication.username,',
@@ -12088,8 +12090,44 @@ unistr('    l_result.display_text := ''Credenciales inv\00E1lidas'';'),
 'FUNCTION authentication_ajax(p_authentication IN apex_plugin.t_authentication,',
 '                             p_plugin         IN apex_plugin.t_plugin)',
 '  RETURN apex_plugin.t_authentication_ajax_result IS',
-'  l_result apex_plugin.t_authentication_ajax_result;',
+'  l_result       apex_plugin.t_authentication_ajax_result;',
+'  rw_dispositivo t_dispositivos%ROWTYPE;',
 'BEGIN',
+'  rw_dispositivo.token_dispositivo         := apex_application.g_x01;',
+'  rw_dispositivo.nombre_sistema_operativo  := apex_application.g_x02;',
+'  rw_dispositivo.version_sistema_operativo := apex_application.g_x03;',
+'  rw_dispositivo.nombre_navegador          := apex_application.g_x04;',
+'  rw_dispositivo.version_navegador         := apex_application.g_x05;',
+'',
+'  BEGIN',
+'    SELECT s.codigo',
+'      INTO rw_dispositivo.tipo',
+'      FROM t_significados s',
+'     WHERE s.dominio = ''TIPO_DISPOSITIVO''',
+'       AND upper(s.significado) LIKE',
+'           upper(''%'' || apex_application.g_x06 || ''%'');',
+'  EXCEPTION',
+'    WHEN OTHERS THEN',
+'      rw_dispositivo.tipo := NULL;',
+'  END;',
+'',
+'  IF rw_dispositivo.token_dispositivo IS NULL THEN',
+'    rw_dispositivo.token_dispositivo := k_autenticacion.f_randombytes_hex;',
+'  END IF;',
+'',
+'  rw_dispositivo.id_dispositivo := k_dispositivo.f_registrar_dispositivo(i_id_aplicacion             => k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY'')),',
+'                                                                         i_token_dispositivo         => rw_dispositivo.token_dispositivo,',
+'                                                                         i_token_notificacion        => NULL,',
+'                                                                         i_nombre_sistema_operativo  => rw_dispositivo.nombre_sistema_operativo,',
+'                                                                         i_version_sistema_operativo => rw_dispositivo.version_sistema_operativo,',
+'                                                                         i_tipo                      => rw_dispositivo.tipo,',
+'                                                                         i_nombre_navegador          => rw_dispositivo.nombre_navegador,',
+'                                                                         i_version_navegador         => rw_dispositivo.version_navegador);',
+'',
+'  apex_json.open_object;',
+'  apex_json.write(''device_token'', rw_dispositivo.token_dispositivo);',
+'  apex_json.close_object;',
+'',
 '  RETURN l_result;',
 'END;'))
 ,p_api_version=>2
