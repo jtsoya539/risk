@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   21:54 Thursday June 3, 2021
+--   Date and Time:   23:38 Sunday June 6, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -122,7 +122,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210603215416'
+,p_last_upd_yyyymmddhh24miss=>'20210606233612'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -1496,7 +1496,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'DwvS5NcqSsnbezBW/7ptv8G+OyVIKMJOLtAUizmvzOM='
+,p_value=>'hGbNxRzyEEY3pPDVZ2fBtnNfEyvGso0XzLsDoFCa5u4='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -12047,16 +12047,19 @@ unistr('  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''I'')
 '  l_result            apex_plugin.t_authentication_auth_result;',
 '  l_id_sesion         t_sesiones.id_sesion%TYPE;',
 '  l_token_dispositivo t_dispositivos.token_dispositivo%TYPE;',
-'  l_cookie            owa_cookie.cookie;',
 'BEGIN',
 '  l_result.is_authenticated := k_autenticacion.f_validar_credenciales(p_authentication.username,',
 '                                                                      p_password,',
 '                                                                      k_autenticacion.c_clave_acceso);',
 '',
 '  IF l_result.is_authenticated THEN',
-'    l_cookie := owa_cookie.get(''DEVICE_TOKEN'');',
+'    -- Busca el token del dispositivo en el collection DEVICE_TOKEN (en el servidor)',
 '    BEGIN',
-'      l_token_dispositivo := l_cookie.vals(1);',
+'      SELECT c001',
+'        INTO l_token_dispositivo',
+'        FROM apex_collections',
+'       WHERE collection_name = ''DEVICE_TOKEN''',
+'         AND rownum <= 1;',
 '    EXCEPTION',
 '      WHEN OTHERS THEN',
 '        l_token_dispositivo := NULL;',
@@ -12266,7 +12269,7 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#'
 ,p_page_is_public_y_n=>'Y'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210602230443'
+,p_last_upd_yyyymmddhh24miss=>'20210606232746'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(67647397002621286)
@@ -12405,6 +12408,7 @@ wwv_flow_api.create_page_da_action(
 '}, {',
 '    success: function (data) {',
 '        // do something here',
+'        console.log("Dispositivo registrado: ", data.device_token);',
 '        apex.storage.setCookie("DEVICE_TOKEN", data.device_token);',
 '    },',
 '    error: function (jqXHR, textStatus, errorThrown) {',
@@ -12500,6 +12504,12 @@ wwv_flow_api.create_page_process(
 '                                                                         i_nombre_navegador          => rw_dispositivo.nombre_navegador,',
 '                                                                         i_version_navegador         => rw_dispositivo.version_navegador);',
 '',
+'  -- Guarda el token del dispositivo en un collection (en el servidor)',
+'  apex_collection.create_or_truncate_collection(p_collection_name => ''DEVICE_TOKEN'');',
+'  apex_collection.add_member(p_collection_name => ''DEVICE_TOKEN'',',
+'                             p_c001            => rw_dispositivo.token_dispositivo);',
+'',
+'  -- Retorna el token del dispositivo para guardar en un cookie (en el cliente)',
 '  apex_json.open_object;',
 '  apex_json.write(''device_token'', rw_dispositivo.token_dispositivo);',
 '  apex_json.close_object;',
