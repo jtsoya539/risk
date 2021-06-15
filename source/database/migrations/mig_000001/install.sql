@@ -49,7 +49,7 @@ prompt
 prompt Ejecutando migracion...
 prompt -----------------------------------
 prompt
-@@upd_t_sistemas.sql
+@@upd_t_modulos.sql
 
 prompt
 prompt Registrando migracion...
