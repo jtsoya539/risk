@@ -34,6 +34,7 @@ BEGIN
     END IF;
   END IF;
 
+  $if k_modulo.c_instalado_msj $then
   -- Valida dirección de correo
   IF inserting OR (updating AND nvl(:new.direccion_correo, 'X') <>
      nvl(:old.direccion_correo, 'X')) THEN
@@ -42,7 +43,9 @@ BEGIN
                               'Dirección de correo electrónico inválida');
     END IF;
   END IF;
+  $end
 
+  $if k_modulo.c_instalado_msj $then
   -- Valida número de teléfono
   IF inserting OR (updating AND nvl(:new.numero_telefono, 'X') <>
      nvl(:old.numero_telefono, 'X')) THEN
@@ -50,5 +53,6 @@ BEGIN
       raise_application_error(-20000, 'Número de teléfono inválido');
     END IF;
   END IF;
+  $end
 END;
 /

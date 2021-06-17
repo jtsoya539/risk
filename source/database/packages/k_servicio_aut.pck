@@ -855,6 +855,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     l_rsp.lugar := 'Generando OTP';
     l_otp       := oos_util_totp.generate_otp(l_secret);
   
+    $if k_modulo.c_instalado_msj $then
     l_rsp.lugar := 'Enviando mensajería';
     CASE
      k_operacion.f_valor_parametro_string(i_parametros, 'tipo_mensajeria')
@@ -903,6 +904,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
         NULL;
       
     END CASE;
+    $end
   
     l_dato.contenido := l_secret;
   

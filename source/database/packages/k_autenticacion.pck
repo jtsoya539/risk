@@ -486,6 +486,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       p_registrar_clave(l_alias, i_clave, c_clave_acceso);
     END IF;
   
+    $if k_modulo.c_instalado_msj $then
     IF l_confirmacion_activa = 'S' THEN
       -- Envía correo de verificación
       l_body := k_mensajeria.f_correo_html('Para activar tu cuenta, por favor verifica tu dirección de correo.' ||
@@ -515,6 +516,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                 'Error al enviar correo de verificación');
       END IF;
     END IF;
+    $end
   
     RETURN l_alias;
   EXCEPTION
