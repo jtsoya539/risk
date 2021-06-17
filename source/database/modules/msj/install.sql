@@ -103,7 +103,8 @@ prompt
 prompt Ejecutando scripts...
 prompt -----------------------------------
 prompt
-@@compile_schema.sql
+@@packages/k_modulo.pck
+@@../../compile_schema.sql
 @@scripts/ins_t_modulos.sql
 commit;
 /

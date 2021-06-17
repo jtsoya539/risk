@@ -96,6 +96,16 @@ prompt
 purge recyclebin;
 
 prompt
+prompt Ejecutando scripts...
+prompt -----------------------------------
+prompt
+@@../../packages/k_modulo.pck
+@@../../compile_schema.sql
+@@scripts/del_t_modulos.sql
+commit;
+/
+
+prompt
 prompt ===================================
 prompt Desinstalacion finalizada
 prompt ===================================
