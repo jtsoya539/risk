@@ -50,3 +50,5 @@ END;
 
 set serveroutput off
 set define off
+
+@@compile_schema.sql
