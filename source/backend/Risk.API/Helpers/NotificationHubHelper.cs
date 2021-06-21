@@ -88,7 +88,7 @@ namespace Risk.API.Helpers
 
             var templates = new Dictionary<string, InstallationTemplate>()
             {
-                {"default_template", new InstallationTemplate { Body = dispositivo.TemplateNotificacion }}
+                {dispositivo.Plantillas[0].Nombre, new InstallationTemplate { Body = dispositivo.Plantillas[0].Contenido }}
             };
 
             Installation installation = new Installation

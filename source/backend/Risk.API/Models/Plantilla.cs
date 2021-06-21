@@ -22,34 +22,16 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 
-namespace Risk.API.Entities
+namespace Risk.API.Models
 {
-    public class YDispositivo
+    [SwaggerSchema("Plantilla de notificaciones push")]
+    public class Plantilla
     {
-        [JsonProperty("id_dispositivo")]
-        public int IdDispositivo { get; set; }
-        [JsonProperty("token_dispositivo")]
-        public string TokenDispositivo { get; set; }
-        [JsonProperty("nombre_sistema_operativo")]
-        public string NombreSistemaOperativo { get; set; }
-        [JsonProperty("version_sistema_operativo")]
-        public string VersionSistemaOperativo { get; set; }
-        [JsonProperty("tipo")]
-        public string Tipo { get; set; }
-        [JsonProperty("nombre_navegador")]
-        public string NombreNavegador { get; set; }
-        [JsonProperty("version_navegador")]
-        public string VersionNavegador { get; set; }
-        [JsonProperty("token_notificacion")]
-        public string TokenNotificacion { get; set; }
-        [JsonProperty("plataforma_notificacion")]
-        public string PlataformaNotificacion { get; set; }
-        [JsonProperty("plantillas")]
-        public List<YPlantilla> Plantillas { get; set; }
-        [JsonProperty("suscripciones")]
-        public List<YDato> Suscripciones { get; set; }
+        [SwaggerSchema("Contenido de la plantilla")]
+        public string Contenido { get; set; }
+        [SwaggerSchema("Nombre de la plantilla")]
+        public string Nombre { get; set; }
     }
 }

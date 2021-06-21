@@ -181,8 +181,8 @@ namespace Risk.API.Mappers
                     NombreNavegador = entity.NombreNavegador,
                     VersionNavegador = entity.VersionNavegador,
                     TokenNotificacion = entity.TokenNotificacion,
-                    TemplateNotificacion = entity.TemplateNotificacion,
                     PlataformaNotificacion = entity.PlataformaNotificacion,
+                    Plantillas = GetPlantillaListFromEntity(entity.Plantillas),
                     Suscripciones = GetDatoListFromEntity(entity.Suscripciones)
                 };
             }
@@ -546,6 +546,37 @@ namespace Risk.API.Mappers
                 foreach (var item in entityList)
                 {
                     modelList.Add(GetNotificacionFromEntity(item));
+                }
+            }
+            return modelList;
+        }
+
+        public static Plantilla GetPlantillaFromEntity(YPlantilla entity)
+        {
+            Plantilla model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = new Plantilla
+                {
+                    Contenido = entity.Contenido,
+                    Nombre = entity.Nombre
+                };
+            }
+            return model;
+        }
+
+        public static List<Plantilla> GetPlantillaListFromEntity(List<YPlantilla> entityList)
+        {
+            List<Plantilla> modelList = new List<Plantilla>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetPlantillaFromEntity(item));
                 }
             }
             return modelList;
