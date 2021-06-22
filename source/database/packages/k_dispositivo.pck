@@ -160,6 +160,16 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     l_dispositivo   y_dispositivo;
     l_suscripciones y_datos;
     l_suscripcion   y_dato;
+    l_plantilla     y_plantilla;
+    l_plantillas    y_datos;
+    l_id_aplicacion t_aplicaciones.id_aplicacion%TYPE;
+  
+    $if k_modulo.c_instalado_msj $then
+    CURSOR cr_plantillas(i_id_aplicacion IN VARCHAR2) IS
+      SELECT (n.id_aplicacion || '-' || n.nombre) nombre, n.plantilla
+        FROM t_notificacion_plantillas n
+       WHERE n.id_aplicacion = i_id_aplicacion;
+    $end
   
     CURSOR cr_suscripciones(i_id_dispositivo IN NUMBER) IS
       SELECT s.suscripcion
@@ -170,6 +180,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     -- Inicializa respuesta
     l_dispositivo   := NEW y_dispositivo();
     l_suscripciones := NEW y_datos();
+    l_plantillas    := NEW y_datos();
   
     -- Buscando datos del dispositivo
     BEGIN
@@ -181,8 +192,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              d.nombre_navegador,
              d.version_navegador,
              d.token_notificacion,
-             a.template_notificacion,
-             a.plataforma_notificacion
+             a.plataforma_notificacion,
+             a.id_aplicacion
         INTO l_dispositivo.id_dispositivo,
              l_dispositivo.token_dispositivo,
              l_dispositivo.nombre_sistema_operativo,
@@ -191,8 +202,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              l_dispositivo.nombre_navegador,
              l_dispositivo.version_navegador,
              l_dispositivo.token_notificacion,
-             l_dispositivo.template_notificacion,
-             l_dispositivo.plataforma_notificacion
+             l_dispositivo.plataforma_notificacion,
+             l_id_aplicacion
         FROM t_dispositivos d, t_aplicaciones a
        WHERE a.id_aplicacion(+) = d.id_aplicacion
          AND d.id_dispositivo = i_id_dispositivo;
@@ -203,6 +214,19 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
         raise_application_error(-20000,
                                 'Error al buscar datos del dispositivo');
     END;
+  
+    -- Buscando plantillas de la aplicación
+    $if k_modulo.c_instalado_msj $then
+    FOR c IN cr_plantillas(l_id_aplicacion) LOOP
+      l_plantilla           := NEW y_plantilla();
+      l_plantilla.contenido := c.plantilla;
+      l_plantilla.nombre    := c.nombre;
+    
+      l_plantillas.extend;
+      l_plantillas(l_plantillas.count) := l_plantilla;
+    END LOOP;
+    $end
+    l_dispositivo.plantillas := l_plantillas;
   
     -- Buscando suscripciones del dispositivo
     FOR c IN cr_suscripciones(l_dispositivo.id_dispositivo) LOOP

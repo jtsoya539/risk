@@ -1,0 +1,32 @@
+create table T_NOTIFICACION_PLANTILLAS
+(
+  id_aplicacion VARCHAR2(5) not null,
+  id_plantilla  VARCHAR2(10) not null,
+  nombre        VARCHAR2(100),
+  activo        VARCHAR2(1) default 'N' not null,
+  detalle       VARCHAR2(2000),
+  plantilla     CLOB not null
+)
+;
+comment on table T_NOTIFICACION_PLANTILLAS
+  is 'Plantillas de notificaciones push';
+comment on column T_NOTIFICACION_PLANTILLAS.id_aplicacion
+  is 'Identificador de la aplicacion';
+comment on column T_NOTIFICACION_PLANTILLAS.id_plantilla
+  is 'Identificador de la plantilla';
+comment on column T_NOTIFICACION_PLANTILLAS.nombre
+  is 'Nombre de la plantilla';
+comment on column T_NOTIFICACION_PLANTILLAS.activo
+  is 'La plantilla esta activa? (S/N)';
+comment on column T_NOTIFICACION_PLANTILLAS.detalle
+  is 'Detalles adicionales de la plantilla';
+comment on column T_NOTIFICACION_PLANTILLAS.plantilla
+  is 'Plantilla para las notificaciones push de la aplicación';
+alter table T_NOTIFICACION_PLANTILLAS
+  add constraint PK_NOTIFICACION_PLANTILLAS primary key (ID_APLICACION, ID_PLANTILLA);
+alter table T_NOTIFICACION_PLANTILLAS
+  add constraint FK_NOTIFICACION_PLANTILLAS_APLICACIONES foreign key (ID_APLICACION)
+  references T_APLICACIONES (ID_APLICACION);
+alter table T_NOTIFICACION_PLANTILLAS
+  add constraint CK_NOTIFICACION_PLANTILLAS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));

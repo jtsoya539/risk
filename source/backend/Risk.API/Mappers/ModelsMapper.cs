@@ -60,6 +60,37 @@ namespace Risk.API.Mappers
             return entityList;
         }
 
+        public static YPlantilla GetYPlantillaFromModel(Plantilla model)
+        {
+            YPlantilla entity;
+            if (model == null)
+            {
+                entity = null;
+            }
+            else
+            {
+                entity = new YPlantilla
+                {
+                    Contenido = model.Contenido,
+                    Nombre = model.Nombre
+                };
+            }
+            return entity;
+        }
+
+        public static List<YPlantilla> GetYPlantillaListFromModel(List<Plantilla> modelList)
+        {
+            List<YPlantilla> entityList = new List<YPlantilla>();
+            if (modelList != null)
+            {
+                foreach (var item in modelList)
+                {
+                    entityList.Add(GetYPlantillaFromModel(item));
+                }
+            }
+            return entityList;
+        }
+
         public static YDispositivo GetYDispositivoFromModel(Dispositivo model)
         {
             YDispositivo entity;
@@ -79,8 +110,8 @@ namespace Risk.API.Mappers
                     NombreNavegador = model.NombreNavegador,
                     VersionNavegador = model.VersionNavegador,
                     TokenNotificacion = model.TokenNotificacion,
-                    TemplateNotificacion = model.TemplateNotificacion,
                     PlataformaNotificacion = model.PlataformaNotificacion,
+                    Plantillas = GetYPlantillaListFromModel(model.Plantillas),
                     Suscripciones = GetYDatoListFromModel(model.Suscripciones)
                 };
             }

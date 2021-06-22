@@ -86,10 +86,14 @@ namespace Risk.API.Helpers
                 }
             }
 
-            var templates = new Dictionary<string, InstallationTemplate>()
+            var templates = new Dictionary<string, InstallationTemplate>();
+            if (dispositivo.Plantillas != null)
             {
-                {"default_template", new InstallationTemplate { Body = dispositivo.TemplateNotificacion }}
-            };
+                foreach (var item in dispositivo.Plantillas)
+                {
+                    templates.Add(item.Nombre, new InstallationTemplate { Body = item.Contenido });
+                }
+            }
 
             Installation installation = new Installation
             {

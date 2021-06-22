@@ -68,6 +68,7 @@ prompt
 @@tables/t_correo_adjuntos.tab
 @@tables/t_mensajes.tab
 @@tables/t_notificaciones.tab
+@@tables/t_notificacion_plantillas.tab
 
 prompt
 prompt Creando vistas...
@@ -106,6 +107,7 @@ prompt
 @@packages/k_modulo.pck
 @@../../compile_schema.sql
 @@scripts/ins_t_modulos.sql
+@@scripts/ins_t_notificacion_plantillas.sql
 commit;
 /
 

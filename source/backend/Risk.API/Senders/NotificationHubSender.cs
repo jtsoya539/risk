@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Risk.API.Models;
 
 namespace Risk.API.Senders
@@ -62,6 +63,16 @@ namespace Risk.API.Senders
         public async Task Enviar(Notificacion msj)
         {
             var properties = new Dictionary<string, string> { { "titulo", msj.Titulo }, { "contenido", msj.Contenido } };
+            if (msj.DatosExtra != null)
+            {
+                var datos = JObject.Parse(msj.DatosExtra);
+                foreach (var x in datos)
+                {
+                    string name = x.Key;
+                    string value = (string)x.Value;
+                    properties.Add(name, value);
+                }
+            }
             await hubClient.SendTemplateNotificationAsync(properties, msj.Suscripcion);
         }
     }

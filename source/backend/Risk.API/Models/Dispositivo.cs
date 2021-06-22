@@ -36,8 +36,8 @@ namespace Risk.API.Models
         public string NombreNavegador { get; set; }
         public string VersionNavegador { get; set; }
         public string TokenNotificacion { get; set; }
-        public string TemplateNotificacion { get; set; }
         public string PlataformaNotificacion { get; set; }
+        public List<Plantilla> Plantillas { get; set; }
         public List<Dato> Suscripciones { get; set; }
     }
 }

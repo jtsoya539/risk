@@ -220,7 +220,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
     l_elemento  y_notificacion;
   
     CURSOR cr_elementos IS
-      SELECT id_notificacion, suscripcion, titulo, contenido, estado
+      SELECT id_notificacion,
+             suscripcion,
+             titulo,
+             contenido,
+             estado,
+             datos_extra
         FROM t_notificaciones
        WHERE estado IN ('P', 'R')
       -- P-PENDIENTE DE ENVÍO
@@ -243,6 +248,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
         l_elemento.suscripcion     := ele.suscripcion;
         l_elemento.titulo          := ele.titulo;
         l_elemento.contenido       := ele.contenido;
+        l_elemento.datos_extra     := ele.datos_extra;
       
         l_elementos.extend;
         l_elementos(l_elementos.count) := l_elemento;

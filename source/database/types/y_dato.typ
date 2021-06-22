@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_dato UNDER y_objeto
+CREATE OR REPLACE TYPE y_dato force UNDER y_objeto
 (
 /**
 Contiene un dato en formato de texto.
@@ -51,6 +51,7 @@ Retorna el objeto serializado en formato JSON.
 */
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
+NOT FINAL
 /
 CREATE OR REPLACE TYPE BODY y_dato IS
 

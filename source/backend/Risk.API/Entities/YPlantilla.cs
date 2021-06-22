@@ -22,34 +22,15 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Risk.API.Entities
 {
-    public class YDispositivo
+    public class YPlantilla
     {
-        [JsonProperty("id_dispositivo")]
-        public int IdDispositivo { get; set; }
-        [JsonProperty("token_dispositivo")]
-        public string TokenDispositivo { get; set; }
-        [JsonProperty("nombre_sistema_operativo")]
-        public string NombreSistemaOperativo { get; set; }
-        [JsonProperty("version_sistema_operativo")]
-        public string VersionSistemaOperativo { get; set; }
-        [JsonProperty("tipo")]
-        public string Tipo { get; set; }
-        [JsonProperty("nombre_navegador")]
-        public string NombreNavegador { get; set; }
-        [JsonProperty("version_navegador")]
-        public string VersionNavegador { get; set; }
-        [JsonProperty("token_notificacion")]
-        public string TokenNotificacion { get; set; }
-        [JsonProperty("plataforma_notificacion")]
-        public string PlataformaNotificacion { get; set; }
-        [JsonProperty("plantillas")]
-        public List<YPlantilla> Plantillas { get; set; }
-        [JsonProperty("suscripciones")]
-        public List<YDato> Suscripciones { get; set; }
+        [JsonProperty("contenido")]
+        public string Contenido { get; set; }
+        [JsonProperty("nombre")]
+        public string Nombre { get; set; }
     }
 }

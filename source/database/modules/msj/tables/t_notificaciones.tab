@@ -3,13 +3,14 @@ create table T_NOTIFICACIONES
   id_notificacion         NUMBER not null,
   id_usuario              NUMBER(10),
   suscripcion             VARCHAR2(500) not null,
-  titulo                  VARCHAR2(160) not null,
-  contenido               VARCHAR2(500) not null,
+  titulo                  VARCHAR2(160),
+  contenido               VARCHAR2(500),
   estado                  VARCHAR2(1) default 'P' not null,
   fecha_envio             DATE,
   respuesta_envio         VARCHAR2(1000),
   cantidad_intentos_envio NUMBER(3),
-  prioridad_envio         NUMBER(3)
+  prioridad_envio         NUMBER(3),
+  datos_extra             CLOB
 )
 ;
 comment on table T_NOTIFICACIONES
@@ -34,9 +35,13 @@ comment on column T_NOTIFICACIONES.cantidad_intentos_envio
   is 'Cantidad de intentos de envío';
 comment on column T_NOTIFICACIONES.prioridad_envio
   is 'Prioridad de envío';
+comment on column T_NOTIFICACIONES.datos_extra
+  is 'Datos extra de la notificación push';
 alter table T_NOTIFICACIONES
   add constraint PK_NOTIFICACIONES primary key (ID_NOTIFICACION);
 alter table T_NOTIFICACIONES
   add constraint FK_NOTIFICACIONES_USUARIOS foreign key (ID_USUARIO)
   references T_USUARIOS (ID_USUARIO);
-
+alter table T_NOTIFICACIONES
+  add constraint CK_NOTIFICACIONES_DATOS_EXTRA
+  check (datos_extra IS JSON);
