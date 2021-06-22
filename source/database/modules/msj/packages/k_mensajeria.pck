@@ -83,7 +83,8 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                                   i_contenido       IN VARCHAR2,
                                   i_id_usuario      IN NUMBER DEFAULT NULL,
                                   i_suscripcion     IN VARCHAR2 DEFAULT NULL,
-                                  i_prioridad_envio IN NUMBER DEFAULT NULL);
+                                  i_prioridad_envio IN NUMBER DEFAULT NULL,
+                                  i_datos_extra     IN VARCHAR2 DEFAULT NULL);
 
   FUNCTION f_enviar_correo(i_subject         IN VARCHAR2,
                            i_body            IN CLOB,
@@ -317,7 +318,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                                   i_contenido       IN VARCHAR2,
                                   i_id_usuario      IN NUMBER DEFAULT NULL,
                                   i_suscripcion     IN VARCHAR2 DEFAULT NULL,
-                                  i_prioridad_envio IN NUMBER DEFAULT NULL) IS
+                                  i_prioridad_envio IN NUMBER DEFAULT NULL,
+                                  i_datos_extra     IN VARCHAR2 DEFAULT NULL) IS
     l_suscripcion t_notificaciones.suscripcion%TYPE;
   BEGIN
     l_suscripcion := i_suscripcion;
@@ -332,29 +334,26 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                               'Tag o expresión destino obligatorio');
     END IF;
   
-    IF i_titulo IS NULL THEN
-      raise_application_error(-20000,
-                              'Título de la notificación obligatorio');
-    END IF;
-  
-    IF i_contenido IS NULL THEN
-      raise_application_error(-20000,
-                              'Contenido de la notificación obligatorio');
-    END IF;
-  
     IF NOT k_sistema.f_es_produccion THEN
       l_suscripcion := k_util.f_valor_parametro('SUSCRIPCION_PRUEBAS');
     END IF;
   
     INSERT INTO t_notificaciones
-      (id_usuario, suscripcion, titulo, contenido, estado, prioridad_envio)
+      (id_usuario,
+       suscripcion,
+       titulo,
+       contenido,
+       estado,
+       prioridad_envio,
+       datos_extra)
     VALUES
       (i_id_usuario,
        l_suscripcion,
        substr(i_titulo, 1, 160),
        substr(i_contenido, 1, 500),
        'P',
-       nvl(i_prioridad_envio, c_prioridad_media));
+       nvl(i_prioridad_envio, c_prioridad_media),
+       i_datos_extra);
   END;
 
   FUNCTION f_enviar_correo(i_subject         IN VARCHAR2,
