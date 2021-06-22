@@ -30,5 +30,6 @@ namespace Risk.API.Models
         public string Suscripcion { get; set; }
         public string Titulo { get; set; }
         public string Contenido { get; set; }
+        public string DatosExtra { get; set; }
     }
 }

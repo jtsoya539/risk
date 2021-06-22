@@ -532,7 +532,8 @@ namespace Risk.API.Mappers
                     IdNotificacion = entity.IdNotificacion,
                     Suscripcion = entity.Suscripcion,
                     Titulo = entity.Titulo,
-                    Contenido = entity.Contenido
+                    Contenido = entity.Contenido,
+                    DatosExtra = entity.DatosExtra
                 };
             }
             return model;
