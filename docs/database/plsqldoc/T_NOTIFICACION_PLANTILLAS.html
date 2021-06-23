@@ -2,11 +2,11 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Table T_APLICACIONES</TITLE>
+ <TITLE>Table T_NOTIFICACION_PLANTILLAS</TITLE>
  <META name="object" content="TABLE">
- <META name="name" content="T_APLICACIONES">
- <META name="description" content="Aplicaciones">
- <META name="columns" content="ID_APLICACION NOMBRE TIPO ACTIVO CLAVE DETALLE VERSION_ACTUAL TIEMPO_EXPIRACION_ACCESS_TOKEN TIEMPO_EXPIRACION_REFRESH_TOKEN PLATAFORMA_NOTIFICACION">
+ <META name="name" content="T_NOTIFICACION_PLANTILLAS">
+ <META name="description" content="Plantillas de notificaciones push">
+ <META name="columns" content="ID_APLICACION ID_PLANTILLA NOMBRE ACTIVO DETALLE PLANTILLA">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,8 +14,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Table T_APLICACIONES</P>
-Aplicaciones
+<P CLASS="MAIN_TITLE">Table T_NOTIFICACION_PLANTILLAS</P>
+Plantillas de notificaciones push
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -64,6 +64,23 @@ Identificador de la aplicacion
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
+ID_PLANTILLA
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(10)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Identificador de la plantilla
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
 NOMBRE
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
@@ -76,24 +93,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Nombre de la aplicacion
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-TIPO
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(1)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Tipo de la aplicacion
+Nombre de la plantilla
 </TD>
 </TR>
 <TR>
@@ -110,24 +110,7 @@ VARCHAR2(1)
 'N'
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-La aplicacion esta activa? (S/N)
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-CLAVE
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(50)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Clave de la aplicacion
+La plantilla esta activa? (S/N)
 </TD>
 </TR>
 <TR>
@@ -144,75 +127,24 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Detalles adicionales de la aplicacion
+Detalles adicionales de la plantilla
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-VERSION_ACTUAL
+PLANTILLA
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(100)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
+CLOB
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Version actual de la aplicacion
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-TIEMPO_EXPIRACION_ACCESS_TOKEN
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-NUMBER(6)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Tiempo de expiraci&#243;n del Access Token en segundos
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-TIEMPO_EXPIRACION_REFRESH_TOKEN
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-NUMBER(6)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Tiempo de expiraci&#243;n del Refresh Token en horas
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-PLATAFORMA_NOTIFICACION
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(10)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Plataforma para las notificaciones push de la aplicaci&#243;n
+Plantilla para las notificaciones push de la aplicaci&#243;n
 </TD>
 </TR>
 </TABLE>
@@ -234,7 +166,46 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_APLICACIONES
+PK_NOTIFICACION_PLANTILLAS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_APLICACION,ID_PLANTILLA
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Foreign Keys"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Foreign Keys
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Referencing Table
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+FK_NOTIFICACION_PLANTILLAS_APLICACIONES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_APLICACION
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+T_APLICACIONES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ID_APLICACION
@@ -259,7 +230,7 @@ Condition
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-CK_APLICACIONES_ACTIVO
+CK_NOTIFICACION_PLANTILLAS_ACTIVO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ACTIVO IN ('S', 'N')
@@ -288,10 +259,10 @@ Type
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_APLICACIONES
+PK_NOTIFICACION_PLANTILLAS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_APLICACION
+ID_APLICACION,ID_PLANTILLA
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique
