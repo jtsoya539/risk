@@ -107,7 +107,8 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                                  i_contenido       IN VARCHAR2,
                                  i_id_usuario      IN NUMBER DEFAULT NULL,
                                  i_suscripcion     IN VARCHAR2 DEFAULT NULL,
-                                 i_prioridad_envio IN NUMBER DEFAULT NULL)
+                                 i_prioridad_envio IN NUMBER DEFAULT NULL,
+                                 i_datos_extra     IN VARCHAR2 DEFAULT NULL)
     RETURN PLS_INTEGER;
 
 END;
@@ -420,7 +421,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                                  i_contenido       IN VARCHAR2,
                                  i_id_usuario      IN NUMBER DEFAULT NULL,
                                  i_suscripcion     IN VARCHAR2 DEFAULT NULL,
-                                 i_prioridad_envio IN NUMBER DEFAULT NULL)
+                                 i_prioridad_envio IN NUMBER DEFAULT NULL,
+                                 i_datos_extra     IN VARCHAR2 DEFAULT NULL)
     RETURN PLS_INTEGER IS
     PRAGMA AUTONOMOUS_TRANSACTION;
     l_rsp PLS_INTEGER;
@@ -432,7 +434,8 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
                           i_contenido,
                           i_id_usuario,
                           i_suscripcion,
-                          i_prioridad_envio);
+                          i_prioridad_envio,
+                          i_datos_extra);
   
     COMMIT;
     RETURN l_rsp;
