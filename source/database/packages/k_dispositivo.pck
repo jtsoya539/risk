@@ -48,11 +48,17 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
     RETURN y_dispositivo;
 
-  PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
-                                     i_suscripcion    IN VARCHAR2);
+  PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
+                                     i_suscripcion_alta IN VARCHAR2);
 
-  PROCEDURE p_desuscribir_notificacion(i_id_dispositivo IN NUMBER,
-                                       i_suscripcion    IN VARCHAR2);
+  PROCEDURE p_suscribir_notificacion(i_suscripcion      IN VARCHAR2,
+                                     i_suscripcion_alta IN VARCHAR2);
+
+  PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
+                                       i_suscripcion_baja IN VARCHAR2);
+
+  PROCEDURE p_desuscribir_notificacion(i_suscripcion      IN VARCHAR2,
+                                       i_suscripcion_baja IN VARCHAR2);
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
                                   i_latitud        IN NUMBER,
@@ -241,15 +247,15 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     RETURN l_dispositivo;
   END;
 
-  PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
-                                     i_suscripcion    IN VARCHAR2) IS
+  PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
+                                     i_suscripcion_alta IN VARCHAR2) IS
   BEGIN
     -- Actualiza suscripción
     UPDATE t_dispositivo_suscripciones s
-       SET s.suscripcion      = lower(i_suscripcion),
+       SET s.suscripcion      = lower(i_suscripcion_alta),
            s.fecha_expiracion = SYSDATE + c_tiempo_expiracion_suscripcion
      WHERE s.id_dispositivo = i_id_dispositivo
-       AND lower(s.suscripcion) = lower(i_suscripcion);
+       AND lower(s.suscripcion) = lower(i_suscripcion_alta);
   
     IF SQL%NOTFOUND THEN
       -- Inserta suscripción
@@ -257,17 +263,43 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
         (id_dispositivo, suscripcion, fecha_expiracion)
       VALUES
         (i_id_dispositivo,
-         lower(i_suscripcion),
+         lower(i_suscripcion_alta),
          SYSDATE + c_tiempo_expiracion_suscripcion);
     END IF;
   END;
 
-  PROCEDURE p_desuscribir_notificacion(i_id_dispositivo IN NUMBER,
-                                       i_suscripcion    IN VARCHAR2) IS
+  PROCEDURE p_suscribir_notificacion(i_suscripcion      IN VARCHAR2,
+                                     i_suscripcion_alta IN VARCHAR2) IS
+    CURSOR cr_dispositivos(i_suscripcion IN VARCHAR2) IS
+      SELECT s.id_dispositivo
+        FROM t_dispositivo_suscripciones s
+       WHERE lower(s.suscripcion) = lower(i_suscripcion)
+         AND (s.fecha_expiracion IS NULL OR s.fecha_expiracion > SYSDATE);
+  BEGIN
+    FOR c IN cr_dispositivos(i_suscripcion) LOOP
+      p_suscribir_notificacion(c.id_dispositivo, i_suscripcion_alta);
+    END LOOP;
+  END;
+
+  PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
+                                       i_suscripcion_baja IN VARCHAR2) IS
   BEGIN
     DELETE t_dispositivo_suscripciones s
      WHERE s.id_dispositivo = i_id_dispositivo
-       AND lower(s.suscripcion) = lower(i_suscripcion);
+       AND lower(s.suscripcion) = lower(i_suscripcion_baja);
+  END;
+
+  PROCEDURE p_desuscribir_notificacion(i_suscripcion      IN VARCHAR2,
+                                       i_suscripcion_baja IN VARCHAR2) IS
+    CURSOR cr_dispositivos(i_suscripcion IN VARCHAR2) IS
+      SELECT s.id_dispositivo
+        FROM t_dispositivo_suscripciones s
+       WHERE lower(s.suscripcion) = lower(i_suscripcion)
+         AND (s.fecha_expiracion IS NULL OR s.fecha_expiracion > SYSDATE);
+  BEGIN
+    FOR c IN cr_dispositivos(i_suscripcion) LOOP
+      p_desuscribir_notificacion(c.id_dispositivo, i_suscripcion_baja);
+    END LOOP;
   END;
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
