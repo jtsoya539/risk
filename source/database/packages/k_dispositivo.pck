@@ -55,12 +55,26 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                      i_suscripcion_alta IN VARCHAR2);
 
+  /**
+  Suscribe a una notificación a partir de otra suscripción
+  
+  %author dmezac 24/6/2021 10:05:15
+  %param i_suscripcion Suscripción original
+  %param i_suscripcion_alta Suscripción a dar de alta
+  */
   PROCEDURE p_suscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
                                        i_suscripcion_alta IN VARCHAR2);
 
   PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                        i_suscripcion_baja IN VARCHAR2);
 
+  /**
+  Desuscribe de una notificación a partir de otra suscripción
+  
+  %author dmezac 24/6/2021 10:05:15
+  %param i_suscripcion Suscripción original
+  %param i_suscripcion_alta Suscripción a dar de baja
+  */
   PROCEDURE p_desuscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
                                          i_suscripcion_baja IN VARCHAR2);
 
