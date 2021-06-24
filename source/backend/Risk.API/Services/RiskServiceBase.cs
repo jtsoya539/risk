@@ -87,6 +87,27 @@ namespace Risk.API.Services
             return ctx.ToString(Formatting.None);
         }
 
+        protected string ObtenerUsuario()
+        {
+            string accessToken = string.Empty; // access_token
+            string usuario = string.Empty; // usuario
+
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                try
+                {
+                    accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                    usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug($"Error al obtener usuario: {ex.Message}");
+                }
+            }
+
+            return usuario;
+        }
+
         protected string ObtenerVersion()
         {
             string version = string.Empty;
