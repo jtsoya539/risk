@@ -186,7 +186,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
   
     $if k_modulo.c_instalado_msj $then
     CURSOR cr_plantillas(i_id_aplicacion IN VARCHAR2) IS
-      SELECT (n.id_aplicacion || '-' || n.nombre) nombre, n.plantilla
+      SELECT n.nombre, n.plantilla
         FROM t_notificacion_plantillas n
        WHERE n.id_aplicacion = i_id_aplicacion;
     $end
