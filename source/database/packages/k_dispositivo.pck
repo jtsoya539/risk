@@ -33,6 +33,10 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   c_suscripcion_defecto CONSTANT VARCHAR2(120) := 'default';
   c_suscripcion_usuario CONSTANT VARCHAR2(120) := 'user';
 
+  FUNCTION f_suscripcion_defecto RETURN VARCHAR2;
+
+  FUNCTION f_suscripcion_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_id_dispositivo(i_token_dispositivo IN VARCHAR2) RETURN NUMBER;
 
   FUNCTION f_registrar_dispositivo(i_id_aplicacion             IN VARCHAR2,
@@ -70,6 +74,16 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
 
   -- Tiempo de expiración de la suscripción en días
   c_tiempo_expiracion_suscripcion CONSTANT PLS_INTEGER := 30;
+
+  FUNCTION f_suscripcion_defecto RETURN VARCHAR2 IS
+  BEGIN
+    RETURN c_suscripcion_defecto;
+  END;
+
+  FUNCTION f_suscripcion_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN c_suscripcion_usuario || '_' || to_char(i_id_usuario);
+  END;
 
   FUNCTION f_id_dispositivo(i_token_dispositivo IN VARCHAR2) RETURN NUMBER IS
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;

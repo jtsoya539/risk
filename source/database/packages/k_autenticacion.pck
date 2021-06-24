@@ -939,8 +939,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     IF l_id_dispositivo IS NOT NULL THEN
       -- Inserta o actualiza una suscripción por el usuario en el dispositivo
       k_dispositivo.p_suscribir_notificacion(l_id_dispositivo,
-                                             k_dispositivo.c_suscripcion_usuario || '_' ||
-                                             to_char(l_id_usuario));
+                                             k_dispositivo.f_suscripcion_usuario(l_id_usuario));
     END IF;
   
     RETURN l_id_sesion;
