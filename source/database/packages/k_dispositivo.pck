@@ -55,14 +55,14 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                      i_suscripcion_alta IN VARCHAR2);
 
-  PROCEDURE p_suscribir_notificacion(i_suscripcion      IN VARCHAR2,
-                                     i_suscripcion_alta IN VARCHAR2);
+  PROCEDURE p_suscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
+                                       i_suscripcion_alta IN VARCHAR2);
 
   PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                        i_suscripcion_baja IN VARCHAR2);
 
-  PROCEDURE p_desuscribir_notificacion(i_suscripcion      IN VARCHAR2,
-                                       i_suscripcion_baja IN VARCHAR2);
+  PROCEDURE p_desuscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
+                                         i_suscripcion_baja IN VARCHAR2);
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
                                   i_latitud        IN NUMBER,
@@ -282,8 +282,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     END IF;
   END;
 
-  PROCEDURE p_suscribir_notificacion(i_suscripcion      IN VARCHAR2,
-                                     i_suscripcion_alta IN VARCHAR2) IS
+  PROCEDURE p_suscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
+                                       i_suscripcion_alta IN VARCHAR2) IS
     CURSOR cr_dispositivos(i_suscripcion IN VARCHAR2) IS
       SELECT s.id_dispositivo
         FROM t_dispositivo_suscripciones s
@@ -303,8 +303,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
        AND lower(s.suscripcion) = lower(i_suscripcion_baja);
   END;
 
-  PROCEDURE p_desuscribir_notificacion(i_suscripcion      IN VARCHAR2,
-                                       i_suscripcion_baja IN VARCHAR2) IS
+  PROCEDURE p_desuscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
+                                         i_suscripcion_baja IN VARCHAR2) IS
     CURSOR cr_dispositivos(i_suscripcion IN VARCHAR2) IS
       SELECT s.id_dispositivo
         FROM t_dispositivo_suscripciones s
