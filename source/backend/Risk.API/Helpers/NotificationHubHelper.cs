@@ -32,9 +32,6 @@ namespace Risk.API.Helpers
 {
     public static class NotificationHubHelper
     {
-        public const string SUSCRIPCION_DEFECTO = "default";
-        public const string SUSCRIPCION_USUARIO = "user";
-
         public static void RegistrarDispositivo(string tokenDispositivo, IAutService autService, INotificationHubClientConnection notificationHubClientConnection)
         {
             if (notificationHubClientConnection.Hub == null)
@@ -110,17 +107,6 @@ namespace Risk.API.Helpers
             };
 
             notificationHubClientConnection.Hub.CreateOrUpdateInstallation(installation);
-        }
-
-        public static async Task AgregarSuscripcion(string tag, string newTag, INotificationHubClientConnection notificationHubClientConnection)
-        {
-            // Obtiene hasta 10 registros
-            var registrations = await notificationHubClientConnection.Hub.GetRegistrationsByTagAsync(tag, 10);
-            foreach (var reg in registrations)
-            {
-                reg.Tags.Add(newTag);
-                await notificationHubClientConnection.Hub.UpdateRegistrationAsync(reg);
-            }
         }
     }
 }
