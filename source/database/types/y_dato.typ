@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_dato force UNDER y_objeto
+CREATE OR REPLACE TYPE y_dato UNDER y_objeto
 (
 /**
 Contiene un dato en formato de texto.

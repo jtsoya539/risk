@@ -36,6 +36,16 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SUSCRIPCION_DEFECTO">f_suscripcion_defecto</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SUSCRIPCION_USUARIO">f_suscripcion_usuario</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ID_DISPOSITIVO">f_id_dispositivo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -56,9 +66,19 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_SUSCRIBIR_NOTIFICACION_S">p_suscribir_notificacion_s</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Suscribe a una notificaci&#243;n a partir de otra suscripci&#243;n
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_DESUSCRIBIR_NOTIFICACION">p_desuscribir_notificacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DESUSCRIBIR_NOTIFICACION_S">p_desuscribir_notificacion_s</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Desuscribe de una notificaci&#243;n a partir de otra suscripci&#243;n
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_REGISTRAR_UBICACION">p_registrar_ubicacion</A>&nbsp;&nbsp;
@@ -99,6 +119,24 @@ c_suscripcion_usuario
 </P>
 <PRE CLASS="DECL_TEXT">
 c_suscripcion_usuario CONSTANT VARCHAR2(120) := 'user';
+</PRE>
+<HR>
+<A NAME="F_SUSCRIPCION_DEFECTO"></A>
+<P CLASS="TYPE_TITLE">
+f_suscripcion_defecto
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_suscripcion_defecto RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_SUSCRIPCION_USUARIO"></A>
+<P CLASS="TYPE_TITLE">
+f_suscripcion_usuario
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_suscripcion_usuario(i_id_usuario IN NUMBER) RETURN VARCHAR2
+
 </PRE>
 <HR>
 <A NAME="F_ID_DISPOSITIVO"></A>
@@ -142,20 +180,116 @@ FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
 p_suscribir_notificacion
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_suscribir_notificacion(i_id_dispositivo IN NUMBER,
-                                   i_suscripcion    IN VARCHAR2)
+PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
+                                   i_suscripcion_alta IN VARCHAR2)
 
 </PRE>
+<HR>
+<A NAME="P_SUSCRIBIR_NOTIFICACION_S"></A>
+<P CLASS="TYPE_TITLE">
+p_suscribir_notificacion_s
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_suscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
+                                     i_suscripcion_alta IN VARCHAR2)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Suscribe a una notificaci&#243;n a partir de otra suscripci&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 24/6/2021 10:05:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_suscripcion&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Suscripci&#243;n original<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_suscripcion_alta&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Suscripci&#243;n a dar de alta<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_DESUSCRIBIR_NOTIFICACION"></A>
 <P CLASS="TYPE_TITLE">
 p_desuscribir_notificacion
 </P>
 <PRE CLASS="DECL_TEXT">
-PROCEDURE p_desuscribir_notificacion(i_id_dispositivo IN NUMBER,
-                                     i_suscripcion    IN VARCHAR2)
+PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
+                                     i_suscripcion_baja IN VARCHAR2)
 
 </PRE>
+<HR>
+<A NAME="P_DESUSCRIBIR_NOTIFICACION_S"></A>
+<P CLASS="TYPE_TITLE">
+p_desuscribir_notificacion_s
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_desuscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
+                                       i_suscripcion_baja IN VARCHAR2)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Desuscribe de una notificaci&#243;n a partir de otra suscripci&#243;n<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 24/6/2021 10:05:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_suscripcion&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Suscripci&#243;n original<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_suscripcion_alta&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Suscripci&#243;n a dar de baja<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="P_REGISTRAR_UBICACION"></A>
 <P CLASS="TYPE_TITLE">
