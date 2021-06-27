@@ -119,7 +119,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                                i_nombre  IN VARCHAR2,
                                i_dominio IN VARCHAR2) RETURN CLOB;
 
-  FUNCTION f_inserts_operaciones RETURN BLOB;
+  FUNCTION f_inserts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+    RETURN BLOB;
 
 END;
 /
@@ -754,7 +755,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     RETURN f_inserts_operacion(f_id_operacion(i_tipo, i_nombre, i_dominio));
   END;
 
-  FUNCTION f_inserts_operaciones RETURN BLOB IS
+  FUNCTION f_inserts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+    RETURN BLOB IS
     l_zip     BLOB;
     l_inserts CLOB;
     l_install CLOB;
@@ -765,9 +767,20 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                                                            a.tipo) || '/' ||
                                                nvl(a.dominio, '_') || '/' ||
                                                a.nombre)) || '.sql' nombre_archivo
-        FROM t_operaciones a
+        FROM t_operaciones a, t_significados s, t_modulos m
+       WHERE s.codigo = nvl(a.dominio, 'API')
+         AND m.id_modulo = s.referencia
+         AND s.dominio = 'DOMINIO_OPERACION'
+         AND m.id_modulo = nvl(i_id_modulo, m.id_modulo)
        ORDER BY 2;
   BEGIN
+    l_install := l_install || 'prompt' || utl_tcp.crlf;
+    l_install := l_install || 'prompt Instalando operaciones...' ||
+                 utl_tcp.crlf;
+    l_install := l_install || 'prompt -----------------------------------' ||
+                 utl_tcp.crlf;
+    l_install := l_install || 'prompt' || utl_tcp.crlf;
+  
     FOR ope IN c_operaciones LOOP
       l_inserts := f_inserts_operacion(ope.id_operacion);
       as_zip.add1file(l_zip,

@@ -550,7 +550,8 @@ FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
 f_inserts_operaciones
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_inserts_operaciones RETURN BLOB
+FUNCTION f_inserts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+  RETURN BLOB
 
 </PRE>
 <P>&nbsp;</P>

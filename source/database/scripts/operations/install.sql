@@ -1,3 +1,7 @@
+prompt
+prompt Instalando operaciones...
+prompt -----------------------------------
+prompt
 @@scripts/operations/parametros/_/contexto.sql
 @@scripts/operations/parametros/_/parametros_automaticos.sql
 @@scripts/operations/reporte/gen/listar_significados.sql
@@ -34,8 +38,3 @@
 @@scripts/operations/servicio/gen/valor_parametro.sql
 @@scripts/operations/servicio/gen/version_servicio.sql
 @@scripts/operations/servicio/gen/version_sistema.sql
-@@scripts/operations/servicio/msj/activar_desactivar_mensajeria.sql
-@@scripts/operations/servicio/msj/cambiar_estado_mensajeria.sql
-@@scripts/operations/servicio/msj/listar_correos_pendientes.sql
-@@scripts/operations/servicio/msj/listar_mensajes_pendientes.sql
-@@scripts/operations/servicio/msj/listar_notificaciones_pendientes.sql
