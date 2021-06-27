@@ -113,6 +113,14 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
                                     i_nombre     IN VARCHAR2) RETURN y_objeto;
 
+  FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB;
+
+  FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
+                               i_nombre  IN VARCHAR2,
+                               i_dominio IN VARCHAR2) RETURN CLOB;
+
+  FUNCTION f_inserts_operaciones RETURN BLOB;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_operacion IS
@@ -685,6 +693,93 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     END IF;
   
     RETURN l_objeto;
+  END;
+
+  FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB IS
+    l_inserts CLOB;
+    l_insert  CLOB;
+  
+    PROCEDURE lp_comentar(i_comentario IN VARCHAR2) IS
+    BEGIN
+      l_inserts := l_inserts || '/* ' || lpad('=', 20, '=') || ' ' ||
+                   upper(i_comentario) || ' ' || lpad('=', 20, '=') ||
+                   ' */' || utl_tcp.crlf;
+    END;
+  BEGIN
+    lp_comentar('T_OPERACIONES');
+    l_insert  := fn_gen_inserts('SELECT * FROM t_operaciones WHERE id_operacion = ' ||
+                                to_char(i_id_operacion),
+                                't_operaciones');
+    l_inserts := l_inserts || l_insert;
+    --
+    lp_comentar('T_OPERACION_PARAMETROS');
+    l_insert  := fn_gen_inserts('SELECT * FROM t_operacion_parametros WHERE id_operacion = ' ||
+                                to_char(i_id_operacion) ||
+                                ' ORDER BY version, orden',
+                                't_operacion_parametros');
+    l_inserts := l_inserts || l_insert;
+    --
+    lp_comentar('T_SERVICIOS');
+    l_insert  := fn_gen_inserts('SELECT * FROM t_servicios WHERE id_servicio = ' ||
+                                to_char(i_id_operacion),
+                                't_servicios');
+    l_inserts := l_inserts || l_insert;
+    --
+    lp_comentar('T_REPORTES');
+    l_insert  := fn_gen_inserts('SELECT * FROM t_reportes WHERE id_reporte = ' ||
+                                to_char(i_id_operacion),
+                                't_reportes');
+    l_inserts := l_inserts || l_insert;
+    --
+    lp_comentar('T_TRABAJOS');
+    l_insert  := fn_gen_inserts('SELECT * FROM t_trabajos WHERE id_trabajo = ' ||
+                                to_char(i_id_operacion),
+                                't_trabajos');
+    l_inserts := l_inserts || l_insert;
+    --
+    lp_comentar('T_ROL_PERMISOS');
+    l_insert  := fn_gen_inserts('SELECT * FROM t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(' ||
+                                to_char(i_id_operacion) ||
+                                ') ORDER BY id_rol',
+                                't_rol_permisos');
+    l_inserts := l_inserts || l_insert;
+  
+    RETURN l_inserts;
+  END;
+
+  FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
+                               i_nombre  IN VARCHAR2,
+                               i_dominio IN VARCHAR2) RETURN CLOB IS
+  BEGIN
+    RETURN f_inserts_operacion(f_id_operacion(i_tipo, i_nombre, i_dominio));
+  END;
+
+  FUNCTION f_inserts_operaciones RETURN BLOB IS
+    l_zip     BLOB;
+    l_inserts CLOB;
+    l_install CLOB;
+  
+    CURSOR c_operaciones IS
+      SELECT a.id_operacion,
+             lower(k_util.f_reemplazar_acentos(k_util.f_significado_codigo('TIPO_OPERACION',
+                                                                           a.tipo) || '/' ||
+                                               nvl(a.dominio, '_') || '/' ||
+                                               a.nombre)) || '.sql' nombre_archivo
+        FROM t_operaciones a
+       ORDER BY 2;
+  BEGIN
+    FOR ope IN c_operaciones LOOP
+      l_inserts := f_inserts_operacion(ope.id_operacion);
+      as_zip.add1file(l_zip,
+                      ope.nombre_archivo,
+                      k_util.clob_to_blob(l_inserts));
+      l_install := l_install || '@@' || ope.nombre_archivo || utl_tcp.crlf;
+    END LOOP;
+  
+    as_zip.add1file(l_zip, 'install.sql', k_util.clob_to_blob(l_install));
+    as_zip.finish_zip(l_zip);
+  
+    RETURN l_zip;
   END;
 
 END;

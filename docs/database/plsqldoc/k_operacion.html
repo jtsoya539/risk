@@ -115,6 +115,21 @@ Program units
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_INSERTS_OPERACION">f_inserts_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_INSERTS_OPERACION2">f_inserts_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_INSERTS_OPERACIONES">f_inserts_operaciones</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Exceptions"></A>
@@ -507,6 +522,35 @@ f_valor_parametro_object
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
                                   i_nombre     IN VARCHAR2) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="F_INSERTS_OPERACION"></A>
+<P CLASS="TYPE_TITLE">
+f_inserts_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_INSERTS_OPERACION2"></A>
+<P CLASS="TYPE_TITLE">
+f_inserts_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
+                             i_nombre  IN VARCHAR2,
+                             i_dominio IN VARCHAR2) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_INSERTS_OPERACIONES"></A>
+<P CLASS="TYPE_TITLE">
+f_inserts_operaciones
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_inserts_operaciones RETURN BLOB
 
 </PRE>
 <P>&nbsp;</P>

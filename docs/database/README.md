@@ -17,6 +17,7 @@ csv|Genera archivos en formato CSV|https://oracle-base.com/dba/script?category=m
 oos_util_totp|Genera y valida códigos con el algoritmo TOTP|https://github.com/OraOpenSource/oos-utils
 zt_qr|Genera códigos QR|https://github.com/zorantica/plsql-qr-code
 zt_word|Genera archivos en formato DOCX|https://github.com/zorantica/plsql-word
+fn_gen_inserts|Genera script para insertar registros en una tabla|https://github.com/teopost/oracle-scripts
 
 ## Configuración de PL/SQL Documentation (plsqldoc)
 
