@@ -773,7 +773,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       as_zip.add1file(l_zip,
                       ope.nombre_archivo,
                       k_util.clob_to_blob(l_inserts));
-      l_install := l_install || '@@' || ope.nombre_archivo || utl_tcp.crlf;
+      l_install := l_install || '@@scripts/operations/' ||
+                   ope.nombre_archivo || utl_tcp.crlf;
     END LOOP;
   
     as_zip.add1file(l_zip, 'install.sql', k_util.clob_to_blob(l_install));
