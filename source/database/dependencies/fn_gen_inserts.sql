@@ -90,6 +90,7 @@ is
   l_binary_float_col            binary_float;    --100
   l_binary_double_col           binary_double;   --101
   l_clob_col                    clob;            --112
+  l_blob_col                    blob;            --113
   l_timestamp_col               timestamp(9);    --180
   l_timestamp_wtz_col           timestamp(9) with time zone;    --181
   l_interval_ytm_col            interval year(9) to month;      --182
@@ -98,7 +99,6 @@ is
   l_timestamp_wltz_col          timestamp with local time zone; --231
   --l_nchar_col                   nchar(2000); --96 the same as char
   --l_nclob_col                   nclob; --112 the same as clob
-  --l_blob_col - not supported
   --l_bfile_col - not supported
   --l_long_raw_col - not supported
 
@@ -120,7 +120,25 @@ is
     else
       l_clob_all := l_clob_all||'false'||NL;
     end if;
-  end;  
+  end;
+
+  FUNCTION base64encode(p_blob IN BLOB)
+    RETURN CLOB
+  -- -----------------------------------------------------------------------------------
+  -- File Name    : https://oracle-base.com/dba/miscellaneous/base64encode.sql
+  -- Author       : Tim Hall
+  -- Description  : Encodes a BLOB into a Base64 CLOB.
+  -- Last Modified: 09/11/2011
+  -- -----------------------------------------------------------------------------------
+  IS
+    l_clob CLOB;
+    l_step PLS_INTEGER := 12000; -- make sure you set a multiple of 3 not higher than 24573
+  BEGIN
+    FOR i IN 0 .. TRUNC((DBMS_LOB.getlength(p_blob) - 1 )/l_step) LOOP
+      l_clob := l_clob || UTL_RAW.cast_to_varchar2(UTL_ENCODE.base64_encode(DBMS_LOB.substr(p_blob, l_step, i * l_step + 1)));
+    END LOOP;
+    RETURN l_clob;
+  END;
 begin
   ---------------------------------------
   -- INSERT - header generation
@@ -191,7 +209,9 @@ begin
     elsif l_rec_tab(i).col_type = cons_char_code then  --char
       dbms_sql.define_column_char(l_cur, i, l_char_col, l_rec_tab(i).col_max_len); 
     elsif l_rec_tab(i).col_type = cons_clob_code then --clob
-      dbms_sql.define_column(l_cur, i, l_clob_col); 
+      dbms_sql.define_column(l_cur, i, l_clob_col);
+    elsif l_rec_tab(i).col_type = cons_blob_code then --blob
+      dbms_sql.define_column(l_cur, i, l_blob_col);
     elsif l_rec_tab(i).col_type = cons_timestamp_code then --timestamp
       dbms_sql.define_column(l_cur, i, l_timestamp_col); 
     elsif l_rec_tab(i).col_type = cons_timestamp_wtz_code then --timestamp with time zone
@@ -260,8 +280,11 @@ begin
         dbms_sql.column_value_char(l_cur, i, l_char_col); 
         l_clob := substr(l_char_col, 1, l_rec_tab(i).col_max_len - 1);
       elsif l_rec_tab(i).col_type = cons_clob_code then --clob
-        dbms_sql.column_value(l_cur, i, l_clob_col); 
+        dbms_sql.column_value(l_cur, i, l_clob_col);
         l_clob := l_clob_col;
+      elsif l_rec_tab(i).col_type = cons_blob_code then --blob
+        dbms_sql.column_value(l_cur, i, l_blob_col);
+        l_clob := base64encode(utl_compress.lz_compress(l_blob_col));
       elsif l_rec_tab(i).col_type = cons_timestamp_code then --timestamp
         dbms_sql.column_value(l_cur, i, l_timestamp_col); 
         l_clob := to_char(l_timestamp_col, cons_timestamp_frm);
@@ -282,7 +305,12 @@ begin
         l_clob := to_char(l_timestamp_wltz_col, cons_timestamp_wtz_frm);
       end if;
 
-      if l_rec_tab(i).col_type in (cons_clob_code, cons_char_code, cons_varchar2_code) then
+      if l_rec_tab(i).col_type = cons_blob_code then --blob
+        l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=q'''||l_separator||l_separator||''';'||NL;
+        l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=l_clob('||to_char(i)||') || q'''||l_separator||
+        replace(l_clob, utl_tcp.crlf, l_separator||''';'||utl_tcp.crlf||'  l_clob('||to_char(i)||') :=l_clob('||to_char(i)||') || q'''||l_separator)
+        ||l_separator||''';'||NL;
+      elsif l_rec_tab(i).col_type in (cons_clob_code, cons_char_code, cons_varchar2_code) then
         l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=q'''||l_separator||l_clob||l_separator||''';'||NL;
       else
         l_clob_line := l_clob_line||'  l_varchar2('||to_char(i)||') :=q'''||l_separator||l_clob||l_separator||''';'||NL;
@@ -336,6 +364,8 @@ begin
 --        l_clob := l_long_col;
       elsif l_rec_tab(i).col_type = cons_clob_code then --clob
         l_clob_all := l_clob_all||'l_clob('||to_char(i)||')'||NL;
+      elsif l_rec_tab(i).col_type = cons_blob_code then --blob
+        l_clob_all := l_clob_all||'utl_compress.lz_uncompress(k_util.base64decode(l_clob('||to_char(i)||')))'||NL;
       elsif l_rec_tab(i).col_type = cons_char_code then --timestamp with local time zone
         l_clob_all := l_clob_all||'to_char(l_clob('||to_char(i)||'))'||NL;
       elsif l_rec_tab(i).col_type = cons_varchar2_code then --timestamp with local time zone
