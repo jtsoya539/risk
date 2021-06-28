@@ -76,6 +76,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ID_MODULO">f_id_modulo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -112,6 +117,31 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_VALOR_PARAMETRO_OBJECT">f_valor_parametro_object</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_INSERTS_OPERACION">f_inserts_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_INSERTS_OPERACION2">f_inserts_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DELETES_OPERACION">f_deletes_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DELETES_OPERACION2">f_deletes_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SCRIPTS_OPERACIONES">f_scripts_operaciones</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -429,6 +459,15 @@ FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2
 
 </PRE>
 <HR>
+<A NAME="F_ID_MODULO"></A>
+<P CLASS="TYPE_TITLE">
+f_id_modulo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_id_modulo(i_id_operacion IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
 <A NAME="F_PROCESAR_PARAMETROS"></A>
 <P CLASS="TYPE_TITLE">
 f_procesar_parametros
@@ -507,6 +546,56 @@ f_valor_parametro_object
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
                                   i_nombre     IN VARCHAR2) RETURN y_objeto
+
+</PRE>
+<HR>
+<A NAME="F_INSERTS_OPERACION"></A>
+<P CLASS="TYPE_TITLE">
+f_inserts_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_INSERTS_OPERACION2"></A>
+<P CLASS="TYPE_TITLE">
+f_inserts_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
+                             i_nombre  IN VARCHAR2,
+                             i_dominio IN VARCHAR2) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_DELETES_OPERACION"></A>
+<P CLASS="TYPE_TITLE">
+f_deletes_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_DELETES_OPERACION2"></A>
+<P CLASS="TYPE_TITLE">
+f_deletes_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_deletes_operacion(i_tipo    IN VARCHAR2,
+                             i_nombre  IN VARCHAR2,
+                             i_dominio IN VARCHAR2) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_SCRIPTS_OPERACIONES"></A>
+<P CLASS="TYPE_TITLE">
+f_scripts_operaciones
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_scripts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+  RETURN BLOB
 
 </PRE>
 <P>&nbsp;</P>

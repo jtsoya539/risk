@@ -29,3 +29,4 @@ drop package csv;
 drop package oos_util_totp;
 drop package zt_qr;
 drop package zt_word;
+drop function fn_gen_inserts;

@@ -200,12 +200,7 @@ prompt
 @@scripts/ins_t_significados.sql
 @@scripts/ins_t_errores.sql
 @@scripts/ins_t_parametros.sql
-@@scripts/ins_t_operaciones.sql
-@@scripts/ins_t_operacion_parametros.sql
-@@scripts/ins_t_reportes.sql
-@@scripts/ins_t_servicios.sql
 @@scripts/ins_t_roles.sql
-@@scripts/ins_t_rol_permisos.sql
 @@scripts/ins_t_paises.sql
 @@scripts/ins_t_departamentos.sql
 @@scripts/ins_t_archivo_definiciones.sql
@@ -213,6 +208,7 @@ prompt
 @@scripts/ins_t_usuarios.sql
 @@scripts/ins_t_usuario_claves.sql
 @@scripts/ins_t_rol_usuarios.sql
+@@scripts/operations/install.sql
 commit;
 /
 
