@@ -121,7 +121,13 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                                i_nombre  IN VARCHAR2,
                                i_dominio IN VARCHAR2) RETURN CLOB;
 
-  FUNCTION f_inserts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+  FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB;
+
+  FUNCTION f_deletes_operacion(i_tipo    IN VARCHAR2,
+                               i_nombre  IN VARCHAR2,
+                               i_dominio IN VARCHAR2) RETURN CLOB;
+
+  FUNCTION f_scripts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
     RETURN BLOB;
 
 END;
@@ -777,11 +783,50 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     RETURN f_inserts_operacion(f_id_operacion(i_tipo, i_nombre, i_dominio));
   END;
 
-  FUNCTION f_inserts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+  FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB IS
+    l_deletes CLOB;
+  
+    PROCEDURE lp_comentar(i_comentario IN VARCHAR2) IS
+    BEGIN
+      l_deletes := l_deletes || '/* ' || lpad('=', 20, '=') || ' ' ||
+                   upper(i_comentario) || ' ' || lpad('=', 20, '=') ||
+                   ' */' || utl_tcp.crlf;
+    END;
+  BEGIN
+    lp_comentar('ID_OPERACION = ' || to_char(i_id_operacion));
+    --
+    l_deletes := l_deletes ||
+                 'DELETE t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(' ||
+                 to_char(i_id_operacion) || ');' || utl_tcp.crlf;
+    l_deletes := l_deletes || 'DELETE t_trabajos WHERE id_trabajo = ' ||
+                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+    l_deletes := l_deletes || 'DELETE t_reportes WHERE id_reporte = ' ||
+                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+    l_deletes := l_deletes || 'DELETE t_servicios WHERE id_servicio = ' ||
+                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+    l_deletes := l_deletes ||
+                 'DELETE t_operacion_parametros WHERE id_operacion = ' ||
+                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+    l_deletes := l_deletes || 'DELETE t_operaciones WHERE id_operacion = ' ||
+                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+  
+    RETURN l_deletes;
+  END;
+
+  FUNCTION f_deletes_operacion(i_tipo    IN VARCHAR2,
+                               i_nombre  IN VARCHAR2,
+                               i_dominio IN VARCHAR2) RETURN CLOB IS
+  BEGIN
+    RETURN f_deletes_operacion(f_id_operacion(i_tipo, i_nombre, i_dominio));
+  END;
+
+  FUNCTION f_scripts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
     RETURN BLOB IS
-    l_zip     BLOB;
-    l_inserts CLOB;
-    l_install CLOB;
+    l_zip       BLOB;
+    l_inserts   CLOB;
+    l_deletes   CLOB;
+    l_install   CLOB;
+    l_uninstall CLOB;
   
     CURSOR c_operaciones IS
       SELECT a.id_operacion,
@@ -800,17 +845,32 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     l_install := l_install || 'prompt -----------------------------------' ||
                  utl_tcp.crlf;
     l_install := l_install || 'prompt' || utl_tcp.crlf;
+    --
+    l_uninstall := l_uninstall || 'prompt' || utl_tcp.crlf;
+    l_uninstall := l_uninstall || 'prompt Desinstalando operaciones...' ||
+                   utl_tcp.crlf;
+    l_uninstall := l_uninstall ||
+                   'prompt -----------------------------------' ||
+                   utl_tcp.crlf;
+    l_uninstall := l_uninstall || 'prompt' || utl_tcp.crlf;
   
     FOR ope IN c_operaciones LOOP
       l_inserts := f_inserts_operacion(ope.id_operacion);
+      l_deletes := f_deletes_operacion(ope.id_operacion);
+      --
+      l_install   := l_install || '@@scripts/operations/' ||
+                     ope.nombre_archivo || utl_tcp.crlf;
+      l_uninstall := l_uninstall || l_deletes || utl_tcp.crlf;
+      --
       as_zip.add1file(l_zip,
                       ope.nombre_archivo,
                       k_util.clob_to_blob(l_inserts));
-      l_install := l_install || '@@scripts/operations/' ||
-                   ope.nombre_archivo || utl_tcp.crlf;
     END LOOP;
   
     as_zip.add1file(l_zip, 'install.sql', k_util.clob_to_blob(l_install));
+    as_zip.add1file(l_zip,
+                    'uninstall.sql',
+                    k_util.clob_to_blob(l_uninstall));
     as_zip.finish_zip(l_zip);
   
     RETURN l_zip;

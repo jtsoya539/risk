@@ -131,7 +131,17 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_INSERTS_OPERACIONES">f_inserts_operaciones</A>&nbsp;&nbsp;
+<A HREF="#F_DELETES_OPERACION">f_deletes_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_DELETES_OPERACION2">f_deletes_operacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SCRIPTS_OPERACIONES">f_scripts_operaciones</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -559,12 +569,32 @@ FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
 
 </PRE>
 <HR>
-<A NAME="F_INSERTS_OPERACIONES"></A>
+<A NAME="F_DELETES_OPERACION"></A>
 <P CLASS="TYPE_TITLE">
-f_inserts_operaciones
+f_deletes_operacion
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_inserts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
+FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_DELETES_OPERACION2"></A>
+<P CLASS="TYPE_TITLE">
+f_deletes_operacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_deletes_operacion(i_tipo    IN VARCHAR2,
+                             i_nombre  IN VARCHAR2,
+                             i_dominio IN VARCHAR2) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_SCRIPTS_OPERACIONES"></A>
+<P CLASS="TYPE_TITLE">
+f_scripts_operaciones
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_scripts_operaciones(i_id_modulo IN VARCHAR2 DEFAULT NULL)
   RETURN BLOB
 
 </PRE>

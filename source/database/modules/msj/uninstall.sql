@@ -103,6 +103,7 @@ prompt
 @@../../packages/k_modulo.pck
 @@../../compile_schema.sql
 @@scripts/del_t_modulos.sql
+@@scripts/operations/uninstall.sql
 commit;
 /
 
