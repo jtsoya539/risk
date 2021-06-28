@@ -1,7 +1,7 @@
 create table T_MODULOS
 (
   id_modulo      VARCHAR2(5) not null,
-  nombre         VARCHAR2(100),
+  nombre         VARCHAR2(100) not null,
   detalle        VARCHAR2(2000),
   activo         VARCHAR2(1) default 'N' not null,
   fecha_actual   DATE,

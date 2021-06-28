@@ -309,10 +309,9 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     BEGIN
       SELECT m.id_modulo
         INTO l_id_modulo
-        FROM t_operaciones a, t_significados s, t_modulos m
-       WHERE s.codigo = nvl(a.dominio, 'API')
-         AND m.id_modulo = s.referencia
-         AND s.dominio = 'DOMINIO_OPERACION'
+        FROM t_operaciones a, t_dominios d, t_modulos m
+       WHERE d.id_dominio = nvl(a.dominio, 'API')
+         AND m.id_modulo = d.id_modulo
          AND a.id_operacion = i_id_operacion;
     EXCEPTION
       WHEN no_data_found THEN
@@ -602,7 +601,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
+                                                                                            .valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -614,10 +614,12 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i)
+                                                                                          .valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -629,10 +631,11 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i).nombre ||
-                                 ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre || ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i).valor),
+                                                             to_char(anydata.accessdate(i_parametros(i)
+                                                                                        .valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -640,7 +643,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i).nombre));
+                                                              i_parametros(i)
+                                                              .nombre));
             END IF;
           END IF;
         END IF;

@@ -1,0 +1,30 @@
+create table T_DOMINIOS
+(
+  id_dominio VARCHAR2(5) not null,
+  nombre     VARCHAR2(100) not null,
+  detalle    VARCHAR2(2000),
+  activo     VARCHAR2(1) default 'N' not null,
+  id_modulo  VARCHAR2(5) not null
+)
+;
+comment on table T_DOMINIOS
+  is 'Dominios';
+comment on column T_DOMINIOS.id_dominio
+  is 'Identificador del dominio';
+comment on column T_DOMINIOS.nombre
+  is 'Nombre del dominio';
+comment on column T_DOMINIOS.detalle
+  is 'Detalles adicionales del dominio';
+comment on column T_DOMINIOS.activo
+  is 'El dominio está activo? (S/N)';
+comment on column T_DOMINIOS.id_modulo
+  is 'Módulo del dominio';
+alter table T_DOMINIOS
+  add constraint PK_DOMINIOS primary key (ID_DOMINIO);
+alter table T_DOMINIOS
+  add constraint FK_DOMINIOS_MODULOS foreign key (ID_MODULO)
+  references T_MODULOS (ID_MODULO);
+alter table T_DOMINIOS
+  add constraint CK_DOMINIOS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+
