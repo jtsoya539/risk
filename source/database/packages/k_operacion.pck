@@ -88,6 +88,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   FUNCTION f_id_permiso(i_id_operacion IN NUMBER) RETURN VARCHAR2;
 
+  FUNCTION f_id_modulo(i_id_operacion IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB,
                                  i_version      IN VARCHAR2 DEFAULT NULL)
@@ -293,6 +295,26 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         l_id_permiso := NULL;
     END;
     RETURN l_id_permiso;
+  END;
+
+  FUNCTION f_id_modulo(i_id_operacion IN NUMBER) RETURN VARCHAR2 IS
+    l_id_modulo t_modulos.id_modulo%TYPE;
+  BEGIN
+    BEGIN
+      SELECT m.id_modulo
+        INTO l_id_modulo
+        FROM t_operaciones a, t_significados s, t_modulos m
+       WHERE s.codigo = nvl(a.dominio, 'API')
+         AND m.id_modulo = s.referencia
+         AND s.dominio = 'DOMINIO_OPERACION'
+         AND a.id_operacion = i_id_operacion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_modulo := NULL;
+      WHEN OTHERS THEN
+        l_id_modulo := NULL;
+    END;
+    RETURN l_id_modulo;
   END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
@@ -767,11 +789,9 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                                                            a.tipo) || '/' ||
                                                nvl(a.dominio, '_') || '/' ||
                                                a.nombre)) || '.sql' nombre_archivo
-        FROM t_operaciones a, t_significados s, t_modulos m
-       WHERE s.codigo = nvl(a.dominio, 'API')
-         AND m.id_modulo = s.referencia
-         AND s.dominio = 'DOMINIO_OPERACION'
-         AND m.id_modulo = nvl(i_id_modulo, m.id_modulo)
+        FROM t_operaciones a
+       WHERE f_id_modulo(a.id_operacion) =
+             nvl(i_id_modulo, f_id_modulo(a.id_operacion))
        ORDER BY 2;
   BEGIN
     l_install := l_install || 'prompt' || utl_tcp.crlf;
