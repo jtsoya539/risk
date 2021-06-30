@@ -50,7 +50,7 @@ is
   l_line                       clob := '-----------------------------------';
   
   l_buffer                     varchar2(32767);
-  c_buffer_length              constant integer := 1024;
+  c_buffer_length              constant integer := 32767;
 
   cons_date_frm                varchar2(32) := 'DD.MM.YYYY HH24:MI:SS';
   cons_timestamp_frm           varchar2(32) := 'DD.MM.YYYY HH24:MI:SSXFF';
