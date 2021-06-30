@@ -210,6 +210,7 @@ prompt
 @@scripts/ins_t_usuarios.sql
 @@scripts/ins_t_usuario_claves.sql
 @@scripts/ins_t_rol_usuarios.sql
+@@scripts/ins_t_archivos.sql
 @@scripts/operations/install.sql
 commit;
 /
