@@ -150,6 +150,36 @@ begin
   '  l_clob t_clob;'||NL||
   '  type   t_varchar2 is table of varchar2(64) index by binary_integer;'||NL||
   '  l_varchar2 t_varchar2;'||NL||
+  '  l_blob     blob;'||NL||
+  '  FUNCTION base64decode(p_clob CLOB)'||NL||
+  '    RETURN BLOB'||NL||
+  '  -- -----------------------------------------------------------------------------------'||NL||
+  '  -- File Name    : https://oracle-base.com/dba/miscellaneous/base64decode.sql'||NL||
+  '  -- Author       : Tim Hall'||NL||
+  '  -- Description  : Decodes a Base64 CLOB into a BLOB'||NL||
+  '  -- Last Modified: 09/11/2011'||NL||
+  '  -- -----------------------------------------------------------------------------------'||NL||
+  '  IS'||NL||
+  '    l_blob    BLOB;'||NL||
+  '    l_raw     RAW(32767);'||NL||
+  '    l_amt     NUMBER := 7700;'||NL||
+  '    l_offset  NUMBER := 1;'||NL||
+  '    l_temp    VARCHAR2(32767);'||NL||
+  '  BEGIN'||NL||
+  '    BEGIN'||NL||
+  '      DBMS_LOB.createtemporary (l_blob, FALSE, DBMS_LOB.CALL);'||NL||
+  '      LOOP'||NL||
+  '        DBMS_LOB.read(p_clob, l_amt, l_offset, l_temp);'||NL||
+  '        l_offset := l_offset + l_amt;'||NL||
+  '        l_raw    := UTL_ENCODE.base64_decode(UTL_RAW.cast_to_raw(l_temp));'||NL||
+  '        DBMS_LOB.append (l_blob, TO_BLOB(l_raw));'||NL||
+  '      END LOOP;'||NL||
+  '    EXCEPTION'||NL||
+  '      WHEN NO_DATA_FOUND THEN'||NL||
+  '        NULL;'||NL||
+  '    END;'||NL||
+  '    RETURN l_blob;'||NL||
+  '  END;'||NL||
   'begin'||NL;
 
 
@@ -310,6 +340,7 @@ begin
         l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=l_clob('||to_char(i)||') || q'''||l_separator||
         replace(l_clob, utl_tcp.crlf, l_separator||''';'||utl_tcp.crlf||'  l_clob('||to_char(i)||') :=l_clob('||to_char(i)||') || q'''||l_separator)
         ||l_separator||''';'||NL;
+        l_clob_line := l_clob_line||'  l_blob :=utl_compress.lz_uncompress(base64decode(l_clob('||to_char(i)||')));'||NL;
       elsif l_rec_tab(i).col_type in (cons_clob_code, cons_char_code, cons_varchar2_code) then
         l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=q'''||l_separator||l_clob||l_separator||''';'||NL;
       else
@@ -365,7 +396,7 @@ begin
       elsif l_rec_tab(i).col_type = cons_clob_code then --clob
         l_clob_all := l_clob_all||'l_clob('||to_char(i)||')'||NL;
       elsif l_rec_tab(i).col_type = cons_blob_code then --blob
-        l_clob_all := l_clob_all||'utl_compress.lz_uncompress(k_util.base64decode(l_clob('||to_char(i)||')))'||NL;
+        l_clob_all := l_clob_all||'l_blob'||NL;
       elsif l_rec_tab(i).col_type = cons_char_code then --timestamp with local time zone
         l_clob_all := l_clob_all||'to_char(l_clob('||to_char(i)||'))'||NL;
       elsif l_rec_tab(i).col_type = cons_varchar2_code then --timestamp with local time zone
