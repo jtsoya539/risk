@@ -204,15 +204,6 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_DATO_PARAMETRO', 'D', 'DATE', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_OPERACION', 'GEN', 'GENERAL', 'RISK', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_OPERACION', 'AUT', 'AUTENTICACIÓN', 'RISK', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_OPERACION', 'API', 'SERVICIO', 'RISK', 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_SESION', 'I', 'INVÁLIDO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
@@ -226,9 +217,6 @@ values ('ESTADO_MENSAJERIA', 'E', 'ENVIADO', null, 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_MENSAJERIA', 'R', 'PROCESADO CON ERROR', null, 'S');
-
-insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
-values ('DOMINIO_OPERACION', 'MSJ', 'MENSAJERÍA', 'MSJ', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('ESTADO_MENSAJERIA', 'A', 'ANULADO', null, 'S');
