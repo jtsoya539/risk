@@ -2,17 +2,23 @@ create table T_PARAMETROS
 (
   id_parametro VARCHAR2(50) not null,
   descripcion  VARCHAR2(500),
-  valor        VARCHAR2(500)
+  valor        VARCHAR2(500),
+  id_dominio   VARCHAR2(5)
 )
 ;
 comment on table T_PARAMETROS
   is 'Parametros';
 comment on column T_PARAMETROS.id_parametro
-  is 'Identificador del parametro';
+  is 'Identificador del parámetro';
 comment on column T_PARAMETROS.descripcion
-  is 'Descripcion del parametro';
+  is 'Descripcion del parámetro';
 comment on column T_PARAMETROS.valor
-  is 'Valor del parametro';
+  is 'Valor del parámetro';
+comment on column T_PARAMETROS.id_dominio
+  is 'Dominio del parámetro';
 alter table T_PARAMETROS
   add constraint PK_PARAMETROS primary key (ID_PARAMETRO);
+alter table T_PARAMETROS
+  add constraint FK_PARAMETROS_DOMINIOS foreign key (ID_DOMINIO)
+  references T_DOMINIOS (ID_DOMINIO);
 

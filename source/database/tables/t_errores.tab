@@ -1,7 +1,8 @@
 create table T_ERRORES
 (
-  id_error VARCHAR2(10) not null,
-  mensaje  VARCHAR2(2000)
+  id_error   VARCHAR2(10) not null,
+  mensaje    VARCHAR2(2000),
+  id_dominio VARCHAR2(5)
 )
 ;
 comment on table T_ERRORES
@@ -10,6 +11,11 @@ comment on column T_ERRORES.id_error
   is 'Identificador del error';
 comment on column T_ERRORES.mensaje
   is 'Mensaje del error';
+comment on column T_ERRORES.id_dominio
+  is 'Dominio del error';
 alter table T_ERRORES
   add constraint PK_ERRORES primary key (ID_ERROR);
+alter table T_ERRORES
+  add constraint FK_ERRORES_DOMINIOS foreign key (ID_DOMINIO)
+  references T_DOMINIOS (ID_DOMINIO);
 

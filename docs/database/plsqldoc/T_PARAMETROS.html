@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_PARAMETROS">
  <META name="description" content="Parametros">
- <META name="columns" content="ID_PARAMETRO DESCRIPCION VALOR">
+ <META name="columns" content="ID_PARAMETRO DESCRIPCION VALOR ID_DOMINIO">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -59,7 +59,7 @@ VARCHAR2(50)
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Identificador del parametro
+Identificador del par&#225;metro
 </TD>
 </TR>
 <TR>
@@ -76,7 +76,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Descripcion del parametro
+Descripcion del par&#225;metro
 </TD>
 </TR>
 <TR>
@@ -93,7 +93,24 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Valor del parametro
+Valor del par&#225;metro
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ID_DOMINIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(5)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Dominio del par&#225;metro
 </TD>
 </TR>
 </TABLE>
@@ -119,6 +136,45 @@ PK_PARAMETROS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ID_PARAMETRO
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Foreign Keys"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Foreign Keys
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Referencing Table
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+FK_PARAMETROS_DOMINIOS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_DOMINIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+T_DOMINIOS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_DOMINIO
 </TD>
 </TR>
 </TABLE>
