@@ -104,6 +104,7 @@ is
   --l_nclob_col                   nclob; --112 the same as clob
   --l_bfile_col - not supported
   --l_long_raw_col - not supported
+  l_blob_col_exists             boolean := false;
 
   procedure print_rec(rec in dbms_sql.desc_rec) is
   begin
@@ -152,39 +153,7 @@ begin
   '  type   t_clob is table of clob index by binary_integer;'||NL||
   '  l_clob t_clob;'||NL||
   '  type   t_varchar2 is table of varchar2(64) index by binary_integer;'||NL||
-  '  l_varchar2 t_varchar2;'||NL||
-  '  l_blob     blob;'||NL||
-  '  FUNCTION base64decode(p_clob CLOB)'||NL||
-  '    RETURN BLOB'||NL||
-  '  -- -----------------------------------------------------------------------------------'||NL||
-  '  -- File Name    : https://oracle-base.com/dba/miscellaneous/base64decode.sql'||NL||
-  '  -- Author       : Tim Hall'||NL||
-  '  -- Description  : Decodes a Base64 CLOB into a BLOB'||NL||
-  '  -- Last Modified: 09/11/2011'||NL||
-  '  -- -----------------------------------------------------------------------------------'||NL||
-  '  IS'||NL||
-  '    l_blob    BLOB;'||NL||
-  '    l_raw     RAW(32767);'||NL||
-  '    l_amt     NUMBER := 7700;'||NL||
-  '    l_offset  NUMBER := 1;'||NL||
-  '    l_temp    VARCHAR2(32767);'||NL||
-  '  BEGIN'||NL||
-  '    BEGIN'||NL||
-  '      DBMS_LOB.createtemporary (l_blob, FALSE, DBMS_LOB.CALL);'||NL||
-  '      LOOP'||NL||
-  '        DBMS_LOB.read(p_clob, l_amt, l_offset, l_temp);'||NL||
-  '        l_offset := l_offset + l_amt;'||NL||
-  '        l_raw    := UTL_ENCODE.base64_decode(UTL_RAW.cast_to_raw(l_temp));'||NL||
-  '        DBMS_LOB.append (l_blob, TO_BLOB(l_raw));'||NL||
-  '      END LOOP;'||NL||
-  '    EXCEPTION'||NL||
-  '      WHEN NO_DATA_FOUND THEN'||NL||
-  '        NULL;'||NL||
-  '    END;'||NL||
-  '    RETURN l_blob;'||NL||
-  '  END;'||NL||
-  'begin'||NL;
-
+  '  l_varchar2 t_varchar2;'||NL;
 
   ---------------------------------------
   -- Introduction
@@ -202,17 +171,52 @@ begin
   ---------------------------------------
   
   dbms_sql.describe_columns(l_cur, l_col_cnt, l_rec_tab);
-
-  /*
-  
-  l_clob_all := l_clob_all||l_line||NL||'Describe columns:'||NL;
   
   for i in 1..l_rec_tab.count
   loop
-    print_rec(l_rec_tab(i));
+    if l_rec_tab(i).col_type = cons_blob_code then --blob
+      l_blob_col_exists := true;
+      exit;
+    end if;
   end loop;
   
-  */
+  if l_blob_col_exists then
+    l_clob_all := l_clob_all||
+    '  l_blob     blob;'||NL||
+    '  FUNCTION base64decode(p_clob CLOB)'||NL||
+    '    RETURN BLOB'||NL||
+    '  -- -----------------------------------------------------------------------------------'||NL||
+    '  -- File Name    : https://oracle-base.com/dba/miscellaneous/base64decode.sql'||NL||
+    '  -- Author       : Tim Hall'||NL||
+    '  -- Description  : Decodes a Base64 CLOB into a BLOB'||NL||
+    '  -- Last Modified: 09/11/2011'||NL||
+    '  -- -----------------------------------------------------------------------------------'||NL||
+    '  IS'||NL||
+    '    l_blob    BLOB;'||NL||
+    '    l_raw     RAW(32767);'||NL||
+    '    l_amt     NUMBER := 7700;'||NL||
+    '    l_offset  NUMBER := 1;'||NL||
+    '    l_temp    VARCHAR2(32767);'||NL||
+    '  BEGIN'||NL||
+    '    BEGIN'||NL||
+    '      DBMS_LOB.createtemporary (l_blob, FALSE, DBMS_LOB.CALL);'||NL||
+    '      LOOP'||NL||
+    '        DBMS_LOB.read(p_clob, l_amt, l_offset, l_temp);'||NL||
+    '        l_offset := l_offset + l_amt;'||NL||
+    '        l_raw    := UTL_ENCODE.base64_decode(UTL_RAW.cast_to_raw(l_temp));'||NL||
+    '        DBMS_LOB.append (l_blob, TO_BLOB(l_raw));'||NL||
+    '      END LOOP;'||NL||
+    '    EXCEPTION'||NL||
+    '      WHEN NO_DATA_FOUND THEN'||NL||
+    '        NULL;'||NL||
+    '    END;'||NL||
+    '    RETURN l_blob;'||NL||
+    '  END;'||NL;
+  end if;
+  
+  l_clob_all := l_clob_all||
+  'begin'||NL;
+  
   l_clob_all := l_clob_all||NL||
             '  null;'||NL||
             '  -- start generation of records'||NL||
