@@ -23,14 +23,24 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YPlantilla
+    public class YPlantilla : IEntity
     {
         [JsonProperty("contenido")]
         public string Contenido { get; set; }
         [JsonProperty("nombre")]
         public string Nombre { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Plantilla
+            {
+                Contenido = this.Contenido,
+                Nombre = this.Nombre
+            };
+        }
     }
 }

@@ -122,7 +122,7 @@ namespace Risk.API.Mappers
                     VersionNavegador = entity.VersionNavegador,
                     TokenNotificacion = entity.TokenNotificacion,
                     PlataformaNotificacion = entity.PlataformaNotificacion,
-                    Plantillas = GetPlantillaListFromEntity(entity.Plantillas),
+                    Plantillas = GetModelListFromEntity<Plantilla, YPlantilla>(entity.Plantillas),
                     Suscripciones = GetDatoListFromEntity(entity.Suscripciones)
                 };
             }
@@ -154,37 +154,6 @@ namespace Risk.API.Mappers
                 };
             }
             return model;
-        }
-
-        public static Plantilla GetPlantillaFromEntity(YPlantilla entity)
-        {
-            Plantilla model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Plantilla
-                {
-                    Contenido = entity.Contenido,
-                    Nombre = entity.Nombre
-                };
-            }
-            return model;
-        }
-
-        public static List<Plantilla> GetPlantillaListFromEntity(List<YPlantilla> entityList)
-        {
-            List<Plantilla> modelList = new List<Plantilla>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetPlantillaFromEntity(item));
-                }
-            }
-            return modelList;
         }
 
         public static Pagina<TModel> GetPaginaFromEntity<TModel, TEntity>(YPagina<TEntity> entity, List<TModel> elementos)
