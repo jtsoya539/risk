@@ -102,28 +102,6 @@ namespace Risk.API.Mappers
             };
         }
 
-        public static Sesion GetSesionFromEntity(YSesion entity)
-        {
-            Sesion model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Sesion
-                {
-                    IdSesion = entity.IdSesion,
-                    Estado = entity.Estado,
-                    AccessToken = entity.AccessToken,
-                    RefreshToken = entity.RefreshToken,
-                    TiempoExpiracionAccessToken = entity.TiempoExpiracionAccessToken,
-                    TiempoExpiracionRefreshToken = entity.TiempoExpiracionRefreshToken
-                };
-            }
-            return model;
-        }
-
         public static Dispositivo GetDispositivoFromEntity(YDispositivo entity)
         {
             Dispositivo model;

@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YSesion
+    public class YSesion : IEntity
     {
         [JsonProperty("id_sesion")]
         public int IdSesion { get; set; }
@@ -40,5 +41,18 @@ namespace Risk.API.Entities
         public int TiempoExpiracionAccessToken { get; set; }
         [JsonProperty("tiempo_expiracion_refresh_token")]
         public int TiempoExpiracionRefreshToken { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Sesion
+            {
+                IdSesion = this.IdSesion,
+                Estado = this.Estado,
+                AccessToken = this.AccessToken,
+                RefreshToken = this.RefreshToken,
+                TiempoExpiracionAccessToken = this.TiempoExpiracionAccessToken,
+                TiempoExpiracionRefreshToken = this.TiempoExpiracionRefreshToken
+            };
+        }
     }
 }
