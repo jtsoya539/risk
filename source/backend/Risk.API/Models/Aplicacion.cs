@@ -22,12 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Aplicaciones")]
-    public class Aplicacion
+    public class Aplicacion : IModel
     {
         [SwaggerSchema("Identificador de la aplicacion")]
         public string IdAplicacion { get; set; }
@@ -41,5 +42,10 @@ namespace Risk.API.Models
         public string Detalle { get; set; }
         [SwaggerSchema("Version actual de la aplicacion")]
         public string VersionActual { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

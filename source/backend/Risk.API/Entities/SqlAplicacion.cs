@@ -23,10 +23,12 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Mappers;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class SqlAplicacion
+    public class SqlAplicacion : IEntity
     {
         [JsonProperty("id_aplicacion")]
         public string IdAplicacion { get; set; }
@@ -40,5 +42,18 @@ namespace Risk.API.Entities
         public string Detalle { get; set; }
         [JsonProperty("version_actual")]
         public string VersionActual { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Aplicacion
+            {
+                IdAplicacion = this.IdAplicacion,
+                Nombre = this.Nombre,
+                Tipo = this.Tipo,
+                Activo = EntitiesMapper.GetBoolFromValue(this.Activo),
+                Detalle = this.Detalle,
+                VersionActual = this.VersionActual
+            };
+        }
     }
 }

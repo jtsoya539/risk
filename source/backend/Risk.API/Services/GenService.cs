@@ -289,7 +289,7 @@ namespace Risk.API.Services
             Pagina<Aplicacion> datos = null;
             if (entityRsp.Datos != null)
             {
-                datos = EntitiesMapper.GetPaginaFromEntity<Aplicacion, SqlAplicacion>(entityRsp.Datos, EntitiesMapper.GetAplicacionListFromEntity(entityRsp.Datos.Elementos));
+                datos = EntitiesMapper.GetPaginaFromEntity<Aplicacion, SqlAplicacion>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Aplicacion, SqlAplicacion>(entityRsp.Datos.Elementos));
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Aplicacion>, YPagina<SqlAplicacion>>(entityRsp, datos);

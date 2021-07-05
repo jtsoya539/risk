@@ -156,41 +156,6 @@ namespace Risk.API.Mappers
             return model;
         }
 
-        public static Aplicacion GetAplicacionFromEntity(SqlAplicacion entity)
-        {
-            Aplicacion model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Aplicacion
-                {
-                    IdAplicacion = entity.IdAplicacion,
-                    Nombre = entity.Nombre,
-                    Tipo = entity.Tipo,
-                    Activo = GetBoolFromValue(entity.Activo),
-                    Detalle = entity.Detalle,
-                    VersionActual = entity.VersionActual
-                };
-            }
-            return model;
-        }
-
-        public static List<Aplicacion> GetAplicacionListFromEntity(List<SqlAplicacion> entityList)
-        {
-            List<Aplicacion> modelList = new List<Aplicacion>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetAplicacionFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
         public static Plantilla GetPlantillaFromEntity(YPlantilla entity)
         {
             Plantilla model;
