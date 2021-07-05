@@ -246,44 +246,6 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
-        public static Correo GetCorreoFromEntity(YCorreo entity)
-        {
-            Correo model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Correo
-                {
-                    IdCorreo = entity.IdCorreo,
-                    MensajeTo = entity.MensajeTo,
-                    MensajeSubject = entity.MensajeSubject,
-                    MensajeBody = entity.MensajeBody,
-                    MensajeFrom = entity.MensajeFrom,
-                    MensajeReplyTo = entity.MensajeReplyTo,
-                    MensajeCc = entity.MensajeCc,
-                    MensajeBcc = entity.MensajeBcc,
-                    Adjuntos = GetModelListFromEntity<Archivo, YArchivo>(entity.Adjuntos)
-                };
-            }
-            return model;
-        }
-
-        public static List<Correo> GetCorreoListFromEntity(List<YCorreo> entityList)
-        {
-            List<Correo> modelList = new List<Correo>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetCorreoFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
         public static Plantilla GetPlantillaFromEntity(YPlantilla entity)
         {
             Plantilla model;

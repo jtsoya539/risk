@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Risk.API.Entities;
 
 namespace Risk.API.Models
 {
-    public class Correo
+    public class Correo : IModel
     {
         public int IdCorreo { get; set; }
         public string MensajeTo { get; set; }
@@ -37,5 +38,10 @@ namespace Risk.API.Models
         public string MensajeCc { get; set; }
         public string MensajeBcc { get; set; }
         public List<Archivo> Adjuntos { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

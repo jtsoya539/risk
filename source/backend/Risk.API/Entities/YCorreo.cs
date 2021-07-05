@@ -24,10 +24,12 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Risk.API.Mappers;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YCorreo
+    public class YCorreo : IEntity
     {
         [JsonProperty("id_correo")]
         public int IdCorreo { get; set; }
@@ -47,5 +49,21 @@ namespace Risk.API.Entities
         public string MensajeBcc { get; set; }
         [JsonProperty("adjuntos")]
         public List<YArchivo> Adjuntos { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Correo
+            {
+                IdCorreo = this.IdCorreo,
+                MensajeTo = this.MensajeTo,
+                MensajeSubject = this.MensajeSubject,
+                MensajeBody = this.MensajeBody,
+                MensajeFrom = this.MensajeFrom,
+                MensajeReplyTo = this.MensajeReplyTo,
+                MensajeCc = this.MensajeCc,
+                MensajeBcc = this.MensajeBcc,
+                Adjuntos = EntitiesMapper.GetModelListFromEntity<Archivo, YArchivo>(this.Adjuntos)
+            };
+        }
     }
 }
