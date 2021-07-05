@@ -132,7 +132,7 @@ namespace Risk.API.Services
             Pagina<Significado> datos = null;
             if (entityRsp.Datos != null)
             {
-                datos = EntitiesMapper.GetPaginaFromEntity<Significado, YSignificado>(entityRsp.Datos, EntitiesMapper.GetSignificadoListFromEntity(entityRsp.Datos.Elementos));
+                datos = EntitiesMapper.GetPaginaFromEntity<Significado, YSignificado>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Significado, YSignificado>(entityRsp.Datos.Elementos));
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Significado>, YPagina<YSignificado>>(entityRsp, datos);
@@ -263,7 +263,7 @@ namespace Risk.API.Services
             Pagina<Error> datos = null;
             if (entityRsp.Datos != null)
             {
-                datos = EntitiesMapper.GetPaginaFromEntity<Error, YError>(entityRsp.Datos, EntitiesMapper.GetErrorListFromEntity(entityRsp.Datos.Elementos));
+                datos = EntitiesMapper.GetPaginaFromEntity<Error, YError>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Error, YError>(entityRsp.Datos.Elementos));
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Error>, YPagina<YError>>(entityRsp, datos);

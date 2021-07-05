@@ -22,12 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Agrupa datos de Significados")]
-    public class Significado
+    public class Significado : IModel
     {
         [SwaggerSchema("Codigo")]
         public string Codigo { get; set; }
@@ -37,5 +38,10 @@ namespace Risk.API.Models
         public string Referencia { get; set; }
         [SwaggerSchema("El significado esta activo? (S/N)")]
         public string Activo { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

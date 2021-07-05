@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YSignificado
+    public class YSignificado : IEntity
     {
         [JsonProperty("dominio")]
         public string Dominio { get; set; }
@@ -38,5 +39,16 @@ namespace Risk.API.Entities
         public string Referencia { get; set; }
         [JsonProperty("activo")]
         public string Activo { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Significado
+            {
+                Codigo = this.Codigo,
+                Descripcion = this.Significado,
+                Referencia = this.Referencia,
+                Activo = this.Activo
+            };
+        }
     }
 }

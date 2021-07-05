@@ -23,14 +23,24 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YError
+    public class YError : IEntity
     {
         [JsonProperty("id_error")]
         public string IdError { get; set; }
         [JsonProperty("mensaje")]
         public string Mensaje { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Error
+            {
+                IdError = this.IdError,
+                Mensaje = this.Mensaje
+            };
+        }
     }
 }

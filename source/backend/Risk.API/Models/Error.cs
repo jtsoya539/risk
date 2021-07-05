@@ -22,16 +22,22 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Agrupa datos de Errores")]
-    public class Error
+    public class Error : IModel
     {
         [SwaggerSchema("Identificador del error")]
         public string IdError { get; set; }
         [SwaggerSchema("Mensaje del error")]
         public string Mensaje { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
