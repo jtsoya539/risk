@@ -102,39 +102,6 @@ namespace Risk.API.Mappers
             };
         }
 
-        public static Rol GetRolFromEntity(YRol entity)
-        {
-            Rol model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Rol
-                {
-                    IdRol = entity.IdRol,
-                    Nombre = entity.Nombre,
-                    Activo = entity.Activo,
-                    Detalle = entity.Detalle
-                };
-            }
-            return model;
-        }
-
-        public static List<Rol> GetRolListFromEntity(List<YRol> entityList)
-        {
-            List<Rol> modelList = new List<Rol>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetRolFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
         public static Sesion GetSesionFromEntity(YSesion entity)
         {
             Sesion model;
@@ -205,7 +172,7 @@ namespace Risk.API.Mappers
                     NumeroTelefono = entity.NumeroTelefono,
                     VersionAvatar = entity.VersionAvatar,
                     Origen = GetOrigenSesionEnumFromValue(entity.Origen),
-                    Roles = GetRolListFromEntity(entity.Roles)
+                    Roles = GetModelListFromEntity<Rol, YRol>(entity.Roles)
                 };
             }
             return model;

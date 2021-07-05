@@ -22,13 +22,20 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
+
 namespace Risk.API.Models
 {
-    public class Rol
+    public class Rol : IModel
     {
         public int IdRol { get; set; }
         public string Nombre { get; set; }
         public string Activo { get; set; }
         public string Detalle { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
