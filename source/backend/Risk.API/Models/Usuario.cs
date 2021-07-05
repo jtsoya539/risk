@@ -23,12 +23,13 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Agrupa datos de un usuario")]
-    public class Usuario
+    public class Usuario : IModel
     {
         [SwaggerSchema("Identificador del usuario")]
         public int IdUsuario { get; set; }
@@ -52,5 +53,10 @@ namespace Risk.API.Models
         public OrigenSesion Origen { get; set; }
         [SwaggerSchema("Roles del usuario")]
         public List<Rol> Roles { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

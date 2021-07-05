@@ -129,33 +129,6 @@ namespace Risk.API.Mappers
             return model;
         }
 
-        public static Usuario GetUsuarioFromEntity(YUsuario entity)
-        {
-            Usuario model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Usuario
-                {
-                    IdUsuario = entity.IdUsuario,
-                    Alias = entity.Alias,
-                    Nombre = entity.Nombre,
-                    Apellido = entity.Apellido,
-                    TipoPersona = entity.TipoPersona,
-                    Estado = entity.Estado,
-                    DireccionCorreo = entity.DireccionCorreo,
-                    NumeroTelefono = entity.NumeroTelefono,
-                    VersionAvatar = entity.VersionAvatar,
-                    Origen = GetOrigenSesionEnumFromValue(entity.Origen),
-                    Roles = GetModelListFromEntity<Rol, YRol>(entity.Roles)
-                };
-            }
-            return model;
-        }
-
         public static Pagina<TModel> GetPaginaFromEntity<TModel, TEntity>(YPagina<TEntity> entity, List<TModel> elementos)
         {
             return new Pagina<TModel>

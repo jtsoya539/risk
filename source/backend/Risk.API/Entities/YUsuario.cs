@@ -24,10 +24,12 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Risk.API.Mappers;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YUsuario
+    public class YUsuario : IEntity
     {
         [JsonProperty("id_usuario")]
         public int IdUsuario { get; set; }
@@ -51,5 +53,23 @@ namespace Risk.API.Entities
         public string Origen { get; set; }
         [JsonProperty("roles")]
         public List<YRol> Roles { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Usuario
+            {
+                IdUsuario = this.IdUsuario,
+                Alias = this.Alias,
+                Nombre = this.Nombre,
+                Apellido = this.Apellido,
+                TipoPersona = this.TipoPersona,
+                Estado = this.Estado,
+                DireccionCorreo = this.DireccionCorreo,
+                NumeroTelefono = this.NumeroTelefono,
+                VersionAvatar = this.VersionAvatar,
+                Origen = EntitiesMapper.GetOrigenSesionEnumFromValue(this.Origen),
+                Roles = EntitiesMapper.GetModelListFromEntity<Rol, YRol>(this.Roles)
+            };
+        }
     }
 }

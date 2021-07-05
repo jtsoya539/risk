@@ -209,7 +209,7 @@ namespace Risk.API.Services
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
 
-            return EntitiesMapper.GetRespuestaFromEntity<Usuario, YUsuario>(entityRsp, EntitiesMapper.GetUsuarioFromEntity(entityRsp.Datos));
+            return EntitiesMapper.GetRespuestaFromEntity<Usuario, YUsuario>(entityRsp, EntitiesMapper.GetModelFromEntity<Usuario, YUsuario>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion)
