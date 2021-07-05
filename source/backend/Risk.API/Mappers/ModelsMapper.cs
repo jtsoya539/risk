@@ -30,6 +30,37 @@ namespace Risk.API.Mappers
 {
     public static class ModelsMapper
     {
+        public static TEntity GetEntityFromModel<TModel, TEntity>(IModel model)
+            where TModel : IModel
+            where TEntity : IEntity
+        {
+            IEntity entity;
+            if (model == null)
+            {
+                entity = null;
+            }
+            else
+            {
+                entity = model.ConvertToEntity();
+            }
+            return (TEntity)entity;
+        }
+
+        public static List<TEntity> GetEntityListFromModel<TModel, TEntity>(List<TModel> modelList)
+            where TModel : IModel
+            where TEntity : IEntity
+        {
+            List<TEntity> entityList = new List<TEntity>();
+            if (modelList != null)
+            {
+                foreach (var item in modelList)
+                {
+                    entityList.Add(GetEntityFromModel<TModel, TEntity>(item));
+                }
+            }
+            return entityList;
+        }
+
         public static YDato GetYDatoFromModel(Dato model)
         {
             YDato entity;
