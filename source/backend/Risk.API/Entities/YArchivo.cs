@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YArchivo
+    public class YArchivo : IEntity
     {
         [JsonProperty("contenido")]
         public string Contenido { get; set; }
@@ -42,5 +43,19 @@ namespace Risk.API.Entities
         public string Extension { get; set; }
         [JsonProperty("tipo_mime")]
         public string TipoMime { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Archivo
+            {
+                Contenido = this.Contenido,
+                Url = this.Url,
+                Checksum = this.Checksum,
+                Tamano = this.Tamano,
+                Nombre = this.Nombre,
+                Extension = this.Extension,
+                TipoMime = this.TipoMime
+            };
+        }
     }
 }

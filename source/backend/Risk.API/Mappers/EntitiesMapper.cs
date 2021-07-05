@@ -62,42 +62,6 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
-        public static Archivo GetArchivoFromEntity(YArchivo entity)
-        {
-            Archivo model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Archivo
-                {
-                    Contenido = entity.Contenido,
-                    Url = entity.Url,
-                    Checksum = entity.Checksum,
-                    Tamano = entity.Tamano,
-                    Nombre = entity.Nombre,
-                    Extension = entity.Extension,
-                    TipoMime = entity.TipoMime
-                };
-            }
-            return model;
-        }
-
-        public static List<Archivo> GetArchivoListFromEntity(List<YArchivo> entityList)
-        {
-            List<Archivo> modelList = new List<Archivo>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetArchivoFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
         public static Dato GetDatoFromEntity(YDato entity)
         {
             Dato model;
@@ -301,7 +265,7 @@ namespace Risk.API.Mappers
                     MensajeReplyTo = entity.MensajeReplyTo,
                     MensajeCc = entity.MensajeCc,
                     MensajeBcc = entity.MensajeBcc,
-                    Adjuntos = GetArchivoListFromEntity(entity.Adjuntos)
+                    Adjuntos = GetModelListFromEntity<Archivo, YArchivo>(entity.Adjuntos)
                 };
             }
             return model;

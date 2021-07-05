@@ -22,12 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Agrupa datos de un archivo")]
-    public class Archivo
+    public class Archivo : IModel
     {
         [SwaggerSchema("Contenido del archivo comprimido con gzip y codificado en formato Base64")]
         public string Contenido { get; set; }
@@ -43,5 +44,19 @@ namespace Risk.API.Models
         public string Extension { get; set; }
         [SwaggerSchema("Tipo MIME del archivo")]
         public string TipoMime { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            return new YArchivo
+            {
+                Contenido = this.Contenido,
+                Url = this.Url,
+                Checksum = this.Checksum,
+                Tamano = this.Tamano,
+                Nombre = this.Nombre,
+                Extension = this.Extension,
+                TipoMime = this.TipoMime
+            };
+        }
     }
 }

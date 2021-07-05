@@ -309,7 +309,7 @@ namespace Risk.API.Services
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
 
-            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Archivo, YArchivo>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo)
@@ -358,7 +358,7 @@ namespace Risk.API.Services
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
 
-            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Archivo, YArchivo>(entityRsp.Datos));
         }
 
         public Respuesta<Archivo> ReporteListarSignificados(FormatoReporte formato, string dominio)
@@ -373,7 +373,7 @@ namespace Risk.API.Services
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
 
-            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetArchivoFromEntity(entityRsp.Datos));
+            return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Archivo, YArchivo>(entityRsp.Datos));
         }
     }
 }
