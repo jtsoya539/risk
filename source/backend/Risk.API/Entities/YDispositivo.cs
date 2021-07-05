@@ -24,10 +24,12 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Risk.API.Mappers;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YDispositivo
+    public class YDispositivo : IEntity
     {
         [JsonProperty("id_dispositivo")]
         public int IdDispositivo { get; set; }
@@ -51,5 +53,23 @@ namespace Risk.API.Entities
         public List<YPlantilla> Plantillas { get; set; }
         [JsonProperty("suscripciones")]
         public List<YDato> Suscripciones { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Dispositivo
+            {
+                IdDispositivo = this.IdDispositivo,
+                TokenDispositivo = this.TokenDispositivo,
+                NombreSistemaOperativo = this.NombreSistemaOperativo,
+                VersionSistemaOperativo = this.VersionSistemaOperativo,
+                Tipo = EntitiesMapper.GetTipoDispositivoEnumFromValue(this.Tipo),
+                NombreNavegador = this.NombreNavegador,
+                VersionNavegador = this.VersionNavegador,
+                TokenNotificacion = this.TokenNotificacion,
+                PlataformaNotificacion = this.PlataformaNotificacion,
+                Plantillas = EntitiesMapper.GetModelListFromEntity<Plantilla, YPlantilla>(this.Plantillas),
+                Suscripciones = EntitiesMapper.GetDatoListFromEntity(this.Suscripciones)
+            };
+        }
     }
 }

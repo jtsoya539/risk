@@ -23,10 +23,12 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Risk.API.Entities;
+using Risk.API.Mappers;
 
 namespace Risk.API.Models
 {
-    public class Dispositivo
+    public class Dispositivo : IModel
     {
         public int IdDispositivo { get; set; }
         public string TokenDispositivo { get; set; }
@@ -39,5 +41,23 @@ namespace Risk.API.Models
         public string PlataformaNotificacion { get; set; }
         public List<Plantilla> Plantillas { get; set; }
         public List<Dato> Suscripciones { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            return new YDispositivo
+            {
+                IdDispositivo = this.IdDispositivo,
+                TokenDispositivo = this.TokenDispositivo,
+                NombreSistemaOperativo = this.NombreSistemaOperativo,
+                VersionSistemaOperativo = this.VersionSistemaOperativo,
+                Tipo = ModelsMapper.GetValueFromTipoDispositivoEnum(this.Tipo),
+                NombreNavegador = this.NombreNavegador,
+                VersionNavegador = this.VersionNavegador,
+                TokenNotificacion = this.TokenNotificacion,
+                PlataformaNotificacion = this.PlataformaNotificacion,
+                Plantillas = ModelsMapper.GetEntityListFromModel<Plantilla, YPlantilla>(this.Plantillas),
+                Suscripciones = ModelsMapper.GetYDatoListFromModel(this.Suscripciones)
+            };
+        }
     }
 }

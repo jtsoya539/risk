@@ -232,7 +232,7 @@ namespace Risk.API.Services
 
             if (dispositivo != null)
             {
-                prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetYDispositivoFromModel(dispositivo)));
+                prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetEntityFromModel<Dispositivo, YDispositivo>(dispositivo)));
             }
 
             string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
@@ -255,7 +255,7 @@ namespace Risk.API.Services
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDispositivo>>(rsp);
 
-            return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetDispositivoFromEntity(entityRsp.Datos));
+            return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Dispositivo, YDispositivo>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarUbicacion(string tokenDispositivo, double latitud, double longitud)

@@ -102,33 +102,6 @@ namespace Risk.API.Mappers
             };
         }
 
-        public static Dispositivo GetDispositivoFromEntity(YDispositivo entity)
-        {
-            Dispositivo model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Dispositivo
-                {
-                    IdDispositivo = entity.IdDispositivo,
-                    TokenDispositivo = entity.TokenDispositivo,
-                    NombreSistemaOperativo = entity.NombreSistemaOperativo,
-                    VersionSistemaOperativo = entity.VersionSistemaOperativo,
-                    Tipo = GetTipoDispositivoEnumFromValue(entity.Tipo),
-                    NombreNavegador = entity.NombreNavegador,
-                    VersionNavegador = entity.VersionNavegador,
-                    TokenNotificacion = entity.TokenNotificacion,
-                    PlataformaNotificacion = entity.PlataformaNotificacion,
-                    Plantillas = GetModelListFromEntity<Plantilla, YPlantilla>(entity.Plantillas),
-                    Suscripciones = GetDatoListFromEntity(entity.Suscripciones)
-                };
-            }
-            return model;
-        }
-
         public static Pagina<TModel> GetPaginaFromEntity<TModel, TEntity>(YPagina<TEntity> entity, List<TModel> elementos)
         {
             return new Pagina<TModel>
