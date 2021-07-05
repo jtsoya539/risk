@@ -91,37 +91,6 @@ namespace Risk.API.Mappers
             return entityList;
         }
 
-        public static YPlantilla GetYPlantillaFromModel(Plantilla model)
-        {
-            YPlantilla entity;
-            if (model == null)
-            {
-                entity = null;
-            }
-            else
-            {
-                entity = new YPlantilla
-                {
-                    Contenido = model.Contenido,
-                    Nombre = model.Nombre
-                };
-            }
-            return entity;
-        }
-
-        public static List<YPlantilla> GetYPlantillaListFromModel(List<Plantilla> modelList)
-        {
-            List<YPlantilla> entityList = new List<YPlantilla>();
-            if (modelList != null)
-            {
-                foreach (var item in modelList)
-                {
-                    entityList.Add(GetYPlantillaFromModel(item));
-                }
-            }
-            return entityList;
-        }
-
         public static YDispositivo GetYDispositivoFromModel(Dispositivo model)
         {
             YDispositivo entity;
@@ -142,47 +111,11 @@ namespace Risk.API.Mappers
                     VersionNavegador = model.VersionNavegador,
                     TokenNotificacion = model.TokenNotificacion,
                     PlataformaNotificacion = model.PlataformaNotificacion,
-                    Plantillas = GetYPlantillaListFromModel(model.Plantillas),
+                    Plantillas = GetEntityListFromModel<Plantilla, YPlantilla>(model.Plantillas),
                     Suscripciones = GetYDatoListFromModel(model.Suscripciones)
                 };
             }
             return entity;
-        }
-
-        public static YArchivo GetYArchivoFromModel(Archivo model)
-        {
-            YArchivo entity;
-            if (model == null)
-            {
-                entity = null;
-            }
-            else
-            {
-                entity = new YArchivo
-                {
-                    Contenido = model.Contenido,
-                    Url = model.Url,
-                    Checksum = model.Checksum,
-                    Tamano = model.Tamano,
-                    Nombre = model.Nombre,
-                    Extension = model.Extension,
-                    TipoMime = model.TipoMime
-                };
-            }
-            return entity;
-        }
-
-        public static List<YArchivo> GetYArchivoListFromModel(List<Archivo> modelList)
-        {
-            List<YArchivo> entityList = new List<YArchivo>();
-            if (modelList != null)
-            {
-                foreach (var item in modelList)
-                {
-                    entityList.Add(GetYArchivoFromModel(item));
-                }
-            }
-            return entityList;
         }
 
         public static YPaginaParametros GetYPaginaParametrosFromModel(PaginaParametros model)

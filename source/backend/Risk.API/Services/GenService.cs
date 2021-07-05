@@ -321,7 +321,7 @@ namespace Risk.API.Services
 
             if (archivo != null)
             {
-                prms.Add("archivo", JToken.FromObject(ModelsMapper.GetYArchivoFromModel(archivo)));
+                prms.Add("archivo", JToken.FromObject(ModelsMapper.GetEntityFromModel<Archivo, YArchivo>(archivo)));
             }
 
             string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
