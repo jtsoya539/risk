@@ -22,14 +22,21 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
+
 namespace Risk.API.Models
 {
-    public class Notificacion
+    public class Notificacion : IModel
     {
         public int IdNotificacion { get; set; }
         public string Suscripcion { get; set; }
         public string Titulo { get; set; }
         public string Contenido { get; set; }
         public string DatosExtra { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

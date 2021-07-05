@@ -282,38 +282,6 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
-        public static Mensaje GetMensajeFromEntity(YMensaje entity)
-        {
-            Mensaje model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Mensaje
-                {
-                    IdMensaje = entity.IdMensaje,
-                    NumeroTelefono = entity.NumeroTelefono,
-                    Contenido = entity.Contenido
-                };
-            }
-            return model;
-        }
-
-        public static List<Mensaje> GetMensajeListFromEntity(List<YMensaje> entityList)
-        {
-            List<Mensaje> modelList = new List<Mensaje>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetMensajeFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
         public static Correo GetCorreoFromEntity(YCorreo entity)
         {
             Correo model;
@@ -347,40 +315,6 @@ namespace Risk.API.Mappers
                 foreach (var item in entityList)
                 {
                     modelList.Add(GetCorreoFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
-        public static Notificacion GetNotificacionFromEntity(YNotificacion entity)
-        {
-            Notificacion model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Notificacion
-                {
-                    IdNotificacion = entity.IdNotificacion,
-                    Suscripcion = entity.Suscripcion,
-                    Titulo = entity.Titulo,
-                    Contenido = entity.Contenido,
-                    DatosExtra = entity.DatosExtra
-                };
-            }
-            return model;
-        }
-
-        public static List<Notificacion> GetNotificacionListFromEntity(List<YNotificacion> entityList)
-        {
-            List<Notificacion> modelList = new List<Notificacion>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetNotificacionFromEntity(item));
                 }
             }
             return modelList;

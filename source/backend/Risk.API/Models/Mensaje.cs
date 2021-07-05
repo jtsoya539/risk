@@ -22,12 +22,19 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
+
 namespace Risk.API.Models
 {
-    public class Mensaje
+    public class Mensaje : IModel
     {
         public int IdMensaje { get; set; }
         public string NumeroTelefono { get; set; }
         public string Contenido { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
