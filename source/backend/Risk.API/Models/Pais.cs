@@ -22,12 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Agrupa datos de Paises")]
-    public class Pais
+    public class Pais : IModel
     {
         [SwaggerSchema("Identificador del pais")]
         public int IdPais { get; set; }
@@ -39,5 +40,10 @@ namespace Risk.API.Models
         public string IsoAlpha3 { get; set; }
         [SwaggerSchema("Codigo del pais segun estandar ISO 3166-1 numeric")]
         public int IsoNumeric { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

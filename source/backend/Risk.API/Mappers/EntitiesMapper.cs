@@ -31,6 +31,37 @@ namespace Risk.API.Mappers
 {
     public static class EntitiesMapper
     {
+        public static TModel GetModelFromEntity<TModel, TEntity>(IEntity entity)
+            where TModel : IModel
+            where TEntity : IEntity
+        {
+            IModel model;
+            if (entity == null)
+            {
+                model = null;
+            }
+            else
+            {
+                model = entity.ConvertToModel();
+            }
+            return (TModel)model;
+        }
+
+        public static List<TModel> GetModelListFromEntity<TModel, TEntity>(List<TEntity> entityList)
+            where TModel : IModel
+            where TEntity : IEntity
+        {
+            List<TModel> modelList = new List<TModel>();
+            if (entityList != null)
+            {
+                foreach (var item in entityList)
+                {
+                    modelList.Add(GetModelFromEntity<TModel, TEntity>(item));
+                }
+            }
+            return modelList;
+        }
+
         public static Archivo GetArchivoFromEntity(YArchivo entity)
         {
             Archivo model;
@@ -97,9 +128,9 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
-        public static Respuesta<T> GetRespuestaFromEntity<T, YT>(YRespuesta<YT> entity, T datos)
+        public static Respuesta<TModel> GetRespuestaFromEntity<TModel, TEntity>(YRespuesta<TEntity> entity, TModel datos)
         {
-            return new Respuesta<T>
+            return new Respuesta<TModel>
             {
                 Codigo = entity.Codigo,
                 Mensaje = entity.Mensaje,
@@ -244,139 +275,6 @@ namespace Risk.API.Mappers
                 foreach (var item in entityList)
                 {
                     modelList.Add(GetSignificadoFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
-        public static Pais GetPaisFromEntity(YPais entity)
-        {
-            Pais model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Pais
-                {
-                    IdPais = entity.IdPais,
-                    Nombre = entity.Nombre,
-                    IsoAlpha2 = entity.IsoAlpha2,
-                    IsoAlpha3 = entity.IsoAlpha3,
-                    IsoNumeric = entity.IsoNumeric
-                };
-            }
-            return model;
-        }
-
-        public static List<Pais> GetPaisListFromEntity(List<YPais> entityList)
-        {
-            List<Pais> modelList = new List<Pais>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetPaisFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
-        public static Departamento GetDepartamentoFromEntity(YDepartamento entity)
-        {
-            Departamento model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Departamento
-                {
-                    IdDepartamento = entity.IdDepartamento,
-                    Nombre = entity.Nombre,
-                    IdPais = entity.IdPais
-                };
-            }
-            return model;
-        }
-
-        public static List<Departamento> GetDepartamentoListFromEntity(List<YDepartamento> entityList)
-        {
-            List<Departamento> modelList = new List<Departamento>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetDepartamentoFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
-        public static Ciudad GetCiudadFromEntity(YCiudad entity)
-        {
-            Ciudad model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Ciudad
-                {
-                    IdCiudad = entity.IdCiudad,
-                    Nombre = entity.Nombre,
-                    IdPais = entity.IdPais,
-                    IdDepartamento = entity.IdDepartamento
-                };
-            }
-            return model;
-        }
-
-        public static List<Ciudad> GetCiudadListFromEntity(List<YCiudad> entityList)
-        {
-            List<Ciudad> modelList = new List<Ciudad>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetCiudadFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
-        public static Barrio GetBarrioFromEntity(YBarrio entity)
-        {
-            Barrio model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Barrio
-                {
-                    IdBarrio = entity.IdBarrio,
-                    Nombre = entity.Nombre,
-                    IdPais = entity.IdPais,
-                    IdDepartamento = entity.IdDepartamento,
-                    IdCiudad = entity.IdCiudad,
-                };
-            }
-            return model;
-        }
-
-        public static List<Barrio> GetBarrioListFromEntity(List<YBarrio> entityList)
-        {
-            List<Barrio> modelList = new List<Barrio>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetBarrioFromEntity(item));
                 }
             }
             return modelList;
@@ -583,9 +481,9 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
-        public static Pagina<T> GetPaginaFromEntity<T, YT>(YPagina<YT> entity, List<T> elementos)
+        public static Pagina<TModel> GetPaginaFromEntity<TModel, TEntity>(YPagina<TEntity> entity, List<TModel> elementos)
         {
-            return new Pagina<T>
+            return new Pagina<TModel>
             {
                 PaginaActual = Convert.ToString(entity.NumeroActual),
                 PaginaSiguiente = Convert.ToString(entity.NumeroSiguiente),

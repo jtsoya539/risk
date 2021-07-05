@@ -22,12 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Agrupa datos de Ciudades")]
-    public class Ciudad
+    public class Ciudad : IModel
     {
         [SwaggerSchema("Identificador de la ciudad")]
         public int IdCiudad { get; set; }
@@ -37,5 +38,10 @@ namespace Risk.API.Models
         public int IdPais { get; set; }
         [SwaggerSchema("Departamento de la ciudad")]
         public int IdDepartamento { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

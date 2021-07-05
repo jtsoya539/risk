@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YDepartamento
+    public class YDepartamento : IEntity
     {
         [JsonProperty("id_departamento")]
         public int IdDepartamento { get; set; }
@@ -34,5 +35,15 @@ namespace Risk.API.Entities
         public string Nombre { get; set; }
         [JsonProperty("id_pais")]
         public int IdPais { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            return new Departamento
+            {
+                IdDepartamento = this.IdDepartamento,
+                Nombre = this.Nombre,
+                IdPais = this.IdPais
+            };
+        }
     }
 }
