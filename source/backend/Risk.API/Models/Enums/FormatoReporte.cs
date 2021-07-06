@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,10 +30,15 @@ namespace Risk.API.Models
     [SwaggerSchema("Formatos de Reporte")]
     public enum FormatoReporte
     {
+        [StringValue("PDF")]
         Pdf,
+        [StringValue("DOCX")]
         Docx,
+        [StringValue("XLSX")]
         Xlsx,
+        [StringValue("CSV")]
         Csv,
+        [StringValue("HTML")]
         Html
     }
 }

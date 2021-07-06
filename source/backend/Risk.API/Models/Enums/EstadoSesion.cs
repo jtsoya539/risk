@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,9 +30,13 @@ namespace Risk.API.Models
     [SwaggerSchema("Estados de Sesión")]
     public enum EstadoSesion
     {
+        [StringValue("A")]
         Activo,
+        [StringValue("X")]
         Expirado,
+        [StringValue("F")]
         Finalizado,
+        [StringValue("I")]
         Invalido
     }
 }

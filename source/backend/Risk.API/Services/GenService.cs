@@ -351,7 +351,7 @@ namespace Risk.API.Services
         public Respuesta<Archivo> ReporteVersionSistema(FormatoReporte formato)
         {
             JObject prms = new JObject();
-            prms.Add("formato", ModelsMapper.GetValueFromFormatoReporteEnum(formato));
+            prms.Add("formato", formato.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Reporte.GetStringValue(),
                 NOMBRE_VERSION_SISTEMA,
@@ -365,7 +365,7 @@ namespace Risk.API.Services
         public Respuesta<Archivo> ReporteListarSignificados(FormatoReporte formato, string dominio)
         {
             JObject prms = new JObject();
-            prms.Add("formato", ModelsMapper.GetValueFromFormatoReporteEnum(formato));
+            prms.Add("formato", formato.GetStringValue());
             prms.Add("dominio", dominio);
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Reporte.GetStringValue(),

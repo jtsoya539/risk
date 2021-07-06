@@ -61,59 +61,6 @@ namespace Risk.API.Mappers
             return entityList;
         }
 
-        public static string GetValueFromFormatoReporteEnum(FormatoReporte enumeration)
-        {
-            switch (enumeration)
-            {
-                case FormatoReporte.Pdf:
-                    return "PDF";
-                case FormatoReporte.Docx:
-                    return "DOCX";
-                case FormatoReporte.Xlsx:
-                    return "XLSX";
-                case FormatoReporte.Csv:
-                    return "CSV";
-                case FormatoReporte.Html:
-                    return "HTML";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        public static string GetValueFromEstadoUsuarioEnum(EstadoUsuario enumeration)
-        {
-            switch (enumeration)
-            {
-                case EstadoUsuario.Activo:
-                    return "A";
-                case EstadoUsuario.Inactivo:
-                    return "I";
-                case EstadoUsuario.Bloqueado:
-                    return "B";
-                case EstadoUsuario.PendienteActivacion:
-                    return "P";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        public static string GetValueFromEstadoSesionEnum(EstadoSesion enumeration)
-        {
-            switch (enumeration)
-            {
-                case EstadoSesion.Activo:
-                    return "A";
-                case EstadoSesion.Expirado:
-                    return "X";
-                case EstadoSesion.Finalizado:
-                    return "F";
-                case EstadoSesion.Invalido:
-                    return "I";
-                default:
-                    return string.Empty;
-            }
-        }
-
         public static string GetValueFromOrigenSesionEnum(OrigenSesion? enumeration)
         {
             switch (enumeration)
@@ -123,19 +70,6 @@ namespace Risk.API.Mappers
                 case OrigenSesion.Facebook:
                     return "F";
                 case OrigenSesion.Risk:
-                    return "R";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        public static string GetValueFromTipoTokenEnum(TipoToken enumeration)
-        {
-            switch (enumeration)
-            {
-                case TipoToken.AccessToken:
-                    return "A";
-                case TipoToken.RefreshToken:
                     return "R";
                 default:
                     return string.Empty;

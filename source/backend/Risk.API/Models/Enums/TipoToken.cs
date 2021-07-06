@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,7 +30,9 @@ namespace Risk.API.Models
     [SwaggerSchema("Tipos de Token")]
     public enum TipoToken
     {
+        [StringValue("A")]
         AccessToken,
+        [StringValue("R")]
         RefreshToken
     }
 }

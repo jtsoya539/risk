@@ -83,7 +83,7 @@ namespace Risk.API.Services
         {
             JObject prms = new JObject();
             prms.Add("access_token", accessToken);
-            prms.Add("estado", ModelsMapper.GetValueFromEstadoSesionEnum(estado));
+            prms.Add("estado", estado.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_ESTADO_SESION,
@@ -278,7 +278,7 @@ namespace Risk.API.Services
         public Respuesta<Dato> TiempoExpiracionToken(TipoToken tipoToken)
         {
             JObject prms = new JObject();
-            prms.Add("tipo_token", ModelsMapper.GetValueFromTipoTokenEnum(tipoToken));
+            prms.Add("tipo_token", tipoToken.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_TIEMPO_EXPIRACION_TOKEN,
@@ -312,7 +312,7 @@ namespace Risk.API.Services
         {
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
-            prms.Add("estado", ModelsMapper.GetValueFromEstadoUsuarioEnum(estado));
+            prms.Add("estado", estado.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_ESTADO_USUARIO,
