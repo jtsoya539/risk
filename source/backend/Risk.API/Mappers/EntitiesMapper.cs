@@ -62,23 +62,6 @@ namespace Risk.API.Mappers
             return modelList;
         }
 
-        public static Dato GetDatoFromEntity(YDato entity)
-        {
-            Dato model;
-            if (entity == null)
-            {
-                model = null;
-            }
-            else
-            {
-                model = new Dato
-                {
-                    Contenido = entity.Contenido
-                };
-            }
-            return model;
-        }
-
         public static Respuesta<TModel> GetRespuestaFromEntity<TModel, TEntity>(YRespuesta<TEntity> entity, TModel datos)
         {
             return new Respuesta<TModel>
