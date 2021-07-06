@@ -61,25 +61,6 @@ namespace Risk.API.Mappers
             return entityList;
         }
 
-        public static string GetValueFromTipoDispositivoEnum(TipoDispositivo enumeration)
-        {
-            switch (enumeration)
-            {
-                case TipoDispositivo.Mobile:
-                    return "M";
-                case TipoDispositivo.Tablet:
-                    return "T";
-                case TipoDispositivo.Desktop:
-                    return "D";
-                case TipoDispositivo.Tv:
-                    return "V";
-                case TipoDispositivo.Watch:
-                    return "W";
-                default:
-                    return string.Empty;
-            }
-        }
-
         public static string GetValueFromBool(bool valor)
         {
             if (valor)

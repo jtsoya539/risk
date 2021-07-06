@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,10 +30,15 @@ namespace Risk.API.Models
     [SwaggerSchema("Tipos de Dispositivo")]
     public enum TipoDispositivo
     {
+        [StringValue("M")]
         Mobile,
+        [StringValue("T")]
         Tablet,
+        [StringValue("D")]
         Desktop,
+        [StringValue("V")]
         Tv,
+        [StringValue("W")]
         Watch
     }
 }
