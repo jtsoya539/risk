@@ -32,6 +32,9 @@ namespace Risk.API.Attributes
     {
         public static string GetStringValue(this Enum value)
         {
+            if (value == null)
+                return string.Empty;
+
             // Get the type
             Type type = value.GetType();
 
@@ -46,7 +49,7 @@ namespace Risk.API.Attributes
             return attribs.Length > 0 ? attribs[0].StringValue : null;
         }
 
-        public static TEnum GetEnumValue<TEnum>(this string value, bool ignoreCase = true) where TEnum : System.Enum
+        public static TEnum GetEnumValue<TEnum>(this string value, bool ignoreCase = true) where TEnum : Enum
         {
             TEnum result = default(TEnum);
 
