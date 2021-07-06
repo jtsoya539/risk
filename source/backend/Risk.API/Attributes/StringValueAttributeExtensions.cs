@@ -45,5 +45,32 @@ namespace Risk.API.Attributes
             // Return the first if there was a match.
             return attribs.Length > 0 ? attribs[0].StringValue : null;
         }
+
+        public static TEnum GetEnumValue<TEnum>(this string value, bool ignoreCase = true) where TEnum : System.Enum
+        {
+            TEnum result = default(TEnum);
+
+            // Get the type
+            Type enumType = typeof(TEnum);
+            if (!enumType.IsEnum)
+                throw new ArgumentException("TEnum should be a valid enum");
+
+            string enumStringValue = null;
+
+            foreach (FieldInfo fieldInfo in enumType.GetFields())
+            {
+                var attribs =
+                fieldInfo.GetCustomAttributes(typeof(StringValueAttribute), false)
+                as StringValueAttribute[];
+                //Get the StringValueAttribute for each enum member
+                if (attribs.Length > 0)
+                    enumStringValue = attribs[0].StringValue;
+
+                if (string.Compare(enumStringValue, value, ignoreCase) == 0)
+                    result = (TEnum)Enum.Parse(enumType, fieldInfo.Name);
+            }
+
+            return result;
+        }
     }
 }

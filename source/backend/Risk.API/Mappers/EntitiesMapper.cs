@@ -86,41 +86,6 @@ namespace Risk.API.Mappers
             };
         }
 
-        public static TipoDispositivo GetTipoDispositivoEnumFromValue(string value)
-        {
-            switch (value.ToUpper())
-            {
-                case "M":
-                    return TipoDispositivo.Mobile;
-                case "T":
-                    return TipoDispositivo.Tablet;
-                case "D":
-                    return TipoDispositivo.Desktop;
-                case "V":
-                    return TipoDispositivo.Tv;
-                case "W":
-                    return TipoDispositivo.Watch;
-                default:
-                    return TipoDispositivo.Mobile;
-            }
-        }
-
-        public static OrigenSesion GetOrigenSesionEnumFromValue(string value)
-        {
-            if (value == null)
-                return OrigenSesion.Risk;
-
-            switch (value.ToUpper())
-            {
-                case "G":
-                    return OrigenSesion.Google;
-                case "F":
-                    return OrigenSesion.Facebook;
-                default:
-                    return OrigenSesion.Risk;
-            }
-        }
-
         public static bool GetBoolFromValue(string value)
         {
             switch (value.ToUpper())
