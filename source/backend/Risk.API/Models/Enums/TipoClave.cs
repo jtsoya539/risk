@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,7 +30,9 @@ namespace Risk.API.Models
     [SwaggerSchema("Tipo de Clave")]
     public enum TipoClave
     {
+        [StringValue("A")]
         Acceso,
+        [StringValue("T")]
         Transaccional
     }
 }

@@ -129,19 +129,6 @@ namespace Risk.API.Mappers
             }
         }
 
-        public static string GetValueFromTipoClaveEnum(TipoClave enumeration)
-        {
-            switch (enumeration)
-            {
-                case TipoClave.Acceso:
-                    return "A";
-                case TipoClave.Transaccional:
-                    return "T";
-                default:
-                    return string.Empty;
-            }
-        }
-
         public static string GetValueFromTipoTokenEnum(TipoToken enumeration)
         {
             switch (enumeration)

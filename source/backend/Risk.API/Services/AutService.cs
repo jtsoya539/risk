@@ -68,7 +68,7 @@ namespace Risk.API.Services
             prms.Add("usuario", usuario);
             prms.Add("clave_antigua", claveAntigua);
             prms.Add("clave_nueva", claveNueva);
-            prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
+            prms.Add("tipo_clave", tipoClave.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_CLAVE,
@@ -137,7 +137,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
-            prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
+            prms.Add("tipo_clave", tipoClave.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_REGISTRAR_CLAVE,
@@ -174,7 +174,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
-            prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
+            prms.Add("tipo_clave", tipoClave.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_CREDENCIALES,
