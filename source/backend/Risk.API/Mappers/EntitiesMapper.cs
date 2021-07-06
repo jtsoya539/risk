@@ -79,19 +79,6 @@ namespace Risk.API.Mappers
             return model;
         }
 
-        public static List<Dato> GetDatoListFromEntity(List<YDato> entityList)
-        {
-            List<Dato> modelList = new List<Dato>();
-            if (entityList != null)
-            {
-                foreach (var item in entityList)
-                {
-                    modelList.Add(GetDatoFromEntity(item));
-                }
-            }
-            return modelList;
-        }
-
         public static Respuesta<TModel> GetRespuestaFromEntity<TModel, TEntity>(YRespuesta<TEntity> entity, TModel datos)
         {
             return new Respuesta<TModel>

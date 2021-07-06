@@ -22,12 +22,25 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
+using Risk.API.Mappers;
+
 namespace Risk.API.Models
 {
-    public class PaginaParametros
+    public class PaginaParametros : IModel
     {
         public int? Pagina { get; set; }
         public int? PorPagina { get; set; }
         public bool NoPaginar { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            return new YPaginaParametros
+            {
+                Pagina = this.Pagina,
+                PorPagina = this.PorPagina,
+                NoPaginar = ModelsMapper.GetValueFromBool(this.NoPaginar)
+            };
+        }
     }
 }

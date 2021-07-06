@@ -68,7 +68,7 @@ namespace Risk.API.Entities
                 TokenNotificacion = this.TokenNotificacion,
                 PlataformaNotificacion = this.PlataformaNotificacion,
                 Plantillas = EntitiesMapper.GetModelListFromEntity<Plantilla, YPlantilla>(this.Plantillas),
-                Suscripciones = EntitiesMapper.GetDatoListFromEntity(this.Suscripciones)
+                Suscripciones = EntitiesMapper.GetModelListFromEntity<Dato, YDato>(this.Suscripciones)
             };
         }
     }

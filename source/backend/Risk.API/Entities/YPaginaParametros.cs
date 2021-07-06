@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YPaginaParametros
+    public class YPaginaParametros : IEntity
     {
         [JsonProperty("pagina")]
         public int? Pagina { get; set; }
@@ -34,5 +35,10 @@ namespace Risk.API.Entities
         public int? PorPagina { get; set; }
         [JsonProperty("no_paginar")]
         public string NoPaginar { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

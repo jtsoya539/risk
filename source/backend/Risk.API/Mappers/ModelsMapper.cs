@@ -61,55 +61,6 @@ namespace Risk.API.Mappers
             return entityList;
         }
 
-        public static YDato GetYDatoFromModel(Dato model)
-        {
-            YDato entity;
-            if (model == null)
-            {
-                entity = null;
-            }
-            else
-            {
-                entity = new YDato
-                {
-                    Contenido = model.Contenido
-                };
-            }
-            return entity;
-        }
-
-        public static List<YDato> GetYDatoListFromModel(List<Dato> modelList)
-        {
-            List<YDato> entityList = new List<YDato>();
-            if (modelList != null)
-            {
-                foreach (var item in modelList)
-                {
-                    entityList.Add(GetYDatoFromModel(item));
-                }
-            }
-            return entityList;
-        }
-
-        public static YPaginaParametros GetYPaginaParametrosFromModel(PaginaParametros model)
-        {
-            YPaginaParametros entity;
-            if (model == null)
-            {
-                entity = null;
-            }
-            else
-            {
-                entity = new YPaginaParametros
-                {
-                    Pagina = model.Pagina,
-                    PorPagina = model.PorPagina,
-                    NoPaginar = GetValueFromBool(model.NoPaginar)
-                };
-            }
-            return entity;
-        }
-
         public static string GetValueFromFormatoReporteEnum(FormatoReporte enumeration)
         {
             switch (enumeration)
