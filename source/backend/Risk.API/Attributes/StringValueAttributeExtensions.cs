@@ -22,21 +22,28 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Attributes;
-using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Reflection;
 
-namespace Risk.API.Models
+namespace Risk.API.Attributes
 {
-    [SwaggerSchema("Tipos de Operación")]
-    public enum TipoOperacion
+    // https://weblogs.asp.net/stefansedich/enum-with-string-values-in-c
+    public static class StringValueAttributeExtensions
     {
-        [StringValue("S")]
-        Servicio,
-        [StringValue("R")]
-        Reporte,
-        [StringValue("T")]
-        Trabajo,
-        [StringValue("P")]
-        Parametros
+        public static string GetStringValue(this Enum value)
+        {
+            // Get the type
+            Type type = value.GetType();
+
+            // Get fieldinfo for this type
+            FieldInfo fieldInfo = type.GetField(value.ToString());
+
+            // Get the stringvalue attributes
+            StringValueAttribute[] attribs = fieldInfo.GetCustomAttributes(
+                typeof(StringValueAttribute), false) as StringValueAttribute[];
+
+            // Return the first if there was a match.
+            return attribs.Length > 0 ? attribs[0].StringValue : null;
+        }
     }
 }

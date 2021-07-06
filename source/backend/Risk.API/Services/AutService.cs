@@ -27,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Risk.API.Attributes;
 using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Mappers;
@@ -69,7 +70,7 @@ namespace Risk.API.Services
             prms.Add("clave_nueva", claveNueva);
             prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_CLAVE,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -84,7 +85,7 @@ namespace Risk.API.Services
             prms.Add("access_token", accessToken);
             prms.Add("estado", ModelsMapper.GetValueFromEstadoSesionEnum(estado));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_ESTADO_SESION,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -103,7 +104,7 @@ namespace Risk.API.Services
             prms.Add("origen", ModelsMapper.GetValueFromOrigenSesionEnum(origen));
             prms.Add("dato_externo", datoExterno);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_INICIAR_SESION,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -122,7 +123,7 @@ namespace Risk.API.Services
             prms.Add("origen", ModelsMapper.GetValueFromOrigenSesionEnum(origen));
             prms.Add("dato_externo", datoExterno);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_REFRESCAR_SESION,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -138,7 +139,7 @@ namespace Risk.API.Services
             prms.Add("clave", clave);
             prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_REGISTRAR_CLAVE,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -159,7 +160,7 @@ namespace Risk.API.Services
             prms.Add("origen", ModelsMapper.GetValueFromOrigenSesionEnum(origen));
             prms.Add("id_externo", idExterno);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_REGISTRAR_USUARIO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -175,7 +176,7 @@ namespace Risk.API.Services
             prms.Add("clave", clave);
             prms.Add("tipo_clave", ModelsMapper.GetValueFromTipoClaveEnum(tipoClave));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_CREDENCIALES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -189,7 +190,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("access_token", accessToken);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_SESION,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -203,7 +204,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("usuario", usuario);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_DATOS_USUARIO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -217,7 +218,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_CLAVE_APLICACION,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -235,7 +236,7 @@ namespace Risk.API.Services
                 prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetEntityFromModel<Dispositivo, YDispositivo>(dispositivo)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_REGISTRAR_DISPOSITIVO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -249,7 +250,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("token_dispositivo", tokenDispositivo);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_DATOS_DISPOSITIVO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -265,7 +266,7 @@ namespace Risk.API.Services
             prms.Add("latitud", latitud);
             prms.Add("longitud", longitud);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_REGISTRAR_UBICACION,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -279,7 +280,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("tipo_token", ModelsMapper.GetValueFromTipoTokenEnum(tipoToken));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_TIEMPO_EXPIRACION_TOKEN,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -298,7 +299,7 @@ namespace Risk.API.Services
             prms.Add("direccion_correo", direccionCorreo);
             prms.Add("numero_telefono", numeroTelefono);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_EDITAR_USUARIO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -313,7 +314,7 @@ namespace Risk.API.Services
             prms.Add("usuario", usuario);
             prms.Add("estado", ModelsMapper.GetValueFromEstadoUsuarioEnum(estado));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_ESTADO_USUARIO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -328,7 +329,7 @@ namespace Risk.API.Services
             prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
             prms.Add("destino", destino);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_GENERAR_OTP,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -343,7 +344,7 @@ namespace Risk.API.Services
             prms.Add("secret", secret);
             prms.Add("otp", otp);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_OTP,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));

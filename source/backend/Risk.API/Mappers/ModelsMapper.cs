@@ -189,23 +189,6 @@ namespace Risk.API.Mappers
             }
         }
 
-        public static string GetValueFromTipoOperacionEnum(TipoOperacion enumeration)
-        {
-            switch (enumeration)
-            {
-                case TipoOperacion.Servicio:
-                    return "S";
-                case TipoOperacion.Reporte:
-                    return "R";
-                case TipoOperacion.Trabajo:
-                    return "T";
-                case TipoOperacion.Parametros:
-                    return "P";
-                default:
-                    return string.Empty;
-            }
-        }
-
         public static string GetValueFromTipoDispositivoEnum(TipoDispositivo enumeration)
         {
             switch (enumeration)

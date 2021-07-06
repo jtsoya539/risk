@@ -27,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Risk.API.Attributes;
 using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Mappers;
@@ -56,7 +57,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_MENSAJES_PENDIENTES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -79,7 +80,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_CORREOS_PENDIENTES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -102,7 +103,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_NOTIFICACIONES_PENDIENTES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -125,7 +126,7 @@ namespace Risk.API.Services
             prms.Add("estado", ModelsMapper.GetValueFromEstadoMensajeriaEnum(estado));
             prms.Add("respuesta_envio", respuestaEnvio);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_CAMBIAR_ESTADO_MENSAJERIA,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -140,7 +141,7 @@ namespace Risk.API.Services
             prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
             prms.Add("estado", ModelsMapper.GetValueFromBool(estado));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_ACTIVAR_DESACTIVAR_MENSAJERIA,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));

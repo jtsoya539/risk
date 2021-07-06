@@ -27,6 +27,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Risk.API.Attributes;
 using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Mappers;
@@ -61,7 +62,7 @@ namespace Risk.API.Services
         {
             JObject prms = new JObject();
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VERSION_SISTEMA,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -75,7 +76,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("servicio", servicio);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VERSION_SERVICIO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -89,7 +90,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("parametro", parametro);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALOR_PARAMETRO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -104,7 +105,7 @@ namespace Risk.API.Services
             prms.Add("dominio", dominio);
             prms.Add("codigo", codigo);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_SIGNIFICADO_CODIGO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -123,7 +124,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_SIGNIFICADOS,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -148,7 +149,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_PAISES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -174,7 +175,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_DEPARTAMENTOS,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -201,7 +202,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_CIUDADES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -229,7 +230,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_BARRIOS,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -254,7 +255,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_ERRORES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -280,7 +281,7 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_LISTAR_APLICACIONES,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -303,7 +304,7 @@ namespace Risk.API.Services
             prms.Add("referencia", referencia);
             prms.Add("version", version);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_RECUPERAR_ARCHIVO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -324,7 +325,7 @@ namespace Risk.API.Services
                 prms.Add("archivo", JToken.FromObject(ModelsMapper.GetEntityFromModel<Archivo, YArchivo>(archivo)));
             }
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_GUARDAR_ARCHIVO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -338,7 +339,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("referencia", referencia);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Servicio),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_RECUPERAR_TEXTO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -352,7 +353,7 @@ namespace Risk.API.Services
             JObject prms = new JObject();
             prms.Add("formato", ModelsMapper.GetValueFromFormatoReporteEnum(formato));
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Reporte),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Reporte.GetStringValue(),
                 NOMBRE_VERSION_SISTEMA,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
@@ -367,7 +368,7 @@ namespace Risk.API.Services
             prms.Add("formato", ModelsMapper.GetValueFromFormatoReporteEnum(formato));
             prms.Add("dominio", dominio);
 
-            string rsp = base.ProcesarOperacion(ModelsMapper.GetValueFromTipoOperacionEnum(TipoOperacion.Reporte),
+            string rsp = base.ProcesarOperacion(TipoOperacion.Reporte.GetStringValue(),
                 NOMBRE_LISTAR_SIGNIFICADOS,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
