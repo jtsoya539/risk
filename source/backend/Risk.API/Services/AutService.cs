@@ -101,7 +101,7 @@ namespace Risk.API.Services
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
             prms.Add("token_dispositivo", tokenDispositivo);
-            prms.Add("origen", ModelsMapper.GetValueFromOrigenSesionEnum(origen));
+            prms.Add("origen", origen.GetStringValue());
             prms.Add("dato_externo", datoExterno);
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
@@ -120,7 +120,7 @@ namespace Risk.API.Services
             prms.Add("refresh_token_antiguo", refreshTokenAntiguo);
             prms.Add("access_token_nuevo", accessTokenNuevo);
             prms.Add("refresh_token_nuevo", refreshTokenNuevo);
-            prms.Add("origen", ModelsMapper.GetValueFromOrigenSesionEnum(origen));
+            prms.Add("origen", origen.GetStringValue());
             prms.Add("dato_externo", datoExterno);
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
@@ -157,7 +157,7 @@ namespace Risk.API.Services
             prms.Add("apellido", apellido);
             prms.Add("direccion_correo", direccionCorreo);
             prms.Add("numero_telefono", numeroTelefono);
-            prms.Add("origen", ModelsMapper.GetValueFromOrigenSesionEnum(origen));
+            prms.Add("origen", origen.GetStringValue());
             prms.Add("id_externo", idExterno);
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
@@ -326,7 +326,7 @@ namespace Risk.API.Services
         public Respuesta<Dato> GenerarOtp(TipoMensajeria tipoMensajeria, string destino)
         {
             JObject prms = new JObject();
-            prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
+            prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());
             prms.Add("destino", destino);
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),

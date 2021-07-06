@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,8 +30,11 @@ namespace Risk.API.Models
     [SwaggerSchema("Origen de Sesión")]
     public enum OrigenSesion
     {
+        [StringValue("G")]
         Google,
+        [StringValue("F")]
         Facebook,
+        [StringValue("R")]
         Risk
     }
 }

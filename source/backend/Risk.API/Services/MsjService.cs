@@ -121,9 +121,9 @@ namespace Risk.API.Services
         public Respuesta<Dato> CambiarEstadoMensajeria(TipoMensajeria tipoMensajeria, int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
             JObject prms = new JObject();
-            prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
+            prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());
             prms.Add("id_mensajeria", idMensajeria);
-            prms.Add("estado", ModelsMapper.GetValueFromEstadoMensajeriaEnum(estado));
+            prms.Add("estado", estado.GetStringValue());
             prms.Add("respuesta_envio", respuestaEnvio);
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
@@ -138,7 +138,7 @@ namespace Risk.API.Services
         public Respuesta<Dato> ActivarDesactivarMensajeria(TipoMensajeria tipoMensajeria, bool estado)
         {
             JObject prms = new JObject();
-            prms.Add("tipo_mensajeria", ModelsMapper.GetValueFromTipoMensajeriaEnum(tipoMensajeria));
+            prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());
             prms.Add("estado", ModelsMapper.GetValueFromBool(estado));
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),

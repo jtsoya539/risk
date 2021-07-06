@@ -22,6 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
@@ -29,10 +30,15 @@ namespace Risk.API.Models
     [SwaggerSchema("Estados de Mensajería")]
     public enum EstadoMensajeria
     {
+        [StringValue("P")]
         Pendiente,
+        [StringValue("N")]
         EnProceso,
+        [StringValue("E")]
         Enviado,
+        [StringValue("R")]
         ProcesadoError,
+        [StringValue("A")]
         Anulado
     }
 }

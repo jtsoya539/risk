@@ -61,55 +61,6 @@ namespace Risk.API.Mappers
             return entityList;
         }
 
-        public static string GetValueFromOrigenSesionEnum(OrigenSesion? enumeration)
-        {
-            switch (enumeration)
-            {
-                case OrigenSesion.Google:
-                    return "G";
-                case OrigenSesion.Facebook:
-                    return "F";
-                case OrigenSesion.Risk:
-                    return "R";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        public static string GetValueFromTipoMensajeriaEnum(TipoMensajeria enumeration)
-        {
-            switch (enumeration)
-            {
-                case TipoMensajeria.Mail:
-                    return "M";
-                case TipoMensajeria.SMS:
-                    return "S";
-                case TipoMensajeria.Push:
-                    return "P";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        public static string GetValueFromEstadoMensajeriaEnum(EstadoMensajeria enumeration)
-        {
-            switch (enumeration)
-            {
-                case EstadoMensajeria.Pendiente:
-                    return "P";
-                case EstadoMensajeria.EnProceso:
-                    return "N";
-                case EstadoMensajeria.Enviado:
-                    return "E";
-                case EstadoMensajeria.ProcesadoError:
-                    return "R";
-                case EstadoMensajeria.Anulado:
-                    return "A";
-                default:
-                    return string.Empty;
-            }
-        }
-
         public static string GetValueFromTipoDispositivoEnum(TipoDispositivo enumeration)
         {
             switch (enumeration)
