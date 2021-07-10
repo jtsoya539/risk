@@ -68,7 +68,7 @@ namespace Risk.API.Entities
                 DireccionCorreo = this.DireccionCorreo,
                 NumeroTelefono = this.NumeroTelefono,
                 VersionAvatar = this.VersionAvatar,
-                Origen = string.IsNullOrEmpty(this.Origen) ? OrigenSesion.Risk : this.Origen.GetEnumValue<OrigenSesion>(),
+                Origen = this.Origen.GetEnumValue<OrigenSesion>(),
                 Roles = EntitiesMapper.GetModelListFromEntity<Rol, YRol>(this.Roles)
             };
         }

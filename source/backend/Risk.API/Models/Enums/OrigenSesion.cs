@@ -30,11 +30,11 @@ namespace Risk.API.Models
     [SwaggerSchema("Origen de Sesión")]
     public enum OrigenSesion
     {
+        [StringValue("R")]
+        Risk,
         [StringValue("G")]
         Google,
         [StringValue("F")]
-        Facebook,
-        [StringValue("R")]
-        Risk
+        Facebook
     }
 }
