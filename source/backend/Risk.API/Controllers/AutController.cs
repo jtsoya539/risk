@@ -418,9 +418,10 @@ namespace Risk.API.Controllers
         public IActionResult RefrescarSesionGoogle([FromBody] RefrescarSesionGoogleRequestBody requestBody)
         {
             // Obtener datos del JWT
+            string aliasUsuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
             UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
 
-            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _genService);
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, usuario.Origen, requestBody.IdToken);
             return ProcesarRespuesta(respuesta);
@@ -466,9 +467,10 @@ namespace Risk.API.Controllers
         public IActionResult RefrescarSesionFacebook([FromBody] RefrescarSesionFacebookRequestBody requestBody)
         {
             // Obtener datos del JWT
+            string aliasUsuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
             UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _genService);
 
-            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario.Alias, _autService, _genService);
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _genService);
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, usuario.Origen, requestBody.FbToken);
             return ProcesarRespuesta(respuesta);
