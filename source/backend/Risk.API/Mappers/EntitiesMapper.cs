@@ -63,6 +63,8 @@ namespace Risk.API.Mappers
         }
 
         public static Respuesta<TModel> GetRespuestaFromEntity<TModel, TEntity>(YRespuesta<TEntity> entity, TModel datos)
+            where TModel : IModel
+            where TEntity : IEntity
         {
             return new Respuesta<TModel>
             {
@@ -73,6 +75,8 @@ namespace Risk.API.Mappers
         }
 
         public static Pagina<TModel> GetPaginaFromEntity<TModel, TEntity>(YPagina<TEntity> entity, List<TModel> elementos)
+            where TModel : IModel
+            where TEntity : IEntity
         {
             return new Pagina<TModel>
             {

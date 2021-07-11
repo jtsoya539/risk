@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using System.Collections.Generic;
+using Risk.API.Entities;
 
 namespace Risk.API.Models
 {
-    public class Pagina<T>
+    public class Pagina<T> : IModel
     {
         public string PaginaActual { get; set; }
         public string PaginaSiguiente { get; set; }
@@ -35,5 +36,10 @@ namespace Risk.API.Models
         public string PaginaAnterior { get; set; }
         public int CantidadElementos { get; set; }
         public List<T> Elementos { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

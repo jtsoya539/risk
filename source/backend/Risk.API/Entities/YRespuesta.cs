@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Models;
 
 namespace Risk.API.Entities
 {
-    public class YRespuesta<T>
+    public class YRespuesta<T> : IEntity
     {
         [JsonProperty("codigo")]
         public string Codigo { get; set; }
@@ -38,5 +39,10 @@ namespace Risk.API.Entities
         public string Lugar { get; set; }
         [JsonProperty("datos")]
         public T Datos { get; set; }
+
+        public IModel ConvertToModel()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

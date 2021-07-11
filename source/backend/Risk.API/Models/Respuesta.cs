@@ -22,12 +22,13 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using Risk.API.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
     [SwaggerSchema("Respuesta de un servicio o proceso")]
-    public class Respuesta<T>
+    public class Respuesta<T> : IModel
     {
         [SwaggerSchema("Código de la respuesta")]
         public string Codigo { get; set; }
@@ -35,5 +36,10 @@ namespace Risk.API.Models
         public string Mensaje { get; set; }
         [SwaggerSchema("Datos adicionales")]
         public T Datos { get; set; }
+
+        public IEntity ConvertToEntity()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
