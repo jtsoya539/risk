@@ -1,0 +1,20 @@
+create table T_USUARIO_SUSCRIPCIONES
+(
+  id_usuario       NUMBER(10) not null,
+  suscripcion      VARCHAR2(120) not null,
+  fecha_expiracion DATE
+)
+;
+comment on table T_USUARIO_SUSCRIPCIONES
+  is 'Suscripciones de Usuarios para notificaciones push';
+comment on column T_USUARIO_SUSCRIPCIONES.id_usuario
+  is 'Identificador del usuario';
+comment on column T_USUARIO_SUSCRIPCIONES.suscripcion
+  is 'Tag de la suscripción';
+comment on column T_USUARIO_SUSCRIPCIONES.fecha_expiracion
+  is 'Fecha de expiración de la suscripción';
+alter table T_USUARIO_SUSCRIPCIONES
+  add constraint PK_USUARIO_SUSCRIPCIONES primary key (ID_USUARIO, SUSCRIPCION);
+alter table T_USUARIO_SUSCRIPCIONES
+  add constraint FK_USU_SUS_USUARIOS foreign key (ID_USUARIO)
+  references T_USUARIOS (ID_USUARIO);

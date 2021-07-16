@@ -114,6 +114,7 @@ drop table t_archivos cascade constraints;
 drop table t_archivo_definiciones cascade constraints;
 drop table t_datos cascade constraints;
 drop table t_dato_definiciones cascade constraints;
+drop table t_usuario_suscripciones cascade constraints;
 drop table t_usuario_claves cascade constraints;
 drop table t_sesiones cascade constraints;
 drop table t_dispositivo_ubicaciones cascade constraints;

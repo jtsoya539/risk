@@ -58,9 +58,32 @@ CREATE OR REPLACE PACKAGE k_usuario IS
   PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,
                              i_estado     IN VARCHAR2);
 
+  /**
+  Suscribe usuario a una notificación
+  
+  %author dmezac 15/7/2021 23:05:15
+  %param i_id_usuario Identificador del usuario
+  %param i_suscripcion_alta Suscripción a dar de alta
+  */
+  PROCEDURE p_suscribir_notificacion(i_id_usuario       IN NUMBER,
+                                     i_suscripcion_alta IN VARCHAR2);
+
+  /**
+  Desuscribe usuario de una notificación
+  
+  %author dmezac 15/7/2021 23:05:15
+  %param i_id_usuario Identificador del usuario
+  %param i_suscripcion_baja Suscripción a dar de baja
+  */
+  PROCEDURE p_desuscribir_notificacion(i_id_usuario       IN NUMBER,
+                                       i_suscripcion_baja IN VARCHAR2);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_usuario IS
+
+  -- Tiempo de expiración de la suscripción en días
+  c_tiempo_expiracion_suscripcion CONSTANT PLS_INTEGER := 30;
 
   FUNCTION f_buscar_id(i_usuario IN VARCHAR2) RETURN NUMBER IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
@@ -320,6 +343,35 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
           NULL;
       END;
     END IF;
+  END;
+
+  PROCEDURE p_suscribir_notificacion(i_id_usuario       IN NUMBER,
+                                     i_suscripcion_alta IN VARCHAR2) IS
+  BEGIN
+    -- Actualiza suscripción
+    UPDATE t_usuario_suscripciones s
+       SET s.suscripcion      = lower(i_suscripcion_alta),
+           s.fecha_expiracion = SYSDATE + c_tiempo_expiracion_suscripcion
+     WHERE s.id_usuario = i_id_usuario
+       AND lower(s.suscripcion) = lower(i_suscripcion_alta);
+  
+    IF SQL%NOTFOUND THEN
+      -- Inserta suscripción
+      INSERT INTO t_usuario_suscripciones
+        (id_usuario, suscripcion, fecha_expiracion)
+      VALUES
+        (i_id_usuario,
+         lower(i_suscripcion_alta),
+         SYSDATE + c_tiempo_expiracion_suscripcion);
+    END IF;
+  END;
+
+  PROCEDURE p_desuscribir_notificacion(i_id_usuario       IN NUMBER,
+                                       i_suscripcion_baja IN VARCHAR2) IS
+  BEGIN
+    DELETE t_usuario_suscripciones s
+     WHERE s.id_usuario = i_id_usuario
+       AND lower(s.suscripcion) = lower(i_suscripcion_baja);
   END;
 
 END;
