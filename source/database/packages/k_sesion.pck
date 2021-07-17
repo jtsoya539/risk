@@ -44,6 +44,8 @@ CREATE OR REPLACE PACKAGE k_sesion IS
 
   FUNCTION f_datos_sesion(i_id_sesion IN NUMBER) RETURN y_sesion;
 
+  FUNCTION f_dispositivo_sesion(i_id_sesion IN NUMBER) RETURN VARCHAR2;
+
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                      i_tipo_token    IN VARCHAR2)
     RETURN NUMBER;
@@ -129,6 +131,26 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
     RETURN l_sesion;
   END;
 
+  FUNCTION f_dispositivo_sesion(i_id_sesion IN NUMBER) RETURN VARCHAR2 IS
+    l_id_dispositivo t_sesiones.id_dispositivo%TYPE;
+  BEGIN
+    -- Buscando datos de la sesion
+    BEGIN
+      SELECT id_dispositivo
+        INTO l_id_dispositivo
+        FROM t_sesiones
+       WHERE id_sesion = i_id_sesion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        raise_application_error(-20000, 'Sesión inexistente');
+      WHEN OTHERS THEN
+        raise_application_error(-20000,
+                                'Error al buscar datos de la sesión');
+    END;
+  
+    RETURN l_id_dispositivo;
+  END;
+
   FUNCTION f_tiempo_expiracion_token(i_id_aplicacion IN VARCHAR2,
                                      i_tipo_token    IN VARCHAR2)
     RETURN NUMBER IS
@@ -207,10 +229,13 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
 
   PROCEDURE p_cambiar_estado(i_access_token IN VARCHAR2,
                              i_estado       IN VARCHAR2) IS
-    l_id_sesion t_sesiones.id_sesion%TYPE;
+    l_id_sesion      t_sesiones.id_sesion%TYPE;
+    l_id_dispositivo t_sesiones.id_dispositivo%TYPE;
+    l_id_usuario     t_usuarios.id_usuario%TYPE;
   BEGIN
     -- Busca sesion
-    l_id_sesion := f_id_sesion(i_access_token);
+    l_id_sesion      := f_id_sesion(i_access_token);
+    l_id_dispositivo := f_dispositivo_sesion(l_id_sesion);
   
     IF l_id_sesion IS NULL THEN
       RAISE ex_sesion_inexistente;
@@ -220,7 +245,13 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
     UPDATE t_sesiones
        SET estado = i_estado
      WHERE id_sesion = l_id_sesion
-       AND estado <> i_estado;
+       AND estado <> i_estado
+    RETURNING id_usuario INTO l_id_usuario;
+  
+    IF l_id_usuario IS NOT NULL AND i_estado IN ('X', 'I', 'F') THEN
+      k_dispositivo.p_desuscribir_notificacion_usuario(l_id_dispositivo,
+                                                       l_id_usuario);
+    END IF;
   EXCEPTION
     WHEN ex_sesion_inexistente THEN
       /*raise_application_error(-20000, 'Sesion inexistente');*/
