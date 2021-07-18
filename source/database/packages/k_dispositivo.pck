@@ -65,6 +65,16 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   PROCEDURE p_suscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
                                        i_suscripcion_alta IN VARCHAR2);
 
+  /**
+  Suscribe el dispositivo a las notificaciones de un usuario
+  
+  %author dmezac 15/7/2021 23:30:15
+  %param i_id_dispositivo Identificador del dispositivo
+  %param i_id_usuario Identificador del usuario
+  */
+  PROCEDURE p_suscribir_notificacion_usuario(i_id_dispositivo IN NUMBER,
+                                             i_id_usuario     IN NUMBER);
+
   PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                        i_suscripcion_baja IN VARCHAR2);
 
@@ -77,6 +87,16 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   */
   PROCEDURE p_desuscribir_notificacion_s(i_suscripcion      IN VARCHAR2,
                                          i_suscripcion_baja IN VARCHAR2);
+
+  /**
+  Desuscribe el dispositivo de las notificaciones de un usuario
+  
+  %author dmezac 15/7/2021 23:30:15
+  %param i_id_dispositivo Identificador del dispositivo
+  %param i_id_usuario Identificador del usuario
+  */
+  PROCEDURE p_desuscribir_notificacion_usuario(i_id_dispositivo IN NUMBER,
+                                               i_id_usuario     IN NUMBER);
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
                                   i_latitud        IN NUMBER,
@@ -309,6 +329,21 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     END LOOP;
   END;
 
+  PROCEDURE p_suscribir_notificacion_usuario(i_id_dispositivo IN NUMBER,
+                                             i_id_usuario     IN NUMBER) IS
+  BEGIN
+    -- Inserta suscripción de dispositivo a partir de un usuario
+    INSERT INTO t_dispositivo_suscripciones
+      (id_dispositivo, suscripcion, fecha_expiracion)
+      SELECT i_id_dispositivo, us.suscripcion, us.fecha_expiracion
+        FROM t_usuario_suscripciones us
+       WHERE us.id_usuario = i_id_usuario
+         AND us.suscripcion NOT IN
+             (SELECT ds.suscripcion
+                FROM t_dispositivo_suscripciones ds
+               WHERE ds.id_dispositivo = i_id_dispositivo);
+  END;
+
   PROCEDURE p_desuscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                        i_suscripcion_baja IN VARCHAR2) IS
   BEGIN
@@ -328,6 +363,18 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     FOR c IN cr_dispositivos(i_suscripcion) LOOP
       p_desuscribir_notificacion(c.id_dispositivo, i_suscripcion_baja);
     END LOOP;
+  END;
+
+  PROCEDURE p_desuscribir_notificacion_usuario(i_id_dispositivo IN NUMBER,
+                                               i_id_usuario     IN NUMBER) IS
+  BEGIN
+    -- Elimina suscripción a dispositivo de un usuario
+    DELETE FROM t_dispositivo_suscripciones ds
+     WHERE ds.id_dispositivo = i_id_dispositivo
+       AND ds.suscripcion IN
+           (SELECT us.suscripcion
+              FROM t_usuario_suscripciones us
+             WHERE us.id_usuario = i_id_usuario);
   END;
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,

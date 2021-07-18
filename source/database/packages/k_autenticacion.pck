@@ -486,6 +486,10 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       p_registrar_clave(l_alias, i_clave, c_clave_acceso);
     END IF;
   
+    -- Inserta o actualiza suscripción básica del usuario
+    k_usuario.p_suscribir_notificacion(l_id_usuario,
+                                       k_dispositivo.f_suscripcion_usuario(l_id_usuario));
+  
     $if k_modulo.c_instalado_msj $then
     IF l_confirmacion_activa = 'S' THEN
       -- Envía correo de verificación
@@ -937,9 +941,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     RETURNING id_sesion INTO l_id_sesion;
   
     IF l_id_dispositivo IS NOT NULL THEN
-      -- Inserta o actualiza una suscripción por el usuario en el dispositivo
-      k_dispositivo.p_suscribir_notificacion(l_id_dispositivo,
-                                             k_dispositivo.f_suscripcion_usuario(l_id_usuario));
+      -- Inserta o actualiza suscripciones del usuario en el dispositivo
+      k_dispositivo.p_suscribir_notificacion_usuario(l_id_dispositivo,
+                                                     l_id_usuario);
     END IF;
   
     RETURN l_id_sesion;
