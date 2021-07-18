@@ -95,6 +95,7 @@ plugin plsqldoc generate t_significados;
 plugin plsqldoc generate t_trabajos;
 plugin plsqldoc generate t_usuario_claves;
 plugin plsqldoc generate t_usuarios;
+plugin plsqldoc generate t_usuario_suscripciones;
 
 prompt
 prompt Generando docs de vistas...
