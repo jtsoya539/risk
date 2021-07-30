@@ -33,13 +33,17 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
+using Risk.API.Attributes;
 using Risk.API.Exceptions;
 using Risk.API.Helpers;
+using Risk.API.Models;
 
 namespace Risk.API.Services
 {
     public class RiskServiceBase
     {
+        protected JObject prms;
+        protected JObject rsp;
         protected readonly ILogger<RiskServiceBase> _logger;
         protected readonly IConfiguration _configuration;
         protected readonly IHttpContextAccessor _httpContextAccessor;
@@ -209,6 +213,12 @@ namespace Risk.API.Services
                 }
             }
             return respuesta;
+        }
+
+        protected JObject ProcesarOperacion(TipoOperacion tipo, string nombre, string dominio, JObject parametros)
+        {
+            string respuesta = ProcesarOperacion(tipo.GetStringValue(), nombre, dominio, parametros.ToString(Formatting.None));
+            return JObject.Parse(respuesta);
         }
     }
 }
