@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   23:38 Sunday June 6, 2021
+--   Date and Time:   00:03 Sunday August 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -122,7 +122,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210606233612'
+,p_last_upd_yyyymmddhh24miss=>'20210801000110'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -1496,7 +1496,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'hGbNxRzyEEY3pPDVZ2fBtnNfEyvGso0XzLsDoFCa5u4='
+,p_value=>'lgzPPa7iA8tliOBKkr9NsRNgpOOuZFDBBY0mHZbtWyo='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -12033,7 +12033,9 @@ wwv_flow_api.create_plugin(
 '  RETURN apex_plugin.t_authentication_inval_result IS',
 '  l_result apex_plugin.t_authentication_inval_result;',
 'BEGIN',
-unistr('  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''I''); -- INV\00C1LIDO'),
+'  IF k_sesion.f_validar_sesion(to_char(p_authentication.session_id)) THEN',
+unistr('    k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''I''); -- INV\00C1LIDO'),
+'  END IF;',
 '',
 '  l_result.redirect_url := p_authentication.invalid_session_url;',
 '',
@@ -12083,7 +12085,9 @@ unistr('    l_result.display_text := ''Credenciales inv\00E1lidas'';'),
 '  RETURN apex_plugin.t_authentication_logout_result IS',
 '  l_result apex_plugin.t_authentication_logout_result;',
 'BEGIN',
-'  k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''F''); -- FINALIZADO',
+'  IF k_sesion.f_validar_sesion(to_char(p_authentication.session_id)) THEN',
+'    k_sesion.p_cambiar_estado(to_char(p_authentication.session_id), ''F''); -- FINALIZADO',
+'  END IF;',
 '',
 '  l_result.redirect_url := p_authentication.logout_url;',
 '',
