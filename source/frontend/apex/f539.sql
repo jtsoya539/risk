@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   20:29 Sunday August 1, 2021
+--   Date and Time:   20:37 Sunday August 1, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -122,7 +122,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210801202850'
+,p_last_upd_yyyymmddhh24miss=>'20210801203541'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -167,7 +167,8 @@ wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(94810042862668741)
 ,p_list_item_display_sequence=>40
 ,p_list_item_link_text=>'Significados'
-,p_list_item_link_target=>'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_link_target=>'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-book'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'6,7'
 );
@@ -175,7 +176,8 @@ wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(95000344933744024)
 ,p_list_item_display_sequence=>50
 ,p_list_item_link_text=>unistr('M\00F3dulos')
-,p_list_item_link_target=>'f?p=&APP_ID.:8:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_link_target=>'f?p=&APP_ID.:8:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-cubes'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'8'
 );
@@ -1530,7 +1532,7 @@ begin
 wwv_flow_api.create_app_setting(
  p_id=>wwv_flow_api.id(72100223987977625)
 ,p_name=>'RISK_APP_KEY'
-,p_value=>'ihmUX+NA/JeSa4PdIsubZJKtOv60Br2bjeHeagNj4OM='
+,p_value=>'1uMTX7IpUDIuEpWDjHAKHLhNVR4+5uH7jTSFar3XiiY='
 ,p_is_required=>'N'
 ,p_comments=>unistr('Clave de la aplicaci\00F3n habilitada para consumir servicios')
 );
@@ -13135,8 +13137,8 @@ wwv_flow_api.create_page(
 ,p_autocomplete_on_off=>'OFF'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
-,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210801201623'
+,p_last_updated_by=>'DEMOUSER'
+,p_last_upd_yyyymmddhh24miss=>'20210801203157'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(94807521006668718)
@@ -13211,6 +13213,15 @@ wwv_flow_api.create_worksheet_column(
 ,p_column_type=>'STRING'
 ,p_heading_alignment=>'LEFT'
 ,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_rpt(
+ p_id=>wwv_flow_api.id(95300533450770058)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'953006'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_report_columns=>'DOMINIO:CODIGO:SIGNIFICADO:REFERENCIA:ACTIVO'
 );
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(94810826220668762)
