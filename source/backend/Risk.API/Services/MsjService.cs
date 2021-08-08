@@ -51,17 +51,14 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             if (paginaParametros != null)
             {
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_MENSAJES_PENDIENTES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YMensaje>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_MENSAJES_PENDIENTES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YMensaje>>>();
 
             Pagina<Mensaje> datos = null;
             if (entityRsp.Datos != null)
@@ -74,17 +71,14 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Correo>> ListarCorreosPendientes(PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             if (paginaParametros != null)
             {
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_CORREOS_PENDIENTES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCorreo>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_CORREOS_PENDIENTES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YCorreo>>>();
 
             Pagina<Correo> datos = null;
             if (entityRsp.Datos != null)
@@ -97,17 +91,14 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Notificacion>> ListarNotificacionesPendientes(PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             if (paginaParametros != null)
             {
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_NOTIFICACIONES_PENDIENTES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YNotificacion>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_NOTIFICACIONES_PENDIENTES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YNotificacion>>>();
 
             Pagina<Notificacion> datos = null;
             if (entityRsp.Datos != null)
@@ -120,32 +111,26 @@ namespace Risk.API.Services
 
         public Respuesta<Dato> CambiarEstadoMensajeria(TipoMensajeria tipoMensajeria, int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());
             prms.Add("id_mensajeria", idMensajeria);
             prms.Add("estado", estado.GetStringValue());
             prms.Add("respuesta_envio", respuestaEnvio);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_CAMBIAR_ESTADO_MENSAJERIA,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_CAMBIAR_ESTADO_MENSAJERIA, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ActivarDesactivarMensajeria(TipoMensajeria tipoMensajeria, bool estado)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());
             prms.Add("estado", ModelsMapper.GetValueFromBool(estado));
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_ACTIVAR_DESACTIVAR_MENSAJERIA,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_ACTIVAR_DESACTIVAR_MENSAJERIA, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
