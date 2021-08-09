@@ -257,7 +257,7 @@ begin
   l_clob(6) :=q'!S!';
   l_clob(7) :=q'!!';
   l_varchar2(8) :=q'!!';
-  l_clob(9) :=q'!S!';
+  l_clob(9) :=q'!N!';
   l_clob(10) :=q'!!';
   l_clob(11) :=q'!!';
   l_clob(12) :=q'!!';

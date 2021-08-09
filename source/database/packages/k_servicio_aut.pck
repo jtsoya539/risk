@@ -117,11 +117,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                          'apellido') IS NOT NULL,
                                     'Debe ingresar apellido');
   
-    k_operacion.p_validar_parametro(l_rsp,
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'direccion_correo') IS NOT NULL,
-                                    'Debe ingresar direccion_correo');
-  
     l_rsp.lugar      := 'Registrando usuario';
     l_dato.contenido := k_autenticacion.f_registrar_usuario(k_operacion.f_valor_parametro_string(i_parametros,
                                                                                                  'usuario'),
