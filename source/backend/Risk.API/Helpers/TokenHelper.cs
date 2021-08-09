@@ -254,13 +254,20 @@ namespace Risk.API.Helpers
 
                     // Obtenemos datos recibidos del usuario en la respuesta del Graph de facebook
                     string idExterno = jsonRes["id"].ToString();
+                    string nombreCompleto = jsonRes["name"].ToString();
                     string nombre = jsonRes["first_name"].ToString();
                     string apellido = jsonRes["last_name"].ToString();
-                    string direccionCorreo = jsonRes["email"].ToString();
 
-                    MailAddress addr = new MailAddress(direccionCorreo);
-                    string username = addr.User;
-                    string domain = addr.Host;
+                    string direccionCorreo = "";
+                    string username, domain;
+                    if (jsonRes["email"] != null) {
+                        direccionCorreo = jsonRes["email"].ToString();
+                        MailAddress addr = new MailAddress(direccionCorreo);
+                        username = addr.User;
+                        domain = addr.Host;
+                    } else {
+                        username = $"{nombre}_{apellido}".Replace(' ', '_').ToLower();
+                    }
 
                     usuario = new UsuarioExterno
                     {
@@ -275,7 +282,7 @@ namespace Risk.API.Helpers
             }
             catch (Exception e)
             {
-                throw new SecurityTokenValidationException("Token no válido.", e);
+                throw new SecurityTokenValidationException($"Token no válido: {accessToken}.", e);
             }
 
             return usuario;

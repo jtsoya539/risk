@@ -405,12 +405,16 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         RAISE k_usuario.ex_usuario_existente;
       END IF;
     
-      SELECT i_alias ||
+      l_alias := translate(l_alias,
+                           'áéíóúàèìòùäëïöüñÁÉÍÓÚİÄËÏÖÜÀÈÌÒÙÑ'' ',
+                           'aeiouaeiouaeiounAEIOUYAEIOUAEIOUN__');
+    
+      SELECT l_alias ||
              to_char(MAX(to_number(nvl(regexp_substr(a.alias, '\d+'), '0'))) + 1) alias
         INTO l_alias
         FROM t_usuarios a
-       WHERE (upper(a.alias) = upper(i_alias) OR
-             regexp_like(a.alias, '(' || i_alias || ')\d+', 'i'));
+       WHERE (upper(a.alias) = upper(l_alias) OR
+             regexp_like(a.alias, '(' || l_alias || ')\d+', 'i'));
     END IF;
   
     -- Valida clave
