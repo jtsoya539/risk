@@ -30,7 +30,18 @@ BEGIN
   IF inserting OR
      (updating AND nvl(:new.alias, 'X') <> nvl(:old.alias, 'X')) THEN
     IF NOT k_usuario.f_validar_alias(:new.alias) THEN
-      raise_application_error(-20000, 'Alias de usuario inválido');
+      IF nvl(:new.origen, k_autenticacion.c_origen_risk) =
+         k_autenticacion.c_origen_risk THEN
+        raise_application_error(-20000,
+                                'Caracteres no permitidos en el Usuario: ' ||
+                                regexp_replace(:new.alias,
+                                               TRIM(translate(k_util.f_valor_parametro('REGEXP_VALIDAR_ALIAS_USUARIO'),
+                                                              '^$',
+                                                              '  ')),
+                                               ''));
+      ELSE
+        raise_application_error(-20000, 'Alias de usuario inválido');
+      END IF;
     END IF;
   END IF;
 
