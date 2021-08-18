@@ -9,7 +9,8 @@ create table T_APLICACIONES
   version_actual                  VARCHAR2(100),
   tiempo_expiracion_access_token  NUMBER(6),
   tiempo_expiracion_refresh_token NUMBER(6),
-  plataforma_notificacion         VARCHAR2(10)
+  plataforma_notificacion         VARCHAR2(10),
+  version_minima                  VARCHAR2(100)
 )
 ;
 comment on table T_APLICACIONES
@@ -34,8 +35,11 @@ comment on column T_APLICACIONES.tiempo_expiracion_refresh_token
   is 'Tiempo de expiración del Refresh Token en horas';
 comment on column T_APLICACIONES.plataforma_notificacion
   is 'Plataforma para las notificaciones push de la aplicación';
+comment on column T_APLICACIONES.version_minima
+  is 'Version minima de la aplicacion';
 alter table T_APLICACIONES
   add constraint PK_APLICACIONES primary key (ID_APLICACION);
 alter table T_APLICACIONES
   add constraint CK_APLICACIONES_ACTIVO
   check (ACTIVO IN ('S', 'N'));
+

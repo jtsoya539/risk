@@ -9,7 +9,8 @@ create table T_DISPOSITIVOS
   tipo                      VARCHAR2(1),
   nombre_navegador          VARCHAR2(100),
   version_navegador         VARCHAR2(100),
-  token_notificacion        VARCHAR2(500)
+  token_notificacion        VARCHAR2(500),
+  version_aplicacion        VARCHAR2(100)
 )
 ;
 comment on table T_DISPOSITIVOS
@@ -34,6 +35,8 @@ comment on column T_DISPOSITIVOS.version_navegador
   is 'Version del navegador';
 comment on column T_DISPOSITIVOS.token_notificacion
   is 'Token de notificacion del dispositivo';
+comment on column T_DISPOSITIVOS.version_aplicacion
+  is 'Version de la aplicacion';
 alter table T_DISPOSITIVOS
   add constraint PK_DISPOSITIVOS primary key (ID_DISPOSITIVO);
 alter table T_DISPOSITIVOS
