@@ -772,19 +772,19 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_SERVICIOS');
-    l_insert  := fn_gen_inserts('SELECT * FROM t_servicios WHERE id_servicio = ' ||
+    l_insert  := fn_gen_inserts('SELECT id_servicio, tipo, consulta_sql FROM t_servicios WHERE id_servicio = ' ||
                                 to_char(i_id_operacion),
                                 't_servicios');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_REPORTES');
-    l_insert  := fn_gen_inserts('SELECT * FROM t_reportes WHERE id_reporte = ' ||
+    l_insert  := fn_gen_inserts('SELECT id_reporte, tipo, consulta_sql FROM t_reportes WHERE id_reporte = ' ||
                                 to_char(i_id_operacion),
                                 't_reportes');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_TRABAJOS');
-    l_insert  := fn_gen_inserts('SELECT * FROM t_trabajos WHERE id_trabajo = ' ||
+    l_insert  := fn_gen_inserts('SELECT id_trabajo, tipo, accion, fecha_inicio, tiempo_inicio, intervalo_repeticion, fecha_fin, comentarios FROM t_trabajos WHERE id_trabajo = ' ||
                                 to_char(i_id_operacion),
                                 't_trabajos');
     l_inserts := l_inserts || l_insert;
