@@ -421,7 +421,20 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
           END IF;
         
           IF par.encriptado = 'S' THEN
-            l_parametro.valor := anydata.convertvarchar2(k_util.decrypt(l_json_object.get_string(par.nombre)));
+            BEGIN
+              l_parametro.valor := anydata.convertvarchar2(k_util.decrypt(l_json_object.get_string(par.nombre)));
+            EXCEPTION
+              WHEN value_error THEN
+                raise_application_error(-20000,
+                                        k_error.f_mensaje_error('ora0008',
+                                                                nvl(par.etiqueta,
+                                                                    par.nombre)));
+              WHEN OTHERS THEN
+                raise_application_error(-20000,
+                                        k_error.f_mensaje_error('ora0009',
+                                                                nvl(par.etiqueta,
+                                                                    par.nombre)));
+            END;
           ELSE
             l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
           END IF;

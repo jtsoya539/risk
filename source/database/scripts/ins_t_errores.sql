@@ -1,7 +1,6 @@
 prompt Importing table t_errores...
 set feedback off
 set define off
-
 insert into t_errores (ID_ERROR, MENSAJE, ID_DOMINIO)
 values ('ora0001', 'Valor no permitido', 'API');
 
@@ -22,6 +21,12 @@ values ('ora0006', 'Longitud del parámetro @1@ no debe ser superior a @2@', 'API
 
 insert into t_errores (ID_ERROR, MENSAJE, ID_DOMINIO)
 values ('ora0007', 'Valor del parámetro @1@ no permitido', 'API');
+
+insert into t_errores (ID_ERROR, MENSAJE, ID_DOMINIO)
+values ('ora0008', 'Valor del parámetro @1@ debe estar encriptado', 'API');
+
+insert into t_errores (ID_ERROR, MENSAJE, ID_DOMINIO)
+values ('ora0009', 'Error al desencriptar valor del parámetro @1@', 'API');
 
 insert into t_errores (ID_ERROR, MENSAJE, ID_DOMINIO)
 values ('ser0002', 'Error al procesar parámetros del servicio', 'API');
