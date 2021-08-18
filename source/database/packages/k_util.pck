@@ -762,14 +762,14 @@ END;';
   BEGIN
     RETURN rawtohex(dbms_crypto.encrypt(src => utl_i18n.string_to_raw(i_src,
                                                                       'AL32UTF8'),
-                                        typ => dbms_crypto.des_cbc_pkcs5,
+                                        typ => dbms_crypto.aes_cbc_pkcs5,
                                         key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))));
   END;
 
   FUNCTION decrypt(i_src IN VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN utl_i18n.raw_to_char(dbms_crypto.decrypt(src => hextoraw(i_src),
-                                                    typ => dbms_crypto.des_cbc_pkcs5,
+                                                    typ => dbms_crypto.aes_cbc_pkcs5,
                                                     key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))),
                                 'AL32UTF8');
   END;

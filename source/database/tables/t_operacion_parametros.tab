@@ -12,7 +12,8 @@ create table T_OPERACION_PARAMETROS
   valor_defecto    VARCHAR2(1000),
   etiqueta         VARCHAR2(2000),
   detalle          VARCHAR2(4000),
-  valores_posibles VARCHAR2(50)
+  valores_posibles VARCHAR2(50),
+  encriptado       VARCHAR2(1) default 'N' not null
 )
 ;
 comment on table T_OPERACION_PARAMETROS
@@ -43,6 +44,8 @@ comment on column T_OPERACION_PARAMETROS.detalle
   is 'Detalles adicionales del parámetro';
 comment on column T_OPERACION_PARAMETROS.valores_posibles
   is 'Valores posibles. Dominio definido en tabla de significados';
+comment on column T_OPERACION_PARAMETROS.encriptado
+  is 'El valor del parámetro es encriptado? (S/N)';
 alter table T_OPERACION_PARAMETROS
   add constraint PK_OPERACION_PARAMETROS primary key (ID_OPERACION, NOMBRE, VERSION);
 alter table T_OPERACION_PARAMETROS
@@ -54,8 +57,14 @@ alter table T_OPERACION_PARAMETROS
   add constraint CK_OPE_PAR_ACTIVO
   check (ACTIVO IN ('S', 'N'));
 alter table T_OPERACION_PARAMETROS
+  add constraint CK_OPE_PAR_ENCRIPTADO
+  check (ENCRIPTADO IN ('S', 'N'));
+alter table T_OPERACION_PARAMETROS
   add constraint CK_OPE_PAR_OBLIGATORIO
   check (OBLIGATORIO IN ('S', 'N'));
+alter table T_OPERACION_PARAMETROS
+  add constraint CK_OPE_PAR_TIP_DAT_ENCRIPTADO
+  check (ENCRIPTADO = 'N' OR (ENCRIPTADO = 'S' AND TIPO_DATO = 'S'));
 alter table T_OPERACION_PARAMETROS
   add constraint CK_OPE_PAR_TIP_DAT_LON_MAXIMA
   check (LONGITUD_MAXIMA IS NULL OR (LONGITUD_MAXIMA IS NOT NULL AND TIPO_DATO IN ('S', 'N')));

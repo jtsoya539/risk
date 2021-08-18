@@ -343,7 +343,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
              op.valor_defecto,
              op.etiqueta,
              op.detalle,
-             op.valores_posibles
+             op.valores_posibles,
+             op.encriptado
         FROM t_operacion_parametros op, t_operaciones o
        WHERE o.id_operacion = op.id_operacion
          AND op.activo = 'S'
@@ -362,7 +363,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
              op.valor_defecto,
              op.etiqueta,
              op.detalle,
-             op.valores_posibles
+             op.valores_posibles,
+             op.encriptado
         FROM t_operacion_parametros op
        WHERE op.activo = 'S'
          AND op.id_operacion = c_id_ope_par_automaticos
@@ -418,7 +420,11 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                                                 par.nombre)));
           END IF;
         
-          l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
+          IF par.encriptado = 'S' THEN
+            l_parametro.valor := anydata.convertvarchar2(k_util.decrypt(l_json_object.get_string(par.nombre)));
+          ELSE
+            l_parametro.valor := anydata.convertvarchar2(l_json_object.get_string(par.nombre));
+          END IF;
           IF l_parametro.valor.accessvarchar2 IS NULL AND
              par.valor_defecto IS NOT NULL THEN
             l_parametro.valor := anydata.convertvarchar2(par.valor_defecto);
