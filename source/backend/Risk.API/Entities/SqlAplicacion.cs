@@ -42,6 +42,8 @@ namespace Risk.API.Entities
         public string Detalle { get; set; }
         [JsonProperty("version_actual")]
         public string VersionActual { get; set; }
+        [JsonProperty("version_minima")]
+        public string VersionMinima { get; set; }
 
         public IModel ConvertToModel()
         {
@@ -52,7 +54,8 @@ namespace Risk.API.Entities
                 Tipo = this.Tipo,
                 Activo = EntitiesMapper.GetBoolFromValue(this.Activo),
                 Detalle = this.Detalle,
-                VersionActual = this.VersionActual
+                VersionActual = this.VersionActual,
+                VersionMinima = this.VersionMinima
             };
         }
     }

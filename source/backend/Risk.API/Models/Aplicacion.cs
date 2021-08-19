@@ -42,6 +42,8 @@ namespace Risk.API.Models
         public string Detalle { get; set; }
         [SwaggerSchema("Version actual de la aplicacion")]
         public string VersionActual { get; set; }
+        [SwaggerSchema("Version minima de la aplicacion")]
+        public string VersionMinima { get; set; }
 
         public IEntity ConvertToEntity()
         {
