@@ -48,6 +48,8 @@ SOFTWARE.
   token_notificacion VARCHAR2(500),
 /** Plataforma para las notificaciones push de la aplicación */
   plataforma_notificacion VARCHAR2(10),
+/** Version de la aplicacion */
+  version_aplicacion VARCHAR2(100),
 /** Plantillas para las notificaciones push de la aplicación */
   plantillas y_datos,
 /** Suscripciones para notificaciones push del dispositivo */
@@ -85,6 +87,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     self.version_navegador         := NULL;
     self.token_notificacion        := NULL;
     self.plataforma_notificacion   := NULL;
+    self.version_aplicacion        := NULL;
     self.plantillas                := NEW y_datos();
     self.suscripciones             := NEW y_datos();
     RETURN;
@@ -110,6 +113,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_dispositivo.version_navegador         := l_json_object.get_string('version_navegador');
     l_dispositivo.token_notificacion        := l_json_object.get_string('token_notificacion');
     l_dispositivo.plataforma_notificacion   := l_json_object.get_string('plataforma_notificacion');
+    l_dispositivo.version_aplicacion        := l_json_object.get_string('version_aplicacion');
   
     l_json_array := l_json_object.get_array('plantillas');
   
@@ -164,6 +168,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_json_object.put('token_notificacion', self.token_notificacion);
     l_json_object.put('plataforma_notificacion',
                       self.plataforma_notificacion);
+    l_json_object.put('version_aplicacion', self.version_aplicacion);
   
     IF self.plantillas IS NULL THEN
       l_json_object.put_null('plantillas');
@@ -183,8 +188,7 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
       l_json_array := NEW json_array_t();
       i            := self.suscripciones.first;
       WHILE i IS NOT NULL LOOP
-        l_json_array.append(json_object_t.parse(self.suscripciones(i)
-                                                .to_json));
+        l_json_array.append(json_object_t.parse(self.suscripciones(i).to_json));
         i := self.suscripciones.next(i);
       END LOOP;
       l_json_object.put('suscripciones', l_json_array);

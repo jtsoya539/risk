@@ -50,6 +50,8 @@ namespace Risk.API.Entities
         public string TokenNotificacion { get; set; }
         [JsonProperty("plataforma_notificacion")]
         public string PlataformaNotificacion { get; set; }
+        [JsonProperty("version_aplicacion")]
+        public string VersionAplicacion { get; set; }
         [JsonProperty("plantillas")]
         public List<YPlantilla> Plantillas { get; set; }
         [JsonProperty("suscripciones")]
@@ -68,6 +70,7 @@ namespace Risk.API.Entities
                 VersionNavegador = this.VersionNavegador,
                 TokenNotificacion = this.TokenNotificacion,
                 PlataformaNotificacion = this.PlataformaNotificacion,
+                VersionAplicacion = this.VersionAplicacion,
                 Plantillas = EntitiesMapper.GetModelListFromEntity<Plantilla, YPlantilla>(this.Plantillas),
                 Suscripciones = EntitiesMapper.GetModelListFromEntity<Dato, YDato>(this.Suscripciones)
             };

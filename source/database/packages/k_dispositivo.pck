@@ -46,7 +46,8 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
                                    i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
                                    i_tipo                      IN VARCHAR2 DEFAULT NULL,
                                    i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
-                                   i_version_navegador         IN VARCHAR2 DEFAULT NULL)
+                                   i_version_navegador         IN VARCHAR2 DEFAULT NULL,
+                                   i_version_aplicacion        IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
   FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
@@ -143,7 +144,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
                                    i_version_sistema_operativo IN VARCHAR2 DEFAULT NULL,
                                    i_tipo                      IN VARCHAR2 DEFAULT NULL,
                                    i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
-                                   i_version_navegador         IN VARCHAR2 DEFAULT NULL)
+                                   i_version_navegador         IN VARCHAR2 DEFAULT NULL,
+                                   i_version_aplicacion        IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER IS
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
   BEGIN
@@ -174,7 +176,9 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              version_navegador         = nvl(i_version_navegador,
                                              version_navegador),
              token_notificacion        = nvl(i_token_notificacion,
-                                             token_notificacion)
+                                             token_notificacion),
+             version_aplicacion        = nvl(i_version_aplicacion,
+                                             version_aplicacion)
        WHERE id_dispositivo = l_id_dispositivo;
     ELSE
       -- Inserta dispositivo
@@ -187,7 +191,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
          tipo,
          nombre_navegador,
          version_navegador,
-         token_notificacion)
+         token_notificacion,
+         version_aplicacion)
       VALUES
         (i_token_dispositivo,
          SYSDATE,
@@ -197,7 +202,8 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
          i_tipo,
          i_nombre_navegador,
          i_version_navegador,
-         i_token_notificacion)
+         i_token_notificacion,
+         i_version_aplicacion)
       RETURNING id_dispositivo INTO l_id_dispositivo;
     END IF;
   
@@ -247,6 +253,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              d.version_navegador,
              d.token_notificacion,
              a.plataforma_notificacion,
+             d.version_aplicacion,
              a.id_aplicacion
         INTO l_dispositivo.id_dispositivo,
              l_dispositivo.token_dispositivo,
@@ -257,6 +264,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              l_dispositivo.version_navegador,
              l_dispositivo.token_notificacion,
              l_dispositivo.plataforma_notificacion,
+             l_dispositivo.version_aplicacion,
              l_id_aplicacion
         FROM t_dispositivos d, t_aplicaciones a
        WHERE a.id_aplicacion(+) = d.id_aplicacion
