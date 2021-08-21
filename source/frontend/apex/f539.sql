@@ -28,14 +28,14 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   09:43 Saturday August 21, 2021
+--   Date and Time:   10:42 Saturday August 21, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                     14
 --       Items:                   26
 --       Processes:               15
---       Regions:                 16
+--       Regions:                 17
 --       Buttons:                 22
 --       Dynamic Actions:          1
 --     Shared Components:
@@ -123,7 +123,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210821094339'
+,p_last_upd_yyyymmddhh24miss=>'20210821104122'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -12294,7 +12294,77 @@ wwv_flow_api.create_page(
 ,p_autocomplete_on_off=>'OFF'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210530005721'
+,p_last_upd_yyyymmddhh24miss=>'20210821104122'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(11600179116570116)
+,p_plug_name=>'Cantidad de Usuarios por Origen'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(67558033430620990)
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(11600468331570154)
+,p_region_id=>wwv_flow_api.id(11600179116570116)
+,p_chart_type=>'pie'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_value_format_type=>'decimal'
+,p_value_decimal_places=>0
+,p_value_format_scaling=>'none'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'on'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_indicator_size=>1
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(11600957066570157)
+,p_chart_id=>wwv_flow_api.id(11600468331570154)
+,p_seq=>10
+,p_name=>'Series 1'
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT nvl(u.origen, ''R'') || ''-'' ||',
+'       k_util.f_significado_codigo(''ORIGEN_USUARIO'', nvl(u.origen, ''R'')) origen,',
+'       COUNT(u.id_usuario) cantidad',
+'  FROM t_usuarios u',
+' GROUP BY nvl(u.origen, ''R'') || ''-'' ||',
+'          k_util.f_significado_codigo(''ORIGEN_USUARIO'', nvl(u.origen, ''R''));'))
+,p_series_type=>'pie'
+,p_items_value_column_name=>'CANTIDAD'
+,p_group_short_desc_column_name=>'ORIGEN'
+,p_items_label_column_name=>'ORIGEN'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+,p_gantt_start_date_source=>'DB_COLUMN'
+,p_gantt_end_date_source=>'DB_COLUMN'
+,p_threshold_display=>'onIndicator'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(67654028228621338)
@@ -14870,7 +14940,12 @@ wwv_flow_api.create_install_script(
 '    FROM apex_application_pages ap, apex_applications a',
 '   WHERE a.application_id = ap.application_id',
 '     AND ap.page_alias IS NOT NULL',
-'     AND a.alias = k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='');'))
+'     AND a.alias =',
+'         k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='')',
+'     AND NOT EXISTS (SELECT 1',
+'            FROM t_permisos p',
+'           WHERE p.id_permiso = ''PAGE:'' || upper(a.alias) || '':'' ||',
+'                 upper(ap.page_alias));'))
 );
 end;
 /
@@ -14894,7 +14969,13 @@ wwv_flow_api.create_install_script(
 '    FROM apex_application_pages ap, apex_applications a',
 '   WHERE a.application_id = ap.application_id',
 '     AND ap.page_alias IS NOT NULL',
-'     AND a.alias = k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='');'))
+'     AND a.alias =',
+'         k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='')',
+'     AND NOT EXISTS (SELECT 1',
+'            FROM t_rol_permisos rp',
+'           WHERE rp.id_rol = 1',
+'             AND rp.id_permiso = ''PAGE:'' || upper(a.alias) || '':'' ||',
+'                 upper(ap.page_alias));'))
 );
 end;
 /
