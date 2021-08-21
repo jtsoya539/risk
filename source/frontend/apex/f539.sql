@@ -6,16 +6,16 @@ whenever sqlerror exit sql.sqlcode rollback
 -- ORACLE Application Express (APEX) export file
 --
 -- You should run the script connected to SQL*Plus as the Oracle user
--- APEX_200200 or as the owner (parsing schema) of the application.
+-- APEX_210100 or as the owner (parsing schema) of the application.
 --
 -- NOTE: Calls to apex_application_install override the defaults below.
 --
 --------------------------------------------------------------------------------
 begin
 wwv_flow_api.import_begin (
- p_version_yyyy_mm_dd=>'2020.10.01'
-,p_release=>'20.2.0.00.20'
-,p_default_workspace_id=>2600325421114677
+ p_version_yyyy_mm_dd=>'2021.04.15'
+,p_release=>'21.1.0'
+,p_default_workspace_id=>3200393035349950
 ,p_default_application_id=>539
 ,p_default_id_offset=>0
 ,p_default_owner=>'RISK'
@@ -28,7 +28,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   20:49 Sunday August 1, 2021
+--   Date and Time:   09:43 Saturday August 21, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -70,8 +70,8 @@ prompt APPLICATION 539 - RISK ADMIN
 --     Supporting Objects:  Included
 --       Install scripts:          3
 --       Validations:              1
---   Version:         20.2.0.00.20
---   Instance ID:     500134684140051
+--   Version:         21.1.0
+--   Instance ID:     1100177745227385
 --
 
 prompt --application/delete_application
@@ -115,6 +115,7 @@ wwv_flow_api.create_flow(
 ,p_exact_substitutions_only=>'Y'
 ,p_browser_cache=>'N'
 ,p_browser_frame=>'D'
+,p_referrer_policy=>'strict-origin-when-cross-origin'
 ,p_security_scheme=>wwv_flow_api.id(69700204787934650)
 ,p_rejoin_existing_sessions=>'N'
 ,p_csv_encoding=>'Y'
@@ -122,7 +123,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210801204849'
+,p_last_upd_yyyymmddhh24miss=>'20210821094339'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -1468,6 +1469,14 @@ end;
 prompt --application/plugin_settings
 begin
 wwv_flow_api.create_plugin_setting(
+ p_id=>wwv_flow_api.id(9300286774135598)
+,p_plugin_type=>'ITEM TYPE'
+,p_plugin=>'NATIVE_DATE_PICKER_JET'
+,p_attribute_01=>'MONTH-PICKER:YEAR-PICKER'
+,p_attribute_02=>'VISIBLE'
+,p_attribute_03=>'15'
+);
+wwv_flow_api.create_plugin_setting(
  p_id=>wwv_flow_api.id(67500450503620884)
 ,p_plugin_type=>'REGION TYPE'
 ,p_plugin=>'NATIVE_DISPLAY_SELECTOR'
@@ -1495,7 +1504,8 @@ wwv_flow_api.create_plugin_setting(
  p_id=>wwv_flow_api.id(67501566432620888)
 ,p_plugin_type=>'ITEM TYPE'
 ,p_plugin=>'NATIVE_COLOR_PICKER'
-,p_attribute_01=>'modern'
+,p_attribute_01=>'FULL'
+,p_attribute_02=>'POPUP'
 );
 wwv_flow_api.create_plugin_setting(
  p_id=>wwv_flow_api.id(67501865741620889)
@@ -12337,6 +12347,7 @@ wwv_flow_api.create_worksheet(
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
 ,p_show_detail_link=>'C'
 ,p_download_formats=>'CSV:HTML:EMAIL:XLSX:PDF:RTF'
 ,p_detail_link=>'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:RP:P3_ID_APLICACION:\#ID_APLICACION#\'
@@ -12854,6 +12865,7 @@ wwv_flow_api.create_worksheet(
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
 ,p_show_detail_link=>'C'
 ,p_download_formats=>'CSV:HTML:EMAIL:XLSX:PDF:RTF'
 ,p_detail_link=>'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:RP:P5_ID_PARAMETRO:\#ID_PARAMETRO#\'
@@ -13170,6 +13182,7 @@ wwv_flow_api.create_worksheet(
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
 ,p_show_detail_link=>'C'
 ,p_download_formats=>'CSV:HTML:EMAIL:XLSX:PDF:RTF'
 ,p_detail_link=>'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:RP:P7_DOMINIO,P7_CODIGO:\#DOMINIO#\,\#CODIGO#\'
@@ -14162,6 +14175,7 @@ wwv_flow_api.create_worksheet(
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_report_list_mode=>'TABS'
+,p_lazy_loading=>false
 ,p_show_detail_link=>'C'
 ,p_download_formats=>'CSV:HTML:EMAIL:XLSX:PDF:RTF'
 ,p_detail_link=>'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:RP:P10_ID_ERROR:\#ID_ERROR#\'
@@ -14802,9 +14816,9 @@ wwv_flow_api.create_install(
 ,p_deinstall_script_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'DELETE t_rol_permisos WHERE id_permiso LIKE ''PAGE:%'';',
 'DELETE t_permisos WHERE id_permiso LIKE ''PAGE:%'';',
-'UPDATE t_dispositivos SET id_aplicacion = NULL WHERE id_aplicacion = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));',
-'UPDATE t_sesiones SET id_aplicacion = NULL WHERE id_aplicacion = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));',
-'DELETE t_aplicaciones WHERE clave = apex_app_setting.get_value(''RISK_APP_KEY'');'))
+'UPDATE t_dispositivos SET id_aplicacion = NULL WHERE id_aplicacion = k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='');',
+'UPDATE t_sesiones SET id_aplicacion = NULL WHERE id_aplicacion = k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='');',
+'DELETE t_aplicaciones WHERE clave = ''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='';'))
 );
 end;
 /
@@ -14820,7 +14834,8 @@ wwv_flow_api.create_install_script(
 'DECLARE',
 '  l_clave_aplicacion t_aplicaciones.clave%TYPE;',
 'BEGIN',
-'  l_clave_aplicacion := k_autenticacion.f_randombytes_base64;',
+'  -- l_clave_aplicacion := k_autenticacion.f_randombytes_base64;',
+'  l_clave_aplicacion := ''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='';',
 '',
 '  INSERT INTO t_aplicaciones',
 '    (id_aplicacion, nombre, tipo, activo, clave, detalle, version_actual)',
@@ -14833,7 +14848,7 @@ wwv_flow_api.create_install_script(
 unistr('     ''Aplicaci\00F3n Web para administrar el sistema'','),
 '     ''0.1.0'');',
 '',
-'  apex_app_setting.set_value(''RISK_APP_KEY'', l_clave_aplicacion);',
+'  -- apex_app_setting.set_value(''RISK_APP_KEY'', l_clave_aplicacion);',
 'END;'))
 );
 end;
@@ -14855,7 +14870,7 @@ wwv_flow_api.create_install_script(
 '    FROM apex_application_pages ap, apex_applications a',
 '   WHERE a.application_id = ap.application_id',
 '     AND ap.page_alias IS NOT NULL',
-'     AND a.alias = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));'))
+'     AND a.alias = k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='');'))
 );
 end;
 /
@@ -14879,7 +14894,7 @@ wwv_flow_api.create_install_script(
 '    FROM apex_application_pages ap, apex_applications a',
 '   WHERE a.application_id = ap.application_id',
 '     AND ap.page_alias IS NOT NULL',
-'     AND a.alias = k_aplicacion.f_id_aplicacion(apex_app_setting.get_value(''RISK_APP_KEY''));'))
+'     AND a.alias = k_aplicacion.f_id_aplicacion(''wc/bL7KghNc2OJxpnWdBh0GoRkLx1mGYEsYlDF9aof4='');'))
 );
 end;
 /
