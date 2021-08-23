@@ -28,14 +28,14 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   10:42 Saturday August 21, 2021
+--   Date and Time:   21:10 Sunday August 22, 2021
 --   Exported By:     JMEZA
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                     14
+--     Pages:                     15
 --       Items:                   26
 --       Processes:               15
---       Regions:                 17
+--       Regions:                 21
 --       Buttons:                 22
 --       Dynamic Actions:          1
 --     Shared Components:
@@ -123,7 +123,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'RISK ADMIN'
 ,p_last_updated_by=>'JMEZA'
-,p_last_upd_yyyymmddhh24miss=>'20210821104122'
+,p_last_upd_yyyymmddhh24miss=>'20210822210916'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>4
 ,p_ui_type_name => null
@@ -190,6 +190,15 @@ wwv_flow_api.create_list_item(
 ,p_list_item_icon=>'fa-exclamation-triangle-o'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'9,10'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(13300320992866525)
+,p_list_item_display_sequence=>70
+,p_list_item_link_text=>unistr('Mensajer\00EDa')
+,p_list_item_link_target=>'f?p=&APP_ID.:11:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-envelope-o'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'11'
 );
 end;
 /
@@ -12338,6 +12347,7 @@ wwv_flow_api.create_jet_chart(
 ,p_overview_rendered=>'off'
 ,p_horizontal_grid=>'auto'
 ,p_vertical_grid=>'auto'
+,p_gauge_orientation=>'circular'
 ,p_gauge_indicator_size=>1
 ,p_gauge_plot_area=>'on'
 ,p_show_gauge_value=>true
@@ -14481,6 +14491,339 @@ wwv_flow_api.create_page_process(
 ,p_region_id=>wwv_flow_api.id(95700383917854413)
 ,p_process_type=>'NATIVE_FORM_INIT'
 ,p_process_name=>'Initialize form Error'
+);
+end;
+/
+prompt --application/pages/page_00011
+begin
+wwv_flow_api.create_page(
+ p_id=>11
+,p_user_interface_id=>wwv_flow_api.id(67643235261621152)
+,p_name=>unistr('Mensajer\00EDa')
+,p_alias=>unistr('MENSAJER\00CDA')
+,p_step_title=>unistr('Mensajer\00EDa')
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_last_updated_by=>'JMEZA'
+,p_last_upd_yyyymmddhh24miss=>'20210822210916'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(13300764317866530)
+,p_plug_name=>'Chart 1'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(67558033430620990)
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(13301171816866535)
+,p_region_id=>wwv_flow_api.id(13300764317866530)
+,p_chart_type=>'area'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'off'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_orientation=>'circular'
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(13302803313866542)
+,p_chart_id=>wwv_flow_api.id(13301171816866535)
+,p_seq=>10
+,p_name=>'Series 1'
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select ''Label 1'' label, 30 value from sys.dual',
+'union all',
+'select ''Label 2'' label, 20 value from sys.dual',
+'union all',
+'select ''Label 3'' label, 34 value from sys.dual',
+'union all',
+'select ''Label 4'' label, 6  value from sys.dual',
+'union all',
+'select ''Label 5'' label, 10 value from sys.dual'))
+,p_max_row_count=>20
+,p_series_type=>'area'
+,p_items_value_column_name=>'VALUE'
+,p_items_label_column_name=>'LABEL'
+,p_items_label_rendered=>false
+,p_items_label_position=>'auto'
+,p_threshold_display=>'onIndicator'
+);
+wwv_flow_api.create_jet_chart_axis(
+ p_id=>wwv_flow_api.id(13301601386866539)
+,p_chart_id=>wwv_flow_api.id(13301171816866535)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'auto'
+,p_minor_tick_rendered=>'auto'
+,p_tick_label_rendered=>'on'
+,p_zoom_order_seconds=>false
+,p_zoom_order_minutes=>false
+,p_zoom_order_hours=>false
+,p_zoom_order_days=>false
+,p_zoom_order_weeks=>false
+,p_zoom_order_months=>false
+,p_zoom_order_quarters=>false
+,p_zoom_order_years=>false
+);
+wwv_flow_api.create_jet_chart_axis(
+ p_id=>wwv_flow_api.id(13302249136866542)
+,p_chart_id=>wwv_flow_api.id(13301171816866535)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'auto'
+,p_minor_tick_rendered=>'auto'
+,p_tick_label_rendered=>'on'
+,p_zoom_order_seconds=>false
+,p_zoom_order_minutes=>false
+,p_zoom_order_hours=>false
+,p_zoom_order_days=>false
+,p_zoom_order_weeks=>false
+,p_zoom_order_months=>false
+,p_zoom_order_quarters=>false
+,p_zoom_order_years=>false
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(13700113780909710)
+,p_plug_name=>'Cantidad de Mensajes de texto (SMS) por Estado'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(67558033430620990)
+,p_plug_display_sequence=>60
+,p_plug_new_grid_row=>false
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_JET_CHART'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(13700417056909762)
+,p_region_id=>wwv_flow_api.id(13700113780909710)
+,p_chart_type=>'donut'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_value_format_type=>'decimal'
+,p_value_decimal_places=>0
+,p_value_format_scaling=>'none'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'on'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_indicator_size=>1
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(13700974328909766)
+,p_chart_id=>wwv_flow_api.id(13700417056909762)
+,p_seq=>10
+,p_name=>'Series 1'
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT a.estado || ''-'' ||',
+'       k_util.f_significado_codigo(''ESTADO_MENSAJERIA'', a.estado) estado,',
+'       COUNT(a.id_mensaje) cantidad',
+'  FROM t_mensajes a',
+' GROUP BY a.estado || ''-'' ||',
+'          k_util.f_significado_codigo(''ESTADO_MENSAJERIA'', a.estado);'))
+,p_series_type=>'donut'
+,p_items_value_column_name=>'CANTIDAD'
+,p_group_short_desc_column_name=>'ESTADO'
+,p_items_label_column_name=>'ESTADO'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+,p_gantt_start_date_source=>'DB_COLUMN'
+,p_gantt_end_date_source=>'DB_COLUMN'
+,p_threshold_display=>'onIndicator'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(14000187183935438)
+,p_plug_name=>unistr('Cantidad de Correos electr\00F3nicos (E-mail) por Estado')
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(67558033430620990)
+,p_plug_display_sequence=>50
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_JET_CHART'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(14000440866935490)
+,p_region_id=>wwv_flow_api.id(14000187183935438)
+,p_chart_type=>'donut'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_value_format_type=>'decimal'
+,p_value_decimal_places=>0
+,p_value_format_scaling=>'none'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'on'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_indicator_size=>1
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(14000942195935493)
+,p_chart_id=>wwv_flow_api.id(14000440866935490)
+,p_seq=>10
+,p_name=>'Series 1'
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT a.estado || ''-'' ||',
+'       k_util.f_significado_codigo(''ESTADO_MENSAJERIA'', a.estado) estado,',
+'       COUNT(a.id_correo) cantidad',
+'  FROM t_correos a',
+' GROUP BY a.estado || ''-'' ||',
+'          k_util.f_significado_codigo(''ESTADO_MENSAJERIA'', a.estado);'))
+,p_series_type=>'donut'
+,p_items_value_column_name=>'CANTIDAD'
+,p_group_short_desc_column_name=>'ESTADO'
+,p_items_label_column_name=>'ESTADO'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+,p_gantt_start_date_source=>'DB_COLUMN'
+,p_gantt_end_date_source=>'DB_COLUMN'
+,p_threshold_display=>'onIndicator'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(14100112138941612)
+,p_plug_name=>'Cantidad de Notificaciones push por Estado'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(67558033430620990)
+,p_plug_display_sequence=>70
+,p_plug_new_grid_row=>false
+,p_plug_display_point=>'BODY'
+,p_plug_source_type=>'NATIVE_JET_CHART'
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(14100460490941663)
+,p_region_id=>wwv_flow_api.id(14100112138941612)
+,p_chart_type=>'donut'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_value_position=>'auto'
+,p_value_format_type=>'decimal'
+,p_value_decimal_places=>0
+,p_value_format_scaling=>'none'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_show_row=>true
+,p_show_start=>true
+,p_show_end=>true
+,p_show_progress=>true
+,p_show_baseline=>true
+,p_legend_rendered=>'on'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+,p_horizontal_grid=>'auto'
+,p_vertical_grid=>'auto'
+,p_gauge_indicator_size=>1
+,p_gauge_plot_area=>'on'
+,p_show_gauge_value=>true
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(14100990750941666)
+,p_chart_id=>wwv_flow_api.id(14100460490941663)
+,p_seq=>10
+,p_name=>'Series 1'
+,p_data_source_type=>'SQL'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT a.estado || ''-'' ||',
+'       k_util.f_significado_codigo(''ESTADO_MENSAJERIA'', a.estado) estado,',
+'       COUNT(a.id_notificacion) cantidad',
+'  FROM t_notificaciones a',
+' GROUP BY a.estado || ''-'' ||',
+'          k_util.f_significado_codigo(''ESTADO_MENSAJERIA'', a.estado);'))
+,p_series_type=>'donut'
+,p_items_value_column_name=>'CANTIDAD'
+,p_group_short_desc_column_name=>'ESTADO'
+,p_items_label_column_name=>'ESTADO'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+,p_gantt_start_date_source=>'DB_COLUMN'
+,p_gantt_end_date_source=>'DB_COLUMN'
+,p_threshold_display=>'onIndicator'
 );
 end;
 /
