@@ -22,28 +22,34 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.Security.Cryptography;
-using System.Text;
+using System;
+using System.IO;
+using HtmlAgilityPack;
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
-    public static class HashHelper
+    public static class HtmlHelper
     {
-        public static string SHA1(string input)
+        public static string ObtenerMetaContent(byte[] html, string metaName)
         {
-            using (SHA1Managed sha1 = new SHA1Managed())
+            string content = string.Empty;
+
+            if (html != null && !string.IsNullOrEmpty(metaName))
             {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var sb = new StringBuilder(hash.Length * 2);
+                var doc = new HtmlDocument();
+                doc.Load(new MemoryStream(html));
 
-                foreach (byte b in hash)
+                try
                 {
-                    // can be "x2" if you want lowercase
-                    sb.Append(b.ToString("X2"));
+                    content = doc.DocumentNode.SelectSingleNode($"/html/head/meta[@name='{metaName}']").Attributes["content"].Value;
                 }
-
-                return sb.ToString();
+                catch (Exception)
+                {
+                    content = string.Empty;
+                }
             }
+
+            return content;
         }
     }
 }

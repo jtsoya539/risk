@@ -22,7 +22,7 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
     public static class RiskConstants
     {

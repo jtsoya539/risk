@@ -22,12 +22,10 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
 using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
     // https://www.c-sharpcorner.com/article/encryption-and-decryption-using-a-symmetric-key-in-c-sharp/
     // https://stackoverflow.com/a/14501633

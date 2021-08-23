@@ -22,33 +22,29 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System.IO;
-using System.IO.Compression;
+using System;
+using System.Text;
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
-    public static class GZipHelper
+    // https://stackoverflow.com/a/311179
+    public static class HexHelper
     {
-        public static byte[] Compress(byte[] data)
+        public static string ByteArrayToString(byte[] ba)
         {
-            using (var compressedStream = new MemoryStream())
-            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress))
-            {
-                zipStream.Write(data, 0, data.Length);
-                zipStream.Close();
-                return compressedStream.ToArray();
-            }
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2}", b);
+            return hex.ToString();
         }
 
-        public static byte[] Decompress(byte[] data)
+        public static byte[] StringToByteArray(string hex)
         {
-            using (var compressedStream = new MemoryStream(data))
-            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Decompress))
-            using (var resultStream = new MemoryStream())
-            {
-                zipStream.CopyTo(resultStream);
-                return resultStream.ToArray();
-            }
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+            for (int i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
         }
     }
 }

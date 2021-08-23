@@ -22,34 +22,33 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
 using System.IO;
-using HtmlAgilityPack;
+using System.IO.Compression;
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
-    public static class HtmlHelper
+    public static class GZipHelper
     {
-        public static string ObtenerMetaContent(byte[] html, string metaName)
+        public static byte[] Compress(byte[] data)
         {
-            string content = string.Empty;
-
-            if (html != null && !string.IsNullOrEmpty(metaName))
+            using (var compressedStream = new MemoryStream())
+            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Compress))
             {
-                var doc = new HtmlDocument();
-                doc.Load(new MemoryStream(html));
-
-                try
-                {
-                    content = doc.DocumentNode.SelectSingleNode($"/html/head/meta[@name='{metaName}']").Attributes["content"].Value;
-                }
-                catch (Exception)
-                {
-                    content = string.Empty;
-                }
+                zipStream.Write(data, 0, data.Length);
+                zipStream.Close();
+                return compressedStream.ToArray();
             }
+        }
 
-            return content;
+        public static byte[] Decompress(byte[] data)
+        {
+            using (var compressedStream = new MemoryStream(data))
+            using (var zipStream = new GZipStream(compressedStream, CompressionMode.Decompress))
+            using (var resultStream = new MemoryStream())
+            {
+                zipStream.CopyTo(resultStream);
+                return resultStream.ToArray();
+            }
         }
     }
 }

@@ -30,7 +30,7 @@ using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
 using iText.Layout;
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
     public static class PdfHelper
     {

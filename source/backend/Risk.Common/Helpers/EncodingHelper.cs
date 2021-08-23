@@ -24,7 +24,7 @@ SOFTWARE.
 
 using System.Text;
 
-namespace Risk.API.Helpers
+namespace Risk.Common.Helpers
 {
     public static class EncodingHelper
     {
