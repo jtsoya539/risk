@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Attributes;
 using Risk.API.Mappers;
 using Risk.API.Models;
 
@@ -51,7 +52,7 @@ namespace Risk.API.Entities
             {
                 IdAplicacion = this.IdAplicacion,
                 Nombre = this.Nombre,
-                Tipo = this.Tipo,
+                Tipo = this.Tipo.GetEnumValue<TipoAplicacion>(),
                 Activo = EntitiesMapper.GetBoolFromValue(this.Activo),
                 Detalle = this.Detalle,
                 VersionActual = this.VersionActual,

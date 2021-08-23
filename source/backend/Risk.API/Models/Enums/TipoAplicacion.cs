@@ -22,32 +22,21 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Entities;
+using Risk.API.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
-    [SwaggerSchema("Aplicaciones")]
-    public class Aplicacion : IModel
+    [SwaggerSchema("Tipos de Aplicación")]
+    public enum TipoAplicacion
     {
-        [SwaggerSchema("Identificador de la aplicacion")]
-        public string IdAplicacion { get; set; }
-        [SwaggerSchema("Nombre de la aplicacion")]
-        public string Nombre { get; set; }
-        [SwaggerSchema("Tipo de la aplicacion")]
-        public TipoAplicacion Tipo { get; set; }
-        [SwaggerSchema("La aplicacion esta activa?")]
-        public bool Activo { get; set; }
-        [SwaggerSchema("Detalles adicionales de la aplicacion")]
-        public string Detalle { get; set; }
-        [SwaggerSchema("Version actual de la aplicacion")]
-        public string VersionActual { get; set; }
-        [SwaggerSchema("Version minima de la aplicacion")]
-        public string VersionMinima { get; set; }
-
-        public IEntity ConvertToEntity()
-        {
-            throw new System.NotImplementedException();
-        }
+        [StringValue("W")]
+        Web,
+        [StringValue("M")]
+        Mobile,
+        [StringValue("D")]
+        Desktop,
+        [StringValue("S")]
+        Servicio
     }
 }
