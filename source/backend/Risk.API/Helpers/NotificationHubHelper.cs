@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Microsoft.Azure.NotificationHubs;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Helpers
 {

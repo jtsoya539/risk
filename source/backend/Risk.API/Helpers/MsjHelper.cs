@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Helpers
 {

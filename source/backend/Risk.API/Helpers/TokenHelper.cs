@@ -37,6 +37,7 @@ using Risk.API.Services;
 using Google.Apis.Auth;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Helpers
 {
@@ -260,12 +261,15 @@ namespace Risk.API.Helpers
 
                     string direccionCorreo = "";
                     string username, domain;
-                    if (jsonRes["email"] != null) {
+                    if (jsonRes["email"] != null)
+                    {
                         direccionCorreo = jsonRes["email"].ToString();
                         MailAddress addr = new MailAddress(direccionCorreo);
                         username = addr.User;
                         domain = addr.Host;
-                    } else {
+                    }
+                    else
+                    {
                         username = $"{nombre}_{apellido}".Replace(' ', '_').ToLower();
                     }
 

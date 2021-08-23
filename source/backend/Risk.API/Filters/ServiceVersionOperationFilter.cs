@@ -24,7 +24,7 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using Microsoft.OpenApi.Models;
-using Risk.API.Helpers;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters

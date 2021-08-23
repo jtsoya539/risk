@@ -37,6 +37,7 @@ using Risk.API.Attributes;
 using Risk.API.Exceptions;
 using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Services
 {

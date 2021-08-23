@@ -25,6 +25,7 @@ SOFTWARE.
 using Microsoft.AspNetCore.Http;
 using Risk.API.Helpers;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 using System.Net.Mime;
 using System.Threading.Tasks;
 

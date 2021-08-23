@@ -34,6 +34,7 @@ using Risk.API.Attributes;
 using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers

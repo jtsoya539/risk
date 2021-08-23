@@ -30,8 +30,8 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Controllers
 {

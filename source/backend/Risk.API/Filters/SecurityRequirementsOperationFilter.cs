@@ -28,7 +28,7 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Risk.API.Attributes;
-using Risk.API.Helpers;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters

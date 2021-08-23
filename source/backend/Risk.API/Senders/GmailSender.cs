@@ -36,8 +36,8 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MimeKit;
-using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Senders
 {

@@ -38,4 +38,8 @@
     <PackageReference Include="Twilio" Version="5.64.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Risk.Common\Risk.Common.csproj" />
+  </ItemGroup>
+
 </Project>

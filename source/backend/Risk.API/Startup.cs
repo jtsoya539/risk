@@ -44,6 +44,7 @@ using Risk.API.Models;
 using Risk.API.Senders;
 using Risk.API.Services;
 using Risk.API.Workers;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Risk.API

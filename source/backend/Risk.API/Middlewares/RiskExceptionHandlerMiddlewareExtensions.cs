@@ -28,8 +28,8 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Risk.API.Exceptions;
-using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Middlewares
 {

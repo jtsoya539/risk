@@ -26,9 +26,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 
 namespace Risk.API.Middlewares
 {

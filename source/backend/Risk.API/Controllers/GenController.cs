@@ -28,9 +28,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Risk.API.Attributes;
-using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers
