@@ -44,4 +44,5 @@ alter table T_NOTIFICACIONES
   references T_USUARIOS (ID_USUARIO);
 alter table T_NOTIFICACIONES
   add constraint CK_NOTIFICACIONES_DATOS_EXTRA
-  check (datos_extra IS JSON);
+  check (DATOS_EXTRA IS JSON);
+
