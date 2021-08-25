@@ -4,7 +4,7 @@ using Prism.Navigation;
 using Risk.API.Client.Api;
 using Risk.API.Client.Client;
 using Risk.API.Client.Model;
-using Risk.Forms.Helpers;
+using Risk.Common.Helpers;
 using Risk.Forms.Resources.Resx;
 using Xamarin.Essentials.Interfaces;
 

@@ -7,7 +7,7 @@ using Prism.Ioc;
 using Risk.API.Client.Api;
 using Risk.API.Client.Client;
 using Risk.API.Client.Model;
-using Risk.Forms.Helpers;
+using Risk.Common.Helpers;
 using Risk.Forms.ViewModels;
 using Risk.Forms.Views;
 using System;

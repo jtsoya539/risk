@@ -64,5 +64,14 @@ namespace Risk.Common.Helpers
         public const string META_FORMAT = "risk:format";
         public const string META_PAGE_SIZE = "risk:page_size";
         public const string META_PAGE_ORIENTATION = "risk:page_orientation";
+
+        // Secure Storage keys
+        public const string ACCESS_TOKEN = "ACCESS_TOKEN";
+        public const string REFRESH_TOKEN = "REFRESH_TOKEN";
+        public const string DEVICE_TOKEN = "DEVICE_TOKEN";
+
+        // Application Properties keys
+        public const string IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
+        public const string IS_CONNECTED = "IS_CONNECTED";
     }
 }
