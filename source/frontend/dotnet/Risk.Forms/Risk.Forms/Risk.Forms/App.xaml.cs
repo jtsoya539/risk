@@ -74,20 +74,24 @@ namespace Risk.Forms
 
                 // Valida versión de la aplicación
                 Version versionAplicacion = new Version(appInfo.VersionString);
-                Version versionServidor = new Version(aplicacion.VersionActual);
 
-                switch (versionAplicacion.CompareTo(versionServidor))
+                if (!string.IsNullOrEmpty(aplicacion.VersionMinima))
                 {
-                    case 0:
-                        //Console.Write("the same as");
-                        break;
-                    case 1:
-                        //Console.Write("later than");
-                        break;
-                    case -1:
-                        //Console.Write("earlier than");
-                        await UserDialogs.Instance.AlertAsync("Es necesaria una actualización de la aplicación");
-                        break;
+                    Version versionServidor = new Version(aplicacion.VersionMinima);
+
+                    switch (versionAplicacion.CompareTo(versionServidor))
+                    {
+                        case 0:
+                            //Console.Write("the same as");
+                            break;
+                        case 1:
+                            //Console.Write("later than");
+                            break;
+                        case -1:
+                            //Console.Write("earlier than");
+                            await UserDialogs.Instance.AlertAsync("Es necesaria una actualización de la aplicación");
+                            break;
+                    }
                 }
             }
 
@@ -110,7 +114,8 @@ namespace Risk.Forms
                     TokenDispositivo = deviceToken,
                     NombreSistemaOperativo = deviceInfo.Platform.ToString(),
                     VersionSistemaOperativo = deviceInfo.VersionString,
-                    Tipo = TipoDispositivo.Mobile
+                    Tipo = TipoDispositivo.Mobile,
+                    VersionAplicacion = appInfo.VersionString
                 }
             });
 
