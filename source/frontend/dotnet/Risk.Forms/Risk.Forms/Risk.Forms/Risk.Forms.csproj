@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\backend\Risk.API.Client\Risk.API.Client\src\Risk.API.Client\Risk.API.Client.csproj" />
+    <ProjectReference Include="..\..\..\..\..\backend\Risk.Common\Risk.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
