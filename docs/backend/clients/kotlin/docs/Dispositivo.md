@@ -12,8 +12,9 @@ Name | Type | Description | Notes
 **nombreNavegador** | **kotlin.String** |  |  [optional]
 **versionNavegador** | **kotlin.String** |  |  [optional]
 **tokenNotificacion** | **kotlin.String** |  |  [optional]
-**templateNotificacion** | **kotlin.String** |  |  [optional]
 **plataformaNotificacion** | **kotlin.String** |  |  [optional]
+**versionAplicacion** | **kotlin.String** |  |  [optional]
+**plantillas** | [**kotlin.Array&lt;Plantilla&gt;**](Plantilla.md) |  |  [optional]
 **suscripciones** | [**kotlin.Array&lt;Dato&gt;**](Dato.md) |  |  [optional]
 
 

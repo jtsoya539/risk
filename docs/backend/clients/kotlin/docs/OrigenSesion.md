@@ -4,11 +4,11 @@
 ## Enum
 
 
+    * `risk` (value: `"Risk"`)
+
     * `google` (value: `"Google"`)
 
     * `facebook` (value: `"Facebook"`)
-
-    * `risk` (value: `"Risk"`)
 
 
 

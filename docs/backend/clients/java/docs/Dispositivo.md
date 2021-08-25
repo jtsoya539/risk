@@ -14,8 +14,9 @@ Name | Type | Description | Notes
 **nombreNavegador** | **String** |  |  [optional]
 **versionNavegador** | **String** |  |  [optional]
 **tokenNotificacion** | **String** |  |  [optional]
-**templateNotificacion** | **String** |  |  [optional]
 **plataformaNotificacion** | **String** |  |  [optional]
+**versionAplicacion** | **String** |  |  [optional]
+**plantillas** | [**List&lt;Plantilla&gt;**](Plantilla.md) |  |  [optional]
 **suscripciones** | [**List&lt;Dato&gt;**](Dato.md) |  |  [optional]
 
 

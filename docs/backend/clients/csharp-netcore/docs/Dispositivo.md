@@ -11,8 +11,9 @@ Name | Type | Description | Notes
 **NombreNavegador** | **string** |  | [optional] 
 **VersionNavegador** | **string** |  | [optional] 
 **TokenNotificacion** | **string** |  | [optional] 
-**TemplateNotificacion** | **string** |  | [optional] 
 **PlataformaNotificacion** | **string** |  | [optional] 
+**VersionAplicacion** | **string** |  | [optional] 
+**Plantillas** | [**List&lt;Plantilla&gt;**](Plantilla.md) |  | [optional] 
 **Suscripciones** | [**List&lt;Dato&gt;**](Dato.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

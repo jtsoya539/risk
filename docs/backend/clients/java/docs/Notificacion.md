@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **suscripcion** | **String** |  |  [optional]
 **titulo** | **String** |  |  [optional]
 **contenido** | **String** |  |  [optional]
+**datosExtra** | **String** |  |  [optional]
 
 
 

@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-05-13T14:31:40.054-04:00[America/Asuncion]
+- Build date: 2021-08-24T21:54:01.732-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -205,6 +205,7 @@ Class | Method | HTTP request | Description
  - [Pais](docs/Pais.md)
  - [PaisPagina](docs/PaisPagina.md)
  - [PaisPaginaRespuesta](docs/PaisPaginaRespuesta.md)
+ - [Plantilla](docs/Plantilla.md)
  - [RefrescarSesionFacebookRequestBody](docs/RefrescarSesionFacebookRequestBody.md)
  - [RefrescarSesionGoogleRequestBody](docs/RefrescarSesionGoogleRequestBody.md)
  - [RefrescarSesionRequestBody](docs/RefrescarSesionRequestBody.md)
@@ -218,6 +219,7 @@ Class | Method | HTTP request | Description
  - [Significado](docs/Significado.md)
  - [SignificadoPagina](docs/SignificadoPagina.md)
  - [SignificadoPaginaRespuesta](docs/SignificadoPaginaRespuesta.md)
+ - [TipoAplicacion](docs/TipoAplicacion.md)
  - [TipoDispositivo](docs/TipoDispositivo.md)
  - [TipoMensajeria](docs/TipoMensajeria.md)
  - [Usuario](docs/Usuario.md)

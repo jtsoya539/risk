@@ -1,13 +1,9 @@
-# Risk.API.Client.Model.Notificacion
+# Risk.API.Client.Model.TipoAplicacion
+Tipos de Aplicación
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IdNotificacion** | **int** |  | [optional] 
-**Suscripcion** | **string** |  | [optional] 
-**Titulo** | **string** |  | [optional] 
-**Contenido** | **string** |  | [optional] 
-**DatosExtra** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

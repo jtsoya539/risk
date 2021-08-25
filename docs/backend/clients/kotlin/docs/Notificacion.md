@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **suscripcion** | **kotlin.String** |  |  [optional]
 **titulo** | **kotlin.String** |  |  [optional]
 **contenido** | **kotlin.String** |  |  [optional]
+**datosExtra** | **kotlin.String** |  |  [optional]
 
 
 
