@@ -243,7 +243,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       p_respuesta_error(io_respuesta,
                         c_error_inesperado,
                         k_error.f_mensaje_error(c_error_inesperado,
-                                                to_char(nvl(k_sistema.f_valor_parametro_number(k_operacion.c_id_log),
+                                                to_char(nvl(k_sistema.f_valor_parametro_number(c_id_log),
                                                             0))),
                         i_error_stack);
     END IF;
@@ -620,8 +620,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                                            .valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -633,12 +632,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i)
-                                                                                          .valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -650,11 +647,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre || ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i)
-                                                                                        .valor),
+                                                             to_char(anydata.accessdate(i_parametros(i).valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -662,8 +658,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i)
-                                                              .nombre));
+                                                              i_parametros(i).nombre));
             END IF;
           END IF;
         END IF;
@@ -851,50 +846,65 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     l_install   CLOB;
     l_uninstall CLOB;
   
-    CURSOR c_operaciones IS
+    CURSOR c_modulos IS
+      SELECT m.id_modulo
+        FROM t_modulos m
+       WHERE m.id_modulo = nvl(i_id_modulo, m.id_modulo);
+  
+    CURSOR c_operaciones(i_id_modulo IN VARCHAR2) IS
       SELECT a.id_operacion,
+             lower(f_id_modulo(a.id_operacion)) || '/' ||
              lower(k_util.f_reemplazar_acentos(k_util.f_significado_codigo('TIPO_OPERACION',
                                                                            a.tipo) || '/' ||
                                                nvl(a.dominio, '_') || '/' ||
                                                a.nombre)) || '.sql' nombre_archivo
         FROM t_operaciones a
-       WHERE f_id_modulo(a.id_operacion) =
-             nvl(i_id_modulo, f_id_modulo(a.id_operacion))
+       WHERE f_id_modulo(a.id_operacion) = i_id_modulo
        ORDER BY 2;
   BEGIN
-    l_install := l_install || 'prompt' || utl_tcp.crlf;
-    l_install := l_install || 'prompt Instalando operaciones...' ||
-                 utl_tcp.crlf;
-    l_install := l_install || 'prompt -----------------------------------' ||
-                 utl_tcp.crlf;
-    l_install := l_install || 'prompt' || utl_tcp.crlf;
-    --
-    l_uninstall := l_uninstall || 'prompt' || utl_tcp.crlf;
-    l_uninstall := l_uninstall || 'prompt Desinstalando operaciones...' ||
+    FOR m IN c_modulos LOOP
+      l_install := '';
+      l_install := l_install || 'prompt' || utl_tcp.crlf;
+      l_install := l_install || 'prompt Instalando operaciones...' ||
                    utl_tcp.crlf;
-    l_uninstall := l_uninstall ||
+      l_install := l_install ||
                    'prompt -----------------------------------' ||
                    utl_tcp.crlf;
-    l_uninstall := l_uninstall || 'prompt' || utl_tcp.crlf;
-  
-    FOR ope IN c_operaciones LOOP
-      l_inserts := f_inserts_operacion(ope.id_operacion);
-      l_deletes := f_deletes_operacion(ope.id_operacion);
+      l_install := l_install || 'prompt' || utl_tcp.crlf;
       --
-      l_install   := l_install || '@@scripts/operations/' ||
-                     ope.nombre_archivo || utl_tcp.crlf;
-      l_uninstall := l_uninstall || l_deletes || utl_tcp.crlf;
-      --
+      l_uninstall := '';
+      l_uninstall := l_uninstall || 'prompt' || utl_tcp.crlf;
+      l_uninstall := l_uninstall || 'prompt Desinstalando operaciones...' ||
+                     utl_tcp.crlf;
+      l_uninstall := l_uninstall ||
+                     'prompt -----------------------------------' ||
+                     utl_tcp.crlf;
+      l_uninstall := l_uninstall || 'prompt' || utl_tcp.crlf;
+    
+      FOR ope IN c_operaciones(m.id_modulo) LOOP
+        l_inserts := f_inserts_operacion(ope.id_operacion);
+        l_deletes := f_deletes_operacion(ope.id_operacion);
+        --
+        l_install   := l_install || '@@scripts/operations/' ||
+                       ope.nombre_archivo || utl_tcp.crlf;
+        l_uninstall := l_uninstall || l_deletes || utl_tcp.crlf;
+        --
+        as_zip.add1file(l_zip,
+                        ope.nombre_archivo,
+                        k_util.clob_to_blob(l_inserts));
+      END LOOP;
+    
       as_zip.add1file(l_zip,
-                      ope.nombre_archivo,
-                      k_util.clob_to_blob(l_inserts));
+                      lower(m.id_modulo) || '/' || 'install.sql',
+                      k_util.clob_to_blob(l_install));
+      as_zip.add1file(l_zip,
+                      lower(m.id_modulo) || '/' || 'uninstall.sql',
+                      k_util.clob_to_blob(l_uninstall));
     END LOOP;
   
-    as_zip.add1file(l_zip, 'install.sql', k_util.clob_to_blob(l_install));
-    as_zip.add1file(l_zip,
-                    'uninstall.sql',
-                    k_util.clob_to_blob(l_uninstall));
-    as_zip.finish_zip(l_zip);
+    IF l_zip IS NOT NULL AND dbms_lob.getlength(l_zip) > 0 THEN
+      as_zip.finish_zip(l_zip);
+    END IF;
   
     RETURN l_zip;
   END;
