@@ -76,6 +76,7 @@ plugin plsqldoc generate t_errores;
 plugin plsqldoc generate t_mensajes;
 plugin plsqldoc generate t_migraciones;
 plugin plsqldoc generate t_modulos;
+plugin plsqldoc generate t_monedas;
 plugin plsqldoc generate t_notificaciones;
 plugin plsqldoc generate t_notificacion_plantillas;
 plugin plsqldoc generate t_operaciones;

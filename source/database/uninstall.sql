@@ -133,6 +133,7 @@ drop table t_parametros cascade constraints;
 drop table t_roles cascade constraints;
 drop table t_usuarios cascade constraints;
 drop table t_personas cascade constraints;
+drop table t_monedas cascade constraints;
 drop table t_barrios cascade constraints;
 drop table t_ciudades cascade constraints;
 drop table t_departamentos cascade constraints;

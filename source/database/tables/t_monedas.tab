@@ -1,0 +1,33 @@
+create table T_MONEDAS
+(
+  id_moneda   VARCHAR2(3) not null,
+  descripcion VARCHAR2(50) not null,
+  activo      VARCHAR2(1) default 'N' not null,
+  formato     VARCHAR2(30),
+  simbolo     VARCHAR2(3),
+  id_pais     NUMBER(3)
+)
+;
+comment on table T_MONEDAS
+  is 'Monedas';
+comment on column T_MONEDAS.id_moneda
+  is 'Identificador de la moneda';
+comment on column T_MONEDAS.descripcion
+  is 'Descripción de la moneda';
+comment on column T_MONEDAS.activo
+  is 'La moneda está activa? (S/N)';
+comment on column T_MONEDAS.formato
+  is 'Formato de la moneda';
+comment on column T_MONEDAS.simbolo
+  is 'Símbolo de la moneda';
+comment on column T_MONEDAS.id_pais
+  is 'País de la moneda';
+alter table T_MONEDAS
+  add constraint PK_MONEDAS primary key (ID_MONEDA);
+alter table T_MONEDAS
+  add constraint FK_MONEDAS_PAISES foreign key (ID_PAIS)
+  references T_PAISES (ID_PAIS);
+alter table T_MONEDAS
+  add constraint CK_MONEDAS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+

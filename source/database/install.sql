@@ -79,6 +79,7 @@ prompt
 @@tables/t_departamentos.tab
 @@tables/t_ciudades.tab
 @@tables/t_barrios.tab
+@@tables/t_monedas.tab
 @@tables/t_personas.tab
 @@tables/t_usuarios.tab
 @@tables/t_roles.tab
