@@ -74,6 +74,7 @@ begin
   l_clob(11) :=q'!!';
   l_clob(12) :=q'!!';
   l_clob(13) :=q'!!';
+  l_clob(14) :=q'!N!';
 
   insert into t_operacion_parametros
   (
@@ -90,6 +91,7 @@ begin
     ,"ETIQUETA"
     ,"DETALLE"
     ,"VALORES_POSIBLES"
+    ,"ENCRIPTADO"
   )
   values
   (
@@ -106,6 +108,7 @@ begin
     ,to_char(l_clob(11))
     ,to_char(l_clob(12))
     ,to_char(l_clob(13))
+    ,to_char(l_clob(14))
   );
 
   l_varchar2(1) :=q'!1001!';
@@ -121,6 +124,7 @@ begin
   l_clob(11) :=q'!!';
   l_clob(12) :=q'!!';
   l_clob(13) :=q'!!';
+  l_clob(14) :=q'!N!';
 
   insert into t_operacion_parametros
   (
@@ -137,6 +141,7 @@ begin
     ,"ETIQUETA"
     ,"DETALLE"
     ,"VALORES_POSIBLES"
+    ,"ENCRIPTADO"
   )
   values
   (
@@ -153,6 +158,7 @@ begin
     ,to_char(l_clob(11))
     ,to_char(l_clob(12))
     ,to_char(l_clob(13))
+    ,to_char(l_clob(14))
   );
 
   l_varchar2(1) :=q'!1001!';
@@ -168,6 +174,7 @@ begin
   l_clob(11) :=q'!!';
   l_clob(12) :=q'!!';
   l_clob(13) :=q'!!';
+  l_clob(14) :=q'!N!';
 
   insert into t_operacion_parametros
   (
@@ -184,6 +191,7 @@ begin
     ,"ETIQUETA"
     ,"DETALLE"
     ,"VALORES_POSIBLES"
+    ,"ENCRIPTADO"
   )
   values
   (
@@ -200,6 +208,7 @@ begin
     ,to_char(l_clob(11))
     ,to_char(l_clob(12))
     ,to_char(l_clob(13))
+    ,to_char(l_clob(14))
   );
 
   l_varchar2(1) :=q'!1001!';
@@ -215,6 +224,7 @@ begin
   l_clob(11) :=q'!!';
   l_clob(12) :=q'!!';
   l_clob(13) :=q'!!';
+  l_clob(14) :=q'!N!';
 
   insert into t_operacion_parametros
   (
@@ -231,6 +241,7 @@ begin
     ,"ETIQUETA"
     ,"DETALLE"
     ,"VALORES_POSIBLES"
+    ,"ENCRIPTADO"
   )
   values
   (
@@ -247,6 +258,7 @@ begin
     ,to_char(l_clob(11))
     ,to_char(l_clob(12))
     ,to_char(l_clob(13))
+    ,to_char(l_clob(14))
   );
 
 end;

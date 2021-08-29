@@ -78,28 +78,19 @@ begin
 
   l_varchar2(1) :=q'!13!';
   l_clob(2) :=q'!T!';
-  l_varchar2(3) :=q'!!';
-  l_varchar2(4) :=q'!!';
-  l_clob(5) :=q'!!';
-  l_clob(6) :=q'!!';
+  l_clob(3) :=q'!!';
 
   insert into t_servicios
   (
      "ID_SERVICIO"
     ,"TIPO"
-    ,"CANTIDAD_EJECUCIONES"
-    ,"FECHA_ULTIMA_EJECUCION"
     ,"CONSULTA_SQL"
-    ,"SQL_ULTIMA_EJECUCION"
   )
   values
   (
      to_number(l_varchar2(1))
     ,to_char(l_clob(2))
-    ,to_number(l_varchar2(3))
-    ,to_date(l_varchar2(4),'DD.MM.YYYY HH24:MI:SS')
-    ,l_clob(5)
-    ,l_clob(6)
+    ,l_clob(3)
   );
 
 end;
