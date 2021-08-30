@@ -4,8 +4,9 @@ create table T_MONEDAS
   descripcion VARCHAR2(50) not null,
   activo      VARCHAR2(1) default 'N' not null,
   formato     VARCHAR2(30),
-  simbolo     VARCHAR2(3),
-  id_pais     NUMBER(3)
+  simbolo     VARCHAR2(10),
+  id_pais     NUMBER(3),
+  codigo_iso  VARCHAR2(3)
 )
 ;
 comment on table T_MONEDAS
@@ -22,6 +23,8 @@ comment on column T_MONEDAS.simbolo
   is 'Símbolo de la moneda';
 comment on column T_MONEDAS.id_pais
   is 'País de la moneda';
+comment on column T_MONEDAS.codigo_iso
+  is 'Código de la moneda según estándar ISO 4217';
 alter table T_MONEDAS
   add constraint PK_MONEDAS primary key (ID_MONEDA);
 alter table T_MONEDAS
