@@ -95,6 +95,10 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                                  i_version      IN VARCHAR2 DEFAULT NULL)
     RETURN y_parametros;
 
+  FUNCTION f_nombre_programa(i_id_operacion IN NUMBER,
+                             i_version      IN VARCHAR2 DEFAULT NULL)
+    RETURN VARCHAR2;
+
   FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB;
 
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,
@@ -595,6 +599,45 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     RETURN l_parametros;
   END;
 
+  FUNCTION f_nombre_programa(i_id_operacion IN NUMBER,
+                             i_version      IN VARCHAR2 DEFAULT NULL)
+    RETURN VARCHAR2 IS
+    l_nombre_programa   VARCHAR2(4000);
+    l_tipo_operacion    t_operaciones.tipo%TYPE;
+    l_nombre_operacion  t_operaciones.nombre%TYPE;
+    l_dominio_operacion t_operaciones.dominio%TYPE;
+    l_version_actual    t_operaciones.version_actual%TYPE;
+  BEGIN
+  
+    BEGIN
+      SELECT o.tipo, upper(o.nombre), upper(o.dominio), o.version_actual
+        INTO l_tipo_operacion,
+             l_nombre_operacion,
+             l_dominio_operacion,
+             l_version_actual
+        FROM t_operaciones o
+       WHERE o.id_operacion = i_id_operacion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        raise_application_error(-20000, 'Operación inexistente');
+    END;
+  
+    IF nvl(i_version, l_version_actual) = l_version_actual THEN
+      l_nombre_programa := 'K_' ||
+                           k_util.f_significado_codigo('TIPO_OPERACION',
+                                                       l_tipo_operacion) || '_' ||
+                           l_dominio_operacion || '.' || l_nombre_operacion;
+    ELSE
+      l_nombre_programa := 'K_' ||
+                           k_util.f_significado_codigo('TIPO_OPERACION',
+                                                       l_tipo_operacion) || '_' ||
+                           l_dominio_operacion || '.' || l_nombre_operacion || '_' ||
+                           REPLACE(i_version, '.', '_');
+    END IF;
+  
+    RETURN l_nombre_programa;
+  END;
+
   FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB IS
     l_filtros_sql CLOB;
     i             INTEGER;
@@ -620,7 +663,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
+                                                                                            .valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -632,10 +676,12 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i)
+                                                                                          .valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -647,10 +693,11 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i).nombre ||
-                                 ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre || ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i).valor),
+                                                             to_char(anydata.accessdate(i_parametros(i)
+                                                                                        .valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -658,7 +705,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i).nombre));
+                                                              i_parametros(i)
+                                                              .nombre));
             END IF;
           END IF;
         END IF;
