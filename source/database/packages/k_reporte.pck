@@ -110,26 +110,21 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                i_version    IN VARCHAR2 DEFAULT NULL)
     RETURN y_respuesta IS
     PRAGMA AUTONOMOUS_TRANSACTION;
-    l_rsp             y_respuesta;
-    l_prms            y_parametros;
-    l_ctx             y_parametros;
-    l_archivo         y_archivo;
-    l_nombre_reporte  t_operaciones.nombre%TYPE;
-    l_dominio_reporte t_operaciones.dominio%TYPE;
-    l_version_actual  t_operaciones.version_actual%TYPE;
-    l_tipo_reporte    t_reportes.tipo%TYPE;
-    l_sentencia       VARCHAR2(4000);
+    l_rsp            y_respuesta;
+    l_prms           y_parametros;
+    l_ctx            y_parametros;
+    l_archivo        y_archivo;
+    l_nombre_reporte t_operaciones.nombre%TYPE;
+    l_tipo_reporte   t_reportes.tipo%TYPE;
+    l_sentencia      VARCHAR2(4000);
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del reporte';
     BEGIN
-      SELECT upper(o.nombre), upper(o.dominio), o.version_actual, r.tipo
-        INTO l_nombre_reporte,
-             l_dominio_reporte,
-             l_version_actual,
-             l_tipo_reporte
+      SELECT upper(o.nombre), r.tipo
+        INTO l_nombre_reporte, l_tipo_reporte
         FROM t_reportes r, t_operaciones o
        WHERE o.id_operacion = r.id_reporte
          AND o.activo = 'S'
@@ -146,8 +141,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     BEGIN
       l_prms := k_operacion.f_procesar_parametros(i_id_reporte,
                                                   i_parametros,
-                                                  nvl(i_version,
-                                                      l_version_actual));
+                                                  i_version);
     EXCEPTION
       WHEN OTHERS THEN
         k_operacion.p_respuesta_error(l_rsp,
@@ -220,14 +214,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      IF nvl(i_version, l_version_actual) = l_version_actual THEN
-        l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
-                       l_nombre_reporte || '(:2); END;';
-      ELSE
-        l_sentencia := 'BEGIN :1 := K_REPORTE_' || l_dominio_reporte || '.' ||
-                       l_nombre_reporte || '_' ||
-                       REPLACE(i_version, '.', '_') || '(:2); END;';
-      END IF;
+      l_sentencia := 'BEGIN :1 := ' ||
+                     k_operacion.f_nombre_programa(i_id_reporte, i_version) ||
+                     '(:2); END;';
     
       l_rsp.lugar := 'Procesando reporte';
       BEGIN

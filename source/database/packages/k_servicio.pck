@@ -97,25 +97,20 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                 i_version     IN VARCHAR2 DEFAULT NULL)
     RETURN y_respuesta IS
     PRAGMA AUTONOMOUS_TRANSACTION;
-    l_rsp              y_respuesta;
-    l_prms             y_parametros;
-    l_ctx              y_parametros;
-    l_nombre_servicio  t_operaciones.nombre%TYPE;
-    l_dominio_servicio t_operaciones.dominio%TYPE;
-    l_version_actual   t_operaciones.version_actual%TYPE;
-    l_tipo_servicio    t_servicios.tipo%TYPE;
-    l_sentencia        VARCHAR2(4000);
+    l_rsp             y_respuesta;
+    l_prms            y_parametros;
+    l_ctx             y_parametros;
+    l_nombre_servicio t_operaciones.nombre%TYPE;
+    l_tipo_servicio   t_servicios.tipo%TYPE;
+    l_sentencia       VARCHAR2(4000);
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del servicio';
     BEGIN
-      SELECT upper(o.nombre), upper(o.dominio), o.version_actual, s.tipo
-        INTO l_nombre_servicio,
-             l_dominio_servicio,
-             l_version_actual,
-             l_tipo_servicio
+      SELECT upper(o.nombre), s.tipo
+        INTO l_nombre_servicio, l_tipo_servicio
         FROM t_servicios s, t_operaciones o
        WHERE o.id_operacion = s.id_servicio
          AND o.activo = 'S'
@@ -132,8 +127,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     BEGIN
       l_prms := k_operacion.f_procesar_parametros(i_id_servicio,
                                                   i_parametros,
-                                                  nvl(i_version,
-                                                      l_version_actual));
+                                                  i_version);
     EXCEPTION
       WHEN OTHERS THEN
         k_operacion.p_respuesta_error(l_rsp,
@@ -206,14 +200,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      IF nvl(i_version, l_version_actual) = l_version_actual THEN
-        l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
-                       l_nombre_servicio || '(:2); END;';
-      ELSE
-        l_sentencia := 'BEGIN :1 := K_SERVICIO_' || l_dominio_servicio || '.' ||
-                       l_nombre_servicio || '_' ||
-                       REPLACE(i_version, '.', '_') || '(:2); END;';
-      END IF;
+      l_sentencia := 'BEGIN :1 := ' ||
+                     k_operacion.f_nombre_programa(i_id_servicio, i_version) ||
+                     '(:2); END;';
     
       l_rsp.lugar := 'Procesando servicio';
       BEGIN

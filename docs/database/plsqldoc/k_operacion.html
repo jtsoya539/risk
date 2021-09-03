@@ -86,6 +86,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_NOMBRE_PROGRAMA">f_nombre_programa</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_FILTROS_SQL">f_filtros_sql</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -477,6 +482,17 @@ FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                i_parametros   IN CLOB,
                                i_version      IN VARCHAR2 DEFAULT NULL)
   RETURN y_parametros
+
+</PRE>
+<HR>
+<A NAME="F_NOMBRE_PROGRAMA"></A>
+<P CLASS="TYPE_TITLE">
+f_nombre_programa
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_nombre_programa(i_id_operacion IN NUMBER,
+                           i_version      IN VARCHAR2 DEFAULT NULL)
+  RETURN VARCHAR2
 
 </PRE>
 <HR>
