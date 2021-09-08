@@ -663,8 +663,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                                            .valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -676,12 +675,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i)
-                                                                                          .valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -693,11 +690,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre || ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i)
-                                                                                        .valor),
+                                                             to_char(anydata.accessdate(i_parametros(i).valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -705,8 +701,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i)
-                                                              .nombre));
+                                                              i_parametros(i).nombre));
             END IF;
           END IF;
         END IF;
@@ -901,14 +896,14 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   
     CURSOR c_operaciones(i_id_modulo IN VARCHAR2) IS
       SELECT a.id_operacion,
-             lower(f_id_modulo(a.id_operacion)) || '/' ||
+             lower(f_id_modulo(a.id_operacion)) id_modulo,
              lower(k_util.f_reemplazar_acentos(k_util.f_significado_codigo('TIPO_OPERACION',
                                                                            a.tipo) || '/' ||
                                                nvl(a.dominio, '_') || '/' ||
                                                a.nombre)) || '.sql' nombre_archivo
         FROM t_operaciones a
        WHERE f_id_modulo(a.id_operacion) = i_id_modulo
-       ORDER BY 2;
+       ORDER BY 3;
   BEGIN
     FOR m IN c_modulos LOOP
       l_install := '';
@@ -938,7 +933,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         l_uninstall := l_uninstall || l_deletes || utl_tcp.crlf;
         --
         as_zip.add1file(l_zip,
-                        ope.nombre_archivo,
+                        ope.id_modulo || '/' || ope.nombre_archivo,
                         k_util.clob_to_blob(l_inserts));
       END LOOP;
     

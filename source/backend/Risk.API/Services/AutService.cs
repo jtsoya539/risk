@@ -56,6 +56,7 @@ namespace Risk.API.Services
         private const string NOMBRE_VALIDAR_OTP = "VALIDAR_OTP";
         private const string NOMBRE_EDITAR_USUARIO = "EDITAR_USUARIO";
         private const string NOMBRE_REGISTRAR_UBICACION = "REGISTRAR_UBICACION";
+        private const string NOMBRE_VALIDAR_PERMISO = "VALIDAR_PERMISO";
 
         public AutService(ILogger<AutService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(logger, configuration, httpContextAccessor, dbConnectionFactory)
@@ -346,6 +347,21 @@ namespace Risk.API.Services
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_OTP,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> ValidarPermiso(string idPermiso, string accion = null)
+        {
+            JObject prms = new JObject();
+            prms.Add("id_permiso", idPermiso);
+            prms.Add("accion", accion);
+
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+                NOMBRE_VALIDAR_PERMISO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

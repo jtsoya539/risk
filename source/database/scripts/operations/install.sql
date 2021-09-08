@@ -23,6 +23,7 @@ prompt
 @@scripts/operations/servicio/aut/validar_clave_aplicacion.sql
 @@scripts/operations/servicio/aut/validar_credenciales.sql
 @@scripts/operations/servicio/aut/validar_otp.sql
+@@scripts/operations/servicio/aut/validar_permiso.sql
 @@scripts/operations/servicio/aut/validar_sesion.sql
 @@scripts/operations/servicio/gen/guardar_archivo.sql
 @@scripts/operations/servicio/gen/listar_aplicaciones.sql

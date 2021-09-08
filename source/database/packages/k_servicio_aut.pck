@@ -76,6 +76,8 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION validar_otp(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION validar_permiso(i_parametros IN y_parametros) RETURN y_respuesta;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
@@ -951,6 +953,44 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
         k_operacion.p_respuesta_error(l_rsp, 'aut0002', 'OTP inválido');
         RAISE k_operacion.ex_error_general;
     END;
+  
+    k_operacion.p_respuesta_ok(l_rsp);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_operacion.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_operacion.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION validar_permiso(i_parametros IN y_parametros) RETURN y_respuesta IS
+    l_rsp y_respuesta;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Validando parametros';
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'id_permiso') IS NOT NULL,
+                                    'Debe ingresar permiso');
+  
+    l_rsp.lugar := 'Validando permiso';
+    IF NOT
+        k_autorizacion.f_validar_permiso(k_usuario.f_id_usuario(k_sistema.f_usuario),
+                                         k_operacion.f_valor_parametro_string(i_parametros,
+                                                                              'id_permiso'),
+                                         k_operacion.f_valor_parametro_string(i_parametros,
+                                                                              'accion')) THEN
+      k_operacion.p_respuesta_error(l_rsp, 'aut0001', 'Sin autorización');
+      RAISE k_operacion.ex_error_general;
+    END IF;
   
     k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
