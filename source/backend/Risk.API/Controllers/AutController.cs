@@ -478,12 +478,12 @@ namespace Risk.API.Controllers
         }
 
         [HttpGet("ValidarPermiso")]
-        [SwaggerOperation(OperationId = "ValidarPermiso", Summary = "ValidarPermiso", Description = "Permite validar un permiso")]
+        [SwaggerOperation(OperationId = "ValidarPermiso", Summary = "ValidarPermiso", Description = "Permite validar un permiso o una acción sobre un permiso")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
         public IActionResult ValidarPermiso([FromQuery, SwaggerParameter(Description = "Identificador del permiso", Required = true)] string idPermiso,
-            [FromQuery, SwaggerParameter(Description = "Acción", Required = false)] string accion = null)
+            [FromQuery, SwaggerParameter(Description = "Acción sobre el permiso", Required = false)] AccionPermiso? accion = null)
         {
             var respuesta = _autService.ValidarPermiso(idPermiso, accion);
             return ProcesarRespuesta(respuesta);

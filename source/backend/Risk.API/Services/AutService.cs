@@ -354,11 +354,11 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
-        public Respuesta<Dato> ValidarPermiso(string idPermiso, string accion = null)
+        public Respuesta<Dato> ValidarPermiso(string idPermiso, AccionPermiso? accion = null)
         {
             JObject prms = new JObject();
             prms.Add("id_permiso", idPermiso);
-            prms.Add("accion", accion);
+            prms.Add("accion", accion.GetStringValue());
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_VALIDAR_PERMISO,
