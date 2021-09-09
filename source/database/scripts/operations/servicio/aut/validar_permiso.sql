@@ -123,7 +123,7 @@ begin
   l_clob(10) :=q'!!';
   l_clob(11) :=q'!!';
   l_clob(12) :=q'!!';
-  l_clob(13) :=q'!!';
+  l_clob(13) :=q'!ACCION_PERMISO!';
   l_clob(14) :=q'!N!';
 
   insert into t_operacion_parametros
