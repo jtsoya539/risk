@@ -65,6 +65,20 @@ CREATE OR REPLACE PACKAGE k_util IS
     RETURN y_cadenas
     PIPELINED;
 
+  FUNCTION f_unir_cadenas(i_cadena    IN VARCHAR2,
+                          i_cadenas   IN y_cadenas,
+                          i_wrap_char IN VARCHAR2 DEFAULT '@')
+    RETURN VARCHAR2;
+
+  FUNCTION f_unir_cadenas(i_cadena    IN VARCHAR2,
+                          i_cadena1   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena2   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena3   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena4   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena5   IN VARCHAR2 DEFAULT NULL,
+                          i_wrap_char IN VARCHAR2 DEFAULT '@')
+    RETURN VARCHAR2;
+
   /**
   Retorna el valor que se encuenta en la posicion indicada dentro de una cadena
   Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
@@ -405,6 +419,58 @@ END;';
       END IF;
     END LOOP;
     RETURN;
+  END;
+
+  FUNCTION f_unir_cadenas(i_cadena    IN VARCHAR2,
+                          i_cadenas   IN y_cadenas,
+                          i_wrap_char IN VARCHAR2 DEFAULT '@')
+    RETURN VARCHAR2 IS
+    l_cadena VARCHAR2(32767);
+  BEGIN
+    l_cadena := i_cadena;
+    IF l_cadena IS NOT NULL AND i_cadenas.count > 0 THEN
+      FOR i IN i_cadenas.first .. i_cadenas.last LOOP
+        -- Given the index "i" find the related placeholder in the message and
+        -- replace the placeholder with the array's value at index "i".
+        l_cadena := REPLACE(l_cadena,
+                            i_wrap_char || to_char(i) || i_wrap_char,
+                            i_cadenas(i));
+      END LOOP;
+    END IF;
+  
+    RETURN l_cadena;
+  END;
+
+  FUNCTION f_unir_cadenas(i_cadena    IN VARCHAR2,
+                          i_cadena1   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena2   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena3   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena4   IN VARCHAR2 DEFAULT NULL,
+                          i_cadena5   IN VARCHAR2 DEFAULT NULL,
+                          i_wrap_char IN VARCHAR2 DEFAULT '@')
+    RETURN VARCHAR2 IS
+    l_cadenas y_cadenas;
+  BEGIN
+    l_cadenas := NEW y_cadenas();
+    l_cadenas.extend(5);
+  
+    IF i_cadena1 IS NOT NULL THEN
+      l_cadenas(1) := i_cadena1;
+    END IF;
+    IF i_cadena2 IS NOT NULL THEN
+      l_cadenas(2) := i_cadena2;
+    END IF;
+    IF i_cadena3 IS NOT NULL THEN
+      l_cadenas(3) := i_cadena3;
+    END IF;
+    IF i_cadena4 IS NOT NULL THEN
+      l_cadenas(4) := i_cadena4;
+    END IF;
+    IF i_cadena5 IS NOT NULL THEN
+      l_cadenas(5) := i_cadena5;
+    END IF;
+  
+    RETURN f_unir_cadenas(i_cadena, l_cadenas, nvl(i_wrap_char, '@'));
   END;
 
   FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,

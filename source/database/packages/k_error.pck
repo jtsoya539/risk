@@ -34,10 +34,6 @@ CREATE OR REPLACE PACKAGE k_error IS
   c_oracle_predefined_error CONSTANT VARCHAR2(3) := 'OPE';
   c_user_defined_error      CONSTANT VARCHAR2(3) := 'UDE';
 
-  c_wrap_char CONSTANT VARCHAR2(1) := '@';
-
-  TYPE t_cadenas IS TABLE OF VARCHAR2(255) INDEX BY BINARY_INTEGER;
-
   FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2;
 
   /**
@@ -49,23 +45,22 @@ CREATE OR REPLACE PACKAGE k_error IS
   */
   FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2) RETURN VARCHAR2;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
-                           i_cadenas   IN t_cadenas,
-                           i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
-    RETURN VARCHAR2;
+  FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
+                           i_cadenas  IN y_cadenas) RETURN VARCHAR2;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
-                           i_cadena1   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena2   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena3   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena4   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena5   IN VARCHAR2 DEFAULT NULL,
-                           i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
+  FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
+                           i_cadena1  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena2  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena3  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena4  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena5  IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2;
 
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_error IS
+
+  c_wrap_char CONSTANT VARCHAR2(1) := '@';
 
   FUNCTION f_tipo_excepcion(i_sqlcode IN NUMBER) RETURN VARCHAR2 IS
     l_tipo_error VARCHAR2(3);
@@ -104,9 +99,29 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     RETURN TRIM(l_mensaje);
   END;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
-                           i_cadenas   IN t_cadenas,
-                           i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
+  FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
+                           i_cadenas  IN y_cadenas) RETURN VARCHAR2 IS
+    l_mensaje t_errores.mensaje%TYPE;
+  BEGIN
+    BEGIN
+      SELECT mensaje
+        INTO l_mensaje
+        FROM t_errores
+       WHERE id_error = i_id_error;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_mensaje := 'Error no registrado [' || i_id_error || ']';
+    END;
+  
+    RETURN k_util.f_unir_cadenas(l_mensaje, i_cadenas, c_wrap_char);
+  END;
+
+  FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
+                           i_cadena1  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena2  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena3  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena4  IN VARCHAR2 DEFAULT NULL,
+                           i_cadena5  IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2 IS
     l_mensaje t_errores.mensaje%TYPE;
   BEGIN
@@ -120,48 +135,13 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
         l_mensaje := 'Error no registrado [' || i_id_error || ']';
     END;
   
-    IF l_mensaje IS NOT NULL AND i_cadenas.count > 0 THEN
-      FOR i IN i_cadenas.first .. i_cadenas.last LOOP
-        -- Given the index "i" find the related placeholder in the message and
-        -- replace the placeholder with the array's value at index "i".
-        l_mensaje := REPLACE(l_mensaje,
-                             i_wrap_char || to_char(i) || i_wrap_char,
-                             i_cadenas(i));
-      END LOOP;
-    END IF;
-  
-    RETURN l_mensaje;
-  END;
-
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
-                           i_cadena1   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena2   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena3   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena4   IN VARCHAR2 DEFAULT NULL,
-                           i_cadena5   IN VARCHAR2 DEFAULT NULL,
-                           i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
-    RETURN VARCHAR2 IS
-    l_cadenas t_cadenas;
-  BEGIN
-    IF i_cadena1 IS NOT NULL THEN
-      l_cadenas(1) := i_cadena1;
-    END IF;
-    IF i_cadena2 IS NOT NULL THEN
-      l_cadenas(2) := i_cadena2;
-    END IF;
-    IF i_cadena3 IS NOT NULL THEN
-      l_cadenas(3) := i_cadena3;
-    END IF;
-    IF i_cadena4 IS NOT NULL THEN
-      l_cadenas(4) := i_cadena4;
-    END IF;
-    IF i_cadena5 IS NOT NULL THEN
-      l_cadenas(5) := i_cadena5;
-    END IF;
-  
-    RETURN f_mensaje_error(i_id_error,
-                           l_cadenas,
-                           nvl(i_wrap_char, c_wrap_char));
+    RETURN k_util.f_unir_cadenas(l_mensaje,
+                                 i_cadena1,
+                                 i_cadena2,
+                                 i_cadena3,
+                                 i_cadena4,
+                                 i_cadena5,
+                                 c_wrap_char);
   END;
 
 END;
