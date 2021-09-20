@@ -78,6 +78,18 @@ CREATE OR REPLACE PACKAGE k_usuario IS
   PROCEDURE p_desuscribir_notificacion(i_id_usuario       IN NUMBER,
                                        i_suscripcion_baja IN VARCHAR2);
 
+  /**
+  Guarda dato de un usuario
+  
+  %author dmezac 22/8/2021 15:05:15
+  %param i_alias Alias del usuario
+  %param i_campo Campo a guardar
+  %param i_dato Dato a guardar
+  */
+  PROCEDURE p_guardar_dato_string(i_alias IN VARCHAR2,
+                                  i_campo IN VARCHAR2,
+                                  i_dato  IN VARCHAR2);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_usuario IS
@@ -372,6 +384,26 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
     DELETE t_usuario_suscripciones s
      WHERE s.id_usuario = i_id_usuario
        AND lower(s.suscripcion) = lower(i_suscripcion_baja);
+  END;
+
+  PROCEDURE p_guardar_dato_string(i_alias IN VARCHAR2,
+                                  i_campo IN VARCHAR2,
+                                  i_dato  IN VARCHAR2) IS
+    l_id_persona t_personas.id_persona%TYPE;
+    l_alias      t_usuarios.alias%TYPE;
+  BEGIN
+    -- Verifica que exista usuario
+    BEGIN
+      SELECT alias INTO l_alias FROM t_usuarios WHERE alias = i_alias;
+    EXCEPTION
+      WHEN no_data_found THEN
+        raise_application_error(-20000, 'Usuario inexistente');
+    END;
+  
+    -- Guarda dato del usuario
+    IF i_dato IS NOT NULL THEN
+      k_dato.p_guardar_dato_string('T_USUARIOS', i_campo, l_alias, i_dato);
+    END IF;
   END;
 
 END;

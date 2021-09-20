@@ -74,6 +74,14 @@ DELETE t_servicios WHERE id_servicio = 10;
 DELETE t_operacion_parametros WHERE id_operacion = 10;
 DELETE t_operaciones WHERE id_operacion = 10;
 
+/* ==================== ID_OPERACION = 70 ==================== */
+DELETE t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(70);
+DELETE t_trabajos WHERE id_trabajo = 70;
+DELETE t_reportes WHERE id_reporte = 70;
+DELETE t_servicios WHERE id_servicio = 70;
+DELETE t_operacion_parametros WHERE id_operacion = 70;
+DELETE t_operaciones WHERE id_operacion = 70;
+
 /* ==================== ID_OPERACION = 42 ==================== */
 DELETE t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(42);
 DELETE t_trabajos WHERE id_trabajo = 42;
