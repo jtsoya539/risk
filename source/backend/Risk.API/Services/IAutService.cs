@@ -43,6 +43,7 @@ namespace Risk.API.Services
         Respuesta<Dato> RegistrarUbicacion(string tokenDispositivo, double latitud, double longitud);
         Respuesta<Dato> TiempoExpiracionToken(TipoToken tipoToken);
         Respuesta<Dato> EditarUsuario(string usuarioAntiguo, string usuarioNuevo, string nombre, string apellido, string direccionCorreo, string numeroTelefono);
+        Respuesta<Dato> EditarDatoUsuario(string usuario, string campo, string dato);
         Respuesta<Dato> CambiarEstadoUsuario(string usuario, EstadoUsuario estado);
         Respuesta<Dato> GenerarOtp(TipoMensajeria tipoMensajeria, string destino);
         Respuesta<Dato> ValidarOtp(string secret, int otp);
