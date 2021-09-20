@@ -72,6 +72,9 @@ CREATE OR REPLACE PACKAGE k_servicio_aut IS
 
   FUNCTION editar_usuario(i_parametros IN y_parametros) RETURN y_respuesta;
 
+  FUNCTION editar_dato_usuario(i_parametros IN y_parametros)
+    RETURN y_respuesta;
+
   FUNCTION generar_otp(i_parametros IN y_parametros) RETURN y_respuesta;
 
   FUNCTION validar_otp(i_parametros IN y_parametros) RETURN y_respuesta;
@@ -803,6 +806,52 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                                           'direccion_correo'),
                                      k_operacion.f_valor_parametro_string(i_parametros,
                                                                           'numero_telefono'));
+  
+    k_operacion.p_respuesta_ok(l_rsp, l_dato);
+    RETURN l_rsp;
+  EXCEPTION
+    WHEN k_operacion.ex_error_parametro THEN
+      RETURN l_rsp;
+    WHEN k_operacion.ex_error_general THEN
+      RETURN l_rsp;
+    WHEN OTHERS THEN
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
+      RETURN l_rsp;
+  END;
+
+  FUNCTION editar_dato_usuario(i_parametros IN y_parametros)
+    RETURN y_respuesta IS
+    l_rsp  y_respuesta;
+    l_dato y_dato;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp  := NEW y_respuesta();
+    l_dato := NEW y_dato();
+  
+    l_rsp.lugar := 'Validando parámetros';
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario') IS NOT NULL,
+                                    'Debe ingresar usuario');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'campo') IS NOT NULL,
+                                    'Debe ingresar campo');
+    k_operacion.p_validar_parametro(l_rsp,
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'dato') IS NOT NULL,
+                                    'Debe ingresar dato');
+  
+    l_rsp.lugar := 'Editando dato del usuario';
+    k_usuario.p_guardar_dato_string(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'usuario'),
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'campo'),
+                                    k_operacion.f_valor_parametro_string(i_parametros,
+                                                                         'dato'));
   
     k_operacion.p_respuesta_ok(l_rsp, l_dato);
     RETURN l_rsp;

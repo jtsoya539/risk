@@ -55,6 +55,7 @@ namespace Risk.API.Services
         private const string NOMBRE_GENERAR_OTP = "GENERAR_OTP";
         private const string NOMBRE_VALIDAR_OTP = "VALIDAR_OTP";
         private const string NOMBRE_EDITAR_USUARIO = "EDITAR_USUARIO";
+        private const string NOMBRE_EDITAR_DATO_USUARIO = "EDITAR_DATO_USUARIO";
         private const string NOMBRE_REGISTRAR_UBICACION = "REGISTRAR_UBICACION";
         private const string NOMBRE_VALIDAR_PERMISO = "VALIDAR_PERMISO";
 
@@ -302,6 +303,22 @@ namespace Risk.API.Services
 
             string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
                 NOMBRE_EDITAR_USUARIO,
+                DOMINIO_OPERACION,
+                prms.ToString(Formatting.None));
+            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+
+            return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
+        }
+
+        public Respuesta<Dato> EditarDatoUsuario(string usuario, string campo, string dato)
+        {
+            JObject prms = new JObject();
+            prms.Add("usuario", usuario);
+            prms.Add("campo", campo);
+            prms.Add("dato", dato);
+
+            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+                NOMBRE_EDITAR_DATO_USUARIO,
                 DOMINIO_OPERACION,
                 prms.ToString(Formatting.None));
             var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);

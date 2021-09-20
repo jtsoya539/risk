@@ -253,6 +253,17 @@ namespace Risk.API.Controllers
             return ProcesarRespuesta(respuesta);
         }
 
+        [HttpPost("EditarDatoUsuario")]
+        [SwaggerOperation(OperationId = "EditarDatoUsuario", Summary = "EditarDatoUsuario", Description = "Permite editar dato de un usuario")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        public IActionResult EditarDatoUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromBody] EditarDatoUsuarioRequestBody requestBody)
+        {
+            var respuesta = _autService.EditarDatoUsuario(usuario, requestBody.Campo, requestBody.Dato);
+            return ProcesarRespuesta(respuesta);
+        }
+
         [AllowAnyClient]
         [AllowAnonymous]
         [HttpGet("/[controller]/ActivarUsuario")]

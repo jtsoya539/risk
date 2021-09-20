@@ -11,6 +11,7 @@ prompt
 @@scripts/operations/servicio/aut/cambiar_estado_usuario.sql
 @@scripts/operations/servicio/aut/datos_dispositivo.sql
 @@scripts/operations/servicio/aut/datos_usuario.sql
+@@scripts/operations/servicio/aut/editar_dato_usuario.sql
 @@scripts/operations/servicio/aut/editar_usuario.sql
 @@scripts/operations/servicio/aut/generar_otp.sql
 @@scripts/operations/servicio/aut/iniciar_sesion.sql
