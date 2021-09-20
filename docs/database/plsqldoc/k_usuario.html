@@ -100,6 +100,11 @@ Suscribe usuario a una notificaci&#243;n
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Desuscribe usuario de una notificaci&#243;n
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_GUARDAR_DATO_STRING">p_guardar_dato_string</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Guarda dato de un usuario
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Exceptions"></A>
@@ -328,6 +333,62 @@ Identificador del usuario<br>
 i_suscripcion_baja&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Suscripci&#243;n a dar de baja<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_GUARDAR_DATO_STRING"></A>
+<P CLASS="TYPE_TITLE">
+p_guardar_dato_string
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_guardar_dato_string(i_alias IN VARCHAR2,
+                                i_campo IN VARCHAR2,
+                                i_dato  IN VARCHAR2)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Guarda dato de un usuario<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 22/8/2021 15:05:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_alias&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Alias del usuario<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_campo&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Campo a guardar<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_dato&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Dato a guardar<br>
 
 </TD></TR>
 </TABLE>
