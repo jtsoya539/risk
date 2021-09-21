@@ -72,6 +72,11 @@ Constants
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_WRAP_CHAR">c_wrap_char</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -89,6 +94,14 @@ c_user_defined_error
 </P>
 <PRE CLASS="DECL_TEXT">
 c_user_defined_error      CONSTANT VARCHAR2(3) := 'UDE';
+</PRE>
+<HR>
+<A NAME="C_WRAP_CHAR"></A>
+<P CLASS="TYPE_TITLE">
+c_wrap_char
+</P>
+<PRE CLASS="DECL_TEXT">
+c_wrap_char CONSTANT VARCHAR2(1) := '@';
 </PRE>
 <HR>
 <A NAME="F_TIPO_EXCEPCION"></A>
@@ -157,8 +170,10 @@ Mensaje de error<br>
 f_mensaje_error
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
-                         i_cadenas  IN y_cadenas) RETURN VARCHAR2
+FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
+                         i_cadenas   IN y_cadenas,
+                         i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
+  RETURN VARCHAR2
 
 </PRE>
 <HR>
@@ -167,12 +182,13 @@ FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
 f_mensaje_error
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_mensaje_error(i_id_error IN VARCHAR2,
-                         i_cadena1  IN VARCHAR2 DEFAULT NULL,
-                         i_cadena2  IN VARCHAR2 DEFAULT NULL,
-                         i_cadena3  IN VARCHAR2 DEFAULT NULL,
-                         i_cadena4  IN VARCHAR2 DEFAULT NULL,
-                         i_cadena5  IN VARCHAR2 DEFAULT NULL)
+FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
+                         i_cadena1   IN VARCHAR2 DEFAULT NULL,
+                         i_cadena2   IN VARCHAR2 DEFAULT NULL,
+                         i_cadena3   IN VARCHAR2 DEFAULT NULL,
+                         i_cadena4   IN VARCHAR2 DEFAULT NULL,
+                         i_cadena5   IN VARCHAR2 DEFAULT NULL,
+                         i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
   RETURN VARCHAR2
 
 </PRE>
