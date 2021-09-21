@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**CambiarClaveAcceso**](AutApi.md#cambiarclaveacceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 [**CambiarClaveTransaccional**](AutApi.md#cambiarclavetransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
 [**DatosUsuario**](AutApi.md#datosusuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
+[**EditarDatoUsuario**](AutApi.md#editardatousuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
 [**EditarUsuario**](AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**EliminarUsuario**](AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**FinalizarSesion**](AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -25,6 +26,7 @@ Method | HTTP request | Description
 [**RegistrarUbicacion**](AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 [**RegistrarUsuario**](AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 [**ValidarOtp**](AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
+[**ValidarPermiso**](AutApi.md#validarpermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
 [**ValidarSesion**](AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
 
@@ -341,6 +343,92 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="editardatousuario"></a>
+# **EditarDatoUsuario**
+> DatoRespuesta EditarDatoUsuario (string usuario, string riskServiceVersion = null, EditarDatoUsuarioRequestBody editarDatoUsuarioRequestBody = null)
+
+EditarDatoUsuario
+
+Permite editar dato de un usuario
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class EditarDatoUsuarioExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var usuario = usuario_example;  // string | Usuario
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var editarDatoUsuarioRequestBody = new EditarDatoUsuarioRequestBody(); // EditarDatoUsuarioRequestBody |  (optional) 
+
+            try
+            {
+                // EditarDatoUsuario
+                DatoRespuesta result = apiInstance.EditarDatoUsuario(usuario, riskServiceVersion, editarDatoUsuarioRequestBody);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.EditarDatoUsuario: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **usuario** | **string**| Usuario | 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional] 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json, text/plain
 
 ### HTTP response details
@@ -1760,6 +1848,92 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 | **200** | Operación exitosa |  -  |
 | **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="validarpermiso"></a>
+# **ValidarPermiso**
+> DatoRespuesta ValidarPermiso (string idPermiso, AccionPermiso? accion = null, string riskServiceVersion = null)
+
+ValidarPermiso
+
+Permite validar un permiso o una acción sobre un permiso
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using Risk.API.Client.Api;
+using Risk.API.Client.Client;
+using Risk.API.Client.Model;
+
+namespace Example
+{
+    public class ValidarPermisoExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://localhost:5001";
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+            // Configure API key authorization: RiskAppKey
+            config.AddApiKey("Risk-App-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
+
+            var apiInstance = new AutApi(config);
+            var idPermiso = idPermiso_example;  // string | Identificador del permiso
+            var accion = ;  // AccionPermiso? | Acción sobre el permiso (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+
+            try
+            {
+                // ValidarPermiso
+                DatoRespuesta result = apiInstance.ValidarPermiso(idPermiso, accion, riskServiceVersion);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AutApi.ValidarPermiso: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPermiso** | **string**| Identificador del permiso | 
+ **accion** | **AccionPermiso?**| Acción sobre el permiso | [optional] 
+ **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
 | **400** | Operación con error |  -  |
 | **500** | Error inesperado |  -  |
 | **501** | Servicio no implementado o inactivo |  -  |

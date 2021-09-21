@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**cambiarClaveAcceso**](AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 [**cambiarClaveTransaccional**](AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
 [**datosUsuario**](AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
+[**editarDatoUsuario**](AutApi.md#editarDatoUsuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
 [**editarUsuario**](AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**eliminarUsuario**](AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**finalizarSesion**](AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -25,6 +26,7 @@ Method | HTTP request | Description
 [**registrarUbicacion**](AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 [**registrarUsuario**](AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 [**validarOtp**](AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
+[**validarPermiso**](AutApi.md#validarPermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
 [**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
 
@@ -237,6 +239,62 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+<a name="editarDatoUsuario"></a>
+# **editarDatoUsuario**
+> DatoRespuesta editarDatoUsuario(usuario, riskMinusServiceMinusVersion, editarDatoUsuarioRequestBody)
+
+EditarDatoUsuario
+
+Permite editar dato de un usuario
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val usuario : kotlin.String = usuario_example // kotlin.String | Usuario
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+val editarDatoUsuarioRequestBody : EditarDatoUsuarioRequestBody =  // EditarDatoUsuarioRequestBody | 
+try {
+    val result : DatoRespuesta = apiInstance.editarDatoUsuario(usuario, riskMinusServiceMinusVersion, editarDatoUsuarioRequestBody)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#editarDatoUsuario")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#editarDatoUsuario")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **usuario** | **kotlin.String**| Usuario |
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional]
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure AccessToken:
+    ApiClient.accessToken = ""
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json, text/plain
 
 <a name="editarUsuario"></a>
@@ -1142,6 +1200,62 @@ Name | Type | Description  | Notes
 ### Authorization
 
 
+Configure RiskAppKey:
+    ApiClient.apiKey["Risk-App-Key"] = ""
+    ApiClient.apiKeyPrefix["Risk-App-Key"] = ""
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json, text/plain
+
+<a name="validarPermiso"></a>
+# **validarPermiso**
+> DatoRespuesta validarPermiso(idPermiso, accion, riskMinusServiceMinusVersion)
+
+ValidarPermiso
+
+Permite validar un permiso o una acción sobre un permiso
+
+### Example
+```kotlin
+// Import classes:
+//import py.com.risk.client.infrastructure.*
+//import py.com.risk.client.models.*
+
+val apiInstance = AutApi()
+val idPermiso : kotlin.String = idPermiso_example // kotlin.String | Identificador del permiso
+val accion : AccionPermiso =  // AccionPermiso | Acción sobre el permiso
+val riskMinusServiceMinusVersion : kotlin.String = riskMinusServiceMinusVersion_example // kotlin.String | Versión del Servicio
+try {
+    val result : DatoRespuesta = apiInstance.validarPermiso(idPermiso, accion, riskMinusServiceMinusVersion)
+    println(result)
+} catch (e: ClientException) {
+    println("4xx response calling AutApi#validarPermiso")
+    e.printStackTrace()
+} catch (e: ServerException) {
+    println("5xx response calling AutApi#validarPermiso")
+    e.printStackTrace()
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPermiso** | **kotlin.String**| Identificador del permiso |
+ **accion** | [**AccionPermiso**](.md)| Acción sobre el permiso | [optional] [enum: Consultar, Insertar, Actualizar, Eliminar]
+ **riskMinusServiceMinusVersion** | **kotlin.String**| Versión del Servicio | [optional]
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+
+Configure AccessToken:
+    ApiClient.accessToken = ""
 Configure RiskAppKey:
     ApiClient.apiKey["Risk-App-Key"] = ""
     ApiClient.apiKeyPrefix["Risk-App-Key"] = ""

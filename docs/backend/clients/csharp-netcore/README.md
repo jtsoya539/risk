@@ -95,6 +95,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**CambiarClaveAcceso**](docs/AutApi.md#cambiarclaveacceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 *AutApi* | [**CambiarClaveTransaccional**](docs/AutApi.md#cambiarclavetransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
 *AutApi* | [**DatosUsuario**](docs/AutApi.md#datosusuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
+*AutApi* | [**EditarDatoUsuario**](docs/AutApi.md#editardatousuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
 *AutApi* | [**EditarUsuario**](docs/AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**EliminarUsuario**](docs/AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**FinalizarSesion**](docs/AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -112,6 +113,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**RegistrarUbicacion**](docs/AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 *AutApi* | [**RegistrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**ValidarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
+*AutApi* | [**ValidarPermiso**](docs/AutApi.md#validarpermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
 *AutApi* | [**ValidarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**GuardarArchivo**](docs/GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 *GenApi* | [**ListarAplicaciones**](docs/GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
@@ -142,6 +144,7 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [Model.AccionPermiso](docs/AccionPermiso.md)
  - [Model.Aplicacion](docs/Aplicacion.md)
  - [Model.AplicacionPagina](docs/AplicacionPagina.md)
  - [Model.AplicacionPaginaRespuesta](docs/AplicacionPaginaRespuesta.md)
@@ -164,6 +167,7 @@ Class | Method | HTTP request | Description
  - [Model.DepartamentoPagina](docs/DepartamentoPagina.md)
  - [Model.DepartamentoPaginaRespuesta](docs/DepartamentoPaginaRespuesta.md)
  - [Model.Dispositivo](docs/Dispositivo.md)
+ - [Model.EditarDatoUsuarioRequestBody](docs/EditarDatoUsuarioRequestBody.md)
  - [Model.EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [Model.EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
  - [Model.Error](docs/Error.md)

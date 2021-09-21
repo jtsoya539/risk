@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-08-24T21:54:01.732-04:00[America/Asuncion]
+- Build date: 2021-09-20T23:56:22.905048700-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -114,6 +114,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**cambiarClaveAcceso**](docs/AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 *AutApi* | [**cambiarClaveTransaccional**](docs/AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
 *AutApi* | [**datosUsuario**](docs/AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
+*AutApi* | [**editarDatoUsuario**](docs/AutApi.md#editarDatoUsuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
 *AutApi* | [**editarUsuario**](docs/AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**eliminarUsuario**](docs/AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**finalizarSesion**](docs/AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -131,6 +132,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**registrarUbicacion**](docs/AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
+*AutApi* | [**validarPermiso**](docs/AutApi.md#validarPermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**guardarArchivo**](docs/GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 *GenApi* | [**listarAplicaciones**](docs/GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
@@ -160,6 +162,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [AccionPermiso](docs/AccionPermiso.md)
  - [Aplicacion](docs/Aplicacion.md)
  - [AplicacionPagina](docs/AplicacionPagina.md)
  - [AplicacionPaginaRespuesta](docs/AplicacionPaginaRespuesta.md)
@@ -182,6 +185,7 @@ Class | Method | HTTP request | Description
  - [DepartamentoPagina](docs/DepartamentoPagina.md)
  - [DepartamentoPaginaRespuesta](docs/DepartamentoPaginaRespuesta.md)
  - [Dispositivo](docs/Dispositivo.md)
+ - [EditarDatoUsuarioRequestBody](docs/EditarDatoUsuarioRequestBody.md)
  - [EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
  - [Error](docs/Error.md)

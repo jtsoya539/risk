@@ -39,6 +39,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**cambiarClaveAcceso**](docs/AutApi.md#cambiarclaveacceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 *AutApi* | [**cambiarClaveTransaccional**](docs/AutApi.md#cambiarclavetransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
 *AutApi* | [**datosUsuario**](docs/AutApi.md#datosusuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
+*AutApi* | [**editarDatoUsuario**](docs/AutApi.md#editardatousuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
 *AutApi* | [**editarUsuario**](docs/AutApi.md#editarusuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 *AutApi* | [**eliminarUsuario**](docs/AutApi.md#eliminarusuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 *AutApi* | [**finalizarSesion**](docs/AutApi.md#finalizarsesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -56,6 +57,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**registrarUbicacion**](docs/AutApi.md#registrarubicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 *AutApi* | [**registrarUsuario**](docs/AutApi.md#registrarusuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 *AutApi* | [**validarOtp**](docs/AutApi.md#validarotp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
+*AutApi* | [**validarPermiso**](docs/AutApi.md#validarpermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**guardarArchivo**](docs/GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 *GenApi* | [**listarAplicaciones**](docs/GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
@@ -86,6 +88,7 @@ Class | Method | HTTP request | Description
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
+ - [py.com.risk.client.models.AccionPermiso](docs/AccionPermiso.md)
  - [py.com.risk.client.models.Aplicacion](docs/Aplicacion.md)
  - [py.com.risk.client.models.AplicacionPagina](docs/AplicacionPagina.md)
  - [py.com.risk.client.models.AplicacionPaginaRespuesta](docs/AplicacionPaginaRespuesta.md)
@@ -108,6 +111,7 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.DepartamentoPagina](docs/DepartamentoPagina.md)
  - [py.com.risk.client.models.DepartamentoPaginaRespuesta](docs/DepartamentoPaginaRespuesta.md)
  - [py.com.risk.client.models.Dispositivo](docs/Dispositivo.md)
+ - [py.com.risk.client.models.EditarDatoUsuarioRequestBody](docs/EditarDatoUsuarioRequestBody.md)
  - [py.com.risk.client.models.EditarUsuarioRequestBody](docs/EditarUsuarioRequestBody.md)
  - [py.com.risk.client.models.EliminarUsuarioRequestBody](docs/EliminarUsuarioRequestBody.md)
  - [py.com.risk.client.models.Error](docs/Error.md)

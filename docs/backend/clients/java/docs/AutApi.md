@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**cambiarClaveAcceso**](AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
 [**cambiarClaveTransaccional**](AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
 [**datosUsuario**](AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
+[**editarDatoUsuario**](AutApi.md#editarDatoUsuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
 [**editarUsuario**](AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
 [**eliminarUsuario**](AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
 [**finalizarSesion**](AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
@@ -25,6 +26,7 @@ Method | HTTP request | Description
 [**registrarUbicacion**](AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
 [**registrarUsuario**](AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
 [**validarOtp**](AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
+[**validarPermiso**](AutApi.md#validarPermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
 [**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
 
@@ -335,6 +337,91 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
+## editarDatoUsuario
+
+> DatoRespuesta editarDatoUsuario(usuario, riskServiceVersion, editarDatoUsuarioRequestBody)
+
+EditarDatoUsuario
+
+Permite editar dato de un usuario
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.AutApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure HTTP bearer authorization: AccessToken
+        HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
+        AccessToken.setBearerToken("BEARER TOKEN");
+
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        AutApi apiInstance = new AutApi(defaultClient);
+        String usuario = "usuario_example"; // String | Usuario
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        EditarDatoUsuarioRequestBody editarDatoUsuarioRequestBody = new EditarDatoUsuarioRequestBody(); // EditarDatoUsuarioRequestBody | 
+        try {
+            DatoRespuesta result = apiInstance.editarDatoUsuario(usuario, riskServiceVersion, editarDatoUsuarioRequestBody);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AutApi#editarDatoUsuario");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **usuario** | **String**| Usuario |
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional]
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
 ### HTTP response details
@@ -1715,6 +1802,91 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 | **200** | Operación exitosa |  -  |
 | **403** | Aplicación no autorizada |  -  |
+| **400** | Operación con error |  -  |
+| **500** | Error inesperado |  -  |
+| **501** | Servicio no implementado o inactivo |  -  |
+
+
+## validarPermiso
+
+> DatoRespuesta validarPermiso(idPermiso, accion, riskServiceVersion)
+
+ValidarPermiso
+
+Permite validar un permiso o una acción sobre un permiso
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.AutApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://localhost:5001");
+        
+        // Configure HTTP bearer authorization: AccessToken
+        HttpBearerAuth AccessToken = (HttpBearerAuth) defaultClient.getAuthentication("AccessToken");
+        AccessToken.setBearerToken("BEARER TOKEN");
+
+        // Configure API key authorization: RiskAppKey
+        ApiKeyAuth RiskAppKey = (ApiKeyAuth) defaultClient.getAuthentication("RiskAppKey");
+        RiskAppKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //RiskAppKey.setApiKeyPrefix("Token");
+
+        AutApi apiInstance = new AutApi(defaultClient);
+        String idPermiso = "idPermiso_example"; // String | Identificador del permiso
+        AccionPermiso accion = new AccionPermiso(); // AccionPermiso | Acción sobre el permiso
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        try {
+            DatoRespuesta result = apiInstance.validarPermiso(idPermiso, accion, riskServiceVersion);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AutApi#validarPermiso");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **idPermiso** | **String**| Identificador del permiso |
+ **accion** | [**AccionPermiso**](.md)| Acción sobre el permiso | [optional] [enum: Consultar, Insertar, Actualizar, Eliminar]
+ **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+
+### Return type
+
+[**DatoRespuesta**](DatoRespuesta.md)
+
+### Authorization
+
+[AccessToken](../README.md#AccessToken), [RiskAppKey](../README.md#RiskAppKey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/plain
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Operación exitosa |  -  |
+| **403** | Aplicación no autorizada |  -  |
+| **401** | Operación no autorizada |  -  |
 | **400** | Operación con error |  -  |
 | **500** | Error inesperado |  -  |
 | **501** | Servicio no implementado o inactivo |  -  |
