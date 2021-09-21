@@ -3,6 +3,7 @@
 # Sesion
 
 Agrupa datos de una sesión
+
 ## Properties
 
 Name | Type | Description | Notes

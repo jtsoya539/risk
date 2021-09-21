@@ -2,6 +2,7 @@
 
 # RegistrarDispositivoRequestBody
 
+
 ## Properties
 
 Name | Type | Description | Notes

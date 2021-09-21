@@ -2,6 +2,7 @@
 
 # Rol
 
+
 ## Properties
 
 Name | Type | Description | Notes

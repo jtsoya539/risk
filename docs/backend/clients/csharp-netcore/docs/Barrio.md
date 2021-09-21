@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Barrio
 Agrupa datos de Barrios
+
 ## Properties
 
 Name | Type | Description | Notes

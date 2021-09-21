@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.BarrioPaginaRespuesta
 Respuesta de un servicio o proceso
+
 ## Properties
 
 Name | Type | Description | Notes

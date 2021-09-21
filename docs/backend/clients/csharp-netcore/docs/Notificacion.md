@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.Notificacion
+
 ## Properties
 
 Name | Type | Description | Notes

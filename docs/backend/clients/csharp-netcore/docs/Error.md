@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Error
 Agrupa datos de Errores
+
 ## Properties
 
 Name | Type | Description | Notes

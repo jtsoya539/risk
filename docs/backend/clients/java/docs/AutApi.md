@@ -92,6 +92,7 @@ No authorization required
 - **Content-Type**: Not defined
 - **Accept**: text/html, application/json
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -172,6 +173,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -256,6 +258,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -338,6 +341,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -424,6 +428,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -509,6 +514,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -591,6 +597,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -675,6 +682,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -717,7 +725,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        TipoMensajeria tipoMensajeria = new TipoMensajeria(); // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
+        TipoMensajeria tipoMensajeria = TipoMensajeria.fromValue("Mail"); // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
         String destino = "destino_example"; // String | Destino de la mensajería
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
@@ -755,6 +763,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -846,6 +855,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: multipart/form-data
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -925,6 +935,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1003,6 +1014,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1080,6 +1092,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1165,6 +1178,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/octet-stream, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1244,6 +1258,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1322,6 +1337,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1399,6 +1415,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1482,6 +1499,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1561,6 +1579,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1639,6 +1658,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1716,6 +1736,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1797,6 +1818,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1843,7 +1865,7 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String idPermiso = "idPermiso_example"; // String | Identificador del permiso
-        AccionPermiso accion = new AccionPermiso(); // AccionPermiso | Acción sobre el permiso
+        AccionPermiso accion = AccionPermiso.fromValue("Consultar"); // AccionPermiso | Acción sobre el permiso
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
             DatoRespuesta result = apiInstance.validarPermiso(idPermiso, accion, riskServiceVersion);
@@ -1880,6 +1902,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1963,6 +1986,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |

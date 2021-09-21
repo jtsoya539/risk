@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.CambiarClaveTransaccionalRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

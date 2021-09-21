@@ -2,6 +2,7 @@
 
 # FinalizarSesionRequestBody
 
+
 ## Properties
 
 Name | Type | Description | Notes

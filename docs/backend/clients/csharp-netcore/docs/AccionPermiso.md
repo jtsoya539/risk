@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.AccionPermiso
 Acciones sobre Permisos
+
 ## Properties
 
 Name | Type | Description | Notes

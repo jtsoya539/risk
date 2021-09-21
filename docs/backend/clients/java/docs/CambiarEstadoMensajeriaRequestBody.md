@@ -2,13 +2,14 @@
 
 # CambiarEstadoMensajeriaRequestBody
 
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tipoMensajeria** | [**TipoMensajeria**](TipoMensajeria.md) |  |  [optional]
+**tipoMensajeria** | **TipoMensajeria** |  |  [optional]
 **idMensajeria** | **Integer** |  |  [optional]
-**estado** | [**EstadoMensajeria**](EstadoMensajeria.md) |  |  [optional]
+**estado** | **EstadoMensajeria** |  |  [optional]
 **respuestaEnvio** | **String** |  |  [optional]
 
 

@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.CambiarClaveAccesoRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -44,7 +44,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         RepApi apiInstance = new RepApi(defaultClient);
-        FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
+        FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
         String dominio = "dominio_example"; // String | Dominio
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
@@ -82,6 +82,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/octet-stream, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -129,7 +130,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         RepApi apiInstance = new RepApi(defaultClient);
-        FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
+        FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
             File result = apiInstance.reporteVersionSistema(formato, riskServiceVersion);
@@ -165,6 +166,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/octet-stream, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |

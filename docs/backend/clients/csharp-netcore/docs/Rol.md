@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.Rol
+
 ## Properties
 
 Name | Type | Description | Notes

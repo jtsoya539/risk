@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Plantilla
 Plantilla de notificaciones push
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -2,6 +2,7 @@
 
 # CambiarClaveTransaccionalRequestBody
 
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.OrigenSesion
 Origen de Sesión
+
 ## Properties
 
 Name | Type | Description | Notes

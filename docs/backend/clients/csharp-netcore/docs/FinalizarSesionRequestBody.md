@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.FinalizarSesionRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -2,6 +2,7 @@
 
 # RegistrarClaveTransaccionalRequestBody
 
+
 ## Properties
 
 Name | Type | Description | Notes

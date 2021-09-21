@@ -3,6 +3,7 @@
 # Error
 
 Agrupa datos de Errores
+
 ## Properties
 
 Name | Type | Description | Notes

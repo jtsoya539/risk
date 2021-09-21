@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.ErrorPagina
+
 ## Properties
 
 Name | Type | Description | Notes

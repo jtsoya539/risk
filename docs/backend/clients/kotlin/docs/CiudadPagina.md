@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **paginaPrimera** | **kotlin.String** |  |  [optional]
 **paginaAnterior** | **kotlin.String** |  |  [optional]
 **cantidadElementos** | **kotlin.Int** |  |  [optional]
-**elementos** | [**kotlin.Array&lt;Ciudad&gt;**](Ciudad.md) |  |  [optional]
+**elementos** | [**kotlin.collections.List&lt;Ciudad&gt;**](Ciudad.md) |  |  [optional]
 
 
 

@@ -2,6 +2,7 @@
 
 # MensajePagina
 
+
 ## Properties
 
 Name | Type | Description | Notes

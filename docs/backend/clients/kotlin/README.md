@@ -2,8 +2,8 @@
 
 ## Requires
 
-* Kotlin 1.3.41
-* Gradle 4.9
+* Kotlin 1.4.30
+* Gradle 6.8.3
 
 ## Build
 
@@ -123,8 +123,6 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.IniciarSesionFacebookRequestBody](docs/IniciarSesionFacebookRequestBody.md)
  - [py.com.risk.client.models.IniciarSesionGoogleRequestBody](docs/IniciarSesionGoogleRequestBody.md)
  - [py.com.risk.client.models.IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
- - [py.com.risk.client.models.InlineObject](docs/InlineObject.md)
- - [py.com.risk.client.models.InlineObject1](docs/InlineObject1.md)
  - [py.com.risk.client.models.Mensaje](docs/Mensaje.md)
  - [py.com.risk.client.models.MensajePagina](docs/MensajePagina.md)
  - [py.com.risk.client.models.MensajePaginaRespuesta](docs/MensajePaginaRespuesta.md)

@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.PaisPagina
+
 ## Properties
 
 Name | Type | Description | Notes

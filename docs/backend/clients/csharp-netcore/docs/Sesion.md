@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Sesion
 Agrupa datos de una sesión
+
 ## Properties
 
 Name | Type | Description | Notes

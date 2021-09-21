@@ -2,6 +2,7 @@
 
 # RegistrarUbicacionRequestBody
 
+
 ## Properties
 
 Name | Type | Description | Notes

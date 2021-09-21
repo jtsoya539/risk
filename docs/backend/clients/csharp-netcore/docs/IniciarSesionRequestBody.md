@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.IniciarSesionRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

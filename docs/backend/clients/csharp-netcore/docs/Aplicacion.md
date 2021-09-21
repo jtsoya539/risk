@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Aplicacion
 Aplicaciones
+
 ## Properties
 
 Name | Type | Description | Notes

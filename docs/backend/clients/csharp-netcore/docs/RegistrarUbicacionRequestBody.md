@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.RegistrarUbicacionRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Dato
 Dato en formato de texto
+
 ## Properties
 
 Name | Type | Description | Notes

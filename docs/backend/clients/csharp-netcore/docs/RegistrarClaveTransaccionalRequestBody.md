@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.RegistrarClaveTransaccionalRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

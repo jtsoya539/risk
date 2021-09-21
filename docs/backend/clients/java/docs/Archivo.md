@@ -3,6 +3,7 @@
 # Archivo
 
 Agrupa datos de un archivo
+
 ## Properties
 
 Name | Type | Description | Notes

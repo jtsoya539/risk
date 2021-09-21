@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.DepartamentoPagina
+
 ## Properties
 
 Name | Type | Description | Notes

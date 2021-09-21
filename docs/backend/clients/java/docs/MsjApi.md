@@ -48,7 +48,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         MsjApi apiInstance = new MsjApi(defaultClient);
-        TipoMensajeria tipoMensajeria = new TipoMensajeria(); // TipoMensajeria | Tipo de mensajería a activar
+        TipoMensajeria tipoMensajeria = TipoMensajeria.fromValue("Mail"); // TipoMensajeria | Tipo de mensajería a activar
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
             DatoRespuesta result = apiInstance.activarMensajeria(tipoMensajeria, riskServiceVersion);
@@ -84,6 +84,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -168,6 +169,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: application/json
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -214,7 +216,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         MsjApi apiInstance = new MsjApi(defaultClient);
-        TipoMensajeria tipoMensajeria = new TipoMensajeria(); // TipoMensajeria | Tipo de mensajería a desactivar
+        TipoMensajeria tipoMensajeria = TipoMensajeria.fromValue("Mail"); // TipoMensajeria | Tipo de mensajería a desactivar
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
             DatoRespuesta result = apiInstance.desactivarMensajeria(tipoMensajeria, riskServiceVersion);
@@ -250,6 +252,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -338,6 +341,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -425,6 +429,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -511,6 +516,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |

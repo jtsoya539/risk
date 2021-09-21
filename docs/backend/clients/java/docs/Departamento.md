@@ -3,6 +3,7 @@
 # Departamento
 
 Agrupa datos de Departamentos
+
 ## Properties
 
 Name | Type | Description | Notes

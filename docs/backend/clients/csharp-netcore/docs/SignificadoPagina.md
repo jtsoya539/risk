@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.SignificadoPagina
+
 ## Properties
 
 Name | Type | Description | Notes

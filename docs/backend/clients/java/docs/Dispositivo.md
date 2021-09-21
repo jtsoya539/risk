@@ -2,6 +2,7 @@
 
 # Dispositivo
 
+
 ## Properties
 
 Name | Type | Description | Notes
@@ -10,7 +11,7 @@ Name | Type | Description | Notes
 **tokenDispositivo** | **String** |  |  [optional]
 **nombreSistemaOperativo** | **String** |  |  [optional]
 **versionSistemaOperativo** | **String** |  |  [optional]
-**tipo** | [**TipoDispositivo**](TipoDispositivo.md) |  |  [optional]
+**tipo** | **TipoDispositivo** |  |  [optional]
 **nombreNavegador** | **String** |  |  [optional]
 **versionNavegador** | **String** |  |  [optional]
 **tokenNotificacion** | **String** |  |  [optional]

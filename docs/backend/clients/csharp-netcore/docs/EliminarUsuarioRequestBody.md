@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.EliminarUsuarioRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-09-20T23:56:22.905048700-04:00[America/Asuncion]
+- Build date: 2021-09-21T00:15:34.274462200-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -16,7 +16,7 @@ Risk Web API
 
 Building the API client library requires:
 
-1. Java 1.7+
+1. Java 1.8+
 2. Maven/Gradle
 
 ## Installation
@@ -197,8 +197,6 @@ Class | Method | HTTP request | Description
  - [IniciarSesionFacebookRequestBody](docs/IniciarSesionFacebookRequestBody.md)
  - [IniciarSesionGoogleRequestBody](docs/IniciarSesionGoogleRequestBody.md)
  - [IniciarSesionRequestBody](docs/IniciarSesionRequestBody.md)
- - [InlineObject](docs/InlineObject.md)
- - [InlineObject1](docs/InlineObject1.md)
  - [Mensaje](docs/Mensaje.md)
  - [MensajePagina](docs/MensajePagina.md)
  - [MensajePaginaRespuesta](docs/MensajePaginaRespuesta.md)

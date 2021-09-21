@@ -3,6 +3,7 @@
 # Ciudad
 
 Agrupa datos de Ciudades
+
 ## Properties
 
 Name | Type | Description | Notes

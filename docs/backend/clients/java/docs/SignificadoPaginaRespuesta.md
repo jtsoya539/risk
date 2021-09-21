@@ -3,6 +3,7 @@
 # SignificadoPaginaRespuesta
 
 Respuesta de un servicio o proceso
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.BarrioPagina
+
 ## Properties
 
 Name | Type | Description | Notes

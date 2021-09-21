@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.RefrescarSesionRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.Dispositivo
+
 ## Properties
 
 Name | Type | Description | Notes

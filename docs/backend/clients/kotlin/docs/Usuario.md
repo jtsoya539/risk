@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **numeroTelefono** | **kotlin.String** | Numero de telefono principal del usuario |  [optional]
 **versionAvatar** | **kotlin.Int** | Version del avatar del usuario |  [optional]
 **origen** | [**OrigenSesion**](OrigenSesion.md) |  |  [optional]
-**roles** | [**kotlin.Array&lt;Rol&gt;**](Rol.md) | Roles del usuario |  [optional]
+**roles** | [**kotlin.collections.List&lt;Rol&gt;**](Rol.md) | Roles del usuario |  [optional]
 
 
 

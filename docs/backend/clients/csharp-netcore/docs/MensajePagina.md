@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.MensajePagina
+
 ## Properties
 
 Name | Type | Description | Notes

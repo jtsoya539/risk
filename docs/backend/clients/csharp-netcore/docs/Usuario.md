@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Usuario
 Agrupa datos de un usuario
+
 ## Properties
 
 Name | Type | Description | Notes

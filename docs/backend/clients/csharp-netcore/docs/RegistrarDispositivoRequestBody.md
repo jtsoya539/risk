@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.RegistrarDispositivoRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

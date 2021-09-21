@@ -107,6 +107,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: multipart/form-data
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -193,6 +194,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -282,6 +284,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -368,6 +371,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -451,6 +455,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -536,6 +541,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -617,6 +623,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -705,6 +712,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -795,6 +803,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/octet-stream, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -874,6 +883,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -919,7 +929,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         GenApi apiInstance = new GenApi(defaultClient);
-        FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
+        FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
         String dominio = "dominio_example"; // String | Dominio
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
@@ -957,6 +967,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/octet-stream, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1004,7 +1015,7 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         GenApi apiInstance = new GenApi(defaultClient);
-        FormatoReporte formato = new FormatoReporte(); // FormatoReporte | Formato del reporte
+        FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
         String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
         try {
             File result = apiInstance.reporteVersionSistema(formato, riskServiceVersion);
@@ -1040,6 +1051,7 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/octet-stream, text/plain
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -1126,6 +1138,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1209,6 +1222,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1288,6 +1302,7 @@ Name | Type | Description  | Notes
 - **Content-Type**: Not defined
 - **Accept**: application/json, text/plain
 
+
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
@@ -1356,6 +1371,7 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |

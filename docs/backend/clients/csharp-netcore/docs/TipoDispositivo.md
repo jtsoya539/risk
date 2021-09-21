@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.TipoDispositivo
 Tipos de Dispositivo
+
 ## Properties
 
 Name | Type | Description | Notes

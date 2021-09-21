@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.EditarDatoUsuarioRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

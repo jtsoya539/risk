@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.FormatoReporte
 Formatos de Reporte
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -3,6 +3,7 @@
 # Significado
 
 Agrupa datos de Significados
+
 ## Properties
 
 Name | Type | Description | Notes

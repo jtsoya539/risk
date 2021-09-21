@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Ciudad
 Agrupa datos de Ciudades
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.CambiarEstadoMensajeriaRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Significado
 Agrupa datos de Significados
+
 ## Properties
 
 Name | Type | Description | Notes

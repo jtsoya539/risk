@@ -3,6 +3,7 @@
 # Pais
 
 Agrupa datos de Paises
+
 ## Properties
 
 Name | Type | Description | Notes

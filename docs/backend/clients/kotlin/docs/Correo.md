@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **mensajeReplyTo** | **kotlin.String** |  |  [optional]
 **mensajeCc** | **kotlin.String** |  |  [optional]
 **mensajeBcc** | **kotlin.String** |  |  [optional]
-**adjuntos** | [**kotlin.Array&lt;Archivo&gt;**](Archivo.md) |  |  [optional]
+**adjuntos** | [**kotlin.collections.List&lt;Archivo&gt;**](Archivo.md) |  |  [optional]
 
 
 

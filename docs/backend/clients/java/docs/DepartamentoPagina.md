@@ -2,6 +2,7 @@
 
 # DepartamentoPagina
 
+
 ## Properties
 
 Name | Type | Description | Notes

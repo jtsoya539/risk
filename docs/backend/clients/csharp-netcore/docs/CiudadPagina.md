@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.CiudadPagina
+
 ## Properties
 
 Name | Type | Description | Notes

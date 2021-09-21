@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **paginaPrimera** | **kotlin.String** |  |  [optional]
 **paginaAnterior** | **kotlin.String** |  |  [optional]
 **cantidadElementos** | **kotlin.Int** |  |  [optional]
-**elementos** | [**kotlin.Array&lt;Correo&gt;**](Correo.md) |  |  [optional]
+**elementos** | [**kotlin.collections.List&lt;Correo&gt;**](Correo.md) |  |  [optional]
 
 
 

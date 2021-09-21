@@ -3,6 +3,7 @@
 # Plantilla
 
 Plantilla de notificaciones push
+
 ## Properties
 
 Name | Type | Description | Notes

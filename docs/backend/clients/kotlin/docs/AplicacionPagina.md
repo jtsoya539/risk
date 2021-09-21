@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **paginaPrimera** | **kotlin.String** |  |  [optional]
 **paginaAnterior** | **kotlin.String** |  |  [optional]
 **cantidadElementos** | **kotlin.Int** |  |  [optional]
-**elementos** | [**kotlin.Array&lt;Aplicacion&gt;**](Aplicacion.md) |  |  [optional]
+**elementos** | [**kotlin.collections.List&lt;Aplicacion&gt;**](Aplicacion.md) |  |  [optional]
 
 
 

@@ -1,4 +1,5 @@
 # Risk.API.Client.Model.IniciarSesionGoogleRequestBody
+
 ## Properties
 
 Name | Type | Description | Notes

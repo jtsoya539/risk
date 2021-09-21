@@ -1,5 +1,6 @@
 # Risk.API.Client.Model.Pais
 Agrupa datos de Paises
+
 ## Properties
 
 Name | Type | Description | Notes
