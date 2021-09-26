@@ -30,6 +30,7 @@ using Microsoft.Extensions.Configuration;
 using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers
@@ -52,7 +53,7 @@ namespace Risk.API.Controllers
         [HttpPost("ActivarMensajeria")]
         [SwaggerOperation(OperationId = "ActivarMensajeria", Summary = "ActivarMensajeria", Description = "Permite activar el servicio de mensajería")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult ActivarMensajeria([FromQuery, SwaggerParameter(Description = "Tipo de mensajería a activar", Required = true)] TipoMensajeria tipoMensajeria)
         {
             var respuesta = _msjService.ActivarDesactivarMensajeria(tipoMensajeria, true);
@@ -62,7 +63,7 @@ namespace Risk.API.Controllers
         [HttpPost("DesactivarMensajeria")]
         [SwaggerOperation(OperationId = "DesactivarMensajeria", Summary = "DesactivarMensajeria", Description = "Permite desactivar el servicio de mensajería")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult DesactivarMensajeria([FromQuery, SwaggerParameter(Description = "Tipo de mensajería a desactivar", Required = true)] TipoMensajeria tipoMensajeria)
         {
             var respuesta = _msjService.ActivarDesactivarMensajeria(tipoMensajeria, false);
@@ -72,7 +73,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarMensajesPendientes")]
         [SwaggerOperation(OperationId = "ListarMensajesPendientes", Summary = "ListarMensajesPendientes", Description = "Obtiene una lista de mensajes de texto (SMS) pendientes de envío")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Mensaje>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Mensaje>>))]
         public IActionResult ListarMensajesPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
             [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
@@ -93,7 +94,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarCorreosPendientes")]
         [SwaggerOperation(OperationId = "ListarCorreosPendientes", Summary = "ListarCorreosPendientes", Description = "Obtiene una lista de correos electrónicos (E-mail) pendientes de envío")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Correo>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Correo>>))]
         public IActionResult ListarCorreosPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
             [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
@@ -114,7 +115,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarNotificacionesPendientes")]
         [SwaggerOperation(OperationId = "ListarNotificacionesPendientes", Summary = "ListarNotificacionesPendientes", Description = "Obtiene una lista de notificaciones push pendientes de envío")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Notificacion>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Notificacion>>))]
         public IActionResult ListarNotificacionesPendientes([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
             [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
@@ -136,7 +137,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "CambiarEstadoMensajeria", Summary = "CambiarEstadoMensajeria", Description = "Permite cambiar el estado de envío de un mensaje de texto (SMS), correo electrónico (E-mail) o notificación push")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult CambiarEstadoMensajeria([FromBody] CambiarEstadoMensajeriaRequestBody requestBody)
         {
             var respuesta = _msjService.CambiarEstadoMensajeria(requestBody.TipoMensajeria, requestBody.IdMensajeria, requestBody.Estado, requestBody.RespuestaEnvio);

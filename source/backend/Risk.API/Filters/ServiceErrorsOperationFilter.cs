@@ -24,8 +24,10 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 using Risk.API.Models;
+using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters
@@ -43,29 +45,29 @@ namespace Risk.API.Filters
             };
 
 
-            if (!operation.Responses.ContainsKey("400"))
+            if (!operation.Responses.ContainsKey(StatusCodes.Status400BadRequest.ToString()))
             {
-                operation.Responses.Add("400", new OpenApiResponse
+                operation.Responses.Add(StatusCodes.Status400BadRequest.ToString(), new OpenApiResponse
                 {
-                    Description = "Operación con error",
+                    Description = RiskConstants.SWAGGER_RESPONSE_400,
                     Content = content
                 });
             }
 
-            if (!operation.Responses.ContainsKey("500"))
+            if (!operation.Responses.ContainsKey(StatusCodes.Status500InternalServerError.ToString()))
             {
-                operation.Responses.Add("500", new OpenApiResponse
+                operation.Responses.Add(StatusCodes.Status500InternalServerError.ToString(), new OpenApiResponse
                 {
-                    Description = "Error inesperado",
+                    Description = RiskConstants.SWAGGER_RESPONSE_500,
                     Content = content
                 });
             }
 
-            if (!operation.Responses.ContainsKey("501"))
+            if (!operation.Responses.ContainsKey(StatusCodes.Status501NotImplemented.ToString()))
             {
-                operation.Responses.Add("501", new OpenApiResponse
+                operation.Responses.Add(StatusCodes.Status501NotImplemented.ToString(), new OpenApiResponse
                 {
-                    Description = "Servicio no implementado o inactivo",
+                    Description = RiskConstants.SWAGGER_RESPONSE_501,
                     Content = content
                 });
             }

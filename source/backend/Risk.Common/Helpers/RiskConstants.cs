@@ -49,6 +49,14 @@ namespace Risk.Common.Helpers
         public const string HEADER_AUTHORIZATION = "Authorization";
         public const string HEADER_RISK_SERVICE_VERSION = "Risk-Service-Version";
 
+        // Swagger Response Descriptions
+        public const string SWAGGER_RESPONSE_200 = "Operación exitosa";
+        public const string SWAGGER_RESPONSE_400 = "Operación con error";
+        public const string SWAGGER_RESPONSE_401 = "Operación no autorizada";
+        public const string SWAGGER_RESPONSE_403 = "Aplicación no autorizada";
+        public const string SWAGGER_RESPONSE_500 = "Error inesperado";
+        public const string SWAGGER_RESPONSE_501 = "Servicio no implementado o inactivo";
+
         // Formatos de salida de reportes
         public const string FORMATO_PDF = "PDF";
         public const string FORMATO_DOCX = "DOCX";

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
 using Risk.API.Attributes;
 using Risk.Common.Helpers;
@@ -62,11 +63,11 @@ namespace Risk.API.Filters
                 new List<string>());
 
                 // Add Http Response
-                if (!operation.Responses.ContainsKey("403"))
+                if (!operation.Responses.ContainsKey(StatusCodes.Status403Forbidden.ToString()))
                 {
-                    operation.Responses.Add("403", new OpenApiResponse
+                    operation.Responses.Add(StatusCodes.Status403Forbidden.ToString(), new OpenApiResponse
                     {
-                        Description = "Aplicación no autorizada",
+                        Description = RiskConstants.SWAGGER_RESPONSE_403,
                         Content = content
                     });
                 }
@@ -85,11 +86,11 @@ namespace Risk.API.Filters
                 new List<string>());
 
                 // Add Http Response
-                if (!operation.Responses.ContainsKey("401"))
+                if (!operation.Responses.ContainsKey(StatusCodes.Status401Unauthorized.ToString()))
                 {
-                    operation.Responses.Add("401", new OpenApiResponse
+                    operation.Responses.Add(StatusCodes.Status401Unauthorized.ToString(), new OpenApiResponse
                     {
-                        Description = "Operación no autorizada",
+                        Description = RiskConstants.SWAGGER_RESPONSE_401,
                         Content = content
                     });
                 }

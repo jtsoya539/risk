@@ -52,7 +52,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarPaises")]
         [SwaggerOperation(OperationId = "ListarPaises", Summary = "ListarPaises", Description = "Obtiene una lista de países")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Pais>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Pais>>))]
         public IActionResult ListarPaises([FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
             [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
@@ -74,7 +74,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarDepartamentos")]
         [SwaggerOperation(OperationId = "ListarDepartamentos", Summary = "ListarDepartamentos", Description = "Obtiene una lista de departamentos")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Departamento>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Departamento>>))]
         public IActionResult ListarDepartamentos([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
@@ -97,7 +97,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarCiudades")]
         [SwaggerOperation(OperationId = "ListarCiudades", Summary = "ListarCiudades", Description = "Obtiene una lista de ciudades")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Ciudad>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Ciudad>>))]
         public IActionResult ListarCiudades([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
             [FromQuery, SwaggerParameter(Description = "Identificador del departamento", Required = false)] int? idDepartamento,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
@@ -121,7 +121,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarBarrios")]
         [SwaggerOperation(OperationId = "ListarBarrios", Summary = "ListarBarrios", Description = "Obtiene una lista de barrios")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Barrio>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Barrio>>))]
         public IActionResult ListarBarrios([FromQuery, SwaggerParameter(Description = "Identificador del país", Required = false)] int? idPais,
             [FromQuery, SwaggerParameter(Description = "Identificador del departamento", Required = false)] int? idDepartamento,
             [FromQuery, SwaggerParameter(Description = "Identificador de la ciudad", Required = false)] int? idCiudad,

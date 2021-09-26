@@ -61,7 +61,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RegistrarUsuario", Summary = "RegistrarUsuario", Description = "Permite registrar un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult RegistrarUsuario([FromBody] RegistrarUsuarioRequestBody requestBody)
         {
             var respuesta = _autService.RegistrarUsuario(requestBody.Usuario, requestBody.Clave, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
@@ -73,7 +73,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "IniciarSesion", Summary = "IniciarSesion", Description = "Permite iniciar la sesión de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
         public IActionResult IniciarSesion([FromBody] IniciarSesionRequestBody requestBody)
         {
             var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, TipoClave.Acceso);
@@ -101,7 +101,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RefrescarSesion", Summary = "RefrescarSesion", Description = "Permite refrescar la sesión de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
         public IActionResult RefrescarSesion([FromBody] RefrescarSesionRequestBody requestBody)
         {
             string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
@@ -117,7 +117,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "FinalizarSesion", Summary = "FinalizarSesion", Description = "Permite finalizar la sesión de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult FinalizarSesion([FromBody] FinalizarSesionRequestBody requestBody)
         {
             var respuesta = _autService.CambiarEstadoSesion(requestBody.AccessToken, EstadoSesion.Finalizado);
@@ -128,7 +128,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RegistrarClaveTransaccional", Summary = "RegistrarClaveTransaccional", Description = "Permite registrar una clave transaccional para un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult RegistrarClaveTransaccional([FromBody] RegistrarClaveTransaccionalRequestBody requestBody)
         {
             var respuesta = _autService.RegistrarClave(requestBody.Usuario, requestBody.Clave, TipoClave.Transaccional);
@@ -139,7 +139,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "CambiarClaveAcceso", Summary = "CambiarClaveAcceso", Description = "Permite cambiar la clave de acceso de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult CambiarClaveAcceso([FromBody] CambiarClaveAccesoRequestBody requestBody)
         {
             var respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, TipoClave.Acceso);
@@ -150,7 +150,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "CambiarClaveTransaccional", Summary = "CambiarClaveTransaccional", Description = "Permite cambiar la clave transaccional de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult CambiarClaveTransaccional([FromBody] CambiarClaveTransaccionalRequestBody requestBody)
         {
             var respuesta = _autService.CambiarClave(requestBody.Usuario, requestBody.ClaveAntigua, requestBody.ClaveNueva, TipoClave.Transaccional);
@@ -160,7 +160,7 @@ namespace Risk.API.Controllers
         [HttpGet("ValidarSesion")]
         [SwaggerOperation(OperationId = "ValidarSesion", Summary = "ValidarSesion", Description = "Permite validar si una sesión está activa o no")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult ValidarSesion([FromQuery, SwaggerParameter(Description = "Access Token de la sesión", Required = true)] string accessToken)
         {
             var respuesta = _autService.ValidarSesion(accessToken);
@@ -172,7 +172,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RegistrarDispositivo", Summary = "RegistrarDispositivo", Description = "Permite registrar un dispositivo")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
         {
             if (requestBody.Dispositivo.TokenDispositivo == null || requestBody.Dispositivo.TokenDispositivo.Equals(string.Empty))
@@ -195,7 +195,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RegistrarUbicacion", Summary = "RegistrarUbicacion", Description = "Permite registrar la ubicación (coordenadas geográficas) de un dispositivo")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult RegistrarUbicacion([FromBody] RegistrarUbicacionRequestBody requestBody)
         {
             var respuesta = _autService.RegistrarUbicacion(requestBody.TokenDispositivo, requestBody.Latitud, requestBody.Longitud);
@@ -205,7 +205,7 @@ namespace Risk.API.Controllers
         [HttpGet("DatosUsuario")]
         [SwaggerOperation(OperationId = "DatosUsuario", Summary = "DatosUsuario", Description = "Permite obtener los datos de un usuario")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Usuario>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Usuario>))]
         public IActionResult DatosUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario)
         {
             var respuesta = _autService.DatosUsuario(usuario);
@@ -216,7 +216,7 @@ namespace Risk.API.Controllers
         [HttpGet("RecuperarAvatarUsuario")]
         [SwaggerOperation(OperationId = "RecuperarAvatarUsuario", Summary = "RecuperarAvatarUsuario", Description = "Permite recuperar el avatar de un usuario")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(FileContentResult))]
         public IActionResult RecuperarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario,
             [FromQuery, SwaggerParameter(Description = "Versión", Required = false)] int? version)
         {
@@ -235,7 +235,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "GuardarAvatarUsuario", Summary = "GuardarAvatarUsuario", Description = "Permite guardar el avatar de un usuario")]
         [Consumes("multipart/form-data")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult GuardarAvatarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromForm] GuardarArchivoRequestBody requestBody)
         {
             var respuesta = _genService.GuardarArchivo("T_USUARIOS", "AVATAR", usuario, ProcesarArchivo(requestBody));
@@ -246,7 +246,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "EditarUsuario", Summary = "EditarUsuario", Description = "Permite editar un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult EditarUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromBody] EditarUsuarioRequestBody requestBody)
         {
             var respuesta = _autService.EditarUsuario(usuario, requestBody.UsuarioNuevo, requestBody.Nombre, requestBody.Apellido, requestBody.DireccionCorreo, requestBody.NumeroTelefono);
@@ -257,7 +257,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "EditarDatoUsuario", Summary = "EditarDatoUsuario", Description = "Permite editar dato de un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult EditarDatoUsuario([FromQuery, SwaggerParameter(Description = "Usuario", Required = true)] string usuario, [FromBody] EditarDatoUsuarioRequestBody requestBody)
         {
             var respuesta = _autService.EditarDatoUsuario(usuario, requestBody.Campo, requestBody.Dato);
@@ -269,7 +269,7 @@ namespace Risk.API.Controllers
         [HttpGet("/[controller]/ActivarUsuario")]
         [SwaggerOperation(OperationId = "ActivarUsuario", Summary = "ActivarUsuario", Description = "Permite activar un usuario")]
         [Produces(MediaTypeNames.Text.Html)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult ActivarUsuario([FromQuery, SwaggerParameter(Description = "Clave para la activación", Required = true)] string key)
         {
             string mensaje;
@@ -343,7 +343,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "EliminarUsuario", Summary = "EliminarUsuario", Description = "Permite eliminar un usuario")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult EliminarUsuario([FromBody] EliminarUsuarioRequestBody requestBody)
         {
             var respValidarCredenciales = _autService.ValidarCredenciales(requestBody.Usuario, requestBody.Clave, TipoClave.Acceso);
@@ -369,7 +369,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "GenerarOtp", Summary = "GenerarOtp", Description = "Permite generar un código OTP")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult GenerarOtp([FromQuery, SwaggerParameter(Description = "Tipo de mensajería (Mail/SMS/Push)", Required = true)] TipoMensajeria tipoMensajeria,
             [FromQuery, SwaggerParameter(Description = "Destino de la mensajería", Required = true)] string destino)
         {
@@ -382,7 +382,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "ValidarOtp", Summary = "ValidarOtp", Description = "Permite validar un código OTP")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult ValidarOtp([FromQuery, SwaggerParameter(Description = "Secret recibido al generar el código OTP", Required = true)] string secret,
             [FromQuery, SwaggerParameter(Description = "Código OTP a validar", Required = true)] int otp)
         {
@@ -395,7 +395,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "IniciarSesionGoogle", Summary = "IniciarSesionGoogle", Description = "Permite iniciar la sesión de un usuario con su cuenta de google")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
         public IActionResult IniciarSesionGoogle([FromBody] IniciarSesionGoogleRequestBody requestBody)
         {
             // Obtener datos del JWT
@@ -426,7 +426,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RefrescarSesionGoogle", Summary = "RefrescarSesionGoogle", Description = "Permite refrescar la sesión de un usuario con su cuenta de google")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
         public IActionResult RefrescarSesionGoogle([FromBody] RefrescarSesionGoogleRequestBody requestBody)
         {
             // Obtener datos del JWT
@@ -444,7 +444,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "IniciarSesionFacebook", Summary = "IniciarSesionFacebook", Description = "Permite iniciar la sesión de un usuario con su cuenta de facebook")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
         public IActionResult IniciarSesionFacebook([FromBody] IniciarSesionFacebookRequestBody requestBody)
         {
             // Obtener datos del JWT
@@ -475,7 +475,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "RefrescarSesionFacebook", Summary = "RefrescarSesionFacebook", Description = "Permite refrescar la sesión de un usuario con su cuenta de facebook")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Sesion>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
         public IActionResult RefrescarSesionFacebook([FromBody] RefrescarSesionFacebookRequestBody requestBody)
         {
             // Obtener datos del JWT
@@ -492,7 +492,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "ValidarPermiso", Summary = "ValidarPermiso", Description = "Permite validar un permiso o una acción sobre un permiso")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult ValidarPermiso([FromQuery, SwaggerParameter(Description = "Identificador del permiso", Required = true)] string idPermiso,
             [FromQuery, SwaggerParameter(Description = "Acción sobre el permiso", Required = false)] AccionPermiso? accion = null)
         {

@@ -53,7 +53,7 @@ namespace Risk.API.Controllers
         [HttpGet("/[controller]/VersionSistema")]
         [SwaggerOperation(OperationId = "VersionSistema", Summary = "VersionSistema", Description = "Obtiene la versión actual del sistema")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult VersionSistema()
         {
             var respuesta = _genService.VersionSistema();
@@ -64,7 +64,7 @@ namespace Risk.API.Controllers
         [HttpGet("VersionServicio")]
         [SwaggerOperation(OperationId = "VersionServicio", Summary = "VersionServicio", Description = "Obtiene la versión actual del servicio")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult VersionServicio([FromQuery, SwaggerParameter(Description = "Nombre del servicio", Required = true)] string servicio)
         {
             var respuesta = _genService.VersionServicio(servicio);
@@ -74,7 +74,7 @@ namespace Risk.API.Controllers
         [HttpGet("ValorParametro")]
         [SwaggerOperation(OperationId = "ValorParametro", Summary = "ValorParametro", Description = "Obtiene el valor de un parámetro")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult ValorParametro([FromQuery, SwaggerParameter(Description = "Identificador del parámetro", Required = true)] string parametro)
         {
             var respuesta = _genService.ValorParametro(parametro);
@@ -84,7 +84,7 @@ namespace Risk.API.Controllers
         [HttpGet("SignificadoCodigo")]
         [SwaggerOperation(OperationId = "SignificadoCodigo", Summary = "SignificadoCodigo", Description = "Obtiene el significado de un código dentro de un dominio")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult SignificadoCodigo([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio, [FromQuery, SwaggerParameter(Description = "Código", Required = true)] string codigo)
         {
             var respuesta = _genService.SignificadoCodigo(dominio, codigo);
@@ -94,7 +94,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarSignificados")]
         [SwaggerOperation(OperationId = "ListarSignificados", Summary = "ListarSignificados", Description = "Obtiene una lista de significados dentro de un dominio")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Significado>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Significado>>))]
         public IActionResult ListarSignificados([FromQuery, SwaggerParameter(Description = "Dominio", Required = true)] string dominio,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
@@ -117,7 +117,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarErrores")]
         [SwaggerOperation(OperationId = "ListarErrores", Summary = "ListarErrores", Description = "Obtiene una lista de errores")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Error>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Error>>))]
         public IActionResult ListarErrores([FromQuery, SwaggerParameter(Description = "Identificador del error", Required = false)] string idError,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
@@ -140,7 +140,7 @@ namespace Risk.API.Controllers
         [HttpGet("ListarAplicaciones")]
         [SwaggerOperation(OperationId = "ListarAplicaciones", Summary = "ListarAplicaciones", Description = "Obtiene una lista de aplicaciones")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Pagina<Aplicacion>>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Aplicacion>>))]
         public IActionResult ListarAplicaciones([FromQuery, SwaggerParameter(Description = "Identificador de la aplicacion", Required = false)] string idAplicacion,
             [FromQuery, SwaggerParameter(Description = "Clave de la aplicacion", Required = false)] string claveAplicacion,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
@@ -163,7 +163,7 @@ namespace Risk.API.Controllers
         [HttpGet("RecuperarArchivo")]
         [SwaggerOperation(OperationId = "RecuperarArchivo", Summary = "RecuperarArchivo", Description = "Permite recuperar un archivo")]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(FileContentResult))]
         public IActionResult RecuperarArchivo([FromQuery, SwaggerParameter(Description = "Tabla", Required = true)] string tabla,
             [FromQuery, SwaggerParameter(Description = "Campo", Required = true)] string campo,
             [FromQuery, SwaggerParameter(Description = "Referencia", Required = true)] string referencia,
@@ -183,7 +183,7 @@ namespace Risk.API.Controllers
         [SwaggerOperation(OperationId = "GuardarArchivo", Summary = "GuardarArchivo", Description = "Permite guardar un archivo")]
         [Consumes("multipart/form-data")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult GuardarArchivo([FromQuery, SwaggerParameter(Description = "Tabla", Required = true)] string tabla,
             [FromQuery, SwaggerParameter(Description = "Campo", Required = true)] string campo,
             [FromQuery, SwaggerParameter(Description = "Referencia", Required = true)] string referencia,
@@ -197,7 +197,7 @@ namespace Risk.API.Controllers
         [HttpGet("RecuperarTexto")]
         [SwaggerOperation(OperationId = "RecuperarTexto", Summary = "RecuperarTexto", Description = "Obtiene un texto definido en el sistema")]
         [Produces(MediaTypeNames.Application.Json)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(Respuesta<Dato>))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult RecuperarTexto([FromQuery, SwaggerParameter(Description = "Referencia del texto", Required = true)] string referencia)
         {
             var respuesta = _genService.RecuperarTexto(referencia);
@@ -207,7 +207,7 @@ namespace Risk.API.Controllers
         [HttpGet("ReporteVersionSistema")]
         [SwaggerOperation(OperationId = "ReporteVersionSistema", Summary = "ReporteVersionSistema", Description = "Obtiene un reporte con la versión actual del sistema", Tags = new[] { "Gen", "Rep" })]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(FileContentResult))]
         public IActionResult ReporteVersionSistema([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato)
         {
             var respuesta = _genService.ReporteVersionSistema(formato);
@@ -223,7 +223,7 @@ namespace Risk.API.Controllers
         [HttpGet("ReporteListarSignificados")]
         [SwaggerOperation(OperationId = "ReporteListarSignificados", Summary = "ReporteListarSignificados", Description = "Obtiene un reporte con los significados dentro de un dominio", Tags = new[] { "Gen", "Rep" })]
         [Produces(MediaTypeNames.Application.Json, new[] { "application/octet-stream" })]
-        [SwaggerResponse(StatusCodes.Status200OK, "Operación exitosa", typeof(FileContentResult))]
+        [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(FileContentResult))]
         public IActionResult ReporteListarSignificados([FromQuery, SwaggerParameter(Description = "Formato del reporte", Required = true)] FormatoReporte formato,
             [FromQuery, SwaggerParameter(Description = "Dominio", Required = false)] string dominio)
         {
