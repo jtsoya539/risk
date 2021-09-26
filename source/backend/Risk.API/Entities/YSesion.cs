@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using Newtonsoft.Json;
+using Risk.API.Attributes;
 using Risk.API.Models;
 
 namespace Risk.API.Entities
@@ -47,7 +48,7 @@ namespace Risk.API.Entities
             return new Sesion
             {
                 IdSesion = this.IdSesion,
-                Estado = this.Estado,
+                Estado = this.Estado.GetEnumValue<EstadoSesion>(),
                 AccessToken = this.AccessToken,
                 RefreshToken = this.RefreshToken,
                 TiempoExpiracionAccessToken = this.TiempoExpiracionAccessToken,

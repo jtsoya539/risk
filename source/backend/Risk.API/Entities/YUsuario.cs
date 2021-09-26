@@ -64,7 +64,7 @@ namespace Risk.API.Entities
                 Nombre = this.Nombre,
                 Apellido = this.Apellido,
                 TipoPersona = this.TipoPersona,
-                Estado = this.Estado,
+                Estado = this.Estado.GetEnumValue<EstadoUsuario>(),
                 DireccionCorreo = this.DireccionCorreo,
                 NumeroTelefono = this.NumeroTelefono,
                 VersionAvatar = this.VersionAvatar,

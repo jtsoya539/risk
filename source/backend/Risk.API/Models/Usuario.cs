@@ -42,7 +42,7 @@ namespace Risk.API.Models
         [SwaggerSchema("Tipo de la persona")]
         public string TipoPersona { get; set; }
         [SwaggerSchema("Estado del usuario")]
-        public string Estado { get; set; }
+        public EstadoUsuario Estado { get; set; }
         [SwaggerSchema("Direccion de correo electronico principal del usuario")]
         public string DireccionCorreo { get; set; }
         [SwaggerSchema("Numero de telefono principal del usuario")]

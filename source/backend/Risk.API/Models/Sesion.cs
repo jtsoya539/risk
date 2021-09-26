@@ -33,7 +33,7 @@ namespace Risk.API.Models
         [SwaggerSchema("Identificador de la sesion")]
         public long IdSesion { get; set; }
         [SwaggerSchema("Estado de la sesion")]
-        public string Estado { get; set; }
+        public EstadoSesion Estado { get; set; }
         [SwaggerSchema("Access Token de la sesion")]
         public string AccessToken { get; set; }
         [SwaggerSchema("Refresh Token de la sesion")]
