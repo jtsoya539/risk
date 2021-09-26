@@ -118,6 +118,7 @@ namespace Risk.API
             services.AddSingleton<INotificationHubClientConnection, NotificationHubClientConnection>();
             services.AddSingleton<IAutService, AutService>();
             services.AddSingleton<IGenService, GenService>();
+            services.AddSingleton<IGloService, GloService>();
             services.AddSingleton<IMsjService, MsjService>();
 
             // Add Msj helper and senders

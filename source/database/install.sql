@@ -165,6 +165,7 @@ prompt
 @@packages/k_trabajo.pck
 @@packages/k_servicio_aut.pck
 @@packages/k_servicio_gen.pck
+@@packages/k_servicio_glo.pck
 @@packages/k_reporte_gen.pck
 
 prompt

@@ -14,7 +14,7 @@ begin
   l_varchar2(1) :=q'!27!';
   l_clob(2) :=q'!S!';
   l_clob(3) :=q'!LISTAR_BARRIOS!';
-  l_clob(4) :=q'!GEN!';
+  l_clob(4) :=q'!GLO!';
   l_clob(5) :=q'!S!';
   l_clob(6) :=q'!!';
   l_clob(7) :=q'!0.1.0!';
@@ -339,7 +339,7 @@ begin
   -----------------------------------
 
   l_varchar2(1) :=q'!2!';
-  l_clob(2) :=q'!SERVICIO:GEN:LISTAR_BARRIOS!';
+  l_clob(2) :=q'!SERVICIO:GLO:LISTAR_BARRIOS!';
   l_clob(3) :=q'!N!';
   l_clob(4) :=q'!N!';
   l_clob(5) :=q'!N!';
@@ -365,7 +365,7 @@ begin
   );
 
   l_varchar2(1) :=q'!4!';
-  l_clob(2) :=q'!SERVICIO:GEN:LISTAR_BARRIOS!';
+  l_clob(2) :=q'!SERVICIO:GLO:LISTAR_BARRIOS!';
   l_clob(3) :=q'!N!';
   l_clob(4) :=q'!N!';
   l_clob(5) :=q'!N!';

@@ -28,11 +28,7 @@ prompt
 @@scripts/operations/servicio/aut/validar_sesion.sql
 @@scripts/operations/servicio/gen/guardar_archivo.sql
 @@scripts/operations/servicio/gen/listar_aplicaciones.sql
-@@scripts/operations/servicio/gen/listar_barrios.sql
-@@scripts/operations/servicio/gen/listar_ciudades.sql
-@@scripts/operations/servicio/gen/listar_departamentos.sql
 @@scripts/operations/servicio/gen/listar_errores.sql
-@@scripts/operations/servicio/gen/listar_paises.sql
 @@scripts/operations/servicio/gen/listar_significados.sql
 @@scripts/operations/servicio/gen/recuperar_archivo.sql
 @@scripts/operations/servicio/gen/recuperar_texto.sql
@@ -40,3 +36,7 @@ prompt
 @@scripts/operations/servicio/gen/valor_parametro.sql
 @@scripts/operations/servicio/gen/version_servicio.sql
 @@scripts/operations/servicio/gen/version_sistema.sql
+@@scripts/operations/servicio/glo/listar_barrios.sql
+@@scripts/operations/servicio/glo/listar_ciudades.sql
+@@scripts/operations/servicio/glo/listar_departamentos.sql
+@@scripts/operations/servicio/glo/listar_paises.sql

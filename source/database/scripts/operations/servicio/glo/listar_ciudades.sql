@@ -11,10 +11,10 @@ begin
   -- start generation of records
   -----------------------------------
 
-  l_varchar2(1) :=q'!16!';
+  l_varchar2(1) :=q'!26!';
   l_clob(2) :=q'!S!';
-  l_clob(3) :=q'!LISTAR_PAISES!';
-  l_clob(4) :=q'!GEN!';
+  l_clob(3) :=q'!LISTAR_CIUDADES!';
+  l_clob(4) :=q'!GLO!';
   l_clob(5) :=q'!S!';
   l_clob(6) :=q'!!';
   l_clob(7) :=q'!0.1.0!';
@@ -61,10 +61,110 @@ begin
   -- start generation of records
   -----------------------------------
 
-  l_varchar2(1) :=q'!16!';
-  l_clob(2) :=q'!ID_PAIS!';
+  l_varchar2(1) :=q'!26!';
+  l_clob(2) :=q'!ID_CIUDAD!';
   l_clob(3) :=q'!0.1.0!';
   l_varchar2(4) :=q'!1!';
+  l_clob(5) :=q'!S!';
+  l_clob(6) :=q'!N!';
+  l_clob(7) :=q'!!';
+  l_varchar2(8) :=q'!!';
+  l_clob(9) :=q'!N!';
+  l_clob(10) :=q'!!';
+  l_clob(11) :=q'!!';
+  l_clob(12) :=q'!!';
+  l_clob(13) :=q'!!';
+  l_clob(14) :=q'!N!';
+
+  insert into t_operacion_parametros
+  (
+     "ID_OPERACION"
+    ,"NOMBRE"
+    ,"VERSION"
+    ,"ORDEN"
+    ,"ACTIVO"
+    ,"TIPO_DATO"
+    ,"FORMATO"
+    ,"LONGITUD_MAXIMA"
+    ,"OBLIGATORIO"
+    ,"VALOR_DEFECTO"
+    ,"ETIQUETA"
+    ,"DETALLE"
+    ,"VALORES_POSIBLES"
+    ,"ENCRIPTADO"
+  )
+  values
+  (
+     to_number(l_varchar2(1))
+    ,to_char(l_clob(2))
+    ,to_char(l_clob(3))
+    ,to_number(l_varchar2(4))
+    ,to_char(l_clob(5))
+    ,to_char(l_clob(6))
+    ,to_char(l_clob(7))
+    ,to_number(l_varchar2(8))
+    ,to_char(l_clob(9))
+    ,to_char(l_clob(10))
+    ,to_char(l_clob(11))
+    ,to_char(l_clob(12))
+    ,to_char(l_clob(13))
+    ,to_char(l_clob(14))
+  );
+
+  l_varchar2(1) :=q'!26!';
+  l_clob(2) :=q'!ID_PAIS!';
+  l_clob(3) :=q'!0.1.0!';
+  l_varchar2(4) :=q'!2!';
+  l_clob(5) :=q'!S!';
+  l_clob(6) :=q'!N!';
+  l_clob(7) :=q'!!';
+  l_varchar2(8) :=q'!!';
+  l_clob(9) :=q'!N!';
+  l_clob(10) :=q'!!';
+  l_clob(11) :=q'!!';
+  l_clob(12) :=q'!!';
+  l_clob(13) :=q'!!';
+  l_clob(14) :=q'!N!';
+
+  insert into t_operacion_parametros
+  (
+     "ID_OPERACION"
+    ,"NOMBRE"
+    ,"VERSION"
+    ,"ORDEN"
+    ,"ACTIVO"
+    ,"TIPO_DATO"
+    ,"FORMATO"
+    ,"LONGITUD_MAXIMA"
+    ,"OBLIGATORIO"
+    ,"VALOR_DEFECTO"
+    ,"ETIQUETA"
+    ,"DETALLE"
+    ,"VALORES_POSIBLES"
+    ,"ENCRIPTADO"
+  )
+  values
+  (
+     to_number(l_varchar2(1))
+    ,to_char(l_clob(2))
+    ,to_char(l_clob(3))
+    ,to_number(l_varchar2(4))
+    ,to_char(l_clob(5))
+    ,to_char(l_clob(6))
+    ,to_char(l_clob(7))
+    ,to_number(l_varchar2(8))
+    ,to_char(l_clob(9))
+    ,to_char(l_clob(10))
+    ,to_char(l_clob(11))
+    ,to_char(l_clob(12))
+    ,to_char(l_clob(13))
+    ,to_char(l_clob(14))
+  );
+
+  l_varchar2(1) :=q'!26!';
+  l_clob(2) :=q'!ID_DEPARTAMENTO!';
+  l_clob(3) :=q'!0.1.0!';
+  l_varchar2(4) :=q'!3!';
   l_clob(5) :=q'!S!';
   l_clob(6) :=q'!N!';
   l_clob(7) :=q'!!';
@@ -126,7 +226,7 @@ begin
   -- start generation of records
   -----------------------------------
 
-  l_varchar2(1) :=q'!16!';
+  l_varchar2(1) :=q'!26!';
   l_clob(2) :=q'!T!';
   l_clob(3) :=q'!!';
 
@@ -189,7 +289,7 @@ begin
   -----------------------------------
 
   l_varchar2(1) :=q'!2!';
-  l_clob(2) :=q'!SERVICIO:GEN:LISTAR_PAISES!';
+  l_clob(2) :=q'!SERVICIO:GLO:LISTAR_CIUDADES!';
   l_clob(3) :=q'!N!';
   l_clob(4) :=q'!N!';
   l_clob(5) :=q'!N!';
@@ -215,7 +315,7 @@ begin
   );
 
   l_varchar2(1) :=q'!4!';
-  l_clob(2) :=q'!SERVICIO:GEN:LISTAR_PAISES!';
+  l_clob(2) :=q'!SERVICIO:GLO:LISTAR_CIUDADES!';
   l_clob(3) :=q'!N!';
   l_clob(4) :=q'!N!';
   l_clob(5) :=q'!N!';

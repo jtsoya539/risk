@@ -156,6 +156,7 @@ plugin plsqldoc generate k_reporte_gen;
 plugin plsqldoc generate k_servicio;
 plugin plsqldoc generate k_servicio_aut;
 plugin plsqldoc generate k_servicio_gen;
+plugin plsqldoc generate k_servicio_glo;
 plugin plsqldoc generate k_servicio_msj;
 plugin plsqldoc generate k_sesion;
 plugin plsqldoc generate k_sistema;

@@ -42,10 +42,6 @@ namespace Risk.API.Services
         private const string NOMBRE_SIGNIFICADO_CODIGO = "SIGNIFICADO_CODIGO";
         private const string NOMBRE_VERSION_SISTEMA = "VERSION_SISTEMA";
         private const string NOMBRE_VERSION_SERVICIO = "VERSION_SERVICIO";
-        private const string NOMBRE_LISTAR_PAISES = "LISTAR_PAISES";
-        private const string NOMBRE_LISTAR_DEPARTAMENTOS = "LISTAR_DEPARTAMENTOS";
-        private const string NOMBRE_LISTAR_CIUDADES = "LISTAR_CIUDADES";
-        private const string NOMBRE_LISTAR_BARRIOS = "LISTAR_BARRIOS";
         private const string NOMBRE_LISTAR_ERRORES = "LISTAR_ERRORES";
         private const string NOMBRE_LISTAR_APLICACIONES = "LISTAR_APLICACIONES";
         private const string NOMBRE_RECUPERAR_ARCHIVO = "RECUPERAR_ARCHIVO";
@@ -137,112 +133,6 @@ namespace Risk.API.Services
             }
 
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Significado>, YPagina<YSignificado>>(entityRsp, datos);
-        }
-
-        public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null)
-        {
-            JObject prms = new JObject();
-            prms.Add("id_pais", idPais);
-
-            if (paginaParametros != null)
-            {
-                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
-            }
-
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_PAISES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
-
-            Pagina<Pais> datos = null;
-            if (entityRsp.Datos != null)
-            {
-                datos = EntitiesMapper.GetPaginaFromEntity<Pais, YPais>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Pais, YPais>(entityRsp.Datos.Elementos));
-            }
-
-            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Pais>, YPagina<YPais>>(entityRsp, datos);
-        }
-
-        public Respuesta<Pagina<Departamento>> ListarDepartamentos(int? idDepartamento = null, int? idPais = null, PaginaParametros paginaParametros = null)
-        {
-            JObject prms = new JObject();
-            prms.Add("id_departamento", idDepartamento);
-            prms.Add("id_pais", idPais);
-
-            if (paginaParametros != null)
-            {
-                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
-            }
-
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_DEPARTAMENTOS,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YDepartamento>>>(rsp);
-
-            Pagina<Departamento> datos = null;
-            if (entityRsp.Datos != null)
-            {
-                datos = EntitiesMapper.GetPaginaFromEntity<Departamento, YDepartamento>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Departamento, YDepartamento>(entityRsp.Datos.Elementos));
-            }
-
-            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Departamento>, YPagina<YDepartamento>>(entityRsp, datos);
-        }
-
-        public Respuesta<Pagina<Ciudad>> ListarCiudades(int? idCiudad = null, int? idPais = null, int? idDepartamento = null, PaginaParametros paginaParametros = null)
-        {
-            JObject prms = new JObject();
-            prms.Add("id_ciudad", idCiudad);
-            prms.Add("id_pais", idPais);
-            prms.Add("id_departamento", idDepartamento);
-
-            if (paginaParametros != null)
-            {
-                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
-            }
-
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_CIUDADES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCiudad>>>(rsp);
-
-            Pagina<Ciudad> datos = null;
-            if (entityRsp.Datos != null)
-            {
-                datos = EntitiesMapper.GetPaginaFromEntity<Ciudad, YCiudad>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Ciudad, YCiudad>(entityRsp.Datos.Elementos));
-            }
-
-            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Ciudad>, YPagina<YCiudad>>(entityRsp, datos);
-        }
-
-        public Respuesta<Pagina<Barrio>> ListarBarrios(int? idBarrio = null, int? idPais = null, int? idDepartamento = null, int? idCiudad = null, PaginaParametros paginaParametros = null)
-        {
-            JObject prms = new JObject();
-            prms.Add("id_barrio", idBarrio);
-            prms.Add("id_pais", idPais);
-            prms.Add("id_departamento", idDepartamento);
-            prms.Add("id_ciudad", idCiudad);
-
-            if (paginaParametros != null)
-            {
-                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
-            }
-
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_BARRIOS,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YBarrio>>>(rsp);
-
-            Pagina<Barrio> datos = null;
-            if (entityRsp.Datos != null)
-            {
-                datos = EntitiesMapper.GetPaginaFromEntity<Barrio, YBarrio>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Barrio, YBarrio>(entityRsp.Datos.Elementos));
-            }
-
-            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Barrio>, YPagina<YBarrio>>(entityRsp, datos);
         }
 
         public Respuesta<Pagina<Error>> ListarErrores(string idError = null, PaginaParametros paginaParametros = null)
