@@ -35,9 +35,9 @@ SOFTWARE.
 /** Estado de la sesion */
   estado CHAR(1),
 /** Access Token de la sesion */
-  access_token VARCHAR2(1000),
+  access_token VARCHAR2(4000),
 /** Refresh Token de la sesion */
-  refresh_token VARCHAR2(1000),
+  refresh_token VARCHAR2(4000),
 /** Tiempo de expiración del Access Token en segundos */
   tiempo_expiracion_access_token NUMBER(6),
 /** Tiempo de expiración del Refresh Token en horas */

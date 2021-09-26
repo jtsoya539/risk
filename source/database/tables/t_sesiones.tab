@@ -6,16 +6,16 @@ create table T_SESIONES
   estado                         VARCHAR2(1),
   fecha_estado                   DATE,
   fecha_autenticacion            DATE,
-  access_token                   VARCHAR2(1000),
+  access_token                   VARCHAR2(4000),
   fecha_expiracion_access_token  DATE,
-  refresh_token                  VARCHAR2(1000),
+  refresh_token                  VARCHAR2(4000),
   fecha_expiracion_refresh_token DATE,
   direccion_ip                   VARCHAR2(50),
   host                           VARCHAR2(50),
   terminal                       VARCHAR2(50),
   id_dispositivo                 NUMBER(15),
   origen                         VARCHAR2(1),
-  dato_externo                   VARCHAR2(2000)
+  dato_externo                   VARCHAR2(4000)
 )
 ;
 comment on table T_SESIONES
@@ -65,3 +65,4 @@ alter table T_SESIONES
 alter table T_SESIONES
   add constraint FK_SESIONES_USUARIOS foreign key (ID_USUARIO)
   references T_USUARIOS (ID_USUARIO);
+
