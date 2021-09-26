@@ -57,11 +57,11 @@ namespace Risk.API.Helpers
             List<Claim> claims = new List<Claim>();
 
             claims.Add(new Claim(ClaimTypes.Name, datosUsuario.Alias));
-            claims.Add(new Claim(ClaimTypes.GivenName, datosUsuario.Nombre ?? ""));
-            claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? ""));
-            claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? ""));
-            //claimsList.Add(new Claim(ClaimTypes.HomePhone, usuario.NumeroTelefono ?? ""));
-            claims.Add(new Claim(ClaimTypes.GroupSid, datosUsuario.Origen.ToString() ?? ""));
+            claims.Add(new Claim(ClaimTypes.GivenName, datosUsuario.Nombre ?? string.Empty));
+            claims.Add(new Claim(ClaimTypes.Surname, datosUsuario.Apellido ?? string.Empty));
+            claims.Add(new Claim(ClaimTypes.Email, datosUsuario.DireccionCorreo ?? string.Empty));
+            //claims.Add(new Claim(ClaimTypes.HomePhone, datosUsuario.NumeroTelefono ?? string.Empty));
+            claims.Add(new Claim(ClaimTypes.GroupSid, datosUsuario.Origen.ToString() ?? string.Empty));
 
             // Agrega los roles del usuario a la lista de claims
             foreach (var rol in datosUsuario.Roles)
