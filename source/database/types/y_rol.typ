@@ -31,7 +31,7 @@ SOFTWARE.
 */
 
 /** Identificador del rol */
-  id_rol NUMBER(3),
+  id_rol NUMBER(15),
 /** Nombre del rol */
   nombre VARCHAR2(100),
 /** El rol esta activo? (S/N) */

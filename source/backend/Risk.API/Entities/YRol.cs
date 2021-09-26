@@ -30,7 +30,7 @@ namespace Risk.API.Entities
     public class YRol : IEntity
     {
         [JsonProperty("id_rol")]
-        public int IdRol { get; set; }
+        public long IdRol { get; set; }
         [JsonProperty("nombre")]
         public string Nombre { get; set; }
         [JsonProperty("activo")]
