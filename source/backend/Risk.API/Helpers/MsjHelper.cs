@@ -149,7 +149,7 @@ namespace Risk.API.Helpers
             return mensajes;
         }
 
-        public void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio)
+        public void CambiarEstadoMensajeria(TipoMensajeria tipo, long id, EstadoMensajeria estado, string respuestaEnvio)
         {
             try
             {

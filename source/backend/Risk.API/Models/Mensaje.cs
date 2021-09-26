@@ -28,7 +28,7 @@ namespace Risk.API.Models
 {
     public class Mensaje : IModel
     {
-        public int IdMensaje { get; set; }
+        public long IdMensaje { get; set; }
         public string NumeroTelefono { get; set; }
         public string Contenido { get; set; }
 

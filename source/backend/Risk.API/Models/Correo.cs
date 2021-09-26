@@ -29,7 +29,7 @@ namespace Risk.API.Models
 {
     public class Correo : IModel
     {
-        public int IdCorreo { get; set; }
+        public long IdCorreo { get; set; }
         public string MensajeTo { get; set; }
         public string MensajeSubject { get; set; }
         public string MensajeBody { get; set; }

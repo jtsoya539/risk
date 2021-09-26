@@ -33,7 +33,7 @@ namespace Risk.API.Entities
     public class YUsuario : IEntity
     {
         [JsonProperty("id_usuario")]
-        public int IdUsuario { get; set; }
+        public long IdUsuario { get; set; }
         [JsonProperty("alias")]
         public string Alias { get; set; }
         [JsonProperty("nombre")]

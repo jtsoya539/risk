@@ -31,7 +31,7 @@ namespace Risk.API.Models
 {
     public class Dispositivo : IModel
     {
-        public int IdDispositivo { get; set; }
+        public long IdDispositivo { get; set; }
         public string TokenDispositivo { get; set; }
         public string NombreSistemaOperativo { get; set; }
         public string VersionSistemaOperativo { get; set; }

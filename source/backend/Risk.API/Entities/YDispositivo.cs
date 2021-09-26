@@ -33,7 +33,7 @@ namespace Risk.API.Entities
     public class YDispositivo : IEntity
     {
         [JsonProperty("id_dispositivo")]
-        public int IdDispositivo { get; set; }
+        public long IdDispositivo { get; set; }
         [JsonProperty("token_dispositivo")]
         public string TokenDispositivo { get; set; }
         [JsonProperty("nombre_sistema_operativo")]

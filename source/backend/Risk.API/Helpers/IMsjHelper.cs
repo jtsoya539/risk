@@ -35,6 +35,6 @@ namespace Risk.API.Helpers
         List<Correo> ListarCorreosPendientes();
         List<Notificacion> ListarNotificacionesPendientes();
         List<Mensaje> ListarMensajesPendientes();
-        void CambiarEstadoMensajeria(TipoMensajeria tipo, int id, EstadoMensajeria estado, string respuestaEnvio);
+        void CambiarEstadoMensajeria(TipoMensajeria tipo, long id, EstadoMensajeria estado, string respuestaEnvio);
     }
 }

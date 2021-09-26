@@ -30,7 +30,7 @@ namespace Risk.API.Entities
     public class YMensaje : IEntity
     {
         [JsonProperty("id_mensaje")]
-        public int IdMensaje { get; set; }
+        public long IdMensaje { get; set; }
         [JsonProperty("numero_telefono")]
         public string NumeroTelefono { get; set; }
         [JsonProperty("contenido")]

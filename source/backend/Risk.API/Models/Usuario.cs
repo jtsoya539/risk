@@ -32,7 +32,7 @@ namespace Risk.API.Models
     public class Usuario : IModel
     {
         [SwaggerSchema("Identificador del usuario")]
-        public int IdUsuario { get; set; }
+        public long IdUsuario { get; set; }
         [SwaggerSchema("Alias del usuario (identificador para autenticacion)")]
         public string Alias { get; set; }
         [SwaggerSchema("Nombre de la persona")]

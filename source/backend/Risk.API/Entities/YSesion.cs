@@ -30,7 +30,7 @@ namespace Risk.API.Entities
     public class YSesion : IEntity
     {
         [JsonProperty("id_sesion")]
-        public int IdSesion { get; set; }
+        public long IdSesion { get; set; }
         [JsonProperty("estado")]
         public string Estado { get; set; }
         [JsonProperty("access_token")]

@@ -109,7 +109,7 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Notificacion>, YPagina<YNotificacion>>(entityRsp, datos);
         }
 
-        public Respuesta<Dato> CambiarEstadoMensajeria(TipoMensajeria tipoMensajeria, int idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
+        public Respuesta<Dato> CambiarEstadoMensajeria(TipoMensajeria tipoMensajeria, long idMensajeria, EstadoMensajeria estado, string respuestaEnvio)
         {
             prms = new JObject();
             prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());

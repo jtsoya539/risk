@@ -30,7 +30,7 @@ namespace Risk.API.Entities
     public class YNotificacion : IEntity
     {
         [JsonProperty("id_notificacion")]
-        public int IdNotificacion { get; set; }
+        public long IdNotificacion { get; set; }
         [JsonProperty("suscripcion")]
         public string Suscripcion { get; set; }
         [JsonProperty("titulo")]

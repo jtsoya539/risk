@@ -32,7 +32,7 @@ namespace Risk.API.Entities
     public class YCorreo : IEntity
     {
         [JsonProperty("id_correo")]
-        public int IdCorreo { get; set; }
+        public long IdCorreo { get; set; }
         [JsonProperty("mensaje_to")]
         public string MensajeTo { get; set; }
         [JsonProperty("mensaje_subject")]

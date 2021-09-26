@@ -28,7 +28,7 @@ namespace Risk.API.Models
 {
     public class Notificacion : IModel
     {
-        public int IdNotificacion { get; set; }
+        public long IdNotificacion { get; set; }
         public string Suscripcion { get; set; }
         public string Titulo { get; set; }
         public string Contenido { get; set; }
