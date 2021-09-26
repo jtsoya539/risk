@@ -31,7 +31,7 @@ SOFTWARE.
 */
 
 /** Identificador del pais */
-  id_pais NUMBER(3),
+  id_pais NUMBER(10),
 /** Nombre del pais */
   nombre VARCHAR2(100),
 /** Codigo del pais segun estandar ISO 3166-1 alpha-2 */

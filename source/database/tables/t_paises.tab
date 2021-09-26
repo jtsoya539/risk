@@ -1,6 +1,6 @@
 create table T_PAISES
 (
-  id_pais     NUMBER(3) not null,
+  id_pais     NUMBER(10) not null,
   nombre      VARCHAR2(100),
   iso_alpha_2 VARCHAR2(2),
   iso_alpha_3 VARCHAR2(3),

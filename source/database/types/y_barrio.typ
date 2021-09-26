@@ -31,15 +31,15 @@ SOFTWARE.
 */
 
 /** Identificador del barrio */
-  id_barrio NUMBER(3),
+  id_barrio NUMBER(10),
 /** Nombre del barrio */
   nombre VARCHAR2(100),
 /** País del barrio */
-  id_pais NUMBER(3),
+  id_pais NUMBER(10),
 /** Departamento, estado o provincia del barrio */
-  id_departamento NUMBER(3),
+  id_departamento NUMBER(10),
 /** Ciudad del barrio */
-  id_ciudad NUMBER(3),
+  id_ciudad NUMBER(10),
 
   CONSTRUCTOR FUNCTION y_barrio RETURN SELF AS RESULT,
 

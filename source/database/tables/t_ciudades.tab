@@ -1,9 +1,9 @@
 create table T_CIUDADES
 (
-  id_ciudad       NUMBER(3) not null,
+  id_ciudad       NUMBER(10) not null,
   nombre          VARCHAR2(100),
-  id_pais         NUMBER(3),
-  id_departamento NUMBER(3)
+  id_pais         NUMBER(10),
+  id_departamento NUMBER(10)
 )
 ;
 comment on table T_CIUDADES

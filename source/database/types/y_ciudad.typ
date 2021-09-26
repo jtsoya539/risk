@@ -31,13 +31,13 @@ SOFTWARE.
 */
 
 /** Identificador de la ciudad */
-  id_ciudad NUMBER(3),
+  id_ciudad NUMBER(10),
 /** Nombre de la ciudad */
   nombre VARCHAR2(100),
 /** País de la ciudad */
-  id_pais NUMBER(3),
+  id_pais NUMBER(10),
 /** Departamento, estado o provincia de la ciudad */
-  id_departamento NUMBER(3),
+  id_departamento NUMBER(10),
 
   CONSTRUCTOR FUNCTION y_ciudad RETURN SELF AS RESULT,
 

@@ -31,11 +31,11 @@ SOFTWARE.
 */
 
 /** Identificador del departamento, estado o provincia */
-  id_departamento NUMBER(3),
+  id_departamento NUMBER(10),
 /** Nombre del departamento, estado o provincia */
   nombre VARCHAR2(100),
 /** País del departamento, estado o provincia */
-  id_pais NUMBER(3),
+  id_pais NUMBER(10),
 
   CONSTRUCTOR FUNCTION y_departamento RETURN SELF AS RESULT,
 
