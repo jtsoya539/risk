@@ -10,7 +10,7 @@ create table T_SIGNIFICADOS
 comment on table T_SIGNIFICADOS
   is 'Significados';
 comment on column T_SIGNIFICADOS.dominio
-  is 'Dominio';
+  is 'Dominio de significados';
 comment on column T_SIGNIFICADOS.codigo
   is 'Codigo';
 comment on column T_SIGNIFICADOS.significado

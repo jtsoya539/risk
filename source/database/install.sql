@@ -74,6 +74,7 @@ prompt
 @@tables/t_dominios.tab
 @@tables/t_aplicaciones.tab
 @@tables/t_errores.tab
+@@tables/t_significado_dominios.tab
 @@tables/t_significados.tab
 @@tables/t_paises.tab
 @@tables/t_departamentos.tab

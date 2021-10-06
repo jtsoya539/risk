@@ -92,6 +92,7 @@ plugin plsqldoc generate t_rol_permisos;
 plugin plsqldoc generate t_rol_usuarios;
 plugin plsqldoc generate t_servicios;
 plugin plsqldoc generate t_sesiones;
+plugin plsqldoc generate t_significado_dominios;
 plugin plsqldoc generate t_significados;
 plugin plsqldoc generate t_trabajos;
 plugin plsqldoc generate t_usuario_claves;

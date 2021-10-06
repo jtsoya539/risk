@@ -140,6 +140,7 @@ drop table t_ciudades cascade constraints;
 drop table t_departamentos cascade constraints;
 drop table t_paises cascade constraints;
 drop table t_significados cascade constraints;
+drop table t_significado_dominios cascade constraints;
 drop table t_errores cascade constraints;
 drop table t_aplicaciones cascade constraints;
 drop table t_dominios cascade constraints;

@@ -2,11 +2,11 @@
 <HTML>
  <HEAD>
  <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
- <TITLE>Table T_SIGNIFICADOS</TITLE>
+ <TITLE>Table T_SIGNIFICADO_DOMINIOS</TITLE>
  <META name="object" content="TABLE">
- <META name="name" content="T_SIGNIFICADOS">
- <META name="description" content="Significados">
- <META name="columns" content="DOMINIO CODIGO SIGNIFICADO REFERENCIA ACTIVO">
+ <META name="name" content="T_SIGNIFICADO_DOMINIOS">
+ <META name="description" content="Dominios de Significados">
+ <META name="columns" content="DOMINIO DESCRIPCION DETALLE ACTIVO ID_DOMINIO">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,8 +14,8 @@
 <TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
-<P CLASS="MAIN_TITLE">Table T_SIGNIFICADOS</P>
-Significados
+<P CLASS="MAIN_TITLE">Table T_SIGNIFICADO_DOMINIOS</P>
+Dominios de Significados
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -64,27 +64,27 @@ Dominio de significados
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-CODIGO
+DESCRIPCION
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(30)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+VARCHAR2(500)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Codigo
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Descripci&#243;n del dominio de significados
 </TD>
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-SIGNIFICADO
+DETALLE
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(300)
+VARCHAR2(2000)
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Y
@@ -93,24 +93,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Significado
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-REFERENCIA
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-VARCHAR2(50)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Referencia adicional
+Detalles adicionales del dominio de significados
 </TD>
 </TR>
 <TR>
@@ -127,7 +110,24 @@ VARCHAR2(1)
 'N'
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-El significado esta activo? (S/N)
+El dominio de significados est&#225; activo? (S/N)
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ID_DOMINIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(5)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Dominio del dominio de significados
 </TD>
 </TR>
 </TABLE>
@@ -149,10 +149,49 @@ Columns
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_SIGNIFICADOS
+PK_SIGNIFICADO_DOMINIOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-DOMINIO,CODIGO
+DOMINIO
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Foreign Keys"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Foreign Keys
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Referencing Table
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+FK_SIGNIFICADO_DOMINIOS_DOMINIOS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_DOMINIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+T_DOMINIOS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_DOMINIO
 </TD>
 </TR>
 </TABLE>
@@ -174,7 +213,7 @@ Condition
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-CK_SIGNIFICADOS_ACTIVO
+CK_SIGNIFICADO_DOMINIOS_ACTIVO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ACTIVO IN ('S', 'N')
@@ -203,10 +242,10 @@ Type
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-PK_SIGNIFICADOS
+PK_SIGNIFICADO_DOMINIOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-DOMINIO,CODIGO
+DOMINIO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

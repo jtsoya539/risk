@@ -1,0 +1,30 @@
+create table T_SIGNIFICADO_DOMINIOS
+(
+  dominio     VARCHAR2(50) not null,
+  descripcion VARCHAR2(500) not null,
+  detalle     VARCHAR2(2000),
+  activo      VARCHAR2(1) default 'N' not null,
+  id_dominio  VARCHAR2(5) not null
+)
+;
+comment on table T_SIGNIFICADO_DOMINIOS
+  is 'Dominios de Significados';
+comment on column T_SIGNIFICADO_DOMINIOS.dominio
+  is 'Dominio de significados';
+comment on column T_SIGNIFICADO_DOMINIOS.descripcion
+  is 'Descripción del dominio de significados';
+comment on column T_SIGNIFICADO_DOMINIOS.detalle
+  is 'Detalles adicionales del dominio de significados';
+comment on column T_SIGNIFICADO_DOMINIOS.activo
+  is 'El dominio de significados está activo? (S/N)';
+comment on column T_SIGNIFICADO_DOMINIOS.id_dominio
+  is 'Dominio del dominio de significados';
+alter table T_SIGNIFICADO_DOMINIOS
+  add constraint PK_SIGNIFICADO_DOMINIOS primary key (DOMINIO);
+alter table T_SIGNIFICADO_DOMINIOS
+  add constraint FK_SIGNIFICADO_DOMINIOS_DOMINIOS foreign key (ID_DOMINIO)
+  references T_DOMINIOS (ID_DOMINIO);
+alter table T_SIGNIFICADO_DOMINIOS
+  add constraint CK_SIGNIFICADO_DOMINIOS_ACTIVO
+  check (ACTIVO IN ('S', 'N'));
+
