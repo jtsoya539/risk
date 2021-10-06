@@ -4,7 +4,7 @@ create table T_SIGNIFICADO_DOMINIOS
   descripcion VARCHAR2(500) not null,
   detalle     VARCHAR2(2000),
   activo      VARCHAR2(1) default 'N' not null,
-  id_dominio  VARCHAR2(5) not null
+  id_dominio  VARCHAR2(5)
 )
 ;
 comment on table T_SIGNIFICADO_DOMINIOS

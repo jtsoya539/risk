@@ -204,6 +204,7 @@ prompt
 @@scripts/ins_t_modulos.sql
 @@scripts/ins_t_dominios.sql
 @@scripts/ins_t_aplicaciones.sql
+@@scripts/ins_t_significado_dominios.sql
 @@scripts/ins_t_significados.sql
 @@scripts/ins_t_errores.sql
 @@scripts/ins_t_parametros.sql
