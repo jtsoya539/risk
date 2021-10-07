@@ -47,6 +47,8 @@ CREATE OR REPLACE PACKAGE k_significado IS
   FUNCTION f_existe_codigo(i_dominio IN VARCHAR2,
                            i_codigo  IN VARCHAR2) RETURN BOOLEAN;
 
+  FUNCTION f_id_modulo_dominio(i_dominio IN VARCHAR2) RETURN VARCHAR2;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_significado IS
@@ -102,6 +104,24 @@ CREATE OR REPLACE PACKAGE BODY k_significado IS
         l_existe := 'S';
     END;
     RETURN k_util.string_to_bool(l_existe);
+  END;
+
+  FUNCTION f_id_modulo_dominio(i_dominio IN VARCHAR2) RETURN VARCHAR2 IS
+    l_id_modulo t_modulos.id_modulo%TYPE;
+  BEGIN
+    BEGIN
+      SELECT d.id_modulo
+        INTO l_id_modulo
+        FROM t_significado_dominios sd, t_dominios d
+       WHERE d.id_dominio = sd.id_dominio
+         AND sd.dominio = i_dominio;
+    EXCEPTION
+      WHEN no_data_found THEN
+        l_id_modulo := NULL;
+      WHEN OTHERS THEN
+        l_id_modulo := NULL;
+    END;
+    RETURN l_id_modulo;
   END;
 
 END;
