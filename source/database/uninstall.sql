@@ -71,6 +71,7 @@ drop package k_auditoria;
 drop package k_dominio;
 drop package k_modulo;
 drop package k_sistema;
+drop package k_significado;
 drop package k_util;
 
 prompt

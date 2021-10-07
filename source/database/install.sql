@@ -120,6 +120,7 @@ prompt
 @@types/y_objetos.typ
 
 @@packages/k_util.pck
+@@packages/k_significado.pck
 @@packages/k_sistema.pck
 
 @@types/y_dato.typ
