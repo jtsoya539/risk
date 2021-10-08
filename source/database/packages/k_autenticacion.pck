@@ -97,12 +97,14 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
 
   FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
                                   i_clave      IN VARCHAR2,
-                                  i_tipo_clave IN CHAR DEFAULT 'A')
+                                  i_tipo_clave IN CHAR DEFAULT 'A',
+                                  i_metodo     IN VARCHAR2 DEFAULT NULL)
     RETURN BOOLEAN;
 
   PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
                                    i_clave      IN VARCHAR2,
-                                   i_tipo_clave IN CHAR DEFAULT 'A');
+                                   i_tipo_clave IN CHAR DEFAULT 'A',
+                                   i_metodo     IN VARCHAR2 DEFAULT NULL);
 
   FUNCTION f_iniciar_sesion(i_id_aplicacion     IN VARCHAR2,
                             i_usuario           IN VARCHAR2,
@@ -771,7 +773,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
                                   i_clave      IN VARCHAR2,
-                                  i_tipo_clave IN CHAR DEFAULT 'A')
+                                  i_tipo_clave IN CHAR DEFAULT 'A',
+                                  i_metodo     IN VARCHAR2 DEFAULT NULL)
     RETURN BOOLEAN IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
   BEGIN
@@ -782,7 +785,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       RAISE k_usuario.ex_usuario_inexistente;
     END IF;
   
-    CASE k_util.f_valor_parametro('METODO_VALIDACION_CREDENCIALES')
+    CASE nvl(i_metodo,
+         k_util.f_valor_parametro('METODO_VALIDACION_CREDENCIALES'))
       WHEN c_metodo_validacion_risk THEN
         IF NOT
             f_validar_credenciales_risk(l_id_usuario, i_clave, i_tipo_clave) THEN
@@ -811,9 +815,11 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
                                    i_clave      IN VARCHAR2,
-                                   i_tipo_clave IN CHAR DEFAULT 'A') IS
+                                   i_tipo_clave IN CHAR DEFAULT 'A',
+                                   i_metodo     IN VARCHAR2 DEFAULT NULL) IS
   BEGIN
-    IF NOT f_validar_credenciales(i_usuario, i_clave, i_tipo_clave) THEN
+    IF NOT
+        f_validar_credenciales(i_usuario, i_clave, i_tipo_clave, i_metodo) THEN
       raise_application_error(-20000, 'Credenciales inválidas');
     END IF;
   END;

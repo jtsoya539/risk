@@ -364,7 +364,8 @@ f_validar_credenciales
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_validar_credenciales(i_usuario    IN VARCHAR2,
                                 i_clave      IN VARCHAR2,
-                                i_tipo_clave IN CHAR DEFAULT 'A')
+                                i_tipo_clave IN CHAR DEFAULT 'A',
+                                i_metodo     IN VARCHAR2 DEFAULT NULL)
   RETURN BOOLEAN
 
 </PRE>
@@ -376,7 +377,8 @@ p_validar_credenciales
 <PRE CLASS="DECL_TEXT">
 PROCEDURE p_validar_credenciales(i_usuario    IN VARCHAR2,
                                  i_clave      IN VARCHAR2,
-                                 i_tipo_clave IN CHAR DEFAULT 'A')
+                                 i_tipo_clave IN CHAR DEFAULT 'A',
+                                 i_metodo     IN VARCHAR2 DEFAULT NULL)
 
 </PRE>
 <HR>
