@@ -71,7 +71,7 @@ namespace Risk.API.Helpers
             //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
             //connStrBuilder.ValidateConnection = true;
 
-            var con = new OracleConnection(connectionString);
+            var con = new OracleConnection(connStrBuilder.ToString());
             //con.KeepAlive = true;
             return con;
         }
