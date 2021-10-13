@@ -137,7 +137,7 @@ namespace Risk.API.Services
             string respuesta = string.Empty;
             if (tipo != null && nombre != null && dominio != null)
             {
-                using (OracleConnection con = (OracleConnection)_dbConnectionFactory.CreateConnection())
+                using (OracleConnection con = (OracleConnection)_dbConnectionFactory.CreateConnection(this.GetType().Name))
                 {
                     try
                     {

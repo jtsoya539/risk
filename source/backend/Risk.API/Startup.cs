@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 using System;
-using System.IO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -85,36 +84,10 @@ namespace Risk.API
                 });
             });
 
-            string oracleLocation = Configuration["OracleConfiguration:OracleLocation"];
-            if (!oracleLocation.Equals(string.Empty))
-            {
-                if (!Directory.Exists(oracleLocation))
-                {
-                    throw new Exception($"El directorio {oracleLocation} no existe");
-                }
-
-                //Enter directory where the tnsnames.ora and sqlnet.ora files are located
-                OracleConfiguration.TnsAdmin = oracleLocation;
-
-                //Enter directory where wallet is stored locally
-                OracleConfiguration.WalletLocation = oracleLocation;
-            }
-
-            string connectionString = Configuration.GetConnectionString(Configuration["Database"]);
-            OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
-
-            // Connection Pooling Configuration
-            connStrBuilder.Pooling = Configuration.GetValue<bool>("OracleConfiguration:Pooling"); // Connection pooling.
-            connStrBuilder.MinPoolSize = Configuration.GetValue<int>("OracleConfiguration:MinPoolSize"); // Minimum number of connections in a pool.
-            connStrBuilder.MaxPoolSize = Configuration.GetValue<int>("OracleConfiguration:MaxPoolSize"); // Maximum number of connections in a pool.
-            connStrBuilder.ConnectionTimeout = Configuration.GetValue<int>("OracleConfiguration:ConnectionTimeout"); // Maximum time (in seconds) to wait for a free connection from the pool.
-            //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
-            //connStrBuilder.ValidateConnection = true;
-
             services.AddHttpContextAccessor();
 
             //services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
-            services.AddSingleton<IDbConnectionFactory>(sp => new RiskDbConnectionFactory(connStrBuilder.ToString()));
+            services.AddSingleton<IDbConnectionFactory, RiskDbConnectionFactory>();
             services.AddSingleton<INotificationHubClientConnection, NotificationHubClientConnection>();
             services.AddSingleton<IAutService, AutService>();
             services.AddSingleton<IGenService, GenService>();

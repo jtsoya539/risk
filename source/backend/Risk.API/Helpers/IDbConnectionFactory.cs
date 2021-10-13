@@ -28,6 +28,6 @@ namespace Risk.API.Helpers
 {
     public interface IDbConnectionFactory
     {
-        IDbConnection CreateConnection();
+        IDbConnection CreateConnection(string database = null);
     }
 }

@@ -22,23 +22,56 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
 using System.Data;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Risk.API.Helpers
 {
     public class RiskDbConnectionFactory : IDbConnectionFactory
     {
-        private readonly string _connectionString;
+        private readonly IConfiguration _configuration;
 
-        public RiskDbConnectionFactory(string connectionString)
+        public RiskDbConnectionFactory(IConfiguration configuration)
         {
-            _connectionString = connectionString;
+            _configuration = configuration;
         }
 
-        public IDbConnection CreateConnection()
+        public IDbConnection CreateConnection(string database = null)
         {
-            var con = new OracleConnection(_connectionString);
+            string oracleLocation = _configuration["OracleConfiguration:OracleLocation"];
+            if (!string.IsNullOrEmpty(oracleLocation))
+            {
+                if (!Directory.Exists(oracleLocation))
+                    throw new Exception($"El directorio {oracleLocation} no existe");
+
+                //Enter directory where the tnsnames.ora and sqlnet.ora files are located
+                OracleConfiguration.TnsAdmin = oracleLocation;
+
+                //Enter directory where wallet is stored locally
+                OracleConfiguration.WalletLocation = oracleLocation;
+            }
+
+            string connectionString = _configuration.GetConnectionString(database ?? _configuration["Database"]);
+            if (string.IsNullOrEmpty(connectionString))
+                connectionString = _configuration.GetConnectionString(_configuration["Database"]);
+
+            if (string.IsNullOrEmpty(connectionString))
+                throw new Exception($"No se encuentra configuración para conexión a Base de Datos");
+
+            OracleConnectionStringBuilder connStrBuilder = new OracleConnectionStringBuilder(connectionString);
+
+            // Connection Pooling Configuration
+            connStrBuilder.Pooling = _configuration.GetValue<bool>("OracleConfiguration:Pooling"); // Connection pooling.
+            connStrBuilder.MinPoolSize = _configuration.GetValue<int>("OracleConfiguration:MinPoolSize"); // Minimum number of connections in a pool.
+            connStrBuilder.MaxPoolSize = _configuration.GetValue<int>("OracleConfiguration:MaxPoolSize"); // Maximum number of connections in a pool.
+            connStrBuilder.ConnectionTimeout = _configuration.GetValue<int>("OracleConfiguration:ConnectionTimeout"); // Maximum time (in seconds) to wait for a free connection from the pool.
+            //connStrBuilder.ConnectionLifeTime = 300; // Maximum life time (in seconds) of the connection.
+            //connStrBuilder.ValidateConnection = true;
+
+            var con = new OracleConnection(connectionString);
             //con.KeepAlive = true;
             return con;
         }
