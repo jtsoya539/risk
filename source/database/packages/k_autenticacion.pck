@@ -131,7 +131,7 @@ END;
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   c_algoritmo      CONSTANT PLS_INTEGER := as_crypto.hmac_sh1;
-  c_iteraciones    CONSTANT PLS_INTEGER := 4096;
+  c_iteraciones    CONSTANT PLS_INTEGER := 128; -- 4096
   c_longitud_bytes CONSTANT PLS_INTEGER := 32;
 
   c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
