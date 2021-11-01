@@ -10,6 +10,7 @@
 
 Dependencia|Descripción|Fuente
 -----------|-----------|------
+as_crypto|Contiene funciones/procedimientos básicos de criptografía (alternativa a dbms_crypto)|https://github.com/antonscheffer/as_crypto
 as_pdf3|Genera archivos en formato PDF|https://technology.amis.nl/2012/04/11/generating-a-pdf-document-with-some-plsql-as_pdf_mini-as_pdf3/
 as_xlsx|Genera archivos en formato XLSX|https://technology.amis.nl/2011/02/19/create-an-excel-file-with-plsql/
 as_zip|Comprime y descomprime archivos en formato ZIP|https://github.com/antonscheffer/as_zip
