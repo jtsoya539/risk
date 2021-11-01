@@ -53,8 +53,8 @@ THE SOFTWARE.
 ******************************************************************************
 ******************************************** */
 
-  use_winzip_encryption constant boolean := true;
-  use_dbms_crypto       constant boolean := true;
+  use_winzip_encryption constant boolean := false;
+  use_dbms_crypto       constant boolean := false;
   --
   type file_list is table of clob;
   --

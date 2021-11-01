@@ -163,6 +163,10 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_util IS
 
+  c_algoritmo CONSTANT PLS_INTEGER := as_crypto.encrypt_aes +
+                                      as_crypto.chain_cbc +
+                                      as_crypto.pad_pkcs5; -- dbms_crypto.aes_cbc_pkcs5;
+
   PROCEDURE p_generar_trigger_secuencia(i_tabla    IN VARCHAR2,
                                         i_campo    IN VARCHAR2,
                                         i_trigger  IN VARCHAR2 DEFAULT NULL,
@@ -692,8 +696,8 @@ END;';
   FUNCTION f_hash(i_data      IN VARCHAR2,
                   i_hash_type IN PLS_INTEGER) RETURN VARCHAR2 DETERMINISTIC IS
   BEGIN
-    RETURN rawtohex(dbms_crypto.hash(utl_raw.cast_to_raw(i_data),
-                                     i_hash_type));
+    RETURN rawtohex(as_crypto.hash(utl_raw.cast_to_raw(i_data),
+                                   i_hash_type));
   END;
 
   FUNCTION bool_to_string(i_bool IN BOOLEAN) RETURN VARCHAR2 IS
@@ -826,17 +830,17 @@ END;';
 
   FUNCTION encrypt(i_src IN VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
-    RETURN rawtohex(dbms_crypto.encrypt(src => utl_i18n.string_to_raw(i_src,
-                                                                      'AL32UTF8'),
-                                        typ => dbms_crypto.aes_cbc_pkcs5,
-                                        key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))));
+    RETURN rawtohex(as_crypto.encrypt(src => utl_i18n.string_to_raw(i_src,
+                                                                    'AL32UTF8'),
+                                      typ => c_algoritmo,
+                                      key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))));
   END;
 
   FUNCTION decrypt(i_src IN VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
-    RETURN utl_i18n.raw_to_char(dbms_crypto.decrypt(src => hextoraw(i_src),
-                                                    typ => dbms_crypto.aes_cbc_pkcs5,
-                                                    key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))),
+    RETURN utl_i18n.raw_to_char(as_crypto.decrypt(src => hextoraw(i_src),
+                                                  typ => c_algoritmo,
+                                                  key => hextoraw(f_valor_parametro('CLAVE_ENCRIPTACION_DESENCRIPTACION'))),
                                 'AL32UTF8');
   END;
 

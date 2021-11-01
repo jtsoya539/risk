@@ -130,7 +130,7 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
-  c_algoritmo      CONSTANT PLS_INTEGER := dbms_crypto.hmac_sh1;
+  c_algoritmo      CONSTANT PLS_INTEGER := as_crypto.hmac_sh1;
   c_iteraciones    CONSTANT PLS_INTEGER := 4096;
   c_longitud_bytes CONSTANT PLS_INTEGER := 32;
 
@@ -160,9 +160,9 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
                                                                   utl_raw.big_endian));
       l_xorsum := NULL;
       FOR j IN 1 .. p_count LOOP
-        l_last := dbms_crypto.mac(l_last,
-                                  c_algoritmo,
-                                  utl_raw.cast_to_raw(p_password));
+        l_last := as_crypto.mac(l_last,
+                                c_algoritmo,
+                                utl_raw.cast_to_raw(p_password));
         IF l_xorsum IS NULL THEN
           l_xorsum := l_last;
         ELSE
@@ -225,12 +225,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
 
   FUNCTION f_randombytes_hex RETURN VARCHAR2 IS
   BEGIN
-    RETURN rawtohex(dbms_crypto.randombytes(c_longitud_bytes));
+    RETURN rawtohex(as_crypto.randombytes(c_longitud_bytes));
   END;
 
   FUNCTION f_randombytes_base64 RETURN VARCHAR2 IS
   BEGIN
-    RETURN utl_raw.cast_to_varchar2(utl_encode.base64_encode(dbms_crypto.randombytes(c_longitud_bytes)));
+    RETURN utl_raw.cast_to_varchar2(utl_encode.base64_encode(as_crypto.randombytes(c_longitud_bytes)));
   END;
 
   FUNCTION f_salt RETURN VARCHAR2 IS
@@ -1042,7 +1042,7 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   BEGIN
     l_json_object := NEW json_object_t();
     l_json_object.put('usuario', i_alias);
-    l_json_object.put('hash', k_util.f_hash(i_alias, dbms_crypto.hash_sh1));
+    l_json_object.put('hash', k_util.f_hash(i_alias, as_crypto.hash_sh1));
   
     l_key := utl_url.escape(k_util.base64encode(k_util.clob_to_blob(l_json_object.to_clob)),
                             TRUE);

@@ -205,18 +205,21 @@ as
     );
 
     -- Original code
-     l_rhmac := dbms_crypto.mac(
-       src => hextoraw(l_szepoch)
-       , typ => dbms_crypto.hmac_sh1
-       , key => hextoraw(l_sztmp)
-     );
-    /*
-    l_rhmac := oos_util_crypto.mac(
-      p_src => hextoraw(l_szepoch)
-      , p_typ => oos_util_crypto.gc_hmac_sh1
-      , p_key => hextoraw(l_sztmp)
+    -- l_rhmac := dbms_crypto.mac(
+    --   src => hextoraw(l_szepoch)
+    --   , typ => dbms_crypto.hmac_sh1
+    --   , key => hextoraw(l_sztmp)
+    -- );
+    -- l_rhmac := oos_util_crypto.mac(
+    --   p_src => hextoraw(l_szepoch)
+    --   , p_typ => oos_util_crypto.gc_hmac_sh1
+    --   , p_key => hextoraw(l_sztmp)
+    -- );
+    l_rhmac := as_crypto.mac(
+      src => hextoraw(l_szepoch)
+      , typ => as_crypto.hmac_sh1
+      , key => hextoraw(l_sztmp)
     );
-    */
 
     l_noffset := to_number(substr(rawtohex(l_rhmac), -1, 1), 'x');
 
