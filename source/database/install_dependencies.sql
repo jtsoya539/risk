@@ -24,7 +24,8 @@ SOFTWARE.
 
 @@dependencies/as_pdf3_4.txt
 @@dependencies/as_xlsx18.txt
-@@dependencies/as_zip10.txt
+@@dependencies/as_zip.pks
+@@dependencies/as_zip.pkb
 @@dependencies/csv.sql
 @@dependencies/oos_util_totp.pks
 @@dependencies/oos_util_totp.pkb
