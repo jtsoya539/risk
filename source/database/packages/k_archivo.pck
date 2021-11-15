@@ -168,8 +168,20 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
                                    o_tamano    OUT NUMBER) IS
   BEGIN
     IF i_contenido IS NOT NULL THEN
-      o_checksum := rawtohex(as_crypto.hash(i_contenido, as_crypto.hash_sh1));
-      o_tamano   := dbms_lob.getlength(i_contenido);
+      BEGIN
+        o_checksum := rawtohex(as_crypto.hash(i_contenido,
+                                              as_crypto.hash_sh1));
+      EXCEPTION
+        WHEN OTHERS THEN
+          o_checksum := NULL;
+      END;
+    
+      BEGIN
+        o_tamano := dbms_lob.getlength(i_contenido);
+      EXCEPTION
+        WHEN OTHERS THEN
+          o_tamano := NULL;
+      END;
     END IF;
   END;
 
