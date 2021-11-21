@@ -48,10 +48,12 @@ namespace Risk.API.Helpers
                     throw new Exception($"El directorio {oracleLocation} no existe");
 
                 //Enter directory where the tnsnames.ora and sqlnet.ora files are located
-                OracleConfiguration.TnsAdmin = oracleLocation;
+                if (string.IsNullOrEmpty(OracleConfiguration.TnsAdmin))
+                    OracleConfiguration.TnsAdmin = oracleLocation;
 
                 //Enter directory where wallet is stored locally
-                OracleConfiguration.WalletLocation = oracleLocation;
+                if (string.IsNullOrEmpty(OracleConfiguration.WalletLocation))
+                    OracleConfiguration.WalletLocation = oracleLocation;
             }
 
             string connectionString = _configuration.GetConnectionString(database ?? _configuration["Database"]);
