@@ -501,7 +501,9 @@ FUNCTION f_nombre_programa(i_id_operacion IN NUMBER,
 f_filtros_sql
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB
+FUNCTION f_filtros_sql(i_parametros      IN y_parametros,
+                       i_nombres_excluir IN y_cadenas DEFAULT NULL)
+  RETURN CLOB
 
 </PRE>
 <HR>

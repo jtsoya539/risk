@@ -46,6 +46,9 @@ CREATE OR REPLACE PACKAGE k_reporte IS
   c_meta_page_size        CONSTANT VARCHAR2(30) := 'risk:page_size';
   c_meta_page_orientation CONSTANT VARCHAR2(30) := 'risk:page_orientation';
 
+  PROCEDURE p_registrar_sql_ejecucion(i_id_reporte IN NUMBER,
+                                      i_sql        IN CLOB);
+
   PROCEDURE p_limpiar_historial;
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
@@ -57,6 +60,10 @@ CREATE OR REPLACE PACKAGE k_reporte IS
     RETURN y_archivo;
 
   FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2;
+
+  FUNCTION f_reporte_sql(i_consulta_sql IN CLOB,
+                         i_formato      IN VARCHAR2 DEFAULT NULL)
+    RETURN y_archivo;
 
   FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
                          i_parametros IN y_parametros) RETURN y_archivo;
@@ -91,8 +98,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       ROLLBACK;
   END;
 
-  PROCEDURE lp_registrar_sql_ejecucion(i_id_reporte IN NUMBER,
-                                       i_sql        IN CLOB) IS
+  PROCEDURE p_registrar_sql_ejecucion(i_id_reporte IN NUMBER,
+                                      i_sql        IN CLOB) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
   BEGIN
     UPDATE t_reportes
@@ -427,48 +434,20 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                           10));
   END;
 
-  FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
-                         i_parametros IN y_parametros) RETURN y_archivo IS
-    l_rsp             y_respuesta;
-    l_contenido       BLOB;
-    l_formato         VARCHAR2(10);
-    l_nombre_reporte  t_operaciones.nombre%TYPE;
-    l_dominio_reporte t_operaciones.dominio%TYPE;
-    l_consulta_sql    t_reportes.consulta_sql%TYPE;
+  FUNCTION f_reporte_sql(i_consulta_sql IN CLOB,
+                         i_formato      IN VARCHAR2 DEFAULT NULL)
+    RETURN y_archivo IS
+    l_rsp          y_respuesta;
+    l_contenido    BLOB;
+    l_formato      VARCHAR2(10);
+    l_consulta_sql t_reportes.consulta_sql%TYPE;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
-    l_rsp.lugar := 'Buscando datos del reporte';
-    BEGIN
-      SELECT upper(o.nombre), upper(o.dominio), r.consulta_sql
-        INTO l_nombre_reporte, l_dominio_reporte, l_consulta_sql
-        FROM t_reportes r, t_operaciones o
-       WHERE o.id_operacion = r.id_reporte
-         AND o.activo = 'S'
-         AND r.id_reporte = i_id_reporte;
-    EXCEPTION
-      WHEN no_data_found THEN
-        k_operacion.p_respuesta_error(l_rsp,
-                                      k_operacion.c_error_parametro,
-                                      'Reporte inexistente o inactivo');
-        RAISE k_operacion.ex_error_parametro;
-    END;
-  
-    l_rsp.lugar := 'Validando parámetros';
-    l_formato   := f_formato(i_parametros);
-  
-    IF l_consulta_sql IS NULL THEN
-      k_operacion.p_respuesta_error(l_rsp,
-                                    k_operacion.c_error_general,
-                                    'Consulta SQL no definida');
-      RAISE k_operacion.ex_error_parametro;
-    END IF;
-  
-    l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ')' ||
-                      k_operacion.f_filtros_sql(i_parametros);
-    -- Registra SQL
-    lp_registrar_sql_ejecucion(i_id_reporte, l_consulta_sql);
+    l_consulta_sql := i_consulta_sql;
+    l_formato      := upper(nvl(i_formato,
+                                k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO')));
   
     CASE l_formato
       WHEN c_formato_pdf THEN
@@ -632,6 +611,60 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     END CASE;
   
     RETURN f_archivo_ok(l_contenido, l_formato);
+  EXCEPTION
+    WHEN k_operacion.ex_error_parametro THEN
+      RETURN f_archivo_error(l_rsp, l_formato);
+    WHEN k_operacion.ex_error_general THEN
+      RETURN f_archivo_error(l_rsp, l_formato);
+    WHEN OTHERS THEN
+      k_operacion.p_respuesta_excepcion(l_rsp,
+                                        utl_call_stack.error_number(1),
+                                        utl_call_stack.error_msg(1),
+                                        dbms_utility.format_error_stack);
+      RETURN f_archivo_error(l_rsp, l_formato);
+  END;
+
+  FUNCTION f_reporte_sql(i_id_reporte IN NUMBER,
+                         i_parametros IN y_parametros) RETURN y_archivo IS
+    l_rsp          y_respuesta;
+    l_formato      VARCHAR2(10);
+    l_consulta_sql t_reportes.consulta_sql%TYPE;
+  BEGIN
+    -- Inicializa respuesta
+    l_rsp := NEW y_respuesta();
+  
+    l_rsp.lugar := 'Buscando datos del reporte';
+    BEGIN
+      SELECT r.consulta_sql
+        INTO l_consulta_sql
+        FROM t_reportes r, t_operaciones o
+       WHERE o.id_operacion = r.id_reporte
+         AND o.activo = 'S'
+         AND r.id_reporte = i_id_reporte;
+    EXCEPTION
+      WHEN no_data_found THEN
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_parametro,
+                                      'Reporte inexistente o inactivo');
+        RAISE k_operacion.ex_error_parametro;
+    END;
+  
+    l_rsp.lugar := 'Validando parámetros';
+    l_formato   := f_formato(i_parametros);
+  
+    IF l_consulta_sql IS NULL THEN
+      k_operacion.p_respuesta_error(l_rsp,
+                                    k_operacion.c_error_general,
+                                    'Consulta SQL no definida');
+      RAISE k_operacion.ex_error_parametro;
+    END IF;
+  
+    l_consulta_sql := 'SELECT * FROM (' || l_consulta_sql || ')' ||
+                      k_operacion.f_filtros_sql(i_parametros);
+    -- Registra SQL
+    p_registrar_sql_ejecucion(i_id_reporte, l_consulta_sql);
+  
+    RETURN f_reporte_sql(l_consulta_sql, l_formato);
   EXCEPTION
     WHEN k_operacion.ex_error_parametro THEN
       RETURN f_archivo_error(l_rsp, l_formato);

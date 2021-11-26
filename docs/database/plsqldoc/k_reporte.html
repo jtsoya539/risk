@@ -36,6 +36,11 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_REGISTRAR_SQL_EJECUCION">p_registrar_sql_ejecucion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_LIMPIAR_HISTORIAL">p_limpiar_historial</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -57,6 +62,11 @@ Program units
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REPORTE_SQL">f_reporte_sql</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_REPORTE_SQL2">f_reporte_sql</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -210,6 +220,16 @@ c_meta_page_orientation
 c_meta_page_orientation CONSTANT VARCHAR2(30) := 'risk:page_orientation';
 </PRE>
 <HR>
+<A NAME="P_REGISTRAR_SQL_EJECUCION"></A>
+<P CLASS="TYPE_TITLE">
+p_registrar_sql_ejecucion
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_registrar_sql_ejecucion(i_id_reporte IN NUMBER,
+                                    i_sql        IN CLOB)
+
+</PRE>
+<HR>
 <A NAME="P_LIMPIAR_HISTORIAL"></A>
 <P CLASS="TYPE_TITLE">
 p_limpiar_historial
@@ -251,6 +271,17 @@ FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2
 </PRE>
 <HR>
 <A NAME="F_REPORTE_SQL"></A>
+<P CLASS="TYPE_TITLE">
+f_reporte_sql
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_reporte_sql(i_consulta_sql IN CLOB,
+                       i_formato      IN VARCHAR2 DEFAULT NULL)
+  RETURN y_archivo
+
+</PRE>
+<HR>
+<A NAME="F_REPORTE_SQL2"></A>
 <P CLASS="TYPE_TITLE">
 f_reporte_sql
 </P>

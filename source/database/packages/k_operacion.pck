@@ -99,7 +99,9 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                              i_version      IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2;
 
-  FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB;
+  FUNCTION f_filtros_sql(i_parametros      IN y_parametros,
+                         i_nombres_excluir IN y_cadenas DEFAULT NULL)
+    RETURN CLOB;
 
   FUNCTION f_valor_parametro(i_parametros IN y_parametros,
                              i_nombre     IN VARCHAR2) RETURN anydata;
@@ -640,19 +642,54 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     RETURN l_nombre_programa;
   END;
 
-  FUNCTION f_filtros_sql(i_parametros IN y_parametros) RETURN CLOB IS
-    l_filtros_sql CLOB;
-    i             INTEGER;
-    l_typeinfo    anytype;
-    l_typecode    PLS_INTEGER;
-    l_seen_one    BOOLEAN := FALSE;
+  FUNCTION f_filtros_sql(i_parametros      IN y_parametros,
+                         i_nombres_excluir IN y_cadenas DEFAULT NULL)
+    RETURN CLOB IS
+    l_filtros_sql     CLOB;
+    i                 INTEGER;
+    l_typeinfo        anytype;
+    l_typecode        PLS_INTEGER;
+    l_seen_one        BOOLEAN := FALSE;
+    l_existe          VARCHAR2(1);
+    l_nombres_excluir y_cadenas;
   BEGIN
     IF i_parametros IS NOT NULL THEN
+    
+      IF i_nombres_excluir IS NOT NULL THEN
+        l_nombres_excluir := i_nombres_excluir;
+      ELSE
+        l_nombres_excluir := NEW y_cadenas();
+      END IF;
+    
+      -- Carga la lista de nombres a excluir
+      SELECT x.nombre
+        BULK COLLECT
+        INTO l_nombres_excluir
+        FROM (SELECT lower(p.nombre) nombre
+                FROM t_operacion_parametros p
+               WHERE p.id_operacion = c_id_ope_par_automaticos
+              UNION
+              SELECT lower(column_value)
+                FROM TABLE(l_nombres_excluir)) x;
+    
       i := i_parametros.first;
       WHILE i IS NOT NULL LOOP
       
-        IF lower(i_parametros(i).nombre) NOT IN
-           ('formato', 'pagina_parametros') THEN
+        -- Busca si existe en la lista de nombres a excluir
+        BEGIN
+          SELECT 'S'
+            INTO l_existe
+            FROM TABLE(l_nombres_excluir)
+           WHERE lower(column_value) = lower(i_parametros(i).nombre);
+        EXCEPTION
+          WHEN no_data_found THEN
+            l_existe := 'N';
+          WHEN too_many_rows THEN
+            l_existe := 'S';
+        END;
+      
+        -- Sólo si no existe en la lista de nombres a excluir
+        IF l_existe = 'N' THEN
           IF i_parametros(i).valor IS NOT NULL THEN
             l_typecode := i_parametros(i).valor.gettype(l_typeinfo);
           
