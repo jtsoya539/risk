@@ -104,6 +104,8 @@ prompt
 @@../../compile_schema.sql
 @@scripts/operations/uninstall.sql
 @@scripts/del_t_parametros.sql
+@@scripts/del_t_significados.sql
+@@scripts/del_t_significado_dominios.sql
 @@scripts/del_t_dominios.sql
 @@scripts/del_t_modulos.sql
 commit;
