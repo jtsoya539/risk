@@ -7,7 +7,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idRol** | **Integer** |  |  [optional]
+**idRol** | **Long** |  |  [optional]
 **nombre** | **String** |  |  [optional]
 **activo** | **String** |  |  [optional]
 **detalle** | **String** |  |  [optional]

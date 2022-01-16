@@ -8,8 +8,8 @@ Agrupa datos de una sesión
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idSesion** | **Integer** | Identificador de la sesion |  [optional]
-**estado** | **String** | Estado de la sesion |  [optional]
+**idSesion** | **Long** | Identificador de la sesion |  [optional]
+**estado** | **EstadoSesion** |  |  [optional]
 **accessToken** | **String** | Access Token de la sesion |  [optional]
 **refreshToken** | **String** | Refresh Token de la sesion |  [optional]
 **tiempoExpiracionAccessToken** | **Integer** | Tiempo de expiración del Access Token en segundos |  [optional]

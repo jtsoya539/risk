@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TipoMensajeria** | **TipoMensajeria** |  | [optional] 
-**IdMensajeria** | **int** |  | [optional] 
+**IdMensajeria** | **long** |  | [optional] 
 **Estado** | **EstadoMensajeria** |  | [optional] 
 **RespuestaEnvio** | **string** |  | [optional] 
 

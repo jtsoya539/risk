@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idDispositivo** | **kotlin.Int** |  |  [optional]
+**idDispositivo** | **kotlin.Long** |  |  [optional]
 **tokenDispositivo** | **kotlin.String** |  |  [optional]
 **nombreSistemaOperativo** | **kotlin.String** |  |  [optional]
 **versionSistemaOperativo** | **kotlin.String** |  |  [optional]

@@ -7,7 +7,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idDispositivo** | **Integer** |  |  [optional]
+**idDispositivo** | **Long** |  |  [optional]
 **tokenDispositivo** | **String** |  |  [optional]
 **nombreSistemaOperativo** | **String** |  |  [optional]
 **versionSistemaOperativo** | **String** |  |  [optional]

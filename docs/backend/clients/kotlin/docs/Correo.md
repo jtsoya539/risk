@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idCorreo** | **kotlin.Int** |  |  [optional]
+**idCorreo** | **kotlin.Long** |  |  [optional]
 **mensajeTo** | **kotlin.String** |  |  [optional]
 **mensajeSubject** | **kotlin.String** |  |  [optional]
 **mensajeBody** | **kotlin.String** |  |  [optional]

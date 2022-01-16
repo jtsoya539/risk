@@ -7,7 +7,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idCorreo** | **Integer** |  |  [optional]
+**idCorreo** | **Long** |  |  [optional]
 **mensajeTo** | **String** |  |  [optional]
 **mensajeSubject** | **String** |  |  [optional]
 **mensajeBody** | **String** |  |  [optional]

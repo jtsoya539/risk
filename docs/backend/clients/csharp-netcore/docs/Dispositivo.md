@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IdDispositivo** | **int** |  | [optional] 
+**IdDispositivo** | **long** |  | [optional] 
 **TokenDispositivo** | **string** |  | [optional] 
 **NombreSistemaOperativo** | **string** |  | [optional] 
 **VersionSistemaOperativo** | **string** |  | [optional] 

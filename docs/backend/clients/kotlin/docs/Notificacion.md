@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idNotificacion** | **kotlin.Int** |  |  [optional]
+**idNotificacion** | **kotlin.Long** |  |  [optional]
 **suscripcion** | **kotlin.String** |  |  [optional]
 **titulo** | **kotlin.String** |  |  [optional]
 **contenido** | **kotlin.String** |  |  [optional]

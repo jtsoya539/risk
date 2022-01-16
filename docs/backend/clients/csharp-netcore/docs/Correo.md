@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IdCorreo** | **int** |  | [optional] 
+**IdCorreo** | **long** |  | [optional] 
 **MensajeTo** | **string** |  | [optional] 
 **MensajeSubject** | **string** |  | [optional] 
 **MensajeBody** | **string** |  | [optional] 

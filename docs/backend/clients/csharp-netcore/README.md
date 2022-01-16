@@ -129,11 +129,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**ValidarSesion**](docs/AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**GuardarArchivo**](docs/GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 *GenApi* | [**ListarAplicaciones**](docs/GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
-*GenApi* | [**ListarBarrios**](docs/GenApi.md#listarbarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
-*GenApi* | [**ListarCiudades**](docs/GenApi.md#listarciudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
-*GenApi* | [**ListarDepartamentos**](docs/GenApi.md#listardepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**ListarErrores**](docs/GenApi.md#listarerrores) | **GET** /Api/Gen/ListarErrores | ListarErrores
-*GenApi* | [**ListarPaises**](docs/GenApi.md#listarpaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 *GenApi* | [**ListarSignificados**](docs/GenApi.md#listarsignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
 *GenApi* | [**RecuperarArchivo**](docs/GenApi.md#recuperararchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo
 *GenApi* | [**RecuperarTexto**](docs/GenApi.md#recuperartexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
@@ -143,6 +139,10 @@ Class | Method | HTTP request | Description
 *GenApi* | [**ValorParametro**](docs/GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
 *GenApi* | [**VersionServicio**](docs/GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
 *GenApi* | [**VersionSistema**](docs/GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema
+*GloApi* | [**ListarBarrios**](docs/GloApi.md#listarbarrios) | **GET** /Api/Glo/ListarBarrios | ListarBarrios
+*GloApi* | [**ListarCiudades**](docs/GloApi.md#listarciudades) | **GET** /Api/Glo/ListarCiudades | ListarCiudades
+*GloApi* | [**ListarDepartamentos**](docs/GloApi.md#listardepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos
+*GloApi* | [**ListarPaises**](docs/GloApi.md#listarpaises) | **GET** /Api/Glo/ListarPaises | ListarPaises
 *MsjApi* | [**ActivarMensajeria**](docs/MsjApi.md#activarmensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria
 *MsjApi* | [**CambiarEstadoMensajeria**](docs/MsjApi.md#cambiarestadomensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
 *MsjApi* | [**DesactivarMensajeria**](docs/MsjApi.md#desactivarmensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria
@@ -186,6 +186,8 @@ Class | Method | HTTP request | Description
  - [Model.ErrorPagina](docs/ErrorPagina.md)
  - [Model.ErrorPaginaRespuesta](docs/ErrorPaginaRespuesta.md)
  - [Model.EstadoMensajeria](docs/EstadoMensajeria.md)
+ - [Model.EstadoSesion](docs/EstadoSesion.md)
+ - [Model.EstadoUsuario](docs/EstadoUsuario.md)
  - [Model.FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [Model.FormatoReporte](docs/FormatoReporte.md)
  - [Model.IniciarSesionFacebookRequestBody](docs/IniciarSesionFacebookRequestBody.md)

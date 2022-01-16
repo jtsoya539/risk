@@ -7,7 +7,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idNotificacion** | **Integer** |  |  [optional]
+**idNotificacion** | **Long** |  |  [optional]
 **suscripcion** | **String** |  |  [optional]
 **titulo** | **String** |  |  [optional]
 **contenido** | **String** |  |  [optional]

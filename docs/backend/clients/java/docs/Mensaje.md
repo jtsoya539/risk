@@ -7,7 +7,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**idMensaje** | **Integer** |  |  [optional]
+**idMensaje** | **Long** |  |  [optional]
 **numeroTelefono** | **String** |  |  [optional]
 **contenido** | **String** |  |  [optional]
 

@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IdRol** | **int** |  | [optional] 
+**IdRol** | **long** |  | [optional] 
 **Nombre** | **string** |  | [optional] 
 **Activo** | **string** |  | [optional] 
 **Detalle** | **string** |  | [optional] 

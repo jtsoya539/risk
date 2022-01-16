@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**IdNotificacion** | **int** |  | [optional] 
+**IdNotificacion** | **long** |  | [optional] 
 **Suscripcion** | **string** |  | [optional] 
 **Titulo** | **string** |  | [optional] 
 **Contenido** | **string** |  | [optional] 

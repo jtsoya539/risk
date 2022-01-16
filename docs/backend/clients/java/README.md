@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2021-09-21T00:15:34.274462200-04:00[America/Asuncion]
+- Build date: 2022-01-16T20:22:41.707-03:00[America/Asuncion]
 
 Risk Web API
 
@@ -136,11 +136,7 @@ Class | Method | HTTP request | Description
 *AutApi* | [**validarSesion**](docs/AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 *GenApi* | [**guardarArchivo**](docs/GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
 *GenApi* | [**listarAplicaciones**](docs/GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
-*GenApi* | [**listarBarrios**](docs/GenApi.md#listarBarrios) | **GET** /Api/Gen/ListarBarrios | ListarBarrios
-*GenApi* | [**listarCiudades**](docs/GenApi.md#listarCiudades) | **GET** /Api/Gen/ListarCiudades | ListarCiudades
-*GenApi* | [**listarDepartamentos**](docs/GenApi.md#listarDepartamentos) | **GET** /Api/Gen/ListarDepartamentos | ListarDepartamentos
 *GenApi* | [**listarErrores**](docs/GenApi.md#listarErrores) | **GET** /Api/Gen/ListarErrores | ListarErrores
-*GenApi* | [**listarPaises**](docs/GenApi.md#listarPaises) | **GET** /Api/Gen/ListarPaises | ListarPaises
 *GenApi* | [**listarSignificados**](docs/GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
 *GenApi* | [**recuperarArchivo**](docs/GenApi.md#recuperarArchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo
 *GenApi* | [**recuperarTexto**](docs/GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
@@ -150,6 +146,10 @@ Class | Method | HTTP request | Description
 *GenApi* | [**valorParametro**](docs/GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
 *GenApi* | [**versionServicio**](docs/GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
 *GenApi* | [**versionSistema**](docs/GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
+*GloApi* | [**listarBarrios**](docs/GloApi.md#listarBarrios) | **GET** /Api/Glo/ListarBarrios | ListarBarrios
+*GloApi* | [**listarCiudades**](docs/GloApi.md#listarCiudades) | **GET** /Api/Glo/ListarCiudades | ListarCiudades
+*GloApi* | [**listarDepartamentos**](docs/GloApi.md#listarDepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos
+*GloApi* | [**listarPaises**](docs/GloApi.md#listarPaises) | **GET** /Api/Glo/ListarPaises | ListarPaises
 *MsjApi* | [**activarMensajeria**](docs/MsjApi.md#activarMensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria
 *MsjApi* | [**cambiarEstadoMensajeria**](docs/MsjApi.md#cambiarEstadoMensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
 *MsjApi* | [**desactivarMensajeria**](docs/MsjApi.md#desactivarMensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria
@@ -192,6 +192,8 @@ Class | Method | HTTP request | Description
  - [ErrorPagina](docs/ErrorPagina.md)
  - [ErrorPaginaRespuesta](docs/ErrorPaginaRespuesta.md)
  - [EstadoMensajeria](docs/EstadoMensajeria.md)
+ - [EstadoSesion](docs/EstadoSesion.md)
+ - [EstadoUsuario](docs/EstadoUsuario.md)
  - [FinalizarSesionRequestBody](docs/FinalizarSesionRequestBody.md)
  - [FormatoReporte](docs/FormatoReporte.md)
  - [IniciarSesionFacebookRequestBody](docs/IniciarSesionFacebookRequestBody.md)
