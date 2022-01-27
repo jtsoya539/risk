@@ -177,7 +177,7 @@ CREATE OR REPLACE PACKAGE BODY k_util IS
     l_trigger := lower(nvl(i_trigger, 'gs_' || substr(i_tabla, 3)));
   
     -- Genera secuencia
-    l_sentencia := 'CREATE SEQUENCE s_' || lower(i_campo);
+    l_sentencia := 'CREATE SEQUENCE s_' || lower(i_campo) || ' NOCACHE';
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
