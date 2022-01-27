@@ -118,7 +118,35 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
              nvl(i_version, nvl(a.version_actual, 0));
     EXCEPTION
       WHEN no_data_found THEN
-        raise_application_error(-20000, 'Archivo inexistente');
+        -- Busca versión en tabla histórica
+        BEGIN
+          SELECT h.contenido,
+                 h.url,
+                 h.checksum,
+                 h.tamano,
+                 h.nombre,
+                 h.extension,
+                 f_tipo_mime(d.extensiones_permitidas, h.extension)
+            INTO l_archivo.contenido,
+                 l_archivo.url,
+                 l_archivo.checksum,
+                 l_archivo.tamano,
+                 l_archivo.nombre,
+                 l_archivo.extension,
+                 l_archivo.tipo_mime
+            FROM t_archivos_hist h, t_archivo_definiciones d
+           WHERE d.tabla = h.tabla
+             AND d.campo = h.campo
+             AND upper(h.tabla) = upper(i_tabla)
+             AND upper(h.campo) = upper(i_campo)
+             AND h.referencia = i_referencia
+             AND h.version = nvl(i_version, -1);
+        EXCEPTION
+          WHEN no_data_found THEN
+            raise_application_error(-20000, 'Archivo inexistente');
+          WHEN OTHERS THEN
+            raise_application_error(-20000, 'Error al recuperar archivo');
+        END;
       WHEN OTHERS THEN
         raise_application_error(-20000, 'Error al recuperar archivo');
     END;
@@ -130,6 +158,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
                               i_campo      IN VARCHAR2,
                               i_referencia IN VARCHAR2,
                               i_archivo    IN y_archivo) IS
+    l_version_actual t_archivos.version_actual%TYPE;
   BEGIN
     UPDATE t_archivos a
        SET a.contenido      = i_archivo.contenido,
@@ -142,6 +171,13 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
        AND a.referencia = i_referencia;
   
     IF SQL%NOTFOUND THEN
+      SELECT nvl(MAX(h.version), 0) + 1
+        INTO l_version_actual
+        FROM t_archivos_hist h
+       WHERE upper(h.tabla) = upper(i_tabla)
+         AND upper(h.campo) = upper(i_campo)
+         AND h.referencia = i_referencia;
+    
       INSERT INTO t_archivos
         (tabla,
          campo,
@@ -159,7 +195,7 @@ CREATE OR REPLACE PACKAGE BODY k_archivo IS
          i_archivo.url,
          i_archivo.nombre,
          i_archivo.extension,
-         1);
+         l_version_actual);
     END IF;
   END;
 

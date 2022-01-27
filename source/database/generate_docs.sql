@@ -182,6 +182,7 @@ plugin plsqldoc generate gb_servicios;
 plugin plsqldoc generate gb_sesiones;
 plugin plsqldoc generate gb_trabajos;
 plugin plsqldoc generate gb_usuarios;
+plugin plsqldoc generate gf_archivos;
 plugin plsqldoc generate gf_operaciones;
 plugin plsqldoc generate gs_barrios;
 plugin plsqldoc generate gs_ciudades;

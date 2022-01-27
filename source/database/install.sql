@@ -196,6 +196,7 @@ prompt
 @@triggers/gb_personas.trg
 @@triggers/gb_datos.trg
 @@triggers/gb_archivos.trg
+@@triggers/gf_archivos.trg
 @@triggers/gf_operaciones.trg
 
 prompt
