@@ -33,7 +33,7 @@ comment on column T_ARCHIVOS.nombre
 comment on column T_ARCHIVOS.extension
   is 'Extensión del archivo';
 comment on column T_ARCHIVOS.version_actual
-  is 'Versión del archivo';
+  is 'Versión actual del archivo';
 alter table T_ARCHIVOS
   add constraint PK_ARCHIVOS primary key (TABLA, CAMPO, REFERENCIA);
 alter table T_ARCHIVOS

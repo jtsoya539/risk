@@ -104,6 +104,7 @@ prompt
 @@tables/t_datos.tab
 @@tables/t_archivo_definiciones.tab
 @@tables/t_archivos.tab
+@@tables/t_archivos_hist.tab
 @@tables/t_migraciones.tab
 
 prompt

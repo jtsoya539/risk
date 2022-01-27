@@ -1,0 +1,42 @@
+create table T_ARCHIVOS_HIST
+(
+  tabla      VARCHAR2(30) not null,
+  campo      VARCHAR2(30) not null,
+  referencia VARCHAR2(500) not null,
+  version    NUMBER(10) not null,
+  contenido  BLOB,
+  url        VARCHAR2(4000),
+  checksum   VARCHAR2(100),
+  tamano     NUMBER,
+  nombre     VARCHAR2(4000),
+  extension  VARCHAR2(100)
+)
+;
+comment on table T_ARCHIVOS_HIST
+  is 'Histórico de Archivos';
+comment on column T_ARCHIVOS_HIST.tabla
+  is 'Nombre de la tabla relacionada';
+comment on column T_ARCHIVOS_HIST.campo
+  is 'Nombre del campo';
+comment on column T_ARCHIVOS_HIST.referencia
+  is 'Identificador del registro relacionado';
+comment on column T_ARCHIVOS_HIST.version
+  is 'Versión del archivo';
+comment on column T_ARCHIVOS_HIST.contenido
+  is 'Contenido del archivo';
+comment on column T_ARCHIVOS_HIST.url
+  is 'URL del archivo';
+comment on column T_ARCHIVOS_HIST.checksum
+  is 'Hash del archivo calculado con el algoritmo SHA-1';
+comment on column T_ARCHIVOS_HIST.tamano
+  is 'Tamaño del archivo en bytes';
+comment on column T_ARCHIVOS_HIST.nombre
+  is 'Nombre del archivo';
+comment on column T_ARCHIVOS_HIST.extension
+  is 'Extensión del archivo';
+alter table T_ARCHIVOS_HIST
+  add constraint PK_ARCHIVOS_HIST primary key (TABLA, CAMPO, REFERENCIA, VERSION);
+alter table T_ARCHIVOS_HIST
+  add constraint FK_ARC_HIS_ARC_DEFINICIONES foreign key (TABLA, CAMPO)
+  references T_ARCHIVO_DEFINICIONES (TABLA, CAMPO);
+

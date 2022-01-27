@@ -61,6 +61,7 @@ prompt
 plugin plsqldoc generate t_aplicaciones;
 plugin plsqldoc generate t_archivo_definiciones;
 plugin plsqldoc generate t_archivos;
+plugin plsqldoc generate t_archivos_hist;
 plugin plsqldoc generate t_barrios;
 plugin plsqldoc generate t_ciudades;
 plugin plsqldoc generate t_correo_adjuntos;

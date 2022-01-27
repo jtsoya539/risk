@@ -112,6 +112,7 @@ prompt Borrando tablas...
 prompt -----------------------------------
 prompt
 drop table t_migraciones cascade constraints;
+drop table t_archivos_hist cascade constraints;
 drop table t_archivos cascade constraints;
 drop table t_archivo_definiciones cascade constraints;
 drop table t_datos cascade constraints;
