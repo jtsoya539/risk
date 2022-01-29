@@ -47,7 +47,10 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
                                    i_tipo                      IN VARCHAR2 DEFAULT NULL,
                                    i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL,
-                                   i_version_aplicacion        IN VARCHAR2 DEFAULT NULL)
+                                   i_version_aplicacion        IN VARCHAR2 DEFAULT NULL,
+                                   i_pais_iso_alpha_2          IN VARCHAR2 DEFAULT NULL,
+                                   i_zona_horaria              IN VARCHAR2 DEFAULT NULL,
+                                   i_idioma_iso369_1           IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER;
 
   FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
@@ -145,9 +148,14 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
                                    i_tipo                      IN VARCHAR2 DEFAULT NULL,
                                    i_nombre_navegador          IN VARCHAR2 DEFAULT NULL,
                                    i_version_navegador         IN VARCHAR2 DEFAULT NULL,
-                                   i_version_aplicacion        IN VARCHAR2 DEFAULT NULL)
+                                   i_version_aplicacion        IN VARCHAR2 DEFAULT NULL,
+                                   i_pais_iso_alpha_2          IN VARCHAR2 DEFAULT NULL,
+                                   i_zona_horaria              IN VARCHAR2 DEFAULT NULL,
+                                   i_idioma_iso369_1           IN VARCHAR2 DEFAULT NULL)
     RETURN NUMBER IS
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
+    l_id_pais        t_dispositivos.id_pais%TYPE;
+    l_id_idioma      t_dispositivos.id_idioma%TYPE;
   BEGIN
     -- Valida aplicación
     IF i_id_aplicacion IS NULL THEN
@@ -160,6 +168,32 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
   
     -- Busca dispositivo
     l_id_dispositivo := f_id_dispositivo(i_token_dispositivo);
+  
+    -- Busca el pais
+    IF i_pais_iso_alpha_2 IS NOT NULL THEN
+      BEGIN
+        SELECT p.id_pais
+          INTO l_id_pais
+          FROM t_paises p
+         WHERE p.iso_alpha_2 = upper(i_pais_iso_alpha_2);
+      EXCEPTION
+        WHEN OTHERS THEN
+          l_id_pais := NULL;
+      END;
+    END IF;
+  
+    -- Busca el idioma
+    IF i_idioma_iso369_1 IS NOT NULL THEN
+      BEGIN
+        SELECT i.id_idioma
+          INTO l_id_idioma
+          FROM t_idiomas i
+         WHERE i.iso_639_1 = lower(i_idioma_iso369_1);
+      EXCEPTION
+        WHEN OTHERS THEN
+          l_id_idioma := NULL;
+      END;
+    END IF;
   
     IF l_id_dispositivo IS NOT NULL THEN
       -- Actualiza dispositivo
@@ -178,7 +212,11 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              token_notificacion        = nvl(i_token_notificacion,
                                              token_notificacion),
              version_aplicacion        = nvl(i_version_aplicacion,
-                                             version_aplicacion)
+                                             version_aplicacion),
+             id_pais                   = nvl(l_id_pais, id_pais),
+             zona_horaria              = nvl(k_util.f_zona_horaria(i_zona_horaria),
+                                             zona_horaria),
+             id_idioma                 = nvl(l_id_idioma, id_idioma)
        WHERE id_dispositivo = l_id_dispositivo;
     ELSE
       -- Inserta dispositivo
@@ -192,7 +230,10 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
          nombre_navegador,
          version_navegador,
          token_notificacion,
-         version_aplicacion)
+         version_aplicacion,
+         id_pais,
+         zona_horaria,
+         id_idioma)
       VALUES
         (i_token_dispositivo,
          SYSDATE,
@@ -203,7 +244,10 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
          i_nombre_navegador,
          i_version_navegador,
          i_token_notificacion,
-         i_version_aplicacion)
+         i_version_aplicacion,
+         l_id_pais,
+         k_util.f_zona_horaria(i_zona_horaria),
+         l_id_idioma)
       RETURNING id_dispositivo INTO l_id_dispositivo;
     END IF;
   
@@ -254,6 +298,13 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              d.token_notificacion,
              a.plataforma_notificacion,
              d.version_aplicacion,
+             (SELECT p.iso_alpha_2
+                FROM t_paises p
+               WHERE p.id_pais = d.id_pais),
+             d.zona_horaria,
+             (SELECT i.iso_639_1
+                FROM t_idiomas i
+               WHERE i.id_idioma = d.id_idioma),
              a.id_aplicacion
         INTO l_dispositivo.id_dispositivo,
              l_dispositivo.token_dispositivo,
@@ -265,6 +316,9 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
              l_dispositivo.token_notificacion,
              l_dispositivo.plataforma_notificacion,
              l_dispositivo.version_aplicacion,
+             l_dispositivo.id_pais_iso2,
+             l_dispositivo.zona_horaria,
+             l_dispositivo.id_idioma_iso369_1,
              l_id_aplicacion
         FROM t_dispositivos d, t_aplicaciones a
        WHERE a.id_aplicacion(+) = d.id_aplicacion

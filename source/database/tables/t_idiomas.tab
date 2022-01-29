@@ -1,0 +1,29 @@
+create table T_IDIOMAS
+(
+  id_idioma  NUMBER(3) not null,
+  nombre     VARCHAR2(100),
+  iso_639_1  VARCHAR2(2),
+  iso_639_2t VARCHAR2(3),
+  iso_639_2b VARCHAR2(3)
+)
+;
+comment on table T_IDIOMAS
+  is 'Idiomas';
+comment on column T_IDIOMAS.id_idioma
+  is 'Identificador del idioma';
+comment on column T_IDIOMAS.nombre
+  is 'Nombre del idioma';
+comment on column T_IDIOMAS.iso_639_1
+  is 'Codigo del idioma segun estandar ISO 639-1';
+comment on column T_IDIOMAS.iso_639_2t
+  is 'Codigo del idioma segun estandar ISO 639-2/T';
+comment on column T_IDIOMAS.iso_639_2b
+  is 'Codigo del idioma segun estandar ISO 639-2/B';
+alter table T_IDIOMAS
+  add constraint PK_IDIOMAS primary key (ID_IDIOMA);
+alter table T_IDIOMAS
+  add constraint UK_IDIOMAS_ISO_639_1 unique (ISO_639_1);
+alter table T_IDIOMAS
+  add constraint UK_IDIOMAS_ISO_639_2T unique (ISO_639_2T);
+alter table T_IDIOMAS
+  add constraint UK_IDIOMAS_ISO_639_2B unique (ISO_639_2B);

@@ -159,6 +159,24 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_charset RETURN VARCHAR2;
 
+  /**
+  Retorna si el valor recibido es de tipo numérico
+  
+  %author dmezac 26/1/2022 19:48:15
+  %param i_valor Zona horaria en formato decimal
+  %return Si el valor recibido es de tipo numérico
+  */
+  FUNCTION f_es_valor_numerico(i_valor IN VARCHAR2) RETURN BOOLEAN;
+
+  /**
+  Retorna una zona horaria en formato '(+|-)HH:MM'
+  
+  %author dmezac 26/1/2022 19:43:15
+  %param i_zona_horaria Zona horaria en formato decimal
+  %return Zona horaria en formato '(+|-)HH:MM'
+  */
+  FUNCTION f_zona_horaria(i_zona_horaria IN VARCHAR2) RETURN VARCHAR2;
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_util IS
@@ -946,6 +964,52 @@ END;'
         l_characterset := NULL;
     END;
     RETURN utl_i18n.map_charset(l_characterset);
+  END;
+
+  FUNCTION f_es_valor_numerico(i_valor IN VARCHAR2) RETURN BOOLEAN IS
+    l_numero NUMBER(20, 2);
+    l_result BOOLEAN;
+  BEGIN
+    l_result := FALSE;
+    l_numero := to_number(i_valor);
+    l_result := TRUE;
+    RETURN l_result;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN l_result;
+  END;
+
+  FUNCTION f_zona_horaria(i_zona_horaria IN VARCHAR2) RETURN VARCHAR2 IS
+    l_zona   NUMBER(18, 2);
+    l_tiempo NUMBER(15);
+    l_hora   NUMBER(15);
+    l_minuto NUMBER(3);
+    --
+    l_retorno    VARCHAR2(10);
+    l_validacion DATE;
+  BEGIN
+    IF f_es_valor_numerico(i_zona_horaria) THEN
+      l_zona := to_number(i_zona_horaria);
+    
+      l_tiempo := l_zona * 3600;
+    
+      l_hora   := trunc(l_tiempo / 3600);
+      l_tiempo := abs((l_tiempo - (l_hora * 3600)) MOD 3600);
+      l_minuto := trunc(l_tiempo / 60);
+    
+      l_retorno := to_char(l_hora) || ':' || to_char(l_minuto);
+    ELSE
+      l_retorno := i_zona_horaria;
+    END IF;
+  
+    SELECT CAST(current_timestamp at TIME ZONE (SELECT l_retorno FROM dual) AS DATE) fecha
+      INTO l_validacion
+      FROM dual;
+  
+    RETURN l_retorno;
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN NULL;
   END;
 
 END;
