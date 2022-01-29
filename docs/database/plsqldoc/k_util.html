@@ -190,6 +190,16 @@ Retorna el significado de un codigo dentro de un dominio
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ES_VALOR_NUMERICO">f_es_valor_numerico</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna si el valor recibido es de tipo num&#233;rico
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_ZONA_HORARIA">f_zona_horaria</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna una zona horaria en formato '(+|-)HH:MM'
+</TD></TR>
 </TABLE>
 <BR>
 <A NAME="Exceptions"></A>
@@ -726,6 +736,110 @@ f_charset
 FUNCTION f_charset RETURN VARCHAR2
 
 </PRE>
+<HR>
+<A NAME="F_ES_VALOR_NUMERICO"></A>
+<P CLASS="TYPE_TITLE">
+f_es_valor_numerico
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_es_valor_numerico(i_valor IN VARCHAR2) RETURN BOOLEAN
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna si el valor recibido es de tipo num&#233;rico<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 26/1/2022 19:48:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_valor&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Zona horaria en formato decimal<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Si el valor recibido es de tipo num&#233;rico<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_ZONA_HORARIA"></A>
+<P CLASS="TYPE_TITLE">
+f_zona_horaria
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_zona_horaria(i_zona_horaria IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna una zona horaria en formato '(+|-)HH:MM'<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 26/1/2022 19:43:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_zona_horaria&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Zona horaria en formato decimal<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Zona horaria en formato '(+|-)HH:MM'<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <P>&nbsp;</P>
 <P>&nbsp;</P>
 </BODY>
