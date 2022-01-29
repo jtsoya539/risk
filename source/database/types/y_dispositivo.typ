@@ -50,6 +50,12 @@ SOFTWARE.
   plataforma_notificacion VARCHAR2(10),
 /** Version de la aplicacion */
   version_aplicacion VARCHAR2(100),
+/** Pais del dispositivo */
+  id_pais_iso2 VARCHAR2(2),
+/** Zona horaria del dispositivo */
+  zona_horaria VARCHAR2(8),
+/** Idioma del dispositivo */
+  id_idioma_iso369_1 VARCHAR2(2),
 /** Plantillas para las notificaciones push de la aplicación */
   plantillas y_datos,
 /** Suscripciones para notificaciones push del dispositivo */
@@ -88,6 +94,9 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     self.token_notificacion        := NULL;
     self.plataforma_notificacion   := NULL;
     self.version_aplicacion        := NULL;
+    self.id_pais_iso2              := NULL;
+    self.zona_horaria              := NULL;
+    self.id_idioma_iso369_1        := NULL;
     self.plantillas                := NEW y_datos();
     self.suscripciones             := NEW y_datos();
     RETURN;
@@ -114,6 +123,9 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_dispositivo.token_notificacion        := l_json_object.get_string('token_notificacion');
     l_dispositivo.plataforma_notificacion   := l_json_object.get_string('plataforma_notificacion');
     l_dispositivo.version_aplicacion        := l_json_object.get_string('version_aplicacion');
+    l_dispositivo.id_pais_iso2              := l_json_object.get_string('id_pais_iso2');
+    l_dispositivo.zona_horaria              := l_json_object.get_string('zona_horaria');
+    l_dispositivo.id_idioma_iso369_1        := l_json_object.get_string('id_idioma_iso369_1');
   
     l_json_array := l_json_object.get_array('plantillas');
   
@@ -169,6 +181,9 @@ CREATE OR REPLACE TYPE BODY y_dispositivo IS
     l_json_object.put('plataforma_notificacion',
                       self.plataforma_notificacion);
     l_json_object.put('version_aplicacion', self.version_aplicacion);
+    l_json_object.put('id_pais_iso2', self.id_pais_iso2);
+    l_json_object.put('zona_horaria', self.zona_horaria);
+    l_json_object.put('id_idioma_iso369_1', self.id_idioma_iso369_1);
   
     IF self.plantillas IS NULL THEN
       l_json_object.put_null('plantillas');

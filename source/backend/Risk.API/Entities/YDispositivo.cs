@@ -52,6 +52,12 @@ namespace Risk.API.Entities
         public string PlataformaNotificacion { get; set; }
         [JsonProperty("version_aplicacion")]
         public string VersionAplicacion { get; set; }
+        [JsonProperty("id_pais_iso2")]
+        public string IdPaisIso2 { get; set; }
+        [JsonProperty("zona_horaria")]
+        public string ZonaHoraria { get; set; }
+        [JsonProperty("id_idioma_iso369_1")]
+        public string IdiomaIso { get; set; }
         [JsonProperty("plantillas")]
         public List<YPlantilla> Plantillas { get; set; }
         [JsonProperty("suscripciones")]
@@ -71,6 +77,9 @@ namespace Risk.API.Entities
                 TokenNotificacion = this.TokenNotificacion,
                 PlataformaNotificacion = this.PlataformaNotificacion,
                 VersionAplicacion = this.VersionAplicacion,
+                IdPaisIso2 = this.IdPaisIso2,
+                ZonaHoraria = this.ZonaHoraria,
+                IdiomaIso = this.IdiomaIso,
                 Plantillas = EntitiesMapper.GetModelListFromEntity<Plantilla, YPlantilla>(this.Plantillas),
                 Suscripciones = EntitiesMapper.GetModelListFromEntity<Dato, YDato>(this.Suscripciones)
             };

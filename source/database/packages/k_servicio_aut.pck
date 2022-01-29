@@ -628,7 +628,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                               l_dispositivo.tipo,
                                                               l_dispositivo.nombre_navegador,
                                                               l_dispositivo.version_navegador,
-                                                              l_dispositivo.version_aplicacion);
+                                                              l_dispositivo.version_aplicacion,
+                                                              l_dispositivo.id_pais_iso2,
+                                                              l_dispositivo.zona_horaria,
+                                                              l_dispositivo.id_idioma_iso369_1);
   
     l_rsp.lugar := 'Agregando suscripciones';
     i           := l_dispositivo.suscripciones.first;
