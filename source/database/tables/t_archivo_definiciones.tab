@@ -6,7 +6,8 @@ create table T_ARCHIVO_DEFINICIONES
   tamano_maximo          NUMBER(10),
   orden                  NUMBER(3) not null,
   nombre_referencia      VARCHAR2(30),
-  extensiones_permitidas VARCHAR2(50)
+  extensiones_permitidas VARCHAR2(50),
+  historico_activo       VARCHAR2(1) default 'N' not null
 )
 ;
 comment on table T_ARCHIVO_DEFINICIONES
@@ -25,6 +26,11 @@ comment on column T_ARCHIVO_DEFINICIONES.nombre_referencia
   is 'Nombre del campo de referencia';
 comment on column T_ARCHIVO_DEFINICIONES.extensiones_permitidas
   is 'Dominio de las extensiones de archivo permitidas';
+comment on column T_ARCHIVO_DEFINICIONES.historico_activo
+  is 'El registro histórico de versiones está activo? (S/N)';
 alter table T_ARCHIVO_DEFINICIONES
   add constraint PK_ARCHIVO_DEFINICIONES primary key (TABLA, CAMPO);
+alter table T_ARCHIVO_DEFINICIONES
+  add constraint CK_ARC_DEF_HISTORICO_ACTIVO
+  check (HISTORICO_ACTIVO IN ('S', 'N'));
 
