@@ -106,13 +106,21 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
                            i_cadenas   IN y_cadenas,
                            i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
     RETURN VARCHAR2 IS
-    l_mensaje t_errores.mensaje%TYPE;
+    l_mensaje   t_errores.mensaje%TYPE;
+    l_id_idioma t_idiomas.id_idioma%TYPE := k_sistema.f_idioma;
+    l_id_pais   t_paises.id_pais%TYPE := k_sistema.f_pais;
   BEGIN
     BEGIN
-      SELECT mensaje
-        INTO l_mensaje
-        FROM t_errores
-       WHERE id_error = i_id_error;
+      WITH lv_mensajes AS
+       (SELECT mensaje
+          FROM t_errores
+         WHERE id_error = i_id_error
+           AND nvl(id_idioma, nvl(l_id_idioma, -1)) = nvl(l_id_idioma, -1)
+           AND nvl(id_pais, nvl(l_id_pais, -1)) = nvl(l_id_pais, -1)
+         ORDER BY decode(id_error, NULL, 0, 1) +
+                  decode(id_idioma, NULL, 0, 1) +
+                  decode(id_pais, NULL, 0, 1) DESC)
+      SELECT mensaje INTO l_mensaje FROM lv_mensajes WHERE rownum = 1;
     EXCEPTION
       WHEN no_data_found THEN
         l_mensaje := 'Error no registrado [' || i_id_error || ']';

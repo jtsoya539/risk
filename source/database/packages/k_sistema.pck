@@ -42,6 +42,9 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   c_id_aplicacion    CONSTANT VARCHAR2(50) := 'ID_APLICACION';
   c_id_sesion        CONSTANT VARCHAR2(50) := 'ID_SESION';
   c_id_usuario       CONSTANT VARCHAR2(50) := 'ID_USUARIO';
+  c_id_pais          CONSTANT VARCHAR2(50) := 'ID_PAIS';
+  c_zona_horaria     CONSTANT VARCHAR2(50) := 'ZONA_HORARIA';
+  c_id_idioma        CONSTANT VARCHAR2(50) := 'ID_IDIOMA';
 
   /**
   Indica si el ambiente de Base de Datos es de producción
@@ -60,12 +63,44 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   FUNCTION f_fecha RETURN DATE;
 
   /**
+  Retorna el valor del parámetro ID_USUARIO en la sesión
+  
+  %author jtsoya539 29/1/2022 10:22:38
+  %return Valor del parámetro ID_USUARIO
+  */
+  FUNCTION f_id_usuario RETURN NUMBER;
+
+  /**
   Retorna el valor del parámetro USUARIO en la sesión
   
   %author jtsoya539 4/2/2021 08:54:38
   %return Valor del parámetro USUARIO
   */
   FUNCTION f_usuario RETURN VARCHAR2;
+
+  /**
+  Retorna el valor del parámetro ID_PAIS en la sesión
+  
+  %author dmezac 27/1/2022 23:54:40
+  %return Valor del parámetro ID_PAIS
+  */
+  FUNCTION f_pais RETURN NUMBER;
+
+  /**
+  Retorna el valor del parámetro ZONA_HORARIA en la sesión
+  
+  %author dmezac 27/1/2022 23:50:38
+  %return Valor del parámetro ZONA_HORARIA
+  */
+  FUNCTION f_zona_horaria RETURN VARCHAR2;
+
+  /**
+  Retorna el valor del parámetro ID_IDIOMA en la sesión
+  
+  %author dmezac 27/1/2022 23:52:18
+  %return Valor del parámetro ID_IDIOMA
+  */
+  FUNCTION f_idioma RETURN NUMBER;
 
   /**
   Retorna el valor de un parámetro en la sesión
@@ -221,9 +256,29 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
     RETURN f_valor_parametro_date(c_fecha);
   END;
 
+  FUNCTION f_id_usuario RETURN NUMBER IS
+  BEGIN
+    RETURN f_valor_parametro_number(c_id_usuario);
+  END;
+
   FUNCTION f_usuario RETURN VARCHAR2 IS
   BEGIN
     RETURN f_valor_parametro_string(c_usuario);
+  END;
+
+  FUNCTION f_pais RETURN NUMBER IS
+  BEGIN
+    RETURN f_valor_parametro_number(c_id_pais);
+  END;
+
+  FUNCTION f_zona_horaria RETURN VARCHAR2 IS
+  BEGIN
+    RETURN f_valor_parametro_string(c_zona_horaria);
+  END;
+
+  FUNCTION f_idioma RETURN NUMBER IS
+  BEGIN
+    RETURN f_valor_parametro_number(c_id_idioma);
   END;
 
   FUNCTION f_valor_parametro(i_parametro IN VARCHAR2) RETURN anydata IS
@@ -317,6 +372,36 @@ CREATE OR REPLACE PACKAGE BODY k_sistema IS
         NULL;
     END;
     p_definir_parametro_string(c_usuario, USER);
+  
+    DECLARE
+      l_id_pais t_paises.id_pais%TYPE;
+    BEGIN
+      SELECT p.id_pais
+        INTO l_id_pais
+        FROM t_paises p
+       WHERE p.iso_alpha_2 = k_util.f_valor_parametro('ID_PAIS_ISO');
+      p_definir_parametro_number(c_id_pais, l_id_pais);
+    EXCEPTION
+      WHEN OTHERS THEN
+        NULL;
+    END;
+  
+    p_definir_parametro_string(c_zona_horaria,
+                               k_util.f_valor_parametro('ZONA_HORARIA'));
+  
+    DECLARE
+      l_id_idioma t_idiomas.id_idioma%TYPE;
+    BEGIN
+      SELECT i.id_idioma
+        INTO l_id_idioma
+        FROM t_idiomas i
+       WHERE i.iso_639_1 = k_util.f_valor_parametro('ID_IDIOMA_ISO');
+      p_definir_parametro_number(c_id_idioma, l_id_idioma);
+    EXCEPTION
+      WHEN OTHERS THEN
+        NULL;
+    END;
+  
   END;
 
   PROCEDURE p_limpiar_parametros IS
