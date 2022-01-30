@@ -21,4 +21,9 @@ comment on column T_PAISES.iso_numeric
   is 'Codigo del pais segun estandar ISO 3166-1 numeric';
 alter table T_PAISES
   add constraint PK_PAISES primary key (ID_PAIS);
-
+alter table T_PAISES
+  add constraint UK_PAISES_ISO_ALPHA_2 unique (ISO_ALPHA_2);
+alter table T_PAISES
+  add constraint UK_PAISES_ISO_ALPHA_3 unique (ISO_ALPHA_3);
+alter table T_PAISES
+  add constraint UK_PAISES_ISO_NUMERIC unique (ISO_NUMERIC);

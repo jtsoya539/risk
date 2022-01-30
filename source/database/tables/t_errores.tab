@@ -2,7 +2,9 @@ create table T_ERRORES
 (
   id_error   VARCHAR2(10) not null,
   mensaje    VARCHAR2(2000),
-  id_dominio VARCHAR2(5)
+  id_dominio VARCHAR2(5),
+  id_idioma  NUMBER(3),
+  id_pais    NUMBER(3)
 )
 ;
 comment on table T_ERRORES
@@ -13,9 +15,18 @@ comment on column T_ERRORES.mensaje
   is 'Mensaje del error';
 comment on column T_ERRORES.id_dominio
   is 'Dominio del error';
+comment on column T_ERRORES.id_idioma
+  is 'Idioma del error';
+comment on column T_ERRORES.id_pais
+  is 'Pais del error';
 alter table T_ERRORES
-  add constraint PK_ERRORES primary key (ID_ERROR);
+  add constraint UK_ERRORES unique (ID_ERROR, ID_IDIOMA, ID_PAIS);
 alter table T_ERRORES
   add constraint FK_ERRORES_DOMINIOS foreign key (ID_DOMINIO)
   references T_DOMINIOS (ID_DOMINIO);
-
+alter table T_ERRORES
+  add constraint FK_ERRORES_IDIOMAS foreign key (ID_IDIOMA)
+  references T_IDIOMAS (ID_IDIOMA);
+alter table T_ERRORES
+  add constraint FK_ERRORES_PAISES foreign key (ID_PAIS)
+  references T_PAISES (ID_PAIS);

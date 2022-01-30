@@ -69,7 +69,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_codigo     IN VARCHAR2,
-                              i_mensaje    IN VARCHAR2,
+                              i_mensaje    IN VARCHAR2 DEFAULT NULL,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL,
                               i_datos      IN y_objeto DEFAULT NULL);
 
@@ -217,16 +217,18 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
 
   PROCEDURE p_respuesta_error(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_codigo     IN VARCHAR2,
-                              i_mensaje    IN VARCHAR2,
+                              i_mensaje    IN VARCHAR2 DEFAULT NULL,
                               i_mensaje_bd IN VARCHAR2 DEFAULT NULL,
                               i_datos      IN y_objeto DEFAULT NULL) IS
+    l_mensaje VARCHAR2(32767) := substr(i_mensaje, 1, 32767);
   BEGIN
     IF i_codigo = c_ok THEN
       io_respuesta.codigo := c_error_general;
     ELSE
       io_respuesta.codigo := substr(i_codigo, 1, 10);
     END IF;
-    io_respuesta.mensaje    := substr(k_error.f_mensaje_excepcion(i_mensaje),
+    io_respuesta.mensaje    := substr(k_error.f_mensaje_excepcion(nvl(l_mensaje,
+                                                                      k_error.f_mensaje_error(i_codigo))),
                                       1,
                                       4000);
     io_respuesta.mensaje_bd := substr(i_mensaje_bd, 1, 4000);
