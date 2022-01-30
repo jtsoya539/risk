@@ -31,9 +31,9 @@ SOFTWARE.
 */
 
 /** Identificador del error */
-  id_error VARCHAR2(10),
+  id_error VARCHAR2(100),
 /** Mensaje del error */
-  mensaje VARCHAR2(2000),
+  mensaje VARCHAR2(4000),
 
   CONSTRUCTOR FUNCTION y_error RETURN SELF AS RESULT,
 

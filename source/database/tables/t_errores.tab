@@ -1,7 +1,7 @@
 create table T_ERRORES
 (
-  id_error   VARCHAR2(10) not null,
-  mensaje    VARCHAR2(2000),
+  id_error   VARCHAR2(100) not null,
+  mensaje    VARCHAR2(4000),
   id_dominio VARCHAR2(5),
   id_idioma  NUMBER(3),
   id_pais    NUMBER(3)
@@ -30,3 +30,4 @@ alter table T_ERRORES
 alter table T_ERRORES
   add constraint FK_ERRORES_PAISES foreign key (ID_PAIS)
   references T_PAISES (ID_PAIS);
+

@@ -74,7 +74,6 @@ prompt
 @@tables/t_modulos.tab
 @@tables/t_dominios.tab
 @@tables/t_aplicaciones.tab
-@@tables/t_errores.tab
 @@tables/t_significado_dominios.tab
 @@tables/t_significados.tab
 @@tables/t_paises.tab
@@ -83,6 +82,7 @@ prompt
 @@tables/t_barrios.tab
 @@tables/t_idiomas.tab
 @@tables/t_monedas.tab
+@@tables/t_errores.tab
 @@tables/t_personas.tab
 @@tables/t_usuarios.tab
 @@tables/t_roles.tab
