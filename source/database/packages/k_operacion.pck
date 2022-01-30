@@ -82,6 +82,10 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                                 i_expresion  IN BOOLEAN,
                                 i_mensaje    IN VARCHAR2);
 
+  PROCEDURE p_definir_parametros(i_id_operacion     IN NUMBER,
+                                 i_nombre_operacion IN VARCHAR2,
+                                 i_contexto         IN y_parametros);
+
   FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
                           i_nombre  IN VARCHAR2,
                           i_dominio IN VARCHAR2) RETURN NUMBER;
@@ -267,6 +271,76 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                         nvl(i_mensaje,
                             k_error.f_mensaje_error(c_error_parametro)));
       RAISE ex_error_parametro;
+    END IF;
+  END;
+
+  PROCEDURE p_definir_parametros(i_id_operacion     IN NUMBER,
+                                 i_nombre_operacion IN VARCHAR2,
+                                 i_contexto         IN y_parametros) IS
+    l_id_sesion   t_sesiones.id_sesion%TYPE;
+    l_dispositivo y_dispositivo;
+  BEGIN
+    l_id_sesion := k_sesion.f_id_sesion(k_operacion.f_valor_parametro_string(i_contexto,
+                                                                             'access_token'));
+    k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
+                                         k_operacion.f_valor_parametro_string(i_contexto,
+                                                                              'direccion_ip'));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
+                                         i_id_operacion);
+    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
+                                         i_nombre_operacion);
+    k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
+                                         k_aplicacion.f_id_aplicacion(k_operacion.f_valor_parametro_string(i_contexto,
+                                                                                                           'clave_aplicacion'),
+                                                                      'S'));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
+                                         l_id_sesion);
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
+                                         k_usuario.f_id_usuario(k_operacion.f_valor_parametro_string(i_contexto,
+                                                                                                     'usuario')));
+    k_sistema.p_definir_parametro_string(k_sistema.c_usuario,
+                                         k_operacion.f_valor_parametro_string(i_contexto,
+                                                                              'usuario'));
+  
+    IF l_id_sesion IS NOT NULL THEN
+      l_dispositivo := k_dispositivo.f_datos_dispositivo(k_sesion.f_dispositivo_sesion(l_id_sesion));
+    
+      DECLARE
+        l_id_pais t_paises.id_pais%TYPE;
+      BEGIN
+        IF l_dispositivo.id_pais_iso2 IS NOT NULL THEN
+          SELECT p.id_pais
+            INTO l_id_pais
+            FROM t_paises p
+           WHERE p.iso_alpha_2 = l_dispositivo.id_pais_iso2;
+          k_sistema.p_definir_parametro_number(k_sistema.c_id_pais,
+                                               l_id_pais);
+        END IF;
+      EXCEPTION
+        WHEN OTHERS THEN
+          NULL;
+      END;
+    
+      IF l_dispositivo.zona_horaria IS NOT NULL THEN
+        k_sistema.p_definir_parametro_string(k_sistema.c_zona_horaria,
+                                             l_dispositivo.zona_horaria);
+      END IF;
+    
+      DECLARE
+        l_id_idioma t_idiomas.id_idioma%TYPE;
+      BEGIN
+        IF l_dispositivo.id_idioma_iso369_1 IS NOT NULL THEN
+          SELECT i.id_idioma
+            INTO l_id_idioma
+            FROM t_idiomas i
+           WHERE i.iso_639_1 = l_dispositivo.id_idioma_iso369_1;
+          k_sistema.p_definir_parametro_number(k_sistema.c_id_idioma,
+                                               l_id_idioma);
+        END IF;
+      EXCEPTION
+        WHEN OTHERS THEN
+          NULL;
+      END;
     END IF;
   END;
 
@@ -704,8 +778,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                                            .valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -717,12 +790,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i)
-                                                                                          .valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -734,11 +805,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre || ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i)
-                                                                                        .valor),
+                                                             to_char(anydata.accessdate(i_parametros(i).valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -746,8 +816,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i)
-                                                              .nombre));
+                                                              i_parametros(i).nombre));
             END IF;
           END IF;
         END IF;

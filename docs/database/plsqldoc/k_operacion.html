@@ -66,6 +66,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DEFINIR_PARAMETROS">p_definir_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_ID_OPERACION">f_id_operacion</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -441,6 +446,17 @@ p_validar_parametro
 PROCEDURE p_validar_parametro(io_respuesta IN OUT NOCOPY y_respuesta,
                               i_expresion  IN BOOLEAN,
                               i_mensaje    IN VARCHAR2)
+
+</PRE>
+<HR>
+<A NAME="P_DEFINIR_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+p_definir_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_definir_parametros(i_id_operacion     IN NUMBER,
+                               i_nombre_operacion IN VARCHAR2,
+                               i_contexto         IN y_parametros)
 
 </PRE>
 <HR>

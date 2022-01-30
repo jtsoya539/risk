@@ -102,8 +102,6 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     l_ctx             y_parametros;
     l_nombre_servicio t_operaciones.nombre%TYPE;
     l_tipo_servicio   t_servicios.tipo%TYPE;
-    l_id_sesion       t_sesiones.id_sesion%TYPE;
-    l_dispositivo     y_dispositivo;
     l_sentencia       VARCHAR2(4000);
   BEGIN
     -- Inicializa respuesta
@@ -163,68 +161,9 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
-    l_id_sesion := k_sesion.f_id_sesion(k_operacion.f_valor_parametro_string(l_ctx,
-                                                                             'access_token'));
-    k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
-                                         k_operacion.f_valor_parametro_string(l_ctx,
-                                                                              'direccion_ip'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
-                                         i_id_servicio);
-    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
-                                         l_nombre_servicio);
-    k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
-                                         k_aplicacion.f_id_aplicacion(k_operacion.f_valor_parametro_string(l_ctx,
-                                                                                                           'clave_aplicacion'),
-                                                                      'S'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
-                                         l_id_sesion);
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
-                                         k_usuario.f_id_usuario(k_operacion.f_valor_parametro_string(l_ctx,
-                                                                                                     'usuario')));
-    k_sistema.p_definir_parametro_string(k_sistema.c_usuario,
-                                         k_operacion.f_valor_parametro_string(l_ctx,
-                                                                              'usuario'));
-  
-    IF l_id_sesion IS NOT NULL THEN
-      l_dispositivo := k_dispositivo.f_datos_dispositivo(k_sesion.f_dispositivo_sesion(l_id_sesion));
-    
-      DECLARE
-        l_id_pais t_paises.id_pais%TYPE;
-      BEGIN
-        IF l_dispositivo.id_pais_iso2 IS NOT NULL THEN
-          SELECT p.id_pais
-            INTO l_id_pais
-            FROM t_paises p
-           WHERE p.iso_alpha_2 = l_dispositivo.id_pais_iso2;
-          k_sistema.p_definir_parametro_number(k_sistema.c_id_pais,
-                                               l_id_pais);
-        END IF;
-      EXCEPTION
-        WHEN OTHERS THEN
-          NULL;
-      END;
-    
-      IF l_dispositivo.zona_horaria IS NOT NULL THEN
-        k_sistema.p_definir_parametro_string(k_sistema.c_zona_horaria,
-                                             l_dispositivo.zona_horaria);
-      END IF;
-    
-      DECLARE
-        l_id_idioma t_idiomas.id_idioma%TYPE;
-      BEGIN
-        IF l_dispositivo.id_idioma_iso369_1 IS NOT NULL THEN
-          SELECT i.id_idioma
-            INTO l_id_idioma
-            FROM t_idiomas i
-           WHERE i.iso_639_1 = l_dispositivo.id_idioma_iso369_1;
-          k_sistema.p_definir_parametro_number(k_sistema.c_id_idioma,
-                                               l_id_idioma);
-        END IF;
-      EXCEPTION
-        WHEN OTHERS THEN
-          NULL;
-      END;
-    END IF;
+    k_operacion.p_definir_parametros(i_id_servicio,
+                                     l_nombre_servicio,
+                                     l_ctx);
   
     l_rsp.lugar := 'Validando permiso';
     IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN

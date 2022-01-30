@@ -182,26 +182,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
-    k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
-                                         k_operacion.f_valor_parametro_string(l_ctx,
-                                                                              'direccion_ip'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
-                                         i_id_reporte);
-    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
-                                         l_nombre_reporte);
-    k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
-                                         k_aplicacion.f_id_aplicacion(k_operacion.f_valor_parametro_string(l_ctx,
-                                                                                                           'clave_aplicacion'),
-                                                                      'S'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
-                                         k_sesion.f_id_sesion(k_operacion.f_valor_parametro_string(l_ctx,
-                                                                                                   'access_token')));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
-                                         k_usuario.f_id_usuario(k_operacion.f_valor_parametro_string(l_ctx,
-                                                                                                     'usuario')));
-    k_sistema.p_definir_parametro_string(k_sistema.c_usuario,
-                                         k_operacion.f_valor_parametro_string(l_ctx,
-                                                                              'usuario'));
+    k_operacion.p_definir_parametros(i_id_reporte, l_nombre_reporte, l_ctx);
   
     l_rsp.lugar := 'Validando permiso';
     IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN
