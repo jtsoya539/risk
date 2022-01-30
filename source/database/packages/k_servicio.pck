@@ -185,44 +185,46 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                          k_operacion.f_valor_parametro_string(l_ctx,
                                                                               'usuario'));
   
-    l_dispositivo := k_dispositivo.f_datos_dispositivo(k_sesion.f_dispositivo_sesion(l_id_sesion));
-  
-    DECLARE
-      l_id_pais t_paises.id_pais%TYPE;
-    BEGIN
-      IF l_dispositivo.id_pais_iso2 IS NOT NULL THEN
-        SELECT p.id_pais
-          INTO l_id_pais
-          FROM t_paises p
-         WHERE p.iso_alpha_2 = l_dispositivo.id_pais_iso2;
-        k_sistema.p_definir_parametro_number(k_sistema.c_id_pais,
-                                             l_id_pais);
+    IF l_id_sesion IS NOT NULL THEN
+      l_dispositivo := k_dispositivo.f_datos_dispositivo(k_sesion.f_dispositivo_sesion(l_id_sesion));
+    
+      DECLARE
+        l_id_pais t_paises.id_pais%TYPE;
+      BEGIN
+        IF l_dispositivo.id_pais_iso2 IS NOT NULL THEN
+          SELECT p.id_pais
+            INTO l_id_pais
+            FROM t_paises p
+           WHERE p.iso_alpha_2 = l_dispositivo.id_pais_iso2;
+          k_sistema.p_definir_parametro_number(k_sistema.c_id_pais,
+                                               l_id_pais);
+        END IF;
+      EXCEPTION
+        WHEN OTHERS THEN
+          NULL;
+      END;
+    
+      IF l_dispositivo.zona_horaria IS NOT NULL THEN
+        k_sistema.p_definir_parametro_string(k_sistema.c_zona_horaria,
+                                             l_dispositivo.zona_horaria);
       END IF;
-    EXCEPTION
-      WHEN OTHERS THEN
-        NULL;
-    END;
-  
-    IF l_dispositivo.zona_horaria IS NOT NULL THEN
-      k_sistema.p_definir_parametro_string(k_sistema.c_zona_horaria,
-                                           l_dispositivo.zona_horaria);
+    
+      DECLARE
+        l_id_idioma t_idiomas.id_idioma%TYPE;
+      BEGIN
+        IF l_dispositivo.id_idioma_iso369_1 IS NOT NULL THEN
+          SELECT i.id_idioma
+            INTO l_id_idioma
+            FROM t_idiomas i
+           WHERE i.iso_639_1 = l_dispositivo.id_idioma_iso369_1;
+          k_sistema.p_definir_parametro_number(k_sistema.c_id_idioma,
+                                               l_id_idioma);
+        END IF;
+      EXCEPTION
+        WHEN OTHERS THEN
+          NULL;
+      END;
     END IF;
-  
-    DECLARE
-      l_id_idioma t_idiomas.id_idioma%TYPE;
-    BEGIN
-      IF l_dispositivo.id_idioma_iso369_1 IS NOT NULL THEN
-        SELECT i.id_idioma
-          INTO l_id_idioma
-          FROM t_idiomas i
-         WHERE i.iso_639_1 = l_dispositivo.id_idioma_iso369_1;
-        k_sistema.p_definir_parametro_number(k_sistema.c_id_idioma,
-                                             l_id_idioma);
-      END IF;
-    EXCEPTION
-      WHEN OTHERS THEN
-        NULL;
-    END;
   
     l_rsp.lugar := 'Validando permiso';
     IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN
