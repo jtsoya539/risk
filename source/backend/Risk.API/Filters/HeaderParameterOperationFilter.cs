@@ -24,13 +24,23 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using Microsoft.OpenApi.Models;
-using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Risk.API.Filters
 {
-    public class ServiceVersionOperationFilter : IOperationFilter
+    public class HeaderParameterOperationFilter : IOperationFilter
     {
+        private readonly string _name;
+        private readonly string _description;
+        private readonly bool _required;
+
+        public HeaderParameterOperationFilter(string name, string description, bool required = false)
+        {
+            _name = name;
+            _description = description;
+            _required = required;
+        }
+
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             if (operation.Parameters == null)
@@ -40,10 +50,10 @@ namespace Risk.API.Filters
 
             operation.Parameters.Add(new OpenApiParameter
             {
-                Name = RiskConstants.HEADER_RISK_SERVICE_VERSION,
-                Description = "Versión del Servicio",
+                Name = _name,
+                Description = _description,
                 In = ParameterLocation.Header,
-                Required = false,
+                Required = _required,
                 Schema = new OpenApiSchema()
                 {
                     Type = "string"
