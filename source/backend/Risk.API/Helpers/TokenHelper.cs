@@ -110,44 +110,30 @@ namespace Risk.API.Helpers
             return DateTime.Now.Ticks.ToString() + "-" + Guid.NewGuid().ToString();
         }
 
-        public static string ObtenerUsuarioDeAccessToken(string accessToken)
+        public static string ObtenerValorParametroDeHeaders(IHeaderDictionary headers, string headerName)
         {
-            string usuario = string.Empty;
+            string valorParametro = string.Empty;
 
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-            if (tokenHandler.CanReadToken(accessToken))
+            string headerValue = null;
+            if (headers.Keys.Contains(headerName))
             {
-                JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(accessToken);
-                usuario = jwtToken.Claims.First(claim => claim.Type == "unique_name").Value;
+                headerValue = headers[headerName];
+            }
+            else if (headers.Keys.Contains(headerName.ToLower()))
+            {
+                headerValue = headers[headerName.ToLower()];
+            }
+            else if (headers.Keys.Contains(headerName.ToUpper()))
+            {
+                headerValue = headers[headerName.ToUpper()];
             }
 
-            return usuario;
-        }
-
-        public static string ObtenerClaveAplicacionDeHeaders(IHeaderDictionary headers)
-        {
-            string claveAplicacion = string.Empty;
-
-            string riskAppKeyHeader = null;
-            if (headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY))
+            if (!string.IsNullOrEmpty(headerValue))
             {
-                riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY];
-            }
-            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY.ToLower()))
-            {
-                riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY.ToLower()];
-            }
-            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_APP_KEY.ToUpper()))
-            {
-                riskAppKeyHeader = headers[RiskConstants.HEADER_RISK_APP_KEY.ToUpper()];
+                valorParametro = headerValue;
             }
 
-            if (!string.IsNullOrEmpty(riskAppKeyHeader))
-            {
-                claveAplicacion = riskAppKeyHeader;
-            }
-
-            return claveAplicacion;
+            return valorParametro;
         }
 
         public static string ObtenerAccessTokenDeHeaders(IHeaderDictionary headers)
@@ -163,30 +149,18 @@ namespace Risk.API.Helpers
             return accessToken;
         }
 
-        public static string ObtenerVersionDeHeaders(IHeaderDictionary headers)
+        public static string ObtenerUsuarioDeAccessToken(string accessToken)
         {
-            string version = string.Empty;
+            string usuario = string.Empty;
 
-            string riskServiceVersionHeader = null;
-            if (headers.Keys.Contains(RiskConstants.HEADER_RISK_SERVICE_VERSION))
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            if (tokenHandler.CanReadToken(accessToken))
             {
-                riskServiceVersionHeader = headers[RiskConstants.HEADER_RISK_SERVICE_VERSION];
-            }
-            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_SERVICE_VERSION.ToLower()))
-            {
-                riskServiceVersionHeader = headers[RiskConstants.HEADER_RISK_SERVICE_VERSION.ToLower()];
-            }
-            else if (headers.Keys.Contains(RiskConstants.HEADER_RISK_SERVICE_VERSION.ToUpper()))
-            {
-                riskServiceVersionHeader = headers[RiskConstants.HEADER_RISK_SERVICE_VERSION.ToUpper()];
+                JwtSecurityToken jwtToken = tokenHandler.ReadJwtToken(accessToken);
+                usuario = jwtToken.Claims.First(claim => claim.Type == "unique_name").Value;
             }
 
-            if (!string.IsNullOrEmpty(riskServiceVersionHeader))
-            {
-                version = riskServiceVersionHeader;
-            }
-
-            return version;
+            return usuario;
         }
 
         public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken, IGenService genService)

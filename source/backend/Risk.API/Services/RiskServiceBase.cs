@@ -68,15 +68,17 @@ namespace Risk.API.Services
             string claveAplicacion = string.Empty; // clave_aplicacion
             string accessToken = string.Empty; // access_token
             string usuario = string.Empty; // usuario
+            string tokenDispositivo = string.Empty; // token_dispositivo
 
             if (_httpContextAccessor.HttpContext != null)
             {
                 try
                 {
                     direccionIp = _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                    claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                    claveAplicacion = TokenHelper.ObtenerValorParametroDeHeaders(_httpContextAccessor.HttpContext.Request.Headers, RiskConstants.HEADER_RISK_APP_KEY);
                     accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
                     usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
+                    tokenDispositivo = TokenHelper.ObtenerValorParametroDeHeaders(_httpContextAccessor.HttpContext.Request.Headers, RiskConstants.HEADER_RISK_DEVICE_TOKEN);
                 }
                 catch (Exception ex)
                 {
@@ -88,6 +90,7 @@ namespace Risk.API.Services
             ctx.Add("clave_aplicacion", claveAplicacion);
             ctx.Add("access_token", accessToken);
             ctx.Add("usuario", usuario);
+            ctx.Add("token_dispositivo", tokenDispositivo);
 
             return ctx.ToString(Formatting.None);
         }
@@ -121,7 +124,7 @@ namespace Risk.API.Services
             {
                 try
                 {
-                    version = TokenHelper.ObtenerVersionDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
+                    version = TokenHelper.ObtenerValorParametroDeHeaders(_httpContextAccessor.HttpContext.Request.Headers, RiskConstants.HEADER_RISK_SERVICE_VERSION);
                 }
                 catch (Exception ex)
                 {

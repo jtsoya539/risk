@@ -44,7 +44,7 @@ namespace Risk.API.Middlewares
         {
             if (context.Request.Path.StartsWithSegments(new PathString("/Api")))
             {
-                string claveAplicacion = TokenHelper.ObtenerClaveAplicacionDeHeaders(context.Request.Headers);
+                string claveAplicacion = TokenHelper.ObtenerValorParametroDeHeaders(context.Request.Headers, RiskConstants.HEADER_RISK_APP_KEY);
 
                 if (string.IsNullOrEmpty(claveAplicacion))
                 {
