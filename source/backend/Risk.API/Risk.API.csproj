@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
-    <PackageReference Include="MailKit" Version="3.1.0" />
+    <PackageReference Include="MailKit" Version="3.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.22" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.22" />
     <PackageReference Include="Microsoft.Azure.NotificationHubs" Version="4.1.0" />
@@ -33,7 +33,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.3" />
-    <PackageReference Include="Twilio" Version="5.70.0" />
+    <PackageReference Include="Twilio" Version="5.70.1" />
   </ItemGroup>
 
   <ItemGroup>
