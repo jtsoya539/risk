@@ -277,33 +277,42 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   PROCEDURE p_definir_parametros(i_id_operacion     IN NUMBER,
                                  i_nombre_operacion IN VARCHAR2,
                                  i_contexto         IN y_parametros) IS
-    l_id_sesion   t_sesiones.id_sesion%TYPE;
-    l_dispositivo y_dispositivo;
+    l_id_sesion      t_sesiones.id_sesion%TYPE;
+    l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
+    l_dispositivo    y_dispositivo;
   BEGIN
-    l_id_sesion := k_sesion.f_id_sesion(k_operacion.f_valor_parametro_string(i_contexto,
-                                                                             'access_token'));
-    k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
-                                         k_operacion.f_valor_parametro_string(i_contexto,
-                                                                              'direccion_ip'));
     k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
                                          i_id_operacion);
     k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
                                          i_nombre_operacion);
+    --
+    k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
+                                         k_operacion.f_valor_parametro_string(i_contexto,
+                                                                              'direccion_ip'));
     k_sistema.p_definir_parametro_string(k_sistema.c_id_aplicacion,
                                          k_aplicacion.f_id_aplicacion(k_operacion.f_valor_parametro_string(i_contexto,
-                                                                                                           'clave_aplicacion'),
-                                                                      'S'));
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
-                                         l_id_sesion);
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
-                                         k_usuario.f_id_usuario(k_operacion.f_valor_parametro_string(i_contexto,
-                                                                                                     'usuario')));
+                                                                                                           'clave_aplicacion')));
     k_sistema.p_definir_parametro_string(k_sistema.c_usuario,
                                          k_operacion.f_valor_parametro_string(i_contexto,
                                                                               'usuario'));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_usuario,
+                                         k_usuario.f_id_usuario(k_operacion.f_valor_parametro_string(i_contexto,
+                                                                                                     'usuario')));
+    --
+    l_id_sesion := k_sesion.f_id_sesion(k_operacion.f_valor_parametro_string(i_contexto,
+                                                                             'access_token'));
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_sesion,
+                                         l_id_sesion);
+    --
+    l_id_dispositivo := k_dispositivo.f_id_dispositivo(k_operacion.f_valor_parametro_string(i_contexto,
+                                                                                            'token_dispositivo'));
   
-    IF l_id_sesion IS NOT NULL THEN
-      l_dispositivo := k_dispositivo.f_datos_dispositivo(k_sesion.f_dispositivo_sesion(l_id_sesion));
+    IF l_id_dispositivo IS NULL AND l_id_sesion IS NOT NULL THEN
+      l_id_dispositivo := k_sesion.f_dispositivo_sesion(l_id_sesion);
+    END IF;
+  
+    IF l_id_dispositivo IS NOT NULL THEN
+      l_dispositivo := k_dispositivo.f_datos_dispositivo(l_id_dispositivo);
     
       DECLARE
         l_id_pais t_paises.id_pais%TYPE;
