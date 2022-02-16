@@ -37,8 +37,7 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   -------------------------------------------------------------------------------
   */
 
-  c_ok                           CONSTANT PLS_INTEGER := 0;
-  c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
+  c_ok CONSTANT PLS_INTEGER := 0;
 
   -- Prioridades de envío
   c_prioridad_urgente    CONSTANT PLS_INTEGER := 1;

@@ -1,7 +1,6 @@
 prompt Importing table t_parametros...
 set feedback off
 set define off
-
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('DIRECCION_CORREO_PRUEBAS', 'Dirección de correo electrónico para pruebas', 'demouser@risk.com', 'MSJ');
 
@@ -31,5 +30,8 @@ values ('REGEXP_VALIDAR_NUMERO_TELEFONO', 'Expresión Regular para validación de 
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('SUSCRIPCION_PRUEBAS', 'Tag o expresión destino para pruebas de notificaciones push', 'test', 'MSJ');
+
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
+values ('MENSAJERIA_CANTIDAD_INTENTOS_PERMITIDOS', 'Cantidad de intentos permitidos para envío de mensajes', '3', 'MSJ');
 
 prompt Done.

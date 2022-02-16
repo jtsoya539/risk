@@ -279,7 +279,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
 
   FUNCTION cambiar_estado_mensajeria(i_parametros IN y_parametros)
     RETURN y_respuesta IS
-    l_rsp y_respuesta;
+    l_rsp                          y_respuesta;
+    l_cantidad_intentos_permitidos PLS_INTEGER;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
@@ -311,6 +312,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
                                                                          'respuesta_envio') IS NOT NULL,
                                     'Debe ingresar respuesta_envio');
   
+    l_cantidad_intentos_permitidos := to_number(k_util.f_valor_parametro('MENSAJERIA_CANTIDAD_INTENTOS_PERMITIDOS'));
+  
     l_rsp.lugar := 'Cambiando estado de mensajería';
     CASE
      k_operacion.f_valor_parametro_string(i_parametros, 'tipo_mensajeria')
@@ -321,8 +324,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
            SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
                m.estado                  = CASE
                                              WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
-                                                  ('R') AND nvl(m.cantidad_intentos_envio, 0) >=
-                                                  k_mensajeria.c_cantidad_intentos_permitidos THEN
+                                                  ('R') AND
+                                                  nvl(m.cantidad_intentos_envio, 0) >= l_cantidad_intentos_permitidos THEN
                                               'A' -- ANULADO
                                              ELSE
                                               k_operacion.f_valor_parametro_string(i_parametros, 'estado')
@@ -348,8 +351,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
            SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
                m.estado                  = CASE
                                              WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
-                                                  ('R') AND nvl(m.cantidad_intentos_envio, 0) >=
-                                                  k_mensajeria.c_cantidad_intentos_permitidos THEN
+                                                  ('R') AND
+                                                  nvl(m.cantidad_intentos_envio, 0) >= l_cantidad_intentos_permitidos THEN
                                               'A' -- ANULADO
                                              ELSE
                                               k_operacion.f_valor_parametro_string(i_parametros, 'estado')
@@ -375,8 +378,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_msj IS
            SET m.cantidad_intentos_envio = nvl(m.cantidad_intentos_envio, 0) + 1,
                m.estado                  = CASE
                                              WHEN k_operacion.f_valor_parametro_string(i_parametros, 'estado') IN
-                                                  ('R') AND nvl(m.cantidad_intentos_envio, 0) >=
-                                                  k_mensajeria.c_cantidad_intentos_permitidos THEN
+                                                  ('R') AND
+                                                  nvl(m.cantidad_intentos_envio, 0) >= l_cantidad_intentos_permitidos THEN
                                               'A' -- ANULADO
                                              ELSE
                                               k_operacion.f_valor_parametro_string(i_parametros, 'estado')
