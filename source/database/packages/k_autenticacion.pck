@@ -77,6 +77,9 @@ CREATE OR REPLACE PACKAGE k_autenticacion IS
                               i_clave      IN VARCHAR2,
                               i_tipo_clave IN CHAR DEFAULT 'A');
 
+  PROCEDURE p_desbloquear_clave(i_alias      IN VARCHAR2,
+                                i_tipo_clave IN CHAR DEFAULT 'A');
+
   PROCEDURE p_restablecer_clave(i_alias      IN VARCHAR2,
                                 i_clave      IN VARCHAR2,
                                 i_tipo_clave IN CHAR DEFAULT 'A');
@@ -616,6 +619,33 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     WHEN dup_val_on_index THEN
       raise_application_error(-20000,
                               'Usuario ya tiene una clave registrada');
+  END;
+
+  PROCEDURE p_desbloquear_clave(i_alias      IN VARCHAR2,
+                                i_tipo_clave IN CHAR DEFAULT 'A') IS
+    l_id_usuario t_usuarios.id_usuario%TYPE;
+  BEGIN
+    -- Busca usuario
+    l_id_usuario := k_usuario.f_id_usuario(i_alias);
+  
+    IF l_id_usuario IS NULL THEN
+      RAISE k_usuario.ex_usuario_inexistente;
+    END IF;
+  
+    -- Actualiza clave de usuario
+    UPDATE t_usuario_claves
+       SET estado                     = 'N',
+           cantidad_intentos_fallidos = 0,
+           fecha_ultima_autenticacion = NULL
+     WHERE id_usuario = l_id_usuario
+       AND tipo = i_tipo_clave;
+  
+    IF SQL%NOTFOUND THEN
+      raise_application_error(-20000, 'Usuario sin clave registrada');
+    END IF;
+  EXCEPTION
+    WHEN k_usuario.ex_usuario_inexistente THEN
+      raise_application_error(-20000, 'Usuario inexistente');
   END;
 
   PROCEDURE p_restablecer_clave(i_alias      IN VARCHAR2,
