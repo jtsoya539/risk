@@ -137,8 +137,6 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   c_iteraciones    CONSTANT PLS_INTEGER := 128; -- 4096
   c_longitud_bytes CONSTANT PLS_INTEGER := 32;
 
-  c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
-
   -- Excepciones
   ex_credenciales_invalidas EXCEPTION;
   ex_tokens_invalidos       EXCEPTION;
@@ -180,19 +178,21 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   PROCEDURE lp_registrar_intento_fallido(i_id_usuario IN NUMBER,
                                          i_tipo       IN CHAR) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
+    l_cantidad_intentos_permitidos PLS_INTEGER;
   BEGIN
+    l_cantidad_intentos_permitidos := to_number(k_util.f_valor_parametro('AUTENTICACION_CANTIDAD_INTENTOS_PERMITIDOS'));
     UPDATE t_usuario_claves
        SET cantidad_intentos_fallidos = CASE
                                           WHEN nvl(cantidad_intentos_fallidos,
                                                    0) >=
-                                               c_cantidad_intentos_permitidos THEN
+                                               l_cantidad_intentos_permitidos THEN
                                            cantidad_intentos_fallidos
                                           ELSE
                                            nvl(cantidad_intentos_fallidos, 0) + 1
                                         END,
            estado = CASE
                       WHEN nvl(cantidad_intentos_fallidos, 0) >=
-                           c_cantidad_intentos_permitidos THEN
+                           l_cantidad_intentos_permitidos THEN
                        'B'
                       ELSE
                        estado
