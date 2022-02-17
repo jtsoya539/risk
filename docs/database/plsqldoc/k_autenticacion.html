@@ -76,6 +76,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_DESBLOQUEAR_CLAVE">p_desbloquear_clave</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_RESTABLECER_CLAVE">p_restablecer_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -308,6 +313,16 @@ p_registrar_clave
 PROCEDURE p_registrar_clave(i_alias      IN VARCHAR2,
                             i_clave      IN VARCHAR2,
                             i_tipo_clave IN CHAR DEFAULT 'A')
+
+</PRE>
+<HR>
+<A NAME="P_DESBLOQUEAR_CLAVE"></A>
+<P CLASS="TYPE_TITLE">
+p_desbloquear_clave
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_desbloquear_clave(i_alias      IN VARCHAR2,
+                              i_tipo_clave IN CHAR DEFAULT 'A')
 
 </PRE>
 <HR>
