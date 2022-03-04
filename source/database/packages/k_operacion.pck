@@ -86,6 +86,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                                  i_nombre_operacion IN VARCHAR2,
                                  i_contexto         IN y_parametros);
 
+  FUNCTION f_operacion(i_id_operacion IN NUMBER) RETURN t_operaciones%ROWTYPE;
+
   FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
                           i_nombre  IN VARCHAR2,
                           i_dominio IN VARCHAR2) RETURN NUMBER;
@@ -125,11 +127,17 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   FUNCTION f_valor_parametro_object(i_parametros IN y_parametros,
                                     i_nombre     IN VARCHAR2) RETURN y_objeto;
 
+  FUNCTION f_inserts_operacion(i_operacion IN t_operaciones%ROWTYPE)
+    RETURN CLOB;
+
   FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB;
 
   FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
                                i_nombre  IN VARCHAR2,
                                i_dominio IN VARCHAR2) RETURN CLOB;
+
+  FUNCTION f_deletes_operacion(i_operacion IN t_operaciones%ROWTYPE)
+    RETURN CLOB;
 
   FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB;
 
@@ -351,6 +359,23 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
           NULL;
       END;
     END IF;
+  END;
+
+  FUNCTION f_operacion(i_id_operacion IN NUMBER) RETURN t_operaciones%ROWTYPE IS
+    rw_operacion t_operaciones%ROWTYPE;
+  BEGIN
+    BEGIN
+      SELECT a.*
+        INTO rw_operacion
+        FROM t_operaciones a
+       WHERE a.id_operacion = i_id_operacion;
+    EXCEPTION
+      WHEN no_data_found THEN
+        rw_operacion := NULL;
+      WHEN OTHERS THEN
+        rw_operacion := NULL;
+    END;
+    RETURN rw_operacion;
   END;
 
   FUNCTION f_id_operacion(i_tipo    IN VARCHAR2,
@@ -691,19 +716,25 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   FUNCTION f_nombre_programa(i_id_operacion IN NUMBER,
                              i_version      IN VARCHAR2 DEFAULT NULL)
     RETURN VARCHAR2 IS
-    l_nombre_programa   VARCHAR2(4000);
-    l_tipo_operacion    t_operaciones.tipo%TYPE;
-    l_nombre_operacion  t_operaciones.nombre%TYPE;
-    l_dominio_operacion t_operaciones.dominio%TYPE;
-    l_version_actual    t_operaciones.version_actual%TYPE;
+    l_nombre_programa     VARCHAR2(4000);
+    l_tipo_operacion      t_operaciones.tipo%TYPE;
+    l_nombre_operacion    t_operaciones.nombre%TYPE;
+    l_dominio_operacion   t_operaciones.dominio%TYPE;
+    l_version_actual      t_operaciones.version_actual%TYPE;
+    l_tipo_implementacion t_operaciones.tipo_implementacion%TYPE;
   BEGIN
   
     BEGIN
-      SELECT o.tipo, upper(o.nombre), upper(o.dominio), o.version_actual
+      SELECT o.tipo,
+             upper(o.nombre),
+             upper(o.dominio),
+             o.version_actual,
+             nvl(o.tipo_implementacion, 'K')
         INTO l_tipo_operacion,
              l_nombre_operacion,
              l_dominio_operacion,
-             l_version_actual
+             l_version_actual,
+             l_tipo_implementacion
         FROM t_operaciones o
        WHERE o.id_operacion = i_id_operacion;
     EXCEPTION
@@ -711,16 +742,19 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         raise_application_error(-20000, 'Operación inexistente');
     END;
   
-    IF nvl(i_version, l_version_actual) = l_version_actual THEN
-      l_nombre_programa := 'K_' ||
-                           k_util.f_significado_codigo('TIPO_OPERACION',
-                                                       l_tipo_operacion) || '_' ||
-                           l_dominio_operacion || '.' || l_nombre_operacion;
-    ELSE
-      l_nombre_programa := 'K_' ||
-                           k_util.f_significado_codigo('TIPO_OPERACION',
-                                                       l_tipo_operacion) || '_' ||
-                           l_dominio_operacion || '.' || l_nombre_operacion || '_' ||
+    l_nombre_programa := k_util.f_referencia_codigo('TIPO_IMPLEMENTACION',
+                                                    l_tipo_implementacion) || '_' ||
+                         k_util.f_significado_codigo('TIPO_OPERACION',
+                                                     l_tipo_operacion) || '_' ||
+                         l_dominio_operacion || CASE l_tipo_implementacion
+                           WHEN 'K' THEN
+                            '.'
+                           ELSE
+                            '_'
+                         END || l_nombre_operacion;
+  
+    IF nvl(i_version, l_version_actual) <> l_version_actual THEN
+      l_nombre_programa := l_nombre_programa || '_' ||
                            REPLACE(i_version, '.', '_');
     END IF;
   
@@ -787,7 +821,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
+                                                                                            .valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -799,10 +834,12 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i)
+                                                                                          .valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -814,10 +851,11 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i).nombre ||
-                                 ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i)
+                                .nombre || ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i).valor),
+                                                             to_char(anydata.accessdate(i_parametros(i)
+                                                                                        .valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -825,7 +863,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i).nombre));
+                                                              i_parametros(i)
+                                                              .nombre));
             END IF;
           END IF;
         END IF;
@@ -909,7 +948,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     RETURN l_objeto;
   END;
 
-  FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB IS
+  FUNCTION f_inserts_operacion(i_operacion IN t_operaciones%ROWTYPE)
+    RETURN CLOB IS
     l_inserts CLOB;
     l_insert  CLOB;
   
@@ -922,43 +962,55 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   BEGIN
     lp_comentar('T_OPERACIONES');
     l_insert  := fn_gen_inserts('SELECT * FROM t_operaciones WHERE id_operacion = ' ||
-                                to_char(i_id_operacion),
+                                to_char(i_operacion.id_operacion),
                                 't_operaciones');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_OPERACION_PARAMETROS');
     l_insert  := fn_gen_inserts('SELECT * FROM t_operacion_parametros WHERE id_operacion = ' ||
-                                to_char(i_id_operacion) ||
+                                to_char(i_operacion.id_operacion) ||
                                 ' ORDER BY version, orden',
                                 't_operacion_parametros');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_SERVICIOS');
     l_insert  := fn_gen_inserts('SELECT id_servicio, tipo, consulta_sql FROM t_servicios WHERE id_servicio = ' ||
-                                to_char(i_id_operacion),
+                                to_char(i_operacion.id_operacion),
                                 't_servicios');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_REPORTES');
     l_insert  := fn_gen_inserts('SELECT id_reporte, tipo, consulta_sql FROM t_reportes WHERE id_reporte = ' ||
-                                to_char(i_id_operacion),
+                                to_char(i_operacion.id_operacion),
                                 't_reportes');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_TRABAJOS');
     l_insert  := fn_gen_inserts('SELECT id_trabajo, tipo, accion, fecha_inicio, tiempo_inicio, intervalo_repeticion, fecha_fin, comentarios FROM t_trabajos WHERE id_trabajo = ' ||
-                                to_char(i_id_operacion),
+                                to_char(i_operacion.id_operacion),
                                 't_trabajos');
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_ROL_PERMISOS');
     l_insert  := fn_gen_inserts('SELECT * FROM t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(' ||
-                                to_char(i_id_operacion) ||
+                                to_char(i_operacion.id_operacion) ||
                                 ') ORDER BY id_rol',
                                 't_rol_permisos');
     l_inserts := l_inserts || l_insert;
+    --
+    IF i_operacion.tipo_implementacion = 'F' THEN
+      lp_comentar('FUNCTION');
+      l_insert  := dbms_metadata.get_ddl('FUNCTION',
+                                         upper(f_nombre_programa(i_operacion.id_operacion)));
+      l_inserts := l_inserts || l_insert;
+    END IF;
   
     RETURN l_inserts;
+  END;
+
+  FUNCTION f_inserts_operacion(i_id_operacion IN NUMBER) RETURN CLOB IS
+  BEGIN
+    RETURN f_inserts_operacion(f_operacion(i_id_operacion));
   END;
 
   FUNCTION f_inserts_operacion(i_tipo    IN VARCHAR2,
@@ -968,7 +1020,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     RETURN f_inserts_operacion(f_id_operacion(i_tipo, i_nombre, i_dominio));
   END;
 
-  FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB IS
+  FUNCTION f_deletes_operacion(i_operacion IN t_operaciones%ROWTYPE)
+    RETURN CLOB IS
     l_deletes CLOB;
   
     PROCEDURE lp_comentar(i_comentario IN VARCHAR2) IS
@@ -978,24 +1031,35 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                    ' */' || utl_tcp.crlf;
     END;
   BEGIN
-    lp_comentar('ID_OPERACION = ' || to_char(i_id_operacion));
+    lp_comentar('ID_OPERACION = ' || to_char(i_operacion.id_operacion));
     --
     l_deletes := l_deletes ||
                  'DELETE t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(' ||
-                 to_char(i_id_operacion) || ');' || utl_tcp.crlf;
+                 to_char(i_operacion.id_operacion) || ');' || utl_tcp.crlf;
     l_deletes := l_deletes || 'DELETE t_trabajos WHERE id_trabajo = ' ||
-                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+                 to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     l_deletes := l_deletes || 'DELETE t_reportes WHERE id_reporte = ' ||
-                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+                 to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     l_deletes := l_deletes || 'DELETE t_servicios WHERE id_servicio = ' ||
-                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+                 to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     l_deletes := l_deletes ||
                  'DELETE t_operacion_parametros WHERE id_operacion = ' ||
-                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+                 to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     l_deletes := l_deletes || 'DELETE t_operaciones WHERE id_operacion = ' ||
-                 to_char(i_id_operacion) || ';' || utl_tcp.crlf;
+                 to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
+    --
+    IF i_operacion.tipo_implementacion = 'F' THEN
+      l_deletes := l_deletes || 'DROP FUNCTION ' ||
+                   lower(f_nombre_programa(i_operacion.id_operacion)) || ';' ||
+                   utl_tcp.crlf;
+    END IF;
   
     RETURN l_deletes;
+  END;
+
+  FUNCTION f_deletes_operacion(i_id_operacion IN NUMBER) RETURN CLOB IS
+  BEGIN
+    RETURN f_deletes_operacion(f_operacion(i_id_operacion));
   END;
 
   FUNCTION f_deletes_operacion(i_tipo    IN VARCHAR2,

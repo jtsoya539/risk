@@ -8,7 +8,8 @@ create table T_OPERACIONES
   detalle                VARCHAR2(4000),
   version_actual         VARCHAR2(100) not null,
   nivel_log              NUMBER(1) default 0 not null,
-  parametros_automaticos VARCHAR2(1000)
+  parametros_automaticos VARCHAR2(1000),
+  tipo_implementacion    VARCHAR2(1) default 'K'
 )
 ;
 comment on table T_OPERACIONES
@@ -31,6 +32,8 @@ comment on column T_OPERACIONES.nivel_log
   is 'Nivel de log de la operación (0-Off, 1-Error, 2-Info)';
 comment on column T_OPERACIONES.parametros_automaticos
   is 'Nombres de los parámetros automáticos de la operación, separados por coma. Ej.: PARAM1,PARAM2,PARAM3';
+comment on column T_OPERACIONES.tipo_implementacion
+  is 'Tipo de implementación de la operación';
 alter table T_OPERACIONES
   add constraint PK_OPERACIONES primary key (ID_OPERACION);
 alter table T_OPERACIONES

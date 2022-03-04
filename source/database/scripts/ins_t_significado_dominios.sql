@@ -58,4 +58,7 @@ values ('TIPO_REPORTE', 'TIPO_REPORTE', null, 'S', 'API');
 insert into t_significado_dominios (DOMINIO, DESCRIPCION, DETALLE, ACTIVO, ID_DOMINIO)
 values ('TIPO_SERVICIO', 'TIPO_SERVICIO', null, 'S', 'API');
 
+insert into t_significado_dominios (DOMINIO, DESCRIPCION, DETALLE, ACTIVO, ID_DOMINIO)
+values ('TIPO_IMPLEMENTACION', 'TIPO_IMPLEMENTACION', null, 'S', 'API');
+
 prompt Done.
