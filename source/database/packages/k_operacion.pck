@@ -36,6 +36,10 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
   c_tipo_parametros CONSTANT CHAR(1) := 'P';
 
+  -- Tipos de Implementaciones
+  c_tipo_implementacion_paquete CONSTANT CHAR(1) := 'K';
+  c_tipo_implementacion_funcion CONSTANT CHAR(1) := 'F';
+
   -- Códigos de respuesta
   c_ok                       CONSTANT VARCHAR2(10) := '0';
   c_servicio_no_implementado CONSTANT VARCHAR2(10) := 'ser0001';
@@ -821,8 +825,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                                            .valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -834,12 +837,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i)
-                                                                                          .valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -851,11 +852,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre || ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i)
-                                                                                        .valor),
+                                                             to_char(anydata.accessdate(i_parametros(i).valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -863,8 +863,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i)
-                                                              .nombre));
+                                                              i_parametros(i).nombre));
             END IF;
           END IF;
         END IF;
@@ -998,10 +997,13 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                 't_rol_permisos');
     l_inserts := l_inserts || l_insert;
     --
-    IF i_operacion.tipo_implementacion = 'F' THEN
+    IF i_operacion.tipo_implementacion = c_tipo_implementacion_funcion THEN
       lp_comentar('FUNCTION');
       l_insert  := dbms_metadata.get_ddl('FUNCTION',
                                          upper(f_nombre_programa(i_operacion.id_operacion)));
+      l_insert  := TRIM(utl_tcp.crlf FROM l_insert);
+      l_insert  := TRIM(' ' FROM l_insert);
+      l_insert  := l_insert || utl_tcp.crlf || '/';
       l_inserts := l_inserts || l_insert;
     END IF;
   
@@ -1048,7 +1050,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     l_deletes := l_deletes || 'DELETE t_operaciones WHERE id_operacion = ' ||
                  to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     --
-    IF i_operacion.tipo_implementacion = 'F' THEN
+    IF i_operacion.tipo_implementacion = c_tipo_implementacion_funcion THEN
       l_deletes := l_deletes || 'DROP FUNCTION ' ||
                    lower(f_nombre_programa(i_operacion.id_operacion)) || ';' ||
                    utl_tcp.crlf;
