@@ -392,7 +392,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("IniciarSesionGoogle")]
-        [SwaggerOperation(OperationId = "IniciarSesionGoogle", Summary = "IniciarSesionGoogle", Description = "Permite iniciar la sesión de un usuario con su cuenta de google")]
+        [SwaggerOperation(OperationId = "IniciarSesionGoogle", Summary = "IniciarSesionGoogle", Description = "Permite iniciar la sesión de un usuario con su cuenta de Google")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
@@ -423,7 +423,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RefrescarSesionGoogle")]
-        [SwaggerOperation(OperationId = "RefrescarSesionGoogle", Summary = "RefrescarSesionGoogle", Description = "Permite refrescar la sesión de un usuario con su cuenta de google")]
+        [SwaggerOperation(OperationId = "RefrescarSesionGoogle", Summary = "RefrescarSesionGoogle", Description = "Permite refrescar la sesión de un usuario con su cuenta de Google")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
@@ -441,7 +441,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("IniciarSesionFacebook")]
-        [SwaggerOperation(OperationId = "IniciarSesionFacebook", Summary = "IniciarSesionFacebook", Description = "Permite iniciar la sesión de un usuario con su cuenta de facebook")]
+        [SwaggerOperation(OperationId = "IniciarSesionFacebook", Summary = "IniciarSesionFacebook", Description = "Permite iniciar la sesión de un usuario con su cuenta de Facebook")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]
@@ -472,7 +472,7 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpPost("RefrescarSesionFacebook")]
-        [SwaggerOperation(OperationId = "RefrescarSesionFacebook", Summary = "RefrescarSesionFacebook", Description = "Permite refrescar la sesión de un usuario con su cuenta de facebook")]
+        [SwaggerOperation(OperationId = "RefrescarSesionFacebook", Summary = "RefrescarSesionFacebook", Description = "Permite refrescar la sesión de un usuario con su cuenta de Facebook")]
         [Consumes(MediaTypeNames.Application.Json)]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Sesion>))]

@@ -217,7 +217,7 @@ namespace Risk.API.Helpers
             UsuarioExterno usuario = null;
             try
             {
-                // Validamos el token a través del Graph de facebook
+                // Validamos el token a través del Graph de Facebook
                 using (var client = new HttpClient())
                 {
                     client.BaseAddress = new Uri("https://graph.facebook.com");
@@ -227,7 +227,7 @@ namespace Risk.API.Helpers
                     string result = response.Content.ReadAsStringAsync().Result;
                     var jsonRes = JsonConvert.DeserializeObject<dynamic>(result);
 
-                    // Obtenemos datos recibidos del usuario en la respuesta del Graph de facebook
+                    // Obtenemos datos recibidos del usuario en la respuesta del Graph de Facebook
                     string idExterno = jsonRes["id"].ToString();
                     string nombreCompleto = jsonRes["name"].ToString();
                     string nombre = jsonRes["first_name"].ToString();
