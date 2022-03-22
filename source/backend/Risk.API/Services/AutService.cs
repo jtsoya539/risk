@@ -25,7 +25,6 @@ SOFTWARE.
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
 using Risk.API.Entities;
@@ -66,39 +65,39 @@ namespace Risk.API.Services
 
         public Respuesta<Dato> CambiarClave(string usuario, string claveAntigua, string claveNueva, TipoClave tipoClave)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave_antigua", claveAntigua);
             prms.Add("clave_nueva", claveNueva);
             prms.Add("tipo_clave", tipoClave.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_CAMBIAR_CLAVE,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> CambiarEstadoSesion(string accessToken, EstadoSesion estado)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("access_token", accessToken);
             prms.Add("estado", estado.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_CAMBIAR_ESTADO_SESION,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Sesion> IniciarSesion(string usuario, string accessToken, string refreshToken, string tokenDispositivo, OrigenSesion? origen = null, string datoExterno = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("access_token", accessToken);
             prms.Add("refresh_token", refreshToken);
@@ -106,18 +105,18 @@ namespace Risk.API.Services
             prms.Add("origen", origen.GetStringValue());
             prms.Add("dato_externo", datoExterno);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_INICIAR_SESION,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YSesion>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetModelFromEntity<Sesion, YSesion>(entityRsp.Datos));
         }
 
         public Respuesta<Sesion> RefrescarSesion(string accessTokenAntiguo, string refreshTokenAntiguo, string accessTokenNuevo, string refreshTokenNuevo, OrigenSesion? origen = null, string datoExterno = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("access_token_antiguo", accessTokenAntiguo);
             prms.Add("refresh_token_antiguo", refreshTokenAntiguo);
             prms.Add("access_token_nuevo", accessTokenNuevo);
@@ -125,34 +124,34 @@ namespace Risk.API.Services
             prms.Add("origen", origen.GetStringValue());
             prms.Add("dato_externo", datoExterno);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_REFRESCAR_SESION,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YSesion>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YSesion>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Sesion, YSesion>(entityRsp, EntitiesMapper.GetModelFromEntity<Sesion, YSesion>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarClave(string usuario, string clave, TipoClave tipoClave)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
             prms.Add("tipo_clave", tipoClave.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_REGISTRAR_CLAVE,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarUsuario(string usuario, string clave, string nombre, string apellido, string direccionCorreo, string numeroTelefono, OrigenSesion? origen = null, string idExterno = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
             prms.Add("nombre", nombre);
@@ -162,138 +161,138 @@ namespace Risk.API.Services
             prms.Add("origen", origen.GetStringValue());
             prms.Add("id_externo", idExterno);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_REGISTRAR_USUARIO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarCredenciales(string usuario, string clave, TipoClave tipoClave)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("clave", clave);
             prms.Add("tipo_clave", tipoClave.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_VALIDAR_CREDENCIALES,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarSesion(string accessToken)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("access_token", accessToken);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_VALIDAR_SESION,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Usuario> DatosUsuario(string usuario)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_DATOS_USUARIO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YUsuario>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YUsuario>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Usuario, YUsuario>(entityRsp, EntitiesMapper.GetModelFromEntity<Usuario, YUsuario>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarClaveAplicacion(string claveAplicacion)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("clave_aplicacion", claveAplicacion);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_VALIDAR_CLAVE_APLICACION,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarDispositivo(Dispositivo dispositivo)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
 
             if (dispositivo != null)
             {
                 prms.Add("dispositivo", JToken.FromObject(ModelsMapper.GetEntityFromModel<Dispositivo, YDispositivo>(dispositivo)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_REGISTRAR_DISPOSITIVO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dispositivo> DatosDispositivo(string tokenDispositivo)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("token_dispositivo", tokenDispositivo);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_DATOS_DISPOSITIVO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDispositivo>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDispositivo>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dispositivo, YDispositivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Dispositivo, YDispositivo>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RegistrarUbicacion(string tokenDispositivo, double latitud, double longitud)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("token_dispositivo", tokenDispositivo);
             prms.Add("latitud", latitud);
             prms.Add("longitud", longitud);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_REGISTRAR_UBICACION,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> TiempoExpiracionToken(TipoToken tipoToken)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("tipo_token", tipoToken.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_TIEMPO_EXPIRACION_TOKEN,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> EditarUsuario(string usuarioAntiguo, string usuarioNuevo, string nombre, string apellido, string direccionCorreo, string numeroTelefono)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario_antiguo", usuarioAntiguo);
             prms.Add("usuario_nuevo", usuarioNuevo);
             prms.Add("nombre", nombre);
@@ -301,87 +300,87 @@ namespace Risk.API.Services
             prms.Add("direccion_correo", direccionCorreo);
             prms.Add("numero_telefono", numeroTelefono);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_EDITAR_USUARIO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> EditarDatoUsuario(string usuario, string campo, string dato)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("campo", campo);
             prms.Add("dato", dato);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_EDITAR_DATO_USUARIO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> CambiarEstadoUsuario(string usuario, EstadoUsuario estado)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("usuario", usuario);
             prms.Add("estado", estado.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_CAMBIAR_ESTADO_USUARIO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> GenerarOtp(TipoMensajeria tipoMensajeria, string destino)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("tipo_mensajeria", tipoMensajeria.GetStringValue());
             prms.Add("destino", destino);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_GENERAR_OTP,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarOtp(string secret, int otp)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("secret", secret);
             prms.Add("otp", otp);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_VALIDAR_OTP,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValidarPermiso(string idPermiso, AccionPermiso? accion = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_permiso", idPermiso);
             prms.Add("accion", accion.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio,
                 NOMBRE_VALIDAR_PERMISO,
                 DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+                prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }

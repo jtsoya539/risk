@@ -25,7 +25,6 @@ SOFTWARE.
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
 using Risk.API.Entities;
@@ -56,63 +55,51 @@ namespace Risk.API.Services
 
         public Respuesta<Dato> VersionSistema()
         {
-            JObject prms = new JObject();
+            prms = new JObject();
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_VERSION_SISTEMA,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_VERSION_SISTEMA, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> VersionServicio(string servicio)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("servicio", servicio);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_VERSION_SERVICIO,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_VERSION_SERVICIO, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> ValorParametro(string parametro)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("parametro", parametro);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_VALOR_PARAMETRO,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_VALOR_PARAMETRO, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> SignificadoCodigo(string dominio, string codigo)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("dominio", dominio);
             prms.Add("codigo", codigo);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_SIGNIFICADO_CODIGO,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_SIGNIFICADO_CODIGO, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Pagina<Significado>> ListarSignificados(string dominio, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("dominio", dominio);
 
             if (paginaParametros != null)
@@ -120,11 +107,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_SIGNIFICADOS,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YSignificado>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_SIGNIFICADOS, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YSignificado>>>();
 
             Pagina<Significado> datos = null;
             if (entityRsp.Datos != null)
@@ -137,7 +121,7 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Error>> ListarErrores(string idError = null, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_error", idError);
 
             if (paginaParametros != null)
@@ -145,11 +129,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_ERRORES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YError>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_ERRORES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YError>>>();
 
             Pagina<Error> datos = null;
             if (entityRsp.Datos != null)
@@ -162,7 +143,7 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Aplicacion>> ListarAplicaciones(string idAplicacion = null, string claveAplicacion = null, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_aplicacion", idAplicacion);
             prms.Add("clave", claveAplicacion);
 
@@ -171,11 +152,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_APLICACIONES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<SqlAplicacion>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_APLICACIONES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<SqlAplicacion>>>();
 
             Pagina<Aplicacion> datos = null;
             if (entityRsp.Datos != null)
@@ -188,24 +166,21 @@ namespace Risk.API.Services
 
         public Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("tabla", tabla);
             prms.Add("campo", campo);
             prms.Add("referencia", referencia);
             prms.Add("version", version);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_RECUPERAR_ARCHIVO,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_RECUPERAR_ARCHIVO, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YArchivo>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Archivo, YArchivo>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("tabla", tabla);
             prms.Add("campo", campo);
             prms.Add("referencia", referencia);
@@ -215,54 +190,42 @@ namespace Risk.API.Services
                 prms.Add("archivo", JToken.FromObject(ModelsMapper.GetEntityFromModel<Archivo, YArchivo>(archivo)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_GUARDAR_ARCHIVO,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_GUARDAR_ARCHIVO, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Dato> RecuperarTexto(string referencia)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("referencia", referencia);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_RECUPERAR_TEXTO,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YDato>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_RECUPERAR_TEXTO, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
         }
 
         public Respuesta<Archivo> ReporteVersionSistema(FormatoReporte formato)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("formato", formato.GetStringValue());
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Reporte.GetStringValue(),
-                NOMBRE_VERSION_SISTEMA,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Reporte, NOMBRE_VERSION_SISTEMA, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YArchivo>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Archivo, YArchivo>(entityRsp.Datos));
         }
 
         public Respuesta<Archivo> ReporteListarSignificados(FormatoReporte formato, string dominio)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("formato", formato.GetStringValue());
             prms.Add("dominio", dominio);
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Reporte.GetStringValue(),
-                NOMBRE_LISTAR_SIGNIFICADOS,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YArchivo>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Reporte, NOMBRE_LISTAR_SIGNIFICADOS, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YArchivo>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Archivo, YArchivo>(entityRsp, EntitiesMapper.GetModelFromEntity<Archivo, YArchivo>(entityRsp.Datos));
         }
