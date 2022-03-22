@@ -50,7 +50,7 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_pais", idPais);
 
             if (paginaParametros != null)
@@ -58,11 +58,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_PAISES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YPais>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_PAISES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YPais>>>();
 
             Pagina<Pais> datos = null;
             if (entityRsp.Datos != null)
@@ -75,7 +72,7 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Departamento>> ListarDepartamentos(int? idDepartamento = null, int? idPais = null, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_departamento", idDepartamento);
             prms.Add("id_pais", idPais);
 
@@ -84,11 +81,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_DEPARTAMENTOS,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YDepartamento>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_DEPARTAMENTOS, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YDepartamento>>>();
 
             Pagina<Departamento> datos = null;
             if (entityRsp.Datos != null)
@@ -101,7 +95,7 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Ciudad>> ListarCiudades(int? idCiudad = null, int? idPais = null, int? idDepartamento = null, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_ciudad", idCiudad);
             prms.Add("id_pais", idPais);
             prms.Add("id_departamento", idDepartamento);
@@ -111,11 +105,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_CIUDADES,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YCiudad>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_CIUDADES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YCiudad>>>();
 
             Pagina<Ciudad> datos = null;
             if (entityRsp.Datos != null)
@@ -128,7 +119,7 @@ namespace Risk.API.Services
 
         public Respuesta<Pagina<Barrio>> ListarBarrios(int? idBarrio = null, int? idPais = null, int? idDepartamento = null, int? idCiudad = null, PaginaParametros paginaParametros = null)
         {
-            JObject prms = new JObject();
+            prms = new JObject();
             prms.Add("id_barrio", idBarrio);
             prms.Add("id_pais", idPais);
             prms.Add("id_departamento", idDepartamento);
@@ -139,11 +130,8 @@ namespace Risk.API.Services
                 prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
             }
 
-            string rsp = base.ProcesarOperacion(TipoOperacion.Servicio.GetStringValue(),
-                NOMBRE_LISTAR_BARRIOS,
-                DOMINIO_OPERACION,
-                prms.ToString(Formatting.None));
-            var entityRsp = JsonConvert.DeserializeObject<YRespuesta<YPagina<YBarrio>>>(rsp);
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_BARRIOS, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<YBarrio>>>();
 
             Pagina<Barrio> datos = null;
             if (entityRsp.Datos != null)
