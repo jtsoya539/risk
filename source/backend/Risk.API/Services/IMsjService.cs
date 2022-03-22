@@ -26,7 +26,7 @@ using Risk.API.Models;
 
 namespace Risk.API.Services
 {
-    public interface IMsjService
+    public interface IMsjService : IServiceBase
     {
         Respuesta<Pagina<Mensaje>> ListarMensajesPendientes(PaginaParametros paginaParametros = null);
         Respuesta<Pagina<Correo>> ListarCorreosPendientes(PaginaParametros paginaParametros = null);

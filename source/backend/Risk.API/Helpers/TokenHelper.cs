@@ -45,6 +45,7 @@ namespace Risk.API.Helpers
     {
         public static string GenerarAccessToken(string usuario, IAutService autService, IGenService genService)
         {
+            autService.Version = string.Empty;
             var respDatosUsuario = autService.DatosUsuario(usuario);
             if (!respDatosUsuario.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
@@ -69,6 +70,7 @@ namespace Risk.API.Helpers
                 claims.Add(new Claim(ClaimTypes.Role, rol.Nombre));
             }
 
+            autService.Version = string.Empty;
             var respTiempoExpiracionToken = autService.TiempoExpiracionToken(TipoToken.AccessToken);
             if (!respTiempoExpiracionToken.Codigo.Equals(RiskConstants.CODIGO_OK))
             {

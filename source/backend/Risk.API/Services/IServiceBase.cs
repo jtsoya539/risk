@@ -22,23 +22,10 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Risk.API.Models;
-
 namespace Risk.API.Services
 {
-    public interface IGenService : IServiceBase
+    public interface IServiceBase
     {
-        Respuesta<Dato> VersionSistema();
-        Respuesta<Dato> VersionServicio(string servicio);
-        Respuesta<Dato> ValorParametro(string parametro);
-        Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
-        Respuesta<Pagina<Significado>> ListarSignificados(string dominio, PaginaParametros paginaParametros = null);
-        Respuesta<Pagina<Error>> ListarErrores(string idError = null, PaginaParametros paginaParametros = null);
-        Respuesta<Pagina<Aplicacion>> ListarAplicaciones(string idAplicacion = null, string claveAplicacion = null, PaginaParametros paginaParametros = null);
-        Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version = null);
-        Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo);
-        Respuesta<Dato> RecuperarTexto(string referencia);
-        Respuesta<Archivo> ReporteVersionSistema(FormatoReporte formato);
-        Respuesta<Archivo> ReporteListarSignificados(FormatoReporte formato, string dominio);
+        string Version { get; set; }
     }
 }

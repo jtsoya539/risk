@@ -26,7 +26,7 @@ using Risk.API.Models;
 
 namespace Risk.API.Services
 {
-    public interface IGloService
+    public interface IGloService : IServiceBase
     {
         Respuesta<Pagina<Pais>> ListarPaises(int? idPais = null, PaginaParametros paginaParametros = null);
         Respuesta<Pagina<Departamento>> ListarDepartamentos(int? idDepartamento = null, int? idPais = null, PaginaParametros paginaParametros = null);

@@ -41,8 +41,9 @@ using Risk.Common.Helpers;
 
 namespace Risk.API.Services
 {
-    public class RiskServiceBase
+    public class RiskServiceBase : IServiceBase
     {
+        public string Version { get; set; }
         protected JObject prms;
         protected JObject rsp;
         protected readonly ILogger<RiskServiceBase> _logger;
@@ -120,15 +121,23 @@ namespace Risk.API.Services
         {
             string version = string.Empty;
 
-            if (_httpContextAccessor.HttpContext != null)
+            if (Version != null)
             {
-                try
+                version = Version;
+                Version = null;
+            }
+            else
+            {
+                if (_httpContextAccessor.HttpContext != null)
                 {
-                    version = TokenHelper.ObtenerValorParametroDeHeaders(_httpContextAccessor.HttpContext.Request.Headers, RiskConstants.HEADER_RISK_SERVICE_VERSION);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogDebug($"Error al obtener versión: {ex.Message}");
+                    try
+                    {
+                        version = TokenHelper.ObtenerValorParametroDeHeaders(_httpContextAccessor.HttpContext.Request.Headers, RiskConstants.HEADER_RISK_SERVICE_VERSION);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogDebug($"Error al obtener versión: {ex.Message}");
+                    }
                 }
             }
 
@@ -219,9 +228,9 @@ namespace Risk.API.Services
             return respuesta;
         }
 
-        protected JObject ProcesarOperacion(TipoOperacion tipo, string nombre, string dominio, JObject parametros)
+        protected JObject ProcesarOperacion(TipoOperacion tipo, string nombre, string dominio, JObject parametros, [CallerFilePath] string callerFilePath = "", [CallerMemberName] string callerMemberName = "")
         {
-            string respuesta = ProcesarOperacion(tipo.GetStringValue(), nombre, dominio, parametros.ToString(Formatting.None));
+            string respuesta = ProcesarOperacion(tipo.GetStringValue(), nombre, dominio, parametros.ToString(Formatting.None), callerFilePath, callerMemberName);
             return JObject.Parse(respuesta);
         }
     }

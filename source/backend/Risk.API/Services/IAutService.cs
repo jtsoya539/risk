@@ -26,7 +26,7 @@ using Risk.API.Models;
 
 namespace Risk.API.Services
 {
-    public interface IAutService
+    public interface IAutService : IServiceBase
     {
         Respuesta<Dato> ValidarCredenciales(string usuario, string clave, TipoClave tipoClave);
         Respuesta<Sesion> IniciarSesion(string usuario, string accessToken, string refreshToken, string tokenDispositivo, OrigenSesion? origen = null, string datoExterno = null);

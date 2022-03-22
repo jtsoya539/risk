@@ -55,6 +55,7 @@ namespace Risk.API.Middlewares
                 }
                 else
                 {
+                    autService.Version = string.Empty;
                     var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(claveAplicacion);
 
                     if (!respValidarClaveAplicacion.Codigo.Equals(RiskConstants.CODIGO_OK))

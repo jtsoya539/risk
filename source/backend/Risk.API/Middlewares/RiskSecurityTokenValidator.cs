@@ -90,15 +90,18 @@ namespace Risk.API.Middlewares
             }
             catch (SecurityTokenExpiredException)
             {
+                _autService.Version = string.Empty;
                 respuesta = _autService.CambiarEstadoSesion(securityToken, EstadoSesion.Expirado);
                 throw;
             }
             catch (SecurityTokenValidationException)
             {
+                _autService.Version = string.Empty;
                 respuesta = _autService.CambiarEstadoSesion(securityToken, EstadoSesion.Invalido);
                 throw;
             }
 
+            _autService.Version = string.Empty;
             respuesta = _autService.ValidarSesion(securityToken);
 
             if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
