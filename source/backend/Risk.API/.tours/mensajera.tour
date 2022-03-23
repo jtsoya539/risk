@@ -1,0 +1,121 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Mensajería",
+  "steps": [
+    {
+      "file": "appsettings.json",
+      "description": "Las configuraciones de mensajería se realizan en el archivo appsettings.json en el apartado MsjConfiguration",
+      "line": 46,
+      "selection": {
+        "start": {
+          "line": 46,
+          "character": 4
+        },
+        "end": {
+          "line": 46,
+          "character": 20
+        }
+      }
+    },
+    {
+      "file": "Startup.cs",
+      "description": "Un worker es una tarea que se ejecuta en segundo plano cada cierto tiempo.\r\nActualmente existen tres workers para mensajería:\r\n* MailWorker\r\n* PushWorker\r\n* SMSWorker\r\n\r\nLos mismos se agregan como Hosted Services si están habilitados en la configuración del appsettings.json",
+      "line": 103,
+      "selection": {
+        "start": {
+          "line": 109,
+          "character": 43
+        },
+        "end": {
+          "line": 109,
+          "character": 52
+        }
+      }
+    },
+    {
+      "file": "Workers/MailWorker.cs",
+      "description": "MailWorker es el worker encargado de consultar los correos electrónicos (E-mail) pendientes de envío y enviarlos.",
+      "line": 38,
+      "selection": {
+        "start": {
+          "line": 38,
+          "character": 18
+        },
+        "end": {
+          "line": 38,
+          "character": 28
+        }
+      }
+    },
+    {
+      "file": "Workers/PushWorker.cs",
+      "description": "PushWorker es el worker encargado de consultar las notificaciones push pendientes de envío y enviarlas.",
+      "line": 38
+    },
+    {
+      "file": "Workers/SMSWorker.cs",
+      "description": "SMSWorker es el worker encargado de consultar los mensajes de texto (SMS) pendientes de envío y enviarlos.",
+      "line": 38,
+      "selection": {
+        "start": {
+          "line": 38,
+          "character": 18
+        },
+        "end": {
+          "line": 38,
+          "character": 27
+        }
+      }
+    },
+    {
+      "file": "Senders/IMsjSender.cs",
+      "description": "La interfaz IMsjSender define los métodos que debe implementar una clase para poder realizar el envío de la mensajería.",
+      "line": 29,
+      "selection": {
+        "start": {
+          "line": 29,
+          "character": 22
+        },
+        "end": {
+          "line": 29,
+          "character": 32
+        }
+      }
+    },
+    {
+      "file": "Senders/GmailSender.cs",
+      "description": "GmailSender implementa el envío de Correo electrónico (E-mail) a través de una cuenta de Gmail configurada con autenticación OAuth o acceso de apps menos seguras.",
+      "line": 44
+    },
+    {
+      "file": "Senders/NotificationHubSender.cs",
+      "description": "NotificationHubSender implementa el envío de Notificación push a través de una cuenta de Azure configurada con el servicio Notification Hubs.",
+      "line": 35,
+      "selection": {
+        "start": {
+          "line": 35,
+          "character": 18
+        },
+        "end": {
+          "line": 35,
+          "character": 39
+        }
+      }
+    },
+    {
+      "file": "Senders/TwilioSender.cs",
+      "description": "TwilioSender implementa el envío de Mensaje de texto (SMS) a través de una cuenta de Twilio configurada con el servicio SMS.",
+      "line": 35,
+      "selection": {
+        "start": {
+          "line": 35,
+          "character": 18
+        },
+        "end": {
+          "line": 35,
+          "character": 30
+        }
+      }
+    }
+  ]
+}
