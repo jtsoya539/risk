@@ -32,7 +32,7 @@ Method | HTTP request | Description
 
 <a name="activarusuario"></a>
 # **ActivarUsuario**
-> DatoRespuesta ActivarUsuario (string key, string riskServiceVersion = null)
+> DatoRespuesta ActivarUsuario (string key, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ActivarUsuario
 
@@ -56,12 +56,13 @@ namespace Example
             config.BasePath = "https://localhost:5001";
             var apiInstance = new AutApi(config);
             var key = key_example;  // string | Clave para la activación
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ActivarUsuario
-                DatoRespuesta result = apiInstance.ActivarUsuario(key, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ActivarUsuario(key, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -80,7 +81,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **string**| Clave para la activación | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -108,7 +110,7 @@ No authorization required
 
 <a name="cambiarclaveacceso"></a>
 # **CambiarClaveAcceso**
-> DatoRespuesta CambiarClaveAcceso (string riskServiceVersion = null, CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = null)
+> DatoRespuesta CambiarClaveAcceso (string riskDeviceToken = null, string riskServiceVersion = null, CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = null)
 
 CambiarClaveAcceso
 
@@ -138,13 +140,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var cambiarClaveAccesoRequestBody = new CambiarClaveAccesoRequestBody(); // CambiarClaveAccesoRequestBody |  (optional) 
 
             try
             {
                 // CambiarClaveAcceso
-                DatoRespuesta result = apiInstance.CambiarClaveAcceso(riskServiceVersion, cambiarClaveAccesoRequestBody);
+                DatoRespuesta result = apiInstance.CambiarClaveAcceso(riskDeviceToken, riskServiceVersion, cambiarClaveAccesoRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -162,7 +165,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -193,7 +197,7 @@ Name | Type | Description  | Notes
 
 <a name="cambiarclavetransaccional"></a>
 # **CambiarClaveTransaccional**
-> DatoRespuesta CambiarClaveTransaccional (string riskServiceVersion = null, CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = null)
+> DatoRespuesta CambiarClaveTransaccional (string riskDeviceToken = null, string riskServiceVersion = null, CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = null)
 
 CambiarClaveTransaccional
 
@@ -223,13 +227,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var cambiarClaveTransaccionalRequestBody = new CambiarClaveTransaccionalRequestBody(); // CambiarClaveTransaccionalRequestBody |  (optional) 
 
             try
             {
                 // CambiarClaveTransaccional
-                DatoRespuesta result = apiInstance.CambiarClaveTransaccional(riskServiceVersion, cambiarClaveTransaccionalRequestBody);
+                DatoRespuesta result = apiInstance.CambiarClaveTransaccional(riskDeviceToken, riskServiceVersion, cambiarClaveTransaccionalRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -247,7 +252,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -278,7 +284,7 @@ Name | Type | Description  | Notes
 
 <a name="datosusuario"></a>
 # **DatosUsuario**
-> UsuarioRespuesta DatosUsuario (string usuario, string riskServiceVersion = null)
+> UsuarioRespuesta DatosUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null)
 
 DatosUsuario
 
@@ -309,12 +315,13 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // DatosUsuario
-                UsuarioRespuesta result = apiInstance.DatosUsuario(usuario, riskServiceVersion);
+                UsuarioRespuesta result = apiInstance.DatosUsuario(usuario, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -333,7 +340,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -363,7 +371,7 @@ Name | Type | Description  | Notes
 
 <a name="editardatousuario"></a>
 # **EditarDatoUsuario**
-> DatoRespuesta EditarDatoUsuario (string usuario, string riskServiceVersion = null, EditarDatoUsuarioRequestBody editarDatoUsuarioRequestBody = null)
+> DatoRespuesta EditarDatoUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null, EditarDatoUsuarioRequestBody editarDatoUsuarioRequestBody = null)
 
 EditarDatoUsuario
 
@@ -394,13 +402,14 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var editarDatoUsuarioRequestBody = new EditarDatoUsuarioRequestBody(); // EditarDatoUsuarioRequestBody |  (optional) 
 
             try
             {
                 // EditarDatoUsuario
-                DatoRespuesta result = apiInstance.EditarDatoUsuario(usuario, riskServiceVersion, editarDatoUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.EditarDatoUsuario(usuario, riskDeviceToken, riskServiceVersion, editarDatoUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -419,7 +428,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -450,7 +460,7 @@ Name | Type | Description  | Notes
 
 <a name="editarusuario"></a>
 # **EditarUsuario**
-> DatoRespuesta EditarUsuario (string usuario, string riskServiceVersion = null, EditarUsuarioRequestBody editarUsuarioRequestBody = null)
+> DatoRespuesta EditarUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null, EditarUsuarioRequestBody editarUsuarioRequestBody = null)
 
 EditarUsuario
 
@@ -481,13 +491,14 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var editarUsuarioRequestBody = new EditarUsuarioRequestBody(); // EditarUsuarioRequestBody |  (optional) 
 
             try
             {
                 // EditarUsuario
-                DatoRespuesta result = apiInstance.EditarUsuario(usuario, riskServiceVersion, editarUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.EditarUsuario(usuario, riskDeviceToken, riskServiceVersion, editarUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -506,7 +517,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -537,7 +549,7 @@ Name | Type | Description  | Notes
 
 <a name="eliminarusuario"></a>
 # **EliminarUsuario**
-> DatoRespuesta EliminarUsuario (string riskServiceVersion = null, EliminarUsuarioRequestBody eliminarUsuarioRequestBody = null)
+> DatoRespuesta EliminarUsuario (string riskDeviceToken = null, string riskServiceVersion = null, EliminarUsuarioRequestBody eliminarUsuarioRequestBody = null)
 
 EliminarUsuario
 
@@ -567,13 +579,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var eliminarUsuarioRequestBody = new EliminarUsuarioRequestBody(); // EliminarUsuarioRequestBody |  (optional) 
 
             try
             {
                 // EliminarUsuario
-                DatoRespuesta result = apiInstance.EliminarUsuario(riskServiceVersion, eliminarUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.EliminarUsuario(riskDeviceToken, riskServiceVersion, eliminarUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -591,7 +604,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -622,7 +636,7 @@ Name | Type | Description  | Notes
 
 <a name="finalizarsesion"></a>
 # **FinalizarSesion**
-> DatoRespuesta FinalizarSesion (string riskServiceVersion = null, FinalizarSesionRequestBody finalizarSesionRequestBody = null)
+> DatoRespuesta FinalizarSesion (string riskDeviceToken = null, string riskServiceVersion = null, FinalizarSesionRequestBody finalizarSesionRequestBody = null)
 
 FinalizarSesion
 
@@ -652,13 +666,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var finalizarSesionRequestBody = new FinalizarSesionRequestBody(); // FinalizarSesionRequestBody |  (optional) 
 
             try
             {
                 // FinalizarSesion
-                DatoRespuesta result = apiInstance.FinalizarSesion(riskServiceVersion, finalizarSesionRequestBody);
+                DatoRespuesta result = apiInstance.FinalizarSesion(riskDeviceToken, riskServiceVersion, finalizarSesionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -676,7 +691,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -707,7 +723,7 @@ Name | Type | Description  | Notes
 
 <a name="generarotp"></a>
 # **GenerarOtp**
-> DatoRespuesta GenerarOtp (TipoMensajeria tipoMensajeria, string destino, string riskServiceVersion = null)
+> DatoRespuesta GenerarOtp (TipoMensajeria tipoMensajeria, string destino, string riskDeviceToken = null, string riskServiceVersion = null)
 
 GenerarOtp
 
@@ -737,12 +753,13 @@ namespace Example
             var apiInstance = new AutApi(config);
             var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
             var destino = destino_example;  // string | Destino de la mensajería
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // GenerarOtp
-                DatoRespuesta result = apiInstance.GenerarOtp(tipoMensajeria, destino, riskServiceVersion);
+                DatoRespuesta result = apiInstance.GenerarOtp(tipoMensajeria, destino, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -762,7 +779,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería (Mail/SMS/Push) | 
  **destino** | **string**| Destino de la mensajería | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -791,7 +809,7 @@ Name | Type | Description  | Notes
 
 <a name="guardaravatarusuario"></a>
 # **GuardarAvatarUsuario**
-> DatoRespuesta GuardarAvatarUsuario (string usuario, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
+> DatoRespuesta GuardarAvatarUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
 GuardarAvatarUsuario
 
@@ -822,7 +840,8 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var archivo = BINARY_DATA_HERE;  // System.IO.Stream | Contenido del archivo (optional) 
             var url = url_example;  // string | URL del archivo (optional) 
             var nombre = nombre_example;  // string | Nombre del archivo (optional) 
@@ -831,7 +850,7 @@ namespace Example
             try
             {
                 // GuardarAvatarUsuario
-                DatoRespuesta result = apiInstance.GuardarAvatarUsuario(usuario, riskServiceVersion, archivo, url, nombre, extension);
+                DatoRespuesta result = apiInstance.GuardarAvatarUsuario(usuario, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -850,7 +869,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **archivo** | **System.IO.Stream****System.IO.Stream**| Contenido del archivo | [optional] 
  **url** | **string**| URL del archivo | [optional] 
  **nombre** | **string**| Nombre del archivo | [optional] 
@@ -884,7 +904,7 @@ Name | Type | Description  | Notes
 
 <a name="iniciarsesion"></a>
 # **IniciarSesion**
-> SesionRespuesta IniciarSesion (string riskServiceVersion = null, IniciarSesionRequestBody iniciarSesionRequestBody = null)
+> SesionRespuesta IniciarSesion (string riskDeviceToken = null, string riskServiceVersion = null, IniciarSesionRequestBody iniciarSesionRequestBody = null)
 
 IniciarSesion
 
@@ -912,13 +932,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var iniciarSesionRequestBody = new IniciarSesionRequestBody(); // IniciarSesionRequestBody |  (optional) 
 
             try
             {
                 // IniciarSesion
-                SesionRespuesta result = apiInstance.IniciarSesion(riskServiceVersion, iniciarSesionRequestBody);
+                SesionRespuesta result = apiInstance.IniciarSesion(riskDeviceToken, riskServiceVersion, iniciarSesionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -936,7 +957,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -966,11 +988,11 @@ Name | Type | Description  | Notes
 
 <a name="iniciarsesionfacebook"></a>
 # **IniciarSesionFacebook**
-> SesionRespuesta IniciarSesionFacebook (string riskServiceVersion = null, IniciarSesionFacebookRequestBody iniciarSesionFacebookRequestBody = null)
+> SesionRespuesta IniciarSesionFacebook (string riskDeviceToken = null, string riskServiceVersion = null, IniciarSesionFacebookRequestBody iniciarSesionFacebookRequestBody = null)
 
 IniciarSesionFacebook
 
-Permite iniciar la sesión de un usuario con su cuenta de facebook
+Permite iniciar la sesión de un usuario con su cuenta de Facebook
 
 ### Example
 ```csharp
@@ -994,13 +1016,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var iniciarSesionFacebookRequestBody = new IniciarSesionFacebookRequestBody(); // IniciarSesionFacebookRequestBody |  (optional) 
 
             try
             {
                 // IniciarSesionFacebook
-                SesionRespuesta result = apiInstance.IniciarSesionFacebook(riskServiceVersion, iniciarSesionFacebookRequestBody);
+                SesionRespuesta result = apiInstance.IniciarSesionFacebook(riskDeviceToken, riskServiceVersion, iniciarSesionFacebookRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1018,7 +1041,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1048,11 +1072,11 @@ Name | Type | Description  | Notes
 
 <a name="iniciarsesiongoogle"></a>
 # **IniciarSesionGoogle**
-> SesionRespuesta IniciarSesionGoogle (string riskServiceVersion = null, IniciarSesionGoogleRequestBody iniciarSesionGoogleRequestBody = null)
+> SesionRespuesta IniciarSesionGoogle (string riskDeviceToken = null, string riskServiceVersion = null, IniciarSesionGoogleRequestBody iniciarSesionGoogleRequestBody = null)
 
 IniciarSesionGoogle
 
-Permite iniciar la sesión de un usuario con su cuenta de google
+Permite iniciar la sesión de un usuario con su cuenta de Google
 
 ### Example
 ```csharp
@@ -1076,13 +1100,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var iniciarSesionGoogleRequestBody = new IniciarSesionGoogleRequestBody(); // IniciarSesionGoogleRequestBody |  (optional) 
 
             try
             {
                 // IniciarSesionGoogle
-                SesionRespuesta result = apiInstance.IniciarSesionGoogle(riskServiceVersion, iniciarSesionGoogleRequestBody);
+                SesionRespuesta result = apiInstance.IniciarSesionGoogle(riskDeviceToken, riskServiceVersion, iniciarSesionGoogleRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1100,7 +1125,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **iniciarSesionGoogleRequestBody** | [**IniciarSesionGoogleRequestBody**](IniciarSesionGoogleRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1130,7 +1156,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperaravatarusuario"></a>
 # **RecuperarAvatarUsuario**
-> System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null, string riskServiceVersion = null)
+> System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 RecuperarAvatarUsuario
 
@@ -1162,12 +1188,13 @@ namespace Example
             var apiInstance = new AutApi(config);
             var usuario = usuario_example;  // string | Usuario
             var version = 56;  // int? | Versión (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // RecuperarAvatarUsuario
-                System.IO.Stream result = apiInstance.RecuperarAvatarUsuario(usuario, version, riskServiceVersion);
+                System.IO.Stream result = apiInstance.RecuperarAvatarUsuario(usuario, version, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1187,7 +1214,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **string**| Usuario | 
  **version** | **int?**| Versión | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -1217,7 +1245,7 @@ Name | Type | Description  | Notes
 
 <a name="refrescarsesion"></a>
 # **RefrescarSesion**
-> SesionRespuesta RefrescarSesion (string riskServiceVersion = null, RefrescarSesionRequestBody refrescarSesionRequestBody = null)
+> SesionRespuesta RefrescarSesion (string riskDeviceToken = null, string riskServiceVersion = null, RefrescarSesionRequestBody refrescarSesionRequestBody = null)
 
 RefrescarSesion
 
@@ -1245,13 +1273,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var refrescarSesionRequestBody = new RefrescarSesionRequestBody(); // RefrescarSesionRequestBody |  (optional) 
 
             try
             {
                 // RefrescarSesion
-                SesionRespuesta result = apiInstance.RefrescarSesion(riskServiceVersion, refrescarSesionRequestBody);
+                SesionRespuesta result = apiInstance.RefrescarSesion(riskDeviceToken, riskServiceVersion, refrescarSesionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1269,7 +1298,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1299,11 +1329,11 @@ Name | Type | Description  | Notes
 
 <a name="refrescarsesionfacebook"></a>
 # **RefrescarSesionFacebook**
-> SesionRespuesta RefrescarSesionFacebook (string riskServiceVersion = null, RefrescarSesionFacebookRequestBody refrescarSesionFacebookRequestBody = null)
+> SesionRespuesta RefrescarSesionFacebook (string riskDeviceToken = null, string riskServiceVersion = null, RefrescarSesionFacebookRequestBody refrescarSesionFacebookRequestBody = null)
 
 RefrescarSesionFacebook
 
-Permite refrescar la sesión de un usuario con su cuenta de facebook
+Permite refrescar la sesión de un usuario con su cuenta de Facebook
 
 ### Example
 ```csharp
@@ -1327,13 +1357,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var refrescarSesionFacebookRequestBody = new RefrescarSesionFacebookRequestBody(); // RefrescarSesionFacebookRequestBody |  (optional) 
 
             try
             {
                 // RefrescarSesionFacebook
-                SesionRespuesta result = apiInstance.RefrescarSesionFacebook(riskServiceVersion, refrescarSesionFacebookRequestBody);
+                SesionRespuesta result = apiInstance.RefrescarSesionFacebook(riskDeviceToken, riskServiceVersion, refrescarSesionFacebookRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1351,7 +1382,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1381,11 +1413,11 @@ Name | Type | Description  | Notes
 
 <a name="refrescarsesiongoogle"></a>
 # **RefrescarSesionGoogle**
-> SesionRespuesta RefrescarSesionGoogle (string riskServiceVersion = null, RefrescarSesionGoogleRequestBody refrescarSesionGoogleRequestBody = null)
+> SesionRespuesta RefrescarSesionGoogle (string riskDeviceToken = null, string riskServiceVersion = null, RefrescarSesionGoogleRequestBody refrescarSesionGoogleRequestBody = null)
 
 RefrescarSesionGoogle
 
-Permite refrescar la sesión de un usuario con su cuenta de google
+Permite refrescar la sesión de un usuario con su cuenta de Google
 
 ### Example
 ```csharp
@@ -1409,13 +1441,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var refrescarSesionGoogleRequestBody = new RefrescarSesionGoogleRequestBody(); // RefrescarSesionGoogleRequestBody |  (optional) 
 
             try
             {
                 // RefrescarSesionGoogle
-                SesionRespuesta result = apiInstance.RefrescarSesionGoogle(riskServiceVersion, refrescarSesionGoogleRequestBody);
+                SesionRespuesta result = apiInstance.RefrescarSesionGoogle(riskDeviceToken, riskServiceVersion, refrescarSesionGoogleRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1433,7 +1466,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **refrescarSesionGoogleRequestBody** | [**RefrescarSesionGoogleRequestBody**](RefrescarSesionGoogleRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1463,7 +1497,7 @@ Name | Type | Description  | Notes
 
 <a name="registrarclavetransaccional"></a>
 # **RegistrarClaveTransaccional**
-> DatoRespuesta RegistrarClaveTransaccional (string riskServiceVersion = null, RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = null)
+> DatoRespuesta RegistrarClaveTransaccional (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = null)
 
 RegistrarClaveTransaccional
 
@@ -1493,13 +1527,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var registrarClaveTransaccionalRequestBody = new RegistrarClaveTransaccionalRequestBody(); // RegistrarClaveTransaccionalRequestBody |  (optional) 
 
             try
             {
                 // RegistrarClaveTransaccional
-                DatoRespuesta result = apiInstance.RegistrarClaveTransaccional(riskServiceVersion, registrarClaveTransaccionalRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarClaveTransaccional(riskDeviceToken, riskServiceVersion, registrarClaveTransaccionalRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1517,7 +1552,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1548,7 +1584,7 @@ Name | Type | Description  | Notes
 
 <a name="registrardispositivo"></a>
 # **RegistrarDispositivo**
-> DatoRespuesta RegistrarDispositivo (string riskServiceVersion = null, RegistrarDispositivoRequestBody registrarDispositivoRequestBody = null)
+> DatoRespuesta RegistrarDispositivo (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarDispositivoRequestBody registrarDispositivoRequestBody = null)
 
 RegistrarDispositivo
 
@@ -1576,13 +1612,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var registrarDispositivoRequestBody = new RegistrarDispositivoRequestBody(); // RegistrarDispositivoRequestBody |  (optional) 
 
             try
             {
                 // RegistrarDispositivo
-                DatoRespuesta result = apiInstance.RegistrarDispositivo(riskServiceVersion, registrarDispositivoRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarDispositivo(riskDeviceToken, riskServiceVersion, registrarDispositivoRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1600,7 +1637,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1630,7 +1668,7 @@ Name | Type | Description  | Notes
 
 <a name="registrarubicacion"></a>
 # **RegistrarUbicacion**
-> DatoRespuesta RegistrarUbicacion (string riskServiceVersion = null, RegistrarUbicacionRequestBody registrarUbicacionRequestBody = null)
+> DatoRespuesta RegistrarUbicacion (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarUbicacionRequestBody registrarUbicacionRequestBody = null)
 
 RegistrarUbicacion
 
@@ -1658,13 +1696,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var registrarUbicacionRequestBody = new RegistrarUbicacionRequestBody(); // RegistrarUbicacionRequestBody |  (optional) 
 
             try
             {
                 // RegistrarUbicacion
-                DatoRespuesta result = apiInstance.RegistrarUbicacion(riskServiceVersion, registrarUbicacionRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarUbicacion(riskDeviceToken, riskServiceVersion, registrarUbicacionRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1682,7 +1721,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1712,7 +1752,7 @@ Name | Type | Description  | Notes
 
 <a name="registrarusuario"></a>
 # **RegistrarUsuario**
-> DatoRespuesta RegistrarUsuario (string riskServiceVersion = null, RegistrarUsuarioRequestBody registrarUsuarioRequestBody = null)
+> DatoRespuesta RegistrarUsuario (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarUsuarioRequestBody registrarUsuarioRequestBody = null)
 
 RegistrarUsuario
 
@@ -1740,13 +1780,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new AutApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var registrarUsuarioRequestBody = new RegistrarUsuarioRequestBody(); // RegistrarUsuarioRequestBody |  (optional) 
 
             try
             {
                 // RegistrarUsuario
-                DatoRespuesta result = apiInstance.RegistrarUsuario(riskServiceVersion, registrarUsuarioRequestBody);
+                DatoRespuesta result = apiInstance.RegistrarUsuario(riskDeviceToken, riskServiceVersion, registrarUsuarioRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1764,7 +1805,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -1794,7 +1836,7 @@ Name | Type | Description  | Notes
 
 <a name="validarotp"></a>
 # **ValidarOtp**
-> DatoRespuesta ValidarOtp (string secret, int otp, string riskServiceVersion = null)
+> DatoRespuesta ValidarOtp (string secret, int otp, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ValidarOtp
 
@@ -1824,12 +1866,13 @@ namespace Example
             var apiInstance = new AutApi(config);
             var secret = secret_example;  // string | Secret recibido al generar el código OTP
             var otp = 56;  // int | Código OTP a validar
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ValidarOtp
-                DatoRespuesta result = apiInstance.ValidarOtp(secret, otp, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ValidarOtp(secret, otp, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1849,7 +1892,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **secret** | **string**| Secret recibido al generar el código OTP | 
  **otp** | **int**| Código OTP a validar | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -1878,7 +1922,7 @@ Name | Type | Description  | Notes
 
 <a name="validarpermiso"></a>
 # **ValidarPermiso**
-> DatoRespuesta ValidarPermiso (string idPermiso, AccionPermiso? accion = null, string riskServiceVersion = null)
+> DatoRespuesta ValidarPermiso (string idPermiso, AccionPermiso? accion = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ValidarPermiso
 
@@ -1910,12 +1954,13 @@ namespace Example
             var apiInstance = new AutApi(config);
             var idPermiso = idPermiso_example;  // string | Identificador del permiso
             var accion = ;  // AccionPermiso? | Acción sobre el permiso (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ValidarPermiso
-                DatoRespuesta result = apiInstance.ValidarPermiso(idPermiso, accion, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ValidarPermiso(idPermiso, accion, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1935,7 +1980,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **idPermiso** | **string**| Identificador del permiso | 
  **accion** | **AccionPermiso?**| Acción sobre el permiso | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -1965,7 +2011,7 @@ Name | Type | Description  | Notes
 
 <a name="validarsesion"></a>
 # **ValidarSesion**
-> DatoRespuesta ValidarSesion (string accessToken, string riskServiceVersion = null)
+> DatoRespuesta ValidarSesion (string accessToken, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ValidarSesion
 
@@ -1996,12 +2042,13 @@ namespace Example
 
             var apiInstance = new AutApi(config);
             var accessToken = accessToken_example;  // string | Access Token de la sesión
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ValidarSesion
-                DatoRespuesta result = apiInstance.ValidarSesion(accessToken, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ValidarSesion(accessToken, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2020,7 +2067,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accessToken** | **string**| Access Token de la sesión | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 

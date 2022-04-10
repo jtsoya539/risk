@@ -14,6 +14,9 @@ Name | Type | Description | Notes
 **tokenNotificacion** | **kotlin.String** |  |  [optional]
 **plataformaNotificacion** | **kotlin.String** |  |  [optional]
 **versionAplicacion** | **kotlin.String** |  |  [optional]
+**idPaisIso2** | **kotlin.String** |  |  [optional]
+**zonaHoraria** | **kotlin.String** |  |  [optional]
+**idiomaIso** | **kotlin.String** |  |  [optional]
 **plantillas** | [**kotlin.collections.List&lt;Plantilla&gt;**](Plantilla.md) |  |  [optional]
 **suscripciones** | [**kotlin.collections.List&lt;Dato&gt;**](Dato.md) |  |  [optional]
 

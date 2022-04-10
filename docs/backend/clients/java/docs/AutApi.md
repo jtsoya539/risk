@@ -33,7 +33,7 @@ Method | HTTP request | Description
 
 ## activarUsuario
 
-> DatoRespuesta activarUsuario(key, riskServiceVersion)
+> DatoRespuesta activarUsuario(key, riskDeviceToken, riskServiceVersion)
 
 ActivarUsuario
 
@@ -56,9 +56,10 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String key = "key_example"; // String | Clave para la activación
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.activarUsuario(key, riskServiceVersion);
+            DatoRespuesta result = apiInstance.activarUsuario(key, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#activarUsuario");
@@ -77,7 +78,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **key** | **String**| Clave para la activación |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -104,7 +106,7 @@ No authorization required
 
 ## cambiarClaveAcceso
 
-> DatoRespuesta cambiarClaveAcceso(riskServiceVersion, cambiarClaveAccesoRequestBody)
+> DatoRespuesta cambiarClaveAcceso(riskDeviceToken, riskServiceVersion, cambiarClaveAccesoRequestBody)
 
 CambiarClaveAcceso
 
@@ -137,10 +139,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = new CambiarClaveAccesoRequestBody(); // CambiarClaveAccesoRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.cambiarClaveAcceso(riskServiceVersion, cambiarClaveAccesoRequestBody);
+            DatoRespuesta result = apiInstance.cambiarClaveAcceso(riskDeviceToken, riskServiceVersion, cambiarClaveAccesoRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#cambiarClaveAcceso");
@@ -158,7 +161,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional]
 
 ### Return type
@@ -188,7 +192,7 @@ Name | Type | Description  | Notes
 
 ## cambiarClaveTransaccional
 
-> DatoRespuesta cambiarClaveTransaccional(riskServiceVersion, cambiarClaveTransaccionalRequestBody)
+> DatoRespuesta cambiarClaveTransaccional(riskDeviceToken, riskServiceVersion, cambiarClaveTransaccionalRequestBody)
 
 CambiarClaveTransaccional
 
@@ -221,10 +225,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = new CambiarClaveTransaccionalRequestBody(); // CambiarClaveTransaccionalRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.cambiarClaveTransaccional(riskServiceVersion, cambiarClaveTransaccionalRequestBody);
+            DatoRespuesta result = apiInstance.cambiarClaveTransaccional(riskDeviceToken, riskServiceVersion, cambiarClaveTransaccionalRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#cambiarClaveTransaccional");
@@ -242,7 +247,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional]
 
 ### Return type
@@ -272,7 +278,7 @@ Name | Type | Description  | Notes
 
 ## datosUsuario
 
-> UsuarioRespuesta datosUsuario(usuario, riskServiceVersion)
+> UsuarioRespuesta datosUsuario(usuario, riskDeviceToken, riskServiceVersion)
 
 DatosUsuario
 
@@ -306,9 +312,10 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            UsuarioRespuesta result = apiInstance.datosUsuario(usuario, riskServiceVersion);
+            UsuarioRespuesta result = apiInstance.datosUsuario(usuario, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#datosUsuario");
@@ -327,7 +334,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -356,7 +364,7 @@ Name | Type | Description  | Notes
 
 ## editarDatoUsuario
 
-> DatoRespuesta editarDatoUsuario(usuario, riskServiceVersion, editarDatoUsuarioRequestBody)
+> DatoRespuesta editarDatoUsuario(usuario, riskDeviceToken, riskServiceVersion, editarDatoUsuarioRequestBody)
 
 EditarDatoUsuario
 
@@ -390,10 +398,11 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         EditarDatoUsuarioRequestBody editarDatoUsuarioRequestBody = new EditarDatoUsuarioRequestBody(); // EditarDatoUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.editarDatoUsuario(usuario, riskServiceVersion, editarDatoUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.editarDatoUsuario(usuario, riskDeviceToken, riskServiceVersion, editarDatoUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#editarDatoUsuario");
@@ -412,7 +421,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -442,7 +452,7 @@ Name | Type | Description  | Notes
 
 ## editarUsuario
 
-> DatoRespuesta editarUsuario(usuario, riskServiceVersion, editarUsuarioRequestBody)
+> DatoRespuesta editarUsuario(usuario, riskDeviceToken, riskServiceVersion, editarUsuarioRequestBody)
 
 EditarUsuario
 
@@ -476,10 +486,11 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         EditarUsuarioRequestBody editarUsuarioRequestBody = new EditarUsuarioRequestBody(); // EditarUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.editarUsuario(usuario, riskServiceVersion, editarUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.editarUsuario(usuario, riskDeviceToken, riskServiceVersion, editarUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#editarUsuario");
@@ -498,7 +509,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -528,7 +540,7 @@ Name | Type | Description  | Notes
 
 ## eliminarUsuario
 
-> DatoRespuesta eliminarUsuario(riskServiceVersion, eliminarUsuarioRequestBody)
+> DatoRespuesta eliminarUsuario(riskDeviceToken, riskServiceVersion, eliminarUsuarioRequestBody)
 
 EliminarUsuario
 
@@ -561,10 +573,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         EliminarUsuarioRequestBody eliminarUsuarioRequestBody = new EliminarUsuarioRequestBody(); // EliminarUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.eliminarUsuario(riskServiceVersion, eliminarUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.eliminarUsuario(riskDeviceToken, riskServiceVersion, eliminarUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#eliminarUsuario");
@@ -582,7 +595,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -612,7 +626,7 @@ Name | Type | Description  | Notes
 
 ## finalizarSesion
 
-> DatoRespuesta finalizarSesion(riskServiceVersion, finalizarSesionRequestBody)
+> DatoRespuesta finalizarSesion(riskDeviceToken, riskServiceVersion, finalizarSesionRequestBody)
 
 FinalizarSesion
 
@@ -645,10 +659,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         FinalizarSesionRequestBody finalizarSesionRequestBody = new FinalizarSesionRequestBody(); // FinalizarSesionRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.finalizarSesion(riskServiceVersion, finalizarSesionRequestBody);
+            DatoRespuesta result = apiInstance.finalizarSesion(riskDeviceToken, riskServiceVersion, finalizarSesionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#finalizarSesion");
@@ -666,7 +681,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -696,7 +712,7 @@ Name | Type | Description  | Notes
 
 ## generarOtp
 
-> DatoRespuesta generarOtp(tipoMensajeria, destino, riskServiceVersion)
+> DatoRespuesta generarOtp(tipoMensajeria, destino, riskDeviceToken, riskServiceVersion)
 
 GenerarOtp
 
@@ -727,9 +743,10 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         TipoMensajeria tipoMensajeria = TipoMensajeria.fromValue("Mail"); // TipoMensajeria | Tipo de mensajería (Mail/SMS/Push)
         String destino = "destino_example"; // String | Destino de la mensajería
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.generarOtp(tipoMensajeria, destino, riskServiceVersion);
+            DatoRespuesta result = apiInstance.generarOtp(tipoMensajeria, destino, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#generarOtp");
@@ -749,7 +766,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería (Mail/SMS/Push) | [enum: Mail, SMS, Push]
  **destino** | **String**| Destino de la mensajería |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -777,7 +795,7 @@ Name | Type | Description  | Notes
 
 ## guardarAvatarUsuario
 
-> DatoRespuesta guardarAvatarUsuario(usuario, riskServiceVersion, archivo, url, nombre, extension)
+> DatoRespuesta guardarAvatarUsuario(usuario, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension)
 
 GuardarAvatarUsuario
 
@@ -811,13 +829,14 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         File archivo = new File("/path/to/file"); // File | Contenido del archivo
         String url = "url_example"; // String | URL del archivo
         String nombre = "nombre_example"; // String | Nombre del archivo
         String extension = "extension_example"; // String | Extensión del archivo
         try {
-            DatoRespuesta result = apiInstance.guardarAvatarUsuario(usuario, riskServiceVersion, archivo, url, nombre, extension);
+            DatoRespuesta result = apiInstance.guardarAvatarUsuario(usuario, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#guardarAvatarUsuario");
@@ -836,7 +855,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **archivo** | **File**| Contenido del archivo | [optional]
  **url** | **String**| URL del archivo | [optional]
  **nombre** | **String**| Nombre del archivo | [optional]
@@ -869,7 +889,7 @@ Name | Type | Description  | Notes
 
 ## iniciarSesion
 
-> SesionRespuesta iniciarSesion(riskServiceVersion, iniciarSesionRequestBody)
+> SesionRespuesta iniciarSesion(riskDeviceToken, riskServiceVersion, iniciarSesionRequestBody)
 
 IniciarSesion
 
@@ -898,10 +918,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         IniciarSesionRequestBody iniciarSesionRequestBody = new IniciarSesionRequestBody(); // IniciarSesionRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.iniciarSesion(riskServiceVersion, iniciarSesionRequestBody);
+            SesionRespuesta result = apiInstance.iniciarSesion(riskDeviceToken, riskServiceVersion, iniciarSesionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#iniciarSesion");
@@ -919,7 +940,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -948,11 +970,11 @@ Name | Type | Description  | Notes
 
 ## iniciarSesionFacebook
 
-> SesionRespuesta iniciarSesionFacebook(riskServiceVersion, iniciarSesionFacebookRequestBody)
+> SesionRespuesta iniciarSesionFacebook(riskDeviceToken, riskServiceVersion, iniciarSesionFacebookRequestBody)
 
 IniciarSesionFacebook
 
-Permite iniciar la sesión de un usuario con su cuenta de facebook
+Permite iniciar la sesión de un usuario con su cuenta de Facebook
 
 ### Example
 
@@ -977,10 +999,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         IniciarSesionFacebookRequestBody iniciarSesionFacebookRequestBody = new IniciarSesionFacebookRequestBody(); // IniciarSesionFacebookRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.iniciarSesionFacebook(riskServiceVersion, iniciarSesionFacebookRequestBody);
+            SesionRespuesta result = apiInstance.iniciarSesionFacebook(riskDeviceToken, riskServiceVersion, iniciarSesionFacebookRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#iniciarSesionFacebook");
@@ -998,7 +1021,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1027,11 +1051,11 @@ Name | Type | Description  | Notes
 
 ## iniciarSesionGoogle
 
-> SesionRespuesta iniciarSesionGoogle(riskServiceVersion, iniciarSesionGoogleRequestBody)
+> SesionRespuesta iniciarSesionGoogle(riskDeviceToken, riskServiceVersion, iniciarSesionGoogleRequestBody)
 
 IniciarSesionGoogle
 
-Permite iniciar la sesión de un usuario con su cuenta de google
+Permite iniciar la sesión de un usuario con su cuenta de Google
 
 ### Example
 
@@ -1056,10 +1080,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         IniciarSesionGoogleRequestBody iniciarSesionGoogleRequestBody = new IniciarSesionGoogleRequestBody(); // IniciarSesionGoogleRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.iniciarSesionGoogle(riskServiceVersion, iniciarSesionGoogleRequestBody);
+            SesionRespuesta result = apiInstance.iniciarSesionGoogle(riskDeviceToken, riskServiceVersion, iniciarSesionGoogleRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#iniciarSesionGoogle");
@@ -1077,7 +1102,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **iniciarSesionGoogleRequestBody** | [**IniciarSesionGoogleRequestBody**](IniciarSesionGoogleRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1106,7 +1132,7 @@ Name | Type | Description  | Notes
 
 ## recuperarAvatarUsuario
 
-> File recuperarAvatarUsuario(usuario, version, riskServiceVersion)
+> File recuperarAvatarUsuario(usuario, version, riskDeviceToken, riskServiceVersion)
 
 RecuperarAvatarUsuario
 
@@ -1141,9 +1167,10 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         String usuario = "usuario_example"; // String | Usuario
         Integer version = 56; // Integer | Versión
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            File result = apiInstance.recuperarAvatarUsuario(usuario, version, riskServiceVersion);
+            File result = apiInstance.recuperarAvatarUsuario(usuario, version, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#recuperarAvatarUsuario");
@@ -1163,7 +1190,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **usuario** | **String**| Usuario |
  **version** | **Integer**| Versión | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -1192,7 +1220,7 @@ Name | Type | Description  | Notes
 
 ## refrescarSesion
 
-> SesionRespuesta refrescarSesion(riskServiceVersion, refrescarSesionRequestBody)
+> SesionRespuesta refrescarSesion(riskDeviceToken, riskServiceVersion, refrescarSesionRequestBody)
 
 RefrescarSesion
 
@@ -1221,10 +1249,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RefrescarSesionRequestBody refrescarSesionRequestBody = new RefrescarSesionRequestBody(); // RefrescarSesionRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.refrescarSesion(riskServiceVersion, refrescarSesionRequestBody);
+            SesionRespuesta result = apiInstance.refrescarSesion(riskDeviceToken, riskServiceVersion, refrescarSesionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#refrescarSesion");
@@ -1242,7 +1271,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1271,11 +1301,11 @@ Name | Type | Description  | Notes
 
 ## refrescarSesionFacebook
 
-> SesionRespuesta refrescarSesionFacebook(riskServiceVersion, refrescarSesionFacebookRequestBody)
+> SesionRespuesta refrescarSesionFacebook(riskDeviceToken, riskServiceVersion, refrescarSesionFacebookRequestBody)
 
 RefrescarSesionFacebook
 
-Permite refrescar la sesión de un usuario con su cuenta de facebook
+Permite refrescar la sesión de un usuario con su cuenta de Facebook
 
 ### Example
 
@@ -1300,10 +1330,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RefrescarSesionFacebookRequestBody refrescarSesionFacebookRequestBody = new RefrescarSesionFacebookRequestBody(); // RefrescarSesionFacebookRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.refrescarSesionFacebook(riskServiceVersion, refrescarSesionFacebookRequestBody);
+            SesionRespuesta result = apiInstance.refrescarSesionFacebook(riskDeviceToken, riskServiceVersion, refrescarSesionFacebookRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#refrescarSesionFacebook");
@@ -1321,7 +1352,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1350,11 +1382,11 @@ Name | Type | Description  | Notes
 
 ## refrescarSesionGoogle
 
-> SesionRespuesta refrescarSesionGoogle(riskServiceVersion, refrescarSesionGoogleRequestBody)
+> SesionRespuesta refrescarSesionGoogle(riskDeviceToken, riskServiceVersion, refrescarSesionGoogleRequestBody)
 
 RefrescarSesionGoogle
 
-Permite refrescar la sesión de un usuario con su cuenta de google
+Permite refrescar la sesión de un usuario con su cuenta de Google
 
 ### Example
 
@@ -1379,10 +1411,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RefrescarSesionGoogleRequestBody refrescarSesionGoogleRequestBody = new RefrescarSesionGoogleRequestBody(); // RefrescarSesionGoogleRequestBody | 
         try {
-            SesionRespuesta result = apiInstance.refrescarSesionGoogle(riskServiceVersion, refrescarSesionGoogleRequestBody);
+            SesionRespuesta result = apiInstance.refrescarSesionGoogle(riskDeviceToken, riskServiceVersion, refrescarSesionGoogleRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#refrescarSesionGoogle");
@@ -1400,7 +1433,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **refrescarSesionGoogleRequestBody** | [**RefrescarSesionGoogleRequestBody**](RefrescarSesionGoogleRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1429,7 +1463,7 @@ Name | Type | Description  | Notes
 
 ## registrarClaveTransaccional
 
-> DatoRespuesta registrarClaveTransaccional(riskServiceVersion, registrarClaveTransaccionalRequestBody)
+> DatoRespuesta registrarClaveTransaccional(riskDeviceToken, riskServiceVersion, registrarClaveTransaccionalRequestBody)
 
 RegistrarClaveTransaccional
 
@@ -1462,10 +1496,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = new RegistrarClaveTransaccionalRequestBody(); // RegistrarClaveTransaccionalRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarClaveTransaccional(riskServiceVersion, registrarClaveTransaccionalRequestBody);
+            DatoRespuesta result = apiInstance.registrarClaveTransaccional(riskDeviceToken, riskServiceVersion, registrarClaveTransaccionalRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarClaveTransaccional");
@@ -1483,7 +1518,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1513,7 +1549,7 @@ Name | Type | Description  | Notes
 
 ## registrarDispositivo
 
-> DatoRespuesta registrarDispositivo(riskServiceVersion, registrarDispositivoRequestBody)
+> DatoRespuesta registrarDispositivo(riskDeviceToken, riskServiceVersion, registrarDispositivoRequestBody)
 
 RegistrarDispositivo
 
@@ -1542,10 +1578,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RegistrarDispositivoRequestBody registrarDispositivoRequestBody = new RegistrarDispositivoRequestBody(); // RegistrarDispositivoRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarDispositivo(riskServiceVersion, registrarDispositivoRequestBody);
+            DatoRespuesta result = apiInstance.registrarDispositivo(riskDeviceToken, riskServiceVersion, registrarDispositivoRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarDispositivo");
@@ -1563,7 +1600,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1592,7 +1630,7 @@ Name | Type | Description  | Notes
 
 ## registrarUbicacion
 
-> DatoRespuesta registrarUbicacion(riskServiceVersion, registrarUbicacionRequestBody)
+> DatoRespuesta registrarUbicacion(riskDeviceToken, riskServiceVersion, registrarUbicacionRequestBody)
 
 RegistrarUbicacion
 
@@ -1621,10 +1659,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RegistrarUbicacionRequestBody registrarUbicacionRequestBody = new RegistrarUbicacionRequestBody(); // RegistrarUbicacionRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarUbicacion(riskServiceVersion, registrarUbicacionRequestBody);
+            DatoRespuesta result = apiInstance.registrarUbicacion(riskDeviceToken, riskServiceVersion, registrarUbicacionRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarUbicacion");
@@ -1642,7 +1681,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1671,7 +1711,7 @@ Name | Type | Description  | Notes
 
 ## registrarUsuario
 
-> DatoRespuesta registrarUsuario(riskServiceVersion, registrarUsuarioRequestBody)
+> DatoRespuesta registrarUsuario(riskDeviceToken, riskServiceVersion, registrarUsuarioRequestBody)
 
 RegistrarUsuario
 
@@ -1700,10 +1740,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         AutApi apiInstance = new AutApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         RegistrarUsuarioRequestBody registrarUsuarioRequestBody = new RegistrarUsuarioRequestBody(); // RegistrarUsuarioRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.registrarUsuario(riskServiceVersion, registrarUsuarioRequestBody);
+            DatoRespuesta result = apiInstance.registrarUsuario(riskDeviceToken, riskServiceVersion, registrarUsuarioRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#registrarUsuario");
@@ -1721,7 +1762,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional]
 
 ### Return type
@@ -1750,7 +1792,7 @@ Name | Type | Description  | Notes
 
 ## validarOtp
 
-> DatoRespuesta validarOtp(secret, otp, riskServiceVersion)
+> DatoRespuesta validarOtp(secret, otp, riskDeviceToken, riskServiceVersion)
 
 ValidarOtp
 
@@ -1781,9 +1823,10 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         String secret = "secret_example"; // String | Secret recibido al generar el código OTP
         Integer otp = 56; // Integer | Código OTP a validar
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.validarOtp(secret, otp, riskServiceVersion);
+            DatoRespuesta result = apiInstance.validarOtp(secret, otp, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#validarOtp");
@@ -1803,7 +1846,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **secret** | **String**| Secret recibido al generar el código OTP |
  **otp** | **Integer**| Código OTP a validar |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -1831,7 +1875,7 @@ Name | Type | Description  | Notes
 
 ## validarPermiso
 
-> DatoRespuesta validarPermiso(idPermiso, accion, riskServiceVersion)
+> DatoRespuesta validarPermiso(idPermiso, accion, riskDeviceToken, riskServiceVersion)
 
 ValidarPermiso
 
@@ -1866,9 +1910,10 @@ public class Example {
         AutApi apiInstance = new AutApi(defaultClient);
         String idPermiso = "idPermiso_example"; // String | Identificador del permiso
         AccionPermiso accion = AccionPermiso.fromValue("Consultar"); // AccionPermiso | Acción sobre el permiso
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.validarPermiso(idPermiso, accion, riskServiceVersion);
+            DatoRespuesta result = apiInstance.validarPermiso(idPermiso, accion, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#validarPermiso");
@@ -1888,7 +1933,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **idPermiso** | **String**| Identificador del permiso |
  **accion** | [**AccionPermiso**](.md)| Acción sobre el permiso | [optional] [enum: Consultar, Insertar, Actualizar, Eliminar]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -1917,7 +1963,7 @@ Name | Type | Description  | Notes
 
 ## validarSesion
 
-> DatoRespuesta validarSesion(accessToken, riskServiceVersion)
+> DatoRespuesta validarSesion(accessToken, riskDeviceToken, riskServiceVersion)
 
 ValidarSesion
 
@@ -1951,9 +1997,10 @@ public class Example {
 
         AutApi apiInstance = new AutApi(defaultClient);
         String accessToken = "accessToken_example"; // String | Access Token de la sesión
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.validarSesion(accessToken, riskServiceVersion);
+            DatoRespuesta result = apiInstance.validarSesion(accessToken, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#validarSesion");
@@ -1972,7 +2019,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **accessToken** | **String**| Access Token de la sesión |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 

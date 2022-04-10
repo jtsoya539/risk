@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 <a name="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
-> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskServiceVersion = null)
+> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ReporteListarSignificados
 
@@ -42,12 +42,13 @@ namespace Example
             var apiInstance = new RepApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
             var dominio = dominio_example;  // string | Dominio (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ReporteListarSignificados
-                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio, riskServiceVersion);
+                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -67,7 +68,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
  **dominio** | **string**| Dominio | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -97,7 +99,7 @@ Name | Type | Description  | Notes
 
 <a name="reporteversionsistema"></a>
 # **ReporteVersionSistema**
-> System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskServiceVersion = null)
+> System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ReporteVersionSistema
 
@@ -128,12 +130,13 @@ namespace Example
 
             var apiInstance = new RepApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ReporteVersionSistema
-                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato, riskServiceVersion);
+                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -152,7 +155,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 

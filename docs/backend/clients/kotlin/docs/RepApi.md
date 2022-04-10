@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 <a name="reporteListarSignificados"></a>
 # **reporteListarSignificados**
-> java.io.File reporteListarSignificados(formato, dominio, riskServiceVersion)
+> java.io.File reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion)
 
 ReporteListarSignificados
 
@@ -25,9 +25,10 @@ Obtiene un reporte con los significados dentro de un dominio
 val apiInstance = RepApi()
 val formato : FormatoReporte =  // FormatoReporte | Formato del reporte
 val dominio : kotlin.String = dominio_example // kotlin.String | Dominio
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : java.io.File = apiInstance.reporteListarSignificados(formato, dominio, riskServiceVersion)
+    val result : java.io.File = apiInstance.reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling RepApi#reporteListarSignificados")
@@ -44,7 +45,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **dominio** | **kotlin.String**| Dominio | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -66,7 +68,7 @@ Configure RiskAppKey:
 
 <a name="reporteVersionSistema"></a>
 # **reporteVersionSistema**
-> java.io.File reporteVersionSistema(formato, riskServiceVersion)
+> java.io.File reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion)
 
 ReporteVersionSistema
 
@@ -80,9 +82,10 @@ Obtiene un reporte con la versión actual del sistema
 
 val apiInstance = RepApi()
 val formato : FormatoReporte =  // FormatoReporte | Formato del reporte
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : java.io.File = apiInstance.reporteVersionSistema(formato, riskServiceVersion)
+    val result : java.io.File = apiInstance.reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling RepApi#reporteVersionSistema")
@@ -98,7 +101,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 

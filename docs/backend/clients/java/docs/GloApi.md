@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## listarBarrios
 
-> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion)
+> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarBarrios
 
@@ -48,9 +48,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            BarrioPaginaRespuesta result = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion);
+            BarrioPaginaRespuesta result = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GloApi#listarBarrios");
@@ -74,7 +75,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -102,7 +104,7 @@ Name | Type | Description  | Notes
 
 ## listarCiudades
 
-> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion)
+> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarCiudades
 
@@ -136,9 +138,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            CiudadPaginaRespuesta result = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion);
+            CiudadPaginaRespuesta result = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GloApi#listarCiudades");
@@ -161,7 +164,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -189,7 +193,7 @@ Name | Type | Description  | Notes
 
 ## listarDepartamentos
 
-> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion)
+> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarDepartamentos
 
@@ -222,9 +226,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DepartamentoPaginaRespuesta result = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion);
+            DepartamentoPaginaRespuesta result = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GloApi#listarDepartamentos");
@@ -246,7 +251,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -274,7 +280,7 @@ Name | Type | Description  | Notes
 
 ## listarPaises
 
-> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskServiceVersion)
+> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarPaises
 
@@ -306,9 +312,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            PaisPaginaRespuesta result = apiInstance.listarPaises(pagina, porPagina, noPaginar, riskServiceVersion);
+            PaisPaginaRespuesta result = apiInstance.listarPaises(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GloApi#listarPaises");
@@ -329,7 +336,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 

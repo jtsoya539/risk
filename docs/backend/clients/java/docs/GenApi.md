@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 ## guardarArchivo
 
-> DatoRespuesta guardarArchivo(tabla, campo, referencia, riskServiceVersion, archivo, url, nombre, extension)
+> DatoRespuesta guardarArchivo(tabla, campo, referencia, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension)
 
 GuardarArchivo
 
@@ -57,13 +57,14 @@ public class Example {
         String tabla = "tabla_example"; // String | Tabla
         String campo = "campo_example"; // String | Campo
         String referencia = "referencia_example"; // String | Referencia
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         File archivo = new File("/path/to/file"); // File | Contenido del archivo
         String url = "url_example"; // String | URL del archivo
         String nombre = "nombre_example"; // String | Nombre del archivo
         String extension = "extension_example"; // String | Extensión del archivo
         try {
-            DatoRespuesta result = apiInstance.guardarArchivo(tabla, campo, referencia, riskServiceVersion, archivo, url, nombre, extension);
+            DatoRespuesta result = apiInstance.guardarArchivo(tabla, campo, referencia, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#guardarArchivo");
@@ -84,7 +85,8 @@ Name | Type | Description  | Notes
  **tabla** | **String**| Tabla |
  **campo** | **String**| Campo |
  **referencia** | **String**| Referencia |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **archivo** | **File**| Contenido del archivo | [optional]
  **url** | **String**| URL del archivo | [optional]
  **nombre** | **String**| Nombre del archivo | [optional]
@@ -117,7 +119,7 @@ Name | Type | Description  | Notes
 
 ## listarAplicaciones
 
-> AplicacionPaginaRespuesta listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskServiceVersion)
+> AplicacionPaginaRespuesta listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarAplicaciones
 
@@ -151,9 +153,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            AplicacionPaginaRespuesta result = apiInstance.listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskServiceVersion);
+            AplicacionPaginaRespuesta result = apiInstance.listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarAplicaciones");
@@ -176,7 +179,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -204,7 +208,7 @@ Name | Type | Description  | Notes
 
 ## listarErrores
 
-> ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar, riskServiceVersion)
+> ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarErrores
 
@@ -237,9 +241,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            ErrorPaginaRespuesta result = apiInstance.listarErrores(idError, pagina, porPagina, noPaginar, riskServiceVersion);
+            ErrorPaginaRespuesta result = apiInstance.listarErrores(idError, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarErrores");
@@ -261,7 +266,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -289,7 +295,7 @@ Name | Type | Description  | Notes
 
 ## listarSignificados
 
-> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar, riskServiceVersion)
+> SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarSignificados
 
@@ -326,9 +332,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            SignificadoPaginaRespuesta result = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar, riskServiceVersion);
+            SignificadoPaginaRespuesta result = apiInstance.listarSignificados(dominio, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#listarSignificados");
@@ -350,7 +357,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -379,7 +387,7 @@ Name | Type | Description  | Notes
 
 ## recuperarArchivo
 
-> File recuperarArchivo(tabla, campo, referencia, version, riskServiceVersion)
+> File recuperarArchivo(tabla, campo, referencia, version, riskDeviceToken, riskServiceVersion)
 
 RecuperarArchivo
 
@@ -416,9 +424,10 @@ public class Example {
         String campo = "campo_example"; // String | Campo
         String referencia = "referencia_example"; // String | Referencia
         Integer version = 56; // Integer | Versión
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            File result = apiInstance.recuperarArchivo(tabla, campo, referencia, version, riskServiceVersion);
+            File result = apiInstance.recuperarArchivo(tabla, campo, referencia, version, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#recuperarArchivo");
@@ -440,7 +449,8 @@ Name | Type | Description  | Notes
  **campo** | **String**| Campo |
  **referencia** | **String**| Referencia |
  **version** | **Integer**| Versión | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -469,7 +479,7 @@ Name | Type | Description  | Notes
 
 ## recuperarTexto
 
-> DatoRespuesta recuperarTexto(referencia, riskServiceVersion)
+> DatoRespuesta recuperarTexto(referencia, riskDeviceToken, riskServiceVersion)
 
 RecuperarTexto
 
@@ -499,9 +509,10 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         String referencia = "referencia_example"; // String | Referencia del texto
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.recuperarTexto(referencia, riskServiceVersion);
+            DatoRespuesta result = apiInstance.recuperarTexto(referencia, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#recuperarTexto");
@@ -520,7 +531,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **referencia** | **String**| Referencia del texto |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -548,7 +560,7 @@ Name | Type | Description  | Notes
 
 ## reporteListarSignificados
 
-> File reporteListarSignificados(formato, dominio, riskServiceVersion)
+> File reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion)
 
 ReporteListarSignificados
 
@@ -583,9 +595,10 @@ public class Example {
         GenApi apiInstance = new GenApi(defaultClient);
         FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
         String dominio = "dominio_example"; // String | Dominio
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            File result = apiInstance.reporteListarSignificados(formato, dominio, riskServiceVersion);
+            File result = apiInstance.reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#reporteListarSignificados");
@@ -605,7 +618,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **dominio** | **String**| Dominio | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -634,7 +648,7 @@ Name | Type | Description  | Notes
 
 ## reporteVersionSistema
 
-> File reporteVersionSistema(formato, riskServiceVersion)
+> File reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion)
 
 ReporteVersionSistema
 
@@ -668,9 +682,10 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            File result = apiInstance.reporteVersionSistema(formato, riskServiceVersion);
+            File result = apiInstance.reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#reporteVersionSistema");
@@ -689,7 +704,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -718,7 +734,7 @@ Name | Type | Description  | Notes
 
 ## significadoCodigo
 
-> DatoRespuesta significadoCodigo(dominio, codigo, riskServiceVersion)
+> DatoRespuesta significadoCodigo(dominio, codigo, riskDeviceToken, riskServiceVersion)
 
 SignificadoCodigo
 
@@ -753,9 +769,10 @@ public class Example {
         GenApi apiInstance = new GenApi(defaultClient);
         String dominio = "dominio_example"; // String | Dominio
         String codigo = "codigo_example"; // String | Código
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.significadoCodigo(dominio, codigo, riskServiceVersion);
+            DatoRespuesta result = apiInstance.significadoCodigo(dominio, codigo, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#significadoCodigo");
@@ -775,7 +792,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dominio** | **String**| Dominio |
  **codigo** | **String**| Código |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -804,7 +822,7 @@ Name | Type | Description  | Notes
 
 ## valorParametro
 
-> DatoRespuesta valorParametro(parametro, riskServiceVersion)
+> DatoRespuesta valorParametro(parametro, riskDeviceToken, riskServiceVersion)
 
 ValorParametro
 
@@ -838,9 +856,10 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         String parametro = "parametro_example"; // String | Identificador del parámetro
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.valorParametro(parametro, riskServiceVersion);
+            DatoRespuesta result = apiInstance.valorParametro(parametro, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#valorParametro");
@@ -859,7 +878,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **parametro** | **String**| Identificador del parámetro |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -888,7 +908,7 @@ Name | Type | Description  | Notes
 
 ## versionServicio
 
-> DatoRespuesta versionServicio(servicio, riskServiceVersion)
+> DatoRespuesta versionServicio(servicio, riskDeviceToken, riskServiceVersion)
 
 VersionServicio
 
@@ -918,9 +938,10 @@ public class Example {
 
         GenApi apiInstance = new GenApi(defaultClient);
         String servicio = "servicio_example"; // String | Nombre del servicio
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.versionServicio(servicio, riskServiceVersion);
+            DatoRespuesta result = apiInstance.versionServicio(servicio, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#versionServicio");
@@ -939,7 +960,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **servicio** | **String**| Nombre del servicio |
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -967,7 +989,7 @@ Name | Type | Description  | Notes
 
 ## versionSistema
 
-> DatoRespuesta versionSistema(riskServiceVersion)
+> DatoRespuesta versionSistema(riskDeviceToken, riskServiceVersion)
 
 VersionSistema
 
@@ -989,9 +1011,10 @@ public class Example {
         defaultClient.setBasePath("https://localhost:5001");
 
         GenApi apiInstance = new GenApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.versionSistema(riskServiceVersion);
+            DatoRespuesta result = apiInstance.versionSistema(riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling GenApi#versionSistema");
@@ -1009,7 +1032,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 

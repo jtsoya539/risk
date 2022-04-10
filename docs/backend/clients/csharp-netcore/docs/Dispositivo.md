@@ -14,6 +14,9 @@ Name | Type | Description | Notes
 **TokenNotificacion** | **string** |  | [optional] 
 **PlataformaNotificacion** | **string** |  | [optional] 
 **VersionAplicacion** | **string** |  | [optional] 
+**IdPaisIso2** | **string** |  | [optional] 
+**ZonaHoraria** | **string** |  | [optional] 
+**IdiomaIso** | **string** |  | [optional] 
 **Plantillas** | [**List&lt;Plantilla&gt;**](Plantilla.md) |  | [optional] 
 **Suscripciones** | [**List&lt;Dato&gt;**](Dato.md) |  | [optional] 
 

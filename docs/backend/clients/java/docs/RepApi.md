@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## reporteListarSignificados
 
-> File reporteListarSignificados(formato, dominio, riskServiceVersion)
+> File reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion)
 
 ReporteListarSignificados
 
@@ -46,9 +46,10 @@ public class Example {
         RepApi apiInstance = new RepApi(defaultClient);
         FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
         String dominio = "dominio_example"; // String | Dominio
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            File result = apiInstance.reporteListarSignificados(formato, dominio, riskServiceVersion);
+            File result = apiInstance.reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling RepApi#reporteListarSignificados");
@@ -68,7 +69,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
  **dominio** | **String**| Dominio | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -97,7 +99,7 @@ Name | Type | Description  | Notes
 
 ## reporteVersionSistema
 
-> File reporteVersionSistema(formato, riskServiceVersion)
+> File reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion)
 
 ReporteVersionSistema
 
@@ -131,9 +133,10 @@ public class Example {
 
         RepApi apiInstance = new RepApi(defaultClient);
         FormatoReporte formato = FormatoReporte.fromValue("Pdf"); // FormatoReporte | Formato del reporte
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            File result = apiInstance.reporteVersionSistema(formato, riskServiceVersion);
+            File result = apiInstance.reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling RepApi#reporteVersionSistema");
@@ -152,7 +155,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 

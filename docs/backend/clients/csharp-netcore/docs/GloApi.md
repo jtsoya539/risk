@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="listarbarrios"></a>
 # **ListarBarrios**
-> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarBarrios
 
@@ -46,12 +46,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarBarrios
-                BarrioPaginaRespuesta result = apiInstance.ListarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion);
+                BarrioPaginaRespuesta result = apiInstance.ListarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -75,7 +76,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -104,7 +106,7 @@ Name | Type | Description  | Notes
 
 <a name="listarciudades"></a>
 # **ListarCiudades**
-> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarCiudades
 
@@ -137,12 +139,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarCiudades
-                CiudadPaginaRespuesta result = apiInstance.ListarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion);
+                CiudadPaginaRespuesta result = apiInstance.ListarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -165,7 +168,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -194,7 +198,7 @@ Name | Type | Description  | Notes
 
 <a name="listardepartamentos"></a>
 # **ListarDepartamentos**
-> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarDepartamentos
 
@@ -226,12 +230,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarDepartamentos
-                DepartamentoPaginaRespuesta result = apiInstance.ListarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion);
+                DepartamentoPaginaRespuesta result = apiInstance.ListarDepartamentos(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -253,7 +258,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -282,7 +288,7 @@ Name | Type | Description  | Notes
 
 <a name="listarpaises"></a>
 # **ListarPaises**
-> PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarPaises
 
@@ -313,12 +319,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarPaises
-                PaisPaginaRespuesta result = apiInstance.ListarPaises(pagina, porPagina, noPaginar, riskServiceVersion);
+                PaisPaginaRespuesta result = apiInstance.ListarPaises(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -339,7 +346,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 

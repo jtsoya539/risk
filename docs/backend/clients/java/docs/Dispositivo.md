@@ -17,6 +17,9 @@ Name | Type | Description | Notes
 **tokenNotificacion** | **String** |  |  [optional]
 **plataformaNotificacion** | **String** |  |  [optional]
 **versionAplicacion** | **String** |  |  [optional]
+**idPaisIso2** | **String** |  |  [optional]
+**zonaHoraria** | **String** |  |  [optional]
+**idiomaIso** | **String** |  |  [optional]
 **plantillas** | [**List&lt;Plantilla&gt;**](Plantilla.md) |  |  [optional]
 **suscripciones** | [**List&lt;Dato&gt;**](Dato.md) |  |  [optional]
 

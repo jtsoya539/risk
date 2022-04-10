@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 <a name="guardararchivo"></a>
 # **GuardarArchivo**
-> DatoRespuesta GuardarArchivo (string tabla, string campo, string referencia, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
+> DatoRespuesta GuardarArchivo (string tabla, string campo, string referencia, string riskDeviceToken = null, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
 GuardarArchivo
 
@@ -53,7 +53,8 @@ namespace Example
             var tabla = tabla_example;  // string | Tabla
             var campo = campo_example;  // string | Campo
             var referencia = referencia_example;  // string | Referencia
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var archivo = BINARY_DATA_HERE;  // System.IO.Stream | Contenido del archivo (optional) 
             var url = url_example;  // string | URL del archivo (optional) 
             var nombre = nombre_example;  // string | Nombre del archivo (optional) 
@@ -62,7 +63,7 @@ namespace Example
             try
             {
                 // GuardarArchivo
-                DatoRespuesta result = apiInstance.GuardarArchivo(tabla, campo, referencia, riskServiceVersion, archivo, url, nombre, extension);
+                DatoRespuesta result = apiInstance.GuardarArchivo(tabla, campo, referencia, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -83,7 +84,8 @@ Name | Type | Description  | Notes
  **tabla** | **string**| Tabla | 
  **campo** | **string**| Campo | 
  **referencia** | **string**| Referencia | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **archivo** | **System.IO.Stream****System.IO.Stream**| Contenido del archivo | [optional] 
  **url** | **string**| URL del archivo | [optional] 
  **nombre** | **string**| Nombre del archivo | [optional] 
@@ -117,7 +119,7 @@ Name | Type | Description  | Notes
 
 <a name="listaraplicaciones"></a>
 # **ListarAplicaciones**
-> AplicacionPaginaRespuesta ListarAplicaciones (string idAplicacion = null, string claveAplicacion = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> AplicacionPaginaRespuesta ListarAplicaciones (string idAplicacion = null, string claveAplicacion = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarAplicaciones
 
@@ -150,12 +152,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarAplicaciones
-                AplicacionPaginaRespuesta result = apiInstance.ListarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskServiceVersion);
+                AplicacionPaginaRespuesta result = apiInstance.ListarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -178,7 +181,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -207,7 +211,7 @@ Name | Type | Description  | Notes
 
 <a name="listarerrores"></a>
 # **ListarErrores**
-> ErrorPaginaRespuesta ListarErrores (string idError = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> ErrorPaginaRespuesta ListarErrores (string idError = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarErrores
 
@@ -239,12 +243,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarErrores
-                ErrorPaginaRespuesta result = apiInstance.ListarErrores(idError, pagina, porPagina, noPaginar, riskServiceVersion);
+                ErrorPaginaRespuesta result = apiInstance.ListarErrores(idError, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -266,7 +271,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -295,7 +301,7 @@ Name | Type | Description  | Notes
 
 <a name="listarsignificados"></a>
 # **ListarSignificados**
-> SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarSignificados
 
@@ -329,12 +335,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarSignificados
-                SignificadoPaginaRespuesta result = apiInstance.ListarSignificados(dominio, pagina, porPagina, noPaginar, riskServiceVersion);
+                SignificadoPaginaRespuesta result = apiInstance.ListarSignificados(dominio, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -356,7 +363,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -386,7 +394,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperararchivo"></a>
 # **RecuperarArchivo**
-> System.IO.Stream RecuperarArchivo (string tabla, string campo, string referencia, int? version = null, string riskServiceVersion = null)
+> System.IO.Stream RecuperarArchivo (string tabla, string campo, string referencia, int? version = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 RecuperarArchivo
 
@@ -420,12 +428,13 @@ namespace Example
             var campo = campo_example;  // string | Campo
             var referencia = referencia_example;  // string | Referencia
             var version = 56;  // int? | Versión (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // RecuperarArchivo
-                System.IO.Stream result = apiInstance.RecuperarArchivo(tabla, campo, referencia, version, riskServiceVersion);
+                System.IO.Stream result = apiInstance.RecuperarArchivo(tabla, campo, referencia, version, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -447,7 +456,8 @@ Name | Type | Description  | Notes
  **campo** | **string**| Campo | 
  **referencia** | **string**| Referencia | 
  **version** | **int?**| Versión | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -477,7 +487,7 @@ Name | Type | Description  | Notes
 
 <a name="recuperartexto"></a>
 # **RecuperarTexto**
-> DatoRespuesta RecuperarTexto (string referencia, string riskServiceVersion = null)
+> DatoRespuesta RecuperarTexto (string referencia, string riskDeviceToken = null, string riskServiceVersion = null)
 
 RecuperarTexto
 
@@ -506,12 +516,13 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var referencia = referencia_example;  // string | Referencia del texto
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // RecuperarTexto
-                DatoRespuesta result = apiInstance.RecuperarTexto(referencia, riskServiceVersion);
+                DatoRespuesta result = apiInstance.RecuperarTexto(referencia, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -530,7 +541,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **referencia** | **string**| Referencia del texto | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -559,7 +571,7 @@ Name | Type | Description  | Notes
 
 <a name="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
-> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskServiceVersion = null)
+> System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ReporteListarSignificados
 
@@ -591,12 +603,13 @@ namespace Example
             var apiInstance = new GenApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
             var dominio = dominio_example;  // string | Dominio (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ReporteListarSignificados
-                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio, riskServiceVersion);
+                System.IO.Stream result = apiInstance.ReporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -616,7 +629,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
  **dominio** | **string**| Dominio | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -646,7 +660,7 @@ Name | Type | Description  | Notes
 
 <a name="reporteversionsistema"></a>
 # **ReporteVersionSistema**
-> System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskServiceVersion = null)
+> System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ReporteVersionSistema
 
@@ -677,12 +691,13 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var formato = ;  // FormatoReporte | Formato del reporte
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ReporteVersionSistema
-                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato, riskServiceVersion);
+                System.IO.Stream result = apiInstance.ReporteVersionSistema(formato, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -701,7 +716,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **formato** | **FormatoReporte**| Formato del reporte | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -731,7 +747,7 @@ Name | Type | Description  | Notes
 
 <a name="significadocodigo"></a>
 # **SignificadoCodigo**
-> DatoRespuesta SignificadoCodigo (string dominio, string codigo, string riskServiceVersion = null)
+> DatoRespuesta SignificadoCodigo (string dominio, string codigo, string riskDeviceToken = null, string riskServiceVersion = null)
 
 SignificadoCodigo
 
@@ -763,12 +779,13 @@ namespace Example
             var apiInstance = new GenApi(config);
             var dominio = dominio_example;  // string | Dominio
             var codigo = codigo_example;  // string | Código
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // SignificadoCodigo
-                DatoRespuesta result = apiInstance.SignificadoCodigo(dominio, codigo, riskServiceVersion);
+                DatoRespuesta result = apiInstance.SignificadoCodigo(dominio, codigo, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -788,7 +805,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **dominio** | **string**| Dominio | 
  **codigo** | **string**| Código | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -818,7 +836,7 @@ Name | Type | Description  | Notes
 
 <a name="valorparametro"></a>
 # **ValorParametro**
-> DatoRespuesta ValorParametro (string parametro, string riskServiceVersion = null)
+> DatoRespuesta ValorParametro (string parametro, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ValorParametro
 
@@ -849,12 +867,13 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var parametro = parametro_example;  // string | Identificador del parámetro
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ValorParametro
-                DatoRespuesta result = apiInstance.ValorParametro(parametro, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ValorParametro(parametro, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -873,7 +892,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **parametro** | **string**| Identificador del parámetro | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -903,7 +923,7 @@ Name | Type | Description  | Notes
 
 <a name="versionservicio"></a>
 # **VersionServicio**
-> DatoRespuesta VersionServicio (string servicio, string riskServiceVersion = null)
+> DatoRespuesta VersionServicio (string servicio, string riskDeviceToken = null, string riskServiceVersion = null)
 
 VersionServicio
 
@@ -932,12 +952,13 @@ namespace Example
 
             var apiInstance = new GenApi(config);
             var servicio = servicio_example;  // string | Nombre del servicio
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // VersionServicio
-                DatoRespuesta result = apiInstance.VersionServicio(servicio, riskServiceVersion);
+                DatoRespuesta result = apiInstance.VersionServicio(servicio, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -956,7 +977,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **servicio** | **string**| Nombre del servicio | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -985,7 +1007,7 @@ Name | Type | Description  | Notes
 
 <a name="versionsistema"></a>
 # **VersionSistema**
-> DatoRespuesta VersionSistema (string riskServiceVersion = null)
+> DatoRespuesta VersionSistema (string riskDeviceToken = null, string riskServiceVersion = null)
 
 VersionSistema
 
@@ -1008,12 +1030,13 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://localhost:5001";
             var apiInstance = new GenApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // VersionSistema
-                DatoRespuesta result = apiInstance.VersionSistema(riskServiceVersion);
+                DatoRespuesta result = apiInstance.VersionSistema(riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1031,7 +1054,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 

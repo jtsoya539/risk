@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 <a name="activarMensajeria"></a>
 # **activarMensajeria**
-> DatoRespuesta activarMensajeria(tipoMensajeria, riskServiceVersion)
+> DatoRespuesta activarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
 
 ActivarMensajeria
 
@@ -28,9 +28,10 @@ Permite activar el servicio de mensajería
 
 val apiInstance = MsjApi()
 val tipoMensajeria : TipoMensajeria =  // TipoMensajeria | Tipo de mensajería a activar
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : DatoRespuesta = apiInstance.activarMensajeria(tipoMensajeria, riskServiceVersion)
+    val result : DatoRespuesta = apiInstance.activarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MsjApi#activarMensajeria")
@@ -46,7 +47,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a activar | [enum: Mail, SMS, Push]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -68,7 +70,7 @@ Configure RiskAppKey:
 
 <a name="cambiarEstadoMensajeria"></a>
 # **cambiarEstadoMensajeria**
-> DatoRespuesta cambiarEstadoMensajeria(riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
+> DatoRespuesta cambiarEstadoMensajeria(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
 
 CambiarEstadoMensajeria
 
@@ -81,10 +83,11 @@ Permite cambiar el estado de envío de un mensaje de texto (SMS), correo electr�
 //import py.com.risk.client.models.*
 
 val apiInstance = MsjApi()
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 val cambiarEstadoMensajeriaRequestBody : CambiarEstadoMensajeriaRequestBody =  // CambiarEstadoMensajeriaRequestBody | 
 try {
-    val result : DatoRespuesta = apiInstance.cambiarEstadoMensajeria(riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
+    val result : DatoRespuesta = apiInstance.cambiarEstadoMensajeria(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MsjApi#cambiarEstadoMensajeria")
@@ -99,7 +102,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
  **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional]
 
 ### Return type
@@ -122,7 +126,7 @@ Configure RiskAppKey:
 
 <a name="desactivarMensajeria"></a>
 # **desactivarMensajeria**
-> DatoRespuesta desactivarMensajeria(tipoMensajeria, riskServiceVersion)
+> DatoRespuesta desactivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
 
 DesactivarMensajeria
 
@@ -136,9 +140,10 @@ Permite desactivar el servicio de mensajería
 
 val apiInstance = MsjApi()
 val tipoMensajeria : TipoMensajeria =  // TipoMensajeria | Tipo de mensajería a desactivar
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : DatoRespuesta = apiInstance.desactivarMensajeria(tipoMensajeria, riskServiceVersion)
+    val result : DatoRespuesta = apiInstance.desactivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MsjApi#desactivarMensajeria")
@@ -154,7 +159,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a desactivar | [enum: Mail, SMS, Push]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -176,7 +182,7 @@ Configure RiskAppKey:
 
 <a name="listarCorreosPendientes"></a>
 # **listarCorreosPendientes**
-> CorreoPaginaRespuesta listarCorreosPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+> CorreoPaginaRespuesta listarCorreosPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarCorreosPendientes
 
@@ -192,9 +198,10 @@ val apiInstance = MsjApi()
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : CorreoPaginaRespuesta = apiInstance.listarCorreosPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : CorreoPaginaRespuesta = apiInstance.listarCorreosPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MsjApi#listarCorreosPendientes")
@@ -212,7 +219,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -234,7 +242,7 @@ Configure RiskAppKey:
 
 <a name="listarMensajesPendientes"></a>
 # **listarMensajesPendientes**
-> MensajePaginaRespuesta listarMensajesPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+> MensajePaginaRespuesta listarMensajesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarMensajesPendientes
 
@@ -250,9 +258,10 @@ val apiInstance = MsjApi()
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : MensajePaginaRespuesta = apiInstance.listarMensajesPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : MensajePaginaRespuesta = apiInstance.listarMensajesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MsjApi#listarMensajesPendientes")
@@ -270,7 +279,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -292,7 +302,7 @@ Configure RiskAppKey:
 
 <a name="listarNotificacionesPendientes"></a>
 # **listarNotificacionesPendientes**
-> NotificacionPaginaRespuesta listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+> NotificacionPaginaRespuesta listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarNotificacionesPendientes
 
@@ -308,9 +318,10 @@ val apiInstance = MsjApi()
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : NotificacionPaginaRespuesta = apiInstance.listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : NotificacionPaginaRespuesta = apiInstance.listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling MsjApi#listarNotificacionesPendientes")
@@ -328,7 +339,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 

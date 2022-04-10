@@ -76,12 +76,13 @@ namespace Example
             config.BasePath = "https://localhost:5001";
             var apiInstance = new AutApi(config);
             var key = key_example;  // string | Clave para la activación
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ActivarUsuario
-                DatoRespuesta result = apiInstance.ActivarUsuario(key, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ActivarUsuario(key, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)

@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 ## activarMensajeria
 
-> DatoRespuesta activarMensajeria(tipoMensajeria, riskServiceVersion)
+> DatoRespuesta activarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
 
 ActivarMensajeria
 
@@ -49,9 +49,10 @@ public class Example {
 
         MsjApi apiInstance = new MsjApi(defaultClient);
         TipoMensajeria tipoMensajeria = TipoMensajeria.fromValue("Mail"); // TipoMensajeria | Tipo de mensajería a activar
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.activarMensajeria(tipoMensajeria, riskServiceVersion);
+            DatoRespuesta result = apiInstance.activarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MsjApi#activarMensajeria");
@@ -70,7 +71,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a activar | [enum: Mail, SMS, Push]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -99,7 +101,7 @@ Name | Type | Description  | Notes
 
 ## cambiarEstadoMensajeria
 
-> DatoRespuesta cambiarEstadoMensajeria(riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
+> DatoRespuesta cambiarEstadoMensajeria(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
 
 CambiarEstadoMensajeria
 
@@ -132,10 +134,11 @@ public class Example {
         //RiskAppKey.setApiKeyPrefix("Token");
 
         MsjApi apiInstance = new MsjApi(defaultClient);
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         CambiarEstadoMensajeriaRequestBody cambiarEstadoMensajeriaRequestBody = new CambiarEstadoMensajeriaRequestBody(); // CambiarEstadoMensajeriaRequestBody | 
         try {
-            DatoRespuesta result = apiInstance.cambiarEstadoMensajeria(riskServiceVersion, cambiarEstadoMensajeriaRequestBody);
+            DatoRespuesta result = apiInstance.cambiarEstadoMensajeria(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MsjApi#cambiarEstadoMensajeria");
@@ -153,7 +156,8 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
  **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional]
 
 ### Return type
@@ -183,7 +187,7 @@ Name | Type | Description  | Notes
 
 ## desactivarMensajeria
 
-> DatoRespuesta desactivarMensajeria(tipoMensajeria, riskServiceVersion)
+> DatoRespuesta desactivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
 
 DesactivarMensajeria
 
@@ -217,9 +221,10 @@ public class Example {
 
         MsjApi apiInstance = new MsjApi(defaultClient);
         TipoMensajeria tipoMensajeria = TipoMensajeria.fromValue("Mail"); // TipoMensajeria | Tipo de mensajería a desactivar
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.desactivarMensajeria(tipoMensajeria, riskServiceVersion);
+            DatoRespuesta result = apiInstance.desactivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MsjApi#desactivarMensajeria");
@@ -238,7 +243,8 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a desactivar | [enum: Mail, SMS, Push]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -267,7 +273,7 @@ Name | Type | Description  | Notes
 
 ## listarCorreosPendientes
 
-> CorreoPaginaRespuesta listarCorreosPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+> CorreoPaginaRespuesta listarCorreosPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarCorreosPendientes
 
@@ -303,9 +309,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            CorreoPaginaRespuesta result = apiInstance.listarCorreosPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
+            CorreoPaginaRespuesta result = apiInstance.listarCorreosPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MsjApi#listarCorreosPendientes");
@@ -326,7 +333,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -355,7 +363,7 @@ Name | Type | Description  | Notes
 
 ## listarMensajesPendientes
 
-> MensajePaginaRespuesta listarMensajesPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+> MensajePaginaRespuesta listarMensajesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarMensajesPendientes
 
@@ -391,9 +399,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            MensajePaginaRespuesta result = apiInstance.listarMensajesPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
+            MensajePaginaRespuesta result = apiInstance.listarMensajesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MsjApi#listarMensajesPendientes");
@@ -414,7 +423,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -443,7 +453,7 @@ Name | Type | Description  | Notes
 
 ## listarNotificacionesPendientes
 
-> NotificacionPaginaRespuesta listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskServiceVersion)
+> NotificacionPaginaRespuesta listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarNotificacionesPendientes
 
@@ -479,9 +489,10 @@ public class Example {
         Integer pagina = 56; // Integer | Número de la página
         Integer porPagina = 56; // Integer | Cantidad de elementos por página
         Boolean noPaginar = true; // Boolean | No paginar?
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            NotificacionPaginaRespuesta result = apiInstance.listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
+            NotificacionPaginaRespuesta result = apiInstance.listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling MsjApi#listarNotificacionesPendientes");
@@ -502,7 +513,8 @@ Name | Type | Description  | Notes
  **pagina** | **Integer**| Número de la página | [optional]
  **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
  **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **String**| Versión del servicio | [optional]
 
 ### Return type
 

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="listarBarrios"></a>
 # **listarBarrios**
-> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion)
+> BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarBarrios
 
@@ -31,9 +31,10 @@ val idCiudad : kotlin.Int = 56 // kotlin.Int | Identificador de la ciudad
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : BarrioPaginaRespuesta = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : BarrioPaginaRespuesta = apiInstance.listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GloApi#listarBarrios")
@@ -54,7 +55,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -74,7 +76,7 @@ Configure RiskAppKey:
 
 <a name="listarCiudades"></a>
 # **listarCiudades**
-> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion)
+> CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarCiudades
 
@@ -92,9 +94,10 @@ val idDepartamento : kotlin.Int = 56 // kotlin.Int | Identificador del departame
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : CiudadPaginaRespuesta = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : CiudadPaginaRespuesta = apiInstance.listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GloApi#listarCiudades")
@@ -114,7 +117,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -134,7 +138,7 @@ Configure RiskAppKey:
 
 <a name="listarDepartamentos"></a>
 # **listarDepartamentos**
-> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion)
+> DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarDepartamentos
 
@@ -151,9 +155,10 @@ val idPais : kotlin.Int = 56 // kotlin.Int | Identificador del país
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : DepartamentoPaginaRespuesta = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : DepartamentoPaginaRespuesta = apiInstance.listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GloApi#listarDepartamentos")
@@ -172,7 +177,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 
@@ -192,7 +198,7 @@ Configure RiskAppKey:
 
 <a name="listarPaises"></a>
 # **listarPaises**
-> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskServiceVersion)
+> PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
 ListarPaises
 
@@ -208,9 +214,10 @@ val apiInstance = GloApi()
 val pagina : kotlin.Int = 56 // kotlin.Int | Número de la página
 val porPagina : kotlin.Int = 56 // kotlin.Int | Cantidad de elementos por página
 val noPaginar : kotlin.Boolean = true // kotlin.Boolean | No paginar?
-val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del Servicio
+val riskDeviceToken : kotlin.String = riskDeviceToken_example // kotlin.String | Token del dispositivo desde el cual se realiza la petición
+val riskServiceVersion : kotlin.String = riskServiceVersion_example // kotlin.String | Versión del servicio
 try {
-    val result : PaisPaginaRespuesta = apiInstance.listarPaises(pagina, porPagina, noPaginar, riskServiceVersion)
+    val result : PaisPaginaRespuesta = apiInstance.listarPaises(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
     println(result)
 } catch (e: ClientException) {
     println("4xx response calling GloApi#listarPaises")
@@ -228,7 +235,8 @@ Name | Type | Description  | Notes
  **pagina** | **kotlin.Int**| Número de la página | [optional]
  **porPagina** | **kotlin.Int**| Cantidad de elementos por página | [optional]
  **noPaginar** | **kotlin.Boolean**| No paginar? | [optional]
- **riskServiceVersion** | **kotlin.String**| Versión del Servicio | [optional]
+ **riskDeviceToken** | **kotlin.String**| Token del dispositivo desde el cual se realiza la petición | [optional]
+ **riskServiceVersion** | **kotlin.String**| Versión del servicio | [optional]
 
 ### Return type
 

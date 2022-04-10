@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2022-01-16T20:22:41.707-03:00[America/Asuncion]
+- Build date: 2022-04-09T23:48:47.392-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -88,9 +88,10 @@ public class AutApiExample {
         
         AutApi apiInstance = new AutApi(defaultClient);
         String key = "key_example"; // String | Clave para la activación
-        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del Servicio
+        String riskDeviceToken = "riskDeviceToken_example"; // String | Token del dispositivo desde el cual se realiza la petición
+        String riskServiceVersion = "riskServiceVersion_example"; // String | Versión del servicio
         try {
-            DatoRespuesta result = apiInstance.activarUsuario(key, riskServiceVersion);
+            DatoRespuesta result = apiInstance.activarUsuario(key, riskDeviceToken, riskServiceVersion);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AutApi#activarUsuario");

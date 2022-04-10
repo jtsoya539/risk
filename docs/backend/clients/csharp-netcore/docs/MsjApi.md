@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 <a name="activarmensajeria"></a>
 # **ActivarMensajeria**
-> DatoRespuesta ActivarMensajeria (TipoMensajeria tipoMensajeria, string riskServiceVersion = null)
+> DatoRespuesta ActivarMensajeria (TipoMensajeria tipoMensajeria, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ActivarMensajeria
 
@@ -45,12 +45,13 @@ namespace Example
 
             var apiInstance = new MsjApi(config);
             var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería a activar
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ActivarMensajeria
-                DatoRespuesta result = apiInstance.ActivarMensajeria(tipoMensajeria, riskServiceVersion);
+                DatoRespuesta result = apiInstance.ActivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -69,7 +70,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería a activar | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -99,7 +101,7 @@ Name | Type | Description  | Notes
 
 <a name="cambiarestadomensajeria"></a>
 # **CambiarEstadoMensajeria**
-> DatoRespuesta CambiarEstadoMensajeria (string riskServiceVersion = null, CambiarEstadoMensajeriaRequestBody cambiarEstadoMensajeriaRequestBody = null)
+> DatoRespuesta CambiarEstadoMensajeria (string riskDeviceToken = null, string riskServiceVersion = null, CambiarEstadoMensajeriaRequestBody cambiarEstadoMensajeriaRequestBody = null)
 
 CambiarEstadoMensajeria
 
@@ -129,13 +131,14 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new MsjApi(config);
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
             var cambiarEstadoMensajeriaRequestBody = new CambiarEstadoMensajeriaRequestBody(); // CambiarEstadoMensajeriaRequestBody |  (optional) 
 
             try
             {
                 // CambiarEstadoMensajeria
-                DatoRespuesta result = apiInstance.CambiarEstadoMensajeria(riskServiceVersion, cambiarEstadoMensajeriaRequestBody);
+                DatoRespuesta result = apiInstance.CambiarEstadoMensajeria(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -153,7 +156,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
  **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional] 
 
 ### Return type
@@ -184,7 +188,7 @@ Name | Type | Description  | Notes
 
 <a name="desactivarmensajeria"></a>
 # **DesactivarMensajeria**
-> DatoRespuesta DesactivarMensajeria (TipoMensajeria tipoMensajeria, string riskServiceVersion = null)
+> DatoRespuesta DesactivarMensajeria (TipoMensajeria tipoMensajeria, string riskDeviceToken = null, string riskServiceVersion = null)
 
 DesactivarMensajeria
 
@@ -215,12 +219,13 @@ namespace Example
 
             var apiInstance = new MsjApi(config);
             var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería a desactivar
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // DesactivarMensajeria
-                DatoRespuesta result = apiInstance.DesactivarMensajeria(tipoMensajeria, riskServiceVersion);
+                DatoRespuesta result = apiInstance.DesactivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -239,7 +244,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería a desactivar | 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -269,7 +275,7 @@ Name | Type | Description  | Notes
 
 <a name="listarcorreospendientes"></a>
 # **ListarCorreosPendientes**
-> CorreoPaginaRespuesta ListarCorreosPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> CorreoPaginaRespuesta ListarCorreosPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarCorreosPendientes
 
@@ -302,12 +308,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarCorreosPendientes
-                CorreoPaginaRespuesta result = apiInstance.ListarCorreosPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
+                CorreoPaginaRespuesta result = apiInstance.ListarCorreosPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -328,7 +335,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -358,7 +366,7 @@ Name | Type | Description  | Notes
 
 <a name="listarmensajespendientes"></a>
 # **ListarMensajesPendientes**
-> MensajePaginaRespuesta ListarMensajesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> MensajePaginaRespuesta ListarMensajesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarMensajesPendientes
 
@@ -391,12 +399,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarMensajesPendientes
-                MensajePaginaRespuesta result = apiInstance.ListarMensajesPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
+                MensajePaginaRespuesta result = apiInstance.ListarMensajesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -417,7 +426,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
@@ -447,7 +457,7 @@ Name | Type | Description  | Notes
 
 <a name="listarnotificacionespendientes"></a>
 # **ListarNotificacionesPendientes**
-> NotificacionPaginaRespuesta ListarNotificacionesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskServiceVersion = null)
+> NotificacionPaginaRespuesta ListarNotificacionesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
 ListarNotificacionesPendientes
 
@@ -480,12 +490,13 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del Servicio (optional) 
+            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
 
             try
             {
                 // ListarNotificacionesPendientes
-                NotificacionPaginaRespuesta result = apiInstance.ListarNotificacionesPendientes(pagina, porPagina, noPaginar, riskServiceVersion);
+                NotificacionPaginaRespuesta result = apiInstance.ListarNotificacionesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -506,7 +517,8 @@ Name | Type | Description  | Notes
  **pagina** | **int?**| Número de la página | [optional] 
  **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
  **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskServiceVersion** | **string**| Versión del Servicio | [optional] 
+ **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
+ **riskServiceVersion** | **string**| Versión del servicio | [optional] 
 
 ### Return type
 
