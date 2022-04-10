@@ -106,7 +106,7 @@ namespace Risk.Forms
                 deviceToken = string.Empty;
             }
 
-            DatoRespuesta datoRespuesta = autApi.RegistrarDispositivo(null, new RegistrarDispositivoRequestBody
+            DatoRespuesta datoRespuesta = autApi.RegistrarDispositivo(null, null, new RegistrarDispositivoRequestBody
             {
                 Dispositivo = new Dispositivo
                 {
@@ -213,7 +213,7 @@ namespace Risk.Forms
                         SesionRespuesta respuestaRefrescarSesion = null;
                         try
                         {
-                            respuestaRefrescarSesion = await autApi.RefrescarSesionAsync(null, new RefrescarSesionRequestBody
+                            respuestaRefrescarSesion = await autApi.RefrescarSesionAsync(null, null, new RefrescarSesionRequestBody
                             {
                                 AccessToken = accessToken,
                                 RefreshToken = refreshToken

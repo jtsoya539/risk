@@ -45,7 +45,7 @@ namespace Risk.Forms.ViewModels
             DatoRespuesta respuestaFinalizarSesion = null;
             try
             {
-                respuestaFinalizarSesion = await _autApi.FinalizarSesionAsync(null, new FinalizarSesionRequestBody { AccessToken = accessToken });
+                respuestaFinalizarSesion = await _autApi.FinalizarSesionAsync(null, null, new FinalizarSesionRequestBody { AccessToken = accessToken });
 
                 if (respuestaFinalizarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
                 {
