@@ -1,6 +1,7 @@
 prompt Importing table t_parametros...
 set feedback off
 set define off
+
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('METODO_VALIDACION_CREDENCIALES', 'Método de validación de credenciales', 'RISK', 'AUT');
 
@@ -56,13 +57,13 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('TIEMPO_TOLERANCIA_VALIDAR_OTP', 'Tiempo de tolerancia para validación de OTP en segundos', '120', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
-values ('ZONA_HORARIA', 'Zona horaria  del entorno de Producción', '-4:0', null);
+values ('ZONA_HORARIA', 'Zona horaria del entorno de Producción', '-4:0', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
-values ('ID_IDIOMA_ISO', 'Código del Idioma por defecto segun estandar ISO 639-1', 'es', null);
+values ('ID_IDIOMA_ISO', 'Código del Idioma por defecto según estándar ISO 639-1', 'es', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
-values ('ID_PAIS_ISO', 'Código del País por defecto segun estandar ISO 3166-1 alpha-2', 'PY', null);
+values ('ID_PAIS_ISO', 'Código del País por defecto según estándar ISO 3166-1 alpha-2', 'PY', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('AUTENTICACION_CANTIDAD_INTENTOS_PERMITIDOS', 'Cantidad de intentos permitidos de autenticación antes del bloqueo de clave', '3', 'AUT');
