@@ -45,6 +45,7 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   c_id_pais          CONSTANT VARCHAR2(50) := 'ID_PAIS';
   c_zona_horaria     CONSTANT VARCHAR2(50) := 'ZONA_HORARIA';
   c_id_idioma        CONSTANT VARCHAR2(50) := 'ID_IDIOMA';
+  c_id_dispositivo   CONSTANT VARCHAR2(50) := 'ID_DISPOSITIVO';
 
   /**
   Indica si el ambiente de Base de Datos es de producción

@@ -907,7 +907,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     END;
   
     -- Busca dispositivo
-    l_id_dispositivo := k_dispositivo.f_id_dispositivo(i_token_dispositivo);
+    l_id_dispositivo := coalesce(k_sistema.f_valor_parametro_number(k_sistema.c_id_dispositivo),
+                                 k_dispositivo.f_id_dispositivo(i_token_dispositivo));
   
     -- Obtiene tipo de aplicacion
     BEGIN

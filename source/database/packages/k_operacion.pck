@@ -323,6 +323,9 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       l_id_dispositivo := k_sesion.f_dispositivo_sesion(l_id_sesion);
     END IF;
   
+    k_sistema.p_definir_parametro_number(k_sistema.c_id_dispositivo,
+                                         l_id_dispositivo);
+  
     IF l_id_dispositivo IS NOT NULL THEN
       l_dispositivo := k_dispositivo.f_datos_dispositivo(l_id_dispositivo);
     
