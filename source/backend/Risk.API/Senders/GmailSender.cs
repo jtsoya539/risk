@@ -154,7 +154,7 @@ namespace Risk.API.Senders
                 foreach (var adjunto in msj.Adjuntos)
                 {
                     string contentType = adjunto.TipoMime;
-                    if (contentType == null)
+                    if (string.IsNullOrEmpty(contentType))
                     {
                         contentType = "application/octet-stream";
                     }

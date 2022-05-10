@@ -170,7 +170,7 @@ namespace Risk.API.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Dato>))]
         public IActionResult RegistrarDispositivo([FromBody] RegistrarDispositivoRequestBody requestBody)
         {
-            if (requestBody.Dispositivo.TokenDispositivo == null || requestBody.Dispositivo.TokenDispositivo.Equals(string.Empty))
+            if (string.IsNullOrEmpty(requestBody.Dispositivo.TokenDispositivo))
             {
                 requestBody.Dispositivo.TokenDispositivo = TokenHelper.GenerarTokenDispositivo();
             }

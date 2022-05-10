@@ -47,7 +47,7 @@ namespace Risk.API.Helpers
 
             Dispositivo dispositivo = respDatosDispositivo.Datos;
 
-            if (dispositivo.TokenNotificacion == null || dispositivo.TokenNotificacion.Equals(string.Empty))
+            if (string.IsNullOrEmpty(dispositivo.TokenNotificacion))
             {
                 return;
             }
