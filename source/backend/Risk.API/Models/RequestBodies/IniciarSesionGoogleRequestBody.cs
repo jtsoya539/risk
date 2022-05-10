@@ -30,7 +30,5 @@ namespace Risk.API.Models
     {
         [SwaggerSchema("Token de la sesión en Google")]
         public string IdToken { get; set; }
-        [SwaggerSchema("Token del dispositivo")]
-        public string TokenDispositivo { get; set; }
     }
 }

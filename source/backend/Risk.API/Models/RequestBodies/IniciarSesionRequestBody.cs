@@ -28,6 +28,5 @@ namespace Risk.API.Models
     {
         public string Usuario { get; set; }
         public string Clave { get; set; }
-        public string TokenDispositivo { get; set; }
     }
 }

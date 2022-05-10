@@ -86,12 +86,7 @@ namespace Risk.API.Controllers
             var accessToken = TokenHelper.GenerarAccessToken(requestBody.Usuario, _autService, _genService);
             var refreshToken = TokenHelper.GenerarRefreshToken();
 
-            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken, requestBody.TokenDispositivo);
-
-            if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
-            }
+            var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken, null);
 
             return ProcesarRespuesta(respIniciarSesion);
         }
@@ -411,12 +406,7 @@ namespace Risk.API.Controllers
 
             var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _genService);
 
-            var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.IdToken);
-
-            if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
-            }
+            var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, null, usuario.Origen, requestBody.IdToken);
 
             return ProcesarRespuesta(respIniciarSesion);
         }
@@ -460,12 +450,7 @@ namespace Risk.API.Controllers
 
             var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _genService);
 
-            var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, requestBody.TokenDispositivo, usuario.Origen, requestBody.FbToken);
-
-            if (respIniciarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                NotificationHubHelper.RegistrarDispositivo(requestBody.TokenDispositivo, _autService, _notificationHubClientConnection);
-            }
+            var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, null, usuario.Origen, requestBody.FbToken);
 
             return ProcesarRespuesta(respIniciarSesion);
         }

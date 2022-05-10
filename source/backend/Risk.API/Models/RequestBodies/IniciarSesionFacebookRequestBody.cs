@@ -30,7 +30,5 @@ namespace Risk.API.Models
     {
         [SwaggerSchema("Token de acceso en Facebook")]
         public string FbToken { get; set; }
-        [SwaggerSchema("Token del dispositivo")]
-        public string TokenDispositivo { get; set; }
     }
 }
