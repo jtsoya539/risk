@@ -115,9 +115,6 @@ CREATE OR REPLACE PACKAGE k_util IS
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
-  FUNCTION f_existe_codigo(i_dominio IN VARCHAR2,
-                           i_codigo  IN VARCHAR2) RETURN BOOLEAN;
-
   PROCEDURE p_actualizar_valor_parametro(i_id_parametro IN VARCHAR2,
                                          i_valor        IN VARCHAR2);
 
@@ -682,25 +679,6 @@ END;';
         l_valor := NULL;
     END;
     RETURN l_valor;
-  END;
-
-  FUNCTION f_existe_codigo(i_dominio IN VARCHAR2,
-                           i_codigo  IN VARCHAR2) RETURN BOOLEAN IS
-    l_existe VARCHAR2(1);
-  BEGIN
-    BEGIN
-      SELECT 'S'
-        INTO l_existe
-        FROM t_significados a
-       WHERE a.dominio = i_dominio
-         AND a.codigo = i_codigo;
-    EXCEPTION
-      WHEN no_data_found THEN
-        l_existe := 'N';
-      WHEN too_many_rows THEN
-        l_existe := 'S';
-    END;
-    RETURN string_to_bool(l_existe);
   END;
 
   PROCEDURE p_actualizar_valor_parametro(i_id_parametro IN VARCHAR2,
