@@ -99,17 +99,6 @@ CREATE OR REPLACE PACKAGE k_util IS
   FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
     DETERMINISTIC;
 
-  /**
-  Retorna el significado de un codigo dentro de un dominio
-  
-  %author jtsoya539 27/3/2020 17:08:39
-  %param i_dominio Dominio
-  %param i_codigo Codigo
-  %return Significado
-  */
-  FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
-                                i_codigo  IN VARCHAR2) RETURN VARCHAR2;
-
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2;
 
   PROCEDURE p_actualizar_valor_parametro(i_id_parametro IN VARCHAR2,
@@ -627,23 +616,6 @@ END;';
     END LOOP;
     -- Retorna el titulo modificado
     RETURN v_palabra;
-  END;
-
-  FUNCTION f_significado_codigo(i_dominio IN VARCHAR2,
-                                i_codigo  IN VARCHAR2) RETURN VARCHAR2 IS
-    l_significado t_significados.significado%TYPE;
-  BEGIN
-    BEGIN
-      SELECT a.significado
-        INTO l_significado
-        FROM t_significados a
-       WHERE a.dominio = i_dominio
-         AND a.codigo = i_codigo;
-    EXCEPTION
-      WHEN OTHERS THEN
-        l_significado := NULL;
-    END;
-    RETURN l_significado;
   END;
 
   FUNCTION f_valor_parametro(i_id_parametro IN VARCHAR2) RETURN VARCHAR2 IS

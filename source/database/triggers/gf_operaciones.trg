@@ -29,11 +29,11 @@ BEGIN
   -------------------------------------------------------------------------------
   */
 
-  l_id_permiso_old := upper(k_util.f_significado_codigo('TIPO_OPERACION',
-                                                        :old.tipo) || ':' ||
+  l_id_permiso_old := upper(k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                               :old.tipo) || ':' ||
                             :old.dominio || ':' || :old.nombre);
-  l_id_permiso_new := upper(k_util.f_significado_codigo('TIPO_OPERACION',
-                                                        :new.tipo) || ':' ||
+  l_id_permiso_new := upper(k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                               :new.tipo) || ':' ||
                             :new.dominio || ':' || :new.nombre);
 
   IF inserting THEN
@@ -75,4 +75,3 @@ BEGIN
   END IF;
 END;
 /
-

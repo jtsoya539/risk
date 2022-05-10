@@ -411,7 +411,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         INTO l_id_permiso
         FROM t_permisos p, t_operaciones a
        WHERE upper(p.id_permiso) =
-             upper(k_util.f_significado_codigo('TIPO_OPERACION', a.tipo) || ':' ||
+             upper(k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                      a.tipo) || ':' ||
                    a.dominio || ':' || a.nombre)
          AND a.id_operacion = i_id_operacion;
     EXCEPTION
@@ -748,8 +749,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   
     l_nombre_programa := k_significado.f_referencia_codigo('TIPO_IMPLEMENTACION',
                                                            l_tipo_implementacion) || '_' ||
-                         k_util.f_significado_codigo('TIPO_OPERACION',
-                                                     l_tipo_operacion) || '_' ||
+                         k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                            l_tipo_operacion) || '_' ||
                          l_dominio_operacion || CASE l_tipo_implementacion
                            WHEN 'K' THEN
                             '.'
@@ -1092,8 +1093,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     CURSOR c_operaciones(i_id_modulo IN VARCHAR2) IS
       SELECT a.id_operacion,
              lower(f_id_modulo(a.id_operacion)) id_modulo,
-             lower(k_util.f_reemplazar_acentos(k_util.f_significado_codigo('TIPO_OPERACION',
-                                                                           a.tipo) || '/' ||
+             lower(k_util.f_reemplazar_acentos(k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                                                  a.tipo) || '/' ||
                                                nvl(a.dominio, '_') || '/' ||
                                                a.nombre)) || '.sql' nombre_archivo
         FROM t_operaciones a

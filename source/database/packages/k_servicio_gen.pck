@@ -201,10 +201,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
                                     'Debe ingresar codigo');
   
     l_rsp.lugar      := 'Obteniendo significado';
-    l_dato.contenido := k_util.f_significado_codigo(k_operacion.f_valor_parametro_string(i_parametros,
-                                                                                         'dominio'),
-                                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                                         'codigo'));
+    l_dato.contenido := k_significado.f_significado_codigo(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                'dominio'),
+                                                           k_operacion.f_valor_parametro_string(i_parametros,
+                                                                                                'codigo'));
   
     IF l_dato.contenido IS NULL THEN
       k_operacion.p_respuesta_error(l_rsp,

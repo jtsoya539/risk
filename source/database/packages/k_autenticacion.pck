@@ -262,16 +262,18 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_caracter              VARCHAR2(1);
   BEGIN
     l_dominio   := 'POLITICA_VALIDACION_CLAVE_' ||
-                   k_util.f_significado_codigo('TIPO_CLAVE', i_tipo_clave);
+                   k_significado.f_significado_codigo('TIPO_CLAVE',
+                                                      i_tipo_clave);
     l_lon_clave := length(i_clave);
   
     -- Valida la longitud de la clave
     IF l_lon_clave <
-       to_number(k_util.f_significado_codigo(l_dominio, 'LONGITUD_MINIMA')) THEN
+       to_number(k_significado.f_significado_codigo(l_dominio,
+                                                    'LONGITUD_MINIMA')) THEN
       raise_application_error(-20000,
                               'La clave debe contener al menos ' ||
-                              k_util.f_significado_codigo(l_dominio,
-                                                          'LONGITUD_MINIMA') ||
+                              k_significado.f_significado_codigo(l_dominio,
+                                                                 'LONGITUD_MINIMA') ||
                               ' caracteres');
     END IF;
   
@@ -297,12 +299,12 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
         END IF;
       END LOOP;
       IF l_can_repeticiones >
-         to_number(k_util.f_significado_codigo(l_dominio,
-                                               'CAN_MAX_CARACTERES_IGUALES')) THEN
+         to_number(k_significado.f_significado_codigo(l_dominio,
+                                                      'CAN_MAX_CARACTERES_IGUALES')) THEN
         raise_application_error(-20000,
                                 'La clave no puede contener más de ' ||
-                                k_util.f_significado_codigo(l_dominio,
-                                                            'CAN_MAX_CARACTERES_IGUALES') ||
+                                k_significado.f_significado_codigo(l_dominio,
+                                                                   'CAN_MAX_CARACTERES_IGUALES') ||
                                 ' caracteres iguales');
       END IF;
     END LOOP;
@@ -310,15 +312,15 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     l_can_letras := l_can_letras_min + l_can_letras_may;
   
     -- Valida que la clave no sea igual al usuario
-    IF k_util.string_to_bool(k_util.f_significado_codigo(l_dominio,
-                                                         'VAL_ALIAS_IGUAL')) AND
+    IF k_util.string_to_bool(k_significado.f_significado_codigo(l_dominio,
+                                                                'VAL_ALIAS_IGUAL')) AND
        i_clave = i_usuario THEN
       raise_application_error(-20000,
                               'La clave no puede ser igual al usuario');
     END IF;
     -- Valida que la clave no contenga el usuario
-    IF k_util.string_to_bool(k_util.f_significado_codigo(l_dominio,
-                                                         'VAL_ALIAS_CONTENIDO')) AND
+    IF k_util.string_to_bool(k_significado.f_significado_codigo(l_dominio,
+                                                                'VAL_ALIAS_CONTENIDO')) AND
        instr(upper(i_clave), upper(i_usuario)) > 0 THEN
       raise_application_error(-20000,
                               'La clave no debe contener el usuario');
@@ -326,57 +328,58 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
   
     -- Valida la cantidad de letras
     IF l_can_letras <
-       to_number(k_util.f_significado_codigo(l_dominio,
-                                             'CAN_MIN_LETRAS_ABECEDARIO')) THEN
+       to_number(k_significado.f_significado_codigo(l_dominio,
+                                                    'CAN_MIN_LETRAS_ABECEDARIO')) THEN
       raise_application_error(-20000,
                               'La clave debe contener al menos ' ||
-                              k_util.f_significado_codigo(l_dominio,
-                                                          'CAN_MIN_LETRAS_ABECEDARIO') ||
+                              k_significado.f_significado_codigo(l_dominio,
+                                                                 'CAN_MIN_LETRAS_ABECEDARIO') ||
                               ' letras del abecedario');
     END IF;
     -- Valida la cantidad de letras mayusculas
     IF l_can_letras_may <
-       to_number(k_util.f_significado_codigo(l_dominio,
-                                             'CAN_MIN_MAYUSCULAS')) THEN
+       to_number(k_significado.f_significado_codigo(l_dominio,
+                                                    'CAN_MIN_MAYUSCULAS')) THEN
       raise_application_error(-20000,
                               'La clave debe contener al menos ' ||
-                              k_util.f_significado_codigo(l_dominio,
-                                                          'CAN_MIN_MAYUSCULAS') ||
+                              k_significado.f_significado_codigo(l_dominio,
+                                                                 'CAN_MIN_MAYUSCULAS') ||
                               ' letra mayúscula');
     END IF;
     -- Valida la cantidad de letras minusculas
     IF l_can_letras_min <
-       to_number(k_util.f_significado_codigo(l_dominio,
-                                             'CAN_MIN_MINUSCULAS')) THEN
+       to_number(k_significado.f_significado_codigo(l_dominio,
+                                                    'CAN_MIN_MINUSCULAS')) THEN
       raise_application_error(-20000,
                               'La clave debe contener al menos ' ||
-                              k_util.f_significado_codigo(l_dominio,
-                                                          'CAN_MIN_MINUSCULAS') ||
+                              k_significado.f_significado_codigo(l_dominio,
+                                                                 'CAN_MIN_MINUSCULAS') ||
                               ' letra minúscula');
     END IF;
     -- Valida la cantidad de numeros
     IF l_can_numeros <
-       to_number(k_util.f_significado_codigo(l_dominio, 'CAN_MIN_NUMEROS')) THEN
+       to_number(k_significado.f_significado_codigo(l_dominio,
+                                                    'CAN_MIN_NUMEROS')) THEN
       raise_application_error(-20000,
                               'La clave debe contener al menos ' ||
-                              k_util.f_significado_codigo(l_dominio,
-                                                          'CAN_MIN_NUMEROS') ||
+                              k_significado.f_significado_codigo(l_dominio,
+                                                                 'CAN_MIN_NUMEROS') ||
                               ' número');
     END IF;
     -- Valida la cantidad de caracteres especiales
     IF l_can_otros <
-       to_number(k_util.f_significado_codigo(l_dominio,
-                                             'CAN_MIN_CARACTERES_ESPECIALES')) THEN
+       to_number(k_significado.f_significado_codigo(l_dominio,
+                                                    'CAN_MIN_CARACTERES_ESPECIALES')) THEN
       raise_application_error(-20000,
                               'La clave debe contener al menos ' ||
-                              k_util.f_significado_codigo(l_dominio,
-                                                          'CAN_MIN_CARACTERES_ESPECIALES') ||
+                              k_significado.f_significado_codigo(l_dominio,
+                                                                 'CAN_MIN_CARACTERES_ESPECIALES') ||
                               ' caracter especial');
     END IF;
   
     -- Valida caracteres prohibidos
-    l_caracteres_prohibidos := k_util.f_significado_codigo(l_dominio,
-                                                           'CARACTERES_PROHIBIDOS');
+    l_caracteres_prohibidos := k_significado.f_significado_codigo(l_dominio,
+                                                                  'CARACTERES_PROHIBIDOS');
     FOR i IN 1 .. length(l_caracteres_prohibidos) LOOP
       l_caracter := substr(l_caracteres_prohibidos, i, 1);
       IF instr(i_clave, l_caracter) > 0 THEN
@@ -897,8 +900,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       WHEN no_data_found THEN
         raise_application_error(-20000,
                                 'Usuario ' ||
-                                k_util.f_formatear_titulo(k_util.f_significado_codigo('ESTADO_USUARIO',
-                                                                                      l_estado_usuario)));
+                                k_util.f_formatear_titulo(k_significado.f_significado_codigo('ESTADO_USUARIO',
+                                                                                             l_estado_usuario)));
       WHEN OTHERS THEN
         NULL;
     END;
