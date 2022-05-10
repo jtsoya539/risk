@@ -486,8 +486,8 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       SELECT id_rol, l_id_usuario
         FROM t_roles
        WHERE nombre =
-             nvl(k_util.f_referencia_codigo('ESTADO_USUARIO',
-                                            l_estado_usuario),
+             nvl(k_significado.f_referencia_codigo('ESTADO_USUARIO',
+                                                   l_estado_usuario),
                  k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO'));
   
     -- Registra clave

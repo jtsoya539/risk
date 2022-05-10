@@ -329,15 +329,16 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
            (SELECT id_rol
               FROM t_roles
              WHERE nombre =
-                   nvl(k_util.f_referencia_codigo('ESTADO_USUARIO', i_estado),
+                   nvl(k_significado.f_referencia_codigo('ESTADO_USUARIO',
+                                                         i_estado),
                        k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO')))
      WHERE a.id_usuario = i_id_usuario
        AND a.id_rol =
            (SELECT id_rol
               FROM t_roles
              WHERE nombre =
-                   nvl(k_util.f_referencia_codigo('ESTADO_USUARIO',
-                                                  l_estado_anterior),
+                   nvl(k_significado.f_referencia_codigo('ESTADO_USUARIO',
+                                                         l_estado_anterior),
                        k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO')));
   
     -- Si no existe, inserta rol por defecto para el nuevo estado
@@ -348,7 +349,8 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
           SELECT id_rol, i_id_usuario
             FROM t_roles
            WHERE nombre =
-                 nvl(k_util.f_referencia_codigo('ESTADO_USUARIO', i_estado),
+                 nvl(k_significado.f_referencia_codigo('ESTADO_USUARIO',
+                                                       i_estado),
                      k_util.f_valor_parametro('NOMBRE_ROL_DEFECTO'));
       EXCEPTION
         WHEN dup_val_on_index THEN

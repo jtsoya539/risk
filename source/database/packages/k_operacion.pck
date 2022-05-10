@@ -746,8 +746,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         raise_application_error(-20000, 'Operación inexistente');
     END;
   
-    l_nombre_programa := k_util.f_referencia_codigo('TIPO_IMPLEMENTACION',
-                                                    l_tipo_implementacion) || '_' ||
+    l_nombre_programa := k_significado.f_referencia_codigo('TIPO_IMPLEMENTACION',
+                                                           l_tipo_implementacion) || '_' ||
                          k_util.f_significado_codigo('TIPO_OPERACION',
                                                      l_tipo_operacion) || '_' ||
                          l_dominio_operacion || CASE l_tipo_implementacion
