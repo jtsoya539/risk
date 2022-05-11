@@ -8,17 +8,17 @@ create table T_ERRORES
 )
 ;
 comment on table T_ERRORES
-  is 'Errores';
+  is 'Errores o textos';
 comment on column T_ERRORES.id_error
-  is 'Identificador del error';
+  is 'Identificador del error o texto';
 comment on column T_ERRORES.mensaje
-  is 'Mensaje del error';
+  is 'Mensaje del error o texto';
 comment on column T_ERRORES.id_dominio
-  is 'Dominio del error';
+  is 'Dominio del error o texto';
 comment on column T_ERRORES.id_idioma
-  is 'Idioma del error';
+  is 'Idioma del error o texto';
 comment on column T_ERRORES.id_pais
-  is 'Pais del error';
+  is 'País del error o texto';
 alter table T_ERRORES
   add constraint UK_ERRORES unique (ID_ERROR, ID_IDIOMA, ID_PAIS);
 alter table T_ERRORES

@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE k_error IS
 
   /**
-  Agrupa operaciones relacionadas con los errores del sistema
+  Agrupa operaciones relacionadas con los errores o textos
   
   %author jtsoya539 27/3/2020 16:22:16
   */
