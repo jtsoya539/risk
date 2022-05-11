@@ -53,7 +53,7 @@ CREATE OR REPLACE PACKAGE k_clave IS
   PROCEDURE p_registrar_autenticacion(i_id_usuario IN NUMBER,
                                       i_tipo_clave IN CHAR DEFAULT 'A');
 
-  PROCEDURE p_validar_politicas(i_usuario    IN VARCHAR2,
+  PROCEDURE p_validar_politicas(i_alias      IN VARCHAR2,
                                 i_clave      IN VARCHAR2,
                                 i_tipo_clave IN CHAR DEFAULT 'A');
 
@@ -237,7 +237,7 @@ CREATE OR REPLACE PACKAGE BODY k_clave IS
       ROLLBACK;
   END;
 
-  PROCEDURE p_validar_politicas(i_usuario    IN VARCHAR2,
+  PROCEDURE p_validar_politicas(i_alias      IN VARCHAR2,
                                 i_clave      IN VARCHAR2,
                                 i_tipo_clave IN CHAR DEFAULT 'A') IS
     l_dominio               t_significados.dominio%TYPE;
@@ -304,14 +304,14 @@ CREATE OR REPLACE PACKAGE BODY k_clave IS
     -- Valida que la clave no sea igual al usuario
     IF k_util.string_to_bool(k_significado.f_significado_codigo(l_dominio,
                                                                 'VAL_ALIAS_IGUAL')) AND
-       i_clave = i_usuario THEN
+       upper(i_clave) = upper(i_alias) THEN
       raise_application_error(-20000,
                               'La clave no puede ser igual al usuario');
     END IF;
     -- Valida que la clave no contenga el usuario
     IF k_util.string_to_bool(k_significado.f_significado_codigo(l_dominio,
                                                                 'VAL_ALIAS_CONTENIDO')) AND
-       instr(upper(i_clave), upper(i_usuario)) > 0 THEN
+       instr(upper(i_clave), upper(i_alias)) > 0 THEN
       raise_application_error(-20000,
                               'La clave no debe contener el usuario');
     END IF;
@@ -522,6 +522,7 @@ CREATE OR REPLACE PACKAGE BODY k_clave IS
                             i_clave_nueva   IN VARCHAR2,
                             i_tipo_clave    IN CHAR DEFAULT 'A') IS
     l_id_usuario t_usuarios.id_usuario%TYPE;
+    l_orden      t_usuario_claves.orden%TYPE;
     l_hash       t_usuario_claves.hash%TYPE;
     l_salt       t_usuario_claves.salt%TYPE;
   BEGIN
@@ -544,15 +545,9 @@ CREATE OR REPLACE PACKAGE BODY k_clave IS
     -- Genera hash
     l_hash := f_hash(i_clave_nueva, l_salt);
   
-    -- Actualiza clave de usuario
+    -- Actualiza clave de usuario antigua
     UPDATE t_usuario_claves a
-       SET HASH                       = l_hash,
-           salt                       = l_salt,
-           algoritmo                  = c_algoritmo,
-           iteraciones                = c_iteraciones,
-           estado                     = 'N',
-           cantidad_intentos_fallidos = 0,
-           fecha_ultima_autenticacion = NULL
+       SET estado = 'I'
      WHERE id_usuario = l_id_usuario
        AND tipo = i_tipo_clave
        AND orden = (SELECT MAX(uc2.orden)
@@ -564,6 +559,36 @@ CREATE OR REPLACE PACKAGE BODY k_clave IS
     IF SQL%NOTFOUND THEN
       raise_application_error(-20000, 'Usuario sin clave activa');
     END IF;
+  
+    SELECT nvl(MAX(c.orden), 0) + 1
+      INTO l_orden
+      FROM t_usuario_claves c
+     WHERE c.id_usuario = l_id_usuario
+       AND c.tipo = i_tipo_clave;
+  
+    -- Inserta clave de usuario nueva
+    INSERT INTO t_usuario_claves
+      (id_usuario,
+       tipo,
+       orden,
+       estado,
+       HASH,
+       salt,
+       algoritmo,
+       iteraciones,
+       cantidad_intentos_fallidos,
+       fecha_ultima_autenticacion)
+    VALUES
+      (l_id_usuario,
+       i_tipo_clave,
+       l_orden,
+       'N',
+       l_hash,
+       l_salt,
+       c_algoritmo,
+       c_iteraciones,
+       0,
+       NULL);
   EXCEPTION
     WHEN k_usuario.ex_usuario_inexistente THEN
       raise_application_error(-20000, 'Credenciales inválidas');
