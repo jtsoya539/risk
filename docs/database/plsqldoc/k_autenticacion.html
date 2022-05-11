@@ -36,57 +36,12 @@ Program units
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_RANDOMBYTES_HEX">f_randombytes_hex</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_RANDOMBYTES_BASE64">f_randombytes_base64</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_SALT">f_salt</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#F_HASH">f_hash</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_VALIDAR_CLAVE">p_validar_clave</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REGISTRAR_USUARIO">f_registrar_usuario</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_EDITAR_USUARIO">p_editar_usuario</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_REGISTRAR_CLAVE">p_registrar_clave</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_DESBLOQUEAR_CLAVE">p_desbloquear_clave</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_RESTABLECER_CLAVE">p_restablecer_clave</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#P_CAMBIAR_CLAVE">p_cambiar_clave</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
@@ -133,16 +88,6 @@ Constants
 </TD></TR></TABLE>
 <TABLE CLASS="SUB_TABLE">
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#C_CLAVE_ACCESO">c_clave_acceso</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
-<A HREF="#C_CLAVE_TRANSACCIONAL">c_clave_transaccional</A>&nbsp;&nbsp;
-</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
-
-</TD></TR>
-<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_ORIGEN_RISK">c_origen_risk</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -169,22 +114,6 @@ Constants
 </TD></TR>
 </TABLE>
 <BR>
-<HR>
-<A NAME="C_CLAVE_ACCESO"></A>
-<P CLASS="TYPE_TITLE">
-c_clave_acceso
-</P>
-<PRE CLASS="DECL_TEXT">
-c_clave_acceso        CONSTANT CHAR(1) := 'A';
-</PRE>
-<HR>
-<A NAME="C_CLAVE_TRANSACCIONAL"></A>
-<P CLASS="TYPE_TITLE">
-c_clave_transaccional
-</P>
-<PRE CLASS="DECL_TEXT">
-c_clave_transaccional CONSTANT CHAR(1) := 'T';
-</PRE>
 <HR>
 <A NAME="C_ORIGEN_RISK"></A>
 <P CLASS="TYPE_TITLE">
@@ -226,54 +155,6 @@ c_metodo_validacion_oracle
 c_metodo_validacion_oracle CONSTANT VARCHAR2(10) := 'ORACLE';
 </PRE>
 <HR>
-<A NAME="F_RANDOMBYTES_HEX"></A>
-<P CLASS="TYPE_TITLE">
-f_randombytes_hex
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_randombytes_hex RETURN VARCHAR2
-
-</PRE>
-<HR>
-<A NAME="F_RANDOMBYTES_BASE64"></A>
-<P CLASS="TYPE_TITLE">
-f_randombytes_base64
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_randombytes_base64 RETURN VARCHAR2
-
-</PRE>
-<HR>
-<A NAME="F_SALT"></A>
-<P CLASS="TYPE_TITLE">
-f_salt
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_salt RETURN VARCHAR2
-
-</PRE>
-<HR>
-<A NAME="F_HASH"></A>
-<P CLASS="TYPE_TITLE">
-f_hash
-</P>
-<PRE CLASS="DECL_TEXT">
-FUNCTION f_hash(i_clave IN VARCHAR2,
-                i_salt  IN VARCHAR2) RETURN VARCHAR2
-
-</PRE>
-<HR>
-<A NAME="P_VALIDAR_CLAVE"></A>
-<P CLASS="TYPE_TITLE">
-p_validar_clave
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_validar_clave(i_usuario    IN VARCHAR2,
-                          i_clave      IN VARCHAR2,
-                          i_tipo_clave IN CHAR DEFAULT 'A')
-
-</PRE>
-<HR>
 <A NAME="F_REGISTRAR_USUARIO"></A>
 <P CLASS="TYPE_TITLE">
 f_registrar_usuario
@@ -302,50 +183,6 @@ PROCEDURE p_editar_usuario(i_alias_antiguo    IN VARCHAR2,
                            i_apellido         IN VARCHAR2,
                            i_direccion_correo IN VARCHAR2,
                            i_numero_telefono  IN VARCHAR2 DEFAULT NULL)
-
-</PRE>
-<HR>
-<A NAME="P_REGISTRAR_CLAVE"></A>
-<P CLASS="TYPE_TITLE">
-p_registrar_clave
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_registrar_clave(i_alias      IN VARCHAR2,
-                            i_clave      IN VARCHAR2,
-                            i_tipo_clave IN CHAR DEFAULT 'A')
-
-</PRE>
-<HR>
-<A NAME="P_DESBLOQUEAR_CLAVE"></A>
-<P CLASS="TYPE_TITLE">
-p_desbloquear_clave
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_desbloquear_clave(i_alias      IN VARCHAR2,
-                              i_tipo_clave IN CHAR DEFAULT 'A')
-
-</PRE>
-<HR>
-<A NAME="P_RESTABLECER_CLAVE"></A>
-<P CLASS="TYPE_TITLE">
-p_restablecer_clave
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_restablecer_clave(i_alias      IN VARCHAR2,
-                              i_clave      IN VARCHAR2,
-                              i_tipo_clave IN CHAR DEFAULT 'A')
-
-</PRE>
-<HR>
-<A NAME="P_CAMBIAR_CLAVE"></A>
-<P CLASS="TYPE_TITLE">
-p_cambiar_clave
-</P>
-<PRE CLASS="DECL_TEXT">
-PROCEDURE p_cambiar_clave(i_alias         IN VARCHAR2,
-                          i_clave_antigua IN VARCHAR2,
-                          i_clave_nueva   IN VARCHAR2,
-                          i_tipo_clave    IN CHAR DEFAULT 'A')
 
 </PRE>
 <HR>

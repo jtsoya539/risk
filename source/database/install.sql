@@ -162,6 +162,7 @@ prompt
 @@packages/k_dispositivo.pck
 @@packages/k_sesion.pck
 @@packages/k_error.pck
+@@packages/k_clave.pck
 @@packages/k_autenticacion.pck
 @@packages/k_autorizacion.pck
 @@packages/k_operacion.pck

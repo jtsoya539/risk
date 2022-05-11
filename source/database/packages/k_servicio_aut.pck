@@ -215,12 +215,12 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     -- l_rsp.lugar := 'Validando parametros';
   
     l_rsp.lugar := 'Registrando clave';
-    k_autenticacion.p_registrar_clave(k_operacion.f_valor_parametro_string(i_parametros,
-                                                                           'usuario'),
-                                      k_operacion.f_valor_parametro_string(i_parametros,
-                                                                           'clave'),
-                                      k_operacion.f_valor_parametro_string(i_parametros,
-                                                                           'tipo_clave'));
+    k_clave.p_registrar_clave(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                   'usuario'),
+                              k_operacion.f_valor_parametro_string(i_parametros,
+                                                                   'clave'),
+                              k_operacion.f_valor_parametro_string(i_parametros,
+                                                                   'tipo_clave'));
   
     k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;
@@ -246,14 +246,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
     -- l_rsp.lugar := 'Validando parametros';
   
     l_rsp.lugar := 'Cambiando clave';
-    k_autenticacion.p_cambiar_clave(k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'usuario'),
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'clave_antigua'),
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'clave_nueva'),
-                                    k_operacion.f_valor_parametro_string(i_parametros,
-                                                                         'tipo_clave'));
+    k_clave.p_cambiar_clave(k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'usuario'),
+                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'clave_antigua'),
+                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'clave_nueva'),
+                            k_operacion.f_valor_parametro_string(i_parametros,
+                                                                 'tipo_clave'));
   
     k_operacion.p_respuesta_ok(l_rsp);
     RETURN l_rsp;

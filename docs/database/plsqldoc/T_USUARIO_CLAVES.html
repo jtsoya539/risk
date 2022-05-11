@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_USUARIO_CLAVES">
  <META name="description" content="Claves por Usuario">
- <META name="columns" content="ID_USUARIO TIPO ESTADO HASH SALT ALGORITMO CANTIDAD_INTENTOS_FALLIDOS ITERACIONES FECHA_ULTIMA_AUTENTICACION">
+ <META name="columns" content="ID_USUARIO TIPO ORDEN ESTADO HASH SALT ALGORITMO ITERACIONES CANTIDAD_INTENTOS_FALLIDOS FECHA_ULTIMA_AUTENTICACION">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -81,6 +81,23 @@ Tipo de la clave
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
+ORDEN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+N&#250;mero de orden de la clave
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
 ESTADO
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
@@ -127,7 +144,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Salt (parametro para validacion)
+Salt (par&#225;metro para validaci&#243;n)
 </TD>
 </TR>
 <TR>
@@ -144,24 +161,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Algoritmo (parametro para validacion)
-</TD>
-</TR>
-<TR>
-<TD VALIGN="TOP" CLASS="LIST_ITEM">
-CANTIDAD_INTENTOS_FALLIDOS
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-NUMBER(3)
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Y
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
-</TD>
-<TD VALIGN="TOP" CLASS="DESC_TEXT">
-Cantidad de intentos fallidos de autenticacion
+Algoritmo (par&#225;metro para validaci&#243;n)
 </TD>
 </TR>
 <TR>
@@ -178,7 +178,24 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Iteraciones (parametro para validacion)
+Iteraciones (par&#225;metro para validaci&#243;n)
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+CANTIDAD_INTENTOS_FALLIDOS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Cantidad de intentos fallidos de autenticaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -195,7 +212,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Fecha de la ultima autenticacion exitosa
+Fecha de la &#250;ltima autenticaci&#243;n exitosa
 </TD>
 </TR>
 </TABLE>
@@ -220,7 +237,7 @@ Columns
 PK_USUARIO_CLAVES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_USUARIO,TIPO
+ID_USUARIO,TIPO,ORDEN
 </TD>
 </TR>
 </TABLE>
@@ -288,7 +305,7 @@ Type
 PK_USUARIO_CLAVES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_USUARIO,TIPO
+ID_USUARIO,TIPO,ORDEN
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

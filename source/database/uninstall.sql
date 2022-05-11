@@ -59,6 +59,7 @@ drop package k_servicio;
 drop package k_operacion;
 drop package k_autorizacion;
 drop package k_autenticacion;
+drop package k_clave;
 drop package k_error;
 drop package k_sesion;
 drop package k_dispositivo;

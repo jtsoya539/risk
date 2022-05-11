@@ -18,10 +18,10 @@ insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('CANTIDAD_MAXIMA_SESIONES_USUARIO', 'Cantidad máxima permitida de sesiones activas por usuario', '2', 'AUT');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
-values ('CLAVE_ENCRIPTACION_DESENCRIPTACION', 'Clave para encriptación y desencriptación. Generar con la función k_autenticacion.f_randombytes_hex', '26B9257BF16323A5919FAA48ABB7C575A50996698A0576C0DE0EE312AF6D2D60', null);
+values ('CLAVE_ENCRIPTACION_DESENCRIPTACION', 'Clave para encriptación y desencriptación. Generar con la función k_clave.f_randombytes_hex', '26B9257BF16323A5919FAA48ABB7C575A50996698A0576C0DE0EE312AF6D2D60', null);
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
-values ('CLAVE_VALIDACION_ACCESS_TOKEN', 'Clave de validación del Access Token. Generar con la función k_autenticacion.f_randombytes_base64', '9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=', 'AUT');
+values ('CLAVE_VALIDACION_ACCESS_TOKEN', 'Clave de validación del Access Token. Generar con la función k_clave.f_randombytes_base64', '9vVzzZbbUCcYE3cDnE+IVMrLF+8X8TPyK2cmC3Vu7M0=', 'AUT');
 
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('NOMBRE_ROL_DEFECTO', 'Nombre del Rol que se agrega por defecto a un usuario cuando se registra', 'USUARIO', null);

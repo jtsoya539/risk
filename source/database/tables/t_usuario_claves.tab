@@ -2,12 +2,13 @@ create table T_USUARIO_CLAVES
 (
   id_usuario                 NUMBER(10) not null,
   tipo                       VARCHAR2(1) not null,
+  orden                      NUMBER(3) not null,
   estado                     VARCHAR2(1),
   hash                       VARCHAR2(500),
   salt                       VARCHAR2(500),
   algoritmo                  VARCHAR2(30),
-  cantidad_intentos_fallidos NUMBER(3),
   iteraciones                NUMBER(10),
+  cantidad_intentos_fallidos NUMBER(3),
   fecha_ultima_autenticacion DATE
 )
 ;
@@ -17,22 +18,24 @@ comment on column T_USUARIO_CLAVES.id_usuario
   is 'Usuario relacionado a la clave';
 comment on column T_USUARIO_CLAVES.tipo
   is 'Tipo de la clave';
+comment on column T_USUARIO_CLAVES.orden
+  is 'Número de orden de la clave';
 comment on column T_USUARIO_CLAVES.estado
   is 'Estado de la clave';
 comment on column T_USUARIO_CLAVES.hash
   is 'Hash de la clave';
 comment on column T_USUARIO_CLAVES.salt
-  is 'Salt (parametro para validacion)';
+  is 'Salt (parámetro para validación)';
 comment on column T_USUARIO_CLAVES.algoritmo
-  is 'Algoritmo (parametro para validacion)';
-comment on column T_USUARIO_CLAVES.cantidad_intentos_fallidos
-  is 'Cantidad de intentos fallidos de autenticacion';
+  is 'Algoritmo (parámetro para validación)';
 comment on column T_USUARIO_CLAVES.iteraciones
-  is 'Iteraciones (parametro para validacion)';
+  is 'Iteraciones (parámetro para validación)';
+comment on column T_USUARIO_CLAVES.cantidad_intentos_fallidos
+  is 'Cantidad de intentos fallidos de autenticación';
 comment on column T_USUARIO_CLAVES.fecha_ultima_autenticacion
-  is 'Fecha de la ultima autenticacion exitosa';
+  is 'Fecha de la última autenticación exitosa';
 alter table T_USUARIO_CLAVES
-  add constraint PK_USUARIO_CLAVES primary key (ID_USUARIO, TIPO);
+  add constraint PK_USUARIO_CLAVES primary key (ID_USUARIO, TIPO, ORDEN);
 alter table T_USUARIO_CLAVES
   add constraint FK_USUARIO_CLAVES_USUARIOS foreign key (ID_USUARIO)
   references T_USUARIOS (ID_USUARIO);
