@@ -1,7 +1,7 @@
 CREATE OR REPLACE TYPE y_error UNDER y_objeto
 (
 /**
-Agrupa datos de Errores.
+Agrupa datos de Errores o textos.
 
 %author jtsoya539 30/3/2020 10:54:26
 */
@@ -30,9 +30,9 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-/** Identificador del error */
+/** Identificador del error o texto */
   id_error VARCHAR2(100),
-/** Mensaje del error */
+/** Mensaje del error o texto */
   mensaje VARCHAR2(4000),
 
   CONSTRUCTOR FUNCTION y_error RETURN SELF AS RESULT,
