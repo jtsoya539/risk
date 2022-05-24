@@ -21,9 +21,9 @@ RISK es una colección de objetos de Base de Datos Oracle (paquetes, types, tabl
 La documentación está disponible en la carpeta [docs](/docs/) del repositorio, o en línea en https://jtsoya539.github.io/risk/. La documentación generada de la API PL/SQL se puede consultar en https://jtsoya539.github.io/risk/database/plsqldoc/index.html.
 
 # Estructura del Repositorio
-* **docs/** Archivos de documentación
-* **source/** Archivos de código fuente separados en Base de Datos y Back-End
-* **test/** Archivos de pruebas unitarias y extras
+* **[/docs/](/docs/)** Archivos de documentación
+* **[/source/](/source/)** Archivos de código fuente separados en Base de Datos y Back-End
+* **[/test/](/test/)** Archivos de pruebas unitarias y extras
 
 # Autores
 * Javier Meza ([github.com/jtsoya539](https://github.com/jtsoya539))
@@ -36,4 +36,4 @@ Si tenés alguna duda o consulta, o querés reportar un error en el código o en
 Cualquier contribución es siempre bienvenida. Si querés corregir un error o agregar una nueva característica, creá un [pull request](https://github.com/jtsoya539/risk/pulls).
 
 # Licencia
-El Proyecto RISK está licenciado bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
+El Proyecto RISK está licenciado bajo la licencia MIT. Ver el archivo [LICENSE](/LICENSE) para más detalles.
