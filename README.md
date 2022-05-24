@@ -8,16 +8,17 @@ Bienvenido/a al repositorio del Proyecto RISK.
 RISK es una colección de objetos de Base de Datos Oracle (paquetes, types, tablas, entre otros) y una API web ASP.NET Core, que sigue el paradigma ["Thick Database"](https://www.oracle.com/a/tech/docs/why-use-plsql-whitepaper-10.pdf) y sirve como plantilla para el back-end de cualquier aplicación.
 
 # Características
-* Operaciones (Servicios Web, Reportes, Trabajos): Parámetros, Logs
+* Operaciones (Servicios Web, Reportes, Trabajos): Parámetros, Logs, Paginación
 * Configuración: Módulos, Dominios, Aplicaciones, Parámetros, Significados, Archivos, Datos Adicionales, Migraciones
 * Autenticación: Personas, Usuarios, Claves, Sesiones, Dispositivos
 * Autorización: Roles, Permisos
 * Globalización: Países, Departamentos, Ciudades, Barrios, Monedas, Idiomas, Textos
 * Reportes en formatos PDF, DOCX, XLSX, CSV, HTML
 * Mensajería a través de Correo electrónico (E-mail), Mensaje de texto (SMS) y Notificación push
+* Definición de interfaz HTTP con la especificación OpenAPI (Swagger)
 
 # Documentación
-La documentación está disponible en la carpeta docs del repositorio, o en línea en https://jtsoya539.github.io/risk/. La documentación generada de la API PL/SQL se puede consultar en https://jtsoya539.github.io/risk/database/plsqldoc/index.html.
+La documentación está disponible en la carpeta [docs](/docs/) del repositorio, o en línea en https://jtsoya539.github.io/risk/. La documentación generada de la API PL/SQL se puede consultar en https://jtsoya539.github.io/risk/database/plsqldoc/index.html.
 
 # Estructura del Repositorio
 * **docs/** Archivos de documentación
