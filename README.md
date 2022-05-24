@@ -31,8 +31,8 @@ La documentación está disponible en la carpeta docs del repositorio, o en lín
 # Sugerencias
 Si tenés alguna duda o consulta, o querés reportar un error en el código o en la documentación, creá un nuevo [issue](https://github.com/jtsoya539/risk/issues).
 
-# Contribución
+# Contribuciones
 Cualquier contribución es siempre bienvenida. Si querés corregir un error o agregar una nueva característica, creá un [pull request](https://github.com/jtsoya539/risk/pulls).
 
 # Licencia
-El Proyecto RISK está licenciado bajo la licencia MIT. Ver el archivo LICENSE para más detalles.
+El Proyecto RISK está licenciado bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
