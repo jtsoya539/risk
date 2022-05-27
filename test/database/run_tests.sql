@@ -22,8 +22,6 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-spool uninstall.log
-
 set feedback off
 set define off
 
@@ -41,60 +39,31 @@ prompt ###################################
 
 prompt
 prompt ===================================
-prompt Desinstalacion de tests iniciada
+prompt Ejecucion de tests iniciada
 prompt ===================================
 prompt
 
 prompt
-prompt Borrando tests de triggers...
+prompt Ejecutando tests de types...
 prompt -----------------------------------
 prompt
-drop package test_gb_personas;
+RunTestSet C:\repo\risk\test\database\types\y_respuesta\y_respuesta.ts
 
 prompt
-prompt Borrando tests de paquetes...
+prompt Ejecutando tests de paquetes...
 prompt -----------------------------------
 prompt
-drop package test_k_aplicacion;
-drop package test_k_archivo;
-drop package test_k_auditoria;
-drop package test_k_autenticacion;
-drop package test_k_autorizacion;
-drop package test_k_clave;
-drop package test_k_dato;
-drop package test_k_dispositivo;
-drop package test_k_dominio;
-drop package test_k_error;
-drop package test_k_html;
-drop package test_k_mensajeria;
-drop package test_k_modulo;
-drop package test_k_operacion;
-drop package test_k_reporte;
-drop package test_k_servicio;
-drop package test_k_sesion;
-drop package test_k_significado;
-drop package test_k_sistema;
-drop package test_k_trabajo;
-drop package test_k_usuario;
-drop package test_k_util;
+RunTestSet C:\repo\risk\test\database\packages\k_dato\k_dato.ts
+RunTestSet C:\repo\risk\test\database\packages\k_util\k_util.ts
 
 prompt
-prompt Borrando tests de types...
+prompt Ejecutando tests de triggers...
 prompt -----------------------------------
 prompt
-drop package test_y_dato;
-drop package test_y_respuesta;
-
-prompt
-prompt Vaciando papelera de reciclaje...
-prompt -----------------------------------
-prompt
-purge recyclebin;
+/*@@triggers/test_gb_personas.pck*/
 
 prompt
 prompt ===================================
-prompt Desinstalacion de tests finalizada
+prompt Ejecucion de tests finalizada
 prompt ===================================
 prompt
-
-spool off
