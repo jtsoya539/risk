@@ -65,7 +65,10 @@ prompt
 prompt Ejecutando tests de triggers...
 prompt -----------------------------------
 prompt
-/*@@triggers/test_gb_personas.pck*/
+RunTestSet C:\repo\risk\test\database\triggers\gb_personas\gb_personas.ts
+
+rollback;
+/
 
 prompt
 prompt ===================================
