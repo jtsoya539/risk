@@ -1,16 +1,21 @@
 PL/SQL Developer Test script 3.0
-8
+13
+DECLARE
+  l_esquema_actual VARCHAR2(500);
 BEGIN
-  -- Call the function
-  :RESULT := k_util.f_esquema_actual;
-
-  IF :RESULT = sys_context('USERENV', 'CURRENT_SCHEMA') THEN
-    dbms_output.put_line('OK');
+  -- Arrange
+  -- Act
+  l_esquema_actual := k_util.f_esquema_actual;
+  -- Assert
+  IF l_esquema_actual = sys_context('USERENV', 'CURRENT_SCHEMA') THEN
+    :RESULT := 'OK';
   END IF;
+
+  ROLLBACK;
 END;
 1
 result
 1
-JMEZA
+OK
 5
 0

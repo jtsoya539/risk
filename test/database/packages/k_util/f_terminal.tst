@@ -1,16 +1,21 @@
 PL/SQL Developer Test script 3.0
-8
+13
+DECLARE
+  l_terminal VARCHAR2(500);
 BEGIN
-  -- Call the function
-  :RESULT := k_util.f_terminal;
-
-  IF :RESULT = sys_context('USERENV', 'TERMINAL') THEN
-    dbms_output.put_line('OK');
+  -- Arrange
+  -- Act
+  l_terminal := k_util.f_terminal;
+  -- Assert
+  IF l_terminal = sys_context('USERENV', 'TERMINAL') THEN
+    :RESULT := 'OK';
   END IF;
+
+  ROLLBACK;
 END;
 1
 result
 1
-NTB1636
+OK
 5
 0

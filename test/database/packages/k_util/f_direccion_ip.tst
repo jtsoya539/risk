@@ -1,16 +1,21 @@
 PL/SQL Developer Test script 3.0
-8
+13
+DECLARE
+  l_direccion_ip VARCHAR2(500);
 BEGIN
-  -- Call the function
-  :RESULT := k_util.f_direccion_ip;
-
-  IF :RESULT = sys_context('USERENV', 'IP_ADDRESS') THEN
-    dbms_output.put_line('OK');
+  -- Arrange
+  -- Act
+  l_direccion_ip := k_util.f_direccion_ip;
+  -- Assert
+  IF l_direccion_ip = sys_context('USERENV', 'IP_ADDRESS') THEN
+    :RESULT := 'OK';
   END IF;
+
+  ROLLBACK;
 END;
 1
 result
 1
-192.168.11.145
+OK
 5
 0

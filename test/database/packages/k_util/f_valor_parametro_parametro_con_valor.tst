@@ -12,10 +12,14 @@ BEGIN
   l_valor := k_util.f_valor_parametro('PARAMETRO_CON_VALOR');
   -- Assert
   IF l_valor = 'VALOR' THEN
-    dbms_output.put_line('OK');
+    :RESULT := 'OK';
   END IF;
 
   ROLLBACK;
 END;
-0
+1
+result
+1
+OK
+5
 0

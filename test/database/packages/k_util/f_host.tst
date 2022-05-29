@@ -1,16 +1,21 @@
 PL/SQL Developer Test script 3.0
-8
+13
+DECLARE
+  l_host VARCHAR2(500);
 BEGIN
-  -- Call the function
-  :RESULT := k_util.f_host;
-
-  IF :RESULT = sys_context('USERENV', 'HOST') THEN
-    dbms_output.put_line('OK');
+  -- Arrange
+  -- Act
+  l_host := k_util.f_host;
+  -- Assert
+  IF l_host = sys_context('USERENV', 'HOST') THEN
+    :RESULT := 'OK';
   END IF;
+
+  ROLLBACK;
 END;
 1
 result
 1
-ATLAS\NTB1636
+OK
 5
 0

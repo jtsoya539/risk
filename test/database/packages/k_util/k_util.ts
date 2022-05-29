@@ -148,7 +148,7 @@ TestScript=f_valor_parametro_parametro_con_valor.tst
 NewSession=False
 Enabled=True
 Performance=
-Var1Name=dbms_output
+Var1Name=result
 Var1Enabled=True
 Var1Global=False
 Var1Type=
@@ -160,7 +160,7 @@ TestScript=f_valor_parametro_parametro_sin_valor.tst
 NewSession=False
 Enabled=True
 Performance=
-Var1Name=dbms_output
+Var1Name=result
 Var1Enabled=True
 Var1Global=False
 Var1Type=
@@ -172,7 +172,7 @@ TestScript=f_valor_parametro_parametro_inexistente.tst
 NewSession=False
 Enabled=True
 Performance=
-Var1Name=dbms_output
+Var1Name=result
 Var1Enabled=True
 Var1Global=False
 Var1Type=
@@ -184,7 +184,7 @@ TestScript=p_actualizar_valor_parametro_uso_basico.tst
 NewSession=False
 Enabled=True
 Performance=
-Var1Name=dbms_output
+Var1Name=result
 Var1Enabled=True
 Var1Global=False
 Var1Type=
@@ -201,13 +201,7 @@ Var1Enabled=True
 Var1Global=False
 Var1Type=String
 Var1InputValue=
-Var1OutputValue=
-Var2Name=dbms_output
-Var2Enabled=True
-Var2Global=False
-Var2Type=
-Var2InputValue=
-Var2OutputValue=OK
+Var1OutputValue=OK
 [Item11]
 Description=f_terminal
 TestScript=f_terminal.tst
@@ -219,13 +213,7 @@ Var1Enabled=True
 Var1Global=False
 Var1Type=String
 Var1InputValue=
-Var1OutputValue=
-Var2Name=dbms_output
-Var2Enabled=True
-Var2Global=False
-Var2Type=
-Var2InputValue=
-Var2OutputValue=OK
+Var1OutputValue=OK
 [Item12]
 Description=f_host
 TestScript=f_host.tst
@@ -237,13 +225,7 @@ Var1Enabled=True
 Var1Global=False
 Var1Type=String
 Var1InputValue=
-Var1OutputValue=
-Var2Name=dbms_output
-Var2Enabled=True
-Var2Global=False
-Var2Type=
-Var2InputValue=
-Var2OutputValue=OK
+Var1OutputValue=OK
 [Item13]
 Description=f_direccion_ip
 TestScript=f_direccion_ip.tst
@@ -255,13 +237,7 @@ Var1Enabled=True
 Var1Global=False
 Var1Type=String
 Var1InputValue=
-Var1OutputValue=
-Var2Name=dbms_output
-Var2Enabled=True
-Var2Global=False
-Var2Type=
-Var2InputValue=
-Var2OutputValue=OK
+Var1OutputValue=OK
 [Item14]
 Description=f_esquema_actual
 TestScript=f_esquema_actual.tst
@@ -273,15 +249,10 @@ Var1Enabled=True
 Var1Global=False
 Var1Type=String
 Var1InputValue=
-Var1OutputValue=
-Var2Name=dbms_output
-Var2Enabled=True
-Var2Global=False
-Var2Type=
-Var2InputValue=
-Var2OutputValue=OK
+Var1OutputValue=OK
 
 [Notes]
-{\rtf1\ansi\ansicpg1252\deff0\deflang3082{\fonttbl{\f0\fnil\fcharset0 Arial;}}
-\viewkind4\uc1\pard\fs20 Tests unitarios del paquete k_util\par
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang3082{\fonttbl{\f0\fnil\fcharset0 Arial;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\fs20 Tests unitarios del paquete k_util\par
 }
