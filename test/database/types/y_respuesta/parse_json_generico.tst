@@ -1,5 +1,5 @@
 PL/SQL Developer Test script 3.0
-21
+23
 DECLARE
   l_respuesta y_respuesta;
   l_error     y_error;
@@ -18,8 +18,14 @@ BEGIN
   l_resultado := y_respuesta.parse_json(l_respuesta.to_json);
   -- Assert
   IF l_resultado.to_json = l_respuesta.to_json THEN
-    dbms_output.put_line('OK');
+    :RESULT := 'OK';
   END IF;
+
+  ROLLBACK;
 END;
-0
+1
+result
+1
+OK
+5
 0

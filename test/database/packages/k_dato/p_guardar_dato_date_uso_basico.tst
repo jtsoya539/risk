@@ -36,10 +36,14 @@ BEGIN
      AND referencia = 'TEST';
 
   IF l_cantidad > 0 THEN
-    dbms_output.put_line('OK');
+    :RESULT := 'OK';
   END IF;
 
   ROLLBACK;
 END;
-0
+1
+result
+1
+OK
+5
 0

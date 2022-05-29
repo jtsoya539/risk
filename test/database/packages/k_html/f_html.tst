@@ -1,5 +1,5 @@
 PL/SQL Developer Test script 3.0
-20
+22
 DECLARE
   l_html CLOB;
 BEGIN
@@ -17,8 +17,14 @@ BEGIN
   l_html := k_html.f_html;
   -- Assert
   IF l_html LIKE '%<html>%<title>Hello</title>%<h1>Hello</h1>%</html>%' THEN
-    dbms_output.put_line('OK');
+    :RESULT := 'OK';
   END IF;
+
+  ROLLBACK;
 END;
-0
+1
+result
+1
+OK
+5
 0
