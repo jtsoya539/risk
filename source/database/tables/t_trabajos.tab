@@ -9,7 +9,8 @@ create table T_TRABAJOS
   fecha_fin              TIMESTAMP(6) WITH TIME ZONE,
   comentarios            VARCHAR2(1000),
   cantidad_ejecuciones   NUMBER,
-  fecha_ultima_ejecucion DATE
+  fecha_ultima_ejecucion DATE,
+  programa               VARCHAR2(128)
 )
 ;
 comment on table T_TRABAJOS
@@ -34,6 +35,8 @@ comment on column T_TRABAJOS.cantidad_ejecuciones
   is 'Cantidad de ejecuciones del trabajo';
 comment on column T_TRABAJOS.fecha_ultima_ejecucion
   is 'Fecha de la ultima ejecucion del trabajo';
+comment on column T_TRABAJOS.programa
+  is 'Programa del trabajo';
 alter table T_TRABAJOS
   add constraint PK_TRABAJOS primary key (ID_TRABAJO);
 alter table T_TRABAJOS
@@ -42,4 +45,3 @@ alter table T_TRABAJOS
 alter table T_TRABAJOS
   add constraint CK_TRABAJOS_TIPO
   check (TIPO IN ('PLSQL_BLOCK', 'STORED_PROCEDURE', 'EXECUTABLE', 'CHAIN', 'EXTERNAL_SCRIPT', 'SQL_SCRIPT', 'BACKUP_SCRIPT'));
-

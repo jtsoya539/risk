@@ -37,7 +37,8 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
   -------------------------------------------------------------------------------
   */
 
-  c_ok CONSTANT PLS_INTEGER := 0;
+  c_ok                           CONSTANT PLS_INTEGER := 0;
+  c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
 
   -- Prioridades de envío
   c_prioridad_urgente    CONSTANT PLS_INTEGER := 1;
@@ -61,6 +62,21 @@ CREATE OR REPLACE PACKAGE k_mensajeria IS
                          i_pie            IN VARCHAR2 DEFAULT NULL,
                          i_boton_etiqueta IN VARCHAR2 DEFAULT NULL,
                          i_boton_accion   IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB;
+
+  FUNCTION f_correo_tabla_html(i_tabla      IN VARCHAR2,
+                               i_titulo     IN VARCHAR2 DEFAULT NULL,
+                               i_encabezado IN VARCHAR2 DEFAULT NULL,
+                               i_pie        IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB;
+
+  FUNCTION f_correo_tabla_aux_html(i_tabla       IN VARCHAR2,
+                                   i_tabla_aux_1 IN VARCHAR2 DEFAULT NULL,
+                                   i_tabla_aux_2 IN VARCHAR2 DEFAULT NULL,
+                                   i_tabla_aux_3 IN VARCHAR2 DEFAULT NULL,
+                                   i_titulo      IN VARCHAR2 DEFAULT NULL,
+                                   i_encabezado  IN VARCHAR2 DEFAULT NULL,
+                                   i_pie         IN VARCHAR2 DEFAULT NULL)
     RETURN CLOB;
 
   PROCEDURE p_enviar_correo(i_subject         IN VARCHAR2,
@@ -199,6 +215,82 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
     RETURN l_html;
   END;
 
+  FUNCTION f_correo_tabla_html(i_tabla      IN VARCHAR2,
+                               i_titulo     IN VARCHAR2 DEFAULT NULL,
+                               i_encabezado IN VARCHAR2 DEFAULT NULL,
+                               i_pie        IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB IS
+    l_html    CLOB;
+    l_tabla   CLOB;
+    l_archivo y_archivo;
+  BEGIN
+    l_archivo := k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_textos,
+                                               'ARCHIVO',
+                                               'email-table-inlined.html');
+  
+    IF l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+      raise_application_error(-20000, 'Template de correo no definido');
+    END IF;
+  
+    l_html := k_util.blob_to_clob(l_archivo.contenido);
+  
+    -- Reemplaza CRLF por <br> en el contenido
+    l_tabla := REPLACE(i_tabla, utl_tcp.crlf, '<br>');
+  
+    l_html := REPLACE(l_html, '&TITULO_TABLA', i_titulo);
+    l_html := REPLACE(l_html, '&TABLA', l_tabla);
+    l_html := REPLACE(l_html, '&PIE_TABLA', i_pie);
+    l_html := REPLACE(l_html, '&TITULO', i_titulo);
+    l_html := REPLACE(l_html, '&ENCABEZADO', i_encabezado);
+  
+    RETURN l_html;
+  END;
+
+  FUNCTION f_correo_tabla_aux_html(i_tabla       IN VARCHAR2,
+                                   i_tabla_aux_1 IN VARCHAR2 DEFAULT NULL,
+                                   i_tabla_aux_2 IN VARCHAR2 DEFAULT NULL,
+                                   i_tabla_aux_3 IN VARCHAR2 DEFAULT NULL,
+                                   i_titulo      IN VARCHAR2 DEFAULT NULL,
+                                   i_encabezado  IN VARCHAR2 DEFAULT NULL,
+                                   i_pie         IN VARCHAR2 DEFAULT NULL)
+    RETURN CLOB IS
+    l_html        CLOB;
+    l_tabla       CLOB;
+    l_tabla_aux_1 CLOB;
+    l_tabla_aux_2 CLOB;
+    l_tabla_aux_3 CLOB;
+    l_archivo     y_archivo;
+  BEGIN
+    l_archivo := k_archivo.f_recuperar_archivo(k_archivo.c_carpeta_textos,
+                                               'ARCHIVO',
+                                               'email-table-aux-inlined.html');
+  
+    IF l_archivo.contenido IS NULL OR
+       dbms_lob.getlength(l_archivo.contenido) = 0 THEN
+      raise_application_error(-20000, 'Template de correo no definido');
+    END IF;
+  
+    l_html := k_util.blob_to_clob(l_archivo.contenido);
+  
+    -- Reemplaza CRLF por <br> en el contenido
+    l_tabla       := REPLACE(i_tabla, utl_tcp.crlf, '<br>');
+    l_tabla_aux_1 := REPLACE(i_tabla_aux_1, utl_tcp.crlf, '<br>');
+    l_tabla_aux_2 := REPLACE(i_tabla_aux_2, utl_tcp.crlf, '<br>');
+    l_tabla_aux_3 := REPLACE(i_tabla_aux_3, utl_tcp.crlf, '<br>');
+  
+    l_html := REPLACE(l_html, '&TITULO_TABLA', i_titulo);
+    l_html := REPLACE(l_html, '&TABLA', l_tabla);
+    l_html := REPLACE(l_html, '&AUX_TABLA1', l_tabla_aux_1);
+    l_html := REPLACE(l_html, '&AUX_TABLA2', l_tabla_aux_2);
+    l_html := REPLACE(l_html, '&AUX_TABLA3', l_tabla_aux_3);
+    l_html := REPLACE(l_html, '&PIE_TABLA', i_pie);
+    l_html := REPLACE(l_html, '&TITULO', i_titulo);
+    l_html := REPLACE(l_html, '&ENCABEZADO', i_encabezado);
+  
+    RETURN l_html;
+  END;
+
   PROCEDURE p_enviar_correo(i_subject         IN VARCHAR2,
                             i_body            IN CLOB,
                             i_id_usuario      IN NUMBER DEFAULT NULL,
@@ -324,9 +416,15 @@ CREATE OR REPLACE PACKAGE BODY k_mensajeria IS
   BEGIN
     l_suscripcion := i_suscripcion;
   
-    IF i_id_usuario IS NOT NULL AND l_suscripcion IS NULL THEN
-      l_suscripcion := k_dispositivo.c_suscripcion_usuario || '_' ||
-                       to_char(i_id_usuario);
+    IF i_id_usuario IS NOT NULL THEN
+      IF l_suscripcion IS NULL THEN
+        l_suscripcion := k_dispositivo.c_suscripcion_usuario || '_' ||
+                         to_char(i_id_usuario);
+      ELSE
+        l_suscripcion := l_suscripcion || '&&' ||
+                         k_dispositivo.c_suscripcion_usuario || '_' ||
+                         to_char(i_id_usuario);
+      END IF;
     END IF;
   
     IF l_suscripcion IS NULL THEN

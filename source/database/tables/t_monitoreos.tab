@@ -1,0 +1,62 @@
+create table T_MONITOREOS
+(
+  id_monitoreo                     NUMBER NOT NULL,
+  causa                            VARCHAR2(4000),
+  consulta_sql                     CLOB,
+  plan_accion                      VARCHAR2(4000),
+  prioridad                        NUMBER(1) DEFAULT 3 NOT NULL,
+  cantidad_ejecuciones             NUMBER,
+  fecha_ultima_ejecucion           TIMESTAMP(2) WITH TIME ZONE,
+  cantidad_ejecuciones_conflicto   NUMBER,
+  fecha_ultima_ejecucion_conflicto TIMESTAMP(2) WITH TIME ZONE,
+  id_rol_responsable               NUMBER(3),
+  id_usuario_responsable           NUMBER(10),
+  nivel_aviso                      NUMBER(1) DEFAULT 1 NOT NULL,
+  frecuencia                       VARCHAR2(3) DEFAULT 'D' NOT NULL,
+  comentarios                      VARCHAR2(1000)
+)
+;
+comment on table T_MONITOREOS
+  is 'Monitoreos de conflictos';
+comment on column T_MONITOREOS.id_monitoreo
+  is 'Identificador del monitoreo';
+comment on column T_MONITOREOS.causa
+  is 'Causa del conflicto';
+comment on column T_MONITOREOS.consulta_sql
+  is 'Consulta SQL del monitoreo';
+comment on column T_MONITOREOS.prioridad
+  is 'Prioridad del monitoreo (1-Muy alta, 2-Alta, 3-Media, 4-Baja, 5-Muy baja)';
+comment on column T_MONITOREOS.plan_accion
+  is 'Plan de acción para resolución del conflicto';
+comment on column T_MONITOREOS.cantidad_ejecuciones
+  is 'Cantidad de ejecuciones del monitoreo';
+comment on column T_MONITOREOS.fecha_ultima_ejecucion
+  is 'Fecha de la ultima ejecucion del monitoreo';
+comment on column T_MONITOREOS.cantidad_ejecuciones_conflicto
+  is 'Cantidad de ejecuciones del monitoreo con conflicto';
+comment on column T_MONITOREOS.fecha_ultima_ejecucion_conflicto
+  is 'Fecha de la ultima ejecucion del monitoreo con conflicto';
+comment on column T_MONITOREOS.id_rol_responsable
+  is 'Identificador del rol responsable';
+comment on column T_MONITOREOS.id_usuario_responsable
+  is 'Identificador del usuario responsable';
+comment on column T_MONITOREOS.nivel_aviso
+  is 'Nivel de aviso del monitoreo (0-Off, 1-Resumido, 2-Detallado)';
+comment on column T_MONITOREOS.frecuencia
+  is 'Frecuencia de ejecución del monitoreo';
+comment on column T_MONITOREOS.comentarios
+  is 'Comentarios del monitoreo';
+alter table T_MONITOREOS
+  add constraint PK_MONITOREOS primary key (ID_MONITOREO);
+alter table T_MONITOREOS
+  add constraint FK_MONITOREOS_OPERACIONES foreign key (ID_MONITOREO)
+  references T_OPERACIONES (ID_OPERACION);
+alter table T_MONITOREOS
+  add constraint CK_MONITOREOS_PRIORIDAD
+  check (PRIORIDAD IN (1, 2, 3, 4, 5));
+alter table T_MONITOREOS
+  add constraint CK_MONITOREOS_NIVEL_AVISO
+  check (NIVEL_AVISO IN (0, 1, 2));
+alter table T_MONITOREOS
+  add constraint CK_MONITOREOS_FRECUENCIA
+  check (FRECUENCIA IN ('H', '2H', '6H', '12H', 'D', 'S', 'M'));

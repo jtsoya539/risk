@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE k_operacion IS
 
   /**
-  Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos)
+  Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos, Monitoreos)
   
   %author jtsoya539 27/3/2020 16:42:26
   */
@@ -34,6 +34,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   c_tipo_servicio   CONSTANT CHAR(1) := 'S';
   c_tipo_reporte    CONSTANT CHAR(1) := 'R';
   c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
+  c_tipo_monitoreo  CONSTANT CHAR(1) := 'M';
   c_tipo_parametros CONSTANT CHAR(1) := 'P';
 
   -- Tipos de Implementaciones
@@ -999,6 +1000,12 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                 't_trabajos');
     l_inserts := l_inserts || l_insert;
     --
+    lp_comentar('T_MONITOREOS');
+    l_insert  := fn_gen_inserts('SELECT id_monitoreo, causa, consulta_sql, plan_accion, prioridad, id_rol_responsable, id_usuario_responsable, nivel_aviso, frecuencia, comentarios FROM t_monitoreos WHERE id_monitoreo = ' ||
+                                to_char(i_operacion.id_operacion),
+                                't_monitoreos');
+    l_inserts := l_inserts || l_insert;
+    --
     lp_comentar('T_ROL_PERMISOS');
     l_insert  := fn_gen_inserts('SELECT * FROM t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(' ||
                                 to_char(i_operacion.id_operacion) ||
@@ -1047,6 +1054,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     l_deletes := l_deletes ||
                  'DELETE t_rol_permisos WHERE id_permiso = k_operacion.f_id_permiso(' ||
                  to_char(i_operacion.id_operacion) || ');' || utl_tcp.crlf;
+    l_deletes := l_deletes || 'DELETE t_monitoreos WHERE id_monitoreo = ' ||
+                 to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     l_deletes := l_deletes || 'DELETE t_trabajos WHERE id_trabajo = ' ||
                  to_char(i_operacion.id_operacion) || ';' || utl_tcp.crlf;
     l_deletes := l_deletes || 'DELETE t_reportes WHERE id_reporte = ' ||

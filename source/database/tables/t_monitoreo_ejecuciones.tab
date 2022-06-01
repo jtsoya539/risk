@@ -1,0 +1,23 @@
+create table T_MONITOREO_EJECUCIONES
+(
+  id_monitoreo_ejecucion NUMBER not null,
+  id_monitoreo           NUMBER,
+  fecha_ejecucion        TIMESTAMP(2) WITH TIME ZONE,
+  datos                  CLOB
+)
+;
+comment on table T_MONITOREO_EJECUCIONES
+  is 'Ejecuciones de monitoreos de conflictos';
+comment on column T_MONITOREO_EJECUCIONES.id_monitoreo_ejecucion
+  is 'Identificador de la ejecución';
+comment on column T_MONITOREO_EJECUCIONES.id_monitoreo
+  is 'Identificador del monitoreo';
+comment on column T_MONITOREO_EJECUCIONES.fecha_ejecucion
+  is 'Fecha de la ejecución del monitoreo';
+comment on column T_MONITOREO_EJECUCIONES.datos
+  is 'Datos del conflicto';
+alter table T_MONITOREO_EJECUCIONES
+  add constraint PK_MONITOREO_EJECUCIONES primary key (ID_MONITOREO_EJECUCION, ID_MONITOREO);
+alter table T_MONITOREO_EJECUCIONES
+  add constraint FK_MONITOREO_EJECUCIONES_OPERACIONES foreign key (ID_MONITOREO)
+  references T_MONITOREOS (ID_MONITOREO);

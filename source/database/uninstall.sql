@@ -46,13 +46,21 @@ prompt ===================================
 prompt
 
 prompt
+prompt Borrando jobs...
+prompt -----------------------------------
+prompt
+@@jobs/drop_monitoreo_conflictos.sql
+
+prompt
 prompt Borrando paquetes...
 prompt -----------------------------------
 prompt
+drop package k_monitoreo_aut;
 drop package k_reporte_gen;
 drop package k_servicio_glo;
 drop package k_servicio_gen;
 drop package k_servicio_aut;
+drop package k_monitoreo;
 drop package k_trabajo;
 drop package k_reporte;
 drop package k_servicio;
@@ -107,6 +115,7 @@ prompt
 prompt Borrando vistas...
 prompt -----------------------------------
 prompt
+drop view v_monitoreo_datos;
 
 prompt
 prompt Borrando tablas...
@@ -124,6 +133,8 @@ drop table t_sesiones cascade constraints;
 drop table t_dispositivo_ubicaciones cascade constraints;
 drop table t_dispositivo_suscripciones cascade constraints;
 drop table t_dispositivos cascade constraints;
+drop table t_monitoreo_ejecuciones cascade constraints;
+drop table t_monitoreos cascade constraints;
 drop table t_trabajos cascade constraints;
 drop table t_servicios cascade constraints;
 drop table t_reportes cascade constraints;
@@ -161,6 +172,7 @@ drop sequence s_id_barrio;
 drop sequence s_id_idioma;
 drop sequence s_id_persona;
 drop sequence s_id_rol;
+drop sequence s_id_monitoreo_ejecucion;
 drop sequence s_id_operacion_log;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;

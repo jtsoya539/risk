@@ -82,6 +82,390 @@ begin
     ,to_number(l_varchar2(10))
   );
 
+  l_clob(1) :=q'!TEXTOS!';
+  l_clob(2) :=q'!ARCHIVO!';
+  l_clob(3) :=q'!email-table-aux-inlined.html!';
+  l_blob :=utl_raw.cast_to_raw('<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>&TITULO</title>
+  <style>
+@media only screen and (max-width: 620px) {
+  table[class=body] h1 {
+    font-size: 28px !important;
+    margin-bottom: 10px !important;
+  }
+
+  table[class=body] p,
+table[class=body] ul,
+table[class=body] ol,
+table[class=body] td,
+table[class=body] span,
+table[class=body] a {
+    font-size: 16px !important;
+  }
+
+  table[class=body] .wrapper,
+table[class=body] .article {
+    padding: 10px !important;
+  }
+
+  table[class=body] .content {
+    padding: 0 !important;
+  }
+
+  table[class=body] .container {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  table[class=body] .main {
+    border-left-width: 0 !important;
+    border-radius: 0 !important;
+    border-right-width: 0 !important;
+  }
+
+  table[class=body] .btn table {
+    width: 100% !important;
+  }
+
+  table[class=body] .btn a {
+    width: 100% !important;
+  }
+
+  table[class=body] .img-responsive {
+    height: auto !important;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
+@media all {
+  .ExternalClass {
+    width: 100%;
+  }
+
+  .ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+    line-height: 100%;
+  }
+
+  .apple-link a {
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    text-decoration: none !important;
+  }
+
+  #MessageViewBody a {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  .btn-primary table td:hover {
+    background-color: #34495e !important;
+  }
+
+  .btn-primary a:hover {
+    background-color: #34495e !important;
+    border-color: #34495e !important;
+  }
+}
+</style>
+</head>
+
+<body class="" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+  <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">&ENCABEZADO</span>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;" width="100%" bgcolor="#f6f6f6">
+    <tr>
+      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; padding: 8px;" valign="top" align="left">&nbsp;</td>
+      <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;" width="580" valign="top" align="left">
+        <div class="content" style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;">
+
+          <!-- START CENTERED WHITE CONTAINER -->
+          <table role="presentation" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;" width="100%">
+
+            <!-- START MAIN CONTENT AREA -->
+            <tr>
+              <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; box-sizing: border-box; padding: 20px;" valign="top" align="left">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+                  <tr>
+                    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; padding: 8px;" valign="top" align="left">
+                      <h2 style="color: #000000; font-family: sans-serif; font-weight: 400; line-height: 1.4; margin: 0; margin-bottom: 30px; text-align: center;">&TITULO_TABLA</h2>
+
+                      &TABLA
+                      <br>
+                      &AUX_TABLA1
+                      <br>
+                      &AUX_TABLA2
+                      <br>
+                      &AUX_TABLA3
+
+                      <!-- START TABLE FOOTER -->
+                      <div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%;">
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+                          <tr>
+                            <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding: 8px; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">&PIE_TABLA</td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!-- END TABLE FOOTER -->
+
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <!-- END MAIN CONTENT AREA -->
+
+          </table>
+          <!-- END CENTERED WHITE CONTAINER -->
+
+        </div>
+      </td>
+      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; padding: 8px;" valign="top" align="left">&nbsp;</td>
+    </tr>
+  </table>
+
+</body>
+
+</html>');
+  l_clob(5) :=q'!!';
+  l_clob(6) :=q'!!';
+  l_varchar2(7) :=q'!!';
+  l_clob(8) :=q'!email-table-aux-inlined!';
+  l_clob(9) :=q'!html!';
+  l_varchar2(10) :=q'!!';
+
+
+  insert into t_archivos
+  (
+     "TABLA"
+    ,"CAMPO"
+    ,"REFERENCIA"
+    ,"CONTENIDO"
+    ,"URL"
+    ,"CHECKSUM"
+    ,"TAMANO"
+    ,"NOMBRE"
+    ,"EXTENSION"
+    ,"VERSION_ACTUAL"
+  )
+  values
+  (
+     to_char(l_clob(1))
+    ,to_char(l_clob(2))
+    ,to_char(l_clob(3))
+    ,l_blob
+    ,to_char(l_clob(5))
+    ,to_char(l_clob(6))
+    ,to_number(l_varchar2(7))
+    ,to_char(l_clob(8))
+    ,to_char(l_clob(9))
+    ,to_number(l_varchar2(10))
+  );
+
+  l_clob(1) :=q'!TEXTOS!';
+  l_clob(2) :=q'!ARCHIVO!';
+  l_clob(3) :=q'!email-table-inlined.html!';
+  l_blob :=utl_raw.cast_to_raw('<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>&TITULO</title>
+  <style>
+@media only screen and (max-width: 620px) {
+  table[class=body] h1 {
+    font-size: 28px !important;
+    margin-bottom: 10px !important;
+  }
+
+  table[class=body] p,
+table[class=body] ul,
+table[class=body] ol,
+table[class=body] td,
+table[class=body] span,
+table[class=body] a {
+    font-size: 16px !important;
+  }
+
+  table[class=body] .wrapper,
+table[class=body] .article {
+    padding: 10px !important;
+  }
+
+  table[class=body] .content {
+    padding: 0 !important;
+  }
+
+  table[class=body] .container {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  table[class=body] .main {
+    border-left-width: 0 !important;
+    border-radius: 0 !important;
+    border-right-width: 0 !important;
+  }
+
+  table[class=body] .btn table {
+    width: 100% !important;
+  }
+
+  table[class=body] .btn a {
+    width: 100% !important;
+  }
+
+  table[class=body] .img-responsive {
+    height: auto !important;
+    max-width: 100% !important;
+    width: auto !important;
+  }
+}
+@media all {
+  .ExternalClass {
+    width: 100%;
+  }
+
+  .ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+    line-height: 100%;
+  }
+
+  .apple-link a {
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    text-decoration: none !important;
+  }
+
+  #MessageViewBody a {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  .btn-primary table td:hover {
+    background-color: #34495e !important;
+  }
+
+  .btn-primary a:hover {
+    background-color: #34495e !important;
+    border-color: #34495e !important;
+  }
+}
+</style>
+</head>
+
+<body class="" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">
+  <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">&ENCABEZADO</span>
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f6f6; width: 100%;" width="100%" bgcolor="#f6f6f6">
+    <tr>
+      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; padding: 8px;" valign="top" align="left">&nbsp;</td>
+      <td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; display: block; max-width: 580px; padding: 10px; width: 580px; margin: 0 auto;" width="580" valign="top" align="left">
+        <div class="content" style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 580px; padding: 10px;">
+
+          <!-- START CENTERED WHITE CONTAINER -->
+          <table role="presentation" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border-radius: 3px; width: 100%;" width="100%">
+
+            <!-- START MAIN CONTENT AREA -->
+            <tr>
+              <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; box-sizing: border-box; padding: 20px;" valign="top" align="left">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+                  <tr>
+                    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; padding: 8px;" valign="top" align="left">
+                      <h2 style="color: #000000; font-family: sans-serif; font-weight: 400; line-height: 1.4; margin: 0; margin-bottom: 30px; text-align: center; text-transform: capitalize;">&TITULO_TABLA</h2>
+
+                      &TABLA
+
+                      <!-- START TABLE FOOTER -->
+                      <div class="footer" style="clear: both; margin-top: 10px; text-align: center; width: 100%;">
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+                          <tr>
+                            <td class="content-block" style="font-family: sans-serif; vertical-align: top; padding: 8px; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;" valign="top" align="center">&PIE_TABLA</td>
+                          </tr>
+                        </table>
+                      </div>
+                      <!-- END TABLE FOOTER -->
+
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <!-- END MAIN CONTENT AREA -->
+
+          </table>
+          <!-- END CENTERED WHITE CONTAINER -->
+
+        </div>
+      </td>
+      <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; text-align: left; padding: 8px;" valign="top" align="left">&nbsp;</td>
+    </tr>
+  </table>
+
+</body>
+
+</html>');
+  l_clob(5) :=q'!!';
+  l_clob(6) :=q'!!';
+  l_varchar2(7) :=q'!!';
+  l_clob(8) :=q'!email-table-inlined!';
+  l_clob(9) :=q'!html!';
+  l_varchar2(10) :=q'!!';
+
+
+  insert into t_archivos
+  (
+     "TABLA"
+    ,"CAMPO"
+    ,"REFERENCIA"
+    ,"CONTENIDO"
+    ,"URL"
+    ,"CHECKSUM"
+    ,"TAMANO"
+    ,"NOMBRE"
+    ,"EXTENSION"
+    ,"VERSION_ACTUAL"
+  )
+  values
+  (
+     to_char(l_clob(1))
+    ,to_char(l_clob(2))
+    ,to_char(l_clob(3))
+    ,l_blob
+    ,to_char(l_clob(5))
+    ,to_char(l_clob(6))
+    ,to_number(l_varchar2(7))
+    ,to_char(l_clob(8))
+    ,to_char(l_clob(9))
+    ,to_number(l_varchar2(10))
+  );
+
   l_clob(1) :=q'!IMAGENES!';
   l_clob(2) :=q'!ARCHIVO!';
   l_clob(3) :=q'!x-mark-5-256.jpg!';
