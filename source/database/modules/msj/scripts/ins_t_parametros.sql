@@ -34,4 +34,7 @@ values ('SUSCRIPCION_PRUEBAS', 'Tag o expresión destino para pruebas de notifica
 insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
 values ('MENSAJERIA_CANTIDAD_INTENTOS_PERMITIDOS', 'Cantidad de intentos permitidos para envío de mensajes', '3', 'MSJ');
 
+insert into t_parametros (ID_PARAMETRO, DESCRIPCION, VALOR, ID_DOMINIO)
+values ('DIRECCION_CORREO_MONITOREOS', 'Dirección de correo electrónico principal para monitoreos de conflictos', 'demouser@risk.com', null);
+
 prompt Done.

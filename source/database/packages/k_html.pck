@@ -30,7 +30,8 @@ CREATE OR REPLACE PACKAGE k_html IS
   -------------------------------------------------------------------------------
   */
 
-  FUNCTION f_query2table(i_query IN CLOB) RETURN CLOB;
+  FUNCTION f_query2table(i_query    IN CLOB,
+                         i_template IN CLOB := NULL) RETURN CLOB;
 
   FUNCTION f_escapar_texto(i_texto IN CLOB) RETURN CLOB;
 
@@ -72,20 +73,15 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
 
   -- https://dba.stackexchange.com/a/6780
   -- https://stackoverflow.com/a/7755800
-  FUNCTION f_query2table(i_query IN CLOB) RETURN CLOB IS
+  FUNCTION f_query2table(i_query    IN CLOB,
+                         i_template IN CLOB := NULL) RETURN CLOB IS
     l_table     CLOB;
     l_ctx       dbms_xmlgen.ctxhandle;
     l_xml_query xmltype;
     l_xml_table xmltype;
-  BEGIN
-    l_ctx := dbms_xmlgen.newcontext(i_query);
-    dbms_xmlgen.setnullhandling(l_ctx, dbms_xmlgen.empty_tag);
-    dbms_xmlgen.setprettyprinting(l_ctx, FALSE);
-    l_xml_query := dbms_xmlgen.getxmltype(l_ctx);
-  
-    IF dbms_xmlgen.getnumrowsprocessed(l_ctx) > 0 AND
-       l_xml_query IS NOT NULL THEN
-      l_xml_table := l_xml_query.transform(xmltype('<?xml version="1.0" encoding="UTF-8"?>
+    --
+    l_template CLOB := nvl(i_template,
+                           '<?xml version="1.0" encoding="UTF-8"?>
   <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:output method="html"/>
   <xsl:template match="/">
@@ -104,7 +100,16 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
       </xsl:for-each>
     </table>
   </xsl:template>
-  </xsl:stylesheet>'));
+  </xsl:stylesheet>');
+  BEGIN
+    l_ctx := dbms_xmlgen.newcontext(i_query);
+    dbms_xmlgen.setnullhandling(l_ctx, dbms_xmlgen.empty_tag);
+    dbms_xmlgen.setprettyprinting(l_ctx, FALSE);
+    l_xml_query := dbms_xmlgen.getxmltype(l_ctx);
+  
+    IF dbms_xmlgen.getnumrowsprocessed(l_ctx) > 0 AND
+       l_xml_query IS NOT NULL THEN
+      l_xml_table := l_xml_query.transform(xmltype(l_template));
       l_table     := l_xml_table.getclobval;
     END IF;
   
