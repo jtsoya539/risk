@@ -5,7 +5,7 @@
  <TITLE>Package k_operacion</TITLE>
  <META name="object" content="PACKAGE">
  <META name="name" content="k_operacion">
- <META name="description" content="Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos)">
+ <META name="description" content="Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos, Monitoreos)">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -14,7 +14,7 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">Package k_operacion</P>
-Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos)<br>
+Agrupa operaciones relacionadas con las Operaciones (Servicios Web, Reportes, Trabajos, Monitoreos)<br>
 
 <BR>
 <A NAME="Author"></A>
@@ -215,6 +215,11 @@ Constants
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_TIPO_MONITOREO">c_tipo_monitoreo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_TIPO_PARAMETROS">c_tipo_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -299,6 +304,14 @@ c_tipo_trabajo
 </P>
 <PRE CLASS="DECL_TEXT">
 c_tipo_trabajo    CONSTANT CHAR(1) := 'T';
+</PRE>
+<HR>
+<A NAME="C_TIPO_MONITOREO"></A>
+<P CLASS="TYPE_TITLE">
+c_tipo_monitoreo
+</P>
+<PRE CLASS="DECL_TEXT">
+c_tipo_monitoreo  CONSTANT CHAR(1) := 'M';
 </PRE>
 <HR>
 <A NAME="C_TIPO_PARAMETROS"></A>

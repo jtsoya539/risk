@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_monitoreo</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_monitoreo">
+ <META name="description" content="Agrupa operaciones relacionadas con los Monitoreos de Conflictos del sistema">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_monitoreo</P>
+Agrupa operaciones relacionadas con los Monitoreos de Conflictos del sistema<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 24/5/2022 10:42:26
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_LIMPIAR_HISTORIAL">p_limpiar_historial</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AVISO_RESUMIDO">p_aviso_resumido</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AVISO_DETALLADO">p_aviso_detallado</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PAGINA_PARAMETROS">f_pagina_parametros</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PAGINAR_ELEMENTOS">f_paginar_elementos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PAGINAR_ELEMENTOS2">f_paginar_elementos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_MONITOREO_SQL">f_monitoreo_sql</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_MONITOREO_COLUMNAS_SQL">f_monitoreo_columnas_sql</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PROCESAR_MONITOREO">f_procesar_monitoreo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PROCESAR_MONITOREO2">f_procesar_monitoreo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_PROCESAR_MONITOREOS">p_procesar_monitoreos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Exceptions"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Exceptions
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#EX_FRECUENCIA_NO_EXISTE">ex_frecuencia_no_existe</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Constants"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Constants
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_ID_EJECUCION">c_id_ejecucion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="C_ID_EJECUCION"></A>
+<P CLASS="TYPE_TITLE">
+c_id_ejecucion
+</P>
+<PRE CLASS="DECL_TEXT">
+c_id_ejecucion CONSTANT VARCHAR2(50) := 'ID_EJECUCION';
+</PRE>
+<HR>
+<A NAME="EX_FRECUENCIA_NO_EXISTE"></A>
+<P CLASS="TYPE_TITLE">
+ex_frecuencia_no_existe
+</P>
+<PRE CLASS="DECL_TEXT">
+ex_frecuencia_no_existe EXCEPTION;
+</PRE>
+<HR>
+<A NAME="P_LIMPIAR_HISTORIAL"></A>
+<P CLASS="TYPE_TITLE">
+p_limpiar_historial
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_limpiar_historial
+
+</PRE>
+<HR>
+<A NAME="P_AVISO_RESUMIDO"></A>
+<P CLASS="TYPE_TITLE">
+p_aviso_resumido
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_aviso_resumido(i_id_ejecucion IN NUMBER)
+
+</PRE>
+<HR>
+<A NAME="P_AVISO_DETALLADO"></A>
+<P CLASS="TYPE_TITLE">
+p_aviso_detallado
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_aviso_detallado(i_id_ejecucion IN NUMBER,
+                            i_id_monitoreo IN NUMBER)
+
+</PRE>
+<HR>
+<A NAME="F_PAGINA_PARAMETROS"></A>
+<P CLASS="TYPE_TITLE">
+f_pagina_parametros
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_pagina_parametros(i_parametros IN y_parametros)
+  RETURN y_pagina_parametros
+
+</PRE>
+<HR>
+<A NAME="F_PAGINAR_ELEMENTOS"></A>
+<P CLASS="TYPE_TITLE">
+f_paginar_elementos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_paginar_elementos(i_elementos           IN y_objetos,
+                             i_numero_pagina       IN INTEGER DEFAULT NULL,
+                             i_cantidad_por_pagina IN INTEGER DEFAULT NULL,
+                             i_no_paginar          IN VARCHAR2 DEFAULT NULL)
+  RETURN y_pagina
+
+</PRE>
+<HR>
+<A NAME="F_PAGINAR_ELEMENTOS2"></A>
+<P CLASS="TYPE_TITLE">
+f_paginar_elementos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_paginar_elementos(i_elementos         IN y_objetos,
+                             i_pagina_parametros IN y_pagina_parametros)
+  RETURN y_pagina
+
+</PRE>
+<HR>
+<A NAME="F_MONITOREO_SQL"></A>
+<P CLASS="TYPE_TITLE">
+f_monitoreo_sql
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_monitoreo_sql(i_id_monitoreo    IN NUMBER,
+                         i_version         IN VARCHAR2 DEFAULT NULL,
+                         o_tiene_conflicto OUT BOOLEAN) RETURN y_respuesta
+
+</PRE>
+<HR>
+<A NAME="F_MONITOREO_COLUMNAS_SQL"></A>
+<P CLASS="TYPE_TITLE">
+f_monitoreo_columnas_sql
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_monitoreo_columnas_sql(i_id_monitoreo IN NUMBER) RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_PROCESAR_MONITOREO"></A>
+<P CLASS="TYPE_TITLE">
+f_procesar_monitoreo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_procesar_monitoreo(i_id_monitoreo IN NUMBER,
+                              i_version      IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_PROCESAR_MONITOREO2"></A>
+<P CLASS="TYPE_TITLE">
+f_procesar_monitoreo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_procesar_monitoreo(i_nombre  IN VARCHAR2,
+                              i_dominio IN VARCHAR2,
+                              i_version IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="P_PROCESAR_MONITOREOS"></A>
+<P CLASS="TYPE_TITLE">
+p_procesar_monitoreos
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_procesar_monitoreos(i_frecuencia IN VARCHAR2 DEFAULT NULL)
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

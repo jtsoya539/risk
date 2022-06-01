@@ -67,6 +67,16 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_CORREO_TABLA_HTML">f_correo_tabla_html</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_CORREO_TABLA_AUX_HTML">f_correo_tabla_aux_html</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#P_ENVIAR_CORREO">p_enviar_correo</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -109,6 +119,11 @@ Constants
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#C_CANTIDAD_INTENTOS_PERMITIDOS">c_cantidad_intentos_permitidos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#C_PRIORIDAD_URGENTE">c_prioridad_urgente</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -136,7 +151,15 @@ Constants
 c_ok
 </P>
 <PRE CLASS="DECL_TEXT">
-c_ok CONSTANT PLS_INTEGER := 0;
+c_ok                           CONSTANT PLS_INTEGER := 0;
+</PRE>
+<HR>
+<A NAME="C_CANTIDAD_INTENTOS_PERMITIDOS"></A>
+<P CLASS="TYPE_TITLE">
+c_cantidad_intentos_permitidos
+</P>
+<PRE CLASS="DECL_TEXT">
+c_cantidad_intentos_permitidos CONSTANT PLS_INTEGER := 3;
 </PRE>
 <HR>
 <A NAME="C_PRIORIDAD_URGENTE"></A>
@@ -220,6 +243,35 @@ FUNCTION f_correo_html(i_contenido      IN VARCHAR2,
                        i_pie            IN VARCHAR2 DEFAULT NULL,
                        i_boton_etiqueta IN VARCHAR2 DEFAULT NULL,
                        i_boton_accion   IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_CORREO_TABLA_HTML"></A>
+<P CLASS="TYPE_TITLE">
+f_correo_tabla_html
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_correo_tabla_html(i_tabla      IN VARCHAR2,
+                             i_titulo     IN VARCHAR2 DEFAULT NULL,
+                             i_encabezado IN VARCHAR2 DEFAULT NULL,
+                             i_pie        IN VARCHAR2 DEFAULT NULL)
+  RETURN CLOB
+
+</PRE>
+<HR>
+<A NAME="F_CORREO_TABLA_AUX_HTML"></A>
+<P CLASS="TYPE_TITLE">
+f_correo_tabla_aux_html
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_correo_tabla_aux_html(i_tabla       IN VARCHAR2,
+                                 i_tabla_aux_1 IN VARCHAR2 DEFAULT NULL,
+                                 i_tabla_aux_2 IN VARCHAR2 DEFAULT NULL,
+                                 i_tabla_aux_3 IN VARCHAR2 DEFAULT NULL,
+                                 i_titulo      IN VARCHAR2 DEFAULT NULL,
+                                 i_encabezado  IN VARCHAR2 DEFAULT NULL,
+                                 i_pie         IN VARCHAR2 DEFAULT NULL)
   RETURN CLOB
 
 </PRE>

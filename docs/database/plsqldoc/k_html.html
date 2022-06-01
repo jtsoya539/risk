@@ -73,7 +73,8 @@ Program units
 f_query2table
 </P>
 <PRE CLASS="DECL_TEXT">
-FUNCTION f_query2table(i_query IN CLOB) RETURN CLOB
+FUNCTION f_query2table(i_query    IN CLOB,
+                       i_template IN CLOB := NULL) RETURN CLOB
 
 </PRE>
 <HR>
