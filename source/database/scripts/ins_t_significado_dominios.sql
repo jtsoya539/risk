@@ -61,4 +61,7 @@ values ('TIPO_SERVICIO', 'Tipos de servicios', null, 'S', 'API');
 insert into t_significado_dominios (DOMINIO, DESCRIPCION, DETALLE, ACTIVO, ID_DOMINIO)
 values ('TIPO_IMPLEMENTACION', 'Tipos de implementación de operaciones', 'El valor de la referencia se utiliza para armar el nombre del programa a ejecutar para la operación. Ver la función k_operacion.f_nombre_programa', 'S', 'API');
 
+insert into t_significado_dominios (DOMINIO, DESCRIPCION, DETALLE, ACTIVO, ID_DOMINIO)
+values ('FRECUENCIA_MONITOREO', 'Frecuencias de ejecución de monitoreos', 'El valor de la referencia indica todas las frecuencias (códigos separados por comas) incluidas en la ejecución de la frecuencia dada', 'S', 'API');
+
 prompt Done.
