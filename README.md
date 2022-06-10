@@ -8,7 +8,7 @@ Bienvenido/a al repositorio del Proyecto RISK.
 RISK es una colección de objetos de Base de Datos Oracle (paquetes, types, tablas, entre otros) y una API web ASP.NET Core, que sigue el paradigma ["Thick Database"](https://www.oracle.com/a/tech/docs/why-use-plsql-whitepaper-10.pdf) y sirve como plantilla para el back-end de cualquier aplicación.
 
 # Características
-* Operaciones (Servicios Web, Reportes, Trabajos): Parámetros, Logs, Paginación
+* Operaciones (Servicios Web, Reportes, Trabajos, Monitoreos): Parámetros, Logs, Paginación
 * Configuración: Módulos, Dominios, Aplicaciones, Parámetros, Significados, Archivos, Datos Adicionales, Migraciones
 * Autenticación: Personas, Usuarios, Claves, Sesiones, Dispositivos
 * Autorización: Roles, Permisos
