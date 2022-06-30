@@ -245,7 +245,8 @@ f_archivo_ok
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_archivo_ok(i_contenido IN BLOB,
-                      i_formato   IN VARCHAR2 DEFAULT NULL)
+                      i_formato   IN VARCHAR2 DEFAULT NULL,
+                      i_nombre    IN VARCHAR2 DEFAULT NULL)
   RETURN y_archivo
 
 </PRE>
@@ -256,7 +257,8 @@ f_archivo_error
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
-                         i_formato   IN VARCHAR2 DEFAULT NULL)
+                         i_formato   IN VARCHAR2 DEFAULT NULL,
+                         i_nombre    IN VARCHAR2 DEFAULT NULL)
   RETURN y_archivo
 
 </PRE>
