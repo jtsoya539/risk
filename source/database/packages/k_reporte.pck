@@ -52,11 +52,13 @@ CREATE OR REPLACE PACKAGE k_reporte IS
   PROCEDURE p_limpiar_historial;
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
-                        i_formato   IN VARCHAR2 DEFAULT NULL)
+                        i_formato   IN VARCHAR2 DEFAULT NULL,
+                        i_nombre    IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo;
 
   FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
-                           i_formato   IN VARCHAR2 DEFAULT NULL)
+                           i_formato   IN VARCHAR2 DEFAULT NULL,
+                           i_nombre    IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo;
 
   FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2;
@@ -266,7 +268,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   END;
 
   FUNCTION f_archivo_ok(i_contenido IN BLOB,
-                        i_formato   IN VARCHAR2 DEFAULT NULL)
+                        i_formato   IN VARCHAR2 DEFAULT NULL,
+                        i_nombre    IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo IS
     l_archivo y_archivo;
     l_formato VARCHAR2(10);
@@ -281,8 +284,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_archivo.p_calcular_propiedades(l_archivo.contenido,
                                      l_archivo.checksum,
                                      l_archivo.tamano);
-    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion) ||
-                                 to_char(SYSDATE, '_YYYYMMDD_HH24MISS'));
+    l_archivo.nombre    := lower(nvl(i_nombre,
+                                     k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion) ||
+                                     to_char(SYSDATE, '_YYYYMMDD_HH24MISS')));
     l_archivo.extension := lower(l_formato);
     l_archivo.tipo_mime := k_archivo.f_tipo_mime('EXTENSION_REPORTE',
                                                  l_formato);
@@ -291,7 +295,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
   END;
 
   FUNCTION f_archivo_error(i_respuesta IN y_respuesta,
-                           i_formato   IN VARCHAR2 DEFAULT NULL)
+                           i_formato   IN VARCHAR2 DEFAULT NULL,
+                           i_nombre    IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo IS
     l_archivo y_archivo;
     l_formato VARCHAR2(10);
@@ -391,8 +396,9 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_archivo.p_calcular_propiedades(l_archivo.contenido,
                                      l_archivo.checksum,
                                      l_archivo.tamano);
-    l_archivo.nombre    := lower(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion) ||
-                                 to_char(SYSDATE, '_YYYYMMDD_HH24MISS'));
+    l_archivo.nombre    := lower(nvl(i_nombre,
+                                     k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion) ||
+                                     to_char(SYSDATE, '_YYYYMMDD_HH24MISS')));
     l_archivo.extension := lower(l_formato);
     l_archivo.tipo_mime := k_archivo.f_tipo_mime('EXTENSION_REPORTE',
                                                  l_formato);
