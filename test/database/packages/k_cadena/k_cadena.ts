@@ -178,6 +178,18 @@ Var2Global=False
 Var2Type=String
 Var2InputValue=ESte eS UN títULO DE pruEba srl
 Var2OutputValue=
+[Item8]
+Description=f_procesar_plantilla_uso_basico
+TestScript=f_procesar_plantilla_uso_basico.tst
+NewSession=False
+Enabled=True
+Performance=
+Var1Name=result
+Var1Enabled=True
+Var1Global=False
+Var1Type=String
+Var1InputValue=
+Var1OutputValue=OK
 
 [Notes]
 {\rtf1\ansi\ansicpg1252\deff0\deflang3082{\fonttbl{\f0\fnil\fcharset0 Arial;}}

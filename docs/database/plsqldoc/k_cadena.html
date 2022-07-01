@@ -65,8 +65,79 @@ Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_PROCESAR_PLANTILLA">f_procesar_plantilla</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
 </TABLE>
 <BR>
+<A NAME="Types"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Types
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#T_TEMPLATE_VARIABLE_NAME">t_template_variable_name</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#T_TEMPLATE_VARIABLE_VALUE">t_template_variable_value</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#T_ASSOC_ARRAY">t_assoc_array</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Variables"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Variables
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#NULL_ASSOC_ARRAY">null_assoc_array</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="T_TEMPLATE_VARIABLE_NAME"></A>
+<P CLASS="TYPE_TITLE">
+t_template_variable_name
+</P>
+<PRE CLASS="DECL_TEXT">
+SUBTYPE t_template_variable_name IS VARCHAR2(255);
+</PRE>
+<HR>
+<A NAME="T_TEMPLATE_VARIABLE_VALUE"></A>
+<P CLASS="TYPE_TITLE">
+t_template_variable_value
+</P>
+<PRE CLASS="DECL_TEXT">
+SUBTYPE t_template_variable_value IS VARCHAR2(32767);
+</PRE>
+<HR>
+<A NAME="T_ASSOC_ARRAY"></A>
+<P CLASS="TYPE_TITLE">
+t_assoc_array
+</P>
+<PRE CLASS="DECL_TEXT">
+TYPE t_assoc_array IS TABLE OF t_template_variable_value INDEX BY t_template_variable_name;
+</PRE>
+<HR>
+<A NAME="NULL_ASSOC_ARRAY"></A>
+<P CLASS="TYPE_TITLE">
+null_assoc_array
+</P>
+<PRE CLASS="DECL_TEXT">
+null_assoc_array t_assoc_array;
+</PRE>
 <HR>
 <A NAME="F_SEPARAR_CADENAS"></A>
 <P CLASS="TYPE_TITLE">
@@ -241,6 +312,18 @@ f_formatear_titulo
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_PROCESAR_PLANTILLA"></A>
+<P CLASS="TYPE_TITLE">
+f_procesar_plantilla
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_procesar_plantilla(i_plantilla IN CLOB,
+                              i_variables IN t_assoc_array DEFAULT null_assoc_array,
+                              i_wrap_char IN VARCHAR2 DEFAULT '@')
+  RETURN CLOB
 
 </PRE>
 <P>&nbsp;</P>

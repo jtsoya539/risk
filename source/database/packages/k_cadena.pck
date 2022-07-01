@@ -30,6 +30,18 @@ CREATE OR REPLACE PACKAGE k_cadena IS
   -------------------------------------------------------------------------------
   */
 
+  -- https://github.com/osalvador/tePLSQL
+  --Define data type for Template Variable names
+  SUBTYPE t_template_variable_name IS VARCHAR2(255);
+
+  --Define data type for Template Variable values
+  SUBTYPE t_template_variable_value IS VARCHAR2(32767);
+
+  --Define Associative Array
+  TYPE t_assoc_array IS TABLE OF t_template_variable_value INDEX BY t_template_variable_name;
+
+  null_assoc_array t_assoc_array;
+
   /**
   Retorna una tabla de cadenas delimitadas por un separador
   
@@ -76,6 +88,11 @@ CREATE OR REPLACE PACKAGE k_cadena IS
 
   FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
     DETERMINISTIC;
+
+  FUNCTION f_procesar_plantilla(i_plantilla IN CLOB,
+                                i_variables IN t_assoc_array DEFAULT null_assoc_array,
+                                i_wrap_char IN VARCHAR2 DEFAULT '@')
+    RETURN CLOB;
 
 END;
 /
@@ -292,6 +309,40 @@ CREATE OR REPLACE PACKAGE BODY k_cadena IS
     END LOOP;
     -- Retorna el titulo modificado
     RETURN v_palabra;
+  END;
+
+  -- https://github.com/osalvador/tePLSQL
+  FUNCTION f_procesar_plantilla(i_plantilla IN CLOB,
+                                i_variables IN t_assoc_array DEFAULT null_assoc_array,
+                                i_wrap_char IN VARCHAR2 DEFAULT '@')
+    RETURN CLOB IS
+    l_key     t_template_variable_name;
+    l_value   t_template_variable_value;
+    l_retorno CLOB;
+  BEGIN
+    l_retorno := i_plantilla;
+  
+    l_key := i_variables.first;
+    WHILE l_key IS NOT NULL LOOP
+      l_value := i_variables(l_key);
+    
+      l_retorno := REPLACE(l_retorno,
+                           i_wrap_char || l_key || i_wrap_char,
+                           l_value);
+      l_retorno := REPLACE(l_retorno,
+                           i_wrap_char || lower(l_key) || i_wrap_char,
+                           l_value);
+      l_retorno := REPLACE(l_retorno,
+                           i_wrap_char || upper(l_key) || i_wrap_char,
+                           l_value);
+      l_retorno := REPLACE(l_retorno,
+                           i_wrap_char || initcap(l_key) || i_wrap_char,
+                           l_value);
+    
+      l_key := i_variables.next(l_key);
+    END LOOP;
+  
+    RETURN l_retorno;
   END;
 
 END;
