@@ -2,8 +2,8 @@ PL/SQL Developer Test script 3.0
 5
 BEGIN
   -- Call the function
-  :RESULT := k_util.f_valor_posicion(i_cadena   => :i_cadena,
-                                     i_posicion => :i_posicion);
+  :RESULT := k_cadena.f_valor_posicion(i_cadena   => :i_cadena,
+                                       i_posicion => :i_posicion);
 END;
 3
 result

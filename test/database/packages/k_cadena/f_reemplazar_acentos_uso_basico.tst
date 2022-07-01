@@ -2,7 +2,7 @@ PL/SQL Developer Test script 3.0
 4
 BEGIN
   -- Call the function
-  :RESULT := k_util.f_reemplazar_acentos(i_cadena => :i_cadena);
+  :RESULT := k_cadena.f_reemplazar_acentos(i_cadena => :i_cadena);
 END;
 2
 result

@@ -2,7 +2,7 @@ PL/SQL Developer Test script 3.0
 4
 BEGIN
   -- Call the function
-  :RESULT := k_util.f_formatear_titulo(i_titulo => :i_titulo);
+  :RESULT := k_cadena.f_formatear_titulo(i_titulo => :i_titulo);
 END;
 2
 result

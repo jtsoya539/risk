@@ -53,6 +53,7 @@ prompt
 prompt Ejecutando tests de paquetes...
 prompt -----------------------------------
 prompt
+RunTestSet C:\repo\risk\test\database\packages\k_cadena\k_cadena.ts
 RunTestSet C:\repo\risk\test\database\packages\k_dato\k_dato.ts
 RunTestSet C:\repo\risk\test\database\packages\k_error\k_error.ts
 RunTestSet C:\repo\risk\test\database\packages\k_html\k_html.ts
