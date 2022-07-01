@@ -148,6 +148,7 @@ plugin plsqldoc generate k_archivo;
 plugin plsqldoc generate k_auditoria;
 plugin plsqldoc generate k_autenticacion;
 plugin plsqldoc generate k_autorizacion;
+plugin plsqldoc generate k_cadena;
 plugin plsqldoc generate k_clave;
 plugin plsqldoc generate k_dato;
 plugin plsqldoc generate k_dispositivo;

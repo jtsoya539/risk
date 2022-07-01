@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+ <LINK REL="STYLESHEET" TYPE="text/css" HREF="plsqldoc.css">
+ <TITLE>Package k_cadena</TITLE>
+ <META name="object" content="PACKAGE">
+ <META name="name" content="k_cadena">
+ <META name="description" content="Agrupa operaciones relacionadas con cadenas">
+</HEAD>
+<BODY>
+<TABLE WIDTH="100%"><TR>
+<TD><P ALIGN="LEFT"><STRONG><SMALL></SMALL></STRONG></TD>
+<TD><P ALIGN="RIGHT"><STRONG><SMALL><A HREF="index.html">index</A></SMALL></STRONG></TD>
+</TR></TABLE>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
+<P CLASS="MAIN_TITLE">Package k_cadena</P>
+Agrupa operaciones relacionadas con cadenas<br>
+
+<BR>
+<A NAME="Author"></A>
+<TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="MAIN_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:05:34
+</TD></TR>
+</TABLE>
+<BR>
+</TD></TR></TABLE>
+<HR>
+<A NAME="Program units"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Program units
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_SEPARAR_CADENAS">f_separar_cadenas</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna una tabla de cadenas delimitadas por un separador
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_UNIR_CADENAS">f_unir_cadenas</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_UNIR_CADENAS2">f_unir_cadenas</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALOR_POSICION">f_valor_posicion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_REEMPLAZAR_ACENTOS">f_reemplazar_acentos</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_FORMATEAR_TITULO">f_formatear_titulo</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_SEPARAR_CADENAS"></A>
+<P CLASS="TYPE_TITLE">
+f_separar_cadenas
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_separar_cadenas(i_cadena    IN VARCHAR2,
+                           i_separador IN VARCHAR2 DEFAULT '~')
+  RETURN y_cadenas
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna una tabla de cadenas delimitadas por un separador<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+dmezac 10/9/2020 18:05:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_cadena&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Cadena<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_separador&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Caracter separador. Por defecto '~'<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tabla de cadenas<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_UNIR_CADENAS"></A>
+<P CLASS="TYPE_TITLE">
+f_unir_cadenas
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_unir_cadenas(i_cadena    IN VARCHAR2,
+                        i_cadenas   IN y_cadenas,
+                        i_wrap_char IN VARCHAR2 DEFAULT '@')
+  RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_UNIR_CADENAS2"></A>
+<P CLASS="TYPE_TITLE">
+f_unir_cadenas
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_unir_cadenas(i_cadena    IN VARCHAR2,
+                        i_cadena1   IN VARCHAR2 DEFAULT NULL,
+                        i_cadena2   IN VARCHAR2 DEFAULT NULL,
+                        i_cadena3   IN VARCHAR2 DEFAULT NULL,
+                        i_cadena4   IN VARCHAR2 DEFAULT NULL,
+                        i_cadena5   IN VARCHAR2 DEFAULT NULL,
+                        i_wrap_char IN VARCHAR2 DEFAULT '@')
+  RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALOR_POSICION"></A>
+<P CLASS="TYPE_TITLE">
+f_valor_posicion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_valor_posicion(i_cadena    IN VARCHAR2,
+                          i_posicion  IN NUMBER,
+                          i_separador IN VARCHAR2 DEFAULT '~')
+  RETURN VARCHAR2
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Retorna el valor que se encuenta en la posicion indicada dentro de una cadena Si la posicion se encuentra fuera de rango retorna el valor mas cercano (primer valor o ultimo valor)<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 27/3/2020 17:07:15<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_cadena&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Cadena<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_posicion&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Posicion dentro de la cadena<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_separador&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Caracter separador. Por defecto '~'<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Returns"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Returns
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Valor que se encuenta en la posicion indicada<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="F_REEMPLAZAR_ACENTOS"></A>
+<P CLASS="TYPE_TITLE">
+f_reemplazar_acentos
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_reemplazar_acentos(i_cadena IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_FORMATEAR_TITULO"></A>
+<P CLASS="TYPE_TITLE">
+f_formatear_titulo
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_formatear_titulo(i_titulo IN VARCHAR2) RETURN VARCHAR2
+
+</PRE>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+</BODY>
+</HTML>

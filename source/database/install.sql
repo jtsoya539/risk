@@ -127,6 +127,7 @@ prompt
 @@types/y_objetos.typ
 
 @@packages/k_util.pck
+@@packages/k_cadena.pck
 @@packages/k_significado.pck
 @@packages/k_sistema.pck
 
