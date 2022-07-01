@@ -196,9 +196,9 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
     l_exp          NUMBER;
     l_payload_json json_object_t;
   BEGIN
-    l_payload_json := json_object_t.parse(utl_raw.cast_to_varchar2(utl_encode.base64_decode(utl_raw.cast_to_raw(k_util.f_valor_posicion(i_access_token,
-                                                                                                                                        2,
-                                                                                                                                        '.')))));
+    l_payload_json := json_object_t.parse(utl_raw.cast_to_varchar2(utl_encode.base64_decode(utl_raw.cast_to_raw(k_cadena.f_valor_posicion(i_access_token,
+                                                                                                                                          2,
+                                                                                                                                          '.')))));
     l_exp          := l_payload_json.get_number('exp');
     RETURN to_date('19700101', 'YYYYMMDD') +((l_exp +
                                              ((to_number(substr(tz_offset(sessiontimezone),

@@ -497,8 +497,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                 FROM t_operaciones o
                WHERE lower(op.nombre) IN
                      (SELECT lower(TRIM(column_value))
-                        FROM k_util.f_separar_cadenas(o.parametros_automaticos,
-                                                      ','))
+                        FROM k_cadena.f_separar_cadenas(o.parametros_automaticos,
+                                                        ','))
                  AND o.id_operacion = i_id_operacion)
        ORDER BY orden;
   BEGIN
@@ -1105,10 +1105,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     CURSOR c_operaciones(i_id_modulo IN VARCHAR2) IS
       SELECT a.id_operacion,
              lower(f_id_modulo(a.id_operacion)) id_modulo,
-             lower(k_util.f_reemplazar_acentos(k_significado.f_significado_codigo('TIPO_OPERACION',
-                                                                                  a.tipo) || '/' ||
-                                               nvl(a.dominio, '_') || '/' ||
-                                               a.nombre)) || '.sql' nombre_archivo
+             lower(k_cadena.f_reemplazar_acentos(k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                                                    a.tipo) || '/' ||
+                                                 nvl(a.dominio, '_') || '/' ||
+                                                 a.nombre)) || '.sql' nombre_archivo
         FROM t_operaciones a
        WHERE f_id_modulo(a.id_operacion) = i_id_modulo
        ORDER BY 3;

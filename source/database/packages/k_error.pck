@@ -129,9 +129,9 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
         l_mensaje := 'Error no registrado [' || i_id_error || ']';
     END;
   
-    RETURN k_util.f_unir_cadenas(l_mensaje,
-                                 i_cadenas,
-                                 nvl(i_wrap_char, c_wrap_char));
+    RETURN k_cadena.f_unir_cadenas(l_mensaje,
+                                   i_cadenas,
+                                   nvl(i_wrap_char, c_wrap_char));
   END;
 
   FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
@@ -165,13 +165,13 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
         l_mensaje := 'Error no registrado [' || i_id_error || ']';
     END;
   
-    RETURN k_util.f_unir_cadenas(l_mensaje,
-                                 i_cadena1,
-                                 i_cadena2,
-                                 i_cadena3,
-                                 i_cadena4,
-                                 i_cadena5,
-                                 nvl(i_wrap_char, c_wrap_char));
+    RETURN k_cadena.f_unir_cadenas(l_mensaje,
+                                   i_cadena1,
+                                   i_cadena2,
+                                   i_cadena3,
+                                   i_cadena4,
+                                   i_cadena5,
+                                   nvl(i_wrap_char, c_wrap_char));
   END;
 
 END;

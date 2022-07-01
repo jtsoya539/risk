@@ -887,7 +887,8 @@ SELECT n.prioridad,
        WHERE o.id_operacion = m.id_monitoreo
          AND o.activo = 'S'
          AND (m.frecuencia IN
-             (SELECT * FROM (k_util.f_separar_cadenas(i_frecuencias, ','))) OR
+             (SELECT *
+                 FROM (k_cadena.f_separar_cadenas(i_frecuencias, ','))) OR
              i_frecuencias IS NULL);
     --
     l_frecuencias t_significados.referencia%TYPE;

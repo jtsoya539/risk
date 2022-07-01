@@ -540,7 +540,7 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
               l_buffer := REPLACE(l_buffer, '&', '&amp;');
               l_buffer := REPLACE(l_buffer, '"', '&quot;');
               l_buffer := REPLACE(l_buffer, '''', '&apos;');
-              l_buffer := k_util.f_reemplazar_acentos(l_buffer);
+              l_buffer := k_cadena.f_reemplazar_acentos(l_buffer);
               l_buffer := nvl(l_buffer, ' ');
               zt_word.p_table_cell(p_doc_id      => l_document,
                                    p_table_id    => l_table,

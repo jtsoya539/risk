@@ -410,15 +410,15 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
     BEGIN
       SELECT TRIM(column_value) estado
         INTO l_estado_usuario
-        FROM k_util.f_separar_cadenas(k_util.f_valor_parametro('ESTADOS_ACTIVOS_USUARIO'),
-                                      ',')
+        FROM k_cadena.f_separar_cadenas(k_util.f_valor_parametro('ESTADOS_ACTIVOS_USUARIO'),
+                                        ',')
        WHERE TRIM(column_value) = l_estado_usuario;
     EXCEPTION
       WHEN no_data_found THEN
         raise_application_error(-20000,
                                 'Usuario ' ||
-                                k_util.f_formatear_titulo(k_significado.f_significado_codigo('ESTADO_USUARIO',
-                                                                                             l_estado_usuario)));
+                                k_cadena.f_formatear_titulo(k_significado.f_significado_codigo('ESTADO_USUARIO',
+                                                                                               l_estado_usuario)));
       WHEN OTHERS THEN
         NULL;
     END;

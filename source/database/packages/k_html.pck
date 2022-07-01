@@ -216,7 +216,7 @@ CREATE OR REPLACE PACKAGE BODY k_html IS
          AND a.nombre IS NOT NULL
          AND a.extension IS NOT NULL
          AND a.referencia IN
-             (SELECT * FROM k_util.f_separar_cadenas(i_fuentes, ','));
+             (SELECT * FROM k_cadena.f_separar_cadenas(i_fuentes, ','));
   BEGIN
     FOR c IN c_fuentes LOOP
       p_print('@font-face { font-family: "' || c.nombre || '"; src: url("' ||
