@@ -80,7 +80,7 @@ namespace Risk.API.Helpers
 
             // Body
             string subtype;
-            if (msj.MensajeBody.Contains("<html>") && msj.MensajeBody.Contains("</html>"))
+            if (HtmlHelper.IsHtml(msj.MensajeBody))
             {
                 subtype = "html";
             }

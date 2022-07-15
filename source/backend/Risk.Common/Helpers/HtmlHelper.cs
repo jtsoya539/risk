@@ -51,5 +51,10 @@ namespace Risk.Common.Helpers
 
             return content;
         }
+
+        public static bool IsHtml(string text)
+        {
+            return text.ToLower().Contains("<html") && text.ToLower().Contains("</html>");
+        }
     }
 }
