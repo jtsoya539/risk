@@ -22,9 +22,6 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using System;
-using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
@@ -35,9 +32,8 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using MimeKit;
+using Risk.API.Helpers;
 using Risk.API.Models;
-using Risk.Common.Helpers;
 
 namespace Risk.API.Senders
 {
@@ -94,11 +90,11 @@ namespace Risk.API.Senders
             if (_configuration.GetValue<bool>("MsjConfiguration:Gmail:EnableOAuth2"))
             {
                 await ConfigurarOAuth2Async();
-                smtpClient.Authenticate(oAuth2);
+                await smtpClient.AuthenticateAsync(oAuth2);
             }
             else
             {
-                smtpClient.Authenticate(_configuration["MsjConfiguration:Gmail:UserName"], _configuration["MsjConfiguration:Gmail:Password"]);
+                await smtpClient.AuthenticateAsync(_configuration["MsjConfiguration:Gmail:UserName"], _configuration["MsjConfiguration:Gmail:Password"]);
             }
         }
 
@@ -109,72 +105,7 @@ namespace Risk.API.Senders
 
         public async Task Enviar(Correo msj)
         {
-            var message = new MimeMessage();
-            message.From.Add(new MailboxAddress(mailboxFromName, mailboxFromAddress));
-            message.To.Add(new MailboxAddress(msj.MensajeTo, msj.MensajeTo));
-
-            if (msj.MensajeReplyTo != null)
-            {
-                message.ReplyTo.Add(new MailboxAddress(msj.MensajeReplyTo, msj.MensajeReplyTo));
-            }
-
-            if (msj.MensajeCc != null)
-            {
-                message.Cc.Add(new MailboxAddress(msj.MensajeCc, msj.MensajeCc));
-            }
-
-            if (msj.MensajeBcc != null)
-            {
-                message.Bcc.Add(new MailboxAddress(msj.MensajeBcc, msj.MensajeBcc));
-            }
-
-            message.Subject = msj.MensajeSubject;
-
-            var multipart = new Multipart("mixed");
-
-            // Body
-            string subtype;
-            if (msj.MensajeBody.Contains("<html>") && msj.MensajeBody.Contains("</html>"))
-            {
-                subtype = "html";
-            }
-            else
-            {
-                subtype = "plain";
-            }
-            var body = new TextPart(subtype)
-            {
-                Text = msj.MensajeBody
-            };
-            multipart.Add(body);
-
-            // Attachments
-            if (msj.Adjuntos.Any())
-            {
-                foreach (var adjunto in msj.Adjuntos)
-                {
-                    string contentType = adjunto.TipoMime;
-                    if (string.IsNullOrEmpty(contentType))
-                    {
-                        contentType = "application/octet-stream";
-                    }
-
-                    byte[] contenido = GZipHelper.Decompress(Convert.FromBase64String(adjunto.Contenido));
-                    var ms = new MemoryStream();
-                    ms.Write(contenido, 0, contenido.Length);
-
-                    var attachment = new MimePart(contentType)
-                    {
-                        Content = new MimeContent(ms, ContentEncoding.Default),
-                        ContentDisposition = new ContentDisposition(ContentDisposition.Attachment),
-                        ContentTransferEncoding = ContentEncoding.Base64,
-                        FileName = string.Concat(adjunto.Nombre, ".", adjunto.Extension)
-                    };
-                    multipart.Add(attachment);
-                }
-            }
-
-            message.Body = multipart;
+            var message = MailHelper.GetMimeMessageFromCorreo(msj);
             await smtpClient.SendAsync(message);
         }
     }
