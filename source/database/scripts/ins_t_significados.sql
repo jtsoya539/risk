@@ -266,6 +266,9 @@ insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('TIPO_IMPLEMENTACION', 'F', 'FUNCIÓN', 'F', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
+values ('TIPO_IMPLEMENTACION', 'B', 'BLOQUE_PLSQL', 'B', 'S');
+
+insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)
 values ('FRECUENCIA_MONITOREO', 'M', 'MENSUAL', 'M,S,D,12H,6H,2H,H', 'S');
 
 insert into t_significados (DOMINIO, CODIGO, SIGNIFICADO, REFERENCIA, ACTIVO)

@@ -540,10 +540,12 @@ SELECT n.prioridad,
     l_elementos y_objetos;
     l_elemento  y_dato;
   
-    l_nombre_monitoreo  t_operaciones.nombre%TYPE;
-    l_dominio_monitoreo t_operaciones.dominio%TYPE;
-    l_version_actual    t_operaciones.version_actual%TYPE;
-    l_consulta_sql      t_monitoreos.consulta_sql%TYPE;
+    l_nombre_monitoreo    t_operaciones.nombre%TYPE;
+    l_dominio_monitoreo   t_operaciones.dominio%TYPE;
+    l_version_actual      t_operaciones.version_actual%TYPE;
+    l_tipo_implementacion t_operaciones.tipo_implementacion%TYPE;
+    l_consulta_sql        t_monitoreos.consulta_sql%TYPE;
+    l_bloque_plsql        t_monitoreos.bloque_plsql%TYPE;
   
     l_sentencia VARCHAR2(4000);
   BEGIN
@@ -557,11 +559,15 @@ SELECT n.prioridad,
       SELECT upper(o.nombre),
              upper(o.dominio),
              o.version_actual,
-             m.consulta_sql
+             nvl(o.tipo_implementacion, 'K'),
+             m.consulta_sql,
+             m.bloque_plsql
         INTO l_nombre_monitoreo,
              l_dominio_monitoreo,
              l_version_actual,
-             l_consulta_sql
+             l_tipo_implementacion,
+             l_consulta_sql,
+             l_bloque_plsql
         FROM t_monitoreos m, t_operaciones o
        WHERE o.id_operacion = m.id_monitoreo
          AND o.activo = 'S'
@@ -679,20 +685,40 @@ SELECT n.prioridad,
           END;
         
           l_rsp_det.lugar := 'Construyendo sentencia';
-          IF nvl(i_version, l_version_actual) = l_version_actual THEN
-            l_sentencia := 'BEGIN :1 := K_MONITOREO_' ||
-                           l_dominio_monitoreo || '.' || l_nombre_monitoreo ||
-                           '(:2); END;';
+          IF l_tipo_implementacion = 'B' THEN
+            l_bloque_plsql := 'DECLARE' || chr(10) ||
+                              '  l_rsp        y_respuesta := NEW y_respuesta();' ||
+                              chr(10) ||
+                              '  l_parametros y_parametros := :1;' ||
+                              chr(10) || 'BEGIN' || chr(10) ||
+                              '  IF l_parametros.count > 0 THEN' || chr(10) ||
+                              '    ' || l_bloque_plsql || ' ' || chr(10) ||
+                              '  ELSE' || chr(10) ||
+                              '    l_rsp.lugar := ''SIN PARÁMETROS'';' ||
+                              chr(10) || '  END IF;' || chr(10) ||
+                              '  :2 := l_rsp;' || chr(10) || 'END;';
           ELSE
-            l_sentencia := 'BEGIN :1 := K_MONITOREO_' ||
-                           l_dominio_monitoreo || '.' || l_nombre_monitoreo || '_' ||
-                           REPLACE(i_version, '.', '_') || '(:2); END;';
+            IF nvl(i_version, l_version_actual) = l_version_actual THEN
+              l_sentencia := 'BEGIN :1 := K_MONITOREO_' ||
+                             l_dominio_monitoreo || '.' ||
+                             l_nombre_monitoreo || '(:2); END;';
+            ELSE
+              l_sentencia := 'BEGIN :1 := K_MONITOREO_' ||
+                             l_dominio_monitoreo || '.' ||
+                             l_nombre_monitoreo || '_' ||
+                             REPLACE(i_version, '.', '_') || '(:2); END;';
+            END IF;
           END IF;
         
           l_rsp_det.lugar := 'Mitigando conflicto';
           BEGIN
-            EXECUTE IMMEDIATE l_sentencia
-              USING OUT l_rsp_det, IN l_prms;
+            IF l_tipo_implementacion = 'B' THEN
+              EXECUTE IMMEDIATE l_bloque_plsql
+                USING IN l_prms, OUT l_rsp_det;
+            ELSE
+              EXECUTE IMMEDIATE l_sentencia
+                USING OUT l_rsp_det, IN l_prms;
+            END IF;
           EXCEPTION
             WHEN k_operacion.ex_servicio_no_implementado THEN
               k_operacion.p_respuesta_error(l_rsp_det,

@@ -13,7 +13,8 @@ create table T_MONITOREOS
   id_usuario_responsable           NUMBER(10),
   nivel_aviso                      NUMBER(1) DEFAULT 1 NOT NULL,
   frecuencia                       VARCHAR2(3) DEFAULT 'D' NOT NULL,
-  comentarios                      VARCHAR2(1000)
+  comentarios                      VARCHAR2(1000),
+  bloque_plsql                     CLOB
 )
 ;
 comment on table T_MONITOREOS
@@ -46,6 +47,8 @@ comment on column T_MONITOREOS.frecuencia
   is 'Frecuencia de ejecución del monitoreo';
 comment on column T_MONITOREOS.comentarios
   is 'Comentarios del monitoreo';
+comment on column T_MONITOREOS.bloque_plsql
+  is 'Bloque PL/SQL del monitoreo';
 alter table T_MONITOREOS
   add constraint PK_MONITOREOS primary key (ID_MONITOREO);
 alter table T_MONITOREOS
