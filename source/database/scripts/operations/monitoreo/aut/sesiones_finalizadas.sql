@@ -198,6 +198,34 @@ begin
   l_varchar2(8) :=q'!0!';
   l_clob(9) :=q'!D!';
   l_clob(10) :=q'!!';
+  l_clob(11) :=q'!DECLARE
+  l_access_token t_sesiones.access_token%TYPE;
+BEGIN
+  l_rsp.lugar    := 'Obteniendo parámetros';
+  l_access_token := k_operacion.f_valor_parametro_string(l_parametros,
+                                                         'access_token');
+
+  l_rsp.lugar := 'Validando parámetros';
+  k_operacion.p_validar_parametro(l_rsp,
+                                  l_access_token IS NOT NULL,
+                                  'Debe ingresar access_token');
+
+  l_rsp.lugar := 'Finalizando sesiones de usuario';
+  k_sesion.p_cambiar_estado(i_access_token => l_access_token,
+                            i_estado       => 'F');
+
+  k_operacion.p_respuesta_ok(l_rsp);
+EXCEPTION
+  WHEN k_operacion.ex_error_parametro THEN
+    NULL;
+  WHEN k_operacion.ex_error_general THEN
+    NULL;
+  WHEN OTHERS THEN
+    k_operacion.p_respuesta_excepcion(l_rsp,
+                                      utl_call_stack.error_number(1),
+                                      utl_call_stack.error_msg(1),
+                                      dbms_utility.format_error_stack);
+END;!';
 
   insert into t_monitoreos
   (
@@ -211,6 +239,7 @@ begin
     ,"NIVEL_AVISO"
     ,"FRECUENCIA"
     ,"COMENTARIOS"
+    ,"BLOQUE_PLSQL"
   )
   values
   (
@@ -224,6 +253,7 @@ begin
     ,to_number(l_varchar2(8))
     ,to_char(l_clob(9))
     ,to_char(l_clob(10))
+    ,l_clob(11)
   );
 
 end;

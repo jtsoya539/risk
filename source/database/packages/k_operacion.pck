@@ -1001,7 +1001,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     l_inserts := l_inserts || l_insert;
     --
     lp_comentar('T_MONITOREOS');
-    l_insert  := fn_gen_inserts('SELECT id_monitoreo, causa, consulta_sql, plan_accion, prioridad, id_rol_responsable, id_usuario_responsable, nivel_aviso, frecuencia, comentarios FROM t_monitoreos WHERE id_monitoreo = ' ||
+    l_insert  := fn_gen_inserts('SELECT id_monitoreo, causa, consulta_sql, plan_accion, prioridad, id_rol_responsable, id_usuario_responsable, nivel_aviso, frecuencia, comentarios, bloque_plsql FROM t_monitoreos WHERE id_monitoreo = ' ||
                                 to_char(i_operacion.id_operacion),
                                 't_monitoreos');
     l_inserts := l_inserts || l_insert;

@@ -190,6 +190,7 @@ begin
   l_varchar2(8) :=q'!0!';
   l_clob(9) :=q'!D!';
   l_clob(10) :=q'!!';
+  l_clob(11) :=q'!!';
 
   insert into t_monitoreos
   (
@@ -203,6 +204,7 @@ begin
     ,"NIVEL_AVISO"
     ,"FRECUENCIA"
     ,"COMENTARIOS"
+    ,"BLOQUE_PLSQL"
   )
   values
   (
@@ -216,6 +218,7 @@ begin
     ,to_number(l_varchar2(8))
     ,to_char(l_clob(9))
     ,to_char(l_clob(10))
+    ,l_clob(11)
   );
 
 end;
