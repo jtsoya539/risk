@@ -208,6 +208,7 @@ prompt
 @@triggers/gb_personas.trg
 @@triggers/gb_datos.trg
 @@triggers/gb_archivos.trg
+@@triggers/gb_monitoreos.trg
 @@triggers/gf_archivos.trg
 @@triggers/gf_operaciones.trg
 

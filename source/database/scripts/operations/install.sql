@@ -3,6 +3,7 @@ prompt Instalando operaciones...
 prompt -----------------------------------
 prompt
 @@scripts/operations/monitoreo/aut/sesiones_expiradas.sql
+@@scripts/operations/monitoreo/aut/sesiones_finalizadas.sql
 @@scripts/operations/parametros/_/contexto.sql
 @@scripts/operations/parametros/_/parametros_automaticos.sql
 @@scripts/operations/reporte/gen/listar_significados.sql
