@@ -175,7 +175,7 @@ namespace Risk.API
                 c.OperationFilter<ServiceErrorsOperationFilter>();
                 c.OperationFilter<HeaderParameterOperationFilter>(RiskConstants.HEADER_RISK_DEVICE_TOKEN, "Token del dispositivo desde el cual se realiza la petición", false);
                 c.OperationFilter<HeaderParameterOperationFilter>(RiskConstants.HEADER_RISK_SERVICE_VERSION, "Versión del servicio", false);
-                c.SchemaFilter<NotNullableSchemaFilter>();
+                //c.SchemaFilter<NotNullableSchemaFilter>();
             });
             services.AddSwaggerGenNewtonsoftSupport();
         }
