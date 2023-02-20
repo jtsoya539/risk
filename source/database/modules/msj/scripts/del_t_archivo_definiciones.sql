@@ -1,0 +1,1 @@
+DELETE t_archivo_definiciones WHERE tabla = 'T_CORREO_ADJUNTOS';

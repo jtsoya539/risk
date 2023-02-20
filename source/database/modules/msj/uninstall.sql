@@ -105,6 +105,8 @@ prompt
 @@../../packages/k_modulo.pck
 @@../../compile_schema.sql
 @@scripts/operations/uninstall.sql
+@@scripts/del_t_archivo_definiciones.sql
+@@scripts/del_t_aplicaciones.sql
 @@scripts/del_t_parametros.sql
 @@scripts/del_t_significados.sql
 @@scripts/del_t_significado_dominios.sql

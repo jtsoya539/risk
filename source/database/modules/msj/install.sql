@@ -114,6 +114,8 @@ prompt
 @@scripts/ins_t_significados.sql
 @@scripts/ins_t_parametros.sql
 @@scripts/ins_t_notificacion_plantillas.sql
+@@scripts/ins_t_aplicaciones.sql
+@@scripts/ins_t_archivo_definiciones.sql
 @@scripts/operations/install.sql
 commit;
 /
