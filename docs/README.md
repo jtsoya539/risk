@@ -18,10 +18,10 @@ Bienvenido/a a la documentación del Proyecto RISK.
 
 ## Requerimientos
 ### Base de Datos
-* [Oracle Database 12c o superior](https://www.oracle.com/database/technologies/xe-downloads.html)
+* [Oracle Database 12c o superior](https://www.oracle.com/database/technologies/oracle-database-software-downloads.html)
 
 ### Back-End
-* [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+* [.NET 6.0 o superior](https://dotnet.microsoft.com/en-us/download/dotnet)
 
 Los servicios de mensajería tienen requerimientos especiales de terceros:
 
@@ -49,7 +49,7 @@ uninstall_dependencies.sql|Desinstala del esquema actual las dependencias de ter
 
 ### Back-End
 #### Pasos para configurar el entorno de desarrollo
-1. Instalar el SDK de .NET Core 3.1 siguiendo las instrucciones según la plataforma preferida.
+1. Instalar el SDK de .NET siguiendo las instrucciones según la plataforma preferida.
 2. Opcionalmente, instalar el editor Visual Studio Code con la extensión C#.
 3. Clonar o descargar el repositorio de RISK.
 4. En el command prompt, ubicarse en la raíz del repositorio e ir hasta *source/backend/Risk.API* (contiene el archivo del proyecto *Risk.API.csproj*).
