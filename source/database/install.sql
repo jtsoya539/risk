@@ -222,10 +222,6 @@ prompt
 @@scripts/ins_t_errores.sql
 @@scripts/ins_t_parametros.sql
 @@scripts/ins_t_roles.sql
-@@scripts/ins_t_paises.sql
-@@scripts/ins_t_departamentos.sql
-@@scripts/ins_t_idiomas.sql
-@@scripts/ins_t_monedas.sql
 @@scripts/ins_t_archivo_definiciones.sql
 @@scripts/ins_t_archivos.sql
 @@scripts/operations/install.sql
