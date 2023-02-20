@@ -633,6 +633,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                                               l_dispositivo.zona_horaria,
                                                               l_dispositivo.id_idioma_iso369_1);
   
+    $if k_modulo.c_instalado_msj $then
     l_rsp.lugar := 'Agregando suscripciones';
     i           := l_dispositivo.suscripciones.first;
     WHILE i IS NOT NULL LOOP
@@ -641,6 +642,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_aut IS
                                              l_dato.contenido);
       i := l_dispositivo.suscripciones.next(i);
     END LOOP;
+    $end
   
     l_rsp.lugar := 'Buscando token del dispositivo';
     BEGIN

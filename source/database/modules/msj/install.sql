@@ -69,6 +69,8 @@ prompt
 @@tables/t_mensajes.tab
 @@tables/t_notificaciones.tab
 @@tables/t_notificacion_plantillas.tab
+@@tables/t_dispositivo_suscripciones.tab
+@@tables/t_usuario_suscripciones.tab
 
 prompt
 prompt Creando vistas...

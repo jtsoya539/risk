@@ -248,10 +248,12 @@ CREATE OR REPLACE PACKAGE BODY k_sesion IS
        AND estado <> i_estado
     RETURNING id_usuario INTO l_id_usuario;
   
+    $if k_modulo.c_instalado_msj $then
     IF l_id_usuario IS NOT NULL AND i_estado IN ('X', 'I', 'F') THEN
       k_dispositivo.p_desuscribir_notificacion_usuario(l_id_dispositivo,
                                                        l_id_usuario);
     END IF;
+    $end
   EXCEPTION
     WHEN ex_sesion_inexistente THEN
       /*raise_application_error(-20000, 'Sesion inexistente');*/

@@ -100,11 +100,9 @@ prompt
 @@tables/t_monitoreos.tab
 @@tables/t_monitoreo_ejecuciones.tab
 @@tables/t_dispositivos.tab
-@@tables/t_dispositivo_suscripciones.tab
 @@tables/t_dispositivo_ubicaciones.tab
 @@tables/t_sesiones.tab
 @@tables/t_usuario_claves.tab
-@@tables/t_usuario_suscripciones.tab
 @@tables/t_dato_definiciones.tab
 @@tables/t_datos.tab
 @@tables/t_archivo_definiciones.tab
@@ -232,7 +230,6 @@ prompt
 @@scripts/ins_t_personas.sql
 @@scripts/ins_t_usuarios.sql
 @@scripts/ins_t_usuario_claves.sql
-@@scripts/ins_t_usuario_suscripciones.sql
 @@scripts/ins_t_rol_usuarios.sql
 @@scripts/ins_t_archivos.sql
 @@scripts/operations/install.sql

@@ -69,6 +69,8 @@ prompt
 prompt Borrando tablas...
 prompt -----------------------------------
 prompt
+drop table t_usuario_suscripciones cascade constraints;
+drop table t_dispositivo_suscripciones cascade constraints;
 drop table t_notificacion_plantillas cascade constraints;
 drop table t_notificaciones cascade constraints;
 drop table t_mensajes cascade constraints;

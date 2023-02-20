@@ -58,6 +58,7 @@ CREATE OR REPLACE PACKAGE k_usuario IS
   PROCEDURE p_cambiar_estado(i_id_usuario IN NUMBER,
                              i_estado     IN VARCHAR2);
 
+  $if k_modulo.c_instalado_msj $then
   /**
   Suscribe usuario a una notificación
   
@@ -77,6 +78,7 @@ CREATE OR REPLACE PACKAGE k_usuario IS
   */
   PROCEDURE p_desuscribir_notificacion(i_id_usuario       IN NUMBER,
                                        i_suscripcion_baja IN VARCHAR2);
+  $end
 
   /**
   Guarda dato de un usuario
@@ -359,6 +361,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
     END IF;
   END;
 
+  $if k_modulo.c_instalado_msj $then
   PROCEDURE p_suscribir_notificacion(i_id_usuario       IN NUMBER,
                                      i_suscripcion_alta IN VARCHAR2) IS
   BEGIN
@@ -387,6 +390,7 @@ CREATE OR REPLACE PACKAGE BODY k_usuario IS
      WHERE s.id_usuario = i_id_usuario
        AND lower(s.suscripcion) = lower(i_suscripcion_baja);
   END;
+  $end
 
   PROCEDURE p_guardar_dato_string(i_alias IN VARCHAR2,
                                   i_campo IN VARCHAR2,

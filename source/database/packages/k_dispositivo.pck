@@ -56,6 +56,7 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   FUNCTION f_datos_dispositivo(i_id_dispositivo IN NUMBER)
     RETURN y_dispositivo;
 
+  $if k_modulo.c_instalado_msj $then
   PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                      i_suscripcion_alta IN VARCHAR2);
 
@@ -101,6 +102,7 @@ CREATE OR REPLACE PACKAGE k_dispositivo IS
   */
   PROCEDURE p_desuscribir_notificacion_usuario(i_id_dispositivo IN NUMBER,
                                                i_id_usuario     IN NUMBER);
+  $end
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
                                   i_latitud        IN NUMBER,
@@ -251,10 +253,12 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
       RETURNING id_dispositivo INTO l_id_dispositivo;
     END IF;
   
+    $if k_modulo.c_instalado_msj $then
     IF l_id_dispositivo IS NOT NULL THEN
       -- Inserta o actualiza una suscripción por defecto en el dispositivo
       p_suscribir_notificacion(l_id_dispositivo, c_suscripcion_defecto);
     END IF;
+    $end
   
     RETURN l_id_dispositivo;
   END;
@@ -275,11 +279,13 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
        WHERE n.id_aplicacion = i_id_aplicacion;
     $end
   
+    $if k_modulo.c_instalado_msj $then
     CURSOR cr_suscripciones(i_id_dispositivo IN NUMBER) IS
       SELECT s.suscripcion
         FROM t_dispositivo_suscripciones s
        WHERE (s.fecha_expiracion IS NULL OR s.fecha_expiracion > SYSDATE)
          AND s.id_dispositivo = i_id_dispositivo;
+    $end
   BEGIN
     -- Inicializa respuesta
     l_dispositivo   := NEW y_dispositivo();
@@ -345,6 +351,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
     l_dispositivo.plantillas := l_plantillas;
   
     -- Buscando suscripciones del dispositivo
+    $if k_modulo.c_instalado_msj $then
     FOR c IN cr_suscripciones(l_dispositivo.id_dispositivo) LOOP
       l_suscripcion           := NEW y_dato();
       l_suscripcion.contenido := c.suscripcion;
@@ -352,11 +359,13 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
       l_suscripciones.extend;
       l_suscripciones(l_suscripciones.count) := l_suscripcion;
     END LOOP;
+    $end
     l_dispositivo.suscripciones := l_suscripciones;
   
     RETURN l_dispositivo;
   END;
 
+  $if k_modulo.c_instalado_msj $then
   PROCEDURE p_suscribir_notificacion(i_id_dispositivo   IN NUMBER,
                                      i_suscripcion_alta IN VARCHAR2) IS
   BEGIN
@@ -438,6 +447,7 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
               FROM t_usuario_suscripciones us
              WHERE us.id_usuario = i_id_usuario);
   END;
+  $end
 
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
                                   i_latitud        IN NUMBER,

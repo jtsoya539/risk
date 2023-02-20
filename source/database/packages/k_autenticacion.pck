@@ -212,9 +212,11 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
       k_clave.p_registrar_clave(l_alias, i_clave, k_clave.c_clave_acceso);
     END IF;
   
+    $if k_modulo.c_instalado_msj $then
     -- Inserta o actualiza suscripción básica del usuario
     k_usuario.p_suscribir_notificacion(l_id_usuario,
                                        k_dispositivo.f_suscripcion_usuario(l_id_usuario));
+    $end
   
     $if k_modulo.c_instalado_msj $then
     IF l_confirmacion_activa = 'S' THEN
@@ -501,11 +503,13 @@ CREATE OR REPLACE PACKAGE BODY k_autenticacion IS
        i_dato_externo)
     RETURNING id_sesion INTO l_id_sesion;
   
+    $if k_modulo.c_instalado_msj $then
     IF l_id_dispositivo IS NOT NULL THEN
       -- Inserta o actualiza suscripciones del usuario en el dispositivo
       k_dispositivo.p_suscribir_notificacion_usuario(l_id_dispositivo,
                                                      l_id_usuario);
     END IF;
+    $end
   
     RETURN l_id_sesion;
   EXCEPTION
