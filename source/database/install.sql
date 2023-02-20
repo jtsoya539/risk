@@ -227,10 +227,6 @@ prompt
 @@scripts/ins_t_idiomas.sql
 @@scripts/ins_t_monedas.sql
 @@scripts/ins_t_archivo_definiciones.sql
-@@scripts/ins_t_personas.sql
-@@scripts/ins_t_usuarios.sql
-@@scripts/ins_t_usuario_claves.sql
-@@scripts/ins_t_rol_usuarios.sql
 @@scripts/ins_t_archivos.sql
 @@scripts/operations/install.sql
 commit;
