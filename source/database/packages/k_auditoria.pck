@@ -61,9 +61,9 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
     -- Genera campos
     l_sentencia := 'alter table ' || i_tabla || ' add
 (
-  usuario_insercion    VARCHAR2(30) DEFAULT SUBSTR(USER, 1, 30),
+  usuario_insercion    VARCHAR2(300) DEFAULT SUBSTR(USER, 1, 300),
   fecha_insercion      DATE DEFAULT SYSDATE,
-  usuario_modificacion VARCHAR2(30) DEFAULT SUBSTR(USER, 1, 30),
+  usuario_modificacion VARCHAR2(300) DEFAULT SUBSTR(USER, 1, 300),
   fecha_modificacion   DATE DEFAULT SYSDATE
 )';
     IF i_ejecutar THEN
@@ -116,10 +116,9 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
   
     -- Genera trigger
     l_sentencia := 'CREATE OR REPLACE TRIGGER ' || l_trigger || '
-  BEFORE DELETE OR INSERT OR UPDATE ON ' ||
-                   lower(i_tabla) || '
+  BEFORE INSERT OR UPDATE ON ' || lower(i_tabla) || '
   FOR EACH ROW
-DECLARE
+BEGIN
   /*
   --------------------------------- MIT License ---------------------------------
   Copyright (c) 2019 jtsoya539
@@ -144,27 +143,19 @@ DECLARE
   -------------------------------------------------------------------------------
   */
 
-  -- Auditoría para inserción de registros
-  PROCEDURE lp_insercion IS
-  BEGIN
-    :new.usuario_insercion := substr(USER, 1, 30);
+  IF inserting THEN
+    -- Auditoría para inserción de registros
+    :new.usuario_insercion := substr(coalesce(k_sistema.f_usuario, USER),
+                                     1,
+                                     300);
     :new.fecha_insercion   := SYSDATE;
-  END;
+  END IF;
 
   -- Auditoría para modificación de registros
-  PROCEDURE lp_modificacion IS
-  BEGIN
-    :new.usuario_modificacion := substr(USER, 1, 30);
-    :new.fecha_modificacion   := SYSDATE;
-  END;
-BEGIN
-  -- Registrar campos de auditoría
-  IF inserting THEN
-    lp_insercion;
-    lp_modificacion;
-  ELSIF updating THEN
-    lp_modificacion;
-  END IF;
+  :new.usuario_modificacion := substr(coalesce(k_sistema.f_usuario, USER),
+                                      1,
+                                      300);
+  :new.fecha_modificacion   := SYSDATE;
 END;';
   
     IF i_ejecutar THEN
