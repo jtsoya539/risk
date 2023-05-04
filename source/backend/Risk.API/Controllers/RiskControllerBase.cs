@@ -24,7 +24,7 @@ SOFTWARE.
 
 using System;
 using System.IO;
-using System.Net;
+using System.Net.Http;
 using System.Net.Mime;
 using System.Web;
 using Microsoft.AspNetCore.Http;
@@ -85,9 +85,9 @@ namespace Risk.API.Controllers
             }
             else if (archivo.Url != null)
             {
-                using (var webClient = new WebClient())
+                using (var client = new HttpClient())
                 {
-                    contenido = webClient.DownloadData(archivo.Url);
+                    contenido = client.GetByteArrayAsync(archivo.Url).Result;
                 }
             }
 
