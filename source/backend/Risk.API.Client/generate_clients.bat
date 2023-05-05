@@ -13,9 +13,9 @@ set generator=1
 set generator_count=2
 set generator[0]=Todos
 set generator[1]=openapi-generator-cli.jar
-set generator[1].url=https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.2.1/openapi-generator-cli-5.2.1.jar
+set generator[1].url=https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.3.0/openapi-generator-cli-6.3.0.jar
 set generator[2]=swagger-codegen-cli.jar
-set generator[2].url=https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.27/swagger-codegen-cli-3.0.27.jar
+set generator[2].url=https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.42/swagger-codegen-cli-3.0.42.jar
 :: ====================================================================
 
 :: ===================== Definiciones de clientes =====================
