@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **Estado** | **EstadoUsuario** |  | [optional] 
 **DireccionCorreo** | **string** | Direccion de correo electronico principal del usuario | [optional] 
 **NumeroTelefono** | **string** | Numero de telefono principal del usuario | [optional] 
-**VersionAvatar** | **int** | Version del avatar del usuario | [optional] 
+**VersionAvatar** | **int?** | Version del avatar del usuario | [optional] 
 **Origen** | **OrigenSesion** |  | [optional] 
 **Roles** | [**List&lt;Rol&gt;**](Rol.md) | Roles del usuario | [optional] 
 

@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2022-04-09T23:48:47.392-04:00[America/Asuncion]
+- Build date: 2023-05-04T22:45:27.411-04:00[America/Asuncion]
 
 Risk Web API
 
