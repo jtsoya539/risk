@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2023-05-04T22:45:27.411-04:00[America/Asuncion]
+- Build date: 2023-05-04T23:16:34.539-04:00[America/Asuncion]
 
 Risk Web API
 
@@ -53,7 +53,14 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:v0.1.0"
+  repositories {
+    mavenCentral()     // Needed if the 'openapi-java-client' jar has been published to maven central.
+    mavenLocal()       // Needed if the 'openapi-java-client' jar has been published to the local maven repo.
+  }
+
+  dependencies {
+     implementation "org.openapitools:openapi-java-client:v0.1.0"
+  }
 ```
 
 ### Others

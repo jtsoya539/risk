@@ -2,10 +2,10 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**reporteListarSignificados**](RepApi.md#reporteListarSignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
-[**reporteVersionSistema**](RepApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**reporteListarSignificados**](RepApi.md#reporteListarSignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados |
+| [**reporteVersionSistema**](RepApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema |
 
 
 
@@ -65,12 +65,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **dominio** | **String**| Dominio | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html] |
+| **dominio** | **String**| Dominio | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -152,11 +152,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 

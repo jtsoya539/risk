@@ -2,20 +2,20 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**guardarArchivo**](GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
-[**listarAplicaciones**](GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
-[**listarErrores**](GenApi.md#listarErrores) | **GET** /Api/Gen/ListarErrores | ListarErrores
-[**listarSignificados**](GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
-[**recuperarArchivo**](GenApi.md#recuperarArchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo
-[**recuperarTexto**](GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
-[**reporteListarSignificados**](GenApi.md#reporteListarSignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
-[**reporteVersionSistema**](GenApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
-[**significadoCodigo**](GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
-[**valorParametro**](GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-[**versionServicio**](GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
-[**versionSistema**](GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**guardarArchivo**](GenApi.md#guardarArchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo |
+| [**listarAplicaciones**](GenApi.md#listarAplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones |
+| [**listarErrores**](GenApi.md#listarErrores) | **GET** /Api/Gen/ListarErrores | ListarErrores |
+| [**listarSignificados**](GenApi.md#listarSignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados |
+| [**recuperarArchivo**](GenApi.md#recuperarArchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo |
+| [**recuperarTexto**](GenApi.md#recuperarTexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto |
+| [**reporteListarSignificados**](GenApi.md#reporteListarSignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados |
+| [**reporteVersionSistema**](GenApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema |
+| [**significadoCodigo**](GenApi.md#significadoCodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo |
+| [**valorParametro**](GenApi.md#valorParametro) | **GET** /Api/Gen/ValorParametro | ValorParametro |
+| [**versionServicio**](GenApi.md#versionServicio) | **GET** /Api/Gen/VersionServicio | VersionServicio |
+| [**versionSistema**](GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema |
 
 
 
@@ -80,17 +80,17 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tabla** | **String**| Tabla |
- **campo** | **String**| Campo |
- **referencia** | **String**| Referencia |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **archivo** | **File**| Contenido del archivo | [optional]
- **url** | **String**| URL del archivo | [optional]
- **nombre** | **String**| Nombre del archivo | [optional]
- **extension** | **String**| Extensión del archivo | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tabla** | **String**| Tabla | |
+| **campo** | **String**| Campo | |
+| **referencia** | **String**| Referencia | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **archivo** | **File**| Contenido del archivo | [optional] |
+| **url** | **String**| URL del archivo | [optional] |
+| **nombre** | **String**| Nombre del archivo | [optional] |
+| **extension** | **String**| Extensión del archivo | [optional] |
 
 ### Return type
 
@@ -172,15 +172,15 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idAplicacion** | **String**| Identificador de la aplicacion | [optional]
- **claveAplicacion** | **String**| Clave de la aplicacion | [optional]
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **idAplicacion** | **String**| Identificador de la aplicacion | [optional] |
+| **claveAplicacion** | **String**| Clave de la aplicacion | [optional] |
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -260,14 +260,14 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idError** | **String**| Identificador del error | [optional]
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **idError** | **String**| Identificador del error | [optional] |
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -351,14 +351,14 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **dominio** | **String**| Dominio |
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **dominio** | **String**| Dominio | |
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -443,14 +443,14 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tabla** | **String**| Tabla |
- **campo** | **String**| Campo |
- **referencia** | **String**| Referencia |
- **version** | **Integer**| Versión | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tabla** | **String**| Tabla | |
+| **campo** | **String**| Campo | |
+| **referencia** | **String**| Referencia | |
+| **version** | **Integer**| Versión | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -528,11 +528,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **referencia** | **String**| Referencia del texto |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **referencia** | **String**| Referencia del texto | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -614,12 +614,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **dominio** | **String**| Dominio | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html] |
+| **dominio** | **String**| Dominio | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -701,11 +701,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **formato** | [**FormatoReporte**](.md)| Formato del reporte | [enum: Pdf, Docx, Xlsx, Csv, Html] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -788,12 +788,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **dominio** | **String**| Dominio |
- **codigo** | **String**| Código |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **dominio** | **String**| Dominio | |
+| **codigo** | **String**| Código | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -875,11 +875,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **parametro** | **String**| Identificador del parámetro |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **parametro** | **String**| Identificador del parámetro | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -957,11 +957,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **servicio** | **String**| Nombre del servicio |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **servicio** | **String**| Nombre del servicio | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -1030,10 +1030,10 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 

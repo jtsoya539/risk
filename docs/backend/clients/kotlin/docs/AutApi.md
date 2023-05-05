@@ -79,7 +79,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: text/html, application/json
+ - **Accept**: application/json
 
 <a name="cambiarClaveAcceso"></a>
 # **cambiarClaveAcceso**
@@ -135,7 +135,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="cambiarClaveTransaccional"></a>
 # **cambiarClaveTransaccional**
@@ -191,7 +191,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="datosUsuario"></a>
 # **datosUsuario**
@@ -247,7 +247,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="editarDatoUsuario"></a>
 # **editarDatoUsuario**
@@ -305,7 +305,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="editarUsuario"></a>
 # **editarUsuario**
@@ -363,7 +363,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="eliminarUsuario"></a>
 # **eliminarUsuario**
@@ -419,7 +419,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="finalizarSesion"></a>
 # **finalizarSesion**
@@ -475,7 +475,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="generarOtp"></a>
 # **generarOtp**
@@ -531,7 +531,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="guardarAvatarUsuario"></a>
 # **guardarAvatarUsuario**
@@ -595,7 +595,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="iniciarSesion"></a>
 # **iniciarSesion**
@@ -649,7 +649,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="iniciarSesionFacebook"></a>
 # **iniciarSesionFacebook**
@@ -703,7 +703,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="iniciarSesionGoogle"></a>
 # **iniciarSesionGoogle**
@@ -757,7 +757,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="recuperarAvatarUsuario"></a>
 # **recuperarAvatarUsuario**
@@ -815,7 +815,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream, text/plain
+ - **Accept**: application/json
 
 <a name="refrescarSesion"></a>
 # **refrescarSesion**
@@ -869,7 +869,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="refrescarSesionFacebook"></a>
 # **refrescarSesionFacebook**
@@ -923,7 +923,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="refrescarSesionGoogle"></a>
 # **refrescarSesionGoogle**
@@ -977,7 +977,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="registrarClaveTransaccional"></a>
 # **registrarClaveTransaccional**
@@ -1033,7 +1033,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="registrarDispositivo"></a>
 # **registrarDispositivo**
@@ -1087,7 +1087,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="registrarUbicacion"></a>
 # **registrarUbicacion**
@@ -1141,7 +1141,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="registrarUsuario"></a>
 # **registrarUsuario**
@@ -1195,7 +1195,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="validarOtp"></a>
 # **validarOtp**
@@ -1251,7 +1251,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="validarPermiso"></a>
 # **validarPermiso**
@@ -1309,7 +1309,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="validarSesion"></a>
 # **validarSesion**
@@ -1365,5 +1365,5 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 

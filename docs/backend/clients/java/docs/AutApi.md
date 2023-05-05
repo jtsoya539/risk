@@ -2,32 +2,32 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**activarUsuario**](AutApi.md#activarUsuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario
-[**cambiarClaveAcceso**](AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso
-[**cambiarClaveTransaccional**](AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional
-[**datosUsuario**](AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario
-[**editarDatoUsuario**](AutApi.md#editarDatoUsuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario
-[**editarUsuario**](AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario
-[**eliminarUsuario**](AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario
-[**finalizarSesion**](AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion
-[**generarOtp**](AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp
-[**guardarAvatarUsuario**](AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario
-[**iniciarSesion**](AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion
-[**iniciarSesionFacebook**](AutApi.md#iniciarSesionFacebook) | **POST** /Api/Aut/IniciarSesionFacebook | IniciarSesionFacebook
-[**iniciarSesionGoogle**](AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle
-[**recuperarAvatarUsuario**](AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario
-[**refrescarSesion**](AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion
-[**refrescarSesionFacebook**](AutApi.md#refrescarSesionFacebook) | **POST** /Api/Aut/RefrescarSesionFacebook | RefrescarSesionFacebook
-[**refrescarSesionGoogle**](AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle
-[**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional
-[**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo
-[**registrarUbicacion**](AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion
-[**registrarUsuario**](AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario
-[**validarOtp**](AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp
-[**validarPermiso**](AutApi.md#validarPermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso
-[**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**activarUsuario**](AutApi.md#activarUsuario) | **GET** /Aut/ActivarUsuario | ActivarUsuario |
+| [**cambiarClaveAcceso**](AutApi.md#cambiarClaveAcceso) | **POST** /Api/Aut/CambiarClaveAcceso | CambiarClaveAcceso |
+| [**cambiarClaveTransaccional**](AutApi.md#cambiarClaveTransaccional) | **POST** /Api/Aut/CambiarClaveTransaccional | CambiarClaveTransaccional |
+| [**datosUsuario**](AutApi.md#datosUsuario) | **GET** /Api/Aut/DatosUsuario | DatosUsuario |
+| [**editarDatoUsuario**](AutApi.md#editarDatoUsuario) | **POST** /Api/Aut/EditarDatoUsuario | EditarDatoUsuario |
+| [**editarUsuario**](AutApi.md#editarUsuario) | **POST** /Api/Aut/EditarUsuario | EditarUsuario |
+| [**eliminarUsuario**](AutApi.md#eliminarUsuario) | **POST** /Api/Aut/EliminarUsuario | EliminarUsuario |
+| [**finalizarSesion**](AutApi.md#finalizarSesion) | **POST** /Api/Aut/FinalizarSesion | FinalizarSesion |
+| [**generarOtp**](AutApi.md#generarOtp) | **POST** /Api/Aut/GenerarOtp | GenerarOtp |
+| [**guardarAvatarUsuario**](AutApi.md#guardarAvatarUsuario) | **POST** /Api/Aut/GuardarAvatarUsuario | GuardarAvatarUsuario |
+| [**iniciarSesion**](AutApi.md#iniciarSesion) | **POST** /Api/Aut/IniciarSesion | IniciarSesion |
+| [**iniciarSesionFacebook**](AutApi.md#iniciarSesionFacebook) | **POST** /Api/Aut/IniciarSesionFacebook | IniciarSesionFacebook |
+| [**iniciarSesionGoogle**](AutApi.md#iniciarSesionGoogle) | **POST** /Api/Aut/IniciarSesionGoogle | IniciarSesionGoogle |
+| [**recuperarAvatarUsuario**](AutApi.md#recuperarAvatarUsuario) | **GET** /Api/Aut/RecuperarAvatarUsuario | RecuperarAvatarUsuario |
+| [**refrescarSesion**](AutApi.md#refrescarSesion) | **POST** /Api/Aut/RefrescarSesion | RefrescarSesion |
+| [**refrescarSesionFacebook**](AutApi.md#refrescarSesionFacebook) | **POST** /Api/Aut/RefrescarSesionFacebook | RefrescarSesionFacebook |
+| [**refrescarSesionGoogle**](AutApi.md#refrescarSesionGoogle) | **POST** /Api/Aut/RefrescarSesionGoogle | RefrescarSesionGoogle |
+| [**registrarClaveTransaccional**](AutApi.md#registrarClaveTransaccional) | **POST** /Api/Aut/RegistrarClaveTransaccional | RegistrarClaveTransaccional |
+| [**registrarDispositivo**](AutApi.md#registrarDispositivo) | **POST** /Api/Aut/RegistrarDispositivo | RegistrarDispositivo |
+| [**registrarUbicacion**](AutApi.md#registrarUbicacion) | **POST** /Api/Aut/RegistrarUbicacion | RegistrarUbicacion |
+| [**registrarUsuario**](AutApi.md#registrarUsuario) | **POST** /Api/Aut/RegistrarUsuario | RegistrarUsuario |
+| [**validarOtp**](AutApi.md#validarOtp) | **GET** /Api/Aut/ValidarOtp | ValidarOtp |
+| [**validarPermiso**](AutApi.md#validarPermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso |
+| [**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion |
 
 
 
@@ -75,11 +75,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **key** | **String**| Clave para la activación |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **key** | **String**| Clave para la activación | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -159,11 +159,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **cambiarClaveAccesoRequestBody** | [**CambiarClaveAccesoRequestBody**](CambiarClaveAccesoRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -245,11 +245,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **cambiarClaveTransaccionalRequestBody** | [**CambiarClaveTransaccionalRequestBody**](CambiarClaveTransaccionalRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -331,11 +331,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **usuario** | **String**| Usuario |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **usuario** | **String**| Usuario | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -418,12 +418,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **usuario** | **String**| Usuario |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **usuario** | **String**| Usuario | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **editarDatoUsuarioRequestBody** | [**EditarDatoUsuarioRequestBody**](EditarDatoUsuarioRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -506,12 +506,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **usuario** | **String**| Usuario |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **usuario** | **String**| Usuario | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **editarUsuarioRequestBody** | [**EditarUsuarioRequestBody**](EditarUsuarioRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -593,11 +593,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **eliminarUsuarioRequestBody** | [**EliminarUsuarioRequestBody**](EliminarUsuarioRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -679,11 +679,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **finalizarSesionRequestBody** | [**FinalizarSesionRequestBody**](FinalizarSesionRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -762,12 +762,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería (Mail/SMS/Push) | [enum: Mail, SMS, Push]
- **destino** | **String**| Destino de la mensajería |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería (Mail/SMS/Push) | [enum: Mail, SMS, Push] |
+| **destino** | **String**| Destino de la mensajería | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -852,15 +852,15 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **usuario** | **String**| Usuario |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **archivo** | **File**| Contenido del archivo | [optional]
- **url** | **String**| URL del archivo | [optional]
- **nombre** | **String**| Nombre del archivo | [optional]
- **extension** | **String**| Extensión del archivo | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **usuario** | **String**| Usuario | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **archivo** | **File**| Contenido del archivo | [optional] |
+| **url** | **String**| URL del archivo | [optional] |
+| **nombre** | **String**| Nombre del archivo | [optional] |
+| **extension** | **String**| Extensión del archivo | [optional] |
 
 ### Return type
 
@@ -938,11 +938,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **iniciarSesionRequestBody** | [**IniciarSesionRequestBody**](IniciarSesionRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1019,11 +1019,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **iniciarSesionFacebookRequestBody** | [**IniciarSesionFacebookRequestBody**](IniciarSesionFacebookRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1100,11 +1100,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **iniciarSesionGoogleRequestBody** | [**IniciarSesionGoogleRequestBody**](IniciarSesionGoogleRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **iniciarSesionGoogleRequestBody** | [**IniciarSesionGoogleRequestBody**](IniciarSesionGoogleRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1186,12 +1186,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **usuario** | **String**| Usuario |
- **version** | **Integer**| Versión | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **usuario** | **String**| Usuario | |
+| **version** | **Integer**| Versión | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -1269,11 +1269,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **refrescarSesionRequestBody** | [**RefrescarSesionRequestBody**](RefrescarSesionRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1350,11 +1350,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **refrescarSesionFacebookRequestBody** | [**RefrescarSesionFacebookRequestBody**](RefrescarSesionFacebookRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1431,11 +1431,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **refrescarSesionGoogleRequestBody** | [**RefrescarSesionGoogleRequestBody**](RefrescarSesionGoogleRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **refrescarSesionGoogleRequestBody** | [**RefrescarSesionGoogleRequestBody**](RefrescarSesionGoogleRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1516,11 +1516,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **registrarClaveTransaccionalRequestBody** | [**RegistrarClaveTransaccionalRequestBody**](RegistrarClaveTransaccionalRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1598,11 +1598,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **registrarDispositivoRequestBody** | [**RegistrarDispositivoRequestBody**](RegistrarDispositivoRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1679,11 +1679,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **registrarUbicacionRequestBody** | [**RegistrarUbicacionRequestBody**](RegistrarUbicacionRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1760,11 +1760,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **registrarUsuarioRequestBody** | [**RegistrarUsuarioRequestBody**](RegistrarUsuarioRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -1842,12 +1842,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **secret** | **String**| Secret recibido al generar el código OTP |
- **otp** | **Integer**| Código OTP a validar |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **secret** | **String**| Secret recibido al generar el código OTP | |
+| **otp** | **Integer**| Código OTP a validar | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -1929,12 +1929,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPermiso** | **String**| Identificador del permiso |
- **accion** | [**AccionPermiso**](.md)| Acción sobre el permiso | [optional] [enum: Consultar, Insertar, Actualizar, Eliminar]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **idPermiso** | **String**| Identificador del permiso | |
+| **accion** | [**AccionPermiso**](.md)| Acción sobre el permiso | [optional] [enum: Consultar, Insertar, Actualizar, Eliminar] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -2016,11 +2016,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **accessToken** | **String**| Access Token de la sesión |
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **accessToken** | **String**| Access Token de la sesión | |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 

@@ -64,7 +64,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream, text/plain
+ - **Accept**: application/json
 
 <a name="reporteVersionSistema"></a>
 # **reporteVersionSistema**
@@ -120,5 +120,5 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream, text/plain
+ - **Accept**: application/json
 

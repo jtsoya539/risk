@@ -5,9 +5,9 @@
 
 ## Properties
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**fbToken** | **String** | Token de acceso en Facebook |  [optional]
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**fbToken** | **String** | Token de acceso en Facebook |  [optional] |
 
 
 

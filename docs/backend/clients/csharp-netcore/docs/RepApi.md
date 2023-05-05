@@ -2,11 +2,10 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**ReporteListarSignificados**](RepApi.md#reportelistarsignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
-[**ReporteVersionSistema**](RepApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
-
+| Method | HTTP request | Description |
+|--------|--------------|-------------|
+| [**ReporteListarSignificados**](RepApi.md#reportelistarsignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados |
+| [**ReporteVersionSistema**](RepApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema |
 
 <a name="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
@@ -40,10 +39,10 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new RepApi(config);
-            var formato = ;  // FormatoReporte | Formato del reporte
-            var dominio = dominio_example;  // string | Dominio (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var formato = (FormatoReporte) "Pdf";  // FormatoReporte | Formato del reporte
+            var dominio = "dominio_example";  // string | Dominio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -53,8 +52,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling RepApi.ReporteListarSignificados: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling RepApi.ReporteListarSignificados: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -62,14 +61,34 @@ namespace Example
 }
 ```
 
+#### Using the ReporteListarSignificadosWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ReporteListarSignificados
+    ApiResponse<System.IO.Stream> response = apiInstance.ReporteListarSignificadosWithHttpInfo(formato, dominio, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling RepApi.ReporteListarSignificadosWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | **FormatoReporte**| Formato del reporte | 
- **dominio** | **string**| Dominio | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **formato** | **FormatoReporte** | Formato del reporte |  |
+| **dominio** | **string** | Dominio | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -129,9 +148,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new RepApi(config);
-            var formato = ;  // FormatoReporte | Formato del reporte
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var formato = (FormatoReporte) "Pdf";  // FormatoReporte | Formato del reporte
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -141,8 +160,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling RepApi.ReporteVersionSistema: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling RepApi.ReporteVersionSistema: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -150,13 +169,33 @@ namespace Example
 }
 ```
 
+#### Using the ReporteVersionSistemaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ReporteVersionSistema
+    ApiResponse<System.IO.Stream> response = apiInstance.ReporteVersionSistemaWithHttpInfo(formato, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling RepApi.ReporteVersionSistemaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | **FormatoReporte**| Formato del reporte | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **formato** | **FormatoReporte** | Formato del reporte |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 

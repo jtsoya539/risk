@@ -2,15 +2,14 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**ActivarMensajeria**](MsjApi.md#activarmensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria
-[**CambiarEstadoMensajeria**](MsjApi.md#cambiarestadomensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
-[**DesactivarMensajeria**](MsjApi.md#desactivarmensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria
-[**ListarCorreosPendientes**](MsjApi.md#listarcorreospendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes
-[**ListarMensajesPendientes**](MsjApi.md#listarmensajespendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes
-[**ListarNotificacionesPendientes**](MsjApi.md#listarnotificacionespendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes
-
+| Method | HTTP request | Description |
+|--------|--------------|-------------|
+| [**ActivarMensajeria**](MsjApi.md#activarmensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria |
+| [**CambiarEstadoMensajeria**](MsjApi.md#cambiarestadomensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria |
+| [**DesactivarMensajeria**](MsjApi.md#desactivarmensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria |
+| [**ListarCorreosPendientes**](MsjApi.md#listarcorreospendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes |
+| [**ListarMensajesPendientes**](MsjApi.md#listarmensajespendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes |
+| [**ListarNotificacionesPendientes**](MsjApi.md#listarnotificacionespendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes |
 
 <a name="activarmensajeria"></a>
 # **ActivarMensajeria**
@@ -44,9 +43,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new MsjApi(config);
-            var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería a activar
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var tipoMensajeria = (TipoMensajeria) "Mail";  // TipoMensajeria | Tipo de mensajería a activar
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -56,8 +55,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling MsjApi.ActivarMensajeria: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling MsjApi.ActivarMensajeria: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -65,13 +64,33 @@ namespace Example
 }
 ```
 
+#### Using the ActivarMensajeriaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ActivarMensajeria
+    ApiResponse<DatoRespuesta> response = apiInstance.ActivarMensajeriaWithHttpInfo(tipoMensajeria, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MsjApi.ActivarMensajeriaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería a activar | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **tipoMensajeria** | **TipoMensajeria** | Tipo de mensajería a activar |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -131,8 +150,8 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new MsjApi(config);
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
             var cambiarEstadoMensajeriaRequestBody = new CambiarEstadoMensajeriaRequestBody(); // CambiarEstadoMensajeriaRequestBody |  (optional) 
 
             try
@@ -143,8 +162,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling MsjApi.CambiarEstadoMensajeria: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling MsjApi.CambiarEstadoMensajeria: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -152,13 +171,33 @@ namespace Example
 }
 ```
 
+#### Using the CambiarEstadoMensajeriaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // CambiarEstadoMensajeria
+    ApiResponse<DatoRespuesta> response = apiInstance.CambiarEstadoMensajeriaWithHttpInfo(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MsjApi.CambiarEstadoMensajeriaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
- **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
+| **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md) |  | [optional]  |
 
 ### Return type
 
@@ -218,9 +257,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new MsjApi(config);
-            var tipoMensajeria = ;  // TipoMensajeria | Tipo de mensajería a desactivar
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var tipoMensajeria = (TipoMensajeria) "Mail";  // TipoMensajeria | Tipo de mensajería a desactivar
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -230,8 +269,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling MsjApi.DesactivarMensajeria: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling MsjApi.DesactivarMensajeria: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -239,13 +278,33 @@ namespace Example
 }
 ```
 
+#### Using the DesactivarMensajeriaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // DesactivarMensajeria
+    ApiResponse<DatoRespuesta> response = apiInstance.DesactivarMensajeriaWithHttpInfo(tipoMensajeria, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MsjApi.DesactivarMensajeriaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tipoMensajeria** | **TipoMensajeria**| Tipo de mensajería a desactivar | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **tipoMensajeria** | **TipoMensajeria** | Tipo de mensajería a desactivar |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -308,8 +367,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -319,8 +378,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling MsjApi.ListarCorreosPendientes: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling MsjApi.ListarCorreosPendientes: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -328,15 +387,35 @@ namespace Example
 }
 ```
 
+#### Using the ListarCorreosPendientesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarCorreosPendientes
+    ApiResponse<CorreoPaginaRespuesta> response = apiInstance.ListarCorreosPendientesWithHttpInfo(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MsjApi.ListarCorreosPendientesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -399,8 +478,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -410,8 +489,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling MsjApi.ListarMensajesPendientes: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling MsjApi.ListarMensajesPendientes: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -419,15 +498,35 @@ namespace Example
 }
 ```
 
+#### Using the ListarMensajesPendientesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarMensajesPendientes
+    ApiResponse<MensajePaginaRespuesta> response = apiInstance.ListarMensajesPendientesWithHttpInfo(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MsjApi.ListarMensajesPendientesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -490,8 +589,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -501,8 +600,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling MsjApi.ListarNotificacionesPendientes: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling MsjApi.ListarNotificacionesPendientes: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -510,15 +609,35 @@ namespace Example
 }
 ```
 
+#### Using the ListarNotificacionesPendientesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarNotificacionesPendientes
+    ApiResponse<NotificacionPaginaRespuesta> response = apiInstance.ListarNotificacionesPendientesWithHttpInfo(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling MsjApi.ListarNotificacionesPendientesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 

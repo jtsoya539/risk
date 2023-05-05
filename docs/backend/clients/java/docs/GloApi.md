@@ -2,12 +2,12 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**listarBarrios**](GloApi.md#listarBarrios) | **GET** /Api/Glo/ListarBarrios | ListarBarrios
-[**listarCiudades**](GloApi.md#listarCiudades) | **GET** /Api/Glo/ListarCiudades | ListarCiudades
-[**listarDepartamentos**](GloApi.md#listarDepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos
-[**listarPaises**](GloApi.md#listarPaises) | **GET** /Api/Glo/ListarPaises | ListarPaises
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**listarBarrios**](GloApi.md#listarBarrios) | **GET** /Api/Glo/ListarBarrios | ListarBarrios |
+| [**listarCiudades**](GloApi.md#listarCiudades) | **GET** /Api/Glo/ListarCiudades | ListarCiudades |
+| [**listarDepartamentos**](GloApi.md#listarDepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos |
+| [**listarPaises**](GloApi.md#listarPaises) | **GET** /Api/Glo/ListarPaises | ListarPaises |
 
 
 
@@ -67,16 +67,16 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPais** | **Integer**| Identificador del país | [optional]
- **idDepartamento** | **Integer**| Identificador del departamento | [optional]
- **idCiudad** | **Integer**| Identificador de la ciudad | [optional]
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **idPais** | **Integer**| Identificador del país | [optional] |
+| **idDepartamento** | **Integer**| Identificador del departamento | [optional] |
+| **idCiudad** | **Integer**| Identificador de la ciudad | [optional] |
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -157,15 +157,15 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPais** | **Integer**| Identificador del país | [optional]
- **idDepartamento** | **Integer**| Identificador del departamento | [optional]
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **idPais** | **Integer**| Identificador del país | [optional] |
+| **idDepartamento** | **Integer**| Identificador del departamento | [optional] |
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -245,14 +245,14 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPais** | **Integer**| Identificador del país | [optional]
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **idPais** | **Integer**| Identificador del país | [optional] |
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -331,13 +331,13 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 

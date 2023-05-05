@@ -5,9 +5,9 @@
 
 ## Properties
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**dispositivo** | [**Dispositivo**](Dispositivo.md) |  |  [optional]
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**dispositivo** | [**Dispositivo**](Dispositivo.md) |  |  [optional] |
 
 
 

@@ -2,13 +2,12 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**ListarBarrios**](GloApi.md#listarbarrios) | **GET** /Api/Glo/ListarBarrios | ListarBarrios
-[**ListarCiudades**](GloApi.md#listarciudades) | **GET** /Api/Glo/ListarCiudades | ListarCiudades
-[**ListarDepartamentos**](GloApi.md#listardepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos
-[**ListarPaises**](GloApi.md#listarpaises) | **GET** /Api/Glo/ListarPaises | ListarPaises
-
+| Method | HTTP request | Description |
+|--------|--------------|-------------|
+| [**ListarBarrios**](GloApi.md#listarbarrios) | **GET** /Api/Glo/ListarBarrios | ListarBarrios |
+| [**ListarCiudades**](GloApi.md#listarciudades) | **GET** /Api/Glo/ListarCiudades | ListarCiudades |
+| [**ListarDepartamentos**](GloApi.md#listardepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos |
+| [**ListarPaises**](GloApi.md#listarpaises) | **GET** /Api/Glo/ListarPaises | ListarPaises |
 
 <a name="listarbarrios"></a>
 # **ListarBarrios**
@@ -46,8 +45,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -57,8 +56,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GloApi.ListarBarrios: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GloApi.ListarBarrios: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -66,18 +65,38 @@ namespace Example
 }
 ```
 
+#### Using the ListarBarriosWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarBarrios
+    ApiResponse<BarrioPaginaRespuesta> response = apiInstance.ListarBarriosWithHttpInfo(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GloApi.ListarBarriosWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPais** | **int?**| Identificador del país | [optional] 
- **idDepartamento** | **int?**| Identificador del departamento | [optional] 
- **idCiudad** | **int?**| Identificador de la ciudad | [optional] 
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **idPais** | **int?** | Identificador del país | [optional]  |
+| **idDepartamento** | **int?** | Identificador del departamento | [optional]  |
+| **idCiudad** | **int?** | Identificador de la ciudad | [optional]  |
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -139,8 +158,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -150,8 +169,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GloApi.ListarCiudades: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GloApi.ListarCiudades: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -159,17 +178,37 @@ namespace Example
 }
 ```
 
+#### Using the ListarCiudadesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarCiudades
+    ApiResponse<CiudadPaginaRespuesta> response = apiInstance.ListarCiudadesWithHttpInfo(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GloApi.ListarCiudadesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPais** | **int?**| Identificador del país | [optional] 
- **idDepartamento** | **int?**| Identificador del departamento | [optional] 
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **idPais** | **int?** | Identificador del país | [optional]  |
+| **idDepartamento** | **int?** | Identificador del departamento | [optional]  |
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -230,8 +269,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -241,8 +280,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GloApi.ListarDepartamentos: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GloApi.ListarDepartamentos: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -250,16 +289,36 @@ namespace Example
 }
 ```
 
+#### Using the ListarDepartamentosWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarDepartamentos
+    ApiResponse<DepartamentoPaginaRespuesta> response = apiInstance.ListarDepartamentosWithHttpInfo(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GloApi.ListarDepartamentosWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idPais** | **int?**| Identificador del país | [optional] 
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **idPais** | **int?** | Identificador del país | [optional]  |
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -319,8 +378,8 @@ namespace Example
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -330,8 +389,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GloApi.ListarPaises: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GloApi.ListarPaises: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -339,15 +398,35 @@ namespace Example
 }
 ```
 
+#### Using the ListarPaisesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarPaises
+    ApiResponse<PaisPaginaRespuesta> response = apiInstance.ListarPaisesWithHttpInfo(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GloApi.ListarPaisesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 

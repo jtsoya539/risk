@@ -72,7 +72,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarCiudades"></a>
 # **listarCiudades**
@@ -134,7 +134,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarDepartamentos"></a>
 # **listarDepartamentos**
@@ -194,7 +194,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarPaises"></a>
 # **listarPaises**
@@ -252,5 +252,5 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 

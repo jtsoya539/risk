@@ -2,21 +2,20 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**GuardarArchivo**](GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo
-[**ListarAplicaciones**](GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones
-[**ListarErrores**](GenApi.md#listarerrores) | **GET** /Api/Gen/ListarErrores | ListarErrores
-[**ListarSignificados**](GenApi.md#listarsignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados
-[**RecuperarArchivo**](GenApi.md#recuperararchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo
-[**RecuperarTexto**](GenApi.md#recuperartexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto
-[**ReporteListarSignificados**](GenApi.md#reportelistarsignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados
-[**ReporteVersionSistema**](GenApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
-[**SignificadoCodigo**](GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo
-[**ValorParametro**](GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro
-[**VersionServicio**](GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio
-[**VersionSistema**](GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema
-
+| Method | HTTP request | Description |
+|--------|--------------|-------------|
+| [**GuardarArchivo**](GenApi.md#guardararchivo) | **POST** /Api/Gen/GuardarArchivo | GuardarArchivo |
+| [**ListarAplicaciones**](GenApi.md#listaraplicaciones) | **GET** /Api/Gen/ListarAplicaciones | ListarAplicaciones |
+| [**ListarErrores**](GenApi.md#listarerrores) | **GET** /Api/Gen/ListarErrores | ListarErrores |
+| [**ListarSignificados**](GenApi.md#listarsignificados) | **GET** /Api/Gen/ListarSignificados | ListarSignificados |
+| [**RecuperarArchivo**](GenApi.md#recuperararchivo) | **GET** /Api/Gen/RecuperarArchivo | RecuperarArchivo |
+| [**RecuperarTexto**](GenApi.md#recuperartexto) | **GET** /Api/Gen/RecuperarTexto | RecuperarTexto |
+| [**ReporteListarSignificados**](GenApi.md#reportelistarsignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados |
+| [**ReporteVersionSistema**](GenApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema |
+| [**SignificadoCodigo**](GenApi.md#significadocodigo) | **GET** /Api/Gen/SignificadoCodigo | SignificadoCodigo |
+| [**ValorParametro**](GenApi.md#valorparametro) | **GET** /Api/Gen/ValorParametro | ValorParametro |
+| [**VersionServicio**](GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio |
+| [**VersionSistema**](GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema |
 
 <a name="guardararchivo"></a>
 # **GuardarArchivo**
@@ -50,15 +49,15 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var tabla = tabla_example;  // string | Tabla
-            var campo = campo_example;  // string | Campo
-            var referencia = referencia_example;  // string | Referencia
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
-            var archivo = BINARY_DATA_HERE;  // System.IO.Stream | Contenido del archivo (optional) 
-            var url = url_example;  // string | URL del archivo (optional) 
-            var nombre = nombre_example;  // string | Nombre del archivo (optional) 
-            var extension = extension_example;  // string | Extensión del archivo (optional) 
+            var tabla = "tabla_example";  // string | Tabla
+            var campo = "campo_example";  // string | Campo
+            var referencia = "referencia_example";  // string | Referencia
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
+            var archivo = new System.IO.MemoryStream(System.IO.File.ReadAllBytes("/path/to/file.txt"));  // System.IO.Stream | Contenido del archivo (optional) 
+            var url = "url_example";  // string | URL del archivo (optional) 
+            var nombre = "nombre_example";  // string | Nombre del archivo (optional) 
+            var extension = "extension_example";  // string | Extensión del archivo (optional) 
 
             try
             {
@@ -68,8 +67,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.GuardarArchivo: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.GuardarArchivo: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -77,19 +76,39 @@ namespace Example
 }
 ```
 
+#### Using the GuardarArchivoWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // GuardarArchivo
+    ApiResponse<DatoRespuesta> response = apiInstance.GuardarArchivoWithHttpInfo(tabla, campo, referencia, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.GuardarArchivoWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tabla** | **string**| Tabla | 
- **campo** | **string**| Campo | 
- **referencia** | **string**| Referencia | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
- **archivo** | **System.IO.Stream****System.IO.Stream**| Contenido del archivo | [optional] 
- **url** | **string**| URL del archivo | [optional] 
- **nombre** | **string**| Nombre del archivo | [optional] 
- **extension** | **string**| Extensión del archivo | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **tabla** | **string** | Tabla |  |
+| **campo** | **string** | Campo |  |
+| **referencia** | **string** | Referencia |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
+| **archivo** | **System.IO.Stream****System.IO.Stream** | Contenido del archivo | [optional]  |
+| **url** | **string** | URL del archivo | [optional]  |
+| **nombre** | **string** | Nombre del archivo | [optional]  |
+| **extension** | **string** | Extensión del archivo | [optional]  |
 
 ### Return type
 
@@ -147,13 +166,13 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var idAplicacion = idAplicacion_example;  // string | Identificador de la aplicacion (optional) 
-            var claveAplicacion = claveAplicacion_example;  // string | Clave de la aplicacion (optional) 
+            var idAplicacion = "idAplicacion_example";  // string | Identificador de la aplicacion (optional) 
+            var claveAplicacion = "claveAplicacion_example";  // string | Clave de la aplicacion (optional) 
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -163,8 +182,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ListarAplicaciones: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.ListarAplicaciones: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -172,17 +191,37 @@ namespace Example
 }
 ```
 
+#### Using the ListarAplicacionesWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarAplicaciones
+    ApiResponse<AplicacionPaginaRespuesta> response = apiInstance.ListarAplicacionesWithHttpInfo(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.ListarAplicacionesWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idAplicacion** | **string**| Identificador de la aplicacion | [optional] 
- **claveAplicacion** | **string**| Clave de la aplicacion | [optional] 
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **idAplicacion** | **string** | Identificador de la aplicacion | [optional]  |
+| **claveAplicacion** | **string** | Clave de la aplicacion | [optional]  |
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -239,12 +278,12 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var idError = idError_example;  // string | Identificador del error (optional) 
+            var idError = "idError_example";  // string | Identificador del error (optional) 
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -254,8 +293,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ListarErrores: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.ListarErrores: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -263,16 +302,36 @@ namespace Example
 }
 ```
 
+#### Using the ListarErroresWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarErrores
+    ApiResponse<ErrorPaginaRespuesta> response = apiInstance.ListarErroresWithHttpInfo(idError, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.ListarErroresWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **idError** | **string**| Identificador del error | [optional] 
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **idError** | **string** | Identificador del error | [optional]  |
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -331,12 +390,12 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var dominio = dominio_example;  // string | Dominio
+            var dominio = "dominio_example";  // string | Dominio
             var pagina = 56;  // int? | Número de la página (optional) 
             var porPagina = 56;  // int? | Cantidad de elementos por página (optional) 
             var noPaginar = true;  // bool? | No paginar? (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -346,8 +405,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ListarSignificados: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.ListarSignificados: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -355,16 +414,36 @@ namespace Example
 }
 ```
 
+#### Using the ListarSignificadosWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ListarSignificados
+    ApiResponse<SignificadoPaginaRespuesta> response = apiInstance.ListarSignificadosWithHttpInfo(dominio, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.ListarSignificadosWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **dominio** | **string**| Dominio | 
- **pagina** | **int?**| Número de la página | [optional] 
- **porPagina** | **int?**| Cantidad de elementos por página | [optional] 
- **noPaginar** | **bool?**| No paginar? | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **dominio** | **string** | Dominio |  |
+| **pagina** | **int?** | Número de la página | [optional]  |
+| **porPagina** | **int?** | Cantidad de elementos por página | [optional]  |
+| **noPaginar** | **bool?** | No paginar? | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -424,12 +503,12 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var tabla = tabla_example;  // string | Tabla
-            var campo = campo_example;  // string | Campo
-            var referencia = referencia_example;  // string | Referencia
+            var tabla = "tabla_example";  // string | Tabla
+            var campo = "campo_example";  // string | Campo
+            var referencia = "referencia_example";  // string | Referencia
             var version = 56;  // int? | Versión (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -439,8 +518,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.RecuperarArchivo: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.RecuperarArchivo: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -448,16 +527,36 @@ namespace Example
 }
 ```
 
+#### Using the RecuperarArchivoWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // RecuperarArchivo
+    ApiResponse<System.IO.Stream> response = apiInstance.RecuperarArchivoWithHttpInfo(tabla, campo, referencia, version, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.RecuperarArchivoWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tabla** | **string**| Tabla | 
- **campo** | **string**| Campo | 
- **referencia** | **string**| Referencia | 
- **version** | **int?**| Versión | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **tabla** | **string** | Tabla |  |
+| **campo** | **string** | Campo |  |
+| **referencia** | **string** | Referencia |  |
+| **version** | **int?** | Versión | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -515,9 +614,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var referencia = referencia_example;  // string | Referencia del texto
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var referencia = "referencia_example";  // string | Referencia del texto
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -527,8 +626,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.RecuperarTexto: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.RecuperarTexto: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -536,13 +635,33 @@ namespace Example
 }
 ```
 
+#### Using the RecuperarTextoWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // RecuperarTexto
+    ApiResponse<DatoRespuesta> response = apiInstance.RecuperarTextoWithHttpInfo(referencia, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.RecuperarTextoWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **referencia** | **string**| Referencia del texto | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **referencia** | **string** | Referencia del texto |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -601,10 +720,10 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var formato = ;  // FormatoReporte | Formato del reporte
-            var dominio = dominio_example;  // string | Dominio (optional) 
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var formato = (FormatoReporte) "Pdf";  // FormatoReporte | Formato del reporte
+            var dominio = "dominio_example";  // string | Dominio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -614,8 +733,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ReporteListarSignificados: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.ReporteListarSignificados: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -623,14 +742,34 @@ namespace Example
 }
 ```
 
+#### Using the ReporteListarSignificadosWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ReporteListarSignificados
+    ApiResponse<System.IO.Stream> response = apiInstance.ReporteListarSignificadosWithHttpInfo(formato, dominio, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.ReporteListarSignificadosWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | **FormatoReporte**| Formato del reporte | 
- **dominio** | **string**| Dominio | [optional] 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **formato** | **FormatoReporte** | Formato del reporte |  |
+| **dominio** | **string** | Dominio | [optional]  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -690,9 +829,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var formato = ;  // FormatoReporte | Formato del reporte
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var formato = (FormatoReporte) "Pdf";  // FormatoReporte | Formato del reporte
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -702,8 +841,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ReporteVersionSistema: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.ReporteVersionSistema: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -711,13 +850,33 @@ namespace Example
 }
 ```
 
+#### Using the ReporteVersionSistemaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ReporteVersionSistema
+    ApiResponse<System.IO.Stream> response = apiInstance.ReporteVersionSistemaWithHttpInfo(formato, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.ReporteVersionSistemaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **formato** | **FormatoReporte**| Formato del reporte | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **formato** | **FormatoReporte** | Formato del reporte |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -777,10 +936,10 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var dominio = dominio_example;  // string | Dominio
-            var codigo = codigo_example;  // string | Código
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var dominio = "dominio_example";  // string | Dominio
+            var codigo = "codigo_example";  // string | Código
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -790,8 +949,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.SignificadoCodigo: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.SignificadoCodigo: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -799,14 +958,34 @@ namespace Example
 }
 ```
 
+#### Using the SignificadoCodigoWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // SignificadoCodigo
+    ApiResponse<DatoRespuesta> response = apiInstance.SignificadoCodigoWithHttpInfo(dominio, codigo, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.SignificadoCodigoWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **dominio** | **string**| Dominio | 
- **codigo** | **string**| Código | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **dominio** | **string** | Dominio |  |
+| **codigo** | **string** | Código |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -866,9 +1045,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var parametro = parametro_example;  // string | Identificador del parámetro
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var parametro = "parametro_example";  // string | Identificador del parámetro
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -878,8 +1057,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.ValorParametro: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.ValorParametro: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -887,13 +1066,33 @@ namespace Example
 }
 ```
 
+#### Using the ValorParametroWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // ValorParametro
+    ApiResponse<DatoRespuesta> response = apiInstance.ValorParametroWithHttpInfo(parametro, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.ValorParametroWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **parametro** | **string**| Identificador del parámetro | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **parametro** | **string** | Identificador del parámetro |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -951,9 +1150,9 @@ namespace Example
             // config.AddApiKeyPrefix("Risk-App-Key", "Bearer");
 
             var apiInstance = new GenApi(config);
-            var servicio = servicio_example;  // string | Nombre del servicio
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var servicio = "servicio_example";  // string | Nombre del servicio
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -963,8 +1162,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.VersionServicio: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.VersionServicio: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -972,13 +1171,33 @@ namespace Example
 }
 ```
 
+#### Using the VersionServicioWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // VersionServicio
+    ApiResponse<DatoRespuesta> response = apiInstance.VersionServicioWithHttpInfo(servicio, riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.VersionServicioWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **servicio** | **string**| Nombre del servicio | 
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **servicio** | **string** | Nombre del servicio |  |
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 
@@ -1030,8 +1249,8 @@ namespace Example
             Configuration config = new Configuration();
             config.BasePath = "https://localhost:5001";
             var apiInstance = new GenApi(config);
-            var riskDeviceToken = riskDeviceToken_example;  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
-            var riskServiceVersion = riskServiceVersion_example;  // string | Versión del servicio (optional) 
+            var riskDeviceToken = "riskDeviceToken_example";  // string | Token del dispositivo desde el cual se realiza la petición (optional) 
+            var riskServiceVersion = "riskServiceVersion_example";  // string | Versión del servicio (optional) 
 
             try
             {
@@ -1041,8 +1260,8 @@ namespace Example
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling GenApi.VersionSistema: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print("Exception when calling GenApi.VersionSistema: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
         }
@@ -1050,12 +1269,32 @@ namespace Example
 }
 ```
 
+#### Using the VersionSistemaWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // VersionSistema
+    ApiResponse<DatoRespuesta> response = apiInstance.VersionSistemaWithHttpInfo(riskDeviceToken, riskServiceVersion);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling GenApi.VersionSistemaWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **string**| Token del dispositivo desde el cual se realiza la petición | [optional] 
- **riskServiceVersion** | **string**| Versión del servicio | [optional] 
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **riskDeviceToken** | **string** | Token del dispositivo desde el cual se realiza la petición | [optional]  |
+| **riskServiceVersion** | **string** | Versión del servicio | [optional]  |
 
 ### Return type
 

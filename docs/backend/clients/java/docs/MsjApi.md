@@ -2,14 +2,14 @@
 
 All URIs are relative to *https://localhost:5001*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**activarMensajeria**](MsjApi.md#activarMensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria
-[**cambiarEstadoMensajeria**](MsjApi.md#cambiarEstadoMensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria
-[**desactivarMensajeria**](MsjApi.md#desactivarMensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria
-[**listarCorreosPendientes**](MsjApi.md#listarCorreosPendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes
-[**listarMensajesPendientes**](MsjApi.md#listarMensajesPendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes
-[**listarNotificacionesPendientes**](MsjApi.md#listarNotificacionesPendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**activarMensajeria**](MsjApi.md#activarMensajeria) | **POST** /Api/Msj/ActivarMensajeria | ActivarMensajeria |
+| [**cambiarEstadoMensajeria**](MsjApi.md#cambiarEstadoMensajeria) | **POST** /Api/Msj/CambiarEstadoMensajeria | CambiarEstadoMensajeria |
+| [**desactivarMensajeria**](MsjApi.md#desactivarMensajeria) | **POST** /Api/Msj/DesactivarMensajeria | DesactivarMensajeria |
+| [**listarCorreosPendientes**](MsjApi.md#listarCorreosPendientes) | **GET** /Api/Msj/ListarCorreosPendientes | ListarCorreosPendientes |
+| [**listarMensajesPendientes**](MsjApi.md#listarMensajesPendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes |
+| [**listarNotificacionesPendientes**](MsjApi.md#listarNotificacionesPendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes |
 
 
 
@@ -68,11 +68,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a activar | [enum: Mail, SMS, Push]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a activar | [enum: Mail, SMS, Push] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -154,11 +154,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
- **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
+| **cambiarEstadoMensajeriaRequestBody** | [**CambiarEstadoMensajeriaRequestBody**](CambiarEstadoMensajeriaRequestBody.md)|  | [optional] |
 
 ### Return type
 
@@ -240,11 +240,11 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a desactivar | [enum: Mail, SMS, Push]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **tipoMensajeria** | [**TipoMensajeria**](.md)| Tipo de mensajería a desactivar | [enum: Mail, SMS, Push] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -328,13 +328,13 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -418,13 +418,13 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 
@@ -508,13 +508,13 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **pagina** | **Integer**| Número de la página | [optional]
- **porPagina** | **Integer**| Cantidad de elementos por página | [optional]
- **noPaginar** | **Boolean**| No paginar? | [optional]
- **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional]
- **riskServiceVersion** | **String**| Versión del servicio | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **pagina** | **Integer**| Número de la página | [optional] |
+| **porPagina** | **Integer**| Cantidad de elementos por página | [optional] |
+| **noPaginar** | **Boolean**| No paginar? | [optional] |
+| **riskDeviceToken** | **String**| Token del dispositivo desde el cual se realiza la petición | [optional] |
+| **riskServiceVersion** | **String**| Versión del servicio | [optional] |
 
 ### Return type
 

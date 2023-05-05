@@ -66,7 +66,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="cambiarEstadoMensajeria"></a>
 # **cambiarEstadoMensajeria**
@@ -122,7 +122,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="desactivarMensajeria"></a>
 # **desactivarMensajeria**
@@ -178,7 +178,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarCorreosPendientes"></a>
 # **listarCorreosPendientes**
@@ -238,7 +238,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarMensajesPendientes"></a>
 # **listarMensajesPendientes**
@@ -298,7 +298,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarNotificacionesPendientes"></a>
 # **listarNotificacionesPendientes**
@@ -358,5 +358,5 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 

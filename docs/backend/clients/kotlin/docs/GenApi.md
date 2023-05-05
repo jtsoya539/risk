@@ -84,7 +84,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: multipart/form-data
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarAplicaciones"></a>
 # **listarAplicaciones**
@@ -146,7 +146,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarErrores"></a>
 # **listarErrores**
@@ -206,7 +206,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="listarSignificados"></a>
 # **listarSignificados**
@@ -268,7 +268,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="recuperarArchivo"></a>
 # **recuperarArchivo**
@@ -330,7 +330,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream, text/plain
+ - **Accept**: application/json
 
 <a name="recuperarTexto"></a>
 # **recuperarTexto**
@@ -384,7 +384,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="reporteListarSignificados"></a>
 # **reporteListarSignificados**
@@ -442,7 +442,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream, text/plain
+ - **Accept**: application/json
 
 <a name="reporteVersionSistema"></a>
 # **reporteVersionSistema**
@@ -498,7 +498,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, application/octet-stream, text/plain
+ - **Accept**: application/json
 
 <a name="significadoCodigo"></a>
 # **significadoCodigo**
@@ -556,7 +556,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="valorParametro"></a>
 # **valorParametro**
@@ -612,7 +612,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="versionServicio"></a>
 # **versionServicio**
@@ -666,7 +666,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json, text/plain
+ - **Accept**: application/json
 
 <a name="versionSistema"></a>
 # **versionSistema**
