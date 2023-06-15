@@ -27,6 +27,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.Web;
 
 namespace Risk.API
@@ -35,7 +36,7 @@ namespace Risk.API
     {
         public static void Main(string[] args)
         {
-            var logger = NLog.Web.NLogBuilder.ConfigureNLog(Path.Combine("config", "log", "nlog.config")).GetCurrentClassLogger();
+            var logger = NLog.LogManager.Setup().LoadConfigurationFromFile(Path.Combine("config", "log", "nlog.config")).GetCurrentClassLogger();
             try
             {
                 logger.Info("Iniciando Risk.API");
