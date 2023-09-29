@@ -2,7 +2,7 @@ create table T_PARAMETROS
 (
   id_parametro VARCHAR2(50) not null,
   descripcion  VARCHAR2(500),
-  valor        VARCHAR2(500),
+  valor        VARCHAR2(4000),
   id_dominio   VARCHAR2(5)
 )
 ;
