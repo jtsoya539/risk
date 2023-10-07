@@ -12,7 +12,7 @@ Dependencia|Descripción
 -----------|-----------
 [as_crypto](https://github.com/antonscheffer/as_crypto)|Contiene funciones/procedimientos básicos de criptografía (alternativa a dbms_crypto)
 [as_pdf3](https://technology.amis.nl/2012/04/11/generating-a-pdf-document-with-some-plsql-as_pdf_mini-as_pdf3/)|Genera archivos en formato PDF
-[as_xlsx](https://technology.amis.nl/2011/02/19/create-an-excel-file-with-plsql/)|Genera archivos en formato XLSX
+[as_xlsx](https://github.com/antonscheffer/as_xlsx)|Genera archivos en formato XLSX
 [as_zip](https://github.com/antonscheffer/as_zip)|Comprime y descomprime archivos en formato ZIP
 [csv](https://oracle-base.com/dba/script?category=miscellaneous&file=csv.sql)|Genera archivos en formato CSV
 [oos_util_totp](https://github.com/OraOpenSource/oos-utils)|Genera y valida códigos con el algoritmo TOTP
