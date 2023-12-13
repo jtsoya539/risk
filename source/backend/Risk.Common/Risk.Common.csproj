@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.54" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.55" />
     <PackageReference Include="itext7.pdfhtml" Version="4.0.5" />
   </ItemGroup>
 
