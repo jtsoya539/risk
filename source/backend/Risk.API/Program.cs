@@ -58,6 +58,7 @@ namespace Risk.API
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(option => option.AddServerHeader = false);
                 })
                 .ConfigureLogging(logging =>
                 {
