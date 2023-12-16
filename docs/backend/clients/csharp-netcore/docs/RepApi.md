@@ -7,7 +7,7 @@ All URIs are relative to *https://localhost:5001*
 | [**ReporteListarSignificados**](RepApi.md#reportelistarsignificados) | **GET** /Api/Gen/ReporteListarSignificados | ReporteListarSignificados |
 | [**ReporteVersionSistema**](RepApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema |
 
-<a name="reportelistarsignificados"></a>
+<a id="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
 > System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -116,7 +116,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="reporteversionsistema"></a>
+<a id="reporteversionsistema"></a>
 # **ReporteVersionSistema**
 > System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskDeviceToken = null, string riskServiceVersion = null)
 

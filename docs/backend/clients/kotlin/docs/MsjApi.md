@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**listarNotificacionesPendientes**](MsjApi.md#listarNotificacionesPendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes
 
 
-<a name="activarMensajeria"></a>
+<a id="activarMensajeria"></a>
 # **activarMensajeria**
 > DatoRespuesta activarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
 
@@ -68,7 +68,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="cambiarEstadoMensajeria"></a>
+<a id="cambiarEstadoMensajeria"></a>
 # **cambiarEstadoMensajeria**
 > DatoRespuesta cambiarEstadoMensajeria(riskDeviceToken, riskServiceVersion, cambiarEstadoMensajeriaRequestBody)
 
@@ -124,7 +124,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="desactivarMensajeria"></a>
+<a id="desactivarMensajeria"></a>
 # **desactivarMensajeria**
 > DatoRespuesta desactivarMensajeria(tipoMensajeria, riskDeviceToken, riskServiceVersion)
 
@@ -180,7 +180,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarCorreosPendientes"></a>
+<a id="listarCorreosPendientes"></a>
 # **listarCorreosPendientes**
 > CorreoPaginaRespuesta listarCorreosPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -240,7 +240,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarMensajesPendientes"></a>
+<a id="listarMensajesPendientes"></a>
 # **listarMensajesPendientes**
 > MensajePaginaRespuesta listarMensajesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -300,7 +300,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarNotificacionesPendientes"></a>
+<a id="listarNotificacionesPendientes"></a>
 # **listarNotificacionesPendientes**
 > NotificacionPaginaRespuesta listarNotificacionesPendientes(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 

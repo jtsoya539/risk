@@ -4,7 +4,7 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2023-05-04T23:16:34.539-04:00[America/Asuncion]
+- Build date: 2023-12-16T18:46:01.852-03:00[America/Asuncion]
 
 Risk Web API
 
@@ -238,20 +238,24 @@ Class | Method | HTTP request | Description
  - [UsuarioRespuesta](docs/UsuarioRespuesta.md)
 
 
+<a id="documentation-for-authorization"></a>
 ## Documentation for Authorization
 
+
 Authentication schemes defined for the API:
-### AccessToken
-
-
-- **Type**: HTTP basic authentication
-
+<a id="RiskAppKey"></a>
 ### RiskAppKey
 
 
 - **Type**: API key
 - **API key parameter name**: Risk-App-Key
 - **Location**: HTTP header
+
+<a id="AccessToken"></a>
+### AccessToken
+
+
+- **Type**: HTTP basic authentication
 
 
 ## Recommendation

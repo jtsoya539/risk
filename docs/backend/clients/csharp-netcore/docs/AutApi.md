@@ -29,7 +29,7 @@ All URIs are relative to *https://localhost:5001*
 | [**ValidarPermiso**](AutApi.md#validarpermiso) | **GET** /Api/Aut/ValidarPermiso | ValidarPermiso |
 | [**ValidarSesion**](AutApi.md#validarsesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion |
 
-<a name="activarusuario"></a>
+<a id="activarusuario"></a>
 # **ActivarUsuario**
 > DatoRespuesta ActivarUsuario (string key, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -127,7 +127,7 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="cambiarclaveacceso"></a>
+<a id="cambiarclaveacceso"></a>
 # **CambiarClaveAcceso**
 > DatoRespuesta CambiarClaveAcceso (string riskDeviceToken = null, string riskServiceVersion = null, CambiarClaveAccesoRequestBody cambiarClaveAccesoRequestBody = null)
 
@@ -234,7 +234,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="cambiarclavetransaccional"></a>
+<a id="cambiarclavetransaccional"></a>
 # **CambiarClaveTransaccional**
 > DatoRespuesta CambiarClaveTransaccional (string riskDeviceToken = null, string riskServiceVersion = null, CambiarClaveTransaccionalRequestBody cambiarClaveTransaccionalRequestBody = null)
 
@@ -341,7 +341,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="datosusuario"></a>
+<a id="datosusuario"></a>
 # **DatosUsuario**
 > UsuarioRespuesta DatosUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -448,7 +448,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="editardatousuario"></a>
+<a id="editardatousuario"></a>
 # **EditarDatoUsuario**
 > DatoRespuesta EditarDatoUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null, EditarDatoUsuarioRequestBody editarDatoUsuarioRequestBody = null)
 
@@ -557,7 +557,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="editarusuario"></a>
+<a id="editarusuario"></a>
 # **EditarUsuario**
 > DatoRespuesta EditarUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null, EditarUsuarioRequestBody editarUsuarioRequestBody = null)
 
@@ -666,7 +666,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="eliminarusuario"></a>
+<a id="eliminarusuario"></a>
 # **EliminarUsuario**
 > DatoRespuesta EliminarUsuario (string riskDeviceToken = null, string riskServiceVersion = null, EliminarUsuarioRequestBody eliminarUsuarioRequestBody = null)
 
@@ -773,7 +773,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="finalizarsesion"></a>
+<a id="finalizarsesion"></a>
 # **FinalizarSesion**
 > DatoRespuesta FinalizarSesion (string riskDeviceToken = null, string riskServiceVersion = null, FinalizarSesionRequestBody finalizarSesionRequestBody = null)
 
@@ -880,7 +880,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="generarotp"></a>
+<a id="generarotp"></a>
 # **GenerarOtp**
 > DatoRespuesta GenerarOtp (TipoMensajeria tipoMensajeria, string destino, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -986,7 +986,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="guardaravatarusuario"></a>
+<a id="guardaravatarusuario"></a>
 # **GuardarAvatarUsuario**
 > DatoRespuesta GuardarAvatarUsuario (string usuario, string riskDeviceToken = null, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
@@ -1101,7 +1101,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="iniciarsesion"></a>
+<a id="iniciarsesion"></a>
 # **IniciarSesion**
 > SesionRespuesta IniciarSesion (string riskDeviceToken = null, string riskServiceVersion = null, IniciarSesionRequestBody iniciarSesionRequestBody = null)
 
@@ -1205,7 +1205,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="iniciarsesionfacebook"></a>
+<a id="iniciarsesionfacebook"></a>
 # **IniciarSesionFacebook**
 > SesionRespuesta IniciarSesionFacebook (string riskDeviceToken = null, string riskServiceVersion = null, IniciarSesionFacebookRequestBody iniciarSesionFacebookRequestBody = null)
 
@@ -1309,7 +1309,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="iniciarsesiongoogle"></a>
+<a id="iniciarsesiongoogle"></a>
 # **IniciarSesionGoogle**
 > SesionRespuesta IniciarSesionGoogle (string riskDeviceToken = null, string riskServiceVersion = null, IniciarSesionGoogleRequestBody iniciarSesionGoogleRequestBody = null)
 
@@ -1413,7 +1413,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="recuperaravatarusuario"></a>
+<a id="recuperaravatarusuario"></a>
 # **RecuperarAvatarUsuario**
 > System.IO.Stream RecuperarAvatarUsuario (string usuario, int? version = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -1522,7 +1522,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="refrescarsesion"></a>
+<a id="refrescarsesion"></a>
 # **RefrescarSesion**
 > SesionRespuesta RefrescarSesion (string riskDeviceToken = null, string riskServiceVersion = null, RefrescarSesionRequestBody refrescarSesionRequestBody = null)
 
@@ -1626,7 +1626,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="refrescarsesionfacebook"></a>
+<a id="refrescarsesionfacebook"></a>
 # **RefrescarSesionFacebook**
 > SesionRespuesta RefrescarSesionFacebook (string riskDeviceToken = null, string riskServiceVersion = null, RefrescarSesionFacebookRequestBody refrescarSesionFacebookRequestBody = null)
 
@@ -1730,7 +1730,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="refrescarsesiongoogle"></a>
+<a id="refrescarsesiongoogle"></a>
 # **RefrescarSesionGoogle**
 > SesionRespuesta RefrescarSesionGoogle (string riskDeviceToken = null, string riskServiceVersion = null, RefrescarSesionGoogleRequestBody refrescarSesionGoogleRequestBody = null)
 
@@ -1834,7 +1834,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="registrarclavetransaccional"></a>
+<a id="registrarclavetransaccional"></a>
 # **RegistrarClaveTransaccional**
 > DatoRespuesta RegistrarClaveTransaccional (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarClaveTransaccionalRequestBody registrarClaveTransaccionalRequestBody = null)
 
@@ -1941,7 +1941,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="registrardispositivo"></a>
+<a id="registrardispositivo"></a>
 # **RegistrarDispositivo**
 > DatoRespuesta RegistrarDispositivo (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarDispositivoRequestBody registrarDispositivoRequestBody = null)
 
@@ -2045,7 +2045,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="registrarubicacion"></a>
+<a id="registrarubicacion"></a>
 # **RegistrarUbicacion**
 > DatoRespuesta RegistrarUbicacion (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarUbicacionRequestBody registrarUbicacionRequestBody = null)
 
@@ -2149,7 +2149,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="registrarusuario"></a>
+<a id="registrarusuario"></a>
 # **RegistrarUsuario**
 > DatoRespuesta RegistrarUsuario (string riskDeviceToken = null, string riskServiceVersion = null, RegistrarUsuarioRequestBody registrarUsuarioRequestBody = null)
 
@@ -2253,7 +2253,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="validarotp"></a>
+<a id="validarotp"></a>
 # **ValidarOtp**
 > DatoRespuesta ValidarOtp (string secret, int otp, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -2359,7 +2359,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="validarpermiso"></a>
+<a id="validarpermiso"></a>
 # **ValidarPermiso**
 > DatoRespuesta ValidarPermiso (string idPermiso, AccionPermiso? accion = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -2468,7 +2468,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="validarsesion"></a>
+<a id="validarsesion"></a>
 # **ValidarSesion**
 > DatoRespuesta ValidarSesion (string accessToken, string riskDeviceToken = null, string riskServiceVersion = null)
 

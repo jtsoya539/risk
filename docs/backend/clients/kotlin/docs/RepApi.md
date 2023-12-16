@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**reporteVersionSistema**](RepApi.md#reporteVersionSistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
 
 
-<a name="reporteListarSignificados"></a>
+<a id="reporteListarSignificados"></a>
 # **reporteListarSignificados**
 > java.io.File reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion)
 
@@ -66,7 +66,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="reporteVersionSistema"></a>
+<a id="reporteVersionSistema"></a>
 # **reporteVersionSistema**
 > java.io.File reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion)
 

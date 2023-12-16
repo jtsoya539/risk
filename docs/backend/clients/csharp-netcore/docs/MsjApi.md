@@ -11,7 +11,7 @@ All URIs are relative to *https://localhost:5001*
 | [**ListarMensajesPendientes**](MsjApi.md#listarmensajespendientes) | **GET** /Api/Msj/ListarMensajesPendientes | ListarMensajesPendientes |
 | [**ListarNotificacionesPendientes**](MsjApi.md#listarnotificacionespendientes) | **GET** /Api/Msj/ListarNotificacionesPendientes | ListarNotificacionesPendientes |
 
-<a name="activarmensajeria"></a>
+<a id="activarmensajeria"></a>
 # **ActivarMensajeria**
 > DatoRespuesta ActivarMensajeria (TipoMensajeria tipoMensajeria, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -118,7 +118,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="cambiarestadomensajeria"></a>
+<a id="cambiarestadomensajeria"></a>
 # **CambiarEstadoMensajeria**
 > DatoRespuesta CambiarEstadoMensajeria (string riskDeviceToken = null, string riskServiceVersion = null, CambiarEstadoMensajeriaRequestBody cambiarEstadoMensajeriaRequestBody = null)
 
@@ -225,7 +225,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="desactivarmensajeria"></a>
+<a id="desactivarmensajeria"></a>
 # **DesactivarMensajeria**
 > DatoRespuesta DesactivarMensajeria (TipoMensajeria tipoMensajeria, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -332,7 +332,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarcorreospendientes"></a>
+<a id="listarcorreospendientes"></a>
 # **ListarCorreosPendientes**
 > CorreoPaginaRespuesta ListarCorreosPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -443,7 +443,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarmensajespendientes"></a>
+<a id="listarmensajespendientes"></a>
 # **ListarMensajesPendientes**
 > MensajePaginaRespuesta ListarMensajesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -554,7 +554,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarnotificacionespendientes"></a>
+<a id="listarnotificacionespendientes"></a>
 # **ListarNotificacionesPendientes**
 > NotificacionPaginaRespuesta ListarNotificacionesPendientes (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 

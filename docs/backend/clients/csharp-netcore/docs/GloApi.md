@@ -9,7 +9,7 @@ All URIs are relative to *https://localhost:5001*
 | [**ListarDepartamentos**](GloApi.md#listardepartamentos) | **GET** /Api/Glo/ListarDepartamentos | ListarDepartamentos |
 | [**ListarPaises**](GloApi.md#listarpaises) | **GET** /Api/Glo/ListarPaises | ListarPaises |
 
-<a name="listarbarrios"></a>
+<a id="listarbarrios"></a>
 # **ListarBarrios**
 > BarrioPaginaRespuesta ListarBarrios (int? idPais = null, int? idDepartamento = null, int? idCiudad = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -123,7 +123,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarciudades"></a>
+<a id="listarciudades"></a>
 # **ListarCiudades**
 > CiudadPaginaRespuesta ListarCiudades (int? idPais = null, int? idDepartamento = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -235,7 +235,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listardepartamentos"></a>
+<a id="listardepartamentos"></a>
 # **ListarDepartamentos**
 > DepartamentoPaginaRespuesta ListarDepartamentos (int? idPais = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -345,7 +345,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarpaises"></a>
+<a id="listarpaises"></a>
 # **ListarPaises**
 > PaisPaginaRespuesta ListarPaises (int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 

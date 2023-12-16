@@ -10,7 +10,7 @@ Method | HTTP request | Description
 [**listarPaises**](GloApi.md#listarPaises) | **GET** /Api/Glo/ListarPaises | ListarPaises
 
 
-<a name="listarBarrios"></a>
+<a id="listarBarrios"></a>
 # **listarBarrios**
 > BarrioPaginaRespuesta listarBarrios(idPais, idDepartamento, idCiudad, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -74,7 +74,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarCiudades"></a>
+<a id="listarCiudades"></a>
 # **listarCiudades**
 > CiudadPaginaRespuesta listarCiudades(idPais, idDepartamento, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -136,7 +136,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarDepartamentos"></a>
+<a id="listarDepartamentos"></a>
 # **listarDepartamentos**
 > DepartamentoPaginaRespuesta listarDepartamentos(idPais, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -196,7 +196,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarPaises"></a>
+<a id="listarPaises"></a>
 # **listarPaises**
 > PaisPaginaRespuesta listarPaises(pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 

@@ -18,7 +18,7 @@ Method | HTTP request | Description
 [**versionSistema**](GenApi.md#versionSistema) | **GET** /Gen/VersionSistema | VersionSistema
 
 
-<a name="guardarArchivo"></a>
+<a id="guardarArchivo"></a>
 # **guardarArchivo**
 > DatoRespuesta guardarArchivo(tabla, campo, referencia, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension)
 
@@ -86,7 +86,7 @@ Configure RiskAppKey:
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
-<a name="listarAplicaciones"></a>
+<a id="listarAplicaciones"></a>
 # **listarAplicaciones**
 > AplicacionPaginaRespuesta listarAplicaciones(idAplicacion, claveAplicacion, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -148,7 +148,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarErrores"></a>
+<a id="listarErrores"></a>
 # **listarErrores**
 > ErrorPaginaRespuesta listarErrores(idError, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -208,7 +208,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="listarSignificados"></a>
+<a id="listarSignificados"></a>
 # **listarSignificados**
 > SignificadoPaginaRespuesta listarSignificados(dominio, pagina, porPagina, noPaginar, riskDeviceToken, riskServiceVersion)
 
@@ -270,7 +270,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="recuperarArchivo"></a>
+<a id="recuperarArchivo"></a>
 # **recuperarArchivo**
 > java.io.File recuperarArchivo(tabla, campo, referencia, version, riskDeviceToken, riskServiceVersion)
 
@@ -332,7 +332,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="recuperarTexto"></a>
+<a id="recuperarTexto"></a>
 # **recuperarTexto**
 > DatoRespuesta recuperarTexto(referencia, riskDeviceToken, riskServiceVersion)
 
@@ -386,7 +386,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="reporteListarSignificados"></a>
+<a id="reporteListarSignificados"></a>
 # **reporteListarSignificados**
 > java.io.File reporteListarSignificados(formato, dominio, riskDeviceToken, riskServiceVersion)
 
@@ -444,7 +444,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="reporteVersionSistema"></a>
+<a id="reporteVersionSistema"></a>
 # **reporteVersionSistema**
 > java.io.File reporteVersionSistema(formato, riskDeviceToken, riskServiceVersion)
 
@@ -500,7 +500,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="significadoCodigo"></a>
+<a id="significadoCodigo"></a>
 # **significadoCodigo**
 > DatoRespuesta significadoCodigo(dominio, codigo, riskDeviceToken, riskServiceVersion)
 
@@ -558,7 +558,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="valorParametro"></a>
+<a id="valorParametro"></a>
 # **valorParametro**
 > DatoRespuesta valorParametro(parametro, riskDeviceToken, riskServiceVersion)
 
@@ -614,7 +614,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="versionServicio"></a>
+<a id="versionServicio"></a>
 # **versionServicio**
 > DatoRespuesta versionServicio(servicio, riskDeviceToken, riskServiceVersion)
 
@@ -668,7 +668,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="versionSistema"></a>
+<a id="versionSistema"></a>
 # **versionSistema**
 > DatoRespuesta versionSistema(riskDeviceToken, riskServiceVersion)
 

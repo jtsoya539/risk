@@ -38,7 +38,7 @@ This runs all tests and packages the library.
 * Some Kotlin and Java types are fully qualified to avoid conflicts with types defined in OpenAPI definitions.
 * Implementation of ApiClient is intended to reduce method counts, specifically to benefit Android targets.
 
-<a name="documentation-for-api-endpoints"></a>
+<a id="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://localhost:5001*
@@ -95,7 +95,7 @@ Class | Method | HTTP request | Description
 *RepApi* | [**reporteVersionSistema**](docs/RepApi.md#reporteversionsistema) | **GET** /Api/Gen/ReporteVersionSistema | ReporteVersionSistema
 
 
-<a name="documentation-for-models"></a>
+<a id="documentation-for-models"></a>
 ## Documentation for Models
 
  - [py.com.risk.client.models.AccionPermiso](docs/AccionPermiso.md)
@@ -166,20 +166,22 @@ Class | Method | HTTP request | Description
  - [py.com.risk.client.models.UsuarioRespuesta](docs/UsuarioRespuesta.md)
 
 
-<a name="documentation-for-authorization"></a>
+<a id="documentation-for-authorization"></a>
 ## Documentation for Authorization
 
-<a name="AccessToken"></a>
-### AccessToken
 
-- **Type**: HTTP basic authentication
-
-<a name="RiskAppKey"></a>
+Authentication schemes defined for the API:
+<a id="RiskAppKey"></a>
 ### RiskAppKey
 
 - **Type**: API key
 - **API key parameter name**: Risk-App-Key
 - **Location**: HTTP header
+
+<a id="AccessToken"></a>
+### AccessToken
+
+- **Type**: HTTP basic authentication
 
 
 

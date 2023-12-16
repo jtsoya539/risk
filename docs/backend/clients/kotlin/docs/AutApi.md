@@ -30,7 +30,7 @@ Method | HTTP request | Description
 [**validarSesion**](AutApi.md#validarSesion) | **GET** /Api/Aut/ValidarSesion | ValidarSesion
 
 
-<a name="activarUsuario"></a>
+<a id="activarUsuario"></a>
 # **activarUsuario**
 > DatoRespuesta activarUsuario(key, riskDeviceToken, riskServiceVersion)
 
@@ -81,7 +81,7 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="cambiarClaveAcceso"></a>
+<a id="cambiarClaveAcceso"></a>
 # **cambiarClaveAcceso**
 > DatoRespuesta cambiarClaveAcceso(riskDeviceToken, riskServiceVersion, cambiarClaveAccesoRequestBody)
 
@@ -137,7 +137,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="cambiarClaveTransaccional"></a>
+<a id="cambiarClaveTransaccional"></a>
 # **cambiarClaveTransaccional**
 > DatoRespuesta cambiarClaveTransaccional(riskDeviceToken, riskServiceVersion, cambiarClaveTransaccionalRequestBody)
 
@@ -193,7 +193,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="datosUsuario"></a>
+<a id="datosUsuario"></a>
 # **datosUsuario**
 > UsuarioRespuesta datosUsuario(usuario, riskDeviceToken, riskServiceVersion)
 
@@ -249,7 +249,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="editarDatoUsuario"></a>
+<a id="editarDatoUsuario"></a>
 # **editarDatoUsuario**
 > DatoRespuesta editarDatoUsuario(usuario, riskDeviceToken, riskServiceVersion, editarDatoUsuarioRequestBody)
 
@@ -307,7 +307,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="editarUsuario"></a>
+<a id="editarUsuario"></a>
 # **editarUsuario**
 > DatoRespuesta editarUsuario(usuario, riskDeviceToken, riskServiceVersion, editarUsuarioRequestBody)
 
@@ -365,7 +365,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="eliminarUsuario"></a>
+<a id="eliminarUsuario"></a>
 # **eliminarUsuario**
 > DatoRespuesta eliminarUsuario(riskDeviceToken, riskServiceVersion, eliminarUsuarioRequestBody)
 
@@ -421,7 +421,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="finalizarSesion"></a>
+<a id="finalizarSesion"></a>
 # **finalizarSesion**
 > DatoRespuesta finalizarSesion(riskDeviceToken, riskServiceVersion, finalizarSesionRequestBody)
 
@@ -477,7 +477,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="generarOtp"></a>
+<a id="generarOtp"></a>
 # **generarOtp**
 > DatoRespuesta generarOtp(tipoMensajeria, destino, riskDeviceToken, riskServiceVersion)
 
@@ -533,7 +533,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="guardarAvatarUsuario"></a>
+<a id="guardarAvatarUsuario"></a>
 # **guardarAvatarUsuario**
 > DatoRespuesta guardarAvatarUsuario(usuario, riskDeviceToken, riskServiceVersion, archivo, url, nombre, extension)
 
@@ -597,7 +597,7 @@ Configure RiskAppKey:
  - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
-<a name="iniciarSesion"></a>
+<a id="iniciarSesion"></a>
 # **iniciarSesion**
 > SesionRespuesta iniciarSesion(riskDeviceToken, riskServiceVersion, iniciarSesionRequestBody)
 
@@ -651,7 +651,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="iniciarSesionFacebook"></a>
+<a id="iniciarSesionFacebook"></a>
 # **iniciarSesionFacebook**
 > SesionRespuesta iniciarSesionFacebook(riskDeviceToken, riskServiceVersion, iniciarSesionFacebookRequestBody)
 
@@ -705,7 +705,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="iniciarSesionGoogle"></a>
+<a id="iniciarSesionGoogle"></a>
 # **iniciarSesionGoogle**
 > SesionRespuesta iniciarSesionGoogle(riskDeviceToken, riskServiceVersion, iniciarSesionGoogleRequestBody)
 
@@ -759,7 +759,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="recuperarAvatarUsuario"></a>
+<a id="recuperarAvatarUsuario"></a>
 # **recuperarAvatarUsuario**
 > java.io.File recuperarAvatarUsuario(usuario, version, riskDeviceToken, riskServiceVersion)
 
@@ -817,7 +817,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="refrescarSesion"></a>
+<a id="refrescarSesion"></a>
 # **refrescarSesion**
 > SesionRespuesta refrescarSesion(riskDeviceToken, riskServiceVersion, refrescarSesionRequestBody)
 
@@ -871,7 +871,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="refrescarSesionFacebook"></a>
+<a id="refrescarSesionFacebook"></a>
 # **refrescarSesionFacebook**
 > SesionRespuesta refrescarSesionFacebook(riskDeviceToken, riskServiceVersion, refrescarSesionFacebookRequestBody)
 
@@ -925,7 +925,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="refrescarSesionGoogle"></a>
+<a id="refrescarSesionGoogle"></a>
 # **refrescarSesionGoogle**
 > SesionRespuesta refrescarSesionGoogle(riskDeviceToken, riskServiceVersion, refrescarSesionGoogleRequestBody)
 
@@ -979,7 +979,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="registrarClaveTransaccional"></a>
+<a id="registrarClaveTransaccional"></a>
 # **registrarClaveTransaccional**
 > DatoRespuesta registrarClaveTransaccional(riskDeviceToken, riskServiceVersion, registrarClaveTransaccionalRequestBody)
 
@@ -1035,7 +1035,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="registrarDispositivo"></a>
+<a id="registrarDispositivo"></a>
 # **registrarDispositivo**
 > DatoRespuesta registrarDispositivo(riskDeviceToken, riskServiceVersion, registrarDispositivoRequestBody)
 
@@ -1089,7 +1089,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="registrarUbicacion"></a>
+<a id="registrarUbicacion"></a>
 # **registrarUbicacion**
 > DatoRespuesta registrarUbicacion(riskDeviceToken, riskServiceVersion, registrarUbicacionRequestBody)
 
@@ -1143,7 +1143,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="registrarUsuario"></a>
+<a id="registrarUsuario"></a>
 # **registrarUsuario**
 > DatoRespuesta registrarUsuario(riskDeviceToken, riskServiceVersion, registrarUsuarioRequestBody)
 
@@ -1197,7 +1197,7 @@ Configure RiskAppKey:
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="validarOtp"></a>
+<a id="validarOtp"></a>
 # **validarOtp**
 > DatoRespuesta validarOtp(secret, otp, riskDeviceToken, riskServiceVersion)
 
@@ -1253,7 +1253,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="validarPermiso"></a>
+<a id="validarPermiso"></a>
 # **validarPermiso**
 > DatoRespuesta validarPermiso(idPermiso, accion, riskDeviceToken, riskServiceVersion)
 
@@ -1311,7 +1311,7 @@ Configure RiskAppKey:
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="validarSesion"></a>
+<a id="validarSesion"></a>
 # **validarSesion**
 > DatoRespuesta validarSesion(accessToken, riskDeviceToken, riskServiceVersion)
 

@@ -17,7 +17,7 @@ All URIs are relative to *https://localhost:5001*
 | [**VersionServicio**](GenApi.md#versionservicio) | **GET** /Api/Gen/VersionServicio | VersionServicio |
 | [**VersionSistema**](GenApi.md#versionsistema) | **GET** /Gen/VersionSistema | VersionSistema |
 
-<a name="guardararchivo"></a>
+<a id="guardararchivo"></a>
 # **GuardarArchivo**
 > DatoRespuesta GuardarArchivo (string tabla, string campo, string referencia, string riskDeviceToken = null, string riskServiceVersion = null, System.IO.Stream archivo = null, string url = null, string nombre = null, string extension = null)
 
@@ -136,7 +136,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listaraplicaciones"></a>
+<a id="listaraplicaciones"></a>
 # **ListarAplicaciones**
 > AplicacionPaginaRespuesta ListarAplicaciones (string idAplicacion = null, string claveAplicacion = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -248,7 +248,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarerrores"></a>
+<a id="listarerrores"></a>
 # **ListarErrores**
 > ErrorPaginaRespuesta ListarErrores (string idError = null, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -358,7 +358,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="listarsignificados"></a>
+<a id="listarsignificados"></a>
 # **ListarSignificados**
 > SignificadoPaginaRespuesta ListarSignificados (string dominio, int? pagina = null, int? porPagina = null, bool? noPaginar = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -471,7 +471,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="recuperararchivo"></a>
+<a id="recuperararchivo"></a>
 # **RecuperarArchivo**
 > System.IO.Stream RecuperarArchivo (string tabla, string campo, string referencia, int? version = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -584,7 +584,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="recuperartexto"></a>
+<a id="recuperartexto"></a>
 # **RecuperarTexto**
 > DatoRespuesta RecuperarTexto (string referencia, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -688,7 +688,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="reportelistarsignificados"></a>
+<a id="reportelistarsignificados"></a>
 # **ReporteListarSignificados**
 > System.IO.Stream ReporteListarSignificados (FormatoReporte formato, string dominio = null, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -797,7 +797,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="reporteversionsistema"></a>
+<a id="reporteversionsistema"></a>
 # **ReporteVersionSistema**
 > System.IO.Stream ReporteVersionSistema (FormatoReporte formato, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -904,7 +904,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="significadocodigo"></a>
+<a id="significadocodigo"></a>
 # **SignificadoCodigo**
 > DatoRespuesta SignificadoCodigo (string dominio, string codigo, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -1013,7 +1013,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="valorparametro"></a>
+<a id="valorparametro"></a>
 # **ValorParametro**
 > DatoRespuesta ValorParametro (string parametro, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -1120,7 +1120,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="versionservicio"></a>
+<a id="versionservicio"></a>
 # **VersionServicio**
 > DatoRespuesta VersionServicio (string servicio, string riskDeviceToken = null, string riskServiceVersion = null)
 
@@ -1224,7 +1224,7 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="versionsistema"></a>
+<a id="versionsistema"></a>
 # **VersionSistema**
 > DatoRespuesta VersionSistema (string riskDeviceToken = null, string riskServiceVersion = null)
 
