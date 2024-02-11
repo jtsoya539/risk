@@ -73,7 +73,7 @@ namespace Risk.API.Senders
             var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
             var credential = await authCode.AuthorizeAsync(_configuration["MsjConfiguration:Gmail:UserId"], CancellationToken.None);
 
-            if (credential.Token.IsExpired(SystemClock.Default))
+            if (credential.Token.IsStale)
                 await credential.RefreshTokenAsync(CancellationToken.None);
 
             oAuth2 = new SaslMechanismOAuth2(credential.UserId, credential.Token.AccessToken);
