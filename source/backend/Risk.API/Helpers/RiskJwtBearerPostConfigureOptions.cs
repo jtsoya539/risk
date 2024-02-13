@@ -39,6 +39,7 @@ namespace Risk.API.Helpers
 
         public void PostConfigure(string name, JwtBearerOptions options)
         {
+            options.UseSecurityTokenValidators = true;
             options.SecurityTokenValidators.Clear();
             options.SecurityTokenValidators.Add(_securityTokenValidator);
         }

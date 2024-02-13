@@ -22,16 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System;
+
 namespace Risk.API.Exceptions
 {
-    [System.Serializable]
-    public class RiskApiException : System.Exception
+    public class RiskApiException : Exception
     {
         public RiskApiException() { }
         public RiskApiException(string message) : base(message) { }
-        public RiskApiException(string message, System.Exception inner) : base(message, inner) { }
-        protected RiskApiException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+        public RiskApiException(string message, Exception inner) : base(message, inner) { }
     }
 }
