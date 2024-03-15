@@ -13,8 +13,8 @@ CREATE OR REPLACE PACKAGE zt_word AS
     1.0        15/10/2017  Zoran Tica       2. First public version.
     2.0        30/03/2020  Zoran Tica       3. Images; table borders
     2.1        11/04/2021  Javier Meza      4. Default spelling and grammar language (f_new_document, parameter p_lang)
-    2.11       31/12/2021  Zoran Tica       5. Fixed special characters issue 
-
+    2.11       31/12/2021  Zoran Tica       5. Fixed special characters issue
+    2.2        30/11/2023  Zoran Tica       6. Draw a table in the header or footer; procedure for document download
 
     ----------------------------------------------------------------------------
     Copyright (C) 2017 - Zoran Tica
@@ -230,16 +230,19 @@ PROCEDURE p_table_cell(
     p_background_color varchar2 default null, --RRGGBB hex format
     p_text varchar2 default null,
     p_font r_font default null,
-    p_image_data r_image_data default null
+    p_image_data r_image_data default null,
+    p_container_id pls_integer default null
     );
-
+        
 PROCEDURE p_table_merge_cells(
     p_doc_id number,
     p_table_id pls_integer,
     p_from_row pls_integer,
     p_from_column pls_integer,
     p_to_row pls_integer,
-    p_to_column pls_integer);
+    p_to_column pls_integer,
+    p_container_id pls_integer default null
+    );
 
 FUNCTION f_new_table(
     p_doc_id number,
@@ -252,7 +255,8 @@ FUNCTION f_new_table(
     p_border_left r_border default null,
     p_border_right r_border default null,
     p_border_inside_h r_border default null,
-    p_border_inside_v r_border default null
+    p_border_inside_v r_border default null,
+    p_container_id pls_integer default null
     ) RETURN pls_integer;
 
 FUNCTION f_new_numbering(
@@ -372,8 +376,16 @@ PROCEDURE p_save_file(
     p_document blob,
     p_file_name varchar2 default 'my_document.docx',
     p_folder varchar2 default 'MY_FOLDER'
-    );
+);
 
+--procedure downloads the document (or some other blob content)
+--it contains a call to the procedure "apex_application.stop_apex_engine" at the end
+--this line is commented - uncomment it only if You plan to download the generated document from the APEX
+PROCEDURE p_download_document(
+    p_doc IN OUT blob,
+    p_file_name varchar2,
+    p_disposition varchar2 default 'attachment'  --values "attachment" and "inline"
+);
 
 
 /*
