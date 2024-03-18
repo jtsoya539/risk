@@ -65,12 +65,12 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
     CASE l_formato
       WHEN k_reporte.c_formato_pdf THEN
         -- PDF
-        as_pdf3.init;
-        as_pdf3.set_page_format('A4');
-        as_pdf3.set_page_orientation('PORTRAIT');
-        as_pdf3.set_margins(2.5, 3, 2.5, 3, 'cm');
-        as_pdf3.write(l_version_actual);
-        l_contenido := as_pdf3.get_pdf;
+        as_pdf.init;
+        as_pdf.set_page_format('A4');
+        as_pdf.set_page_orientation('PORTRAIT');
+        as_pdf.set_margins(2.5, 3, 2.5, 3, 'cm');
+        as_pdf.write(l_version_actual);
+        l_contenido := as_pdf.get_pdf;
       
       WHEN k_reporte.c_formato_docx THEN
         -- DOCX

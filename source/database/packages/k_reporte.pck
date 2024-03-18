@@ -310,14 +310,14 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     CASE l_formato
       WHEN c_formato_pdf THEN
         -- PDF
-        as_pdf3.init;
-        as_pdf3.set_page_format('A4');
-        as_pdf3.set_page_orientation('PORTRAIT');
-        as_pdf3.set_margins(2.5, 3, 2.5, 3, 'cm');
-        as_pdf3.write('Código: ' || i_respuesta.codigo);
-        as_pdf3.write(utl_tcp.crlf);
-        as_pdf3.write('Mensaje: ' || i_respuesta.mensaje);
-        l_archivo.contenido := as_pdf3.get_pdf;
+        as_pdf.init;
+        as_pdf.set_page_format('A4');
+        as_pdf.set_page_orientation('PORTRAIT');
+        as_pdf.set_margins(2.5, 3, 2.5, 3, 'cm');
+        as_pdf.write('Código: ' || i_respuesta.codigo);
+        as_pdf.write(utl_tcp.crlf);
+        as_pdf.write('Mensaje: ' || i_respuesta.mensaje);
+        l_archivo.contenido := as_pdf.get_pdf;
       
       WHEN c_formato_docx THEN
         -- DOCX
@@ -443,25 +443,25 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           l_cursor   PLS_INTEGER;
           l_col_cnt  PLS_INTEGER;
           l_desc_tab dbms_sql.desc_tab2;
-          l_headers  as_pdf3.tp_headers;
+          l_columns  as_pdf.tp_columns;
         BEGIN
-          as_pdf3.init;
-          as_pdf3.set_page_format('A4');
-          as_pdf3.set_page_orientation('LANDSCAPE');
-          as_pdf3.set_margins(1.27, 1.27, 1.27, 1.27, 'cm');
-          as_pdf3.set_font('helvetica', 8);
+          as_pdf.init;
+          as_pdf.set_page_format('A4');
+          as_pdf.set_page_orientation('LANDSCAPE');
+          as_pdf.set_margins(1.27, 1.27, 1.27, 1.27, 'cm');
+          as_pdf.set_font('helvetica', 8);
         
           l_cursor := dbms_sql.open_cursor;
           dbms_sql.parse(l_cursor, l_consulta_sql, dbms_sql.native);
           dbms_sql.describe_columns2(l_cursor, l_col_cnt, l_desc_tab);
-          l_headers := NEW as_pdf3.tp_headers();
+          l_columns := NEW as_pdf.tp_columns();
           FOR i IN 1 .. l_col_cnt LOOP
-            l_headers.extend;
-            l_headers(l_headers.count) := l_desc_tab(i).col_name;
+            l_columns.extend;
+            l_columns(l_columns.count).collabel := l_desc_tab(i).col_name;
           END LOOP;
         
-          as_pdf3.query2table(l_consulta_sql, NULL, l_headers);
-          l_contenido := as_pdf3.get_pdf;
+          as_pdf.query2table(l_consulta_sql, NULL, as_pdf.c_dft_colours);
+          l_contenido := as_pdf.get_pdf;
         END;
       
       WHEN c_formato_docx THEN

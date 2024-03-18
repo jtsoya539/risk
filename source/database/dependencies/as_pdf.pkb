@@ -1,548 +1,24 @@
-CREATE OR REPLACE package as_pdf3
-is
-/**********************************************
-**
-** Author: Anton Scheffer
-** Date: 11-04-2012
-** Website: http://technology.amis.nl
-** See also: http://technology.amis.nl/?p=17718
-**
-** Changelog:
-**   Date: 13-08-2012
-**     added two procedure for Andreas Weiden
-**     see https://sourceforge.net/projects/pljrxml2pdf/
-**   Date: 16-04-2012
-**     changed code for parse_png
-**   Date: 15-04-2012
-**     only dbms_lob.freetemporary for temporary blobs
-**   Date: 11-04-2012
-**     Initial release of as_pdf3
-**
-******************************************************************************
-******************************************************************************
-Copyright (C) 2012 by Anton Scheffer
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-
-******************************************************************************
-******************************************** */
---
-  c_get_page_width    constant pls_integer := 0;
-  c_get_page_height   constant pls_integer := 1;
-  c_get_margin_top    constant pls_integer := 2;
-  c_get_margin_right  constant pls_integer := 3;
-  c_get_margin_bottom constant pls_integer := 4;
-  c_get_margin_left   constant pls_integer := 5;
-  c_get_x             constant pls_integer := 6;
-  c_get_y             constant pls_integer := 7;
-  c_get_fontsize      constant pls_integer := 8;
-  c_get_current_font  constant pls_integer := 9;
---
-  function file2blob( p_dir varchar2, p_file_name varchar2 )
-  return blob;
---
-  function conv2uu( p_value number, p_unit varchar2 )
-  return number;
---
-  procedure set_page_size
-    ( p_width number
-    , p_height number
-    , p_unit varchar2 := 'cm'
-    );
---
-  procedure set_page_format( p_format varchar2 := 'A4' );
---
-  procedure set_page_orientation( p_orientation varchar2 := 'PORTRAIT' );
---
-  procedure set_margins
-    ( p_top number := null
-    , p_left number := null
-    , p_bottom number := null
-    , p_right number := null
-    , p_unit varchar2 := 'cm'
-    );
---
-  procedure set_info
-    ( p_title varchar2 := null
-    , p_author varchar2 := null
-    , p_subject varchar2 := null
-    , p_keywords varchar2 := null
-    );
---
-  procedure init;
---
-  function get_pdf
-  return blob;
---
-  procedure save_pdf
-    ( p_dir varchar2 := 'MY_DIR'
-    , p_filename varchar2 := 'my.pdf'
-    , p_freeblob boolean := true
-    );
---
-  procedure txt2page( p_txt varchar2 );
---
-  procedure put_txt( p_x number, p_y number, p_txt varchar2, p_degrees_rotation number := null );
---
-  function str_len( p_txt varchar2 )
-  return number;
---
-  procedure write
-    ( p_txt in varchar2
-    , p_x in number := null
-    , p_y in number := null
-    , p_line_height in number := null
-    , p_start in number := null -- left side of the available text box
-    , p_width in number := null -- width of the available text box
-    , p_alignment in varchar2 := null
-    );
---
-  procedure set_font
-    ( p_index pls_integer
-    , p_fontsize_pt number
-    , p_output_to_doc boolean := true
-    );
---
-  function set_font
-    ( p_fontname varchar2
-    , p_fontsize_pt number
-    , p_output_to_doc boolean := true
-    )
-  return pls_integer;
---
-  procedure set_font
-    ( p_fontname varchar2
-    , p_fontsize_pt number
-    , p_output_to_doc boolean := true
-    );
---
-  function set_font
-    ( p_family varchar2
-    , p_style varchar2 := 'N'
-    , p_fontsize_pt number := null
-    , p_output_to_doc boolean := true
-    )
-  return pls_integer;
---
-  procedure set_font
-    ( p_family varchar2
-    , p_style varchar2 := 'N'
-    , p_fontsize_pt number := null
-    , p_output_to_doc boolean := true
-    );
---
-  procedure new_page;
---
-  function load_ttf_font
-    ( p_font blob
-    , p_encoding varchar2 := 'WINDOWS-1252'
-    , p_embed boolean := false
-    , p_compress boolean := true
-    , p_offset number := 1
-    )
-  return pls_integer;
---
-  procedure load_ttf_font
-    ( p_font blob
-    , p_encoding varchar2 := 'WINDOWS-1252'
-    , p_embed boolean := false
-    , p_compress boolean := true
-    , p_offset number := 1
-    );
---
-  function load_ttf_font
-    ( p_dir varchar2 := 'MY_FONTS'
-    , p_filename varchar2 := 'BAUHS93.TTF'
-    , p_encoding varchar2 := 'WINDOWS-1252'
-    , p_embed boolean := false
-    , p_compress boolean := true
-    )
-  return pls_integer;
---
-  procedure load_ttf_font
-    ( p_dir varchar2 := 'MY_FONTS'
-    , p_filename varchar2 := 'BAUHS93.TTF'
-    , p_encoding varchar2 := 'WINDOWS-1252'
-    , p_embed boolean := false
-    , p_compress boolean := true
-    );
---
-  procedure load_ttc_fonts
-    ( p_ttc blob
-    , p_encoding varchar2 := 'WINDOWS-1252'
-    , p_embed boolean := false
-    , p_compress boolean := true
-    );
---
-  procedure load_ttc_fonts
-    ( p_dir varchar2 := 'MY_FONTS'
-    , p_filename varchar2 := 'CAMBRIA.TTC'
-    , p_encoding varchar2 := 'WINDOWS-1252'
-    , p_embed boolean := false
-    , p_compress boolean := true
-    );
---
-  procedure set_color( p_rgb varchar2 := '000000' );
---
-  procedure set_color
-    ( p_red number := 0
-    , p_green number := 0
-    , p_blue number := 0
-    );
---
-  procedure set_bk_color( p_rgb varchar2 := 'ffffff' );
---
-  procedure set_bk_color
-    ( p_red number := 0
-    , p_green number := 0
-    , p_blue number := 0
-    );
---
-  procedure horizontal_line
-    ( p_x in number
-    , p_y in number
-    , p_width in number
-    , p_line_width in number := 0.5
-    , p_line_color in varchar2 := '000000'
-    );
---
-  procedure vertical_line
-    ( p_x in number
-    , p_y in number
-    , p_height in number
-    , p_line_width in number := 0.5
-    , p_line_color in varchar2 := '000000'
-    );
---
-  procedure rect
-    ( p_x in number
-    , p_y in number
-    , p_width in number
-    , p_height in number
-    , p_line_color in varchar2 := null
-    , p_fill_color in varchar2 := null
-    , p_line_width in number := 0.5
-    );
---
-  function get( p_what in pls_integer )
-  return number;
---
-  procedure put_image
-    ( p_img blob
-    , p_x number
-    , p_y number
-    , p_width number := null
-    , p_height number := null
-    , p_align varchar2 := 'center'
-    , p_valign varchar2 := 'top'
-    );
---
-  procedure put_image
-    ( p_dir varchar2
-    , p_file_name varchar2
-    , p_x number
-    , p_y number
-    , p_width number := null
-    , p_height number := null
-    , p_align varchar2 := 'center'
-    , p_valign varchar2 := 'top'
-    );
---
-  procedure put_image
-    ( p_url varchar2
-    , p_x number
-    , p_y number
-    , p_width number := null
-    , p_height number := null
-    , p_align varchar2 := 'center'
-    , p_valign varchar2 := 'top'
-    );
---
-  procedure set_page_proc( p_src clob );
---
-  type tp_col_widths is table of number;
-  type tp_headers is table of varchar2(32767);
---
-  procedure query2table
-    ( p_query varchar2
-    , p_widths tp_col_widths := null
-    , p_headers tp_headers := null
-    );
---
-$IF not DBMS_DB_VERSION.VER_LE_10 $THEN
-  procedure refcursor2table
-    ( p_rc sys_refcursor
-    , p_widths tp_col_widths := null
-    , p_headers tp_headers := null
-    );
---
-$END
---
-  procedure pr_goto_page( i_npage number );
---
-  procedure pr_goto_current_page;
-/*
-begin
-  as_pdf3.init;
-  as_pdf3.write( 'Minimal usage' );
-  as_pdf3.save_pdf;
-end;
---
-begin
-  as_pdf3.init;
-  as_pdf3.write( 'Some text with a newline-character included at this "
-" place.' );
-  as_pdf3.write( 'Normally text written with as_pdf3.write() is appended after the previous text. But the text wraps automaticly to a new line.' );
-  as_pdf3.write( 'But you can place your text at any place', -1, 700 );
-  as_pdf3.write( 'you want', 100, 650 );
-  as_pdf3.write( 'You can even align it, left, right, or centered', p_y => 600, p_alignment => 'right' );
-  as_pdf3.save_pdf;
-end;
---
-begin
-  as_pdf3.init;
-  as_pdf3.write( 'The 14 standard PDF-fonts and the WINDOWS-1252 encoding.' );
-  as_pdf3.set_font( 'helvetica' );
-  as_pdf3.write( 'helvetica, normal: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, 700 );
-  as_pdf3.set_font( 'helvetica', 'I' );
-  as_pdf3.write( 'helvetica, italic: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'helvetica', 'b' );
-  as_pdf3.write( 'helvetica, bold: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'helvetica', 'BI' );
-  as_pdf3.write( 'helvetica, bold italic: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'times' );
-  as_pdf3.write( 'times, normal: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, 625 );
-  as_pdf3.set_font( 'times', 'I' );
-  as_pdf3.write( 'times, italic: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'times', 'b' );
-  as_pdf3.write( 'times, bold: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'times', 'BI' );
-  as_pdf3.write( 'times, bold italic: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'courier' );
-  as_pdf3.write( 'courier, normal: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, 550 );
-  as_pdf3.set_font( 'courier', 'I' );
-  as_pdf3.write( 'courier, italic: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'courier', 'b' );
-  as_pdf3.write( 'courier, bold: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'courier', 'BI' );
-  as_pdf3.write( 'courier, bold italic: ' || 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
---
-  as_pdf3.set_font( 'courier' );
-  as_pdf3.write( 'symbol:', -1, 475 );
-  as_pdf3.set_font( 'symbol' );
-  as_pdf3.write( 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
-  as_pdf3.set_font( 'courier' );
-  as_pdf3.write( 'zapfdingbats:', -1, -1 );
-  as_pdf3.set_font( 'zapfdingbats' );
-  as_pdf3.write( 'The quick brown fox jumps over the lazy dog. 1234567890', -1, -1 );
---
-  as_pdf3.set_font( 'times', 'N', 20 );
-  as_pdf3.write( 'times, normal with fontsize 20pt', -1, 400 );
-  as_pdf3.set_font( 'times', 'N', 6 );
-  as_pdf3.write( 'times, normal with fontsize 5pt', -1, -1 );
-  as_pdf3.save_pdf;
-end;
---
-declare
-  x pls_integer;
-begin
-  as_pdf3.init;
-  as_pdf3.write( 'But others fonts and encodings are possible using TrueType fontfiles.' );
-  x := as_pdf3.load_ttf_font( 'MY_FONTS', 'refsan.ttf', 'CID', p_compress => false );
-  as_pdf3.set_font( x, 12  );
-  as_pdf3.write( 'The Windows MSReference SansSerif font contains a lot of encodings, for instance', -1, 700 );
-  as_pdf3.set_font( x, 15  );
-  as_pdf3.write( 'Albanian: Kush mund të lexoni këtë diçka si kjo', -1, -1 );
-  as_pdf3.write( 'Croatic: Tko može citati to nešto poput ovoga', -1, -1 );
-  as_pdf3.write( 'Russian: ??? ????? ????????? ??? ???-?? ????? ?????', -1, -1);
-  as_pdf3.write( 'Greek: ????? µp??e? ?a d?aß?se? a?t? t? ??t? sa? a?t?', -1, -1 ); 
---
-  as_pdf3.set_font( 'helvetica', 12  );
-  as_pdf3.write( 'Or by using a  TrueType collection file (ttc).', -1, 600 );
-  as_pdf3.load_ttc_fonts( 'MY_FONTS',  'cambria.ttc', p_embed => true, p_compress => false );
-  as_pdf3.set_font( 'cambria', 15 );   -- font family
-  as_pdf3.write( 'Anton, testing 1,2,3 with Cambria', -1, -1 );
-  as_pdf3.set_font( 'CambriaMT', 15 );  -- fontname
-  as_pdf3.write( 'Anton, testing 1,2,3 with CambriaMath', -1, -1 );
-  as_pdf3.save_pdf;
-end;
---
-begin
-  as_pdf3.init;
-  for i in 1 .. 10
-  loop
-    as_pdf3.horizontal_line( 30, 700 - i * 15, 100, i );
-  end loop;
-  for i in 1 .. 10
-  loop
-    as_pdf3.vertical_line( 150 + i * 15, 700, 100, i );
-  end loop;
-  for i in 0 .. 255
-  loop
-    as_pdf3.horizontal_line( 330, 700 - i, 100, 2, p_line_color =>  to_char( i, 'fm0x' ) || to_char( i, 'fm0x' ) || to_char( i, 'fm0x' ) );
-  end loop;
-  as_pdf3.save_pdf;
-end;
---
-declare
-  t_logo varchar2(32767) :=
-'/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkS' ||
-'Ew8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJ' ||
-'CQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIy' ||
-'MjIyMjIyMjIyMjIyMjL/wAARCABqAJYDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEA' ||
-'AAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIh' ||
-'MUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6' ||
-'Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZ' ||
-'mqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx' ||
-'8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREA' ||
-'AgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAV' ||
-'YnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hp' ||
-'anN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPE' ||
-'xcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3' ||
-'+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAoorifiX4pk' ||
-'8PaCILR9t9eExxsOqL/E315AHuaUmkrs1oUZVqipw3ZU8X/FCz0KeSw02Jb2+Thy' ||
-'WxHGfQkdT7D8686ufih4suGJW/jgXssUC8fnk1ydvbz3lzHb28bzTyttRF5LMa7H' ||
-'Uvh+3hvRI9T1+7kUPIsf2ezUMykgnlmIHbtXI5znqtj66ng8DhFGFRJyffVv5Fnw' ||
-'r8QfEEvinTodR1N5rSaYRyIyIAd3A5A9SK7X4qeINV0Gz019LvGtmlkcOVVTkADH' ||
-'UGvNdDsPDepa7ZWdtPrMU8syiN3EWFbqCcfSu3+NXGnaOM5/ev8A+giqi5ezepy1' ||
-'6NF4+koxsne6scronxO1+01i2l1K/e6st2Joyij5T1IwByOv4V75BPHc28c8Lh45' ||
-'FDKynIIPINfJleheGPiPJong+802Ul7uEYsCRkYbsfZev04pUqttJF5rlSqKM6Eb' ||
-'PZpGv8RfiFf2etDTNDu/I+zf8fEqqG3Of4eQen8z7VB8O/GGv6x4vhs9Q1J57don' ||
-'YoUUZIHHQV5fI7yyNJIxd3JZmY5JJ6k12nwo/wCR8t/+uEn8qUajlM6K+Ao0MFJc' ||
-'qbS363O1+KviTWNBuNMXS71rYTLIZAqqd2NuOoPqayvht4u17WvFf2TUdRe4g+zu' ||
-'+woo5BXB4HuaX42f8fOj/wC7L/Naw/hH/wAjv/26yfzWqcn7W1zjpUKTytzcVez1' ||
-'sdt8QviJN4euhpelJG16VDSyuMiIHoMdz3rzZviN4tZif7YkHsIkx/6DTPiAkqeO' ||
-'9WE2dxlBXP8Ad2jH6VJ4H8LWfizUp7S51FrV40DoiKC0nPOM+nH51MpTlOyOvDYX' ||
-'C4fCKrUinpdu1zovAfjvXL7xfZ2ep6i89tOGTayKPmxkHgD0/WvbK83074RWWman' ||
-'a30Wr3Zkt5VlUFVwSDnHSvQZ7u2tU3XE8cSju7gD9a6Kakl7x89mVTD1aqlh1pbt' ||
-'YnorDfxj4eWTy11W3lfpthbzD+S5q7ZavBfy7IIrrGM75Ld41/NgKu6OB05pXaL9' ||
-'FFFMgK8A+K+ote+NZYM5jtIliA9yNx/mPyr37tXzP42cv421gseftLD8sCsK7909' ||
-'zIIKWJcn0Rf8Aa5o3h3WJtR1VZmdY9kAjj3YJ+8fbjj8TW/8QPHuj+J/D6WNgLjz' ||
-'lnWQ+ZHtGAD3z71wNno2qahEZbLTrq5jB2l4oiwB9Mii80XVNPhE17p11bxE7d8s' ||
-'RUZ9MmsFOSjZLQ9+phMNUxKqyl7y6XNHwR/yO+j/APXyP5GvQ/jX/wAg/SP+ur/+' ||
-'givPPBH/ACO+j/8AXyP5GvQ/jX/yD9I/66v/AOgirh/CZyYv/kZ0vT/M8y8PaM/i' ||
-'DV106J9kskcjRk9NyqSAfY4xWbLFJBM8UqFJI2KurDBUjgg11nww/wCR/sP92T/0' ||
-'A16B4p+Gq614xtNQg2pZznN+AcH5e4/3uh/OojT5o3R0V8xjh8S6dT4bX+ev5nk1' ||
-'7oU+n+HtP1W4yv26RxEhH8CgfN+JP5V0Hwo/5Hy3/wCuEn8q6b4zxJBY6JFEgSNG' ||
-'kVVUYAAC4Fcn8MbqG08bQyzyBEEMnJ78dB6mq5VGokZ+3licunUe7TOn+Nn/AB86' ||
-'P/uy/wA1rD+EZA8bEk4AtJMn8Vru/GHhW58c3lhKrmws7ZX3yzp875x91e3Tvj6V' ||
-'zduPDPh6/GneGtOl8Qa2wKmRnzGvrk/dx9B+NXKL9pzHDQxEHgPq8dZWd/L1exf+' ||
-'JHhuPxFdw6hozLPeIPLnCnCbBkhi5+UEfXofauEtLWy8OX0N7L4hQ3sDBli01POI' ||
-'PoXOF9j1r1O18E6nrhSfxbqJkjHK6baHy4E9jjlq84+IXg4+GNWE1qh/sy5JMX/T' ||
-'Nu6f1Ht9KVSL+OxeXYiMrYSU/wCu13/l8zudCn1jx3avcxaybO1Vijorbph9Qu1V' ||
-'z/wKt+y+HHh63fzrq3k1CfqZbyQyc/Tp+leL+CvE0vhjxDDc7z9klIjuU7FSev1H' ||
-'X8/WvpNWDqGUggjIIrSk1NXe5wZpTq4Spywdova2hFbWVrZxiO2t4oUH8MaBR+lT' ||
-'0UVseM23uFFFFAgr5y+I9obPx5qQIwsrLKvuCo/qDX0bXkPxn0YiSw1mNflINvKf' ||
-'Tuv/ALNWNdXiexklZU8Uk/tKxb+C16j6bqVgSN8cyygezDH81rR+MQ/4o6L/AK+0' ||
-'/k1cV8JrXVv+Em+2WkJNgEaO5kY4XHUAerZxxXpHxB0b/hIdBSxjv7W1kWdZC1w2' ||
-'BgA/40oXdOxti1CjmanfS6b8jxbwR/yO+j/9fI/ka9D+Nf8AyD9I/wCur/8AoIrG' ||
-'8PeCJtJ8RWOoHVLa7S2lDslpFJIT7AgY/Ouu8a+HNT8bx2EVvB9hit3ZmkuiMkEY' ||
-'4VST+eKiMGqbR1YnFUZY+nWT91L/ADPN/hh/yP8AYf7sn/oBr3y51O1tHEbybpj0' ||
-'ijBZz/wEc1xXh34WafoVyl7PqNzNcoD8yN5SgEYPTn9auar438K+FI3hhkjluB1h' ||
-'tQGYn/abp+ZzWlNckfeOHMakcbiL0E5aW2F8SeFJPG01kb7fYWlqWYKCDLJnHXsv' ||
-'T3/Cqdzqngz4cwGC0hje+xjyofnmY/7THp+P5VjHUvHfjxWXToBoult/y1clWcfX' ||
-'GT+AH1qx4Q+GN/oXiSLUtQurO5iRW+UKxbceh5HX3ovd3ivmChGnT5MRU0X2U/zZ' ||
-'yfjXxR4p1K2ga/gfTNOu9xhtlOGdRjl+56j0HtS/CL/kd/8At1k/mteg/EHwRfeL' ||
-'ZbB7O5t4RbhwwlB53Y6Y+lZ/gf4c6l4Y8Q/2jdXlrLH5LR7Yw2ckj1+lRyS9pc7F' ||
-'jsM8BKmrRk09EQeNviHrnhnxLLp8FtZvBsWSNpFbcQRznB9Qa4bxF8Q9Y8S6abC8' ||
-'htI4CwY+Wh3ZByOSTivS/H/gC78V6haXllcwQPHGY5PNB+YZyMY+prkP+FMa3/0E' ||
-'rH8n/wAKKiqNtLYeBrZdCnCc7Ka9TzcKzkKoJZuAB3NfVWjwS22i2UE3MscCI/1C' ||
-'gGuE8LfCe20e/i1DU7sXk8Lbo40TbGrdic8nFekVVGm46s485x9PEyjGlql1Ciii' ||
-'tzxAooooAKo6vpFnrmmS6ffRl7eXG4A4PByCD26VeooHGTi7rcxL3w9btpEen2Nr' ||
-'aRxRDEcciHaP++SDXG3fhzxxZzCTSpNICDpGqE5/77BP616bRUuKZ0UsVOn5+up5' ||
-'d/wkfxI0vi98Nw3ajq0A5/8AHWP8qgfxz461aQwaX4Za2boWljY7T9W2ivWKTA9K' ||
-'nkfc3WNpbujG/wA/yPKl8DeM/EZ3eI/EDW8DdYITn8MDC/zrqtC+HXh3QiskdmLi' ||
-'4XkTXHzkH2HQfgK6yimoJamdTH1prlTsuy0QgAHAGKWsvWHvVNsLcS+QXIuGhAMg' ||
-'G04wD74z3rHmfxAxkEJuFk3SL8yIUEe07GHq+duR67uMYqm7GEaXNrdHWUVx7z+K' ||
-'y+/yiCixnylC4coX389t+Fx6ZHvTbj/hKHjufmmV1ineLywmN+UMa89cAsPfFLmL' ||
-'+r/3l952VFcpqdvrcEt0bO4vJI1SAx/dOSZCJO2eFxSwPrZ1IBTc+WJ4wBIoEZh2' ||
-'DeScZ3bt2O+cdqLi9j7t+ZHVUVzFzHrUN/dNFLdPaiaMADaSIyMuUGOSDgfTOKWV' ||
-'/ES6XCbcF7j7S4XzAoJi2vs39hzt6e3vTuL2O2qOmormjHqU32F4ptRUGbFysgQE' ||
-'LsY+n97aOK6KJzJEjlGTcoO1uo9j70XIlDl6j6KKKZAUUUUAFFFFABRRRQAUUUUA' ||
-'Y3iDV59JjgNvCkrylwA5IAKxsw6e6gVnnxTchjmwZMSm2MbZ3LMUDKvoVJyN3Toa' ||
-'6ggHqAaMD0FKzNYzglZxuci3i26jghmeCAiXG9Fc7rf94qEP/wB9H05HfrUl74ou' ||
-'4PtKxW0TG3lQM+4lTG7KI2HrkMe/8JrqTGhzlF568daPLTbt2Lt6YxxSs+5ftKd/' ||
-'hOah8SXL6iLcxwSL9ojgKITvIaMMXHJGBn8h1qO48V3Vs1y5sA8EJmVnQklSrbUJ' ||
-'Hoe5HTjtXUrGinKooOMcCl2r6D8qLMXtKd/hOX1fxFqNjd3qW1ik0VpAszkkjgq5' ||
-'zn2Kjjqc0j+JrmNeIoGZIkk25wZ9zEbY8E8jHqeSOldTtU5yBz1poiRcAIox0wOl' ||
-'Fn3D2lOyXKcvZeJ72W5tPtVpFDaXErxiZmK4KiTjnr9wc+9aHh/W21W0WW4MMckh' ||
-'OyNTzx178/pWyY0ZdrIpHoRQsaISVRQT6ChJinUhJO0bDqKKKoxCiiigAooooAKK' ||
-'KKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//Z';
-begin
-  as_pdf3.init;
-  as_pdf3.put_image( to_blob( utl_encode.base64_decode( utl_raw.cast_to_raw( t_logo ) ) )
-                   , 0
-                   , as_pdf3.get( as_pdf3.C_GET_PAGE_HEIGHT ) - 260
-                   , as_pdf3.get( as_pdf3.C_GET_PAGE_WIDTH )
-                   );
-  as_pdf3.write( 'jpg, gif and png images are supported.' );
-  as_pdf3.write( 'And because PDF 1.3 (thats the format I use) doesn''t support alpha channels, neither does AS_PDF.', -1, -1 );
-  as_pdf3.save_pdf;
-end;
---
-declare
-  t_rc sys_refcursor;
-  t_query varchar2(1000);
-begin
-  as_pdf3.init;
-  as_pdf3.load_ttf_font( 'MY_FONTS', 'COLONNA.TTF', 'CID' );
-  as_pdf3.set_page_proc( q'~
-    begin    
-      as_pdf3.set_font( 'helvetica', 8 );
-      as_pdf3.put_txt( 10, 15, 'Page #PAGE_NR# of "PAGE_COUNT#' );
-      as_pdf3.set_font( 'helvetica', 12 );
-      as_pdf3.put_txt( 350, 15, 'This is a footer text' );
-      as_pdf3.set_font( 'helvetica', 'B', 15 );
-      as_pdf3.put_txt( 200, 780, 'This is a header text' );
-      as_pdf3.put_image( 'MY_DIR', 'amis.jpg', 500, 15 );
-   end;~' );
-  as_pdf3.set_page_proc( q'~
-    begin    
-      as_pdf3.set_font( 'Colonna MT', 'N', 50 );
-      as_pdf3.put_txt( 150, 200, 'Watermark Watermark Watermark', 60 );
-   end;~' ); 
-  t_query := 'select rownum, sysdate + level, ''example'' || level from dual connect by level <= 50'; 
-  as_pdf3.query2table( t_query );
-  open t_rc for t_query;
-  as_pdf3.refcursor2table( t_rc );
-  as_pdf3.save_pdf;
-end;
-*/
-end;
-/
-
-CREATE OR REPLACE package body as_pdf3
+create or replace package body as_pdf
 is
 --
   type tp_pls_tab is table of pls_integer index by pls_integer;
   type tp_objects_tab is table of number(10) index by pls_integer;
   type tp_pages_tab is table of blob index by pls_integer;
-  type tp_settings is record
-    ( page_width number
-    , page_height number
-    , margin_left number
-    , margin_right number
-    , margin_top number
-    , margin_bottom number
+  type tp_settings is record (
+      page_width      number
+    , page_height     number
+    , margin_left     number
+    , margin_right    number
+    , margin_top      number
+    , margin_bottom   number
+    , hRowHeight      number  -- Default Row Header Height  (pt)
+    , tRowHeight      number  -- Default Row Table Height   (pt)
+    , tRowHeightMin   number  -- Minumum Row Table height
+    , tRowHeightExact number  -- Exact   Row Table height
+    , LabelMode       boolean
     );
-  type tp_font is record
-    ( standard boolean
+  type tp_font is record (
+      standard boolean
     , family varchar2(100)
     , style varchar2(2)  -- N Normal
                          -- I Italic
@@ -580,8 +56,8 @@ is
     , hmetrics tp_pls_tab
     );
   type tp_font_tab is table of tp_font index by pls_integer;
-  type tp_img is record
-    ( adler32 varchar2(8)
+  type tp_img is record (
+      adler32 varchar2(8)
     , width pls_integer
     , height pls_integer
     , color_res pls_integer
@@ -593,32 +69,152 @@ is
     , transparancy_index pls_integer
     );
   type tp_img_tab is table of tp_img index by pls_integer;
-  type tp_info is record
-    ( title varchar2(1024)
+  type tp_info is record (
+      title varchar2(1024)
     , author varchar2(1024)
     , subject varchar2(1024)
     , keywords varchar2(32767)
     );
   type tp_page_prcs is table of clob index by pls_integer;
---
+
+-- ***************************************************
 -- globals
-  g_pdf_doc blob; -- the PDF-document being constructed
-  g_objects tp_objects_tab;
-  g_pages tp_pages_tab;
-  g_settings tp_settings;
-  g_fonts tp_font_tab;
-  g_used_fonts tp_pls_tab;
-  g_current_font pls_integer;
-  g_images tp_img_tab;
-  g_x number;  -- current x-location of the "cursor"
-  g_y number;  -- current y-location of the "cursor"
-  g_info tp_info;
-  g_page_nr pls_integer;
-  g_page_prcs tp_page_prcs;
---
+  g_package         VARCHAR2(32):='AS_PDF'; -- Package Name
+  g_version         VARCHAR2(32):='3.5.13'; -- Package Version
+  g_objects         tp_objects_tab;
+  g_pages           tp_pages_tab;
+  g_settings        tp_settings;
+  g_fonts           tp_font_tab;
+  g_used_fonts      tp_pls_tab;
+  g_images          tp_img_tab;
+  g_info            tp_info;
+  g_page_prcs       tp_page_prcs;
+  g_current_font    pls_integer; -- Index of last font used
+  g_current_fontPDF pls_integer; -- Index of last font sent to doc
+  g_page_nr         pls_integer;
+  g_pdf_doc         blob;        -- the PDF-document being constructed
+  g_x               number;      -- current x-location of the "cursor"
+  g_y               number;      -- current y-location of the "cursor"
+  g_current_fcolor  VARCHAR2(6); -- Current Foreground Color
+  g_current_bcolor  VARCHAR2(6); -- Current Background Color
+  g_bForce          BOOLEAN;     -- Force Font Changing
+-- *****************************************************
 -- constants
   c_nl constant varchar2(2) := chr(13) || chr(10);
---
+  g_Log            BOOLEAN := FALSE;
+
+-- Generic Functions
+  PROCEDURE log(p_vString IN VARCHAR2, p_bFlag IN BOOLEAN:=FALSE) IS
+  BEGIN
+    IF g_Log then
+      if p_bFlag THEN
+        dbms_output.put_line(p_vString);
+      end if;
+    END IF;
+  END;
+-- Return only First Char of string in Uppercase, . if null
+  FUNCTION Upper1(p_vText in varchar2,
+                  p_vDefault in varchar2 Default '.' ) return varchar2 is
+  begin
+    return upper(substr(p_vText||p_vDefault,1,1));
+  END;
+-- Return numeric value, with decimals, from string of parameter
+  FUNCTION get_ParamNumber(p_vString IN VARCHAR2) RETURN NUMBER IS
+  BEGIN
+    RETURN to_number(regexp_replace(regexp_substr(p_vString,'[[:digit:]-,.]+'),'[,.]', g_vDP ));
+  END;
+-- Return measure unit of parameter string, accept letter and % symbol
+  FUNCTION get_ParamUDM(p_vString IN VARCHAR2) RETURN VARCHAR2 IS
+  BEGIN
+    RETURN regexp_substr(p_vString,'[[:alpha:]%]+');
+  END;
+  -- Return pt value from parameter string with  measure unit
+  FUNCTION get_ParamPT(p_vString   IN VARCHAR2,
+                       p_vXY IN VARCHAR2 DEFAULT 'Y') RETURN NUMBER IS
+    v_nParam NUMBER;
+  BEGIN
+    v_nParam := conv2uu(get_ParamNumber(p_vString),get_ParamUDM(p_vString));
+    IF v_nParam < 0 THEN
+      IF p_vXY='Y' THEN
+        v_nParam:=g_settings.page_height+v_nParam; --Negative Y = Distance from Top border
+      ELSE
+        v_nParam:=g_settings.page_width +v_nParam; --Negative X = Distance from Right border
+      END IF;
+    END IF;
+    RETURN v_nParam;
+  END;
+
+  Function parseString(v_vParse in out varchar2,
+                       p_vSep   in varchar2:=',') return varchar2 is
+    c integer;
+    v_vReturn varchar2(100);
+  BEGIN
+    c := instr(v_vParse, p_vSep);
+    case c
+      when 0 then
+        v_vReturn:=v_vParse;
+        v_vParse:='';
+      when 1 then
+        v_vReturn:='';
+        v_vParse:=substr(v_vParse,2);
+      else
+        v_vReturn:=substr(v_vParse, 1, c-1);
+        v_vParse:=substr(v_vParse, c+1);
+    end case;
+    return v_vReturn;
+  END;
+
+  procedure set_Language(p_vNewValue in varchar2:='E') is
+  begin
+    g_Language:=upper1(p_vNewValue);
+  end;
+
+  procedure RaiseError(p_nErrNum in number) is
+    v_vMsg varchar2(100);
+  begin
+    case g_Language
+      when 'I' then -- Italian
+        case p_nErrNum
+          when -20001 then
+            v_vMsg:='Troppe colonne o larghezza colonne eccessiva';
+          when -20002 then
+            v_vMsg:='non posso calcolare il numeor massimo di colonne';
+          when -20003 then
+            v_vMsg:='Troppe colonne, eccedono larghezza pagina';
+          when -20011 then
+            v_vMsg:='Troppe righe o altezza righe eccessiva';
+          when -20012 then
+            v_vMsg:='non posso calcolare in numero massimo di righe';
+          when -20013 then
+            v_vMsg:='Troppe righe, eccedono altezza pagina';
+          when -20100 then
+            v_vMsg:='La larghezza delle colonne eccede la larghezza del foglio';
+          else
+            v_vMsg:='Errore non codificato';
+        end case;
+      else           -- English Default
+        case p_nErrNum
+          when -20001 then
+            v_vMsg:='too many columns or excessive column width';
+          when -20002 then
+            v_vMsg:='unable to calculate max columns';
+          when -20003 then
+            v_vMsg:='too many columns, exceed page width';
+          when -20011 then
+            v_vMsg:='too many rows or excessive row height';
+          when -20012 then
+            v_vMsg:='unable to calculate max rows';
+          when -20013 then
+            v_vMsg:='too many rows, exceed page height';
+          when -20100 then
+            v_vMsg:='Columns width exceed page width';
+          else
+            v_vMsg:='Error whithout description';
+        end case;
+    end case;
+    Raise_application_error(p_nErrNum,v_vMsg);
+  end;
+
   function num2raw( p_value number )
   return raw
   is
@@ -690,6 +286,21 @@ is
       end if;
       raise;
   end;
+
+  function who_am_i(p_bOwner IN BOOLEAN DEFAULT FALSE) return varchar2
+  is
+     l_owner     varchar2(30);
+     l_name      varchar2(30);
+     l_lineno    number;
+     l_type      varchar2(30);
+  BEGIN
+    owa_util.who_called_me( l_owner, l_name, l_lineno, l_type );
+    IF p_bOwner THEN
+      return l_owner || '.' || l_name;
+    ELSE
+      return nvl(l_name,g_Package);
+    END IF;
+  end;
 --
   procedure init_core_fonts
   is
@@ -702,7 +313,6 @@ is
       if p_compressed_tab is not null
       then
         t_tmp := utl_compress.lz_uncompress
-
           ( utl_encode.base64_decode( utl_raw.cast_to_raw( p_compressed_tab ) ) );
         for i in 0 .. 255
         loop
@@ -893,6 +503,10 @@ is
     c65521 constant pls_integer := 65521;
   begin
     step_size := trunc( 16383 / dbms_lob.getchunksize( p_src ) ) * dbms_lob.getchunksize( p_src );
+    -- AW Bugfix for Chunksizes > 16383
+    if step_size=0 then
+      step_size:=16383;
+    end if;
     for j in 0 .. trunc( ( dbms_lob.getlength( p_src ) - 1 ) / step_size )
     loop
       tmp := rawtohex( dbms_lob.substr( p_src, step_size, j * step_size + 1 ) );
@@ -983,20 +597,20 @@ is
   function subset_font( p_index pls_integer )
   return blob
   is
-    t_tmp blob;
-    t_header blob;
-    t_tables blob;
-    t_len pls_integer;
-    t_code pls_integer;
-    t_glyph pls_integer;
-    t_offset pls_integer;
-    t_factor pls_integer;
-    t_unicode pls_integer;
-    t_used_glyphs tp_pls_tab;
-    t_fmt varchar2(10);
+    t_tmp           blob;
+    t_header        blob;
+    t_tables        blob;
+    t_len           pls_integer;
+    t_code          pls_integer;
+    t_glyph         pls_integer;
+    t_offset        pls_integer;
+    t_factor        pls_integer;
+    t_unicode       pls_integer;
+    t_used_glyphs   tp_pls_tab;
+    t_fmt           varchar2(10);
     t_utf16_charset varchar2(1000);
-    t_raw raw(32767);
-    t_v varchar2(32767);
+    t_raw           raw(32767);
+    t_v             varchar2(32767);
     t_table_records raw(32767);
   begin
     if g_fonts( p_index ).cid
@@ -1246,7 +860,7 @@ is
         t_g2c tp_pls_tab;
         t_code     pls_integer;
         t_c_start  pls_integer;
-        t_map varchar2(32767);
+        t_map  varchar2(32767);
         t_cmap varchar2(32767);
         t_cor pls_integer;
         t_cnt pls_integer;
@@ -1327,7 +941,7 @@ end' ) );
       exception
         when others
         then
-          dbms_output.put_line( '**** ' || g_fonts( p_index ).name );
+          log( '**** ' || g_fonts( p_index ).name );
       end;
       txt2pdfdoc( ']' );
       txt2pdfdoc( 'endobj' );
@@ -1548,8 +1162,7 @@ end' ) );
     t_banner varchar2( 1000 );
   begin
     begin
-      select    'running on '
-             || replace( replace( replace( substr( banner
+      select    replace( replace( replace( substr( banner
                                                  , 1
                                                  , 950
                                                  )
@@ -1567,7 +1180,7 @@ end' ) );
       where instr( upper( banner )
                  , 'DATABASE'
                  ) > 0;
-      t_banner := '/Producer (' || t_banner || ')';
+      t_banner := '/Creator (' || t_banner || ')';
     exception
       when others
       then
@@ -1575,8 +1188,8 @@ end' ) );
     end;
 --
     return add_object( to_char( sysdate, '"/CreationDate (D:"YYYYMMDDhh24miss")"' )
-                     || '/Creator (AS-PDF 0.3.0 by Anton Scheffer)'
                      || t_banner
+                     || '/Producer (' || g_package || ' ' || g_version || ' by Anton Scheffer)'
                      || '/Title <FEFF' || utl_i18n.string_to_raw( g_info.title, 'AL16UTF16' ) || '>'
                      || '/Author <FEFF' || utl_i18n.string_to_raw( g_info.author, 'AL16UTF16' ) || '>'
                      || '/Subject <FEFF' || utl_i18n.string_to_raw( g_info.subject, 'AL16UTF16' ) || '>'
@@ -1590,8 +1203,7 @@ end' ) );
     t_info number(10);
     t_catalogue number(10);
   begin
-    if g_pages.count = 0
-    then
+    if g_pages.count = 0 then
       new_page;
     end if;
     if g_page_prcs.count > 0
@@ -1600,12 +1212,27 @@ end' ) );
       loop
         g_page_nr := i;
         for p in g_page_prcs.first .. g_page_prcs.last
-        loop  
-          begin
-            execute immediate replace( replace( g_page_prcs( p ), '#PAGE_NR#', i + 1 ), '"PAGE_COUNT#', g_pages.count );
-          exception
-            when others then null;
-          end;
+        loop
+          BEGIN
+          -- Replace substitution key with
+          -- #PAGE_NR#    Current page number
+          -- #PAGE_COUNT# Total page number
+          -- ?            Package name
+
+            EXECUTE IMMEDIATE
+              replace(replace(replace(
+                g_page_prcs( p ),
+                  '#PAGE_NR#', i + 1 ),
+                  '#PAGE_COUNT#', g_pages.count),
+                  '?', g_package);
+
+          EXCEPTION
+            when others then
+              log( 'finish_pdf: '||to_char(i)||g_page_prcs( p ));
+              log( to_char(SQLCODE)||SQLERRM);
+              null;
+          END;
+
         end loop;
       end loop;
     end if;
@@ -1655,15 +1282,17 @@ end' ) );
     end if;
   end;
 --
-  function conv2uu( p_value number, p_unit varchar2 )
-  return number
-  is
+  function conv2uu( p_value number, p_unit varchar2 ) return NUMBER  IS
+  -- Convert from p_valore in p_unit to pt
    c_inch constant number := 25.40025;
   begin
+    if p_value is null then
+      return null;
+    end if;
     return round( case lower( p_unit )
-                    when 'mm' then p_value * 72 / c_inch
-                    when 'cm' then p_value * 720 / c_inch
-                    when 'pt' then p_value          -- also point
+                    when 'mm'    then p_value * 72  / c_inch
+                    when 'cm'    then p_value * 720 / c_inch
+                    when 'pt'    then p_value       -- also point
                     when 'point' then p_value
                     when 'inch'  then p_value * 72
                     when 'in'    then p_value * 72  -- also inch
@@ -1671,8 +1300,9 @@ end' ) );
                     when 'p'     then p_value * 12  -- also pica
                     when 'pc'    then p_value * 12  -- also pica
                     when 'em'    then p_value * 12  -- also pica
-                    when 'px'    then p_value       -- pixel voorlopig op point zetten
+                    when 'px'    then p_value       -- pixel impostazione provvisoria
                     when 'px'    then p_value * 0.8 -- pixel
+                    WHEN '2mm'   THEN p_value/72*c_inch -- convert pt to mm
                     else null
                   end
                 , 3
@@ -1787,23 +1417,42 @@ end' ) );
       g_settings.margin_right := 0;
     end if;
   end;
---
-  procedure set_info
-    ( p_title varchar2 := null
-    , p_author varchar2 := null
-    , p_subject varchar2 := null
-    , p_keywords varchar2 := null
-    )
-  is
+
+  procedure set_rowHeight(p_hRowHeight in number default null,
+                          p_tRowHeight in number default null,
+                          p_unit varchar2 := 'cm') is
+    k_nDefaultHeightPT number:=4;
   begin
-    g_info.title := substr( p_title, 1, 1024 );
-    g_info.author := substr( p_author, 1, 1024 );
-    g_info.subject := substr( p_subject, 1, 1024 );
-    g_info.keywords := substr( p_keywords, 1, 16383 );
+  -- Header   (can be: 0=No Header, null=Default, or positive)
+    g_settings.hRowHeight:=coalesce(conv2uu(p_hRowHeight, p_unit), k_nDefaultHeightPT);
+  -- Table    (can be: Negative=Set Min, Positive=Set Exact, null=Automatic
+    g_settings.tRowHeightExact:=null;
+    case
+      when coalesce(p_tRowHeight,0) = 0 then
+        g_settings.tRowHeightMin:=k_nDefaultHeightPT;
+        g_settings.tRowHeightExact:=null;
+      when coalesce(p_tRowHeight,0) < 0 then
+        g_settings.tRowHeightMin:=conv2uu(abs(p_tRowHeight), p_unit);
+        g_settings.tRowHeightExact:=null;
+      else
+        g_settings.tRowHeightMin:=conv2uu(p_tRowHeight, p_unit);
+        g_settings.tRowHeightExact:=g_settings.tRowHeightMin;
+    end case;
+    g_settings.tRowHeight:=g_settings.tRowHeightMin;
   end;
 --
-  procedure init
-  is
+  procedure set_info(p_title    varchar2 := null,
+                     p_author   varchar2 := null,
+                     p_subject  varchar2 := null,
+                     p_keywords varchar2 := null) is
+  begin
+    g_info.title    := substr(p_title, 1, 1024);
+    g_info.author   := substr(p_author, 1, 1024);
+    g_info.subject  := substr(p_subject, 1, 1024);
+    g_info.keywords := substr(p_keywords, 1, 16383);
+  end;
+--
+  procedure init is
   begin
     g_objects.delete;
     g_pages.delete;
@@ -1822,18 +1471,17 @@ end' ) );
     set_page_format;
     set_page_orientation;
     set_margins;
+    --g_package:=who_am_i;
   end;
 --
-  function get_pdf
-  return blob
-  is
+  function get_pdf return BLOB is
   begin
     finish_pdf;
     return g_pdf_doc;
   end;
 --
   procedure save_pdf
-    ( p_dir varchar2 := 'MY_DIR'
+    ( p_dir varchar2 := 'PDF'
     , p_filename varchar2 := 'my.pdf'
     , p_freeblob boolean := true
     )
@@ -1859,11 +1507,9 @@ end' ) );
     end if;
   end;
 --
-  procedure raw2page( p_txt blob )
-  is
+  procedure raw2page(p_txt BLOB) is
   begin
-    if g_pages.count() = 0
-    then
+    if g_pages.count() = 0 then
       new_page;
     end if;
     dbms_lob.append( g_pages( coalesce( g_page_nr, g_pages.count( ) - 1 ) )
@@ -1877,14 +1523,13 @@ end' ) );
     raw2page( utl_raw.cast_to_raw( p_txt ) );
   end;
 --
-  procedure output_font_to_doc( p_output_to_doc boolean )
-  is
+  procedure output_font_to_doc( p_output_to_doc boolean )  is
   begin
-    if p_output_to_doc
-    then
+    if p_output_to_doc then
       txt2page( 'BT /F' || g_current_font || ' '
               || to_char_round( g_fonts( g_current_font ).fontsize ) || ' Tf ET'
               );
+      g_current_fontPDF:=g_current_font;
     end if;
   end;
 --
@@ -1895,8 +1540,7 @@ end' ) );
     )
   is
   begin
-    if p_index is not null
-    then
+    if p_index is not null then
       g_used_fonts( p_index ) := 0;
       g_current_font := p_index;
       g_fonts( p_index ).fontsize := p_fontsize_pt;
@@ -1913,8 +1557,7 @@ end' ) );
   is
     t_fontname varchar2(100);
   begin
-    if p_fontname is null
-    then
+    if p_fontname is null then
       if (  g_current_font is not null
          and p_fontsize_pt != g_fonts( g_current_font ).fontsize
          )
@@ -1930,7 +1573,10 @@ end' ) );
     loop
       if lower( g_fonts( i ).fontname ) = t_fontname
       then
-        exit when g_current_font = i and g_fonts( i ).fontsize = p_fontsize_pt and g_page_nr is null;
+        exit when g_current_font = i
+              and g_fonts( i ).fontsize = p_fontsize_pt
+              and g_page_nr is null
+              and g_bForce=FALSE;
         g_fonts( i ).fontsize := coalesce( p_fontsize_pt
                                          , g_fonts( nvl( g_current_font, i ) ).fontsize
                                          , 12
@@ -2013,9 +1659,15 @@ end' ) );
   begin
     t_dummy := set_font( p_family, p_style, p_fontsize_pt, p_output_to_doc );
   end;
+
+  -- Change only font style
+  PROCEDURE set_font_style(p_style varchar2 := 'N') IS
+    t_dummy pls_integer;
+  BEGIN
+    t_dummy := set_font(to_char(NULL),p_style);
+  END;
 --
-  procedure new_page
-  is
+  procedure new_page is
   begin
     g_pages( g_pages.count() ) := null;
     dbms_lob.createtemporary( g_pages( g_pages.count() - 1 ), true );
@@ -2075,12 +1727,14 @@ end' ) );
     t_rv raw(32767);
     t_unicode pls_integer;
   begin
-    if g_current_font is null
-    then
+    if g_current_font is null then
+
+
       set_font( 'helvetica' );
     end if;
-    if g_fonts( g_current_font ).cid
-    then
+    if g_fonts( g_current_font ).cid then
+
+
       for i in 1 .. length( p_txt )
       loop
         t_unicode := utl_raw.cast_to_binary_integer( utl_raw.convert( utl_raw.cast_to_raw( substr( p_txt, i, 1 ) )
@@ -2151,14 +1805,63 @@ end' ) );
               );
   end;
 --
-  procedure put_txt( p_x number, p_y number, p_txt varchar2, p_degrees_rotation number := null )
-  is
+  procedure put_txt( p_x number, p_y number, p_txt varchar2,
+                     p_degrees_rotation number := null,
+                     p_um VARCHAR2:='pt' ) is
   begin
-    if p_txt is not null
-    then
-      put_raw( p_x, p_y, txt2raw( p_txt ), p_degrees_rotation );
+    if p_txt is not null then
+
+
+      put_raw(conv2uu(p_x, p_um),
+              conv2uu(p_y, p_um),
+              txt2raw(p_txt),
+              p_degrees_rotation);
+
+
+      log(replace(replace(
+          'p_txt('||
+            to_char(p_x)||'; '||
+            to_char(p_y)||'; '||
+            p_txt ||'; '||
+            to_char(p_degrees_rotation)||'; '||
+            p_um ||')',
+            ',','.'),
+            ';',',')||';'
+         , true);
+
+
     end if;
   end;
+  procedure put_txt( p_um VARCHAR2:='pt',
+                     p_x number, p_y number, p_txt varchar2,
+                     p_degrees_rotation number := NULL) is
+  begin
+    if p_txt is not null then
+
+
+      put_raw(conv2uu(p_x, p_um),
+              conv2uu(p_y, p_um),
+              txt2raw(p_txt),
+              p_degrees_rotation);
+    end if;
+  end;
+
+  procedure g_put_txt( p_x VARCHAR2, p_y VARCHAR2, p_txt varchar2,
+                     p_degrees_rotation number := NULL) IS
+  BEGIN
+  -- Some as previous put_txt, but move global g_x and g_y
+  -- Checks the presence of the \n character to calculate g_y position
+    g_x:=nvl(get_ParamPT(p_x),g_x);
+    g_y:=nvl(get_ParamPT(p_y),g_y);
+    IF p_txt is not null THEN
+
+
+      put_raw(g_x, g_y,
+              txt2raw(p_txt),
+              p_degrees_rotation);
+    end if;
+  end;
+
 --
   function str_len( p_txt in varchar2 )
   return number
@@ -2217,14 +1920,54 @@ end' ) );
     return t_width;
   end;
 --
+    /* Full Justified String. NOTE: multiple space are replaced with single space */
+    Function Justify(p_vRiga       in varchar2,  -- String to justify
+                     p_nLineWidth  in number,    -- Width of usabel space
+                     p_nSpaceWidth in number,    -- Width of single space char
+                     v_nTextWidth  in out number) return varchar2 is
+      v_vJRiga      varchar2(4000):='';   -- Justified row
+      v_nSpaziJ     integer:=0;           -- Number of space to add
+    begin
+
+      v_nTextWidth :=str_len(p_vRiga);
+      if p_nSpaceWidth=0 then
+        return(p_vRiga); -- NO Justify Required. Non change in p_vRiga
+      end if;
+
+      v_nSpaziJ := round((p_nLineWidth-v_nTextWidth)/p_nSpaceWidth,0);
+
+      for w in
+        (with
+          p as (
+            select rownum r, regexp_substr(p_vRiga,'[^ ]+', 1, level) Word
+              from dual connect by
+                   regexp_substr(p_vRiga, '[^ ]+', 1, level) is not null), -- Word Wrap
+          s as (
+            select count(*)-1 spTot,
+                   trunc(v_nSpaziJ/count(*)-1)+1 nSp,
+                   mod(v_nSpaziJ,count(*)-1) spResto
+               from p) -- Number of space to add
+          select r,
+                 Word ||
+                   case when r<=spTot then lpad(' ', s.nSp) end ||
+                   case when r<=spResto then ' ' end Jword
+           from p cross join s
+           order by r) -- word list with filled spaces
+      loop
+        v_vJRiga:=v_vJRiga||w.Jword;
+      end loop;
+      v_nTextWidth:=p_nLineWidth;
+      return(v_vJRiga);
+    end;
   procedure write
     ( p_txt in varchar2
+    , p_um VARCHAR :='pt'        -- For recursive call use pt
     , p_x in number := null
     , p_y in number := null
     , p_line_height in number := null
     , p_start in number := null  -- left side of the available text box
     , p_width in number := null  -- width of the available text box
-    , p_alignment in varchar2 := null
+    , p_alignment in varchar2 := NULL
     )
   is
     t_line_height number;
@@ -2236,6 +1979,21 @@ end' ) );
     t_cnt pls_integer;
     t_ind pls_integer;
     t_alignment varchar2(100);
+    k_um constant varchar2(2) := 'pt'; 
+
+    function chkNewPage(y in number, t_line_height in number) return number is
+      t_y number;
+    begin
+    -- Update t_y and check in new page are necessary
+      t_y := y - t_line_height;
+      if t_y < g_settings.margin_bottom then
+        new_page;
+        t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
+      end if;
+      return(t_y);
+
+    end;
+
   begin
     if p_txt is null
     then
@@ -2246,22 +2004,23 @@ end' ) );
     then
       set_font( 'helvetica' );
     end if;
+
 --
-    t_line_height := nvl( p_line_height, g_fonts( g_current_font ).fontsize );
+    t_line_height := nvl( conv2uu(p_line_height,p_um ), g_fonts( g_current_font ).fontsize );
     if (  t_line_height < g_fonts( g_current_font ).fontsize
        or t_line_height > ( g_settings.page_height - g_settings.margin_top - t_line_height ) / 4
        )
     then
       t_line_height := g_fonts( g_current_font ).fontsize;
     end if;
-    t_start := nvl( p_start, g_settings.margin_left );
+    t_start := nvl( conv2uu(p_start,p_um), g_settings.margin_left );
     if (  t_start < g_settings.margin_left
        or t_start > g_settings.page_width - g_settings.margin_right - g_settings.margin_left
        )
     then
       t_start := g_settings.margin_left;
     end if;
-    t_width := nvl( p_width
+    t_width := nvl( conv2uu(p_width,p_um)
                   , g_settings.page_width - g_settings.margin_right - g_settings.margin_left
                   );
     if (  t_width < str_len( '   ' )
@@ -2270,67 +2029,80 @@ end' ) );
     then
       t_width := g_settings.page_width - g_settings.margin_right - g_settings.margin_left;
     end if;
-    t_x := coalesce( p_x, g_x, g_settings.margin_left );
-    t_y := coalesce( p_y
-                   , g_y
+    t_x := coalesce( conv2uu(p_x,p_um), g_x, g_settings.margin_left );
+    t_y := coalesce( conv2uu(p_y,p_um), g_y
                    , g_settings.page_height - g_settings.margin_top - t_line_height
                    );
-    if t_y < 0
-    then
+    if t_y < 0 then
       t_y := coalesce( g_y
                      , g_settings.page_height - g_settings.margin_top - t_line_height
                      ) - t_line_height;
-    end if; 
-    if t_x > t_start + t_width
-    then
+    end if;
+    if t_x > t_start + t_width then
       t_x := t_start;
       t_y := t_y - t_line_height;
-    elsif t_x < t_start
-    then
+    elsif t_x < t_start then
       t_x := t_start;
     end if;
-    if t_y < g_settings.margin_bottom
-    then
+    if t_y < g_settings.margin_bottom then
       new_page;
       t_x := t_start;
       t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
     end if;
---
+
     t_ind := instr( p_txt, chr(10) );
-    if t_ind > 0
-    then
+    if t_ind > 0 then
+    -- String contain LF   (LineFeed Char)
       g_x := t_x;
       g_y := t_y;
-      write( rtrim( substr( p_txt, 1, t_ind - 1 ), chr(13) ), t_x, t_y, t_line_height, t_start, t_width, p_alignment );
-      t_y := g_y - t_line_height;
-      if t_y < g_settings.margin_bottom
-      then
-        new_page;
-        t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
-      end if;
+      -- Call write in recursive mode for chars before LF
+      write( rtrim( substr( p_txt, 1, t_ind - 1 ), chr(13) ), k_um, t_x, t_y, t_line_height, t_start, t_width, p_alignment );
+      t_y := chkNewPage(g_y,t_line_height);
+      -- Update row being coordinates
       g_x := t_start;
       g_y := t_y;
-      write( substr( p_txt, t_ind + 1 ), t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+      -- Call write in recursive mode for char after LF (string can contain more  LF)
+      write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
       return;
     end if;
---
+
+    -- Detect string lenght
     t_len := str_len( p_txt );
-    if t_len <= t_width - t_x + t_start
-    then
-      t_alignment := lower( substr( p_alignment, 1, 100 ) );
-      if instr( t_alignment, 'right' ) > 0 or instr( t_alignment, 'end' ) > 0
-      then
+    t_alignment := upper( substr( ltrim( p_alignment ), 1, 1 ) );
+    if t_len <= t_width - t_x + t_start  then
+    -- The row is shorter than the space available
+      if (t_alignment='R' or t_alignment='E' ) then
+      -- Right align
         t_x := t_start + t_width - t_len;
-      elsif instr( t_alignment, 'center' ) > 0
-      then
+      elsif t_alignment='C' then
+      -- Center into usable space
         t_x := ( t_width + t_x + t_start - t_len ) / 2;
+      elsif t_alignment='J' then  -- instr( 'LJ',  t_alignment)
+      -- Always begin on left if justified
+        if t_x > t_start then
+          t_x := t_start;
+          t_y := chkNewPage(g_y,t_line_height);
+        end if;
       end if;
-      put_txt( t_x, t_y, p_txt );
-      g_x := t_x + t_len + str_len( ' ' );
+    -- send text to document
+      if t_alignment='J' then
+        put_txt( t_x, t_y, Justify(p_txt, t_width, str_len(' '), t_len));
+        g_x := t_width+t_start;
+      else
+        put_txt( t_x, t_y, p_txt );
+        g_x := t_x + t_len + str_len( ' ' );
+      end if;
       g_y := t_y;
       return;
     end if;
---
+    -- Count words into usable row width
+    if t_alignment='J' then  -- instr( 'LJ',  t_alignment)
+    -- Always begin on left if justified
+      if t_x > t_start then
+        t_x := t_start;
+        t_y := chkNewPage(g_y,t_line_height);
+      end if;
+    end if;
     t_cnt := 0;
     while (   instr( p_txt, ' ', 1, t_cnt + 1 ) > 0
           and str_len( substr( p_txt, 1, instr( p_txt, ' ', 1, t_cnt + 1 ) - 1 ) ) <= t_width - t_x + t_start
@@ -2338,59 +2110,50 @@ end' ) );
     loop
       t_cnt := t_cnt + 1;
     end loop;
-    if t_cnt > 0
-    then
+    if t_cnt > 0 then
+    -- There is at least one word
       t_ind := instr( p_txt, ' ', 1, t_cnt );
-      write( substr( p_txt, 1, t_ind - 1 ), t_x, t_y, t_line_height, t_start, t_width, p_alignment );
-      t_y := t_y - t_line_height;
-      if t_y < g_settings.margin_bottom
-      then
-        new_page;
-        t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
+    -- Call write recursvely for begin part
+      write( substr( p_txt, 1, t_ind - 1 ), k_um, t_x, t_y, t_line_height, t_start, t_width, p_alignment );
+      t_y := chkNewPage(t_y,t_line_height);
+    -- Call write recursvely for remain part
+      if t_alignment='J' then
+        if str_len(substr( p_txt, t_ind + 1 )) <= t_width then
+          write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, 'L' );
+        else
+          write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+        end if;
+      else
+        write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
       end if;
-      write( substr( p_txt, t_ind + 1 ), t_start, t_y, t_line_height, t_start, t_width, p_alignment );
       return;
     end if;
---
-    if t_x > t_start and t_len < t_width
-    then
-      t_y := t_y - t_line_height;
-      if t_y < g_settings.margin_bottom
-      then
-        new_page;
-        t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
-      end if;
-      write( p_txt, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+
+    -- Words do not come in the useful space, I'm going to head
+    if t_x > t_start and t_len < t_width then
+      t_y := chkNewPage(t_y, t_line_height);
+    -- Call recursively write for the new line
+      write( p_txt, k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
     else
-      if length( p_txt ) = 1
-      then
-        if t_x > t_start
-        then
-          t_y := t_y - t_line_height;
-          if t_y < g_settings.margin_bottom
-          then
-            new_page;
-            t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
-          end if;
+      if length( p_txt ) = 1 then
+      -- Only one char
+        if t_x > t_start then
+          t_y := chkNewPage(t_y, t_line_height);
         end if;
-        write( p_txt, t_x, t_y, t_line_height, t_start, t_len );
+        write( p_txt, k_um, t_x, t_y, t_line_height, t_start, t_len );
       else
-        t_ind := 2; -- start with 2 to make sure we get amaller string!
+        t_ind := 2; -- start with 2 to make sure we get smaller string!
         while str_len( substr( p_txt, 1, t_ind ) ) <= t_width - t_x + t_start
         loop
           t_ind := t_ind + 1;
         end loop;
-        write( substr( p_txt, 1, t_ind - 1 ), t_x, t_y, t_line_height, t_start, t_width, p_alignment );
-        t_y := t_y - t_line_height;
-        if t_y < g_settings.margin_bottom
-        then
-          new_page;
-          t_y := g_settings.page_height - g_settings.margin_top - t_line_height;
-        end if;
-        write( substr( p_txt, t_ind ), t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+        write( substr( p_txt, 1, t_ind - 1 ), k_um, t_x, t_y, t_line_height, t_start, t_width, p_alignment );
+        t_y := chkNewPage(t_y, t_line_height);
+        write( substr( p_txt, t_ind ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
       end if;
     end if;
   end;
+
 --
   function load_ttf_font
     ( p_font blob
@@ -2412,7 +2175,7 @@ end' ) );
     t_blob blob;
     t_offset pls_integer;
     nr_hmetrics pls_integer;
-    subtype tp_glyphname is varchar2(250);
+    subtype tp_glyphname is varchar2(500);
     type tp_glyphnames is table of tp_glyphname index by pls_integer;
     t_glyphnames tp_glyphnames;
     t_glyph2name tp_pls_tab;
@@ -2804,7 +2567,7 @@ end' ) );
       then
         t_glyphnames.delete;
       else
-dbms_output.put_line( 'no post ' || dbms_lob.substr( t_blob, 4, 1 ) );
+        log( 'no post ' || dbms_lob.substr( t_blob, 4, 1 ) );
     end case;
 --
     dbms_lob.copy( t_blob, p_font, t_tables( 'head' ).length, 1, t_tables( 'head' ).offset );
@@ -2995,7 +2758,7 @@ dbms_output.put_line( 'no post ' || dbms_lob.substr( t_blob, 4, 1 ) );
       end if;
     end if;
 --
-    t_font_ind := g_fonts.count( ) + 1; 
+    t_font_ind := g_fonts.count( ) + 1;
     g_fonts( t_font_ind ) := this_font;
 /*
 --
@@ -3073,7 +2836,7 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     for f in 0 .. blob2num( p_ttc, 4, 9 ) - 1
     loop
       t_font_ind := load_ttf_font( p_ttc, p_encoding, p_embed, p_compress, blob2num( p_ttc, 4, 13 + f * 4 ) + 1 );
-dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' ' || g_fonts( t_font_ind ).family || ' ' || g_fonts( t_font_ind ).style );
+--dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' ' || g_fonts( t_font_ind ).family || ' ' || g_fonts( t_font_ind ).style );
     end loop;
   end;
 --
@@ -3111,9 +2874,18 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
   end;
 --
   procedure set_color( p_rgb varchar2 := '000000', p_backgr boolean )
-  is
-  begin
-    txt2page( rgb( p_rgb ) || case when p_backgr then 'RG' else 'rg' end );
+  IS
+    v_vBackgr VARCHAR2(2):='rg';
+  BEGIN
+    CASE
+    WHEN p_backgr THEN
+      v_vBackgr:='RG';
+      g_current_bcolor:=p_rgb;
+    ELSE
+      v_vBackgr:='rg';
+      g_current_fcolor:=p_rgb;
+    END CASE;
+    txt2page( rgb(p_rgb) || v_vBackgr );
   end;
 --
   procedure set_color( p_rgb varchar2 := '000000' )
@@ -3195,7 +2967,30 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
             || to_char_round( p_y, 5 ) || ' l b'
             );
     txt2page( 'Q' );
+    log(replace(replace(
+          'hline('||
+          to_char_round(p_x, 5) ||'; '||
+          to_char_round(p_y, 5) ||'; '||
+          to_char_round(p_width, 5) ||'; '||
+          to_char(p_line_width) || '; '||
+          p_line_color ||')',
+          ',','.'),
+          ';',',')|| ';'
+       , true);
+
   end;
+  procedure horizontal_line
+    ( p_x VARCHAR2
+    , p_y VARCHAR2
+    , p_width VARCHAR2
+    , p_line_width VARCHAR2 := '0.5pt'
+    , p_line_color varchar2 := '000000'
+    )
+  IS
+  BEGIN
+    horizontal_line(get_ParamPT(p_x), get_ParamPT(p_y), get_ParamPT(p_width), get_ParamPT(p_line_width), p_line_color);
+  END;
+
 --
   procedure vertical_line
     ( p_x number
@@ -3224,8 +3019,30 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
             || to_char_round( p_y + p_height, 5 ) || ' l b'
             );
     txt2page( 'Q' );
+    log(replace(replace(
+          'vline('||
+          to_char_round(p_x, 5) ||'; '||
+          to_char_round(p_y, 5) ||'; '||
+          to_char_round(p_height, 5) ||'; '||
+          to_char(p_line_width) || '; '||
+          p_line_color ||')',
+          ',','.'),
+          ';',',')|| ';'
+       , true);
+
   end;
---
+  procedure vertical_line
+    ( p_x VARCHAR2
+    , p_y VARCHAR2
+    , p_height VARCHAR2
+    , p_line_width VARCHAR2 := '0.5pt'
+    , p_line_color varchar2 := '000000'
+    )
+  IS
+  BEGIN
+    vertical_line(get_ParamPT(p_x), get_ParamPT(p_y), get_ParamPT(p_height), get_ParamPT(p_line_width), p_line_color);
+  END;
+-- Print Rectangle: coordinates are in pt
   procedure rect
     ( p_x number
     , p_y number
@@ -3252,8 +3069,8 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
     then
       set_color( p_fill_color );
     end if;
-    txt2page(  to_char_round( p_x, 5 ) || ' ' || to_char_round( p_y, 5 ) || ' '
-            || to_char_round( p_width, 5 ) || ' ' || to_char_round( p_height, 5 ) || ' re '
+    txt2page(  to_char_round(p_x, 5) ||' '||to_char_round(p_y, 5) || ' '
+            || to_char_round(p_width, 5) ||' '|| to_char_round(p_height, 5) || ' re '
             || case
                  when p_fill_color is null
                  then 'S'
@@ -3261,24 +3078,65 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
                end
             );
     txt2page( 'Q' );
+
+    log(replace(replace(
+          'rect('||
+          to_char_round(p_x, 5) ||'; '||
+          to_char_round(p_y, 5) ||'; '||
+          to_char_round(p_width, 5) ||'; '||
+          to_char_round(p_height, 5) || '; '||
+          p_line_color || '; '||
+          p_fill_color || '; '||
+          case
+            when p_fill_color is null
+            then 'S'
+            else case when p_line_color is null then 'f' else 'b' end
+          end || '; '||
+          to_char(p_line_width)||')',
+          ',','.'),
+          ';',',')|| ';'
+       , true);
+
+  end;
+
+  --  Print Rectangle: you can specify um for each coordinate
+  --- examples rect('5mm','1.5cm','1in','40pt' .... )
+
+  procedure rect
+    ( p_x VARCHAR2
+    , p_y VARCHAR2
+    , p_width VARCHAR2
+    , p_height VARCHAR2
+    , p_line_color varchar2 := null
+    , p_fill_color varchar2 := null
+    , p_line_width VARCHAR2 := '0.5pt'
+    )
+  is
+  begin
+    rect(get_ParamPT(p_x), get_ParamPT(p_y), get_ParamPT(p_width), get_ParamPT(p_height), p_line_color, p_fill_color, get_ParamPT(p_line_width));
   end;
 --
   function get( p_what pls_integer )
   return number
   is
   begin
-    return case p_what
-             when c_get_page_width    then g_settings.page_width
-             when c_get_page_height   then g_settings.page_height
-             when c_get_margin_top    then g_settings.margin_top
-             when c_get_margin_right  then g_settings.margin_right
-             when c_get_margin_bottom then g_settings.margin_bottom
-             when c_get_margin_left   then g_settings.margin_left
-             when c_get_x             then g_x
-             when c_get_y             then g_y
-             when c_get_fontsize      then g_fonts( g_current_font ).fontsize
-             when c_get_current_font  then g_current_font
-           end;
+    return(
+      case p_what
+         when c_get_page_width     then g_settings.page_width
+         when c_get_page_height    then g_settings.page_height
+         when c_get_margin_top     then g_settings.margin_top
+         when c_get_margin_right   then g_settings.margin_right
+         when c_get_margin_bottom  then g_settings.margin_bottom
+         when c_get_margin_left    then g_settings.margin_left
+         when c_get_x              then g_x
+         when c_get_y              then g_y
+         when c_get_fontsize       then g_fonts(g_current_font).fontsize
+         when c_get_current_font   then g_current_font
+         when c_get_current_fcolor then g_current_fcolor
+         when c_get_current_bcolor then g_current_bcolor
+         -- added ltl for GetPdf wrapper package 20210717
+         when c_get_page_count     then g_pages.count()
+       end);
   end;
 --
   function parse_jpg( p_img_blob blob )
@@ -3655,16 +3513,23 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
+    , p_um VARCHAR:='pt'
+  --  New parameter for cell Width & Height
+    , p_cellWidth  number:=null
+    , p_cellHeight number:=null
   )
   is
     t_x number;
     t_y number;
+    t_width  number;
+    t_height number;
+    t_widthRatio  number;
+    t_heightRatio number;
     t_img tp_img;
     t_ind pls_integer;
     t_adler32 varchar2(8);
   begin
-    if p_img is null
-    then
+    if p_img is null then
       return;
     end if;
     t_adler32 := adler32( p_img );
@@ -3675,32 +3540,83 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
       t_ind := g_images.next( t_ind );
     end loop;
 --
-    if t_ind is null
-    then
+    if t_ind is null then
       t_img := parse_img( p_img, t_adler32 );
-      if t_img.adler32 is null
-      then
+      if t_img.adler32 is null then
         return;
       end if;
       t_ind := g_images.count( ) + 1;
       g_images( t_ind ) := t_img;
     end if;
 --
-    t_x := case substr( upper( p_align ), 1, 1 )
-             when 'L' then p_x -- left
-             when 'S' then p_x -- start
-             when 'R' then p_x + nvl( p_width, 0 ) - g_images( t_ind ).width -- right
-             when 'E' then p_x + nvl( p_width, 0 ) - g_images( t_ind ).width -- end
-             else ( p_x + nvl( p_width, 0 ) - g_images( t_ind ).width ) / 2       -- center
-           end;
-    t_y := case substr( upper( p_valign ), 1, 1 )
-             when 'C' then ( p_y - nvl( p_height, 0 ) + g_images( t_ind ).height ) / 2  -- center
-             when 'B' then p_y - nvl( p_height, 0 ) + g_images( t_ind ).height -- bottom
-             else p_y                                          -- top
-           end;
+
+    t_x := conv2uu(p_x,p_um);
+    t_y := conv2uu(p_y,p_um);
+
+    CASE NVL(p_width,0)
+      WHEN -1 THEN -- Proportions unchanged uses t_height
+        t_width := 0;
+        t_widthRatio :=-1;
+      WHEN 0  THEN -- Measure unchanged
+        t_width := 0;
+        t_widthRatio :=g_images( t_ind ).width;
+      ELSE    -- Rescale
+        t_width:=conv2uu(p_width,p_um);
+        t_widthRatio :=least(t_width , g_images(t_ind).width );
+    END CASE;
+    CASE NVL(p_height,0)
+      WHEN -1 THEN -- Proportions unchanged uses t_width
+        t_height := 0;
+        t_heightRatio :=-1;
+      WHEN 0  THEN -- Measure unchanged
+        t_height := 0;
+        t_heightRatio:=g_images(t_ind).height;
+      ELSE    -- Rescale
+        t_height := conv2uu(p_height,p_um);
+        t_heightRatio:=least(t_height, g_images(t_ind).height);
+    END CASE;
+    CASE
+      WHEN t_widthRatio=-1 AND t_heightRatio=-1 THEN
+      -- keep because i can't rescale
+        t_widthRatio :=g_images(t_ind).width;
+        t_heightRatio:=g_images(t_ind).height;
+      WHEN t_widthRatio=-1 THEN
+        t_widthRatio := g_images(t_ind).width/g_images(t_ind).height*t_heightRatio;
+      ELSE
+        t_heightRatio:= g_images(t_ind).height/g_images(t_ind).width*t_widthRatio;
+    END CASE;
+
+    t_x :=
+      case translate(Upper1(p_align),'LSJRE','LLLRR')
+        when 'C' then -- center
+          t_x + (coalesce(p_cellWidth, t_width, 0) - t_widthRatio) / 2
+        when 'R' then -- Right or End
+          t_x +  coalesce(p_cellWidth, t_width, 0) - t_widthRatio
+        else          -- Left , Start or Justified
+          t_x
+
+
+
+
+      end;
+    t_y :=
+      case translate(Upper1(p_valign),'CM','CC')
+        when 'C' then -- Center or Middle
+          t_y - (coalesce(p_cellHeight, t_height, 0) - t_heightRatio) / 2
+
+        when 'B' then -- bottom
+          t_y - coalesce(p_cellHeight, t_height, 0) - t_heightRatio
+        else          -- Top
+          t_y
+
+      end;
+    if nvl(p_cellHeight,0)>=0 then
+      t_y:=t_y-t_heightRatio;
+    end if;
+
 --
-    txt2page( 'q ' || to_char_round( least( nvl( p_width, g_images( t_ind ).width ), g_images( t_ind ).width ) )
-            || ' 0 0 ' || to_char_round( least( nvl( p_height, g_images( t_ind ).height ), g_images( t_ind ).height ) )
+    txt2page( 'q '     || to_char_round(t_widthRatio)
+            || ' 0 0 ' || to_char_round(t_heightRatio)
             || ' ' || to_char_round( t_x ) || ' ' || to_char_round( t_y )
             || ' cm /I' || to_char( t_ind ) || ' Do Q'
             );
@@ -3715,21 +3631,15 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
+    , p_um VARCHAR:='pt'
   )
   is
     t_blob blob;
   begin
-    t_blob := file2blob( p_dir
-                       , p_file_name
-                       );
+    t_blob := file2blob(p_dir, p_file_name);
     put_image( t_blob
-             , p_x
-             , p_y
-             , p_width
-             , p_height
-             , p_align
-             , p_valign
-             );
+             , p_x, p_y, p_width, p_height
+             , p_align, p_valign, p_um);
     dbms_lob.freetemporary( t_blob );
   end;
 --
@@ -3741,35 +3651,69 @@ dbms_output.put_line( t_font_ind || ' ' || g_fonts( t_font_ind ).fontname || ' '
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
+    , p_um VARCHAR:='pt'
     )
   is
     t_blob blob;
   begin
     t_blob := httpuritype( p_url ).getblob( );
-    put_image( t_blob
-             , p_x
-             , p_y
-             , p_width
-             , p_height
-             , p_align
-             , p_valign
-             );
+    put_image(t_blob
+             , p_x, p_y, p_width, p_height
+             , p_align, p_valign, p_um);
     dbms_lob.freetemporary( t_blob );
   end;
+
+
+  Function BorderType(p_vBorder in varchar2) return number is
+    v_nBorder number:=0;
+    v_vBorder varchar2(4);
+  begin
+    v_vBorder:=substr(ltrim(rtrim(upper(p_vBorder))),1,4);
+    if instr(v_vBorder, 'T')>0 then
+      v_nBorder := v_nBorder + 1;
+    end if;
+    if instr(v_vBorder, 'B')>0 then
+      v_nBorder := v_nBorder + 2;
+    end if;
+    if instr(v_vBorder, 'L')>0 then
+      v_nBorder := v_nBorder + 4;
+    end if;
+    if instr(v_vBorder, 'R')>0 then
+      v_nBorder := v_nBorder + 8;
+    end if;
+    return v_nBorder;
+  end;
+
 --
   procedure set_page_proc( p_src clob )
   is
   begin
     g_page_prcs( g_page_prcs.count ) := p_src;
   end;
+  procedure set_page_proc( p_src VARCHAR2 )
+  is
+  begin
+    g_page_prcs( g_page_prcs.count ) := TO_CLOB(p_src);
+  end;
 --
   procedure cursor2table
-    ( p_c integer
-    , p_widths tp_col_widths := null
-    , p_headers tp_headers := null
+    ( p_c          INTEGER
+    , p_formats    tp_columns := NULL -- Colums formats
+    , p_colors     tp_colors  := NULL
+    , p_hRowHeight NUMBER     := NULL -- Header Row height
+    , p_tRowHeight NUMBER     := NULL -- Table  Row height (-Min Value, +Exact Value)
+    , p_um         VARCHAR2   :='pt'  --
+    , p_startX     number     := 0    --
+    , p_BreakField number     := 0    --
+    , p_Interline  number     := 1.2
+    , p_startY     number     := 0    --
+    , p_Frame      varchar2   :=null -- Border Around format
+    , p_bulk_size  pls_integer:= 200
     )
   is
-    t_col_cnt integer;
+    t_col_cnt   integer;
+    t_col_start integer;
+
 $IF DBMS_DB_VERSION.VER_LE_10 $THEN
     t_desc_tab dbms_sql.desc_tab2;
 $ELSE
@@ -3778,180 +3722,1761 @@ $END
     d_tab dbms_sql.date_table;
     n_tab dbms_sql.number_table;
     v_tab dbms_sql.varchar2_table;
-    t_bulk_size pls_integer := 200;
+    b_tab dbms_sql.blob_table;
     t_r integer;
-    t_cur_row pls_integer;
-    type tp_integer_tab is table of integer;
-    t_chars tp_integer_tab := tp_integer_tab( 1, 8, 9, 96, 112 );
-    t_dates tp_integer_tab := tp_integer_tab( 12, 178, 179, 180, 181 , 231 );
+    TYPE       tp_integer_tab is table of integer;
+    t_chars    tp_integer_tab := tp_integer_tab( 1, 8, 9, 96, 112 );
+    t_dates    tp_integer_tab := tp_integer_tab( 12, 178, 179, 180, 181 , 231 );
     t_numerics tp_integer_tab := tp_integer_tab( 2, 100, 101 );
-    t_widths tp_col_widths;
-    t_tmp number;
-    t_x number;
-    t_y number;
-    t_start_x number;
-    t_lineheight number;
-    t_padding number := 2;
-    t_num_format varchar2(100) := 'tm9';
-    t_date_format varchar2(100) := 'dd.mm.yyyy';
-    t_txt varchar2(32767);
-    c_rf number := 0.2; -- raise factor of text above cell bottom 
---
-    procedure show_header
+    t_blobs    tp_integer_tab := tp_integer_tab( 113 );
+
+    t_formats  tp_columns;         -- Verified Columns Formats
+    t_colors   tp_colors;
+    t_hRowHeight    NUMBER;        -- Verified Header Row Height
+    t_tRowHeight    NUMBER;        -- Verified Table  Row Height
+
+    t_tmp           number;
+    t_n             NUMBER;        -- Temporary numeric variable
+    t_x             number;
+    t_y             number;
+    t_yBegin        number;        -- Start Y position for each page
+    t_Frame_y       number;        -- Start Y position for Border Around
+    t_Frame_width   number;        -- Width of Border Around
+    t_Frame_Line    number;        -- Line width of Border Around frame
+    t_Frame_color   varchar2(6);   -- Line color of Border Around frame
+    t_txt           varchar2(32767);
+    t_blob          blob;
+    t_start_x       number;        -- Initial X position (Paper margin + p_StartX)
+    t_lineheight    number;        -- row height
+
+    n_oddLine       number(1):=0;  -- 0 o 3
+    v_nC_rf         number := 0.2; -- Text distance from bottom border of the cell
+    t_Cells         tp_Cells;      -- Array with all cells of one data row
+
+  -- Default
+    k_nMargin       CONSTANT NUMBER       := 2;
+    k_nLineSize     CONSTANT NUMBER       := .5;
+    k_vNumberFormat CONSTANT VARCHAR2(10) := 'TM9';
+    k_vDateFormat   CONSTANT VARCHAR2(10) := 'dd.mm.yyyy';
+    k_vAlignment    CONSTANT VARCHAR2(1)  := 'L';
+    k_vAlignVert    CONSTANT VARCHAR2(1)  := 'M';
+    v_Interline     NUMBER:= p_Interline;
+
+  -- Precalculated
+    v_hRowHeight    NUMBER:=p_hRowHeight;
+
+    type tp_hcell_table is record
+      ( x      number,
+        y      number,
+        w      number,
+        h      number,
+        tx     number,
+        ty     number,
+        testo  varchar2(200)
+      );
+    type tp_hcells is table of tp_hcell_table index by pls_integer;
+
+    type tp_hrow_table is record
+      ( height number
+      );
+    type tp_hrows  is table of tp_hrow_table index by pls_integer;
+
+  -- HEADER
+    t_hcells tp_hcells;
+    t_hrows tp_hrows;
+    v_nHeaderHeight number;
+  -- BREAK
+    t_bcells tp_cells;
+    t_brows  tp_hrows;
+    v_nBreakHeight number;
+  -- RECORD
+    v_nRecordHeight number;
+    t_rrows  tp_hrows;
+
+    w_BlockHeight number; -- Printing Blocok Height
+
+    v_vBreakOld varchar2(1000):='?';
+    v_vBreakNew varchar2(1000);
+
+ -- Set font only if it's different from actual
+    PROCEDURE setCellFont(p_nIndex        in NUMBER,
+                          p_output_to_doc in BOOLEAN DEFAULT TRUE,
+                          p_vMode         in varchar2 default 'T') IS
+      v_vFontName   VARCHAR2(100);
+      v_vFontStyle  VARCHAR2(2);
+      v_nFontSize   NUMBER;
+    BEGIN
+      IF upper1(p_vMode)='T' THEN -- BugFix suggerito da Giuseppe Polo
+        v_vFontName:=nvl(t_formats(p_nIndex).tFontName,g_fonts(g_current_font).family) ;
+        v_vFontStyle:=upper(substr(nvl(t_formats(p_nIndex).tFontStyle, g_fonts(g_current_font).style),1,1));
+        v_nFontSize:=nvl(t_formats(p_nIndex).tFontSize,g_fonts(g_current_font).fontsize);
+      ELSE
+        v_vFontName:=nvl(t_formats(p_nIndex).hFontName,g_fonts(g_current_font).family) ;
+        v_vFontStyle:=upper(substr(nvl(t_formats(p_nIndex).hFontStyle, g_fonts(g_current_font).style),1,1));
+        v_nFontSize:=nvl(t_formats(p_nIndex).hFontSize,g_fonts(g_current_font).fontsize);
+      END IF;
+      -- v_vFontName:=nvl(t_formats(p_nIndex).tFontName,g_fonts(g_current_font).family) ;
+      -- v_vFontStyle:=upper(substr(nvl(t_formats(p_nIndex).tFontStyle, g_fonts(g_current_font).style),1,1));
+      -- v_nFontSize:=nvl(t_formats(p_nIndex).tFontSize,g_fonts(g_current_font).fontsize);
+
+      IF g_bForce=TRUE OR
+         v_vFontName !=g_fonts(g_current_font).family OR
+         v_vFontStyle!=g_fonts(g_current_font).style  OR
+         v_nFontSize !=g_fonts(g_current_font).fontsize
+      THEN
+        -- Change font if is not equal to current font
+        set_font(v_vFontName,  v_vFontStyle, v_nFontSize, p_output_to_doc);
+        Log('set_font('||
+            v_vFontName||', '||
+            v_vFontStyle||', '||
+            v_nFontSize ||', '||
+            case when p_output_to_doc then 'True' else 'False' end ||')'
+           , true);
+      END IF;
+    END;
+
+    PROCEDURE setCellColor(p_nIndex IN NUMBER, p_nOdd in pls_integer:=null) IS
+      v_vColor VARCHAR2(6);
+      v_nOdd   pls_integer;
+    BEGIN
+    -- Change FontColor if necessary
+      v_nOdd:=coalesce(p_nOdd,n_oddLine,0);
+      v_vColor:=NVL(t_formats(p_nIndex).tFontColor, t_Colors(4+v_nOdd));
+      IF (g_current_fcolor != v_vColor) or g_bForce=TRUE  THEN
+        set_color(v_vColor);
+      END IF;
+
+    END;
+
+    FUNCTION getValue(c in pls_integer, r in pls_integer,
+                      p_vMode in varchar2 default 'TYPE') RETURN Varchar2 is
+    begin
+      CASE                       -- Add N rows of text, formatted and aligned
+        WHEN t_desc_tab(c).col_type member of t_numerics THEN
+          n_tab.delete;
+          dbms_sql.column_value( p_c, c, n_tab );
+          t_txt:=to_char(n_tab(r + n_tab.first() ), t_formats(c).tNumFormat);
+          if p_vMode ='TYPE' then
+            return 'NUMERIC';
+          else
+            return t_txt;
+          end if;
+        WHEN t_desc_tab(c).col_type member of t_dates  THEN
+          d_tab.delete;
+          dbms_sql.column_value( p_c, c, d_tab );
+          t_txt:=to_char(d_tab(r + d_tab.first() ), t_formats(c).tNumFormat);
+          if p_vMode ='TYPE' then
+            return 'DATE';
+          else
+            return t_txt;
+          end if;
+        WHEN t_desc_tab(c).col_type member of t_blobs  THEN
+          b_tab.delete;
+          dbms_sql.column_value( p_c, c, b_tab );
+          t_txt:='#IMAGE#'||t_formats(c).tNumFormat;
+          t_blob:=b_tab(r + b_tab.first());
+
+          if p_vMode ='TYPE' then
+            return 'CLOB';
+          else
+            return t_txt;
+          end if;
+        ELSE
+          v_tab.delete;
+          dbms_sql.column_value( p_c, c, v_tab );
+          t_txt:=v_tab( r + v_tab.first() );
+          if p_vMode ='TYPE' then
+            return 'TEXT';
+          else
+            return t_txt;
+          end if;
+      END CASE;
+    end;
+
+ -- Assign default values
+    PROCEDURE SetDefaults IS
+
+      PROCEDURE Test_Alignment(p_vAlignment IN OUT VARCHAR2,
+                               p_vNVL IN VARCHAR2 DEFAULT NULL) IS
+      BEGIN
+        p_vAlignment:= upper(nvl(p_vAlignment, p_vNVL));
+        IF nvl(p_vAlignment,'X') NOT IN ('X','L','C','R') THEN -- Not valid
+          p_vAlignment:=k_vAlignment;
+        END IF;
+      END;
+
+      PROCEDURE Test_AlignVert(p_vAlignVert IN OUT VARCHAR2,
+                               p_vNVL IN VARCHAR2 DEFAULT NULL) IS
+      -- Check parameter consistency and assign default if null or invalid
+      BEGIN
+        p_vAlignVert:= upper(NVL(p_vAlignVert,p_vNVL));
+        IF nvl(p_vAlignVert,'X') NOT IN ('X','T','C','B','M') THEN -- Not valid
+          p_vAlignVert:=k_vAlignVert;
+        END IF;
+        IF nvl(p_vAlignVert,'X') ='M' then -- Middle are synonym of Center
+          p_vAlignVert:='C';
+        end if;
+      END;
+
+      Procedure Calc_Interline(p_nI in integer, p_vMode in varchar2) is
+        v_vSpacing     VARCHAR2(10);
+        v_vInterline   VARCHAR2(10);
+        v_nSpacingPT   NUMBER;
+        v_nInterlinePT NUMBER;
+
+        v_nFontSize    NUMBER;
+      BEGIN
+        if upper1(p_vMode)='T' then
+          v_vSpacing  :=lower(ltrim(rtrim(t_formats(p_nI).vSpacing)));   -- change for table spacing
+          v_vInterline:=lower(ltrim(rtrim(t_formats(p_nI).vInterline))); -- change for table interline
+          v_nFontSize :=t_formats(p_nI).tFontSize;
+        else
+          v_vSpacing  :=lower(ltrim(rtrim(t_formats(p_nI).hSpacing)));   -- change for header spacing
+          v_vInterline:=lower(ltrim(rtrim(t_formats(p_nI).hInterline))); -- change for header interline
+          v_nFontSize :=t_formats(p_nI).hFontSize;
+        end if;
+
+
+      -- detect spacing value
+        CASE
+          WHEN substr(v_vSpacing,-2,1) = '%' THEN
+            v_nSpacingPT:= v_nFontSize*get_ParamNumber(v_vSpacing)/100;
+          WHEN substr(v_vSpacing,-2,1) = 'pt' THEN
+            v_nSpacingPT:= get_ParamNumber(v_vSpacing);
+          WHEN substr(v_vSpacing,-2,1) = 'mm' THEN
+            v_nSpacingPT:= conv2uu(get_ParamNumber(v_vSpacing),'mm');
+          ELSE
+            v_nSpacingPT:=NULL;
+        END CASE;
+
+        CASE
+          WHEN substr(v_vInterline,-2,1) = '%' THEN
+            v_nInterlinePT:= v_nFontSize*get_ParamNumber(v_vInterline)/100;
+          WHEN substr(v_vSpacing,-2,1) = 'pt' THEN
+            v_nInterlinePT:= get_ParamNumber(v_vInterline);
+          WHEN substr(v_vSpacing,-2,1) = 'mm' THEN
+            v_nInterlinePT:= conv2uu(get_ParamNumber(v_vInterline),'mm');
+          ELSE
+            v_nInterlinePT:= v_nFontSize+NVL(v_nSpacingPT,0);
+        END CASE;
+
+        IF v_nFontSize > v_nInterlinePT THEN
+        -- Prevent Interline too small
+          v_nInterlinePT := v_nFontSize+NVL(v_nSpacingPT,0);
+        END IF;
+        -- Recalculate v_nSpacingPT
+        v_nSpacingPT:=v_nInterlinePT - v_nFontSize;
+
+        if upper1(p_vMode)='T' then
+        -- only for compatibility
+          t_formats(p_nI).cSpacing   := v_nSpacingPT;
+          t_formats(p_nI).cInterline := v_nInterlinePT;
+
+          t_formats(p_nI).ctSpacing   := v_nSpacingPT;   -- change for table spacing
+          t_formats(p_nI).ctInterline := v_nInterlinePT; -- change for table interline
+        else
+          t_formats(p_nI).chSpacing   := v_nSpacingPT;   -- change for header spacing
+          t_formats(p_nI).chInterline := v_nInterlinePT; -- change for header interline
+        end if;
+      end;
+
+    BEGIN
+
+    -- Assign standard column width if specified
+      t_tmp := get( c_get_page_width ) - get( c_get_margin_left ) - get( c_get_margin_right );
+      IF p_formats is NULL OR p_formats.count=0 THEN
+        -- Not all columns are defined
+        t_formats := tp_columns();
+        t_formats.extend(t_col_cnt);
+        FOR c IN 1 .. t_col_cnt    -- Assign standard width equal for all columns
+        LOOP
+          t_formats(c).colWidth := round( t_tmp / t_col_cnt, 1 );
+        END LOOP;
+      ELSE
+        t_formats := p_formats;
+        IF lower(p_um) !='pt' THEN
+          for c in 1 .. p_formats.count
+          LOOP
+            if c=t_col_start then -- Per la prima colonna della tabella dati offsetX=0 se non specificato
+              t_formats(c).offsetX:=nvl(t_formats(c).offsetX, 0);
+            end if;
+            if nvl(t_formats(c).offsetX,-1)>=0 then -- New X position are specified
+            -- Calc remaining widht on right side
+              t_tmp := get( c_get_page_width ) - get( c_get_margin_left ) - get( c_get_margin_right );
+              t_tmp := t_tmp - conv2uu(t_formats(c).offsetX, p_um) ;
+            end if;
+            -- Check if outside right border
+            t_formats(c).colWidth := conv2uu(t_formats(c).colWidth, p_um);
+            t_tmp:=t_tmp-t_formats(c).colWidth;
+
+            IF t_tmp < 0 THEN
+              RaiseError(-20100);
+
+            END IF;
+          end LOOP;
+        END IF;
+
+
+        t_n:= t_col_cnt-p_formats.count;
+        IF t_n > 0 THEN
+        -- Some format are missing, add using remaining space
+          t_formats.extend( t_n );
+          FOR c IN p_formats.count+1 .. t_col_cnt
+          LOOP
+            t_formats(c).colWidth := round( t_tmp / t_n, 1 );
+          END LOOP;
+        END IF;
+      END IF;
+    --  Set Default font and size
+      IF get( c_get_current_font ) is NULL THEN
+        set_font( 'helvetica', 12 );
+      END IF;
+
+    -- Assign Default color triplet
+      BEGIN
+      /* 1-3 Header      Font/Background/Line Color
+         4-6 TableRow    Font/Background/Line Color
+         7-9 TableOddRow Font/Background/Line Color  */
+        t_colors:=p_colors;  -- Table with 9 Default colors
+        IF p_colors is null OR p_colors.count < 9 THEN
+          t_colors.extend(9-p_colors.count);
+          FOR i IN p_colors.count+1..9 LOOP
+            CASE
+              WHEN i >6 THEN
+                t_colors(i):=t_colors(i-3);
+              WHEN i IN (2,5) THEN
+                t_colors(i):='ffffff'; --White
+              ELSE
+                t_colors(i):='000000'; --Black
+            END CASE;
+          END LOOP;
+        END IF;
+      END;
+
+
+    -- Verify formats
+      DECLARE
+        v_nI         INTEGER;
+      BEGIN
+        FOR v_nI IN t_formats.first .. t_formats.last
+        LOOP
+        -- HEADER --
+          t_formats(v_nI).hFontName  := nvl(t_formats(v_nI).hFontName , g_fonts(g_current_font).family);
+          t_formats(v_nI).hFontStyle := nvl(t_formats(v_nI).hFontStyle, g_fonts(g_current_font).style);
+          t_formats(v_nI).hFontSize  := nvl(t_formats(v_nI).hFontSize , g_fonts(g_current_font).fontsize); -- pt !
+          t_formats(v_nI).hFontColor := NVL(t_formats(v_nI).hFontColor, t_colors(1));
+          t_formats(v_nI).hBackColor := NVL(t_formats(v_nI).hBackColor, t_colors(2));
+          t_formats(v_nI).hLineColor := NVL(t_formats(v_nI).hLineColor, t_colors(3));
+          Test_Alignment(t_formats(v_nI).hAlignment,'@'); --Use default defined into function
+
+        -- DATA TABLE --
+        -- If colors are null, use t_colors selectde by row type (even or odd)
+        -- t_formats(v_nI).tFontColor
+        -- t_formats(v_nI).tBackColor
+        -- t_formats(v_nI).tLineColor
+
+          Test_Alignment(t_formats(v_nI).hAlignment,'@'); --Use default defined into function
+          Test_AlignVert(t_formats(v_nI).hAlignVert,'@'); --Use default defined into function
+        -- DATA TABLE --
+        -- tAlignment  default is data type (DATE/NUMERIC/TEXT) dependent
+          Test_AlignVert(t_formats(v_nI).tAlignVert,'@'); --Use default defined into function
+          IF v_nI = 1 THEN
+          -- For first column, initialize null parameter with default
+          -- HEADER
+            t_formats(v_nI).hLineSize:= nvl(t_formats(v_nI).hLineSize , k_nLineSize); -- pt !
+            t_formats(v_nI).hBorder  := nvl(t_formats(v_nI).hBorder, 15);
+            t_formats(v_nI).hTMargin := nvl(conv2uu(t_formats(v_nI).hTMargin,p_um), k_nMargin);
+            t_formats(v_nI).hBMargin := nvl(conv2uu(t_formats(v_nI).hBMargin,p_um), k_nMargin);
+            t_formats(v_nI).hLMargin := nvl(conv2uu(t_formats(v_nI).hLMargin,p_um), k_nMargin);
+            t_formats(v_nI).hRMargin := nvl(conv2uu(t_formats(v_nI).hRMargin,p_um), k_nMargin);
+            Test_AlignVert(t_formats(v_nI).hAlignVert,'@');
+          -- TABLE
+            t_formats(v_nI).tLineSize:= nvl(t_formats(v_nI).tLineSize, k_nLineSize);  -- pt !
+            t_formats(v_nI).tBorder  := nvl(t_formats(v_nI).tBorder, 15);
+            t_formats(v_nI).tTMargin := nvl(conv2uu(t_formats(v_nI).tTMargin,p_um), k_nMargin);
+            t_formats(v_nI).tBMargin := nvl(conv2uu(t_formats(v_nI).tBMargin,p_um), k_nMargin);
+            t_formats(v_nI).tLMargin := nvl(conv2uu(t_formats(v_nI).tLMargin,p_um), k_nMargin);
+            t_formats(v_nI).tRMargin := nvl(conv2uu(t_formats(v_nI).tRMargin,p_um), k_nMargin);
+            t_formats(v_nI).tFontName  := nvl(t_formats(v_nI).tFontName , g_fonts(g_current_font).family);
+            t_formats(v_nI).tFontStyle := nvl(t_formats(v_nI).tFontStyle, g_fonts(g_current_font).style);
+            t_formats(v_nI).tFontSize  := nvl(t_formats(v_nI).tFontSize , g_fonts(g_current_font).fontsize); -- pt !
+            t_formats(v_nI).cellRow:=nvl(t_formats(v_nI).cellRow, 0); -- Start with row 0
+
+          ELSE
+          -- For other columns, initialize null parameters with preceding columns
+            t_formats(v_nI).hLineSize:= nvl(t_formats(v_nI).hLineSize, t_formats(v_nI-1).hLineSize);
+            t_formats(v_nI).hBorder  := nvl(t_formats(v_nI).hBorder  , t_formats(v_nI-1).hBorder);
+            t_formats(v_nI).hTMargin := nvl(conv2uu(t_formats(v_nI).hTMargin,p_um), t_formats(v_nI-1).hTMargin);
+            t_formats(v_nI).hBMargin := nvl(conv2uu(t_formats(v_nI).hBMargin,p_um), t_formats(v_nI-1).hBMargin);
+            t_formats(v_nI).hLMargin := nvl(conv2uu(t_formats(v_nI).hLMargin,p_um), t_formats(v_nI-1).hLMargin);
+            t_formats(v_nI).hRMargin := nvl(conv2uu(t_formats(v_nI).hRMargin,p_um), t_formats(v_nI-1).hRMargin);
+            t_formats(v_nI).hCHeight := nvl(conv2uu(t_formats(v_nI).hCHeight,p_um), t_formats(v_nI-1).hCHeight);
+            Test_AlignVert(t_formats(v_nI).hAlignVert,t_formats(v_nI-1).hAlignVert);
+
+            t_formats(v_nI).tLineSize:= nvl(t_formats(v_nI).tLineSize, t_formats(v_nI-1).tLineSize); -- pt!
+            t_formats(v_nI).tBorder  := nvl(t_formats(v_nI).tBorder  , t_formats(v_nI-1).tBorder);
+            t_formats(v_nI).tTMargin := nvl(conv2uu(t_formats(v_nI).tTMargin,p_um), t_formats(v_nI-1).tTMargin);
+            t_formats(v_nI).tBMargin := nvl(conv2uu(t_formats(v_nI).tBMargin,p_um), t_formats(v_nI-1).tBMargin);
+            t_formats(v_nI).tLMargin := nvl(conv2uu(t_formats(v_nI).tLMargin,p_um), t_formats(v_nI-1).tLMargin);
+            t_formats(v_nI).tRMargin := nvl(conv2uu(t_formats(v_nI).tRMargin,p_um), t_formats(v_nI-1).tRMargin);
+            Test_AlignVert(t_formats(v_nI).tAlignVert,t_formats(v_nI-1).tAlignVert);
+            t_formats(v_nI).tFontName  := coalesce(t_formats(v_nI).tFontName , t_formats(v_nI-1).tFontName , g_fonts(g_current_font).family);
+            t_formats(v_nI).tFontStyle := coalesce(t_formats(v_nI).tFontStyle, t_formats(v_nI-1).tFontStyle, g_fonts(g_current_font).style);
+            t_formats(v_nI).tFontSize  := coalesce(t_formats(v_nI).tFontSize , t_formats(v_nI-1).tFontSize , g_fonts(g_current_font).fontsize); -- pt !
+            t_formats(v_nI).cellRow:=nvl(t_formats(v_nI).cellRow, t_formats(v_nI-1).cellRow);
+
+          END IF;
+
+        END LOOP;
+
+      -- For all columns
+        FOR v_nI IN t_formats.first .. t_formats.last LOOP
+          -- Number format and alignment depend of data type
+          CASE
+            WHEN t_desc_tab(v_nI).col_type member of t_numerics THEN
+              t_formats(v_nI).tNumFormat := nvl(t_formats(v_nI).tNumFormat, k_vNumberFormat);
+              Test_Alignment(t_formats(v_nI).tAlignment,'R');
+            WHEN t_desc_tab(v_nI).col_type member of t_dates    THEN
+              t_formats(v_nI).tNumFormat := nvl(t_formats(v_nI).tNumFormat, k_vDateFormat);
+              Test_Alignment(t_formats(v_nI).tAlignment,'R');
+            ELSE
+              t_formats(v_nI).tNumFormat := NULL;
+              Test_Alignment(t_formats(v_nI).tAlignment,'L');
+          END CASE;
+          t_formats(v_nI).cTextArea := t_formats(v_nI).colWidth-t_formats(v_nI).tLMargin-t_formats(v_nI).tRMargin;
+
+
+          Calc_Interline(v_nI,'T');
+          Calc_Interline(v_nI,'H');
+
+          -- CellHeight use Parameter or Font+TopMargin+BottomMargin
+          t_formats(v_nI).tCHeight :=
+            coalesce(conv2uu(t_formats(v_nI).tCHeight,p_um),
+                      t_formats(v_nI).tTMargin
+                     +t_formats(v_nI).tBMargin
+                     +t_formats(v_nI).chInterline);
+
+          t_formats(v_nI).hCHeight :=
+            coalesce(conv2uu(t_formats(v_nI).hCHeight,p_um),
+                      t_formats(v_nI).hTMargin
+                     +t_formats(v_nI).hBMargin
+                     +t_formats(v_nI).ctInterline);
+        END LOOP;
+      END;
+    END;
+
+    -- Offset X  of the text from the left edge of the cell
+    function get_tx(c       in pls_integer,
+                    p_vMode in varchar2,
+                    p_nLen  in pls_integer) return number
+    is
+      v_vMode   VARCHAR2(1);
+      v_vHalign VARCHAR2(1);
+      v_nLeft   NUMBER;
+      v_nRight  NUMBER;
+      v_nWidth  NUMBER;
+
+      v_nTx     NUMBER;
+    BEGIN
+      v_vMode:=Upper1(p_vMode,'t');
+      if v_vMode='H' then
+        v_vHalign:=Upper1(t_formats(c).hAlignment,'L');
+        v_nLeft  :=t_formats(c).hLMargin;
+        v_nRight :=t_formats(c).hRMargin;
+      else
+        v_vHalign:=Upper1(t_formats(c).tAlignment,'L');
+        v_nLeft  :=t_formats(c).tLMargin;
+        v_nRight :=t_formats(c).tRMargin;
+      end if;
+      v_nWidth := t_formats(c).colWidth;
+
+      CASE v_vHalign
+        WHEN 'C' THEN -- center into column
+          v_nTx:=v_nLeft + (v_nWidth-v_nLeft-v_nRight-p_nLen)/2;
+        WHEN 'R' THEN -- Right align
+          v_nTx:=v_nWidth-v_nRight-p_nLen;
+        ELSE          -- Left align (Default)
+          v_nTx:=v_nLeft;
+      END CASE;
+      return v_nTx;
+    end;
+    -- Override of preceding function with text instead of len
+    function get_tx(c       in pls_integer,
+                    p_vMode in varchar2,
+                    p_vText in varchar2) return number is
+    begin
+      return get_tx(c, p_vMode, str_len(p_vText));
+    end;
+
+    -- Offset Y of the text from the top edge of the cell
+    function get_ty(c        in pls_integer,        -- Index of cell
+                    p_vMode  in varchar2,           -- Mode H o T (Default)
+                    p_nRowH  in number,             -- Row Height (cell row)
+                    p_nTextH in number default null -- Text Height (multirow) Default is FontSize
+                    ) return number is
+      v_vMode   VARCHAR2(1);
+      v_vValign VARCHAR2(1);
+      v_nTop    NUMBER;
+      v_nBottom NUMBER;
+      v_nFontH  NUMBER;
+      v_nTextH  NUMBER;
+      v_nILine  NUMBER; -- Interline
+      v_nTy     NUMBER;
+    BEGIN
+      v_vMode:=Upper1(p_vMode,'t');
+      if v_vMode='H' then
+        v_vValign:=Upper1(t_formats(c).hAlignVert,'M');
+        v_nTop   :=t_formats(c).hTMargin;
+        v_nBottom:=t_formats(c).hBMargin;
+        v_nFontH :=t_formats(c).hFontSize;
+        v_nILine :=t_formats(c).cInterline;
+
+        v_nTextH:=nvl(p_nTextH, v_nFontH);
+        CASE v_vValign
+        WHEN 'T' THEN -- align Top
+          v_nTy:= -(v_nTop+v_nTextH);
+        WHEN 'B' THEN -- align Bottom
+          v_nTy:= -p_nRowH+v_nBottom;
+        ELSE          -- align Middle
+          v_nTy:=(p_nRowH-v_nTop-v_nBottom-v_nTextH);
+          if v_nTy>0 then
+            v_nTy:= -(v_nTop + v_nTextH + round(v_nTy/2,0));
+          else -- Text Height + Top Margin + Bottom Margin is greather than cell Height
+            v_nTy:= -(v_nTop+v_nTextH);
+          end if;
+        END CASE;
+      else
+        v_vValign:=Upper1(t_formats(c).tAlignVert,'M');
+        v_nTop   :=t_formats(c).tTMargin;
+        v_nBottom:=t_formats(c).tBMargin;
+        v_nFontH :=t_formats(c).tFontSize;
+        v_nILine :=t_formats(c).cInterline;
+
+        v_nTextH:=nvl(p_nTextH, v_nFontH);
+        CASE v_vValign
+        WHEN 'T' THEN -- align Top
+          v_nTy:= -(v_nTop+v_nILine);
+        WHEN 'B' THEN -- align Bottom
+          v_nTy:= -p_nRowH+v_nBottom;
+        ELSE          -- align Middle
+          v_nTy:=(p_nRowH-v_nTop-v_nBottom-v_nTextH);
+          if v_nTy>0 then
+            v_nTy:= -(v_nTop + round(v_nTy/2,0) + v_nILine);
+          else -- Text Height + Top Margin + Bottom Margin is greather than cell Height
+            v_nTy:= -(v_nTop+v_nILine);
+          end if;
+        END CASE;
+      end if;
+      return v_nTy;
+    end;
+
+    procedure AddImage(p_blob in blob, c in number,
+                       p_vMode in varchar2 default 'DATA') IS
+    BEGIN
+      if p_vMode='BREAK' then
+        t_bcells(c).cImage := p_blob;
+      else
+        t_Cells(c).cImage := p_blob;
+      end if;
+    END;
+
+ -- Add Text row to cell
+    PROCEDURE AddRow(p_vRow IN VARCHAR2,
+                     c IN NUMBER,
+                     p_bSpacing IN BOOLEAN:=FALSE,
+                     p_vMode in varchar2 default 'DATA',
+                     v_nTextArea   in number:=0 ,
+                     v_nSpaceWidth in number:=0) IS
+      v_nTextWidth  NUMBER;
+      v_nTextHeight NUMBER;
+      v_nLast       NUMBER;
+    BEGIN
+
+      if p_vMode='BREAK' then
+        v_nLast:=nvl(t_bcells(c).cRowText.Count,0)+1;
+        t_bcells(c).cRowText(v_nLast) := Justify(p_vRow, v_nTextArea, v_nSpaceWidth, v_nTextWidth);
+
+        t_bcells(c).cRowTextWidth(v_nLast) := v_nTextWidth;
+        t_bcells(c).cRowTextX(v_nLast) := t_bcells(c).cX + get_tx(c,'T', v_nTextWidth);
+      -- Total text height (of the cell)
+        t_bcells(c).cTextHeight :=
+                 nvl(t_bcells(c).cTextHeight,0)
+                 + t_formats(c).cInterline
+                 - CASE WHEN p_bSpacing=FALSE THEN t_formats(c).cSpacing ELSE 0 END;
+        t_bcells(c).cRowsCount:=v_nLast;
+        t_bcells(c).cRowTextY(v_nLast):=-(v_nLast-1)*t_bcells(c).cTextHeight;
+      else
+        v_nLast:=nvl(t_Cells(c).cRowText.Count,0)+1;
+        t_Cells(c).cRowText(v_nLast) := Justify(p_vRow, v_nTextArea, v_nSpaceWidth, v_nTextWidth);
+
+        t_Cells(c).cRowTextWidth(v_nLast) := v_nTextWidth;
+        t_Cells(c).cRowTextX(v_nLast) := t_Cells(c).cX + get_tx(c,'T', v_nTextWidth);
+      -- Total text height (of the cell)
+        v_nTextHeight:= t_formats(c).cInterline
+                 - CASE WHEN p_bSpacing=FALSE THEN t_formats(c).cSpacing ELSE 0 END;
+        t_Cells(c).cTextHeight :=
+                 nvl(t_Cells(c).cTextHeight,0) -- Altezza Attuale
+                 + v_nTextHeight;
+        t_Cells(c).cRowsCount:=v_nLast;
+        t_Cells(c).cRowTextY(v_nLast):=-(v_nLast-1)*v_nTextHeight;
+      end if;
+    END;
+
+    function singleWord(p_vWord in varchar2, c in number, p_vMode in varchar2, v_nTextArea in number, v_nSpaceWidth in number) return varchar2 is
+      v_vWord varchar2(200);
+      wc      integer;
+    begin
+      IF str_len(p_vWord) > v_nTextArea THEN
+      -- The single word is too long
+        v_vWord:=p_vWord;
+        FOR wc IN 1..length(v_vWord)
+        LOOP          -- proceed letter by letter
+          IF str_len(substr(v_vWord,1,wc)) > v_nTextArea THEN
+          -- reached the limit length, add break and go
+          -- ##ALERT!## do I justify it ? if yes add    v_nSpaceWidth, v_nTextArea
+            AddRow(substr(v_vWord,1,wc-1), c, FALSE, p_vMode, v_nTextArea, v_nSpaceWidth);
+
+            v_vWord:=substr(v_vWord,wc);
+          END IF;
+        END LOOP;
+        return(v_vWord); -- start the line with the remaining part
+      ELSE
+        return(p_vWord);
+      END IF;
+
+    end;
+
+    PROCEDURE WordWrap2(p_vFieldText IN VARCHAR2, c IN NUMBER,
+                        p_vMode in varchar2 default 'DATA') IS
+      t_row         VARCHAR2(200):='';
+      v_nTextArea   NUMBER;
+      v_vWord       VARCHAR2(200);
+      v_vFieldText  VARCHAR2(4000);
+      v_nBreakLine  INTEGER;
+      v_nSpaceWidth NUMBER:=0;
+    BEGIN
+      v_nTextArea:=t_formats(c).cTextArea;  -- Retrieve max Width of text
+      if t_formats(c).tAlignment='J' then
+        v_nSpaceWidth:=str_len(' ');
+      else
+        v_nSpaceWidth:=0;
+      end if;
+
+      -- ##TODO## Retrieve Space width in pt
+      v_vFieldText:=p_vFieldText;
+      v_nBreakLine:=instr(v_vFieldText, '\n');   -- Find presenze of NewLine in string
+      if v_nBreakLine >0 then
+        v_vFieldText:=regexp_replace(v_vFieldText,'( +)\\n','\\n'); --Remove space folloowed by NewLine
+      end if;
+      IF (v_nBreakLine>0) or ((trunc(str_len(v_vFieldText)/v_nTextArea,0)+1) > 1) THEN
+        FOR r IN (select regexp_substr(v_vFieldText,'[^ ]+', 1, level) Word
+                    from dual
+                 connect by regexp_substr(v_vFieldText, '[^ ]+', 1, level) is not null )
+        LOOP
+          IF t_row IS NOT NULL THEN
+            t_row:=t_row||' '; -- Append a space if isn't the first word of row
+          END IF;
+          if (v_nBreakLine>0) and (instr(r.word, '\n')>0) then
+            v_vWord:=substr(r.word,1,instr(r.word, '\n'));
+            IF str_len(t_row || v_vWord) > t_formats(c).cTextArea THEN
+            -- Add one line to collection.
+
+              AddRow(t_row, c, TRUE, p_vMode, v_nTextArea, v_nSpaceWidth);
+            -- Create bnew line whit only one word.
+
+              t_row:=singleWord(v_vWord, c, p_vMode, 0, 0);
+            -- Add new line
+
+              AddRow(t_row, c, TRUE, p_vMode, 0, 0);
+            ELSE
+              t_row:=t_row||r.word;
+              AddRow(t_row, c, TRUE, p_vMode, 0, 0);
+            END IF;
+            v_vWord:=substr(r.word,instr(r.word, '\n')+2);
+            -- creo una nuova riga con la parte restante dopo \n
+            t_row:=singleWord(v_vWord, c, p_vMode, 0, 0);
+          else
+            IF str_len(t_row || r.word) > t_formats(c).cTextArea THEN
+            -- Excessive Lenght, store the row and continue
+              AddRow(t_row, c, TRUE, p_vMode, v_nTextArea, v_nSpaceWidth);
+              t_row:=singleWord(r.word, c, p_vMode, v_nTextArea, v_nSpaceWidth);
+            ELSE
+              t_row:=t_row||r.word;
+            END IF;
+          end if;
+        END LOOP;
+      ELSE
+        t_row := p_vFieldText;
+      END IF;
+
+      -- Add Last Row, it's never justified
+      AddRow(t_row, c, FALSE, p_vMode);
+    END;
+
+ -- Calculate cell rows in Header
+ -- Detect height of each cell row
+ -- Detect total height
+    procedure PrepareHeader is
+      c      pls_integer;    -- Column Index
+      r      pls_integer:=0; -- Row    Index
+      rr     pls_integer:=0; -- Current Row
+      x      number:=0;      -- x position
+      y      number:=0;      -- y position
+      w      number:=0;      -- width
+      h      number:=0;      -- height
+      hh     number:=0;      -- Header heigth
+    begin
+
+      g_bForce:=TRUE;
+      for c in t_col_start .. t_col_cnt       -- for each column (esclude breaking columns)
+      loop
+        setCellFont(c, FALSE,'H');            -- Detect font from parameter and activate for calculation
+        r:= coalesce(t_formats(c).cellRow,0); -- Detect row number
+      -- Detect max row height
+        if t_hrows.exists(r) = False then
+          t_hrows(r).height:=0;
+        end if;
+        t_hrows(r).height:=
+          greatest(t_hrows(r).height,
+                   t_formats(c).hTMargin+t_formats(c).hBMargin+t_formats(c).hFontSize,
+                   t_formats(c).hCHeight);
+      end loop;
+    -- Detect total Header height (sum of each row height)
+      r := t_hrows.FIRST;
+      while r IS NOT NULL LOOP
+        hh := hh + t_hrows(r).height;
+        r := t_hrows.NEXT(r);
+      END LOOP;
+    -- repeat column loop, detect x,y for each Text row
+    -- x,y are offset from startX e StartY
+    -- do not verify width
+
+      rr:=coalesce(t_formats(t_col_start).cellRow, 0); -- Riga della prima cella da trattare
+      x:=0;
+      for c in t_col_start .. t_col_cnt
+      loop
+        r:=coalesce(t_formats(c).cellRow, 0);
+        if r > rr then -- row changed
+          rr:=r;       -- Update row number
+          x:=0;        -- reset x
+          y:=y-h;      -- reduce y with preceding row height
+        end if;
+        x:=coalesce(t_formats(c).offsetX, x);   -- Update x with parameter if specified
+        w:=t_formats(c).colWidth;               -- cell width
+        h:=t_hrows(r).height;                   -- cell heght
+
+        t_hcells(c).x:=x;
+        t_hcells(c).y:=y;
+        t_hcells(c).w:=w;
+        t_hcells(c).h:=h;
+        t_hcells(c).tx:=get_tx(c,'H',t_formats(c).colLabel);
+        t_hcells(c).ty:=get_ty(c,'H', h);
+        t_hcells(c).testo:=t_formats(c).colLabel;
+
+        x:=x+w; -- Detect next cell position
+      end loop;
+      case
+        when coalesce(p_hRowHeight,-1) = 0 then
+        -- Zero: no header
+          hh:=0;
+          v_nHeaderHeight:=hh;
+        when coalesce(p_hRowHeight,-1) = -1 then
+        -- null: detect automatically
+          v_nHeaderHeight:=hh;
+        else
+        -- Force: Use specified value. WARNING ! check it before use
+          v_nHeaderHeight:=p_hRowHeight;
+      end case;
+    end;
+    procedure DrawBorderAround(p_nY1 in number,
+                               p_nY2 in number,
+                               p_nW  in number)
     is
     begin
-      if p_headers is not null and p_headers.count > 0
-      then
-        t_x := t_start_x;
-        for c in 1 .. t_col_cnt
-        loop
-          rect( t_x, t_y, t_widths( c ), t_lineheight );
-          if c <= p_headers.count
-          then
-            put_txt( t_x + t_padding, t_y + c_rf * t_lineheight, p_headers( c ) );
-          end if; 
-          t_x := t_x + t_widths( c ); 
-        end loop;
-        t_y := t_y - t_lineheight;
+      -- Draw Border Around Frame only if Line size > 0
+      if t_Frame_Line>0 then
+        rect(t_start_x,
+             p_nY2,
+             p_nW, p_nY1-p_nY2,
+             t_Frame_Color, null, t_Frame_Line);
       end if;
     end;
---
-  begin
+
+    procedure DrawBorder(c       in pls_integer,
+                         p_vMode in varchar2,
+                         p_nY    in number,
+                         p_nOdd  in pls_integer default null)
+    is
+      v_vMode       varchar2(1);
+      v_nLineSize   NUMBER;
+      v_vFontColor  VARCHAR2(6);
+      v_vBackColor  VARCHAR2(6);
+      v_vLineColor  VARCHAR2(6);
+      t_start_y     number;
+      v_nOdd        pls_integer;
+      x      number:=0;      -- x  position
+      y      number:=0;      -- y position
+      w      number:=0;      -- width
+      h      number:=0;      -- heinht
+      b      number(2);      -- Border type
+    begin
+
+      v_vMode:=Upper1(p_vMode,'t');
+      t_x:=nvl(t_x,0);
+      case v_vMode
+      when 'H' then
+        v_nLineSize:=nvl(t_Formats(c).hLineSize,k_nLineSize);
+        --v_vFontColor:=nvl(t_formats(c).hFontColor, t_colors(1));
+        v_vBackColor:=nvl(t_formats(c).hBackColor, t_colors(2));
+        v_vLineColor:=nvl(t_formats(c).hLineColor, t_colors(3));
+        w:=t_hcells(c).w;
+        h:=t_hcells(c).h;
+        b:=t_formats(c).hBorder;
+        x:=t_x+t_hcells(c).x;
+        y:=t_hcells(c).y-h;
+      When 'B' then
+        v_nOdd := 0;
+        v_nLineSize:=nvl(t_Formats(c).tLineSize,k_nLineSize);
+        --v_vFontColor:=nvl(t_formats(c).tFontColor, t_colors(4+v_nOdd));
+        v_vBackColor:=nvl(t_formats(c).tBackColor, t_colors(5+v_nOdd));
+        v_vLineColor:=nvl(t_formats(c).tLineColor, t_colors(6+v_nOdd));
+        w:=t_formats(c).colWidth;
+        h:=t_bCells(c).cHeight;
+        b:=t_formats(c).tBorder;
+        x:=t_x+t_bCells(c).cX;
+        y:=t_bCells(c).cY-h;
+
+      else
+        v_nOdd := coalesce(p_nOdd, n_oddLine);
+        v_nLineSize:=nvl(t_Formats(c).tLineSize,k_nLineSize);
+        --v_vFontColor:=nvl(t_formats(c).tFontColor, t_colors(4+v_nOdd));
+        v_vBackColor:=nvl(t_formats(c).tBackColor, t_colors(5+v_nOdd));
+        v_vLineColor:=nvl(t_formats(c).tLineColor, t_colors(6+v_nOdd));
+        w:=t_formats(c).colWidth;
+        h:=t_Cells(c).cHeight;
+        b:=t_formats(c).tBorder;
+        x:=t_x+t_Cells(c).cX;
+        y:=t_Cells(c).cY-h;
+      end case;
+      t_start_y:=p_nY;
+
+
+      IF v_nLineSize = 0 THEN
+      -- Cell without border
+        IF v_vBackColor != 'ffffff' THEN  -- Draw only background if not white
+          rect(t_start_x + x,
+               t_start_y + y,
+               w, h,
+               v_vBackColor, v_vBackColor, v_nLineSize);
+        END IF;
+
+      else
+        IF b = 15 THEN -- Full border
+          rect(t_start_x + x ,
+               t_start_y + y ,
+               w, h,
+               v_vLineColor, v_vBackColor, v_nLineSize);
+        ELSE
+        -- Draw Background color without border
+          rect(t_start_x + x + v_nLineSize,
+               t_start_y + y + v_nLineSize,
+               w -2*v_nLineSize, h-2*v_nLineSize,
+               v_vBackColor, v_vBackColor, 0);
+
+        -- Draw only required border
+          if BITAND(b,1) = 1 then --Top
+            horizontal_line(
+              t_start_x + x,
+              t_start_y + y + h,
+              w,
+              v_nLineSize, v_vLineColor);
+          end if;
+
+          if BITAND(t_formats(c).tBorder,2) = 2 then --Bottom
+            horizontal_line(
+              t_start_x + x,
+              t_start_y + y,
+              w,
+              v_nLineSize, v_vLineColor);
+          end if;
+
+          if BITAND(t_formats(c).tBorder,4) = 4 then --Left
+            vertical_line(
+              t_start_x + x,
+              t_start_y + y,
+              h,
+              v_nLineSize, v_vLineColor);
+          end if;
+
+          if BITAND(t_formats(c).tBorder,8) = 8 then --Right
+            vertical_line(
+              t_start_x + x + w,
+              t_start_y + y,
+              h,
+              v_nLineSize, v_vLineColor);
+          end if;
+
+        end if;
+
+      end if;
+    end;
+
+    procedure PrepareBreak(p_row in pls_integer) is
+      c      pls_integer;    -- Column Index
+      r      pls_integer:=0; -- Row    Index
+      rr     pls_integer:=0; -- Current Row
+      x      number:=0;      -- x position
+      y      number:=0;      -- y position
+      w      number:=0;      -- width
+      h      number:=0;      -- height
+      hh     number:=0;      -- Break Block total height
+      t      number;
+      b      number;
+    begin
+
+      t_bcells.delete;                          -- clean array
+      t_brows.delete;                           -- clean array
+      if t_col_start > 1 then                   -- Proceed only if break are required
+        g_bForce:=TRUE;
+        setCellFont(1, FALSE,'T');
+        for c in 1 .. t_col_start -1            -- for each column in break block
+        loop
+          if t_bCells.exists(c) = false then
+            t_bCells(c).cTextHeight:=0;
+          end if;
+          setCellFont(c, FALSE,'T');            -- Detect font from parameter and activate it
+          r:= coalesce(t_formats(c).cellRow,0); -- Detect row number
+          if r > rr then -- Row changed
+            rr:=r;       -- Update row numebr
+            x:=0;        -- reset x
+            y:=y-h;      -- reduce y with preceding row height
+          end if;
+          x:=coalesce(t_formats(c).offsetX, x);   -- Apdate x if StartX is specified
+          t_bCells(c).cX:=x;
+          t_bCells(c).cY:=y;
+          w:=t_formats(c).colWidth;               -- cell width
+          t_bCells(c).cWidth:=w;
+
+          if getValue(c, p_row)='TEXT' then       -- Append text rows
+            WordWrap2(t_txt, c, 'BREAK');
+          else
+            AddRow(t_txt,c, FALSE,'BREAK');
+          end if;
+          -- Detect max row height
+          t:=t_formats(c).tTMargin;
+          b:=t_formats(c).tBMargin;
+          if t_brows.exists(r)=false then
+            t_brows(r).Height:=0;
+          end if;
+          h:= greatest(nvl(t_brows(r).Height,0),
+                     t+b+t_bCells(c).cTextHeight,
+                     t+b+t_formats(c).hFontSize,
+                     t_formats(c).tCHeight);
+          t_brows(r).Height:=h;
+          t_bCells(c).cHeight:=h;
+
+          x:=x+w; -- Detect next cell position
+        end loop;
+        -- Repeat loop for verticola alignment
+        -- I can't made it before because there isn't row Height
+        for c in 1 .. t_col_start -1
+        loop
+          r:=coalesce(t_formats(c).cellRow, 0);
+          h:=t_brows(r).Height;
+          t_bCells(c).cHeight:=h;
+          t_bCells(c).cTy := get_ty(c, 'T', h, t_bCells(c).cTextHeight);
+        end loop;
+        -- Calculate Record Block height (sum of cell row height)
+        hh:=0;
+
+        for r in t_brows.FIRST .. t_brows.LAST
+        LOOP
+          hh := hh +  t_brows(r).Height;
+        END LOOP;
+        v_nBreakHeight:=hh;
+
+
+      else
+        hh:=0;    -- No Break required, reset height
+      end if;
+      v_nBreakHeight:=hh;
+    end;
+
+    -- Detect new break key
+    -- TRUE if is differente form preceding row
+    -- Load array of values to print
+    function VerifyBreak(p_row in pls_integer) return boolean is
+      v_bFlag BOOLEAN := FALSE;
+    begin
+      v_vBreakNew:='|';
+      v_nBreakHeight:=0;                      -- reset Height
+      if t_col_start > 1 then                 -- Break non required, exit
+        for c in 1 .. t_col_start -1          -- for each break columns
+        loop
+          v_vBreakNew:=v_vBreakNew||
+            getValue(c, p_row,'VALUE')||'|';  -- compose the break key
+        end loop;
+        if v_vBreakNew!=v_vBreakOld then      -- break key is changed
+          v_vBreakOld:=v_vBreakNew;
+          PrepareBreak(p_row);
+
+          v_bFlag:=TRUE;
+        end if;
+      end if;
+      return v_bFlag;
+    end;
+
+    function RecordWidth return number is
+      c      pls_integer;    -- Column Index
+      w      number:=0;
+      x      number:=0;
+    begin
+      x := p_startX;
+      for c in t_col_start .. t_col_cnt
+      loop
+        if t_Formats.exists(c) then
+          if t_Formats(c).offsetX is not null then
+            x := p_startX+t_Formats(c).offsetX;
+          end if;
+          w := greatest(w, x + t_Formats(c).colWidth);
+        end if;
+      end loop;
+      return w;
+    end;
+
+    procedure PrepareRecord(p_row pls_integer) is
+      c      pls_integer;    -- Column Index
+      r      pls_integer:=0; -- Row associated to cell
+      rr     pls_integer:=0; -- Row associated to last cell
+      x      number:=0;      -- x position
+      y      number:=0;      -- y position
+      w      number:=0;      -- width
+      h      number:=0;      -- height
+      hh     number:=0;      -- Record height
+      t      number;
+      b      number;
+    begin
+    -- don't check if cell is outside right margin
+      rr:=coalesce(t_formats(t_col_start).cellRow, 0); -- Cell row of first cell
+      x:=0;
+
+      if t_rrows.exists(r)=false then
+        t_rrows(r).Height:=0;
+  -- VALR 0.3.5.07 reset rowheight if g_settings.tRowHeightMin is defined
+      elsif nvl(g_settings.tRowHeightMin,0)!=0 then
+        t_rrows(r).Height:=g_settings.tRowHeightMin;
+      elsif nvl(g_settings.tRowHeightExact,0)!=0 then
+        t_rrows(r).Height:=g_settings.tRowHeightExact;
+      end if;
+
+      t_Cells.delete;
+      g_bForce:=TRUE;
+      for c in t_col_start .. t_col_cnt
+      loop
+        if t_Cells.exists(c) = false then
+          t_Cells(c).cTextHeight:=0;
+        end if;
+        setCellFont(c, FALSE,'T');              -- Detect font and activate it for calculations
+        r:=coalesce(t_formats(c).cellRow, 0);
+        if t_rrows.exists(r)=false then         -- 20151214 Added to prevent error
+         t_rrows(r).Height:=0;
+        end if;
+        if r > rr then -- Row changed
+          rr:=r;       -- update row number
+          x:=0;        -- Reset x
+          y:=y-h;      -- reduce y with preceding row height
+
+          if t_rrows.exists(r)=false then
+            t_rrows(r).Height:=0;
+  -- VALR 0.3.5.07 reset rowheight if g_settings.tRowHeightMin is defined
+          elsif nvl(g_settings.tRowHeightMin,0)!=0 then
+            t_rrows(r).Height:=g_settings.tRowHeightMin;
+          elsif nvl(g_settings.tRowHeightExact,0)!=0 then
+            t_rrows(r).Height:=g_settings.tRowHeightExact;
+          end if;
+        end if;
+        x:=coalesce(t_formats(c).offsetX, x);     -- Update x if OffsetX is specified
+        y:=coalesce(-t_formats(c).offsetY, y);    -- Update y if OffsetY is specified ##CHECK# sign
+        t_Cells(c).cX:=x;
+        t_Cells(c).cY:=y;
+
+        w:=t_formats(c).colWidth;                 -- cell width
+        t_Cells(c).cWidth:=w;
+
+        case getValue(c, p_row)
+          when 'TEXT' then                        -- Append text rows
+            WordWrap2(t_txt, c);                  -- t_txt is aligned from getValue
+          when 'CLOB' then                        -- Append cLob Image
+            t_Cells(c).cImage:=t_blob;
+          else
+            AddRow(t_txt, c);                     -- t_txt is aligned from getValue
+        end case;
+        -- Detect max cell row height
+        t:=t_formats(c).tTMargin;
+        b:=t_formats(c).tBMargin;
+
+
+
+
+
+
+
+
+
+        h:= greatest(nvl(t_rrows(r).Height,0),
+                     t+b+t_Cells(c).cTextHeight,
+                     t+b+t_formats(c).hFontSize,
+                     t_formats(c).tCHeight);
+        t_rrows(r).Height:=h;
+        t_Cells(c).cHeight:=h;
+
+        x:=x+w; -- Detect next cell position
+      end loop;
+      -- Repeat loop for vertical alignment
+      for c in t_col_start .. t_col_cnt
+      loop
+        r:=coalesce(t_formats(c).cellRow, 0);
+        h:=t_rrows(r).Height;
+        t_Cells(c).cHeight:=h;
+        t_Cells(c).cTy := get_ty(c, 'T', h, t_Cells(c).cTextHeight);
+      end loop;
+
+      -- Calculate total Record Block Height
+      hh:=0;
+      for r in t_rrows.FIRST .. t_rrows.LAST
+      LOOP
+        hh := hh +  t_rrows(r).Height;
+      END LOOP;
+      -- Use tRowHeightExact if defied
+      if nvl(g_settings.tRowHeightExact,0)>0 then
+        v_nRecordHeight:=g_settings.tRowHeightExact;
+      else
+        v_nRecordHeight:=greatest(hh, g_settings.tRowHeightMin);
+      end if;
+
+    end;
+
+    PROCEDURE show_header IS
+      c pls_integer;
+      r pls_integer;
+      v_vColor       varchar2(6);
+    begin
+      log('Header',true);
+      if coalesce(p_hRowHeight,1) > 0 then     -- Not printed if Height = 0
+        g_bForce:=TRUE;                        -- Force font changing on firts change
+        for c in t_col_start .. t_col_cnt      -- for each columns (exclude break columns)
+        loop
+          r:=coalesce(t_formats(c).cellRow,0); -- Detect row number
+          DrawBorder(c,'H',t_y);
+          setCellFont(c, TRUE,'H');            -- Detect font and activate it for calculation
+          v_vColor:=NVL(t_formats(c).hFontColor, t_Colors(1)); -- Change color if required
+          IF g_current_fcolor != v_vColor or g_bForce=TRUE THEN
+            set_color(v_vColor);
+          END IF;
+          g_bForce:=FALSE;
+        -- Print text
+          put_txt(t_start_x+ t_hcells(c).x + t_hcells(c).tx,
+                  t_y + t_hcells(c).y + t_hcells(c).ty, t_hcells(c).testo);
+        end loop;
+        set_font_style('N');                   -- Reset font style
+        t_y:=t_y-v_nHeaderHeight;              -- Move down y position
+      else
+        v_nHeaderHeight:=0;                    -- NO Header required;
+      end if;
+    end;
+
+    procedure show_break is
+      c pls_integer;
+      r pls_integer;
+      v_vColor       varchar2(6);
+      v_nX     number;
+      v_nY     number;
+    begin
+      if t_col_start > 1 then                  -- Not printed if Height = 0
+        log('Break',true);
+        g_bForce:=TRUE;                        -- force font changing on first change
+        for c in 1 .. t_col_start-1            -- for each columns (exclude break columns)
+        loop
+          r:=coalesce(t_formats(c).cellRow,0); -- Detect row number
+          DrawBorder(c,'B',t_y,0);             -- Draw border, ingore odd/eve difference
+          setCellFont(c, TRUE,'T');            -- Detect font and activate it for calculation
+          setCellColor(c,0);                   -- Change color if required
+          g_bForce:=FALSE;
+        -- Print Text
+          v_nX:=t_start_x + t_bCells(c).cRowTextX(r);
+          v_nY:=t_y + t_bCells(c).cY + t_bCells(c).cTy - t_bCells(c).cRowTextY(r);
+          put_txt(v_nX, v_nY, t_bCells(c).cRowText(r) );
+        end loop;
+        set_font_style('N');                   -- Reset font style
+        t_y:=t_y-v_nBreakHeight;               -- Move down y position
+      end if;
+    end;
+
+    procedure show_record is
+      r        pls_integer;
+      v_vColor varchar2(6);
+      v_nX     number;
+      v_nY     number;
+    begin
+      log('Record', true);
+      for c in t_col_start .. t_col_cnt        -- for each columns (exclude break columns)
+      loop
+        DrawBorder(c,'T',t_y);                 -- Draw border, ignore odd/even difference
+        setCellFont(c, TRUE,'T');              -- Detect font and activate it
+        setCellColor(c);                       -- Change color if required
+        g_bForce:=FALSE;                       -- Disable Force Format after first set
+      -- Print text
+        if nvl(dbms_lob.getlength(t_Cells(c).cImage),0) = 0 then
+          for r in t_Cells(c).cRowText.FIRST .. t_Cells(c).cRowText.LAST
+          LOOP                                   -- for each text row in the cell
+            v_nX:=t_x + t_start_x + t_Cells(c).cRowTextX(r);
+            v_nY:=t_y + t_Cells(c).cY + t_Cells(c).cTy + t_Cells(c).cRowTextY(r);
+            put_txt(v_nX, v_nY, t_Cells(c).cRowText(r) );
+          END LOOP;
+        else
+          v_nX:=t_x + t_start_x;
+          v_nY:=t_y + t_Cells(c).cY;
+
+        -- Use clob as image and tNumFormat as special format string for image
+        -- example of tNumFormat: 'w=100pt,h=50mm,a=L,v=M'
+          declare
+            v_vFmt   varchar2(100);
+            p varchar2(100);
+            w number:=0;
+            h number:=0;
+            hAlign varchar2(1);
+            vAlign varchar2(1);
+
+            -- Parse String value with um and return w or h ratio
+            function get_ImageRatio(p_nRef in number) return number is
+              v_vDummy  varchar2(100);
+              v_vReturn number;
+            begin
+              v_vDummy:=parseString(v_vFmt);
+              if v_vDummy='-1' then
+                if p_nRef=-1 then
+                  v_vReturn:=0;
+                else
+                  v_vReturn:=-1;
+                end if;
+              else
+                v_vReturn:=get_ParamPT(v_vDummy);
+              end if;
+              return v_vReturn;
+            end;
+          begin
+            v_vFmt:=replace(replace(trim(p_formats(c).tNumFormat),' ',','),';',',');
+          -- Initialize Defualt Values
+            h:=0;
+            w:=0;
+            hAlign:='C';
+            vAlign:='C';
+
+            while nvl(v_vFmt,' ') != ' '
+            loop
+              p:=upper1(parseString(v_vFmt,'='));
+              case p
+                when 'W' then
+                  w:=get_ImageRatio(h);
+                when 'H' then
+                  h:=get_ImageRatio(w);
+                when 'A' then  -- ## I can use tAlignment ##
+                  hAlign:=upper1(parseString(v_vFmt)||'C');
+                when 'V' then  -- ## I can use  tAlignVert ##
+                  vAlign:=upper1(parseString(v_vFmt)||'C');
+                else
+                  null;
+              end case;
+            end loop;
+         -- Added 2 optional parameters Cell Width & Height
+            put_image(t_Cells(c).cImage, v_nX, v_nY, w, h, hAlign, vAlign, 'pt',
+                      t_formats(c).colWidth,
+                      t_formats(c).tCHeight );
+
+          end;
+
+        end if;
+      end loop;
+      t_y:=t_y-v_nRecordHeight;                -- Move down y position
+      set_font_style('N'); -- Reset font style
+    end;
+
+----------------------------------------------------------------------------------------------
+-- BEGIN OF MAIN
+--------------------------------------------------------------------------------------------
+  BEGIN
 $IF DBMS_DB_VERSION.VER_LE_10 $THEN
     dbms_sql.describe_columns2( p_c, t_col_cnt, t_desc_tab );
 $ELSE
     dbms_sql.describe_columns3( p_c, t_col_cnt, t_desc_tab );
 $END
-    if p_widths is null or p_widths.count < t_col_cnt
-    then
-      t_tmp := get( c_get_page_width ) - get( c_get_margin_left ) - get( c_get_margin_right );
-      t_widths := tp_col_widths();
-      t_widths.extend( t_col_cnt );  
-      for c in 1 .. t_col_cnt
-      loop
-        t_widths( c ) := round( t_tmp / t_col_cnt, 1 ); 
-      end loop;
-    else
-      t_widths := p_widths;
-    end if;
---
-    if get( c_get_current_font ) is null
-    then 
-      set_font( 'helvetica', 12 );
-    end if;
---
+    set_rowHeight(p_hRowHeight, p_tRowHeight, p_um);
+
+--  -- Convert pt RowHeight parameters, if not defined use the Defaults
+--    t_hRowHeight := coalesce(conv2uu(p_hRowHeight, p_um), g_settings.hRowHeight) ;
+--    t_tRowHeight := coalesce(conv2uu(p_tRowHeight, p_um), g_settings.tRowHeight) ;
+    t_col_start  := p_BreakField+1;
+
+    SetDefaults;
+    g_Log:=false;
+
+--  Assign data type to columns
     for c in 1 .. t_col_cnt
     loop
       case
-        when t_desc_tab( c ).col_type member of t_numerics
-        then
-          dbms_sql.define_array( p_c, c, n_tab, t_bulk_size, 1 );
-        when t_desc_tab( c ).col_type member of t_dates
-        then
-          dbms_sql.define_array( p_c, c, d_tab, t_bulk_size, 1 );
-        when t_desc_tab( c ).col_type member of t_chars
-        then
-          dbms_sql.define_array( p_c, c, v_tab, t_bulk_size, 1 );
+        when t_desc_tab( c ).col_type member of t_numerics then
+          dbms_sql.define_array( p_c, c, n_tab, p_bulk_size, 1 );
+        when t_desc_tab( c ).col_type member of t_dates    then
+          dbms_sql.define_array( p_c, c, d_tab, p_bulk_size, 1 );
+        when t_desc_tab( c ).col_type member of t_chars    then
+          dbms_sql.define_array( p_c, c, v_tab, p_bulk_size, 1 );
+        when t_desc_tab( c ).col_type member of t_blobs    then
+          dbms_sql.define_array( p_c, c, b_tab, p_bulk_size, 1 );
         else
           null;
       end case;
     end loop;
---
-    t_start_x := get( c_get_margin_left );
-    t_lineheight := get( c_get_fontsize ) * 1.2;
-    t_y := coalesce( get( c_get_y ) - t_lineheight, get( c_get_page_height ) - get( c_get_margin_top ) ) - t_lineheight; 
---
-    show_header;
---
-    loop
-      t_r := dbms_sql.fetch_rows( p_c );
-      for i in 0 .. t_r - 1
+
+    t_start_x    := get( c_get_margin_left ) + nvl(conv2uu(p_startX, p_um),0);
+    t_lineheight := get( c_get_fontsize )*v_Interline;       --Min hight are FontSize + 20%
+    t_lineheight := nvl( g_settings.tRowHeightExact,
+                         greatest(g_settings.tRowHeightMin,
+                                  t_lineheight));            --Use parameter if greather
+
+    t_y := coalesce(get(c_get_y)-t_lineheight,
+                    get(c_get_page_height)-get(c_get_margin_top)/*ValR -t_lineheight*/);
+
+    -- t_yBegin:=get(c_get_page_height)-get(c_get_margin_top); /*#Valr 2014.07.08 BugFix Stat point of new page */
+    t_yBegin:=get(c_get_page_height)-get(c_get_margin_top)-nvl(conv2uu(p_startY, p_um),0); /*#Valr 2014.09.18 add p_startY parameter */
+
+    --g_Log:=TRUE;
+    PrepareHeader;              -- Load Header array and detect v_nHeaderHeight
+
+    n_oddLine:=0;               -- Initialize row evidentiation (odd/even)
+    t_r := dbms_sql.fetch_rows( p_c );
+    g_bForce:=TRUE;
+
+    -- Border Around Frame, detect LineSize and color
+    declare
+      v_vFrame varchar2(100);
+      p        varchar2(100);
+    begin
+      v_vFrame:=replace(replace(trim(p_Frame),' ',','),';',',');
+    -- Initialize Defaults
+      t_Frame_color :='000000';
+      t_Frame_Line  :=0;
+    -- Scan parametrs string
+      while nvl(v_vFrame,' ') != ' '
       loop
-        if t_y < get( c_get_margin_bottom )
-        then
-          new_page;
-          t_y := get( c_get_page_height ) - get( c_get_margin_top ) - t_lineheight; 
-          show_header;
-        end if;
-        t_x := t_start_x;
-        for c in 1 .. t_col_cnt
-        loop
-          case
-            when t_desc_tab( c ).col_type member of t_numerics
-            then
-              n_tab.delete;
-              dbms_sql.column_value( p_c, c, n_tab );
-              rect( t_x, t_y, t_widths( c ), t_lineheight );
-              t_txt := to_char( n_tab( i + n_tab.first() ), t_num_format );
-              if t_txt is not null
-              then
-                put_txt( t_x + t_widths( c ) - t_padding - str_len( t_txt ), t_y + c_rf * t_lineheight, t_txt );
-              end if; 
-              t_x := t_x + t_widths( c ); 
-            when t_desc_tab( c ).col_type member of t_dates
-            then
-              d_tab.delete;
-              dbms_sql.column_value( p_c, c, d_tab );
-              rect( t_x, t_y, t_widths( c ), t_lineheight );
-              t_txt := to_char( d_tab( i + d_tab.first() ), t_date_format );
-              if t_txt is not null
-              then
-                put_txt( t_x + t_padding, t_y + c_rf * t_lineheight, t_txt );
-              end if; 
-              t_x := t_x + t_widths( c ); 
-            when t_desc_tab( c ).col_type member of t_chars
-            then
-              v_tab.delete;
-              dbms_sql.column_value( p_c, c, v_tab );
-              rect( t_x, t_y, t_widths( c ), t_lineheight );
-              t_txt := v_tab( i + v_tab.first() );
-              if t_txt is not null
-              then
-                put_txt( t_x + t_padding, t_y + c_rf * t_lineheight, t_txt );
-              end if; 
-              t_x := t_x + t_widths( c ); 
-            else
-              null;
-          end case;
-        end loop;
-        t_y := t_y - t_lineheight;
+        p:=upper1(parseString(v_vFrame,'='));
+        case p
+          when 'L' then --Line Size
+            t_Frame_Line  :=get_ParamPT(parseString(v_vFrame));
+          when 'C' then --Color
+            t_Frame_color :=lpad(ltrim(rtrim(parseString(v_vFrame))),6,'0');
+            if to_char(to_number(t_Frame_color,'xxxxxx'), 'xxxxxx') != t_Frame_color then
+              t_Frame_color:='000000';
+            end if;
+          else
+            null;
+        end case;
       end loop;
-      exit when t_r != t_bulk_size;
-    end loop;      
+
+    end;
+
+
+    if g_settings.LabelMode then      -- Label Mode:
+    -- Check parameters
+      g_labeldef.hDistance:=nvl(g_labeldef.hDistance,0);
+      g_labeldef.vDistance:=nvl(g_labeldef.vDistance,0);
+
+      if nvl(g_labeldef.Width,0)=0 then
+        -- At least 1 column
+        if nvl(g_labeldef.MaxColumns,0)=0 then
+          g_labeldef.MaxColumns:=1;
+        end if;
+        -- Calc column width
+        g_labeldef.Width := trunc(
+          (  g_settings.page_width
+           - g_settings.margin_left - g_settings.margin_right
+           + g_labeldef.hDistance) / g_labeldef.MaxColumns )
+           - g_labeldef.hDistance;
+        if g_labeldef.Width < 1 then
+          RaiseError(-20001);
+
+
+        end if;
+      else
+        if nvl(g_labeldef.MaxColumns,0)=0 then
+        -- calc MaxColumns
+          g_labeldef.MaxColumns := trunc(
+          (  g_settings.page_width
+           - g_settings.margin_left - g_settings.margin_right
+           + g_labeldef.hDistance) /
+          (g_labeldef.Width + g_labeldef.hDistance));
+          if g_labeldef.MaxColumns <=0 then
+            RaiseError(-20002);
+
+
+          end if;
+        else
+        -- or check if exits page width
+          if (g_labeldef.MaxColumns *g_labeldef.Width
+             +(g_labeldef.MaxColumns-1)*g_labeldef.hDistance
+             +g_settings.margin_left
+             +g_settings.margin_right) > g_settings.page_width
+          then
+            RaiseError(-20003);
+
+
+          end if;
+        end if;
+      end if;
+
+      if nvl(g_labeldef.Height,0)=0 then
+        if nvl(g_labeldef.MaxRows,0)=0 then
+          g_labeldef.MaxRows:=1;         -- At least 1 row
+        end if;
+      -- Calc column height
+        g_labeldef.Height := trunc(
+          (  g_settings.page_height
+           - g_settings.margin_top - g_settings.margin_bottom
+           + g_labeldef.vDistance) / g_labeldef.MaxRows)
+           - g_labeldef.vDistance;
+        if g_labeldef.Height < 1 then
+          RaiseError(-20011);
+
+
+        end if;
+      else
+        if nvl(g_labeldef.MaxRows,0)=0 then
+        -- Calculate MaxRows
+          g_labeldef.MaxRows := trunc(
+          (  g_settings.page_height
+           - g_settings.margin_top - g_settings.margin_bottom
+           + g_labeldef.vDistance) /
+          ( g_labeldef.Height + g_labeldef.vDistance));
+          if g_labeldef.MaxRows <=0 then
+            RaiseError(-20012);
+
+
+          end if;
+        else
+        -- or check if it exits page height
+          if (g_labeldef.MaxRows    *g_labeldef.Height
+             +(g_labeldef.MaxRows-1)*g_labeldef.vDistance
+             +g_settings.margin_top
+             +g_settings.margin_bottom) > g_settings.page_height
+          then
+            RaiseError(-20013);
+
+
+          end if;
+        end if;
+      end if;
+
+      declare -- Label mode Block
+        v_iCol          pls_integer;   -- Column index in Label mode
+        v_iRow          pls_integer;   -- Row index in Label mode
+        x number;
+        y number;
+      begin
+        v_iCol:=0;
+        v_iRow:=1;
+        FOR i IN 0 .. t_r - 1
+        LOOP                        -- ** FOR EACH ROW IN THE DATA TABLE ** --
+          -- Calculate next col, row
+          v_iCol:=v_iCol+1;
+          if v_icol > g_labeldef.MaxColumns then
+            v_icol:=1;
+            v_iRow:=v_iRow+1;
+            if v_iRow > g_labeldef.MaxRows then
+              v_iRow:=1;
+              new_page;
+              t_y:=t_yBegin;           -- Reset Y position
+              g_bForce :=true;         -- force font changing
+            end if;
+          end if;
+          if v_iCol > 1 then
+            t_x := (v_iCol-1)*(g_labeldef.width + g_labeldef.hDistance);
+          else
+            t_x := 0;
+
+
+          end if;
+          if v_iRow > 1 then
+            t_y := t_yBegin - (v_iRow-1)*(g_labeldef.height + g_labeldef.vDistance);
+          else
+            t_y := t_yBegin;
+
+
+          end if;
+          PrepareRecord(i); -- :IT: credo vada gia bene
+          Show_record;      -- :IT: deve gestire offset x e y
+          n_oddLine:=0;     -- OddEven switch disabled for Labeling
+        END LOOP;
+      END;
+
+    else
+    -- Normal mode
+      t_Frame_width:= RecordWidth;
+
+      FOR i IN 0 .. t_r - 1
+      LOOP                         -- ** FOR EACH ROW IN THE DATA TABLE ** --
+        PrepareRecord(i);          -- Load Record array
+        if VerifyBreak(i) then     -- check break block, load Break array and detect BreakHeight
+          w_BlockHeight:=v_nBreakHeight+v_nHeaderHeight+v_nRecordHeight;
+        else                       -- Break not required or Break not detected
+          if i=0 then              -- Only for First Row: sub Header Height
+            w_BlockHeight:=v_nHeaderHeight+v_nRecordHeight;
+          else
+            w_BlockHeight:=v_nRecordHeight;
+          end if;
+        end if;
+
+        IF t_y-w_BlockHeight < get(c_get_margin_bottom)
+        THEN                       -- outside bottom margin
+        -- Drawing Around border
+          DrawBorderAround(t_Frame_y, t_y, t_Frame_width);
+
+          new_page;                -- New Page
+          t_y:=t_yBegin;           -- Reset Y position
+          IF v_nBreakHeight>0 THEN -- BreakBlock required
+            show_Break;            -- Print BreakBlock
+          END IF;
+          show_header;             -- Print Header at beginning of alla pages
+          t_Frame_y:=t_y;
+          g_bForce :=true;
+        ELSE
+          IF v_nBreakHeight>0 THEN
+            show_break;
+            show_header;           -- Print Header after each BreakBlock
+            t_Frame_y:=coalesce(t_Frame_y,t_y);
+          ELSIF i=0 THEN
+            show_header;           -- Print Header before first row
+            t_Frame_y:=t_y;
+          END IF;
+          g_bForce:=true;
+        END IF;
+        show_record;
+        n_oddLine:= case when n_oddLine=0 then 3 else 0 end; -- swap Odd-Even
+      END LOOP;
+      -- Draw Last Around Border
+      DrawBorderAround(t_Frame_y, t_y, t_Frame_width);
+    end if;
     g_y := t_y;
   end;
---
-  procedure query2table
-    ( p_query varchar2
-    , p_widths tp_col_widths := null
-    , p_headers tp_headers := null
-    )
-  is
-    t_cx integer;
-    t_dummy integer;
-  begin
-    t_cx := dbms_sql.open_cursor;
-    dbms_sql.parse( t_cx, p_query, dbms_sql.native );
-    t_dummy := dbms_sql.execute( t_cx );
-    cursor2table( t_cx, p_widths, p_headers ); 
-    dbms_sql.close_cursor( t_cx );
+
+  -- Get N elemento from csv string
+  function getNelemFromCSVString(v_vString in varchar2, v_nElem in number) return varchar2 is
+    v_nStart number;
+    v_nEnd   number;
+  BEGIN
+    v_nStart := nvl(instr(v_vString,',',1,v_nElem),0)+1; -- Firts char of elem
+    v_nEnd := nvl(instr(v_vString,',',1,v_nElem+1),0);     -- Next comma 
+    if v_nEnd=0 then                                     -- Retrieve length of Element
+      v_nEnd:=length(v_vString)-v_nStart+1 ;
+    else
+      v_nEnd:=v_nEnd-v_nStart ;
+    end if;  
+    return(substr(v_vString,v_nStart, v_nEnd)) ;
+  END;
+    
+  -- Trasform string with rgb color comma separated into table of varchar2
+  -- 2015-05-10 Add defualt null
+  function colorTable(p_vColors in varchar2 default null) return tp_colors is
+    t_colors    tp_colors;
+    i           pls_integer;
+    v_vColors   varchar2(100);
+    v_vColor    varchar2(6);
+    v_vColorDef varchar2(6);
+  BEGIN
+    t_colors:=tp_colors('000000');
+    t_colors.extend(9-t_colors.count);
+    v_vColors:=replace(p_vColors,' ',''); -- Remove spaces
+
+    for i in 1..9 loop
+      case
+        when i in (2,5) then
+          v_vColorDef:='ffffff';
+        when i>6 then
+          v_vColorDef:=t_colors(i-3);
+        else
+          v_vColorDef:='000000';
+      end case;
+      v_vColor:=parseString(v_vColors,',');
+      -- If isn't valid colour definition set v_vColor:='';
+      if length(v_vColor) > 6 then -- Max 6 Char
+        v_vColor:=v_vColorDef;
+      else
+      -- Only Hex char are allowed 
+        if nvl(length(trim(translate(lower(v_vColor),'1234567890abcdef','                '))),0) >0 then
+          v_vColor:=v_vColorDef;
+        end if;
+      end if;      
+      --v_vColor:=nvl(v_vColor, getNelemFromCSVString(c_dft_colours,i) ); 
+      
+      t_colors(i):=coalesce(v_vColor, v_vColorDef);
+    end loop;
+    return t_colors;
   end;
-$IF not DBMS_DB_VERSION.VER_LE_10 $THEN
---
-  procedure refcursor2table
-    ( p_rc sys_refcursor
-    , p_widths tp_col_widths := null
-    , p_headers tp_headers := null
-    )
-  is
-    t_cx integer;
-    t_rc sys_refcursor;
-  begin
-    t_rc := p_rc;
-    t_cx := dbms_sql.to_cursor_number( t_rc );
-    cursor2table( t_cx, p_widths, p_headers ); 
-    dbms_sql.close_cursor( t_cx );
-  end;
+
+-- 2015-05-10 Add nvl(p_colors, colorTable(null)) that set default colours when null
+  PROCEDURE query2table(p_query      VARCHAR2,
+                        p_formats    tp_columns:= NULL,
+                        p_colors     tp_colors := NULL,
+                        p_hRowHeight NUMBER:=NULL,
+                        p_tRowHeight NUMBER:=NULL,
+                        p_um         VARCHAR2:='pt',
+                        p_startX     number:= 0    ,
+                        p_BreakField number:= 0    ,
+                        p_Interline  number:=1.2   ,
+                        p_startY     number:= 0    ,
+                        p_Frame      varchar2:=null,
+                        p_bulk_size  pls_integer:= 200  -- 0=autodetect Buffer Size
+                        ) IS
+    v_cx    INTEGER;
+    v_dummy INTEGER;
+    t_bulk_size  pls_integer;
+  BEGIN
+    v_cx := dbms_sql.open_cursor;
+    dbms_sql.parse(v_cx, p_query, dbms_sql.native);
+    v_dummy := dbms_sql.execute(v_cx);
+    t_bulk_size:=p_bulk_size;
+    if t_bulk_size=0 then
+    -- Autodetect Buffer Size. Execute query 2 times
+      execute immediate 'Select count(*) from ('||p_query||')' into t_bulk_size;
+    end if;
+
+    cursor2table(v_cx, p_formats, nvl(p_colors, colorTable(null)),
+                 p_hRowheight, p_tRowheight, p_um, p_startX,
+                 p_BreakField,  p_Interline, p_startY, p_Frame, t_bulk_size);
+    dbms_sql.close_cursor(v_cx);
+  END;
+
+
+-- 2015-05-10 Add colorTable(nvl(p_colors, c_dft_colours)) that set default colours when null
+  PROCEDURE query2table(p_query      VARCHAR2,
+                        p_formats    tp_columns:=NULL,
+                        p_colors     varchar2  :=NULL,
+                        p_hRowHeight NUMBER:=NULL  ,
+                        p_tRowHeight NUMBER:=NULL  ,
+                        p_um         VARCHAR2:='pt',
+                        p_startX     number:= 0    ,
+                        p_BreakField number:= 0    ,
+                        p_Interline  number:=1.2   ,
+                        p_startY     number:= 0    ,
+                        p_Frame      varchar2:=null,
+                        p_bulk_size  pls_integer:= 200
+                        ) IS
+  BEGIN
+    query2table(p_query, p_formats, colorTable(nvl(p_colors, c_dft_colours)),
+                p_hRowHeight, p_tRowHeight, p_um,
+                p_startX, p_BreakField, p_Interline, p_startY, p_Frame, p_bulk_size);
+  END;
+
+-- 2015-05-10 Add nvl(p_colors, colorTable(null)) that set default colours when null
+  PROCEDURE query2Labels(p_query      VARCHAR2,
+                         p_formats    tp_columns := NULL,
+                         p_colors     tp_colors  := NULL,
+                         p_hRowHeight NUMBER:=NULL,
+                         p_tRowHeight NUMBER:=NULL,
+                         p_um         VARCHAR2:='pt',
+                         p_startX     number:= 0    ,
+                         p_labelDef   tp_labeldef   ,
+                         p_Interline  number:=1.2   ,
+                         p_startY     number:= 0    ,
+                         p_Frame      varchar2:=null
+                         ) IS
+    v_cx    INTEGER;
+    v_dummy INTEGER;
+  BEGIN
+    v_cx := dbms_sql.open_cursor;
+    dbms_sql.parse(v_cx, p_query, dbms_sql.native);
+    v_dummy := dbms_sql.execute(v_cx);
+  -- set global Record variable with Label definitions
+    g_labeldef := p_labelDef;
+    g_settings.LabelMode:=true;
+    cursor2table(v_cx, p_formats, nvl(p_colors, colorTable(null)),
+                 p_hRowheight, p_tRowheight, p_um,
+                 p_startX, 0, p_Interline, p_startY, p_Frame);
+    g_settings.LabelMode:=false;
+    dbms_sql.close_cursor(v_cx);
+  END;
+
+  -- Same as above, but color definition as CVS string
+  -- 2015-05-10 Add colorTable(nvl(p_colors, c_dft_colours)) that set default colours when null
+  PROCEDURE query2Labels(p_query      VARCHAR2
+                        ,p_formats    tp_columns := null
+                        ,p_colors     varchar2 := NULL
+                        ,p_hRowHeight NUMBER:=NULL
+                        ,p_tRowHeight NUMBER:=NULL
+                        ,p_um         VARCHAR2:='pt'
+                        ,p_startX     number:= 0
+                        ,p_labelDef   tp_labeldef
+                        ,p_Interline  number     :=1.2
+                        ,p_startY     number     := 0   -- Distance from top border
+                        ,p_Frame      varchar2:=null
+                         ) IS
+  BEGIN
+
+    query2Labels(p_query, p_formats, colorTable(nvl(p_colors, c_dft_colours)),
+                 p_hRowHeight, p_tRowHeight, p_um,
+                 p_startX, p_labelDef, p_Interline, p_startY, p_Frame);
+  END;
+
+-- Defined starting from ORACLE 11
+$IF not DBMS_DB_VERSION.ver_le_10 $THEN
+  PROCEDURE refcursor2table(p_rc         SYS_REFCURSOR
+                           ,p_formats    tp_columns := null
+                           ,p_colors     tp_colors := NULL
+                           ,p_hRowHeight NUMBER:=NULL
+                           ,p_tRowHeight NUMBER:=NULL
+                           ,p_um         VARCHAR2 := 'pt'
+                           ,p_startX     NUMBER:= 0
+                           ,p_BreakField number:= 0
+                           ,p_Interline  number:=1.2
+                           ,p_startY     NUMBER:= 0
+                           ,p_Frame      varchar2:=null
+                           , p_bulk_size  pls_integer:= 200
+                            ) IS
+    v_cx INTEGER;
+    v_rc SYS_REFCURSOR;
+  BEGIN
+    v_rc := p_rc;
+    v_cx := dbms_sql.to_cursor_number(v_rc);
+    cursor2table(v_cx, p_formats, p_colors, p_hRowHeight, p_tRowHeight, p_um,
+                 p_startX, p_BreakField, p_Interline, p_startY, p_Frame, p_bulk_size);
+    dbms_sql.close_cursor(v_cx);
+  END;
+$END
+
+-- Defined starting from ORACLE 11
+$IF not DBMS_DB_VERSION.ver_le_10 $THEN
+  PROCEDURE refcursor2label(p_rc         SYS_REFCURSOR
+                           ,p_formats    tp_columns:= NULL
+                           ,p_colors     tp_colors := NULL
+                           ,p_hRowHeight NUMBER:=NULL
+                           ,p_tRowHeight NUMBER:=NULL
+                           ,p_um         VARCHAR2 := 'pt'
+                           ,p_startX     NUMBER:= 0
+                           ,p_labelDef   tp_labeldef
+                           ,p_Interline  number     :=1.2
+                           ,p_startY     NUMBER     := 0
+                           ,p_Frame      varchar2:=null
+                           , p_bulk_size pls_integer:= 200
+                            ) IS
+    v_cx INTEGER;
+    v_rc SYS_REFCURSOR;
+  BEGIN
+    v_rc := p_rc;
+    v_cx := dbms_sql.to_cursor_number(v_rc);
+    g_labeldef := p_labelDef;
+    g_settings.LabelMode:=true;
+    cursor2table(v_cx, p_formats, p_colors, p_hRowHeight, p_tRowHeight, p_um, p_startX, 0, p_Interline, p_startY, p_Frame, p_bulk_size);
+    g_settings.LabelMode:=false;
+    dbms_sql.close_cursor(v_cx);
+  END;
 $END
 --
   procedure pr_goto_page( i_npage number )
@@ -3968,6 +5493,6 @@ $END
   begin
     g_page_nr := null;
   end;
-end;
-/
 
+END;
+/

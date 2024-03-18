@@ -23,7 +23,8 @@ SOFTWARE.
 */
 
 @@dependencies/as_crypto.sql
-@@dependencies/as_pdf3_4.txt
+@@dependencies/as_pdf.pks
+@@dependencies/as_pdf.pkb
 @@dependencies/as_xlsx.pks
 @@dependencies/as_xlsx.pkb
 @@dependencies/as_zip.pks
