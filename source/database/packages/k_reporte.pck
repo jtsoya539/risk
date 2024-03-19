@@ -63,6 +63,39 @@ CREATE OR REPLACE PACKAGE k_reporte IS
 
   FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2;
 
+  /**
+  Agrega encabezado y pie de página al reporte PDF con formato:
+  
+  enc1                   enc3
+  enc2                   enc4
+  ---------------------------
+  
+  
+     Contenido del reporte
+  
+  
+  ---------------------------
+  pie1                   pie2
+  
+  %author jtsoya539 19/3/2024 13:13:50
+  %param i_encabezado1 Texto 1 del encabezado
+  %param i_encabezado2 Texto 2 del encabezado
+  %param i_encabezado3 Texto 3 del encabezado
+  %param i_encabezado4 Texto 4 del encabezado
+  %param i_pie1 Texto 1 del pie
+  %param i_pie2 Texto 2 del pie
+  %param i_page_nr Número de página actual
+  %param i_page_count Número total de páginas
+  */
+  PROCEDURE p_agregar_encabezado_pie_pdf(i_encabezado1 IN VARCHAR2 DEFAULT NULL,
+                                         i_encabezado2 IN VARCHAR2 DEFAULT NULL,
+                                         i_encabezado3 IN VARCHAR2 DEFAULT NULL,
+                                         i_encabezado4 IN VARCHAR2 DEFAULT NULL,
+                                         i_pie1        IN VARCHAR2 DEFAULT NULL,
+                                         i_pie2        IN VARCHAR2 DEFAULT NULL,
+                                         i_page_nr     IN NUMBER DEFAULT NULL,
+                                         i_page_count  IN NUMBER DEFAULT NULL);
+
   FUNCTION f_reporte_sql(i_consulta_sql IN CLOB,
                          i_formato      IN VARCHAR2 DEFAULT NULL)
     RETURN y_archivo;
@@ -419,6 +452,93 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       RETURN upper(substr(k_util.f_valor_parametro('REPORTE_FORMATO_SALIDA_DEFECTO'),
                           1,
                           10));
+  END;
+
+  PROCEDURE p_agregar_encabezado_pie_pdf(i_encabezado1 IN VARCHAR2 DEFAULT NULL,
+                                         i_encabezado2 IN VARCHAR2 DEFAULT NULL,
+                                         i_encabezado3 IN VARCHAR2 DEFAULT NULL,
+                                         i_encabezado4 IN VARCHAR2 DEFAULT NULL,
+                                         i_pie1        IN VARCHAR2 DEFAULT NULL,
+                                         i_pie2        IN VARCHAR2 DEFAULT NULL,
+                                         i_page_nr     IN NUMBER DEFAULT NULL,
+                                         i_page_count  IN NUMBER DEFAULT NULL) IS
+    c_font  CONSTANT VARCHAR2(100) := 'helvetica';
+    c_color CONSTANT VARCHAR2(6) := '7f7f7f';
+    --
+    l_encabezado1  VARCHAR2(300);
+    l_encabezado2  VARCHAR2(300);
+    l_encabezado3  VARCHAR2(300);
+    l_encabezado4  VARCHAR2(300);
+    l_pie1         VARCHAR2(300);
+    l_pie2         VARCHAR2(300);
+    l_x            NUMBER;
+    l_y_encabezado NUMBER;
+    l_y_pie        NUMBER;
+  BEGIN
+    l_encabezado1 := substr(i_encabezado1, 1, 300);
+    l_encabezado2 := substr(i_encabezado2, 1, 300);
+    l_encabezado3 := substr(nvl(i_encabezado3,
+                                to_char(SYSDATE, 'DD/MM/YYYY HH24:MI:SS')),
+                            1,
+                            300);
+    l_encabezado4 := substr(nvl(i_encabezado4, k_sistema.f_usuario), 1, 300);
+    l_pie1        := substr(nvl(i_pie1,
+                                k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion)),
+                            1,
+                            300);
+    l_pie2        := substr(nvl(i_pie2,
+                                'Página ' || to_char(i_page_nr) || ' de ' ||
+                                to_char(i_page_count)),
+                            1,
+                            300);
+    --
+    as_pdf.set_font(c_font, 8);
+    as_pdf.set_color(c_color);
+    --
+    l_x            := as_pdf.get(as_pdf.c_get_margin_left);
+    l_y_encabezado := as_pdf.get(as_pdf.c_get_page_height) -
+                      (as_pdf.get(as_pdf.c_get_margin_top) / 1.1);
+    l_y_pie        := as_pdf.get(as_pdf.c_get_margin_bottom) / 1.1;
+    -- Encabezado
+    as_pdf.horizontal_line(l_x,
+                           l_y_encabezado,
+                           as_pdf.get(as_pdf.c_get_page_width) -
+                           (as_pdf.get(as_pdf.c_get_margin_left) +
+                            as_pdf.get(as_pdf.c_get_margin_right)),
+                           1,
+                           c_color);
+    --
+    as_pdf.write(p_txt       => l_encabezado1,
+                 p_x         => l_x,
+                 p_y         => l_y_encabezado + 15,
+                 p_alignment => 'left');
+    as_pdf.write(p_txt       => l_encabezado2,
+                 p_x         => l_x,
+                 p_y         => l_y_encabezado + 5,
+                 p_alignment => 'left');
+    as_pdf.write(p_txt       => l_encabezado3,
+                 p_x         => l_x,
+                 p_y         => l_y_encabezado + 5,
+                 p_alignment => 'right');
+    as_pdf.write(p_txt       => l_encabezado4,
+                 p_x         => l_x,
+                 p_y         => l_y_encabezado + 15,
+                 p_alignment => 'right');
+    -- Pie
+    as_pdf.horizontal_line(l_x,
+                           l_y_pie,
+                           as_pdf.get(as_pdf.c_get_page_width) -
+                           (as_pdf.get(as_pdf.c_get_margin_left) +
+                            as_pdf.get(as_pdf.c_get_margin_right)),
+                           1,
+                           c_color);
+    --
+    as_pdf.put_txt(l_x, l_y_pie - 13, l_pie1);
+    as_pdf.put_txt(as_pdf.get(as_pdf.c_get_page_width) -
+                   as_pdf.get(as_pdf.c_get_margin_right) -
+                   as_pdf.str_len(l_pie2),
+                   l_y_pie - 13,
+                   l_pie2);
   END;
 
   FUNCTION f_reporte_sql(i_consulta_sql IN CLOB,
