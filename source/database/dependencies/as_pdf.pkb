@@ -1,5 +1,8 @@
-create or replace package body as_pdf
-is
+create or replace package body as_pdf is
+--
+  type tHex is table of pls_integer index by VARCHAR2(2);
+
+  lHex tHex;
 --
   type tp_pls_tab is table of pls_integer index by pls_integer;
   type tp_objects_tab is table of number(10) index by pls_integer;
@@ -98,16 +101,17 @@ is
   g_current_fcolor  VARCHAR2(6); -- Current Foreground Color
   g_current_bcolor  VARCHAR2(6); -- Current Background Color
   g_bForce          BOOLEAN;     -- Force Font Changing
+  g_Log             BOOLEAN := FALSE;
+  g_Language        VARCHAR2(2):='EN';
 -- *****************************************************
 -- constants
   c_nl constant varchar2(2) := chr(13) || chr(10);
-  g_Log            BOOLEAN := FALSE;
 
 -- Generic Functions
   PROCEDURE log(p_vString IN VARCHAR2, p_bFlag IN BOOLEAN:=FALSE) IS
   BEGIN
-    IF g_Log then
-      if p_bFlag THEN
+    IF g_Log THEN
+      if p_bFlag then
         dbms_output.put_line(p_vString);
       end if;
     END IF;
@@ -164,16 +168,40 @@ is
     return v_vReturn;
   END;
 
-  procedure set_Language(p_vNewValue in varchar2:='E') is
+  procedure set_Log(p_vNewValue in boolean:=true) is
   begin
-    g_Language:=upper1(p_vNewValue);
+    g_Log:=p_vNewValue;
+  end;
+
+  procedure set_Language(p_vNewValue in varchar2:='EN') is
+  begin
+    g_Language:=upper(p_vNewValue);
   end;
 
   procedure RaiseError(p_nErrNum in number) is
     v_vMsg varchar2(100);
   begin
     case g_Language
-      when 'I' then -- Italian
+      when 'ES' then -- Spanish
+        case p_nErrNum
+          when -20001 then
+            v_vMsg:='demasiadas columnas o ancho excesivo de las columnas';
+          when -20002 then
+            v_vMsg:='no se pudo calcular el número máximo de columnas';
+          when -20003 then
+            v_vMsg:='demasiadas columnas, excede el ancho de la página';
+          when -20011 then
+            v_vMsg:='demasiadas filas o alto excesivo de las filas';
+          when -20012 then
+            v_vMsg:='no se pudo calcular el número máximo de filas';
+          when -20013 then
+            v_vMsg:='demasiadas filas, excede el alto de la página';
+          when -20100 then
+            v_vMsg:='el ancho de las columnas excede el ancho de la página';
+          else
+            v_vMsg:='Error no identificado';
+        end case;
+      when 'IT' then -- Italian
         case p_nErrNum
           when -20001 then
             v_vMsg:='Troppe colonne o larghezza colonne eccessiva';
@@ -192,7 +220,7 @@ is
           else
             v_vMsg:='Errore non codificato';
         end case;
-      else           -- English Default
+      else -- English (Default)
         case p_nErrNum
           when -20001 then
             v_vMsg:='too many columns or excessive column width';
@@ -512,7 +540,8 @@ is
       tmp := rawtohex( dbms_lob.substr( p_src, step_size, j * step_size + 1 ) );
       for i in 1 .. length( tmp ) / 2
       loop
-        n := to_number( substr( tmp, i * 2 - 1, 2 ), 'xx' );
+        --n := to_number( substr( tmp, i * 2 - 1, 2 ), 'xx' );
+        n := lHex( substr( tmp, i * 2 - 1, 2 ) );
         s1 := s1 + n;
         if s1 >= c65521
         then
@@ -5479,20 +5508,139 @@ $IF not DBMS_DB_VERSION.ver_le_10 $THEN
   END;
 $END
 --
-  procedure pr_goto_page( i_npage number )
-  is
-  begin
-    if i_npage <= g_pages.count
-    then
-      g_page_nr := i_npage - 1;
-    end if;
-  end;
---
-  procedure pr_goto_current_page
-  is
-  begin
-    g_page_nr := null;
-  end;
+  PROCEDURE PR_GOTO_PAGE(i_nPage IN NUMBER) IS
+  BEGIN
+    IF i_nPage<=g_pages.count THEN
+      g_page_nr:=i_nPage-1;
+    END IF;
+  END;
 
-END;
+  PROCEDURE PR_GOTO_CURRENT_PAGE IS
+  BEGIN
+    g_page_nr:=NULL;
+  END;
+
+  PROCEDURE PR_LINE(i_nX1         IN NUMBER,
+                    i_nY1         IN NUMBER,
+                    i_nX2         IN NUMBER,
+                    i_nY2         IN NUMBER,
+                    i_vcLineColor IN VARCHAR2 DEFAULT NULL,
+                    i_nLineWidth  IN NUMBER DEFAULT 0.5,
+                    i_vcStroke    IN VARCHAR2 DEFAULT NULL
+                   ) IS
+  BEGIN
+    txt2page('q ' );
+    txt2page(to_char_round(i_nLineWidth, 5 ) || ' w' );
+    IF SUBSTR(i_vcLineColor, -6 ) != '000000' THEN
+      set_bk_color(i_vcLineColor);
+    ELSE
+      txt2page( '0 g' );
+    END IF;
+
+    txt2page('n ');
+    IF i_vcStroke IS NOT NULL THEN
+      txt2page(i_vcStroke || ' d ');
+    END IF;
+    txt2page(to_char_round(i_nX1, 5) || ' ' || to_char_round(i_nY1, 5) || ' m ');
+    txt2page(to_char_round(i_nX2, 5) || ' ' || to_char_round(i_nY2, 5) || ' l S Q');
+  END;
+
+  PROCEDURE PR_POLYGON(i_lXs         IN tVertices,
+                       i_lYs         IN tVertices,
+                       i_vcLineColor IN VARCHAR2 DEFAULT NULL,
+                       i_vcFillColor IN VARCHAR2 DEFAULT NULL,
+                       i_nLineWidth  IN NUMBER DEFAULT 0.5
+                      ) IS
+    vcBuffer VARCHAR2(32767);
+  BEGIN
+    IF i_lXs.COUNT>0 AND i_lXs.COUNT=i_lYs.COUNT THEN
+      txt2page('q ' );
+      IF SUBSTR(i_vcLineColor, -6 ) != SUBSTR(i_vcFillColor, -6 ) THEN
+        txt2page( to_char_round(i_nLineWidth, 5 ) || ' w' );
+      END IF;
+      IF SUBSTR(i_vcLineColor, -6 ) != '000000' THEN
+        set_bk_color(i_vcLineColor);
+      ELSE
+        txt2page( '0 g' );
+      END IF;
+      IF i_vcFillColor IS NOT NULL THEN
+        set_color(i_vcFillColor);
+      END IF;
+      txt2page(' 2.00000 M ');
+      txt2page('n ');
+
+      vcBuffer:=to_char_round(i_lXs(1), 5) || ' ' || to_char_round(i_lYs(1), 5) || ' m ';
+      FOR i IN 2..i_lXs.COUNT LOOP
+        vcBuffer:=vcBuffer || to_char_round(i_lXs(i), 5) || ' ' || to_char_round(i_lYs(i), 5) || ' l ';
+      END LOOP;
+      vcBuffer:=vcBuffer || to_char_round(i_lXs(1), 5) || ' ' || to_char_round(i_lYs(1), 5) || ' l ';
+      vcBuffer:=vcBuffer || CASE WHEN i_vcFillColor IS NULL THEN
+                               'S'
+                            ELSE CASE WHEN i_vcLineColor IS NULL THEN
+                                   'f'
+                                 ELSE
+                                   'b'
+                                 END
+                            END;
+
+      txt2page( vcBuffer || ' Q' );
+    END IF;
+  END;
+
+  PROCEDURE PR_PATH(i_lPath       IN tPath,
+                    i_vcLineColor IN VARCHAR2 DEFAULT NULL,
+                    i_vcFillColor IN VARCHAR2 DEFAULT NULL,
+                    i_nLineWidth  IN NUMBER DEFAULT 0.5
+                   ) IS
+    vcBuffer VARCHAR2(32767);
+  BEGIN
+    txt2page('q ' );
+
+    IF SUBSTR(i_vcLineColor, -6) != SUBSTR(i_vcFillColor, -6) THEN
+      txt2page(to_char_round(i_nLineWidth, 5) || ' w' );
+    END IF;
+    IF SUBSTR(i_vcLineColor, -6) != '000000' THEN
+      set_bk_color(i_vcLineColor);
+    ELSE
+      txt2page('0 g');
+    END IF;
+    IF i_vcFillColor IS NOT NULL THEN
+      set_color(i_vcFillColor);
+    END IF;
+
+    txt2page('n ');
+    FOR i IN 1..i_lPath.COUNT LOOP
+      IF i_lPath(i).nType=PATH_MOVE_TO THEN
+        vcBuffer:=vcBuffer|| to_char_round( i_lPath(i).nVal1, 5 ) || ' ' ||
+                             to_char_round( i_lPath(i).nVal2, 5 ) || ' m ';
+      ELSIF i_lPath(i).nType=PATH_LINE_TO THEN
+        vcBuffer:=vcBuffer || to_char_round( i_lPath(i).nVal1, 5 ) || ' ' ||
+                              to_char_round( i_lPath(i).nVal2, 5 ) || ' l ';
+      ELSIF i_lPath(i).nType=PATH_CURVE_TO THEN
+        vcBuffer:=vcBuffer || to_char_round( i_lPath(i).nVal1,5)  || ' ' ||
+                              to_char_round( i_lPath(i).nVal2,5)  || ' ' ||
+                              to_char_round( i_lPath(i).nVal3,5)  || ' ' ||
+                              to_char_round( i_lPath(i).nVal4,5)  || ' ' ||
+                              to_char_round( i_lPath(i).nVal5,5)  || ' ' ||
+                              to_char_round( i_lPath(i).nVal6,5)  || ' c ';
+      ELSIF i_lPath(i).nType=PATH_CLOSE THEN
+        vcBuffer:=vcBuffer || CASE WHEN i_vcFillColor IS NULL THEN
+                                'S'
+                               ELSE CASE WHEN i_vcLineColor IS NULL THEN
+                                      'f'
+                                    ELSE
+                                      'b'
+                                    END
+                               END;
+      END IF;
+    END LOOP;
+
+    txt2page( vcBuffer || ' Q' );
+  END;
+--
+begin
+  for i in 0..255 loop
+    lHex(TO_CHAR(i, 'FM0X')):=i;
+  end loop;
+end;
 /

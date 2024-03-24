@@ -61,6 +61,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_AGREGAR_ENCABEZADO_PIE_PDF">p_agregar_encabezado_pie_pdf</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Agrega encabezado y pie de p&#225;gina al reporte PDF con formato:
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_REPORTE_SQL">f_reporte_sql</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -271,6 +276,112 @@ f_formato
 FUNCTION f_formato(i_parametros IN y_parametros) RETURN VARCHAR2
 
 </PRE>
+<HR>
+<A NAME="P_AGREGAR_ENCABEZADO_PIE_PDF"></A>
+<P CLASS="TYPE_TITLE">
+p_agregar_encabezado_pie_pdf
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_agregar_encabezado_pie_pdf(i_encabezado1 IN VARCHAR2 DEFAULT NULL,
+                                       i_encabezado2 IN VARCHAR2 DEFAULT NULL,
+                                       i_encabezado3 IN VARCHAR2 DEFAULT NULL,
+                                       i_encabezado4 IN VARCHAR2 DEFAULT NULL,
+                                       i_pie1        IN VARCHAR2 DEFAULT NULL,
+                                       i_pie2        IN VARCHAR2 DEFAULT NULL,
+                                       i_page_nr     IN NUMBER DEFAULT NULL,
+                                       i_page_count  IN NUMBER DEFAULT NULL)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Agrega encabezado y pie de p&#225;gina al reporte PDF con formato:<br>
+&nbsp;<br>
+enc1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; enc3 enc2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; enc4<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp; Contenido del reporte<br>
+&nbsp;<br>
+&nbsp;<br>
+&nbsp;<br>
+pie1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pie2<br>
+
+<BR>
+</P>
+<A NAME="Author"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Author
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+jtsoya539 19/3/2024 13:13:50<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_encabezado1&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Texto 1 del encabezado<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_encabezado2&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Texto 2 del encabezado<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_encabezado3&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Texto 3 del encabezado<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_encabezado4&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Texto 4 del encabezado<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_pie1&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Texto 1 del pie<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_pie2&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Texto 2 del pie<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_page_nr&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+N&#250;mero de p&#225;gina actual<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_page_count&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+N&#250;mero total de p&#225;ginas<br>
+
+</TD></TR>
+</TABLE>
+<BR>
 <HR>
 <A NAME="F_REPORTE_SQL"></A>
 <P CLASS="TYPE_TITLE">
