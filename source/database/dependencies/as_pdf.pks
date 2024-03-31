@@ -114,30 +114,34 @@ THE SOFTWARE.
 --
   procedure txt2page( p_txt varchar2 );
 --
-  procedure put_txt(p_x number, p_y number, p_txt varchar2,
-                    p_degrees_rotation NUMBER := NULL,
-                    p_um VARCHAR2 := 'pt'  -- Add by ValR
-                    );
-  procedure put_txt(p_um VARCHAR2 := 'pt',
-                    p_x number, p_y number, p_txt varchar2,
-                    p_degrees_rotation NUMBER := NULL
-                    );
-  procedure g_put_txt( p_x VARCHAR2, p_y VARCHAR2, p_txt varchar2,
-                     p_degrees_rotation number := NULL);
+  procedure put_txt
+    ( p_x number
+    , p_y number
+    , p_txt varchar2
+    , p_degrees_rotation number := null
+    , p_um varchar2 := 'pt' -- Add by ValR
+    );
+
+  procedure g_put_txt
+    ( p_x varchar2
+    , p_y varchar2
+    , p_txt varchar2
+    , p_degrees_rotation number := null
+    );
 --
   function str_len( p_txt varchar2 )
   return number;
 --
 -- ValR Chiamata alternativa, con unit? di misura all'inizio
   procedure write
-    ( p_txt in VARCHAR2
-    , p_um VARCHAR :='pt'
+    ( p_txt in varchar2
     , p_x in number := null
     , p_y in number := null
     , p_line_height in number := null
     , p_start in number := null -- left side of the available text box
     , p_width in number := null -- width of the available text box
-    , p_alignment in varchar2 := NULL
+    , p_alignment in varchar2 := null
+    , p_um in varchar2 := 'pt'
     );
 --
   procedure set_font
@@ -251,10 +255,10 @@ THE SOFTWARE.
     , p_line_color in varchar2 := '000000'
     );
   procedure horizontal_line
-    ( p_x VARCHAR2
-    , p_y VARCHAR2
-    , p_width VARCHAR2
-    , p_line_width VARCHAR2 := '0.5pt'
+    ( p_x varchar2
+    , p_y varchar2
+    , p_width varchar2
+    , p_line_width varchar2 := '0.5pt'
     , p_line_color varchar2 := '000000'
     );
 --
@@ -266,13 +270,12 @@ THE SOFTWARE.
     , p_line_color in varchar2 := '000000'
     );
   procedure vertical_line
-    ( p_x VARCHAR2
-    , p_y VARCHAR2
-    , p_height VARCHAR2
-    , p_line_width VARCHAR2 := '0.5pt'
+    ( p_x varchar2
+    , p_y varchar2
+    , p_height varchar2
+    , p_line_width varchar2 := '0.5pt'
     , p_line_color varchar2 := '000000'
     );
-
 --
   procedure rect
     ( p_x in number
@@ -283,15 +286,14 @@ THE SOFTWARE.
     , p_fill_color in varchar2 := null
     , p_line_width in number := 0.5
     );
-
   procedure rect
-    ( p_x VARCHAR2
-    , p_y VARCHAR2
-    , p_width VARCHAR2
-    , p_height VARCHAR2
+    ( p_x varchar2
+    , p_y varchar2
+    , p_width varchar2
+    , p_height varchar2
     , p_line_color varchar2 := null
     , p_fill_color varchar2 := null
-    , p_line_width VARCHAR2 := '0.5pt'
+    , p_line_width varchar2 := '0.5pt'
     );
 --
   function get_ParamPT(p_vString   IN VARCHAR2,
@@ -300,7 +302,7 @@ THE SOFTWARE.
   function get( p_what in pls_integer )
   return number;
 --
-procedure put_image
+  procedure put_image
     ( p_img blob
     , p_x number
     , p_y number
@@ -308,11 +310,10 @@ procedure put_image
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
-    , p_um VARCHAR:='pt'
-  --ITA:  Nuovi parametri per Larghezza e Altezza Cella
-  --ENG:  New parameter for cell Width & Height
-    , p_cellWidth number:=null
-    , p_cellHeight number:=null
+    , p_um varchar2 := 'pt'
+    -- New parameters for cell Width & Height
+    , p_cellWidth number := null
+    , p_cellHeight number := null
   );
 --
   procedure put_image
@@ -324,7 +325,10 @@ procedure put_image
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
-    , p_um VARCHAR:='pt'
+    , p_um varchar2 := 'pt'
+    -- New parameters for cell Width & Height
+    , p_cellWidth number := null
+    , p_cellHeight number := null
     );
 --
   procedure put_image
@@ -335,9 +339,12 @@ procedure put_image
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
-    , p_um VARCHAR:='pt'
+    , p_um varchar2 := 'pt'
+    -- New parameters for cell Width & Height
+    , p_cellWidth number := null
+    , p_cellHeight number := null
     );
-
+--
   Function BorderType(p_vBorder in varchar2) return number;
 --
   procedure set_page_proc( p_src clob );

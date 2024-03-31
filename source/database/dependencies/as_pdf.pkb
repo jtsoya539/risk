@@ -83,7 +83,7 @@ create or replace package body as_pdf is
 -- ***************************************************
 -- globals
   g_package         VARCHAR2(32):='AS_PDF'; -- Package Name
-  g_version         VARCHAR2(32):='3.5.13'; -- Package Version
+  g_version         VARCHAR2(32):='3.6.1'; -- Package Version
   g_objects         tp_objects_tab;
   g_pages           tp_pages_tab;
   g_settings        tp_settings;
@@ -1246,14 +1246,14 @@ end' ) );
           -- Replace substitution key with
           -- #PAGE_NR#    Current page number
           -- #PAGE_COUNT# Total page number
-          -- ?            Package name
+          -- §            Package name
 
             EXECUTE IMMEDIATE
               replace(replace(replace(
                 g_page_prcs( p ),
                   '#PAGE_NR#', i + 1 ),
                   '#PAGE_COUNT#', g_pages.count),
-                  '?', g_package);
+                  '§', g_package);
 
           EXCEPTION
             when others then
@@ -1834,9 +1834,14 @@ end' ) );
               );
   end;
 --
-  procedure put_txt( p_x number, p_y number, p_txt varchar2,
-                     p_degrees_rotation number := null,
-                     p_um VARCHAR2:='pt' ) is
+  procedure put_txt
+    ( p_x number
+    , p_y number
+    , p_txt varchar2
+    , p_degrees_rotation number := null
+    , p_um varchar2 := 'pt' -- Add by ValR
+    )
+  is
   begin
     if p_txt is not null then
 
@@ -1861,36 +1866,29 @@ end' ) );
 
     end if;
   end;
-  procedure put_txt( p_um VARCHAR2:='pt',
-                     p_x number, p_y number, p_txt varchar2,
-                     p_degrees_rotation number := NULL) is
+
+  procedure g_put_txt
+    ( p_x varchar2
+    , p_y varchar2
+    , p_txt varchar2
+    , p_degrees_rotation number := null
+    )
+  is
   begin
-    if p_txt is not null then
-
-
-      put_raw(conv2uu(p_x, p_um),
-              conv2uu(p_y, p_um),
-              txt2raw(p_txt),
-              p_degrees_rotation);
-    end if;
-  end;
-
-  procedure g_put_txt( p_x VARCHAR2, p_y VARCHAR2, p_txt varchar2,
-                     p_degrees_rotation number := NULL) IS
-  BEGIN
   -- Some as previous put_txt, but move global g_x and g_y
   -- Checks the presence of the \n character to calculate g_y position
     g_x:=nvl(get_ParamPT(p_x),g_x);
     g_y:=nvl(get_ParamPT(p_y),g_y);
-    IF p_txt is not null THEN
+    if p_txt is not null then
 
 
       put_raw(g_x, g_y,
               txt2raw(p_txt),
               p_degrees_rotation);
+
+
     end if;
   end;
-
 --
   function str_len( p_txt in varchar2 )
   return number
@@ -1990,13 +1988,13 @@ end' ) );
     end;
   procedure write
     ( p_txt in varchar2
-    , p_um VARCHAR :='pt'        -- For recursive call use pt
     , p_x in number := null
     , p_y in number := null
     , p_line_height in number := null
     , p_start in number := null  -- left side of the available text box
     , p_width in number := null  -- width of the available text box
-    , p_alignment in varchar2 := NULL
+    , p_alignment in varchar2 := null
+    , p_um in varchar2 := 'pt'  -- For recursive call use pt
     )
   is
     t_line_height number;
@@ -2085,13 +2083,13 @@ end' ) );
       g_x := t_x;
       g_y := t_y;
       -- Call write in recursive mode for chars before LF
-      write( rtrim( substr( p_txt, 1, t_ind - 1 ), chr(13) ), k_um, t_x, t_y, t_line_height, t_start, t_width, p_alignment );
+      write( rtrim( substr( p_txt, 1, t_ind - 1 ), chr(13) ), t_x, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
       t_y := chkNewPage(g_y,t_line_height);
       -- Update row being coordinates
       g_x := t_start;
       g_y := t_y;
       -- Call write in recursive mode for char after LF (string can contain more  LF)
-      write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+      write( substr( p_txt, t_ind + 1 ), t_start, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
       return;
     end if;
 
@@ -2143,17 +2141,17 @@ end' ) );
     -- There is at least one word
       t_ind := instr( p_txt, ' ', 1, t_cnt );
     -- Call write recursvely for begin part
-      write( substr( p_txt, 1, t_ind - 1 ), k_um, t_x, t_y, t_line_height, t_start, t_width, p_alignment );
+      write( substr( p_txt, 1, t_ind - 1 ), t_x, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
       t_y := chkNewPage(t_y,t_line_height);
     -- Call write recursvely for remain part
       if t_alignment='J' then
         if str_len(substr( p_txt, t_ind + 1 )) <= t_width then
-          write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, 'L' );
+          write( substr( p_txt, t_ind + 1 ), t_start, t_y, t_line_height, t_start, t_width, 'L', k_um );
         else
-          write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+          write( substr( p_txt, t_ind + 1 ), t_start, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
         end if;
       else
-        write( substr( p_txt, t_ind + 1 ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+        write( substr( p_txt, t_ind + 1 ), t_start, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
       end if;
       return;
     end if;
@@ -2162,23 +2160,23 @@ end' ) );
     if t_x > t_start and t_len < t_width then
       t_y := chkNewPage(t_y, t_line_height);
     -- Call recursively write for the new line
-      write( p_txt, k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+      write( p_txt, t_start, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
     else
       if length( p_txt ) = 1 then
       -- Only one char
         if t_x > t_start then
           t_y := chkNewPage(t_y, t_line_height);
         end if;
-        write( p_txt, k_um, t_x, t_y, t_line_height, t_start, t_len );
+        write( p_txt, t_x, t_y, t_line_height, t_start, t_len, null, k_um );
       else
         t_ind := 2; -- start with 2 to make sure we get smaller string!
         while str_len( substr( p_txt, 1, t_ind ) ) <= t_width - t_x + t_start
         loop
           t_ind := t_ind + 1;
         end loop;
-        write( substr( p_txt, 1, t_ind - 1 ), k_um, t_x, t_y, t_line_height, t_start, t_width, p_alignment );
+        write( substr( p_txt, 1, t_ind - 1 ), t_x, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
         t_y := chkNewPage(t_y, t_line_height);
-        write( substr( p_txt, t_ind ), k_um, t_start, t_y, t_line_height, t_start, t_width, p_alignment );
+        write( substr( p_txt, t_ind ), t_start, t_y, t_line_height, t_start, t_width, p_alignment, k_um );
       end if;
     end if;
   end;
@@ -3009,17 +3007,16 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
 
   end;
   procedure horizontal_line
-    ( p_x VARCHAR2
-    , p_y VARCHAR2
-    , p_width VARCHAR2
-    , p_line_width VARCHAR2 := '0.5pt'
+    ( p_x varchar2
+    , p_y varchar2
+    , p_width varchar2
+    , p_line_width varchar2 := '0.5pt'
     , p_line_color varchar2 := '000000'
     )
-  IS
-  BEGIN
+  is
+  begin
     horizontal_line(get_ParamPT(p_x), get_ParamPT(p_y), get_ParamPT(p_width), get_ParamPT(p_line_width), p_line_color);
-  END;
-
+  end;
 --
   procedure vertical_line
     ( p_x number
@@ -3061,16 +3058,16 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
 
   end;
   procedure vertical_line
-    ( p_x VARCHAR2
-    , p_y VARCHAR2
-    , p_height VARCHAR2
-    , p_line_width VARCHAR2 := '0.5pt'
+    ( p_x varchar2
+    , p_y varchar2
+    , p_height varchar2
+    , p_line_width varchar2 := '0.5pt'
     , p_line_color varchar2 := '000000'
     )
-  IS
-  BEGIN
+  is
+  begin
     vertical_line(get_ParamPT(p_x), get_ParamPT(p_y), get_ParamPT(p_height), get_ParamPT(p_line_width), p_line_color);
-  END;
+  end;
 -- Print Rectangle: coordinates are in pt
   procedure rect
     ( p_x number
@@ -3130,15 +3127,14 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
 
   --  Print Rectangle: you can specify um for each coordinate
   --- examples rect('5mm','1.5cm','1in','40pt' .... )
-
   procedure rect
-    ( p_x VARCHAR2
-    , p_y VARCHAR2
-    , p_width VARCHAR2
-    , p_height VARCHAR2
+    ( p_x varchar2
+    , p_y varchar2
+    , p_width varchar2
+    , p_height varchar2
     , p_line_color varchar2 := null
     , p_fill_color varchar2 := null
-    , p_line_width VARCHAR2 := '0.5pt'
+    , p_line_width varchar2 := '0.5pt'
     )
   is
   begin
@@ -3542,10 +3538,10 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
-    , p_um VARCHAR:='pt'
-  --  New parameter for cell Width & Height
-    , p_cellWidth  number:=null
-    , p_cellHeight number:=null
+    , p_um varchar2 := 'pt'
+    -- New parameters for cell Width & Height
+    , p_cellWidth number := null
+    , p_cellHeight number := null
   )
   is
     t_x number;
@@ -3660,7 +3656,10 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
-    , p_um VARCHAR:='pt'
+    , p_um varchar2 := 'pt'
+    -- New parameters for cell Width & Height
+    , p_cellWidth number := null
+    , p_cellHeight number := null
   )
   is
     t_blob blob;
@@ -3668,7 +3667,9 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     t_blob := file2blob(p_dir, p_file_name);
     put_image( t_blob
              , p_x, p_y, p_width, p_height
-             , p_align, p_valign, p_um);
+             , p_align, p_valign, p_um
+             , p_cellWidth, p_cellHeight
+             );
     dbms_lob.freetemporary( t_blob );
   end;
 --
@@ -3680,15 +3681,20 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     , p_height number := null
     , p_align varchar2 := 'center'
     , p_valign varchar2 := 'top'
-    , p_um VARCHAR:='pt'
+    , p_um varchar2 := 'pt'
+    -- New parameters for cell Width & Height
+    , p_cellWidth number := null
+    , p_cellHeight number := null
     )
   is
     t_blob blob;
   begin
     t_blob := httpuritype( p_url ).getblob( );
-    put_image(t_blob
+    put_image( t_blob
              , p_x, p_y, p_width, p_height
-             , p_align, p_valign, p_um);
+             , p_align, p_valign, p_um
+             , p_cellWidth, p_cellHeight
+             );
     dbms_lob.freetemporary( t_blob );
   end;
 
