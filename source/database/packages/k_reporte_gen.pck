@@ -66,6 +66,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte_gen IS
       WHEN k_reporte.c_formato_pdf THEN
         -- PDF
         as_pdf.init;
+        as_pdf.set_info(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion),
+                        k_sistema.f_usuario);
         as_pdf.set_page_format('A4');
         as_pdf.set_page_orientation('PORTRAIT');
         as_pdf.set_margins(2.5, 3, 2.5, 3, 'cm');
