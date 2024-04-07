@@ -20,6 +20,7 @@ create or replace package body as_pdf is
     , tRowHeightExact number  -- Exact   Row Table height
     , LabelMode       boolean
     );
+  type tp_settings_tab is table of tp_settings index by pls_integer;
   type tp_font is record (
       standard boolean
     , family varchar2(100)
@@ -80,32 +81,34 @@ create or replace package body as_pdf is
     );
   type tp_page_prcs is table of clob index by pls_integer;
 
--- ***************************************************
+-- *****************************************************
 -- globals
-  g_package         VARCHAR2(32):='AS_PDF'; -- Package Name
-  g_version         VARCHAR2(32):='3.6.1'; -- Package Version
-  g_objects         tp_objects_tab;
-  g_pages           tp_pages_tab;
-  g_settings        tp_settings;
-  g_fonts           tp_font_tab;
-  g_used_fonts      tp_pls_tab;
-  g_images          tp_img_tab;
-  g_info            tp_info;
-  g_page_prcs       tp_page_prcs;
-  g_current_font    pls_integer; -- Index of last font used
-  g_current_fontPDF pls_integer; -- Index of last font sent to doc
-  g_page_nr         pls_integer;
-  g_pdf_doc         blob;        -- the PDF-document being constructed
-  g_x               number;      -- current x-location of the "cursor"
-  g_y               number;      -- current y-location of the "cursor"
-  g_current_fcolor  VARCHAR2(6); -- Current Foreground Color
-  g_current_bcolor  VARCHAR2(6); -- Current Background Color
-  g_bForce          BOOLEAN;     -- Force Font Changing
-  g_Log             BOOLEAN := FALSE;
-  g_Language        VARCHAR2(2):='EN';
+  g_objects             tp_objects_tab;
+  g_pages               tp_pages_tab;
+  g_settings_per_page   tp_settings_tab;
+  g_settings            tp_settings;
+  g_fonts               tp_font_tab;
+  g_used_fonts          tp_pls_tab;
+  g_images              tp_img_tab;
+  g_info                tp_info;
+  g_page_prcs           tp_page_prcs;
+  g_current_font_record tp_font;
+  g_current_font        pls_integer; -- Index of last font used
+  g_current_fontPDF     pls_integer; -- Index of last font sent to doc
+  g_page_nr             pls_integer;
+  g_pdf_doc             blob;        -- the PDF-document being constructed
+  g_x                   number;      -- current x-location of the "cursor"
+  g_y                   number;      -- current y-location of the "cursor"
+  g_current_fcolor      VARCHAR2(6); -- Current Foreground Color
+  g_current_bcolor      VARCHAR2(6); -- Current Background Color
+  g_bForce              BOOLEAN;     -- Force Font Changing
+  g_Log                 BOOLEAN := FALSE;
+  g_Language            VARCHAR2(2):='EN';
 -- *****************************************************
 -- constants
-  c_nl constant varchar2(2) := chr(13) || chr(10);
+  c_nl constant         varchar2(2) := chr(13) || chr(10);
+  c_package constant    varchar2(32):='AS_PDF'; -- Package Name
+  c_version constant    varchar2(32):='3.6.2'; -- Package Version
 
 -- Generic Functions
   PROCEDURE log(p_vString IN VARCHAR2, p_bFlag IN BOOLEAN:=FALSE) IS
@@ -314,21 +317,6 @@ create or replace package body as_pdf is
       end if;
       raise;
   end;
-
-  function who_am_i(p_bOwner IN BOOLEAN DEFAULT FALSE) return varchar2
-  is
-     l_owner     varchar2(30);
-     l_name      varchar2(30);
-     l_lineno    number;
-     l_type      varchar2(30);
-  BEGIN
-    owa_util.who_called_me( l_owner, l_name, l_lineno, l_type );
-    IF p_bOwner THEN
-      return l_owner || '.' || l_name;
-    ELSE
-      return nvl(l_name,g_Package);
-    END IF;
-  end;
 --
   procedure init_core_fonts
   is
@@ -531,7 +519,7 @@ create or replace package body as_pdf is
     c65521 constant pls_integer := 65521;
   begin
     step_size := trunc( 16383 / dbms_lob.getchunksize( p_src ) ) * dbms_lob.getchunksize( p_src );
-    -- AW Bugfix for Chunksizes > 16383
+    -- AW: Bugfix for Chunksizes > 16383
     if step_size=0 then
       step_size:=16383;
     end if;
@@ -1129,6 +1117,16 @@ end' ) );
     add_object;
     txt2pdfdoc( '<< /Type /Page' );
     txt2pdfdoc( '/Parent ' || to_char( p_parent ) || ' 0 R' );
+    -- AW: Add a mediabox to each page
+    txt2pdfdoc(    '/MediaBox [0 0 '
+                || to_char_round( g_settings_per_page( p_page_ind ).page_width
+                                , 0
+                                )
+                || ' '
+                || to_char_round( g_settings_per_page( p_page_ind ).page_height
+                                , 0
+                                )
+                || ']' );
     txt2pdfdoc( '/Contents ' || to_char( t_content ) || ' 0 R' );
     txt2pdfdoc( '/Resources ' || to_char( p_resources ) || ' 0 R' );
     txt2pdfdoc( '>>' );
@@ -1150,6 +1148,10 @@ end' ) );
       txt2pdfdoc( to_char( t_self + i * 2 + 2 ) || ' 0 R' );
     end loop;
 --
+    -- AW: take the settings from page 1 as global settings
+    if g_settings_per_page.exists(0) then
+      g_settings := g_settings_per_page(0);
+    end if;
     txt2pdfdoc( ']' );
     txt2pdfdoc( '/Count ' || g_pages.count() );
     txt2pdfdoc(    '/MediaBox [0 0 '
@@ -1218,7 +1220,7 @@ end' ) );
 --
     return add_object( to_char( sysdate, '"/CreationDate (D:"YYYYMMDDhh24miss")"' )
                      || t_banner
-                     || '/Producer (' || g_package || ' ' || g_version || ' by Anton Scheffer)'
+                     || '/Producer (' || c_package || ' ' || c_version || ' by Anton Scheffer)'
                      || '/Title <FEFF' || utl_i18n.string_to_raw( g_info.title, 'AL16UTF16' ) || '>'
                      || '/Author <FEFF' || utl_i18n.string_to_raw( g_info.author, 'AL16UTF16' ) || '>'
                      || '/Subject <FEFF' || utl_i18n.string_to_raw( g_info.subject, 'AL16UTF16' ) || '>'
@@ -1253,7 +1255,7 @@ end' ) );
                 g_page_prcs( p ),
                   '#PAGE_NR#', i + 1 ),
                   '#PAGE_COUNT#', g_pages.count),
-                  '§', g_package);
+                  '§', c_package);
 
           EXCEPTION
             when others then
@@ -1295,6 +1297,8 @@ end' ) );
     end loop;
     g_objects.delete;
     g_pages.delete;
+    -- AW: Page-settings
+    g_settings_per_page.delete;
     g_fonts.delete;
     g_used_fonts.delete;
     g_page_prcs.delete;
@@ -1485,6 +1489,8 @@ end' ) );
   begin
     g_objects.delete;
     g_pages.delete;
+    -- AW: Page-settings
+    g_settings_per_page.delete;
     g_fonts.delete;
     g_used_fonts.delete;
     g_page_prcs.delete;
@@ -1500,7 +1506,6 @@ end' ) );
     set_page_format;
     set_page_orientation;
     set_margins;
-    --g_package:=who_am_i;
   end;
 --
   function get_pdf return BLOB is
@@ -1536,9 +1541,11 @@ end' ) );
     end if;
   end;
 --
-  procedure raw2page(p_txt BLOB) is
+  procedure raw2page( p_txt raw )
+  is
   begin
-    if g_pages.count() = 0 then
+    if g_pages.count() = 0
+    then
       new_page;
     end if;
     dbms_lob.append( g_pages( coalesce( g_page_nr, g_pages.count( ) - 1 ) )
@@ -1569,10 +1576,15 @@ end' ) );
     )
   is
   begin
-    if p_index is not null then
+    if p_index is not null
+    then
       g_used_fonts( p_index ) := 0;
-      g_current_font := p_index;
       g_fonts( p_index ).fontsize := p_fontsize_pt;
+      g_current_font_record.fontsize := p_fontsize_pt;
+      if nvl( g_current_font, -1 ) != p_index then -- AW: set only if different
+        g_current_font := p_index;
+        g_current_font_record := g_fonts( p_index );
+      end if;
       output_font_to_doc( p_output_to_doc );
     end if;
   end;
@@ -1592,6 +1604,7 @@ end' ) );
          )
       then
         g_fonts( g_current_font ).fontsize := p_fontsize_pt;
+        g_current_font_record := g_fonts( g_current_font );
         output_font_to_doc( p_output_to_doc );
       end if;
       return g_current_font;
@@ -1611,6 +1624,7 @@ end' ) );
                                          , 12
                                          );
         g_current_font := i;
+        g_current_font_record := g_fonts( i );
         g_used_fonts( i ) := 0;
         output_font_to_doc( p_output_to_doc );
         return g_current_font;
@@ -1699,6 +1713,7 @@ end' ) );
   procedure new_page is
   begin
     g_pages( g_pages.count() ) := null;
+    g_settings_per_page( g_settings_per_page.count() ) := g_settings;
     dbms_lob.createtemporary( g_pages( g_pages.count() - 1 ), true );
     if g_current_font is not null and g_pages.count() > 0
     then
@@ -1757,13 +1772,9 @@ end' ) );
     t_unicode pls_integer;
   begin
     if g_current_font is null then
-
-
       set_font( 'helvetica' );
     end if;
     if g_fonts( g_current_font ).cid then
-
-
       for i in 1 .. length( p_txt )
       loop
         t_unicode := utl_raw.cast_to_binary_integer( utl_raw.convert( utl_raw.cast_to_raw( substr( p_txt, i, 1 ) )
@@ -1776,11 +1787,11 @@ end' ) );
 -- assume code 32, space maps to the first code from the font
           t_unicode := g_fonts( g_current_font ).code2glyph.first + t_unicode - 32;
         end if;
-        if g_fonts( g_current_font ).code2glyph.exists( t_unicode )
+        if g_current_font_record.code2glyph.exists( t_unicode )
         then
-          g_fonts( g_current_font ).used_chars( g_fonts( g_current_font ).code2glyph( t_unicode ) ) := 0;
+          g_fonts( g_current_font ).used_chars( g_current_font_record.code2glyph( t_unicode ) ) := 0;
           t_rv := utl_raw.concat( t_rv
-                                , utl_raw.cast_to_raw( to_char( g_fonts( g_current_font ).code2glyph( t_unicode ), 'FM0XXX' ) )
+                                , utl_raw.cast_to_raw( to_char( g_current_font_record.code2glyph( t_unicode ), 'FM0XXX' ) )
                                 );
         else
           t_rv := utl_raw.concat( t_rv, utl_raw.cast_to_raw( '0000' ) );
@@ -1897,7 +1908,7 @@ end' ) );
     t_char pls_integer;
     t_rtxt raw(32767);
     t_tmp number;
-    t_font tp_font;
+    --t_font tp_font;
   begin
     if p_txt is null
     then
@@ -1905,8 +1916,7 @@ end' ) );
     end if;
 --
     t_width := 0;
-    t_font := g_fonts( g_current_font );
-    if t_font.cid
+    if g_current_font_record.cid 
     then
       t_rtxt := utl_raw.convert( utl_raw.cast_to_raw( p_txt )
                                , 'AMERICAN_AMERICA.AL16UTF16' -- 16 bit font => 2 bytes per char
@@ -1915,34 +1925,34 @@ end' ) );
       for i in 1 .. utl_raw.length( t_rtxt ) / 2
       loop
         t_char := to_number( utl_raw.substr( t_rtxt, i * 2 - 1, 2 ), 'xxxx' );
-        if t_font.flags = 4 -- a symbolic font
+        if g_current_font_record.flags = 4
         then
 -- assume code 32, space maps to the first code from the font
-          t_char := t_font.code2glyph.first + t_char - 32;
+          t_char := g_current_font_record.code2glyph.first + t_char - 32;
         end if;
-        if (   t_font.code2glyph.exists( t_char )
-           and t_font.hmetrics.exists( t_font.code2glyph( t_char ) )
+        if (   g_current_font_record.code2glyph.exists( t_char )
+           and g_current_font_record.hmetrics.exists( g_current_font_record.code2glyph( t_char ) )   
            )
         then
-          t_tmp := t_font.hmetrics( t_font.code2glyph( t_char ) );
+          t_tmp := g_current_font_record.hmetrics( g_current_font_record.code2glyph( t_char ) );
         else
-          t_tmp := t_font.hmetrics( t_font.hmetrics.last() );
+          t_tmp := g_current_font_record.hmetrics( g_current_font_record.hmetrics.last() );
         end if;
         t_width := t_width + t_tmp;
       end loop;
-      t_width := t_width * t_font.unit_norm;
-      t_width := t_width * t_font.fontsize / 1000;
+      t_width := t_width * g_current_font_record.unit_norm;
+      t_width := t_width * g_current_font_record.fontsize / 1000;
     else
       t_rtxt := utl_raw.convert( utl_raw.cast_to_raw( p_txt )
-                               , t_font.charset  -- should be an 8 bit font
+                               , g_current_font_record.charset  -- should be an 8 bit font
                                , sys_context( 'userenv', 'LANGUAGE' )
                                );
       for i in 1 .. utl_raw.length( t_rtxt )
       loop
         t_char := to_number( utl_raw.substr( t_rtxt, i, 1 ), 'xx' );
-        t_width := t_width + t_font.char_width_tab( t_char );
+        t_width := t_width + g_current_font_record.char_width_tab( t_char );
       end loop;
-      t_width := t_width * t_font.fontsize / 1000;
+      t_width := t_width * g_current_font_record.fontsize / 1000;
     end if;
     return t_width;
   end;
@@ -3542,6 +3552,7 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     -- New parameters for cell Width & Height
     , p_cellWidth number := null
     , p_cellHeight number := null
+    , p_adler32 varchar2 := null
   )
   is
     t_x number;
@@ -3552,12 +3563,14 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     t_heightRatio number;
     t_img tp_img;
     t_ind pls_integer;
-    t_adler32 varchar2(8);
+    t_adler32 varchar2(8) := p_adler32;
   begin
     if p_img is null then
       return;
     end if;
-    t_adler32 := adler32( p_img );
+    if t_adler32 is null then
+      t_adler32 := adler32( p_img );
+    end if;
     t_ind := g_images.first;
     while t_ind is not null
     loop
@@ -3660,15 +3673,17 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     -- New parameters for cell Width & Height
     , p_cellWidth number := null
     , p_cellHeight number := null
+    , p_adler32 varchar2 := null
   )
   is
     t_blob blob;
   begin
-    t_blob := file2blob(p_dir, p_file_name);
+    t_blob := file2blob( p_dir, p_file_name );
     put_image( t_blob
              , p_x, p_y, p_width, p_height
              , p_align, p_valign, p_um
              , p_cellWidth, p_cellHeight
+             , p_adler32
              );
     dbms_lob.freetemporary( t_blob );
   end;
@@ -3685,6 +3700,7 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
     -- New parameters for cell Width & Height
     , p_cellWidth number := null
     , p_cellHeight number := null
+    , p_adler32 varchar2 := null
     )
   is
     t_blob blob;
@@ -3694,6 +3710,7 @@ dbms_output.put_line( this_font.fontname || ' ' || this_font.family || ' ' || th
              , p_x, p_y, p_width, p_height
              , p_align, p_valign, p_um
              , p_cellWidth, p_cellHeight
+             , p_adler32
              );
     dbms_lob.freetemporary( t_blob );
   end;
@@ -5357,19 +5374,21 @@ $END
   end;
 
 -- 2015-05-10 Add nvl(p_colors, colorTable(null)) that set default colours when null
-  PROCEDURE query2table(p_query      VARCHAR2,
-                        p_formats    tp_columns:= NULL,
-                        p_colors     tp_colors := NULL,
-                        p_hRowHeight NUMBER:=NULL,
-                        p_tRowHeight NUMBER:=NULL,
-                        p_um         VARCHAR2:='pt',
-                        p_startX     number:= 0    ,
-                        p_BreakField number:= 0    ,
-                        p_Interline  number:=1.2   ,
-                        p_startY     number:= 0    ,
-                        p_Frame      varchar2:=null,
-                        p_bulk_size  pls_integer:= 200  -- 0=autodetect Buffer Size
-                        ) IS
+  PROCEDURE query2table
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
     v_cx    INTEGER;
     v_dummy INTEGER;
     t_bulk_size  pls_integer;
@@ -5389,40 +5408,85 @@ $END
     dbms_sql.close_cursor(v_cx);
   END;
 
-
 -- 2015-05-10 Add colorTable(nvl(p_colors, c_dft_colours)) that set default colours when null
-  PROCEDURE query2table(p_query      VARCHAR2,
-                        p_formats    tp_columns:=NULL,
-                        p_colors     varchar2  :=NULL,
-                        p_hRowHeight NUMBER:=NULL  ,
-                        p_tRowHeight NUMBER:=NULL  ,
-                        p_um         VARCHAR2:='pt',
-                        p_startX     number:= 0    ,
-                        p_BreakField number:= 0    ,
-                        p_Interline  number:=1.2   ,
-                        p_startY     number:= 0    ,
-                        p_Frame      varchar2:=null,
-                        p_bulk_size  pls_integer:= 200
-                        ) IS
+  PROCEDURE query2table
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
   BEGIN
     query2table(p_query, p_formats, colorTable(nvl(p_colors, c_dft_colours)),
                 p_hRowHeight, p_tRowHeight, p_um,
                 p_startX, p_BreakField, p_Interline, p_startY, p_Frame, p_bulk_size);
   END;
 
+  procedure query2table
+    ( p_query   varchar2
+    , p_widths  tp_col_widths := null
+    , p_headers tp_headers    := null
+    )
+  is
+    i integer;
+    t_columns tp_columns;
+    t_widths_count  integer := 0;
+    t_headers_count integer := 0;
+  begin
+    if p_widths is not null then
+      t_widths_count := p_widths.count;
+    end if;
+    if p_headers is not null then
+      t_headers_count := p_headers.count;
+    end if;
+        
+    t_columns := tp_columns();
+    t_columns.extend(greatest(t_widths_count, t_headers_count));
+    
+    if p_widths is not null then
+      i := p_widths.first;
+      while i is not null 
+      loop
+        t_columns(i).colWidth := p_widths(i);
+        i := p_widths.next(i);
+      end loop;
+    end if;
+    if p_headers is not null then
+      i := p_headers.first;
+      while i is not null 
+      loop
+        t_columns(i).colLabel := p_headers(i);
+        i := p_headers.next(i);
+      end loop;
+    end if;
+    
+    query2table(p_query, t_columns, c_dft_colours);
+  end;
+
 -- 2015-05-10 Add nvl(p_colors, colorTable(null)) that set default colours when null
-  PROCEDURE query2Labels(p_query      VARCHAR2,
-                         p_formats    tp_columns := NULL,
-                         p_colors     tp_colors  := NULL,
-                         p_hRowHeight NUMBER:=NULL,
-                         p_tRowHeight NUMBER:=NULL,
-                         p_um         VARCHAR2:='pt',
-                         p_startX     number:= 0    ,
-                         p_labelDef   tp_labeldef   ,
-                         p_Interline  number:=1.2   ,
-                         p_startY     number:= 0    ,
-                         p_Frame      varchar2:=null
-                         ) IS
+  PROCEDURE query2Labels
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
     v_cx    INTEGER;
     v_dummy INTEGER;
   BEGIN
@@ -5434,47 +5498,50 @@ $END
     g_settings.LabelMode:=true;
     cursor2table(v_cx, p_formats, nvl(p_colors, colorTable(null)),
                  p_hRowheight, p_tRowheight, p_um,
-                 p_startX, 0, p_Interline, p_startY, p_Frame);
+                 p_startX, 0, p_Interline, p_startY, p_Frame, p_bulk_size);
     g_settings.LabelMode:=false;
     dbms_sql.close_cursor(v_cx);
   END;
 
-  -- Same as above, but color definition as CVS string
-  -- 2015-05-10 Add colorTable(nvl(p_colors, c_dft_colours)) that set default colours when null
-  PROCEDURE query2Labels(p_query      VARCHAR2
-                        ,p_formats    tp_columns := null
-                        ,p_colors     varchar2 := NULL
-                        ,p_hRowHeight NUMBER:=NULL
-                        ,p_tRowHeight NUMBER:=NULL
-                        ,p_um         VARCHAR2:='pt'
-                        ,p_startX     number:= 0
-                        ,p_labelDef   tp_labeldef
-                        ,p_Interline  number     :=1.2
-                        ,p_startY     number     := 0   -- Distance from top border
-                        ,p_Frame      varchar2:=null
-                         ) IS
+-- 2015-05-10 Add colorTable(nvl(p_colors, c_dft_colours)) that set default colours when null
+  PROCEDURE query2Labels
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
   BEGIN
-
     query2Labels(p_query, p_formats, colorTable(nvl(p_colors, c_dft_colours)),
                  p_hRowHeight, p_tRowHeight, p_um,
-                 p_startX, p_labelDef, p_Interline, p_startY, p_Frame);
+                 p_startX, p_labelDef, p_Interline, p_startY, p_Frame, p_bulk_size);
   END;
 
 -- Defined starting from ORACLE 11
 $IF not DBMS_DB_VERSION.ver_le_10 $THEN
-  PROCEDURE refcursor2table(p_rc         SYS_REFCURSOR
-                           ,p_formats    tp_columns := null
-                           ,p_colors     tp_colors := NULL
-                           ,p_hRowHeight NUMBER:=NULL
-                           ,p_tRowHeight NUMBER:=NULL
-                           ,p_um         VARCHAR2 := 'pt'
-                           ,p_startX     NUMBER:= 0
-                           ,p_BreakField number:= 0
-                           ,p_Interline  number:=1.2
-                           ,p_startY     NUMBER:= 0
-                           ,p_Frame      varchar2:=null
-                           , p_bulk_size  pls_integer:= 200
-                            ) IS
+  PROCEDURE refcursor2table
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
     v_cx INTEGER;
     v_rc SYS_REFCURSOR;
   BEGIN
@@ -5484,23 +5551,84 @@ $IF not DBMS_DB_VERSION.ver_le_10 $THEN
                  p_startX, p_BreakField, p_Interline, p_startY, p_Frame, p_bulk_size);
     dbms_sql.close_cursor(v_cx);
   END;
-$END
 
--- Defined starting from ORACLE 11
-$IF not DBMS_DB_VERSION.ver_le_10 $THEN
-  PROCEDURE refcursor2label(p_rc         SYS_REFCURSOR
-                           ,p_formats    tp_columns:= NULL
-                           ,p_colors     tp_colors := NULL
-                           ,p_hRowHeight NUMBER:=NULL
-                           ,p_tRowHeight NUMBER:=NULL
-                           ,p_um         VARCHAR2 := 'pt'
-                           ,p_startX     NUMBER:= 0
-                           ,p_labelDef   tp_labeldef
-                           ,p_Interline  number     :=1.2
-                           ,p_startY     NUMBER     := 0
-                           ,p_Frame      varchar2:=null
-                           , p_bulk_size pls_integer:= 200
-                            ) IS
+  PROCEDURE refcursor2table
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
+  BEGIN
+    refcursor2table(p_rc, p_formats, colorTable(nvl(p_colors, c_dft_colours)),
+                    p_hRowHeight, p_tRowHeight, p_um,
+                    p_startX, p_BreakField, p_Interline, p_startY, p_Frame, p_bulk_size);
+  END;
+  
+  procedure refcursor2table
+    ( p_rc      sys_refcursor
+    , p_widths  tp_col_widths := null
+    , p_headers tp_headers    := null
+    )
+  is
+    i integer;
+    t_columns tp_columns;
+    t_widths_count  integer := 0;
+    t_headers_count integer := 0;
+  begin
+    if p_widths is not null then
+      t_widths_count := p_widths.count;
+    end if;
+    if p_headers is not null then
+      t_headers_count := p_headers.count;
+    end if;
+        
+    t_columns := tp_columns();
+    t_columns.extend(greatest(t_widths_count, t_headers_count));
+    
+    if p_widths is not null then
+      i := p_widths.first;
+      while i is not null 
+      loop
+        t_columns(i).colWidth := p_widths(i);
+        i := p_widths.next(i);
+      end loop;
+    end if;
+    if p_headers is not null then
+      i := p_headers.first;
+      while i is not null 
+      loop
+        t_columns(i).colLabel := p_headers(i);
+        i := p_headers.next(i);
+      end loop;
+    end if;
+    
+    refcursor2table(p_rc, t_columns, c_dft_colours);
+  end;
+
+  PROCEDURE refcursor2label
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
     v_cx INTEGER;
     v_rc SYS_REFCURSOR;
   BEGIN
@@ -5511,6 +5639,27 @@ $IF not DBMS_DB_VERSION.ver_le_10 $THEN
     cursor2table(v_cx, p_formats, p_colors, p_hRowHeight, p_tRowHeight, p_um, p_startX, 0, p_Interline, p_startY, p_Frame, p_bulk_size);
     g_settings.LabelMode:=false;
     dbms_sql.close_cursor(v_cx);
+  END;
+  
+  PROCEDURE refcursor2label
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    )
+  IS
+  BEGIN
+    refcursor2label(p_rc, p_formats, colorTable(nvl(p_colors, c_dft_colours)),
+                    p_hRowHeight, p_tRowHeight, p_um,
+                    p_startX, p_labelDef, p_Interline, p_startY, p_Frame, p_bulk_size);
   END;
 $END
 --

@@ -8,13 +8,6 @@ create or replace package as_pdf is
 ** See also: http://technology.amis.nl/?p=17718
 **
 ******************************************************************************
-**
-** Author: Valerio Rossetti
-** Date: 27-07-2012
-** Website:  http://valeriorossetti.blogspot.it/
-** See also: http://valeriorossetti.blogspot.it/2014/07/aspdf3v5-new-features-versione-italiana.html
-**
-******************************************************************************
 Copyright (C) 2012 by Anton Scheffer
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -314,6 +307,7 @@ THE SOFTWARE.
     -- New parameters for cell Width & Height
     , p_cellWidth number := null
     , p_cellHeight number := null
+    , p_adler32 varchar2 := null
   );
 --
   procedure put_image
@@ -329,6 +323,7 @@ THE SOFTWARE.
     -- New parameters for cell Width & Height
     , p_cellWidth number := null
     , p_cellHeight number := null
+    , p_adler32 varchar2 := null
     );
 --
   procedure put_image
@@ -343,6 +338,7 @@ THE SOFTWARE.
     -- New parameters for cell Width & Height
     , p_cellWidth number := null
     , p_cellHeight number := null
+    , p_adler32 varchar2 := null
     );
 --
   Function BorderType(p_vBorder in varchar2) return number;
@@ -452,90 +448,130 @@ THE SOFTWARE.
 --
   procedure query2table
     ( p_query      varchar2
-    , p_formats    tp_columns :=null
-    , p_colors     tp_colors  :=null --Default Colors
-    , p_hRowHeight NUMBER     :=null --Autodetect
-    , p_tRowHeight NUMBER     :=null --Autodetect
-    , p_um         VARCHAR2   :='pt' --
-    , p_startX     number     := 0   -- Distance from left border
-    , p_BreakField number     := 0   -- No Break
-    , p_Interline  number     :=1.2
-    , p_startY     number     := 0   -- Distance from top border
-    , p_Frame      varchar2   :=null -- Border Around format
-    , p_bulk_size  pls_integer:= 200
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
     );
-  PROCEDURE query2table
-    ( p_query      VARCHAR2
-    , p_formats    tp_columns :=null
-    , p_colors     varchar2   :=NULL -- colour list CSV
-    , p_hRowHeight NUMBER     :=NULL
-    , p_tRowHeight NUMBER     :=NULL
-    , p_um         VARCHAR2   :='pt'
-    , p_startX     number     := 0
-    , p_BreakField number     := 0
-    , p_Interline  number     :=1.2
-    , p_startY     number     := 0   -- Distance from top border
-    , p_Frame      varchar2   :=null -- Border Around format
-    , p_bulk_size  pls_integer:= 200
+  procedure query2table
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
     );
-
-  PROCEDURE query2Labels
-    ( p_query      VARCHAR2
-    , p_formats    tp_columns :=null
-    , p_colors     tp_colors  :=NULL
-    , p_hRowHeight NUMBER     :=NULL
-    , p_tRowHeight NUMBER     :=NULL
-    , p_um         VARCHAR2   :='pt'
-    , p_startX     number     := 0
-    , p_labelDef   tp_labeldef
-    , p_Interline  number     :=1.2
-    , p_startY     number     := 0   -- Distance from top border
-    , p_Frame      varchar2   :=null -- Border Around format
-    );
-  PROCEDURE query2Labels
-    ( p_query      VARCHAR2
-    , p_formats    tp_columns :=null
-    , p_colors     varchar2   :=NULL -- colour list CSV
-    , p_hRowHeight NUMBER     :=NULL
-    , p_tRowHeight NUMBER     :=NULL
-    , p_um         VARCHAR2   :='pt'
-    , p_startX     number     := 0
-    , p_labelDef   tp_labeldef
-    , p_Interline  number     :=1.2
-    , p_startY     number     := 0   -- Distance from top border
-    , p_Frame      varchar2   :=null -- Border Around format
+  procedure query2table
+    ( p_query   varchar2
+    , p_widths  tp_col_widths := null
+    , p_headers tp_headers    := null
     );
 --
+  procedure query2Labels
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    );
+  procedure query2Labels
+    ( p_query      varchar2
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    );
+--
+-- Defined starting from ORACLE 11
 $IF not DBMS_DB_VERSION.ver_le_10 $THEN
   procedure refcursor2table
-    ( p_rc          sys_refcursor
-    , p_formats     tp_columns  :=null
-    , p_colors      tp_colors   :=null
-    , p_hRowHeight  NUMBER      :=null
-    , p_tRowHeight  NUMBER      :=null
-    , p_um          VARCHAR2    :='pt'
-    , p_startX      NUMBER      := 0
-    , p_BreakField  number      := 0
-    , p_Interline   number      :=1.2
-    , p_startY      NUMBER      := 0
-    , p_Frame       varchar2    :=null -- Border Around format
-    , p_bulk_size   pls_integer := 200
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
     );
-$END
-$IF not DBMS_DB_VERSION.ver_le_10 $THEN
+  procedure refcursor2table
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_BreakField number      := 0
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    );
+  procedure refcursor2table
+    ( p_rc      sys_refcursor
+    , p_widths  tp_col_widths := null
+    , p_headers tp_headers    := null
+    );
+--
   procedure refcursor2label
-    ( p_rc          sys_refcursor
-    , p_formats     tp_columns  :=null
-    , p_colors      tp_colors   :=null
-    , p_hRowHeight  NUMBER      :=null
-    , p_tRowHeight  NUMBER      :=null
-    , p_um          VARCHAR2    :='pt'
-    , p_startX      NUMBER      := 0
-    , p_labelDef    tp_labeldef
-    , p_Interline   number      :=1.2
-    , p_startY      NUMBER      := 0
-    , p_Frame       varchar2    :=null -- Border Around format
-    , p_bulk_size   pls_integer := 200
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     tp_colors
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
+    );
+  procedure refcursor2label
+    ( p_rc         sys_refcursor
+    , p_formats    tp_columns
+    , p_colors     varchar2
+    , p_hRowHeight number      := null
+    , p_tRowHeight number      := null
+    , p_um         varchar2    := 'pt'
+    , p_startX     number      := 0    -- Distance from left border
+    , p_labelDef   tp_labeldef
+    , p_Interline  number      := 1.2
+    , p_startY     number      := 0    -- Distance from top border
+    , p_Frame      varchar2    := null -- Border Around format
+    , p_bulk_size  pls_integer := 200
     );
 $END
 --
