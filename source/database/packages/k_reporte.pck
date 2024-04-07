@@ -344,6 +344,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       WHEN c_formato_pdf THEN
         -- PDF
         as_pdf.init;
+        as_pdf.set_info(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion),
+                        k_sistema.f_usuario);
         as_pdf.set_page_format('A4');
         as_pdf.set_page_orientation('PORTRAIT');
         as_pdf.set_margins(2.5, 3, 2.5, 3, 'cm');
@@ -560,12 +562,15 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
       WHEN c_formato_pdf THEN
         -- PDF
         DECLARE
-          l_cursor   PLS_INTEGER;
-          l_col_cnt  PLS_INTEGER;
-          l_desc_tab dbms_sql.desc_tab2;
-          l_columns  as_pdf.tp_columns;
+          l_cursor        PLS_INTEGER;
+          l_col_cnt       PLS_INTEGER;
+          l_desc_tab      dbms_sql.desc_tab2;
+          l_columns       as_pdf.tp_columns;
+          l_max_tab_width NUMBER;
         BEGIN
           as_pdf.init;
+          as_pdf.set_info(k_sistema.f_valor_parametro_string(k_sistema.c_nombre_operacion),
+                          k_sistema.f_usuario);
           as_pdf.set_page_format('A4');
           as_pdf.set_page_orientation('LANDSCAPE');
           as_pdf.set_margins(1.27, 1.27, 1.27, 1.27, 'cm');
@@ -574,13 +579,23 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
           l_cursor := dbms_sql.open_cursor;
           dbms_sql.parse(l_cursor, l_consulta_sql, dbms_sql.native);
           dbms_sql.describe_columns2(l_cursor, l_col_cnt, l_desc_tab);
+        
+          l_max_tab_width := as_pdf.get(as_pdf.c_get_page_width) -
+                             as_pdf.get(as_pdf.c_get_margin_left) -
+                             as_pdf.get(as_pdf.c_get_margin_right);
+        
           l_columns := NEW as_pdf.tp_columns();
           FOR i IN 1 .. l_col_cnt LOOP
             l_columns.extend;
             l_columns(l_columns.count).collabel := l_desc_tab(i).col_name;
+            l_columns(l_columns.count).colwidth := round(l_max_tab_width /
+                                                         l_col_cnt,
+                                                         1);
           END LOOP;
         
-          as_pdf.query2table(l_consulta_sql, NULL, as_pdf.c_dft_colours);
+          as_pdf.query2table(l_consulta_sql,
+                             l_columns,
+                             as_pdf.c_dft_colours);
           l_contenido := as_pdf.get_pdf;
         END;
       
