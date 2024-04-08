@@ -18,7 +18,7 @@ begin
   l_clob(5) :=q'!S!';
   l_clob(6) :=q'!!';
   l_clob(7) :=q'!0.1.0!';
-  l_varchar2(8) :=q'!1!';
+  l_varchar2(8) :=q'!0!';
   l_clob(9) :=q'!!';
 
   insert into t_operaciones
