@@ -16,10 +16,11 @@ begin
   l_clob(3) :=q'!PARAMETROS_AUTOMATICOS!';
   l_clob(4) :=q'!!';
   l_clob(5) :=q'!S!';
-  l_clob(6) :=q'!ParÃ¡metros automÃ¡ticos!';
+  l_clob(6) :=q'!Parámetros automáticos!';
   l_clob(7) :=q'!0.1.0!';
   l_varchar2(8) :=q'!0!';
   l_clob(9) :=q'!!';
+  l_clob(10) :=q'!K!';
 
   insert into t_operaciones
   (
@@ -32,6 +33,7 @@ begin
     ,"VERSION_ACTUAL"
     ,"NIVEL_LOG"
     ,"PARAMETROS_AUTOMATICOS"
+    ,"TIPO_IMPLEMENTACION"
   )
   values
   (
@@ -44,6 +46,7 @@ begin
     ,to_char(l_clob(7))
     ,to_number(l_varchar2(8))
     ,to_char(l_clob(9))
+    ,to_char(l_clob(10))
   );
 
 end;
@@ -72,7 +75,7 @@ begin
   l_clob(9) :=q'!N!';
   l_clob(10) :=q'!{}!';
   l_clob(11) :=q'!!';
-  l_clob(12) :=q'!ParÃ¡metros para paginaciÃ³n de elementos!';
+  l_clob(12) :=q'!Parámetros para paginación de elementos!';
   l_clob(13) :=q'!!';
   l_clob(14) :=q'!N!';
 
@@ -194,6 +197,21 @@ begin
 end;
 /
 /* ==================== T_TRABAJOS ==================== */
+set define off
+declare
+  type   t_clob is table of clob index by binary_integer;
+  l_clob t_clob;
+  type   t_varchar2 is table of varchar2(64) index by binary_integer;
+  l_varchar2 t_varchar2;
+begin
+
+  null;
+  -- start generation of records
+  -----------------------------------
+
+end;
+/
+/* ==================== T_MONITOREOS ==================== */
 set define off
 declare
   type   t_clob is table of clob index by binary_integer;

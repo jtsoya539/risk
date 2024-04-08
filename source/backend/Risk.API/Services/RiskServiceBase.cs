@@ -24,6 +24,7 @@ SOFTWARE.
 
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http;
@@ -70,6 +71,7 @@ namespace Risk.API.Services
             string accessToken = string.Empty; // access_token
             string usuario = string.Empty; // usuario
             string tokenDispositivo = string.Empty; // token_dispositivo
+            string idEjecucion = string.Empty; // id_ejecucion
 
             if (_httpContextAccessor.HttpContext != null)
             {
@@ -80,6 +82,7 @@ namespace Risk.API.Services
                     accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
                     usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
                     tokenDispositivo = TokenHelper.ObtenerValorParametroDeHeaders(_httpContextAccessor.HttpContext.Request.Headers, RiskConstants.HEADER_RISK_DEVICE_TOKEN);
+                    idEjecucion = Activity.Current?.Id ?? _httpContextAccessor.HttpContext.TraceIdentifier;
                 }
                 catch (Exception ex)
                 {
@@ -92,6 +95,7 @@ namespace Risk.API.Services
             ctx.Add("access_token", accessToken);
             ctx.Add("usuario", usuario);
             ctx.Add("token_dispositivo", tokenDispositivo);
+            ctx.Add("id_ejecucion", idEjecucion);
 
             return ctx.ToString(Formatting.None);
         }
