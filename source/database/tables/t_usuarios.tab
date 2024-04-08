@@ -7,7 +7,7 @@ create table T_USUARIOS
   direccion_correo VARCHAR2(320),
   numero_telefono  VARCHAR2(160),
   origen           VARCHAR2(1),
-  id_externo       VARCHAR2(160)
+  id_externo       VARCHAR2(500)
 )
 ;
 comment on table T_USUARIOS
@@ -37,3 +37,4 @@ alter table T_USUARIOS
 alter table T_USUARIOS
   add constraint FK_USUARIOS_PERSONAS foreign key (ID_PERSONA)
   references T_PERSONAS (ID_PERSONA);
+

@@ -114,7 +114,8 @@ prompt
 prompt Creando vistas...
 prompt -----------------------------------
 prompt
-@@views/v_monitoreo_datos.sql
+@@views/v_monitoreo_datos.vw
+@@views/v_operacion_datos.vw
 
 prompt
 prompt Creando types...

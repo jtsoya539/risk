@@ -117,6 +117,7 @@ prompt Borrando vistas...
 prompt -----------------------------------
 prompt
 drop view v_monitoreo_datos;
+drop view v_operacion_datos;
 
 prompt
 prompt Borrando tablas...
