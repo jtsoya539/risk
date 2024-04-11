@@ -25,7 +25,6 @@ SOFTWARE.
 using System;
 using System.Data;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -62,7 +61,7 @@ namespace Risk.API.Services
             _dbConnectionFactory = dbConnectionFactory;
         }
 
-        protected string ObtenerContexto()
+        protected JObject ObtenerContexto()
         {
             JObject ctx = new JObject();
 
@@ -97,28 +96,7 @@ namespace Risk.API.Services
             ctx.Add("token_dispositivo", tokenDispositivo);
             ctx.Add("id_ejecucion", idEjecucion);
 
-            return ctx.ToString(Formatting.None);
-        }
-
-        protected string ObtenerUsuario()
-        {
-            string accessToken = string.Empty; // access_token
-            string usuario = string.Empty; // usuario
-
-            if (_httpContextAccessor.HttpContext != null)
-            {
-                try
-                {
-                    accessToken = TokenHelper.ObtenerAccessTokenDeHeaders(_httpContextAccessor.HttpContext.Request.Headers);
-                    usuario = TokenHelper.ObtenerUsuarioDeAccessToken(accessToken);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogDebug($"Error al obtener usuario: {ex.Message}");
-                }
-            }
-
-            return usuario;
+            return ctx;
         }
 
         protected string ObtenerVersion()
@@ -162,11 +140,12 @@ namespace Risk.API.Services
                             con.Open();
                         }
 
+                        JObject ctx = ObtenerContexto();
+
                         // SetApplicationContext
-                        con.ClientId = _configuration["SwaggerConfiguration:Title"];
-                        con.ClientInfo = _configuration["SwaggerConfiguration:Description"];
-                        con.ModuleName = Path.GetFileNameWithoutExtension(callerFilePath);
-                        con.ActionName = callerMemberName;
+                        con.ModuleName = dominio;
+                        con.ActionName = nombre;
+                        con.ClientId = ctx.Value<string>("id_ejecucion");
 
                         using (OracleCommand cmd = con.CreateCommand())
                         {
@@ -191,7 +170,7 @@ namespace Risk.API.Services
 
                             iParametros.Write(parametros.ToCharArray(), 0, parametros.Length);
 
-                            string contexto = ObtenerContexto();
+                            string contexto = ctx.ToString(Formatting.None);
                             iContexto.Write(contexto.ToCharArray(), 0, contexto.Length);
 
                             string version = ObtenerVersion();
