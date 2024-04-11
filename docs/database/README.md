@@ -19,6 +19,7 @@ Dependencia|Descripción
 [zt_qr](https://github.com/zorantica/plsql-qr-code)|Genera códigos QR
 [zt_word](https://github.com/zorantica/plsql-word)|Genera archivos en formato DOCX
 [fn_gen_inserts](https://github.com/teopost/oracle-scripts)|Genera script para insertar registros en una tabla
+[console](https://github.com/ogobrecht/console)|Herramienta para logging
 
 ## Configuración de PL/SQL Documentation (plsqldoc)
 

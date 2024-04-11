@@ -37,3 +37,4 @@ SOFTWARE.
 @@dependencies/ZT_WORD.pks
 @@dependencies/ZT_WORD.pkb
 @@dependencies/fn_gen_inserts.sql
+@@dependencies/create_console_objects.sql
