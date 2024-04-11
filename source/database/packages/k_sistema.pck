@@ -36,16 +36,17 @@ CREATE OR REPLACE PACKAGE k_sistema IS
   c_fecha   CONSTANT VARCHAR2(50) := 'FECHA';
   c_usuario CONSTANT VARCHAR2(50) := 'USUARIO';
   --
-  c_direccion_ip     CONSTANT VARCHAR2(50) := 'DIRECCION_IP';
-  c_id_operacion     CONSTANT VARCHAR2(50) := 'ID_OPERACION';
-  c_nombre_operacion CONSTANT VARCHAR2(50) := 'NOMBRE_OPERACION';
-  c_id_aplicacion    CONSTANT VARCHAR2(50) := 'ID_APLICACION';
-  c_id_sesion        CONSTANT VARCHAR2(50) := 'ID_SESION';
-  c_id_usuario       CONSTANT VARCHAR2(50) := 'ID_USUARIO';
-  c_id_pais          CONSTANT VARCHAR2(50) := 'ID_PAIS';
-  c_zona_horaria     CONSTANT VARCHAR2(50) := 'ZONA_HORARIA';
-  c_id_idioma        CONSTANT VARCHAR2(50) := 'ID_IDIOMA';
-  c_id_dispositivo   CONSTANT VARCHAR2(50) := 'ID_DISPOSITIVO';
+  c_direccion_ip      CONSTANT VARCHAR2(50) := 'DIRECCION_IP';
+  c_id_operacion      CONSTANT VARCHAR2(50) := 'ID_OPERACION';
+  c_nombre_operacion  CONSTANT VARCHAR2(50) := 'NOMBRE_OPERACION';
+  c_dominio_operacion CONSTANT VARCHAR2(50) := 'DOMINIO_OPERACION';
+  c_id_aplicacion     CONSTANT VARCHAR2(50) := 'ID_APLICACION';
+  c_id_sesion         CONSTANT VARCHAR2(50) := 'ID_SESION';
+  c_id_usuario        CONSTANT VARCHAR2(50) := 'ID_USUARIO';
+  c_id_pais           CONSTANT VARCHAR2(50) := 'ID_PAIS';
+  c_zona_horaria      CONSTANT VARCHAR2(50) := 'ZONA_HORARIA';
+  c_id_idioma         CONSTANT VARCHAR2(50) := 'ID_IDIOMA';
+  c_id_dispositivo    CONSTANT VARCHAR2(50) := 'ID_DISPOSITIVO';
 
   /**
   Indica si el ambiente de Base de Datos es de producción

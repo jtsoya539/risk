@@ -87,9 +87,8 @@ CREATE OR REPLACE PACKAGE k_operacion IS
                                 i_expresion  IN BOOLEAN,
                                 i_mensaje    IN VARCHAR2);
 
-  PROCEDURE p_definir_parametros(i_id_operacion     IN NUMBER,
-                                 i_nombre_operacion IN VARCHAR2,
-                                 i_contexto         IN y_parametros);
+  PROCEDURE p_definir_parametros(i_id_operacion IN NUMBER,
+                                 i_contexto     IN y_parametros);
 
   FUNCTION f_operacion(i_id_operacion IN NUMBER) RETURN t_operaciones%ROWTYPE;
 
@@ -287,17 +286,33 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     END IF;
   END;
 
-  PROCEDURE p_definir_parametros(i_id_operacion     IN NUMBER,
-                                 i_nombre_operacion IN VARCHAR2,
-                                 i_contexto         IN y_parametros) IS
+  PROCEDURE p_definir_parametros(i_id_operacion IN NUMBER,
+                                 i_contexto     IN y_parametros) IS
     l_id_sesion      t_sesiones.id_sesion%TYPE;
     l_id_dispositivo t_dispositivos.id_dispositivo%TYPE;
     l_dispositivo    y_dispositivo;
   BEGIN
-    k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
-                                         i_id_operacion);
-    k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
-                                         i_nombre_operacion);
+    DECLARE
+      l_nombre_operacion  t_operaciones.nombre%TYPE;
+      l_dominio_operacion t_operaciones.dominio%TYPE;
+    BEGIN
+      IF i_id_operacion IS NOT NULL THEN
+        SELECT upper(o.nombre), o.dominio
+          INTO l_nombre_operacion, l_dominio_operacion
+          FROM t_operaciones o
+         WHERE o.id_operacion = i_id_operacion;
+      
+        k_sistema.p_definir_parametro_number(k_sistema.c_id_operacion,
+                                             i_id_operacion);
+        k_sistema.p_definir_parametro_string(k_sistema.c_nombre_operacion,
+                                             l_nombre_operacion);
+        k_sistema.p_definir_parametro_string(k_sistema.c_dominio_operacion,
+                                             l_dominio_operacion);
+      END IF;
+    EXCEPTION
+      WHEN OTHERS THEN
+        NULL;
+    END;
     --
     k_sistema.p_definir_parametro_string(k_sistema.c_direccion_ip,
                                          k_operacion.f_valor_parametro_string(i_contexto,

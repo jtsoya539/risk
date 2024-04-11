@@ -161,9 +161,7 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     END;
   
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
-    k_operacion.p_definir_parametros(i_id_servicio,
-                                     l_nombre_servicio,
-                                     l_ctx);
+    k_operacion.p_definir_parametros(i_id_servicio, l_ctx);
   
     l_rsp.lugar := 'Validando permiso';
     IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN
