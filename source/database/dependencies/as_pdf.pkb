@@ -1218,8 +1218,8 @@ end' ) );
         null;
     end;
 --
-    return add_object( '/CreationDate (D:' || to_char( current_timestamp, 'YYYYMMDDhh24misstzh'':tzm''' ) || ')'
-                     || '/ModDate (D:' || to_char( current_timestamp, 'YYYYMMDDhh24misstzh'':tzm''' ) || ')'
+    return add_object( '/CreationDate (D:' || to_char( current_timestamp, 'YYYYMMDDhh24misstzh''tzm''' ) || ')'
+                     || '/ModDate (D:' || to_char( current_timestamp, 'YYYYMMDDhh24misstzh''tzm''' ) || ')'
                      || t_banner
                      || '/Producer (' || c_package || ' ' || c_version || ' by Anton Scheffer)'
                      || '/Title <FEFF' || utl_i18n.string_to_raw( g_info.title, 'AL16UTF16' ) || '>'
