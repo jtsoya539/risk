@@ -1,8 +1,10 @@
 create or replace package body as_pdf is
---
-  type tHex is table of pls_integer index by VARCHAR2(2);
 
-  lHex tHex;
+-- *****************************************************
+-- constants
+  c_package constant varchar2(32) := 'AS_PDF'; -- Package Name
+  c_version constant varchar2(32) := '3.6.3'; -- Package Version
+  c_nl      constant varchar2(2)  := chr(13) || chr(10);
 --
   type tp_pls_tab is table of pls_integer index by pls_integer;
   type tp_objects_tab is table of number(10) index by pls_integer;
@@ -80,7 +82,10 @@ create or replace package body as_pdf is
     , keywords varchar2(32767)
     );
   type tp_page_prcs is table of clob index by pls_integer;
+--
+  type tHex is table of pls_integer index by VARCHAR2(2);
 
+  lHex tHex;
 -- *****************************************************
 -- globals
   g_objects             tp_objects_tab;
@@ -102,13 +107,8 @@ create or replace package body as_pdf is
   g_current_fcolor      VARCHAR2(6); -- Current Foreground Color
   g_current_bcolor      VARCHAR2(6); -- Current Background Color
   g_bForce              BOOLEAN;     -- Force Font Changing
-  g_Log                 BOOLEAN := FALSE;
-  g_Language            VARCHAR2(2):='EN';
--- *****************************************************
--- constants
-  c_nl constant         varchar2(2) := chr(13) || chr(10);
-  c_package constant    varchar2(32):='AS_PDF'; -- Package Name
-  c_version constant    varchar2(32):='3.6.2'; -- Package Version
+  g_Log                 BOOLEAN     := FALSE;
+  g_Language            VARCHAR2(2) := 'EN';
 
 -- Generic Functions
   PROCEDURE log(p_vString IN VARCHAR2, p_bFlag IN BOOLEAN:=FALSE) IS
@@ -1218,7 +1218,8 @@ end' ) );
         null;
     end;
 --
-    return add_object( to_char( sysdate, '"/CreationDate (D:"YYYYMMDDhh24miss")"' )
+    return add_object( '/CreationDate (D:' || to_char( current_timestamp, 'YYYYMMDDhh24misstzh'':tzm''' ) || ')'
+                     || '/ModDate (D:' || to_char( current_timestamp, 'YYYYMMDDhh24misstzh'':tzm''' ) || ')'
                      || t_banner
                      || '/Producer (' || c_package || ' ' || c_version || ' by Anton Scheffer)'
                      || '/Title <FEFF' || utl_i18n.string_to_raw( g_info.title, 'AL16UTF16' ) || '>'

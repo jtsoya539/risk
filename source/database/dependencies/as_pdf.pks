@@ -54,7 +54,125 @@ THE SOFTWARE.
 
   -- Decimal separator used in the text
   g_vDP VARCHAR2(1):= CASE WHEN instr(to_char(15/10),'.') = 0 THEN ',' ELSE '.' END;
+--
+  type tp_col_widths is table of number;
+  type tp_headers    is table of varchar2(32767);
+  type tp_formats    is table of varchar2(32767);
+  type tp_colors     is table of varchar2(6); -- Array of 6 varchar (2 color triads)
+  type tp_colors9    is table of varchar2(9); -- Array of 9 varchar (3 color triads)
+  type tp_column IS RECORD (    --Columns format
+     colLabel    VARCHAR2(100), --Column Label - Intestazione Colonna
+     colWidth    NUMBER,        --Column Width - Larghezza colonna (mm)
+     offsetX     number,        --X position of Column - Force X from LEFT side
+     offsetY     number,        --Y position of Column - Force Y position from TOP
+                                --  how many [um] move down from top border of data row
+                                -- (this value is subtracted from y)
+     cellRow     INTEGER,       --Column's row for "multirow record"
+     -- Header formatting
+     hFontName   VARCHAR2(100), --Font Family as Helvetica - Times-Roman
+     hFontStyle  VARCHAR2(2),   --Font Style as Bold / Italic ecc
+     hFontSize   NUMBER,        --Font Size in pt
+     hFontColor  VARCHAR2(6),   --ink color
+     hBackColor  VARCHAR2(6),   --paper color
+     hLineColor  VARCHAR2(6),   --border color
+     hLineSize   NUMBER,        --Border Thickness; 0 no border
+     hBorder     number(2),     --Side of border to drow 0-15 (binary mode TBLR see BorderType function)
+     hAlignment  VARCHAR2(1),   --Horizontal Alignment Left, Center, Right, Justified
+     hAlignVert  VARCHAR2(1),   --Vertical   Alignment Top , Middle, Bottom
+     hTMargin    NUMBER,        --Top    Margin
+     hBMargin    NUMBER,        --Bottom Margin
+     hLMargin    NUMBER,        --Left   Margin
+     hRMargin    NUMBER,        --Right  Margin
+     hCHeight    number,        --Cell Height (mm); Default is rowHeight
+     -- Table formatting
+     tFontName   VARCHAR2(100), --Font Family as Helvetica - Times-Roman
+     tFontStyle  VARCHAR2(2),   --Font Style as Bold / Italic ecc
+     tFontSize   NUMBER,        --Font Size in pt
+     tFontColor  VARCHAR2(6),   --ink color
+     tBackColor  VARCHAR2(6),   --paper color
+     tLineColor  VARCHAR2(6),   --border color
+     tLineSize   NUMBER,        --Border Thickness; 0 no border
+     tBorder     number(2),     --Side of border to drow 0-15 (binary mode TBLR see BorderType function)
+     tAlignment  VARCHAR2(1),   --Horizontal Alignment Left, Center, Right, Justified
+     tAlignVert  VARCHAR2(1),   --Vertical   Alignment Top , Middle, Bottom
+     tTMargin    NUMBER,        --Top    Margin
+     tBMargin    NUMBER,        --Bottom Margin
+     tLMargin    NUMBER,        --Left   Margin
+     tRMargin    NUMBER,        --Right  Margin
+     tCHeight    number,        --Cell Height (mm); Default is rowHeight
+     tNumFormat  VARCHAR2(100),  --Number or Date Format : Default TM9 o dd.mm.yyyy
 
+     vSpacing    VARCHAR2(10),  --Spacing bewteen lines in pt, font%, mm
+     vInterline  VARCHAR2(10),  --Interline in pt, font%, mm. Override vSpacing if defined
+     hSpacing    VARCHAR2(10),  --Header Spacing bewteen lines in pt, font%, mm
+     hInterline  VARCHAR2(10),  --Header Interline in pt, font%, mm. Override vSpacing if defined
+
+     -- Calculate values
+     cSpacing      NUMBER,      --Spacing in pt
+     cInterline    NUMBER,      --Interline in pt
+     cTextArea     NUMBER       --Max text width in column
+
+     ,ctSpacing    NUMBER       --Spacing in pt
+     ,ctInterline  NUMBER       --Interline in pt
+     ,ctTextArea   NUMBER       --Max text width in column
+     ,chSpacing    NUMBER       --Spacing in pt
+     ,chInterline  NUMBER       --Interline in pt
+     ,chTextArea   NUMBER       --Max text width in column
+
+     );
+  TYPE tp_columns IS TABLE OF tp_column;
+
+  TYPE tp_labeldef is record (
+      MaxColumns   PLS_INTEGER  -- Number of Label Columns in a sheet
+     ,MaxRows      PLS_INTEGER  -- Number of Label Rows    in a sheet
+     ,Width        NUMBER       -- Label Width  in pt
+     ,Height       NUMBER       -- Label Height in pt
+     ,hDistance    NUMBER       -- Horizontal distance between two labels in pt
+     ,vDistance    NUMBER       -- Vertical   distance between two labels in pt
+  );
+  g_labeldef tp_labeldef;
+
+  type tp_CellRowText      is table of varchar2(400) INDEX BY BINARY_INTEGER;
+  type tp_CellRowTextX     is table of NUMBER        INDEX BY BINARY_INTEGER;
+  type tp_CellRowTextY     is table of NUMBER        INDEX BY BINARY_INTEGER;
+  type tp_CellRowTextWidth is table of NUMBER        INDEX BY BINARY_INTEGER;
+  type tp_CellRowHeight    is table of NUMBER        INDEX BY BINARY_INTEGER;
+
+  TYPE tp_Cell IS RECORD (             -- Content of the cell
+     cX            NUMBER,             -- Left side
+     cY            NUMBER,             -- Bottom side
+     cYbase        NUMBER,             -- Baseline of cell row
+     cTextHeight   NUMBER,             -- Text Height of all text rows
+     cRowsCount    NUMBER,             -- Number of text rows
+     cTy           NUMBER,             -- Text distance of firts row from top side
+     cWidth        NUMBER,             -- Cell Width  (pt)
+     cHeight       NUMBER,             -- Cell Height (pt)
+     cRowText      tp_CellRowText,     -- array of text
+     cRowTextX     tp_CellRowTextX,    -- array of distance from left side
+     cRowTextY     tp_CellRowTextY,    -- array of distance from cTy
+     cRowTextWidth tp_CellRowTextWidth,-- array of text width
+     cImage        BLOB                -- blob of image
+     );
+  TYPE tp_Cells IS TABLE OF tp_Cell INDEX BY BINARY_INTEGER; -- Array of cells in a data row
+--
+  type tVertices is table of number index by pls_integer;
+
+  PATH_MOVE_TO    CONSTANT NUMBER:=1;
+  PATH_LINE_TO    CONSTANT NUMBER:=2;
+  PATH_CURVE_TO   CONSTANT NUMBER:=3;
+  PATH_CLOSE      CONSTANT NUMBER:=4;
+
+  type tPathElement IS RECORD (
+    nType NUMBER,
+    nVal1 NUMBER,
+    nVal2 NUMBER,
+    nVal3 NUMBER,
+    nVal4 NUMBER,
+    nVal5 NUMBER,
+    nVal6 NUMBER
+  );
+
+  TYPE tPath IS TABLE OF tPathElement INDEX BY BINARY_INTEGER;
 --
   function file2blob( p_dir varchar2, p_file_name varchar2 )
   return blob;
@@ -346,106 +464,6 @@ THE SOFTWARE.
   procedure set_page_proc( p_src clob );
   procedure set_page_proc( p_src VARCHAR2 );
 --
-  type tp_col_widths is table of number;
-  type tp_headers    is table of varchar2(32767);
-  type tp_formats    is table of varchar2(32767);
-  type tp_colors     is table of varchar2(6); -- Array of 6 varchar (2 color triads)
-  type tp_colors9    is table of varchar2(9); -- Array of 9 varchar (3 color triads)
-  type tp_column IS RECORD (    --Columns format
-     colLabel    VARCHAR2(100), --Column Label - Intestazione Colonna
-     colWidth    NUMBER,        --Column Width - Larghezza colonna (mm)
-     offsetX     number,        --X position of Column - Force X from LEFT side
-     offsetY     number,        --Y position of Column - Force Y position from TOP
-                                --  how many [um] move down from top border of data row
-                                -- (this value is subtracted from y)
-     cellRow     INTEGER,       --Column's row for "multirow record"
-     -- Header formatting
-     hFontName   VARCHAR2(100), --Font Family as Helvetica - Times-Roman
-     hFontStyle  VARCHAR2(2),   --Font Style as Bold / Italic ecc
-     hFontSize   NUMBER,        --Font Size in pt
-     hFontColor  VARCHAR2(6),   --ink color
-     hBackColor  VARCHAR2(6),   --paper color
-     hLineColor  VARCHAR2(6),   --border color
-     hLineSize   NUMBER,        --Border Thickness; 0 no border
-     hBorder     number(2),     --Side of border to drow 0-15 (binary mode TBLR see BorderType function)
-     hAlignment  VARCHAR2(1),   --Horizontal Alignment Left, Center, Right, Justified
-     hAlignVert  VARCHAR2(1),   --Vertical   Alignment Top , Middle, Bottom
-     hTMargin    NUMBER,        --Top    Margin
-     hBMargin    NUMBER,        --Bottom Margin
-     hLMargin    NUMBER,        --Left   Margin
-     hRMargin    NUMBER,        --Right  Margin
-     hCHeight    number,        --Cell Height (mm); Default is rowHeight
-     -- Table formatting
-     tFontName   VARCHAR2(100), --Font Family as Helvetica - Times-Roman
-     tFontStyle  VARCHAR2(2),   --Font Style as Bold / Italic ecc
-     tFontSize   NUMBER,        --Font Size in pt
-     tFontColor  VARCHAR2(6),   --ink color
-     tBackColor  VARCHAR2(6),   --paper color
-     tLineColor  VARCHAR2(6),   --border color
-     tLineSize   NUMBER,        --Border Thickness; 0 no border
-     tBorder     number(2),     --Side of border to drow 0-15 (binary mode TBLR see BorderType function)
-     tAlignment  VARCHAR2(1),   --Horizontal Alignment Left, Center, Right, Justified
-     tAlignVert  VARCHAR2(1),   --Vertical   Alignment Top , Middle, Bottom
-     tTMargin    NUMBER,        --Top    Margin
-     tBMargin    NUMBER,        --Bottom Margin
-     tLMargin    NUMBER,        --Left   Margin
-     tRMargin    NUMBER,        --Right  Margin
-     tCHeight    number,        --Cell Height (mm); Default is rowHeight
-     tNumFormat  VARCHAR2(100),  --Number or Date Format : Default TM9 o dd.mm.yyyy
-
-     vSpacing    VARCHAR2(10),  --Spacing bewteen lines in pt, font%, mm
-     vInterline  VARCHAR2(10),  --Interline in pt, font%, mm. Override vSpacing if defined
-     hSpacing    VARCHAR2(10),  --Header Spacing bewteen lines in pt, font%, mm
-     hInterline  VARCHAR2(10),  --Header Interline in pt, font%, mm. Override vSpacing if defined
-
-     -- Calculate values
-     cSpacing      NUMBER,      --Spacing in pt
-     cInterline    NUMBER,      --Interline in pt
-     cTextArea     NUMBER       --Max text width in column
-
-     ,ctSpacing    NUMBER       --Spacing in pt
-     ,ctInterline  NUMBER       --Interline in pt
-     ,ctTextArea   NUMBER       --Max text width in column
-     ,chSpacing    NUMBER       --Spacing in pt
-     ,chInterline  NUMBER       --Interline in pt
-     ,chTextArea   NUMBER       --Max text width in column
-
-     );
-  TYPE tp_columns IS TABLE OF tp_column;
-
-  TYPE tp_labeldef is record (
-      MaxColumns   PLS_INTEGER  -- Number of Label Columns in a sheet
-     ,MaxRows      PLS_INTEGER  -- Number of Label Rows    in a sheet
-     ,Width        NUMBER       -- Label Width  in pt
-     ,Height       NUMBER       -- Label Height in pt
-     ,hDistance    NUMBER       -- Horizontal distance between two labels in pt
-     ,vDistance    NUMBER       -- Vertical   distance between two labels in pt
-  );
-  g_labeldef tp_labeldef;
-
-  type tp_CellRowText      is table of varchar2(400) INDEX BY BINARY_INTEGER;
-  type tp_CellRowTextX     is table of NUMBER        INDEX BY BINARY_INTEGER;
-  type tp_CellRowTextY     is table of NUMBER        INDEX BY BINARY_INTEGER;
-  type tp_CellRowTextWidth is table of NUMBER        INDEX BY BINARY_INTEGER;
-  type tp_CellRowHeight    is table of NUMBER        INDEX BY BINARY_INTEGER;
-
-  TYPE tp_Cell IS RECORD (             -- Content of the cell
-     cX            NUMBER,             -- Left side
-     cY            NUMBER,             -- Bottom side
-     cYbase        NUMBER,             -- Baseline of cell row
-     cTextHeight   NUMBER,             -- Text Height of all text rows
-     cRowsCount    NUMBER,             -- Number of text rows
-     cTy           NUMBER,             -- Text distance of firts row from top side
-     cWidth        NUMBER,             -- Cell Width  (pt)
-     cHeight       NUMBER,             -- Cell Height (pt)
-     cRowText      tp_CellRowText,     -- array of text
-     cRowTextX     tp_CellRowTextX,    -- array of distance from left side
-     cRowTextY     tp_CellRowTextY,    -- array of distance from cTy
-     cRowTextWidth tp_CellRowTextWidth,-- array of text width
-     cImage        BLOB                -- blob of image
-     );
-  TYPE tp_Cells IS TABLE OF tp_Cell INDEX BY BINARY_INTEGER; -- Array of cells in a data row
---
   procedure query2table
     ( p_query      varchar2
     , p_formats    tp_columns
@@ -574,25 +592,6 @@ $IF not DBMS_DB_VERSION.ver_le_10 $THEN
     , p_bulk_size  pls_integer := 200
     );
 $END
---
-  type tVertices is table of number index by pls_integer;
-
-  PATH_MOVE_TO    CONSTANT NUMBER:=1;
-  PATH_LINE_TO    CONSTANT NUMBER:=2;
-  PATH_CURVE_TO   CONSTANT NUMBER:=3;
-  PATH_CLOSE      CONSTANT NUMBER:=4;
-
-  type tPathElement IS RECORD (
-    nType NUMBER,
-    nVal1 NUMBER,
-    nVal2 NUMBER,
-    nVal3 NUMBER,
-    nVal4 NUMBER,
-    nVal5 NUMBER,
-    nVal6 NUMBER
-  );
-
-  TYPE tPath IS TABLE OF tPathElement INDEX BY BINARY_INTEGER;
 --
   PROCEDURE PR_GOTO_PAGE(i_nPage IN NUMBER);
 
