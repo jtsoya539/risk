@@ -1,15 +1,16 @@
 create table T_OPERACIONES
 (
-  id_operacion           NUMBER not null,
-  tipo                   VARCHAR2(1) not null,
-  nombre                 VARCHAR2(1000) not null,
-  dominio                VARCHAR2(30),
-  activo                 VARCHAR2(1) default 'N' not null,
-  detalle                VARCHAR2(4000),
-  version_actual         VARCHAR2(100) not null,
-  nivel_log              NUMBER(1) default 0 not null,
-  parametros_automaticos VARCHAR2(1000),
-  tipo_implementacion    VARCHAR2(1) default 'K'
+  id_operacion            NUMBER not null,
+  tipo                    VARCHAR2(1) not null,
+  nombre                  VARCHAR2(1000) not null,
+  dominio                 VARCHAR2(30),
+  activo                  VARCHAR2(1) default 'N' not null,
+  detalle                 VARCHAR2(4000),
+  version_actual          VARCHAR2(100) not null,
+  nivel_log               NUMBER(1) default 0 not null,
+  parametros_automaticos  VARCHAR2(1000),
+  tipo_implementacion     VARCHAR2(1) default 'K',
+  aplicaciones_permitidas VARCHAR2(1000)
 )
 ;
 comment on table T_OPERACIONES
@@ -34,6 +35,8 @@ comment on column T_OPERACIONES.parametros_automaticos
   is 'Nombres de los parámetros automáticos de la operación, separados por coma. Ej.: PARAM1,PARAM2,PARAM3';
 comment on column T_OPERACIONES.tipo_implementacion
   is 'Tipo de implementación de la operación';
+comment on column T_OPERACIONES.aplicaciones_permitidas
+  is 'Identificadores de las aplicaciones permitidas para ejecutar la operación, separados por coma. Ej.: APP1,APP2,APP3';
 alter table T_OPERACIONES
   add constraint PK_OPERACIONES primary key (ID_OPERACION);
 alter table T_OPERACIONES

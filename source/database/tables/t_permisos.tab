@@ -6,13 +6,13 @@ create table T_PERMISOS
 )
 ;
 comment on table T_PERMISOS
-  is 'Permisos';
+  is 'Permisos o recursos';
 comment on column T_PERMISOS.id_permiso
-  is 'Identificador del permiso';
+  is 'Identificador del permiso o recurso';
 comment on column T_PERMISOS.descripcion
-  is 'Descripcion del permiso';
+  is 'Descripción del permiso o recurso';
 comment on column T_PERMISOS.detalle
-  is 'Detalles adicionales del permiso';
+  is 'Detalles adicionales del permiso o recurso';
 alter table T_PERMISOS
   add constraint PK_PERMISOS primary key (ID_PERMISO);
 

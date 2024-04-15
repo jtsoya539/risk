@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_OPERACIONES">
  <META name="description" content="Operaciones">
- <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL NIVEL_LOG PARAMETROS_AUTOMATICOS TIPO_IMPLEMENTACION">
+ <META name="columns" content="ID_OPERACION TIPO NOMBRE DOMINIO ACTIVO DETALLE VERSION_ACTUAL NIVEL_LOG PARAMETROS_AUTOMATICOS TIPO_IMPLEMENTACION APLICACIONES_PERMITIDAS">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -213,6 +213,23 @@ Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Tipo de implementaci&#243;n de la operaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+APLICACIONES_PERMITIDAS
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+VARCHAR2(1000)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Identificadores de las aplicaciones permitidas para ejecutar la operaci&#243;n, separados por coma. Ej.: APP1,APP2,APP3
 </TD>
 </TR>
 </TABLE>

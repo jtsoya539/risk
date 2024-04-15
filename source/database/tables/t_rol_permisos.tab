@@ -9,11 +9,11 @@ create table T_ROL_PERMISOS
 )
 ;
 comment on table T_ROL_PERMISOS
-  is 'Permisos por Rol';
+  is 'Permisos o recursos por Rol';
 comment on column T_ROL_PERMISOS.id_rol
   is 'Identificador del rol';
 comment on column T_ROL_PERMISOS.id_permiso
-  is 'Identificador del permiso';
+  is 'Identificador del permiso o recurso';
 comment on column T_ROL_PERMISOS.consultar
   is 'Puede consultar? (S/N)';
 comment on column T_ROL_PERMISOS.insertar
