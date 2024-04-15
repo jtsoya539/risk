@@ -91,6 +91,11 @@ Program units
 
 </TD></TR>
 <TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#F_VALIDAR_PERMISO_APLICACION">f_validar_permiso_aplicacion</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
 <A HREF="#F_PROCESAR_PARAMETROS">f_procesar_parametros</A>&nbsp;&nbsp;
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 
@@ -548,6 +553,17 @@ f_id_modulo
 </P>
 <PRE CLASS="DECL_TEXT">
 FUNCTION f_id_modulo(i_id_operacion IN NUMBER) RETURN VARCHAR2
+
+</PRE>
+<HR>
+<A NAME="F_VALIDAR_PERMISO_APLICACION"></A>
+<P CLASS="TYPE_TITLE">
+f_validar_permiso_aplicacion
+</P>
+<PRE CLASS="DECL_TEXT">
+FUNCTION f_validar_permiso_aplicacion(i_id_aplicacion IN VARCHAR2,
+                                      i_id_operacion  IN NUMBER)
+  RETURN BOOLEAN
 
 </PRE>
 <HR>

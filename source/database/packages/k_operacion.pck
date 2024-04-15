@@ -100,6 +100,10 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   FUNCTION f_id_modulo(i_id_operacion IN NUMBER) RETURN VARCHAR2;
 
+  FUNCTION f_validar_permiso_aplicacion(i_id_aplicacion IN VARCHAR2,
+                                        i_id_operacion  IN NUMBER)
+    RETURN BOOLEAN;
+
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
                                  i_parametros   IN CLOB,
                                  i_version      IN VARCHAR2 DEFAULT NULL)
@@ -460,6 +464,31 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         l_id_modulo := NULL;
     END;
     RETURN l_id_modulo;
+  END;
+
+  FUNCTION f_validar_permiso_aplicacion(i_id_aplicacion IN VARCHAR2,
+                                        i_id_operacion  IN NUMBER)
+    RETURN BOOLEAN IS
+    l_permiso    VARCHAR2(1);
+    rw_operacion t_operaciones%ROWTYPE;
+  BEGIN
+    rw_operacion := f_operacion(i_id_operacion);
+  
+    SELECT decode(nvl(COUNT(*), 0), 0, 'N', 'S')
+      INTO l_permiso
+      FROM t_aplicaciones a
+     WHERE a.id_aplicacion = i_id_aplicacion
+       AND (rw_operacion.aplicaciones_permitidas IS NULL OR
+           (rw_operacion.aplicaciones_permitidas IS NOT NULL AND
+           upper(a.id_aplicacion) IN
+           (SELECT upper(TRIM(column_value))
+                FROM k_cadena.f_separar_cadenas(rw_operacion.aplicaciones_permitidas,
+                                                ','))));
+  
+    RETURN k_util.string_to_bool(l_permiso);
+  EXCEPTION
+    WHEN OTHERS THEN
+      RETURN FALSE;
   END;
 
   FUNCTION f_procesar_parametros(i_id_operacion IN NUMBER,
@@ -845,8 +874,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' WHERE '
                                  END || i_parametros(i).nombre || ' = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             REPLACE(anydata.accessvarchar2(i_parametros(i)
-                                                                                            .valor),
+                                                             REPLACE(anydata.accessvarchar2(i_parametros(i).valor),
                                                                      '''',
                                                                      '''''') || '''');
                 l_seen_one    := TRUE;
@@ -858,12 +886,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
                                  ', ''TM'', ''NLS_NUMERIC_CHARACTERS = ''''.,'''''') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessnumber(i_parametros(i)
-                                                                                          .valor),
+                                                             to_char(anydata.accessnumber(i_parametros(i).valor),
                                                                      'TM',
                                                                      'NLS_NUMERIC_CHARACTERS = ''.,''') || '''');
                 l_seen_one    := TRUE;
@@ -875,11 +901,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                                     ' AND '
                                    ELSE
                                     ' WHERE '
-                                 END || 'to_char(' || i_parametros(i)
-                                .nombre || ', ''YYYY-MM-DD'') = ' ||
+                                 END || 'to_char(' || i_parametros(i).nombre ||
+                                 ', ''YYYY-MM-DD'') = ' ||
                                  dbms_assert.enquote_literal('''' ||
-                                                             to_char(anydata.accessdate(i_parametros(i)
-                                                                                        .valor),
+                                                             to_char(anydata.accessdate(i_parametros(i).valor),
                                                                      'YYYY-MM-DD') || '''');
                 l_seen_one    := TRUE;
               END IF;
@@ -887,8 +912,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
               raise_application_error(-20000,
                                       k_error.f_mensaje_error('ora0002',
                                                               'filtro',
-                                                              i_parametros(i)
-                                                              .nombre));
+                                                              i_parametros(i).nombre));
             END IF;
           END IF;
         END IF;

@@ -219,7 +219,18 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     l_rsp.lugar := 'Definiendo parámetros en la sesión';
     k_operacion.p_definir_parametros(i_id_reporte, l_ctx);
   
-    l_rsp.lugar := 'Validando permiso';
+    l_rsp.lugar := 'Validando permiso por aplicación';
+    IF k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion) IS NOT NULL THEN
+      IF NOT k_operacion.f_validar_permiso_aplicacion(k_sistema.f_valor_parametro_string(k_sistema.c_id_aplicacion),
+                                                      i_id_reporte) THEN
+        k_operacion.p_respuesta_error(l_rsp,
+                                      k_operacion.c_error_permiso,
+                                      k_error.f_mensaje_error(k_operacion.c_error_permiso));
+        RAISE k_operacion.ex_error_general;
+      END IF;
+    END IF;
+  
+    l_rsp.lugar := 'Validando permiso por usuario';
     IF k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario) IS NOT NULL THEN
       IF NOT
           k_autorizacion.f_validar_permiso(k_sistema.f_valor_parametro_number(k_sistema.c_id_usuario),
