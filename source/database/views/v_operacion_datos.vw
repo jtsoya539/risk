@@ -24,4 +24,24 @@ SELECT l.id_operacion_log,
   FROM t_operacion_logs l, t_operaciones s
  WHERE s.id_operacion = l.id_operacion
 ;
+comment on table V_OPERACION_DATOS is 'Logs de Operaciones';
+comment on column V_OPERACION_DATOS.ID_OPERACION_LOG is 'Identificador del log';
+comment on column V_OPERACION_DATOS.ID_OPERACION is 'Identificador de la operación';
+comment on column V_OPERACION_DATOS.NOMBRE_OPERACION is 'Nombre de la operación';
+comment on column V_OPERACION_DATOS.VERSION is 'Versión de la operación';
+comment on column V_OPERACION_DATOS.CONTEXTO is 'Contexto de la operación';
+comment on column V_OPERACION_DATOS.CTX_DIRECCION_IP is 'Contexto de la operación: direccion_ip';
+comment on column V_OPERACION_DATOS.CTX_CLAVE_APLICACION is 'Contexto de la operación: clave_aplicacion';
+comment on column V_OPERACION_DATOS.CTX_ACCESS_TOKEN is 'Contexto de la operación: access_token';
+comment on column V_OPERACION_DATOS.CTX_USUARIO is 'Contexto de la operación: usuario';
+comment on column V_OPERACION_DATOS.CTX_TOKEN_DISPOSITIVO is 'Contexto de la operación: token_dispositivo';
+comment on column V_OPERACION_DATOS.CTX_ID_EJECUCION is 'Contexto de la operación: id_ejecucion';
+comment on column V_OPERACION_DATOS.PARAMETROS is 'Parámetros recibidos';
+comment on column V_OPERACION_DATOS.PRMS is 'Parámetros recibidos: ';
+comment on column V_OPERACION_DATOS.RESPUESTA is 'Respuesta enviada';
+comment on column V_OPERACION_DATOS.RSP_CODIGO is 'Respuesta enviada: codigo';
+comment on column V_OPERACION_DATOS.RSP_MENSAJE is 'Respuesta enviada: mensaje';
+comment on column V_OPERACION_DATOS.RSP_MENSAJE_BD is 'Respuesta enviada: mensaje_bd';
+comment on column V_OPERACION_DATOS.RSP_LUGAR is 'Respuesta enviada: lugar';
+comment on column V_OPERACION_DATOS.RSP_DATOS is 'Respuesta enviada: datos';
 

@@ -5,7 +5,7 @@
  <TITLE>View V_OPERACION_DATOS</TITLE>
  <META name="object" content="VIEW">
  <META name="name" content="V_OPERACION_DATOS">
- <META name="description" content="">
+ <META name="description" content="Logs de Operaciones">
  <META name="columns" content="ID_OPERACION_LOG ID_OPERACION NOMBRE_OPERACION VERSION CONTEXTO CTX_DIRECCION_IP CTX_CLAVE_APLICACION CTX_ACCESS_TOKEN CTX_USUARIO CTX_TOKEN_DISPOSITIVO CTX_ID_EJECUCION PARAMETROS PRMS RESPUESTA RSP_CODIGO RSP_MENSAJE RSP_MENSAJE_BD RSP_LUGAR RSP_DATOS">
 </HEAD>
 <BODY>
@@ -15,7 +15,7 @@
 </TR></TABLE>
 <TABLE CLASS="MAIN_TABLE"><TR><TD CLASS="DESC_TEXT">
 <P CLASS="MAIN_TITLE">View V_OPERACION_DATOS</P>
-
+Logs de Operaciones
 </TD></TR></TABLE>
 <HR>
 <A NAME="Columns"></A>
@@ -59,7 +59,7 @@ NUMBER
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Identificador del log
 </TD>
 </TR>
 <TR>
@@ -76,7 +76,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Identificador de la operaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -93,7 +93,7 @@ VARCHAR2(1000)
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Nombre de la operaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -110,7 +110,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Versi&#243;n de la operaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -127,7 +127,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -144,7 +144,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n: direccion_ip
 </TD>
 </TR>
 <TR>
@@ -161,7 +161,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n: clave_aplicacion
 </TD>
 </TR>
 <TR>
@@ -178,7 +178,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n: access_token
 </TD>
 </TR>
 <TR>
@@ -195,7 +195,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n: usuario
 </TD>
 </TR>
 <TR>
@@ -212,7 +212,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n: token_dispositivo
 </TD>
 </TR>
 <TR>
@@ -229,7 +229,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Contexto de la operaci&#243;n: id_ejecucion
 </TD>
 </TR>
 <TR>
@@ -246,7 +246,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Par&#225;metros recibidos
 </TD>
 </TR>
 <TR>
@@ -263,7 +263,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Par&#225;metros recibidos: 
 </TD>
 </TR>
 <TR>
@@ -280,7 +280,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Respuesta enviada
 </TD>
 </TR>
 <TR>
@@ -297,7 +297,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Respuesta enviada: codigo
 </TD>
 </TR>
 <TR>
@@ -314,7 +314,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Respuesta enviada: mensaje
 </TD>
 </TR>
 <TR>
@@ -331,7 +331,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Respuesta enviada: mensaje_bd
 </TD>
 </TR>
 <TR>
@@ -348,7 +348,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Respuesta enviada: lugar
 </TD>
 </TR>
 <TR>
@@ -365,7 +365,7 @@ Y
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-&nbsp;
+Respuesta enviada: datos
 </TD>
 </TR>
 </TABLE>
@@ -400,6 +400,26 @@ SELECT l.id_operacion_log,
   FROM t_operacion_logs l, t_operaciones s
  WHERE s.id_operacion = l.id_operacion
 ;
+comment on table V_OPERACION_DATOS is 'Logs de Operaciones';
+comment on column V_OPERACION_DATOS.ID_OPERACION_LOG is 'Identificador del log';
+comment on column V_OPERACION_DATOS.ID_OPERACION is 'Identificador de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.NOMBRE_OPERACION is 'Nombre de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.VERSION is 'Versi&#243;n de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.CONTEXTO is 'Contexto de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.CTX_DIRECCION_IP is 'Contexto de la operaci&#243;n: direccion_ip';
+comment on column V_OPERACION_DATOS.CTX_CLAVE_APLICACION is 'Contexto de la operaci&#243;n: clave_aplicacion';
+comment on column V_OPERACION_DATOS.CTX_ACCESS_TOKEN is 'Contexto de la operaci&#243;n: access_token';
+comment on column V_OPERACION_DATOS.CTX_USUARIO is 'Contexto de la operaci&#243;n: usuario';
+comment on column V_OPERACION_DATOS.CTX_TOKEN_DISPOSITIVO is 'Contexto de la operaci&#243;n: token_dispositivo';
+comment on column V_OPERACION_DATOS.CTX_ID_EJECUCION is 'Contexto de la operaci&#243;n: id_ejecucion';
+comment on column V_OPERACION_DATOS.PARAMETROS is 'Par&#225;metros recibidos';
+comment on column V_OPERACION_DATOS.PRMS is 'Par&#225;metros recibidos: ';
+comment on column V_OPERACION_DATOS.RESPUESTA is 'Respuesta enviada';
+comment on column V_OPERACION_DATOS.RSP_CODIGO is 'Respuesta enviada: codigo';
+comment on column V_OPERACION_DATOS.RSP_MENSAJE is 'Respuesta enviada: mensaje';
+comment on column V_OPERACION_DATOS.RSP_MENSAJE_BD is 'Respuesta enviada: mensaje_bd';
+comment on column V_OPERACION_DATOS.RSP_LUGAR is 'Respuesta enviada: lugar';
+comment on column V_OPERACION_DATOS.RSP_DATOS is 'Respuesta enviada: datos';
 </PRE>
 <P>&nbsp;</P>
 <P>&nbsp;</P>
