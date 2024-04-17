@@ -21,7 +21,7 @@ Bienvenido/a a la documentación del Proyecto RISK.
 * [Oracle Database 12c o superior](https://www.oracle.com/database/technologies/oracle-database-software-downloads.html)
 
 ### Back-End
-* [.NET 6.0 o superior](https://dotnet.microsoft.com/en-us/download/dotnet)
+* [.NET 8.0 o superior](https://dotnet.microsoft.com/en-us/download/dotnet)
 
 Los servicios de mensajería tienen requerimientos especiales de terceros:
 
