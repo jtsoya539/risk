@@ -10,9 +10,9 @@ create table T_SESIONES
   fecha_expiracion_access_token  DATE,
   refresh_token                  VARCHAR2(4000),
   fecha_expiracion_refresh_token DATE,
-  direccion_ip                   VARCHAR2(50),
-  host                           VARCHAR2(50),
-  terminal                       VARCHAR2(50),
+  direccion_ip                   VARCHAR2(300),
+  host                           VARCHAR2(300),
+  terminal                       VARCHAR2(300),
   id_dispositivo                 NUMBER(15),
   origen                         VARCHAR2(1),
   dato_externo                   VARCHAR2(4000)
