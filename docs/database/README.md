@@ -1,10 +1,40 @@
 # Base de Datos
 
 ## Contenido
+* [Operaciones](#operaciones)
+* [Configuraciones](#configuraciones)
 * [API PL/SQL](plsqldoc/index.html)
 * [Guía de estilo para Desarrollo](styleguide.md)
 * [Dependencias](#dependencias)
-* [Configuración de PL/SQL Documentation (plsqldoc)](#configuraci%C3%B3n-de-plsql-documentation-plsqldoc)
+* [Configuración de PL/SQL Documentation (plsqldoc)](#configuración-de-plsql-documentation-plsqldoc)
+
+## Operaciones
+
+El corazón de RISK está en las operaciones y el procesamiento de sus parámetros.
+
+Una operación es cualquier programa o proceso que recibe parámetros de entrada y retorna una salida como resultado.
+
+El resultado de una operación puede variar desde un simple indicador de éxito/error a datos complejos con propiedades y listas, o incluso archivos, como en el caso de los reportes.
+
+Existen 5 tipos de operaciones:
+
+Tipo|Descripción
+----|-----------
+Parámetros|Es un tipo de operación que sirve para agrupar ciertos parámetros especiales y no tiene una implementación
+Servicio|Es un proceso que recibe datos de entrada y retorna datos de salida. Sirve de comunicación entre el Back-End y la Base de Datos
+Reporte|Es un proceso que recibe datos de entrada y retorna como salida un archivo de reporte, que puede ser en formatos PDF, DOCX, XLSX, CSV, HTML. Sirve de comunicación entre el Back-End y la Base de Datos
+Trabajo|Es un proceso que se ejecuta automáticamente en un intérvalo de repetición configurado
+Monitoreo|
+
+### Parámetros
+
+### Logs
+
+## Configuraciones
+
+### Parámetros
+
+### Diccionario
 
 ## Dependencias
 
