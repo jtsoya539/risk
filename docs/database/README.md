@@ -1,6 +1,7 @@
 # Base de Datos
 
 ## Contenido
+* [Introducción](#introducción)
 * [Instalación](#instalación)
 * [Operaciones](#operaciones)
 * [Configuraciones](#configuraciones)
@@ -9,7 +10,11 @@
 * [Dependencias](#dependencias)
 * [Configuración de PL/SQL Documentation (plsqldoc)](#configuración-de-plsql-documentation-plsqldoc)
 
+## Introducción
+Este componente consiste en una instancia de Base de Datos Oracle con un esquema central en el que se encuentra instalada una colección de objetos (paquetes, types, tablas, entre otros), y se encarga de persistir los datos e implementar la mayor parte de la lógica de negocio del sistema.
+
 ## Instalación
+En la carpeta *source/database* está disponible una serie de scripts para la instalación y manejo del esquema de Base de Datos:
 
 Script|Descripción
 ------|-----------
