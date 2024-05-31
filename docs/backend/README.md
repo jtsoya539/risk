@@ -3,8 +3,9 @@
 ## Contenido
 * [Introducción](#introducción)
 * [Instalación](#instalación)
-* [Generación de clientes de Risk.API](clients/README.md)
+* [Configuraciones](#configuraciones)
 * [API de clientes de Risk.API](#api-de-clientes-de-riskapi)
+* [Generación de clientes de Risk.API](clients/README.md)
 
 ## Introducción
 Este componente consiste en una API web ASP.NET Core que se encarga de recibir peticiones HTTP de clientes (aplicaciones u otros sistemas) y se conecta a la Base de Datos para procesarlas.
@@ -17,6 +18,14 @@ Este componente consiste en una API web ASP.NET Core que se encarga de recibir p
 4. En el command prompt, ubicarse en la raíz del repositorio e ir hasta *source/backend/Risk.API* (contiene el archivo del proyecto *Risk.API.csproj*).
 5. Realizar las configuraciones necesarias en los archivos *appsettings.json* y *config/log/nlog.config*.
 6. Ejecutar el comando: `dotnet run`.
+
+## Configuraciones
+
+### Archivo *appsettings.json*
+TO-DO
+
+### Archivo *config/log/nlog.config*
+TO-DO
 
 ## API de clientes de Risk.API
 
