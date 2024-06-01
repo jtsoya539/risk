@@ -29,6 +29,6 @@ TO-DO
 
 ## API de clientes de Risk.API
 
-* [.NET Core](clients/csharp-netcore/README.md)
+* [.NET](clients/csharp/README.md)
 * [Java](clients/java/README.md)
 * [Kotlin](clients/kotlin/README.md)

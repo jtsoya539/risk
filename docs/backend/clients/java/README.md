@@ -4,7 +4,9 @@ Risk.API
 
 - API version: v0.1.0
 
-- Build date: 2023-12-16T18:46:01.852-03:00[America/Asuncion]
+- Build date: 2024-06-01T19:10:19.075943400-04:00[America/Asuncion]
+
+- Generator version: 7.6.0
 
 Risk Web API
 
@@ -255,7 +257,7 @@ Authentication schemes defined for the API:
 ### AccessToken
 
 
-- **Type**: HTTP basic authentication
+- **Type**: HTTP Bearer Token authentication (JWT)
 
 
 ## Recommendation

@@ -13,15 +13,15 @@ set generator=1
 set generator_count=2
 set generator[0]=Todos
 set generator[1]=openapi-generator-cli.jar
-set generator[1].url=https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.6.0/openapi-generator-cli-6.6.0.jar
+set generator[1].url=https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.6.0/openapi-generator-cli-7.6.0.jar
 set generator[2]=swagger-codegen-cli.jar
-set generator[2].url=https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.51/swagger-codegen-cli-3.0.51.jar
+set generator[2].url=https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.57/swagger-codegen-cli-3.0.57.jar
 :: ====================================================================
 
 :: ===================== Definiciones de clientes =====================
 set client_count=3
 set client[0]=Todos
-set client[1]=csharp-netcore
+set client[1]=csharp
 set client[1].dir=Risk.API.Client
 set client[2]=java
 set client[2].dir=Risk.API.JavaClient

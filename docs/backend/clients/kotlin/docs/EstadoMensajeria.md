@@ -4,15 +4,15 @@
 ## Enum
 
 
-    * `pendiente` (value: `"Pendiente"`)
+    * `Pendiente` (value: `"Pendiente"`)
 
-    * `enProceso` (value: `"EnProceso"`)
+    * `EnProceso` (value: `"EnProceso"`)
 
-    * `enviado` (value: `"Enviado"`)
+    * `Enviado` (value: `"Enviado"`)
 
-    * `procesadoError` (value: `"ProcesadoError"`)
+    * `ProcesadoError` (value: `"ProcesadoError"`)
 
-    * `anulado` (value: `"Anulado"`)
+    * `Anulado` (value: `"Anulado"`)
 
 
 

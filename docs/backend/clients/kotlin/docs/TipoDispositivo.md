@@ -4,15 +4,15 @@
 ## Enum
 
 
-    * `mobile` (value: `"Mobile"`)
+    * `Mobile` (value: `"Mobile"`)
 
-    * `tablet` (value: `"Tablet"`)
+    * `Tablet` (value: `"Tablet"`)
 
-    * `desktop` (value: `"Desktop"`)
+    * `Desktop` (value: `"Desktop"`)
 
-    * `tv` (value: `"Tv"`)
+    * `Tv` (value: `"Tv"`)
 
-    * `watch` (value: `"Watch"`)
+    * `Watch` (value: `"Watch"`)
 
 
 

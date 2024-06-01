@@ -4,13 +4,13 @@
 ## Enum
 
 
-    * `activo` (value: `"Activo"`)
+    * `Activo` (value: `"Activo"`)
 
-    * `inactivo` (value: `"Inactivo"`)
+    * `Inactivo` (value: `"Inactivo"`)
 
-    * `bloqueado` (value: `"Bloqueado"`)
+    * `Bloqueado` (value: `"Bloqueado"`)
 
-    * `pendienteActivacion` (value: `"PendienteActivacion"`)
+    * `PendienteActivacion` (value: `"PendienteActivacion"`)
 
 
 

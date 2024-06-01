@@ -4,15 +4,15 @@
 ## Enum
 
 
-    * `pdf` (value: `"Pdf"`)
+    * `Pdf` (value: `"Pdf"`)
 
-    * `docx` (value: `"Docx"`)
+    * `Docx` (value: `"Docx"`)
 
-    * `xlsx` (value: `"Xlsx"`)
+    * `Xlsx` (value: `"Xlsx"`)
 
-    * `csv` (value: `"Csv"`)
+    * `Csv` (value: `"Csv"`)
 
-    * `html` (value: `"Html"`)
+    * `Html` (value: `"Html"`)
 
 
 

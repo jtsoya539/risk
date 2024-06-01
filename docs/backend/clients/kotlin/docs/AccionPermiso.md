@@ -4,13 +4,13 @@
 ## Enum
 
 
-    * `consultar` (value: `"Consultar"`)
+    * `Consultar` (value: `"Consultar"`)
 
-    * `insertar` (value: `"Insertar"`)
+    * `Insertar` (value: `"Insertar"`)
 
-    * `actualizar` (value: `"Actualizar"`)
+    * `Actualizar` (value: `"Actualizar"`)
 
-    * `eliminar` (value: `"Eliminar"`)
+    * `Eliminar` (value: `"Eliminar"`)
 
 
 
