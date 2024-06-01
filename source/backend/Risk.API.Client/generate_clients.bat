@@ -1,6 +1,6 @@
 @echo off
 :: ======================= Variables de entorno =======================
-set RISK_HOME=
+set RISK_HOME=%CD%\..\..\..
 set SWAGGER_SPEC_URL=
 set CLIENT_VERSION=
 set API_KEY=
