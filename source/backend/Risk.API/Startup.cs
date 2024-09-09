@@ -109,6 +109,7 @@ namespace Risk.API
                 services.AddHostedService<SMSWorker>();
 
             services.AddSingleton<ISecurityTokenValidator, RiskSecurityTokenValidator>();
+            services.AddSingleton<TokenHandler, RiskTokenHandler>();
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, RiskJwtBearerPostConfigureOptions>();
 
             //var signingKey = Encoding.ASCII.GetBytes(Configuration["JwtSigningKey"]);

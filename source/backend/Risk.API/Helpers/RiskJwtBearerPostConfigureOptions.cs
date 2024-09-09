@@ -31,17 +31,22 @@ namespace Risk.API.Helpers
     public class RiskJwtBearerPostConfigureOptions : IPostConfigureOptions<JwtBearerOptions>
     {
         private readonly ISecurityTokenValidator _securityTokenValidator;
+        private readonly TokenHandler _tokenHandler;
 
-        public RiskJwtBearerPostConfigureOptions(ISecurityTokenValidator securityTokenValidator)
+        public RiskJwtBearerPostConfigureOptions(ISecurityTokenValidator securityTokenValidator, TokenHandler tokenHandler)
         {
             _securityTokenValidator = securityTokenValidator;
+            _tokenHandler = tokenHandler;
         }
 
         public void PostConfigure(string name, JwtBearerOptions options)
         {
-            options.UseSecurityTokenValidators = true;
-            options.SecurityTokenValidators.Clear();
-            options.SecurityTokenValidators.Add(_securityTokenValidator);
+            options.TokenHandlers.Clear();
+            options.TokenHandlers.Add(_tokenHandler);
+
+            //options.UseSecurityTokenValidators = true;
+            //options.SecurityTokenValidators.Clear();
+            //options.SecurityTokenValidators.Add(_securityTokenValidator);
         }
     }
 }
