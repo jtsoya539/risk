@@ -59,21 +59,22 @@ namespace Risk.API.Middlewares
             var signingKey = Encoding.ASCII.GetBytes(respuesta.Datos.Contenido);
             validationParameters.IssuerSigningKey = new SymmetricSecurityKey(signingKey);
 
-            try
+            tokenValidationResult = await _tokenHandler.ValidateTokenAsync(token, validationParameters);
+
+            if (!tokenValidationResult.IsValid)
             {
-                tokenValidationResult = await _tokenHandler.ValidateTokenAsync(token, validationParameters);
-            }
-            catch (SecurityTokenExpiredException)
-            {
-                _autService.Version = string.Empty;
-                respuesta = _autService.CambiarEstadoSesion(token, EstadoSesion.Expirado);
-                throw;
-            }
-            catch (SecurityTokenValidationException)
-            {
-                _autService.Version = string.Empty;
-                respuesta = _autService.CambiarEstadoSesion(token, EstadoSesion.Invalido);
-                throw;
+                if (tokenValidationResult.Exception != null)
+                {
+                    EstadoSesion estadoSesion = EstadoSesion.Invalido;
+                    if (tokenValidationResult.Exception is SecurityTokenExpiredException)
+                    {
+                        estadoSesion = EstadoSesion.Expirado;
+                    }
+
+                    _autService.Version = string.Empty;
+                    respuesta = _autService.CambiarEstadoSesion(token, estadoSesion);
+                    throw tokenValidationResult.Exception;
+                }
             }
 
             _autService.Version = string.Empty;
