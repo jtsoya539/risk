@@ -86,6 +86,8 @@ namespace Risk.API
 
             services.AddHttpContextAccessor();
 
+            services.AddMemoryCache();
+
             //services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
             services.AddSingleton<IDbConnectionFactory, RiskDbConnectionFactory>();
             services.AddSingleton<INotificationHubClientConnection, NotificationHubClientConnection>();
@@ -108,7 +110,9 @@ namespace Risk.API
             if (Configuration.GetValue<bool>("MsjConfiguration:EnableSMSWorker"))
                 services.AddHostedService<SMSWorker>();
 
-            services.AddSingleton<ISecurityTokenValidator, RiskSecurityTokenValidator>();
+            // Add Cache helper
+            services.AddSingleton<ICacheHelper, CacheHelper>();
+
             services.AddSingleton<TokenHandler, RiskTokenHandler>();
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, RiskJwtBearerPostConfigureOptions>();
 

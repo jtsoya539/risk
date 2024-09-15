@@ -34,13 +34,13 @@ namespace Risk.API.Helpers
     public class MsjHelper : IMsjHelper
     {
         private readonly ILogger<MsjHelper> _logger;
-        private readonly IGenService _genService;
+        private readonly ICacheHelper _cacheHelper;
         private readonly IMsjService _msjService;
 
-        public MsjHelper(ILogger<MsjHelper> logger, IGenService genService, IMsjService msjService)
+        public MsjHelper(ILogger<MsjHelper> logger, ICacheHelper cacheHelper, IMsjService msjService)
         {
             _logger = logger;
-            _genService = genService;
+            _cacheHelper = cacheHelper;
             _msjService = msjService;
         }
 
@@ -48,8 +48,7 @@ namespace Risk.API.Helpers
         {
             try
             {
-                var respValorParametro = _genService.ValorParametro("ENVIO_CORREOS_ACTIVO");
-                return respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK) && respValorParametro.Datos.Contenido.Equals("S");
+                return _cacheHelper.GetDbConfigValue("ENVIO_CORREOS_ACTIVO").Equals("S");
             }
             catch (Exception)
             {
@@ -61,8 +60,7 @@ namespace Risk.API.Helpers
         {
             try
             {
-                var respValorParametro = _genService.ValorParametro("ENVIO_NOTIFICACIONES_ACTIVO");
-                return respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK) && respValorParametro.Datos.Contenido.Equals("S");
+                return _cacheHelper.GetDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S");
             }
             catch (Exception)
             {
@@ -74,8 +72,7 @@ namespace Risk.API.Helpers
         {
             try
             {
-                var respValorParametro = _genService.ValorParametro("ENVIO_MENSAJES_ACTIVO");
-                return respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK) && respValorParametro.Datos.Contenido.Equals("S");
+                return _cacheHelper.GetDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S");
             }
             catch (Exception)
             {

@@ -22,25 +22,11 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-
 namespace Risk.API.Helpers
 {
-    public class RiskJwtBearerPostConfigureOptions : IPostConfigureOptions<JwtBearerOptions>
+    public interface ICacheHelper
     {
-        private readonly TokenHandler _tokenHandler;
-
-        public RiskJwtBearerPostConfigureOptions(TokenHandler tokenHandler)
-        {
-            _tokenHandler = tokenHandler;
-        }
-
-        public void PostConfigure(string name, JwtBearerOptions options)
-        {
-            options.TokenHandlers.Clear();
-            options.TokenHandlers.Add(_tokenHandler);
-        }
+        string GetDbConfigValue(string key);
+        T GetFileConfigValue<T>(string key);
     }
 }
