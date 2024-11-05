@@ -35,25 +35,24 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Desinstalacion iniciada
+prompt Uninstallation started
 prompt ===================================
 prompt
 
 prompt
-prompt Borrando paquetes...
+prompt Droping packages...
 prompt -----------------------------------
 prompt
 drop package k_servicio_msj;
 drop package k_mensajeria;
 
 prompt
-prompt Borrando types...
+prompt Droping types...
 prompt -----------------------------------
 prompt
 drop type y_notificacion force;
@@ -61,12 +60,12 @@ drop type y_mensaje force;
 drop type y_correo force;
 
 prompt
-prompt Borrando vistas...
+prompt Droping views...
 prompt -----------------------------------
 prompt
 
 prompt
-prompt Borrando tablas...
+prompt Droping tables...
 prompt -----------------------------------
 prompt
 drop table t_usuario_suscripciones cascade constraints;
@@ -78,7 +77,7 @@ drop table t_correo_adjuntos cascade constraints;
 drop table t_correos cascade constraints;
 
 prompt
-prompt Borrando secuencias...
+prompt Droping sequences...
 prompt -----------------------------------
 prompt
 drop sequence s_id_correo;
@@ -87,19 +86,19 @@ drop sequence s_id_mensaje;
 drop sequence s_id_notificacion;
 
 prompt
-prompt Desinstalando dependencias...
+prompt Uninstalling dependencies...
 prompt -----------------------------------
 prompt
 @@uninstall_dependencies.sql
 
 prompt
-prompt Vaciando papelera de reciclaje...
+prompt Purging recycle bin...
 prompt -----------------------------------
 prompt
 purge recyclebin;
 
 prompt
-prompt Ejecutando scripts...
+prompt Running scripts...
 prompt -----------------------------------
 prompt
 @@../../packages/k_modulo.pck
@@ -117,7 +116,7 @@ commit;
 
 prompt
 prompt ===================================
-prompt Desinstalacion finalizada
+prompt Uninstallation completed
 prompt ===================================
 prompt
 
