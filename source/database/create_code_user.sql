@@ -24,8 +24,8 @@ SOFTWARE.
 
 set define on
 
-accept v_user     char default 'risk' prompt 'Ingrese usuario (por defecto ''risk''):'
-accept v_password char default 'risk' prompt 'Ingrese clave (por defecto ''risk''):' hide
+accept v_user     char default 'risk' prompt 'Enter user (default ''risk''):'
+accept v_password char default 'risk' prompt 'Enter password (default ''risk''):' hide
 
 -- Create user
 CREATE USER &v_user IDENTIFIED BY &v_password;

@@ -25,7 +25,7 @@ SOFTWARE.
 set define on
 set serveroutput on size unlimited
 
-accept v_generar_tapi char default 'N' prompt 'Generar TAPI? (S/N)'
+accept v_generate_tapi char default 'N' prompt 'Generate TAPI? (Y/N)'
 
 DECLARE
   CURSOR cr_tablas IS
@@ -33,9 +33,9 @@ DECLARE
       FROM user_tables
      WHERE lower(table_name) LIKE 't\_%' ESCAPE '\';
 BEGIN
-  IF upper('&v_generar_tapi') = 'S' THEN
+  IF upper('&v_generate_tapi') = 'Y' THEN
     FOR t IN cr_tablas LOOP
-      dbms_output.put_line('Generando TAPI para tabla ' || upper(t.tabla) ||
+      dbms_output.put_line('Generating TAPI for table ' || upper(t.tabla) ||
                            '...');
       dbms_output.put_line('-----------------------------------');
       BEGIN

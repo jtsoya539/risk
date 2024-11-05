@@ -35,24 +35,23 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Instalacion iniciada
+prompt Installation started
 prompt ===================================
 prompt
 
 prompt
-prompt Instalando dependencias...
+prompt Installing dependencies...
 prompt -----------------------------------
 prompt
 @@install_dependencies.sql
 
 prompt
-prompt Creando secuencias...
+prompt Creating sequences...
 prompt -----------------------------------
 prompt
 @@sequences/s_id_pais.seq
@@ -69,7 +68,7 @@ prompt
 @@sequences/s_id_dispositivo.seq
 
 prompt
-prompt Creando tablas...
+prompt Creating tables...
 prompt -----------------------------------
 prompt
 @@tables/t_modulos.tab
@@ -111,14 +110,14 @@ prompt
 @@tables/t_migraciones.tab
 
 prompt
-prompt Creando vistas...
+prompt Creating views...
 prompt -----------------------------------
 prompt
 @@views/v_monitoreo_datos.vw
 @@views/v_operacion_datos.vw
 
 prompt
-prompt Creando types...
+prompt Creating types...
 prompt -----------------------------------
 prompt
 @@types/y_cadenas.typ
@@ -152,7 +151,7 @@ prompt
 @@types/y_barrio.typ
 
 prompt
-prompt Creando paquetes...
+prompt Creating packages...
 prompt -----------------------------------
 prompt
 @@packages/k_modulo.pck
@@ -181,7 +180,7 @@ prompt
 @@packages/k_monitoreo_aut.pck
 
 prompt
-prompt Creando triggers...
+prompt Creating triggers...
 prompt -----------------------------------
 prompt
 @@triggers/gs_paises.trg
@@ -211,7 +210,7 @@ prompt
 @@triggers/gf_operaciones.trg
 
 prompt
-prompt Ejecutando scripts...
+prompt Running scripts...
 prompt -----------------------------------
 prompt
 @@compile_schema.sql
@@ -230,14 +229,14 @@ commit;
 /
 
 prompt
-prompt Creando jobs...
+prompt Creating jobs...
 prompt -----------------------------------
 prompt
 @@jobs/create_monitoreo_conflictos.sql
 
 prompt
 prompt ===================================
-prompt Instalacion finalizada
+prompt Installation completed
 prompt ===================================
 prompt
 
