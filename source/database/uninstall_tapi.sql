@@ -22,20 +22,22 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-@@dependencies/as_crypto.sql
-@@dependencies/as_pdf.pks
-@@dependencies/as_pdf.pkb
-@@dependencies/as_xlsx.pks
-@@dependencies/as_xlsx.pkb
-@@dependencies/as_zip.pks
-@@dependencies/as_zip.pkb
-@@dependencies/csv.sql
-@@dependencies/oos_util_totp.pks
-@@dependencies/oos_util_totp.pkb
-@@dependencies/ZT_QR.pks
-@@dependencies/ZT_QR.pkb
-@@dependencies/ZT_WORD.pks
-@@dependencies/ZT_WORD.pkb
-@@dependencies/fn_gen_inserts.sql
-@@dependencies/create_console_objects.sql
-@@dependencies/om_tapigen_install.sql
+DECLARE
+  CURSOR cr_statements IS
+    SELECT 'drop ' || lower(x.object_type) || ' ' || lower(x.object_name) ||
+           decode(x.object_type, 'VIEW', ' cascade constraints') AS drop_statement
+      FROM TABLE(om_tapigen.view_naming_conflicts) x
+     WHERE x.object_type IN ('PACKAGE', 'VIEW');
+BEGIN
+  FOR s IN cr_statements LOOP
+    BEGIN
+      EXECUTE IMMEDIATE s.drop_statement;
+    EXCEPTION
+      WHEN OTHERS THEN
+        dbms_output.put_line(SQLERRM);
+    END;
+  END LOOP;
+END;
+/
+
+@@compile_schema.sql
