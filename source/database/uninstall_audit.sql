@@ -25,15 +25,27 @@ SOFTWARE.
 set serveroutput on size unlimited
 
 DECLARE
-  CURSOR cr_statements IS
-    SELECT 'drop ' || lower(x.object_type) || ' ' || lower(x.object_name) ||
-           decode(x.object_type, 'VIEW', ' cascade constraints') AS drop_statement
-      FROM TABLE(om_tapigen.view_naming_conflicts) x
-     WHERE x.object_type IN ('PACKAGE', 'VIEW');
+  CURSOR cr_tablas IS
+    SELECT lower(table_name) AS tabla
+      FROM user_tables
+     WHERE lower(table_name) LIKE 't\_%' ESCAPE '\';
 BEGIN
-  FOR s IN cr_statements LOOP
+  FOR t IN cr_tablas LOOP
+    dbms_output.put_line('Droping audit triggers for table ' ||
+                         upper(t.tabla) || '...');
+    dbms_output.put_line('-----------------------------------');
     BEGIN
-      EXECUTE IMMEDIATE s.drop_statement;
+      k_auditoria.p_eliminar_trigger_auditoria(i_tabla => t.tabla);
+    EXCEPTION
+      WHEN OTHERS THEN
+        dbms_output.put_line(SQLERRM);
+    END;
+  
+    dbms_output.put_line('Droping audit columns for table ' ||
+                         upper(t.tabla) || '...');
+    dbms_output.put_line('-----------------------------------');
+    BEGIN
+      k_auditoria.p_eliminar_campos_auditoria(i_tabla => t.tabla);
     EXCEPTION
       WHEN OTHERS THEN
         dbms_output.put_line(SQLERRM);
