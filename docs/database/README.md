@@ -22,10 +22,13 @@ create_code_user.sql|Crea usuario y otorga permisos necesarios para instalar los
 create_code_user_production.sql|Crea usuario y otorga permisos necesarios para instalar los objetos de Base de Datos del Proyecto RISK. Se debe ejecutar con SYS o SYSTEM. (Producción)
 generate_docs.sql|Genera archivos de documentación de objetos de Base de Datos con la herramienta *plsqldoc*. Se debe ejecutar desde un Command Window de PL/SQL Developer con el plug-in *plsqldoc* instalado (Ver [Configuración de PL/SQL Documentation (plsqldoc)](#configuración-de-plsql-documentation-plsqldoc)).
 install.sql|Instala en el esquema actual los objetos de Base de Datos del Proyecto RISK.
-install_audit.sql|Genera campos y triggers de auditoría.
+install_audit.sql|Genera campos y triggers de auditoría para tablas del esquema actual.
 install_dependencies.sql|Instala en el esquema actual las dependencias de terceros (Ver [Dependencias](#dependencias)).
+install_tapi.sql|Genera API's para tablas del esquema actual.
 uninstall.sql|Desinstala del esquema actual los objetos de Base de Datos del Proyecto RISK.
+uninstall_audit.sql|Elimina campos y triggers de auditoría para tablas del esquema actual.
 uninstall_dependencies.sql|Desinstala del esquema actual las dependencias de terceros.
+uninstall_tapi.sql|Elimina API's para tablas del esquema actual.
 
 ### Dependencias
 
@@ -41,6 +44,7 @@ Dependencia|Descripción
 [zt_word](https://github.com/zorantica/plsql-word)|Genera archivos en formato DOCX
 [fn_gen_inserts](https://github.com/teopost/oracle-scripts)|Genera script para insertar registros en una tabla
 [console](https://github.com/ogobrecht/console)|Herramienta para logging
+[om_tapigen](https://github.com/OraMUC/table-api-generator)|Generador de API's para tablas
 
 ### Configuración de PL/SQL Documentation (plsqldoc)
 
