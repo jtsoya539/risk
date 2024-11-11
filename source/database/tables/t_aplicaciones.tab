@@ -4,7 +4,7 @@ create table T_APLICACIONES
   nombre                          VARCHAR2(100),
   tipo                            VARCHAR2(1),
   activo                          VARCHAR2(1) default 'N' not null,
-  clave                           VARCHAR2(50),
+  clave                           VARCHAR2(4000),
   detalle                         VARCHAR2(2000),
   version_actual                  VARCHAR2(100),
   tiempo_expiracion_access_token  NUMBER(6),
