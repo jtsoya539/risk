@@ -30,8 +30,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-/** Identificador del error o texto */
-  id_error VARCHAR2(100),
+/** Clave del error o texto */
+  clave VARCHAR2(100),
 /** Mensaje del error o texto */
   mensaje VARCHAR2(4000),
 
@@ -46,8 +46,8 @@ CREATE OR REPLACE TYPE BODY y_error IS
 
   CONSTRUCTOR FUNCTION y_error RETURN SELF AS RESULT AS
   BEGIN
-    self.id_error := NULL;
-    self.mensaje  := NULL;
+    self.clave   := NULL;
+    self.mensaje := NULL;
   
     RETURN;
   END;
@@ -58,9 +58,9 @@ CREATE OR REPLACE TYPE BODY y_error IS
   BEGIN
     l_json_object := json_object_t.parse(i_json);
   
-    l_objeto          := NEW y_error();
-    l_objeto.id_error := l_json_object.get_string('id_error');
-    l_objeto.mensaje  := l_json_object.get_string('mensaje');
+    l_objeto         := NEW y_error();
+    l_objeto.clave   := l_json_object.get_string('clave');
+    l_objeto.mensaje := l_json_object.get_string('mensaje');
   
     RETURN l_objeto;
   END;
@@ -69,7 +69,7 @@ CREATE OR REPLACE TYPE BODY y_error IS
     l_json_object json_object_t;
   BEGIN
     l_json_object := NEW json_object_t();
-    l_json_object.put('id_error', self.id_error);
+    l_json_object.put('clave', self.clave);
     l_json_object.put('mensaje', self.mensaje);
   
     RETURN l_json_object.to_clob;

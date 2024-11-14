@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_ERRORES">
  <META name="description" content="Errores o textos">
- <META name="columns" content="ID_ERROR MENSAJE ID_DOMINIO ID_IDIOMA ID_PAIS">
+ <META name="columns" content="CLAVE MENSAJE ID_DOMINIO ID_IDIOMA ID_PAIS">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -47,7 +47,7 @@ Comments
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
-ID_ERROR
+CLAVE
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 VARCHAR2(100)
@@ -59,7 +59,7 @@ VARCHAR2(100)
 &nbsp;
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-Identificador del error o texto
+Clave del error o texto
 </TD>
 </TR>
 <TR>
@@ -152,7 +152,7 @@ Columns
 UK_ERRORES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_ERROR,ID_IDIOMA,ID_PAIS
+CLAVE,ID_IDIOMA,ID_PAIS
 </TD>
 </TR>
 </TABLE>
@@ -248,7 +248,7 @@ Type
 UK_ERRORES
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
-ID_ERROR,ID_IDIOMA,ID_PAIS
+CLAVE,ID_IDIOMA,ID_PAIS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Unique

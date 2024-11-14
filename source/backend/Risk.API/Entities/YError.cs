@@ -29,8 +29,8 @@ namespace Risk.API.Entities
 {
     public class YError : IEntity
     {
-        [JsonProperty("id_error")]
-        public string IdError { get; set; }
+        [JsonProperty("clave")]
+        public string Clave { get; set; }
         [JsonProperty("mensaje")]
         public string Mensaje { get; set; }
 
@@ -38,7 +38,7 @@ namespace Risk.API.Entities
         {
             return new Error
             {
-                IdError = this.IdError,
+                Clave = this.Clave,
                 Mensaje = this.Mensaje
             };
         }

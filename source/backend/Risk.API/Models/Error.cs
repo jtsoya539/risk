@@ -27,12 +27,12 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Models
 {
-    [SwaggerSchema("Agrupa datos de Errores")]
+    [SwaggerSchema("Agrupa datos de Errores o textos")]
     public class Error : IModel
     {
-        [SwaggerSchema("Identificador del error")]
-        public string IdError { get; set; }
-        [SwaggerSchema("Mensaje del error")]
+        [SwaggerSchema("Clave del error o texto")]
+        public string Clave { get; set; }
+        [SwaggerSchema("Mensaje del error o texto")]
         public string Mensaje { get; set; }
 
         public IEntity ConvertToEntity()

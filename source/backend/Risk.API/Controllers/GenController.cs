@@ -115,10 +115,10 @@ namespace Risk.API.Controllers
 
         [AllowAnonymous]
         [HttpGet("ListarErrores")]
-        [SwaggerOperation(OperationId = "ListarErrores", Summary = "ListarErrores", Description = "Obtiene una lista de errores")]
+        [SwaggerOperation(OperationId = "ListarErrores", Summary = "ListarErrores", Description = "Obtiene una lista de errores o textos")]
         [Produces(MediaTypeNames.Application.Json)]
         [SwaggerResponse(StatusCodes.Status200OK, RiskConstants.SWAGGER_RESPONSE_200, typeof(Respuesta<Pagina<Error>>))]
-        public IActionResult ListarErrores([FromQuery, SwaggerParameter(Description = "Identificador del error", Required = false)] string idError,
+        public IActionResult ListarErrores([FromQuery, SwaggerParameter(Description = "Clave del error o texto", Required = false)] string clave,
             [FromQuery, SwaggerParameter(Description = "Número de la página", Required = false)] int pagina,
             [FromQuery, SwaggerParameter(Description = "Cantidad de elementos por página", Required = false)] int porPagina,
             [FromQuery, SwaggerParameter(Description = "No paginar?", Required = false)] bool noPaginar)
@@ -129,7 +129,7 @@ namespace Risk.API.Controllers
                 PorPagina = porPagina,
                 NoPaginar = noPaginar
             };
-            var respuesta = _genService.ListarErrores(idError, paginaParametros);
+            var respuesta = _genService.ListarErrores(clave, paginaParametros);
 
             respuesta.Datos = ProcesarPagina(respuesta.Datos);
 
