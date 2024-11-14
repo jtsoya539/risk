@@ -33,24 +33,23 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Ejecucion de tests iniciada
+prompt Tests execution started
 prompt ===================================
 prompt
 
 prompt
-prompt Ejecutando tests de types...
+prompt Running types tests...
 prompt -----------------------------------
 prompt
 RunTestSet C:\repo\risk\test\database\types\y_respuesta\y_respuesta.ts
 
 prompt
-prompt Ejecutando tests de paquetes...
+prompt Running packages tests...
 prompt -----------------------------------
 prompt
 RunTestSet C:\repo\risk\test\database\packages\k_cadena\k_cadena.ts
@@ -63,7 +62,7 @@ RunTestSet C:\repo\risk\test\database\packages\k_sistema\k_sistema.ts
 RunTestSet C:\repo\risk\test\database\packages\k_util\k_util.ts
 
 prompt
-prompt Ejecutando tests de triggers...
+prompt Running triggers tests...
 prompt -----------------------------------
 prompt
 RunTestSet C:\repo\risk\test\database\triggers\gb_personas\gb_personas.ts
@@ -73,6 +72,6 @@ rollback;
 
 prompt
 prompt ===================================
-prompt Ejecucion de tests finalizada
+prompt Tests execution completed
 prompt ===================================
 prompt
