@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_ERRORES">
  <META name="description" content="Errores o textos">
- <META name="columns" content="CLAVE MENSAJE ID_DOMINIO ID_IDIOMA ID_PAIS">
+ <META name="columns" content="ID_ERROR CLAVE MENSAJE ID_DOMINIO ID_IDIOMA ID_PAIS">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -43,6 +43,23 @@ Default
 <TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
 Comments
 </U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+ID_ERROR
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Identificador del error o texto
 </TD>
 </TR>
 <TR>
@@ -128,6 +145,31 @@ Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Pa&#237;s del error o texto
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Primary Key"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Primary Key
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+PK_ERRORES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_ERROR
 </TD>
 </TR>
 </TABLE>
@@ -241,6 +283,17 @@ Columns
 <TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
 Type
 </U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+PK_ERRORES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_ERROR
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Unique
 </TD>
 </TR>
 <TR>

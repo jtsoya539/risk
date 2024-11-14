@@ -176,6 +176,7 @@ drop sequence s_id_operacion_log;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
 drop sequence s_id_dispositivo;
+drop sequence s_id_error;
 
 prompt
 prompt Uninstalling dependencies...

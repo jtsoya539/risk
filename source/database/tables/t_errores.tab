@@ -1,5 +1,6 @@
 create table T_ERRORES
 (
+  id_error   NUMBER not null,
   clave      VARCHAR2(100) not null,
   mensaje    VARCHAR2(4000),
   id_dominio VARCHAR2(5),
@@ -9,6 +10,8 @@ create table T_ERRORES
 ;
 comment on table T_ERRORES
   is 'Errores o textos';
+comment on column T_ERRORES.id_error
+  is 'Identificador del error o texto';
 comment on column T_ERRORES.clave
   is 'Clave del error o texto';
 comment on column T_ERRORES.mensaje
@@ -19,6 +22,8 @@ comment on column T_ERRORES.id_idioma
   is 'Idioma del error o texto';
 comment on column T_ERRORES.id_pais
   is 'País del error o texto';
+alter table T_ERRORES
+  add constraint PK_ERRORES primary key (ID_ERROR);
 alter table T_ERRORES
   add constraint UK_ERRORES unique (CLAVE, ID_IDIOMA, ID_PAIS);
 alter table T_ERRORES

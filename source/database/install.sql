@@ -66,6 +66,7 @@ prompt
 @@sequences/s_id_sesion.seq
 @@sequences/s_id_usuario.seq
 @@sequences/s_id_dispositivo.seq
+@@sequences/s_id_error.seq
 
 prompt
 prompt Creating tables...
@@ -196,6 +197,7 @@ prompt
 @@triggers/gs_sesiones.trg
 @@triggers/gs_usuarios.trg
 @@triggers/gs_dispositivos.trg
+@@triggers/gs_errores.trg
 @@triggers/gb_operaciones.trg
 @@triggers/gb_operacion_parametros.trg
 @@triggers/gb_reportes.trg

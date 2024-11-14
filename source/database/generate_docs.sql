@@ -198,6 +198,7 @@ plugin plsqldoc generate gs_correo_adjuntos;
 plugin plsqldoc generate gs_correos;
 plugin plsqldoc generate gs_departamentos;
 plugin plsqldoc generate gs_dispositivos;
+plugin plsqldoc generate gs_errores;
 plugin plsqldoc generate gs_idiomas;
 plugin plsqldoc generate gs_mensajes;
 plugin plsqldoc generate gs_monitoreo_ejecuciones;
