@@ -8,7 +8,7 @@ BEGIN
   -- Arrange
   l_respuesta       := NEW y_respuesta();
   l_error           := NEW y_error();
-  l_error.id_error  := '0001';
+  l_error.clave     := '0001';
   l_error.mensaje   := 'Este es un mensaje';
   l_respuesta.datos := l_error;
   --
