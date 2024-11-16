@@ -5,7 +5,7 @@ DECLARE
 BEGIN
   -- Arrange
   INSERT INTO t_errores
-    (id_error, mensaje)
+    (clave, mensaje)
   VALUES
     ('mierror', '#1#-#2#-#3#-#4#-#5#');
   -- Act

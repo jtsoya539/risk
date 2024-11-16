@@ -25,7 +25,7 @@ SOFTWARE.
 set serveroutput on size unlimited
 
 BEGIN
-  dbms_output.put_line('Compilando objetos invalidos del esquema ' ||
+  dbms_output.put_line('Compiling invalid objects for schema ' ||
                        upper(sys_context('USERENV', 'CURRENT_SCHEMA')) ||
                        '...');
   dbms_output.put_line('-----------------------------------');

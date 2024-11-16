@@ -24,8 +24,8 @@ SOFTWARE.
 
 set define on
 
-accept v_user     char default 'api' prompt 'Ingrese usuario (por defecto ''api''):'
-accept v_password char default 'api' prompt 'Ingrese clave (por defecto ''api''):' hide
+accept v_user     char default 'api' prompt 'Enter user (default ''api''):'
+accept v_password char default 'api' prompt 'Enter password (default ''api''):' hide
 
 -- Create user
 CREATE USER &v_user IDENTIFIED BY &v_password;

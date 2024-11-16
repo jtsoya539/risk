@@ -4,11 +4,11 @@
 ## Enum
 
 
-    * `mail` (value: `"Mail"`)
+    * `Mail` (value: `"Mail"`)
 
-    * `sMS` (value: `"SMS"`)
+    * `SMS` (value: `"SMS"`)
 
-    * `push` (value: `"Push"`)
+    * `Push` (value: `"Push"`)
 
 
 

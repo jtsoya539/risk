@@ -35,24 +35,23 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Instalacion iniciada
+prompt Installation started
 prompt ===================================
 prompt
 
 prompt
-prompt Instalando dependencias...
+prompt Installing dependencies...
 prompt -----------------------------------
 prompt
 @@install_dependencies.sql
 
 prompt
-prompt Creando secuencias...
+prompt Creating sequences...
 prompt -----------------------------------
 prompt
 @@sequences/s_id_correo.seq
@@ -61,7 +60,7 @@ prompt
 @@sequences/s_id_notificacion.seq
 
 prompt
-prompt Creando tablas...
+prompt Creating tables...
 prompt -----------------------------------
 prompt
 @@tables/t_correos.tab
@@ -73,12 +72,12 @@ prompt
 @@tables/t_usuario_suscripciones.tab
 
 prompt
-prompt Creando vistas...
+prompt Creating views...
 prompt -----------------------------------
 prompt
 
 prompt
-prompt Creando types...
+prompt Creating types...
 prompt -----------------------------------
 prompt
 @@types/y_correo.typ
@@ -86,14 +85,14 @@ prompt
 @@types/y_notificacion.typ
 
 prompt
-prompt Creando paquetes...
+prompt Creating packages...
 prompt -----------------------------------
 prompt
 @@packages/k_mensajeria.pck
 @@packages/k_servicio_msj.pck
 
 prompt
-prompt Creando triggers...
+prompt Creating triggers...
 prompt -----------------------------------
 prompt
 @@triggers/gs_correos.trg
@@ -103,7 +102,7 @@ prompt
 @@triggers/gb_mensajes.trg
 
 prompt
-prompt Ejecutando scripts...
+prompt Running scripts...
 prompt -----------------------------------
 prompt
 @@packages/k_modulo.pck
@@ -122,7 +121,7 @@ commit;
 
 prompt
 prompt ===================================
-prompt Instalacion finalizada
+prompt Installation completed
 prompt ===================================
 prompt
 

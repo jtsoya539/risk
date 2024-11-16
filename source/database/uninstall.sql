@@ -35,24 +35,23 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Desinstalacion iniciada
+prompt Uninstallation started
 prompt ===================================
 prompt
 
 prompt
-prompt Borrando jobs...
+prompt Droping jobs...
 prompt -----------------------------------
 prompt
 @@jobs/drop_monitoreo_conflictos.sql
 
 prompt
-prompt Borrando paquetes...
+prompt Droping packages...
 prompt -----------------------------------
 prompt
 drop package k_monitoreo_aut;
@@ -85,7 +84,7 @@ drop package k_cadena;
 drop package k_util;
 
 prompt
-prompt Borrando types...
+prompt Droping types...
 prompt -----------------------------------
 prompt
 drop type y_barrio force;
@@ -113,14 +112,14 @@ drop type y_objeto force;
 drop type y_cadenas force;
 
 prompt
-prompt Borrando vistas...
+prompt Droping views...
 prompt -----------------------------------
 prompt
 drop view v_monitoreo_datos;
 drop view v_operacion_datos;
 
 prompt
-prompt Borrando tablas...
+prompt Droping tables...
 prompt -----------------------------------
 prompt
 drop table t_migraciones cascade constraints;
@@ -162,7 +161,7 @@ drop table t_dominios cascade constraints;
 drop table t_modulos cascade constraints;
 
 prompt
-prompt Borrando secuencias...
+prompt Droping sequences...
 prompt -----------------------------------
 prompt
 drop sequence s_id_pais;
@@ -177,22 +176,23 @@ drop sequence s_id_operacion_log;
 drop sequence s_id_sesion;
 drop sequence s_id_usuario;
 drop sequence s_id_dispositivo;
+drop sequence s_id_error;
 
 prompt
-prompt Desinstalando dependencias...
+prompt Uninstalling dependencies...
 prompt -----------------------------------
 prompt
 @@uninstall_dependencies.sql
 
 prompt
-prompt Vaciando papelera de reciclaje...
+prompt Purging recycle bin...
 prompt -----------------------------------
 prompt
 purge recyclebin;
 
 prompt
 prompt ===================================
-prompt Desinstalacion finalizada
+prompt Uninstallation completed
 prompt ===================================
 prompt
 

@@ -33,29 +33,28 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Generacion de docs iniciada
+prompt Generation of docs started
 prompt ===================================
 prompt
 
 prompt
-prompt Eliminando docs...
+prompt Deleting docs...
 prompt -----------------------------------
 prompt
 plugin plsqldoc delete;
 
 prompt
-prompt Generando docs de secuencias...
+prompt Generating sequences docs...
 prompt -----------------------------------
 prompt
 
 prompt
-prompt Generando docs de tablas...
+prompt Generating tables docs...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate t_aplicaciones;
@@ -104,14 +103,14 @@ plugin plsqldoc generate t_usuarios;
 plugin plsqldoc generate t_usuario_suscripciones;
 
 prompt
-prompt Generando docs de vistas...
+prompt Generating views docs...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate v_monitoreo_datos;
 plugin plsqldoc generate v_operacion_datos;
 
 prompt
-prompt Generando docs de types...
+prompt Generating types docs...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate y_archivo;
@@ -142,7 +141,7 @@ plugin plsqldoc generate y_significado;
 plugin plsqldoc generate y_usuario;
 
 prompt
-prompt Generando docs de paquetes...
+prompt Generating packages docs...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate k_aplicacion;
@@ -177,7 +176,7 @@ plugin plsqldoc generate k_usuario;
 plugin plsqldoc generate k_util;
 
 prompt
-prompt Generando docs de triggers...
+prompt Generating triggers docs...
 prompt -----------------------------------
 prompt
 plugin plsqldoc generate gb_archivos;
@@ -199,6 +198,7 @@ plugin plsqldoc generate gs_correo_adjuntos;
 plugin plsqldoc generate gs_correos;
 plugin plsqldoc generate gs_departamentos;
 plugin plsqldoc generate gs_dispositivos;
+plugin plsqldoc generate gs_errores;
 plugin plsqldoc generate gs_idiomas;
 plugin plsqldoc generate gs_mensajes;
 plugin plsqldoc generate gs_monitoreo_ejecuciones;
@@ -212,13 +212,13 @@ plugin plsqldoc generate gs_sesiones;
 plugin plsqldoc generate gs_usuarios;
 
 prompt
-prompt Generando index...
+prompt Generating index...
 prompt -----------------------------------
 prompt
 plugin plsqldoc rebuild;
 
 prompt
 prompt ===================================
-prompt Generacion de docs finalizada
+prompt Generation of docs completed
 prompt ===================================
 prompt

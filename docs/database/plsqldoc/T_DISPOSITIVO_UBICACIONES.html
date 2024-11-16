@@ -6,7 +6,7 @@
  <META name="object" content="TABLE">
  <META name="name" content="T_DISPOSITIVO_UBICACIONES">
  <META name="description" content="Ubicaciones de Dispositivos">
- <META name="columns" content="ID_DISPOSITIVO FECHA LATITUD LONGITUD">
+ <META name="columns" content="ID_DISPOSITIVO ORDEN FECHA LATITUD LONGITUD">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -64,6 +64,23 @@ Identificador del dispositivo
 </TR>
 <TR>
 <TD VALIGN="TOP" CLASS="LIST_ITEM">
+ORDEN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+NUMBER(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+N&#250;mero de orden de la ubicaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
 FECHA
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
@@ -115,6 +132,31 @@ Longitud de la ubicaci&#243;n
 </TR>
 </TABLE>
 <HR>
+<A NAME="Primary Key"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Primary Key
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+PK_DISPOSITIVO_UBICACIONES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_DISPOSITIVO,ORDEN
+</TD>
+</TR>
+</TABLE>
+<HR>
 <A NAME="Foreign Keys"></A>
 <TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
 Foreign Keys
@@ -150,6 +192,38 @@ T_DISPOSITIVOS
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 ID_DISPOSITIVO
+</TD>
+</TR>
+</TABLE>
+<HR>
+<A NAME="Indexes"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Indexes
+</TD></TR></TABLE>
+<TABLE CLASS="SIMPLE_TABLE">
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Name
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Columns
+</U>
+</TD>
+<TD VALIGN="TOP" CLASS="LIST_ITEM"><U>
+Type
+</U>
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+PK_DISPOSITIVO_UBICACIONES
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+ID_DISPOSITIVO,ORDEN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Unique
 </TD>
 </TR>
 </TABLE>

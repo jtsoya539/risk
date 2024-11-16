@@ -35,18 +35,17 @@ prompt #  |  _  /   | |   \___ \ |  <    #
 prompt #  | | \ \  _| |_  ____) || . \   #
 prompt #  |_|  \_\|_____||_____/ |_|\_\  #
 prompt #                                 #
-prompt #          Proyecto RISK          #
 prompt #            jtsoya539            #
 prompt ###################################
 
 prompt
 prompt ===================================
-prompt Migracion iniciada
+prompt Migration started
 prompt ===================================
 prompt
 
 prompt
-prompt Ejecutando migracion...
+prompt Running migration...
 prompt -----------------------------------
 prompt
 @@ins_t_paises.sql
@@ -55,7 +54,7 @@ prompt
 @@ins_t_monedas.sql
 
 prompt
-prompt Registrando migracion...
+prompt Registering migration...
 prompt -----------------------------------
 prompt
 @@ins_t_migraciones.sql
@@ -64,7 +63,7 @@ commit;
 
 prompt
 prompt ===================================
-prompt Migracion finalizada
+prompt Migration completed
 prompt ===================================
 prompt
 

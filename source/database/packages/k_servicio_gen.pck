@@ -284,14 +284,14 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_id_idioma t_idiomas.id_idioma%TYPE;
     l_id_pais   t_paises.id_pais%TYPE;
   
-    CURSOR cr_elementos(i_id_error IN VARCHAR2) IS
-      SELECT a.id_error, a.mensaje
+    CURSOR cr_elementos(i_clave IN VARCHAR2) IS
+      SELECT a.clave, a.mensaje
         FROM t_errores a
-       WHERE a.id_error = nvl(i_id_error, a.id_error)
+       WHERE a.clave = nvl(i_clave, a.clave)
          AND nvl(a.id_idioma, nvl(l_id_idioma, -1)) = nvl(l_id_idioma, -1)
          AND nvl(a.id_pais, nvl(l_id_pais, -1)) = nvl(l_id_pais, -1)
-       ORDER BY a.id_error,
-                decode(a.id_error, NULL, 0, 1) +
+       ORDER BY a.clave,
+                decode(a.clave, NULL, 0, 1) +
                 decode(a.id_idioma, NULL, 0, 1) +
                 decode(a.id_pais, NULL, 0, 1) DESC;
   BEGIN
@@ -303,10 +303,10 @@ CREATE OR REPLACE PACKAGE BODY k_servicio_gen IS
     l_id_pais   := k_sistema.f_pais;
   
     FOR ele IN cr_elementos(k_operacion.f_valor_parametro_string(i_parametros,
-                                                                 'id_error')) LOOP
-      l_elemento          := NEW y_error();
-      l_elemento.id_error := ele.id_error;
-      l_elemento.mensaje  := ele.mensaje;
+                                                                 'clave')) LOOP
+      l_elemento         := NEW y_error();
+      l_elemento.clave   := ele.clave;
+      l_elemento.mensaje := ele.mensaje;
     
       l_elementos.extend;
       l_elementos(l_elementos.count) := l_elemento;

@@ -32,3 +32,4 @@ drop package zt_qr;
 drop package zt_word;
 drop function fn_gen_inserts;
 @@dependencies/drop_console_objects.sql
+@@dependencies/om_tapigen_uninstall.sql

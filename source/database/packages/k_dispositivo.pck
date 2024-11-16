@@ -452,12 +452,18 @@ CREATE OR REPLACE PACKAGE BODY k_dispositivo IS
   PROCEDURE p_registrar_ubicacion(i_id_dispositivo IN NUMBER,
                                   i_latitud        IN NUMBER,
                                   i_longitud       IN NUMBER) IS
+    l_orden t_dispositivo_ubicaciones.orden%TYPE;
   BEGIN
+    SELECT nvl(MAX(du.orden), 0) + 1
+      INTO l_orden
+      FROM t_dispositivo_ubicaciones du
+     WHERE du.id_dispositivo = i_id_dispositivo;
+  
     -- Inserta ubicación
     INSERT INTO t_dispositivo_ubicaciones
-      (id_dispositivo, fecha, latitud, longitud)
+      (id_dispositivo, orden, fecha, latitud, longitud)
     VALUES
-      (i_id_dispositivo, SYSDATE, i_latitud, i_longitud);
+      (i_id_dispositivo, l_orden, SYSDATE, i_latitud, i_longitud);
   END;
 
 END;

@@ -50,6 +50,26 @@ CREATE OR REPLACE PACKAGE k_auditoria IS
                                         i_trigger  IN VARCHAR2 DEFAULT NULL,
                                         i_ejecutar IN BOOLEAN DEFAULT TRUE);
 
+  /**
+  Elimina campos de auditoria para una tabla
+  
+  %param i_tabla Tabla
+  %param i_ejecutar Ejecutar la(s) sentencia(s)?
+  */
+  PROCEDURE p_eliminar_campos_auditoria(i_tabla    IN VARCHAR2,
+                                        i_ejecutar IN BOOLEAN DEFAULT TRUE);
+
+  /**
+  Elimina trigger de auditoria para una tabla
+  
+  %param i_tabla Tabla
+  %param i_trigger Trigger
+  %param i_ejecutar Ejecutar la(s) sentencia(s)?
+  */
+  PROCEDURE p_eliminar_trigger_auditoria(i_tabla    IN VARCHAR2,
+                                         i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                         i_ejecutar IN BOOLEAN DEFAULT TRUE);
+
 END;
 /
 CREATE OR REPLACE PACKAGE BODY k_auditoria IS
@@ -157,6 +177,62 @@ BEGIN
                                       300);
   :new.fecha_modificacion   := SYSDATE;
 END;';
+  
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
+  END;
+
+  PROCEDURE p_eliminar_campos_auditoria(i_tabla    IN VARCHAR2,
+                                        i_ejecutar IN BOOLEAN DEFAULT TRUE) IS
+    l_sentencia VARCHAR2(4000);
+  BEGIN
+    -- Elimina campos
+    l_sentencia := 'alter table ' || i_tabla ||
+                   ' drop column usuario_insercion';
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
+  
+    l_sentencia := 'alter table ' || i_tabla ||
+                   ' drop column fecha_insercion';
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
+  
+    l_sentencia := 'alter table ' || i_tabla ||
+                   ' drop column usuario_modificacion';
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
+  
+    l_sentencia := 'alter table ' || i_tabla ||
+                   ' drop column fecha_modificacion';
+    IF i_ejecutar THEN
+      EXECUTE IMMEDIATE l_sentencia;
+    ELSE
+      dbms_output.put_line(l_sentencia);
+    END IF;
+  END;
+
+  PROCEDURE p_eliminar_trigger_auditoria(i_tabla    IN VARCHAR2,
+                                         i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                         i_ejecutar IN BOOLEAN DEFAULT TRUE) IS
+    l_sentencia VARCHAR2(4000);
+    l_trigger   VARCHAR2(30);
+  BEGIN
+    l_trigger := lower(nvl(i_trigger, 'ga_' || substr(i_tabla, 3)));
+  
+    -- Genera trigger
+    l_sentencia := 'drop trigger ' || l_trigger;
   
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;

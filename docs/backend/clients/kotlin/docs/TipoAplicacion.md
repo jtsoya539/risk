@@ -4,13 +4,13 @@
 ## Enum
 
 
-    * `web` (value: `"Web"`)
+    * `Web` (value: `"Web"`)
 
-    * `mobile` (value: `"Mobile"`)
+    * `Mobile` (value: `"Mobile"`)
 
-    * `desktop` (value: `"Desktop"`)
+    * `Desktop` (value: `"Desktop"`)
 
-    * `servicio` (value: `"Servicio"`)
+    * `Servicio` (value: `"Servicio"`)
 
 
 

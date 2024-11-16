@@ -4,13 +4,13 @@
 ## Enum
 
 
-    * `activo` (value: `"Activo"`)
+    * `Activo` (value: `"Activo"`)
 
-    * `expirado` (value: `"Expirado"`)
+    * `Expirado` (value: `"Expirado"`)
 
-    * `finalizado` (value: `"Finalizado"`)
+    * `Finalizado` (value: `"Finalizado"`)
 
-    * `invalido` (value: `"Invalido"`)
+    * `Invalido` (value: `"Invalido"`)
 
 
 

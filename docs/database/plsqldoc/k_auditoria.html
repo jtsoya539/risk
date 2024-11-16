@@ -45,6 +45,16 @@ Genera campos de auditoria para una tabla
 </TD><TD CLASS="DESC_TEXT" WIDTH=95%>
 Genera trigger de auditoria para una tabla
 </TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ELIMINAR_CAMPOS_AUDITORIA">p_eliminar_campos_auditoria</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Elimina campos de auditoria para una tabla
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#P_ELIMINAR_TRIGGER_AUDITORIA">p_eliminar_trigger_auditoria</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Elimina trigger de auditoria para una tabla
+</TD></TR>
 </TABLE>
 <BR>
 <HR>
@@ -96,6 +106,86 @@ PROCEDURE p_generar_trigger_auditoria(i_tabla    IN VARCHAR2,
 </PRE>
 <P CLASS="DESC_TEXT">
 Genera trigger de auditoria para una tabla<br>
+
+<BR>
+</P>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_tabla&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tabla<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_trigger&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Trigger<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_ejecutar&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Ejecutar la(s) sentencia(s)?<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_ELIMINAR_CAMPOS_AUDITORIA"></A>
+<P CLASS="TYPE_TITLE">
+p_eliminar_campos_auditoria
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_eliminar_campos_auditoria(i_tabla    IN VARCHAR2,
+                                      i_ejecutar IN BOOLEAN DEFAULT TRUE)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Elimina campos de auditoria para una tabla<br>
+
+<BR>
+</P>
+<A NAME="Parameters"></A>
+<TABLE CLASS="LIST_TABLE"><TR><TD CLASS="LIST_TITLE">
+Parameters
+</TD></TR></TABLE>
+<TABLE CLASS="LIST_TABLE">
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_tabla&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Tabla<br>
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+</TD><TD VALIGN="TOP" CLASS="LIST_ITEM" WIDTH=1%>
+i_ejecutar&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH=95%>
+Ejecutar la(s) sentencia(s)?<br>
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="P_ELIMINAR_TRIGGER_AUDITORIA"></A>
+<P CLASS="TYPE_TITLE">
+p_eliminar_trigger_auditoria
+</P>
+<PRE CLASS="DECL_TEXT">
+PROCEDURE p_eliminar_trigger_auditoria(i_tabla    IN VARCHAR2,
+                                       i_trigger  IN VARCHAR2 DEFAULT NULL,
+                                       i_ejecutar IN BOOLEAN DEFAULT TRUE)
+
+</PRE>
+<P CLASS="DESC_TEXT">
+Elimina trigger de auditoria para una tabla<br>
 
 <BR>
 </P>

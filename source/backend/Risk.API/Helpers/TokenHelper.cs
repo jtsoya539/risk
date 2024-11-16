@@ -43,7 +43,7 @@ namespace Risk.API.Helpers
 {
     public static class TokenHelper
     {
-        public static string GenerarAccessToken(string usuario, IAutService autService, IGenService genService)
+        public static string GenerarAccessToken(string usuario, IAutService autService, ICacheHelper cacheHelper)
         {
             autService.Version = string.Empty;
             var respDatosUsuario = autService.DatosUsuario(usuario);
@@ -78,12 +78,7 @@ namespace Risk.API.Helpers
             }
             int tiempoExpiracion = int.Parse(respTiempoExpiracionToken.Datos.Contenido);
 
-            var respValorParametro = genService.ValorParametro("CLAVE_VALIDACION_ACCESS_TOKEN");
-            if (!respValorParametro.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                return string.Empty;
-            }
-            var signingKey = Encoding.ASCII.GetBytes(respValorParametro.Datos.Contenido);
+            var signingKey = Encoding.ASCII.GetBytes(cacheHelper.GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

@@ -25,7 +25,7 @@ SOFTWARE.
 set define on
 set serveroutput on size unlimited
 
-accept v_generar_auditoria char default 'N' prompt 'Generar campos y triggers de auditoria? (S/N)'
+accept v_generate_audit char default 'N' prompt 'Generate audit columns and triggers? (Y/N)'
 
 DECLARE
   CURSOR cr_tablas IS
@@ -33,13 +33,13 @@ DECLARE
       FROM user_tables
      WHERE lower(table_name) LIKE 't\_%' ESCAPE '\';
 BEGIN
-  IF upper('&v_generar_auditoria') = 'S' THEN
+  IF upper('&v_generate_audit') = 'Y' THEN
     FOR t IN cr_tablas LOOP
-      dbms_output.put_line('Generando campos de auditoria para tabla ' ||
+      dbms_output.put_line('Generating audit columns for table ' ||
                            upper(t.tabla) || '...');
       dbms_output.put_line('-----------------------------------');
       k_auditoria.p_generar_campos_auditoria(i_tabla => t.tabla);
-      dbms_output.put_line('Generando triggers de auditoria para tabla ' ||
+      dbms_output.put_line('Generating audit triggers for table ' ||
                            upper(t.tabla) || '...');
       dbms_output.put_line('-----------------------------------');
       k_auditoria.p_generar_trigger_auditoria(i_tabla => t.tabla);

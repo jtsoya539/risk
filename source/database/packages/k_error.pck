@@ -47,12 +47,12 @@ CREATE OR REPLACE PACKAGE k_error IS
   */
   FUNCTION f_mensaje_excepcion(i_sqlerrm IN VARCHAR2) RETURN VARCHAR2;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
+  FUNCTION f_mensaje_error(i_clave     IN VARCHAR2,
                            i_cadenas   IN y_cadenas,
                            i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
     RETURN VARCHAR2;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
+  FUNCTION f_mensaje_error(i_clave     IN VARCHAR2,
                            i_cadena1   IN VARCHAR2 DEFAULT NULL,
                            i_cadena2   IN VARCHAR2 DEFAULT NULL,
                            i_cadena3   IN VARCHAR2 DEFAULT NULL,
@@ -102,7 +102,7 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
     RETURN TRIM(l_mensaje);
   END;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
+  FUNCTION f_mensaje_error(i_clave     IN VARCHAR2,
                            i_cadenas   IN y_cadenas,
                            i_wrap_char IN VARCHAR2 DEFAULT c_wrap_char)
     RETURN VARCHAR2 IS
@@ -117,16 +117,15 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
       WITH lv_mensajes AS
        (SELECT mensaje
           FROM t_errores
-         WHERE id_error = i_id_error
+         WHERE clave = i_clave
            AND nvl(id_idioma, nvl(l_id_idioma, -1)) = nvl(l_id_idioma, -1)
            AND nvl(id_pais, nvl(l_id_pais, -1)) = nvl(l_id_pais, -1)
-         ORDER BY decode(id_error, NULL, 0, 1) +
-                  decode(id_idioma, NULL, 0, 1) +
+         ORDER BY decode(clave, NULL, 0, 1) + decode(id_idioma, NULL, 0, 1) +
                   decode(id_pais, NULL, 0, 1) DESC)
       SELECT mensaje INTO l_mensaje FROM lv_mensajes WHERE rownum = 1;
     EXCEPTION
       WHEN no_data_found THEN
-        l_mensaje := 'Error no registrado [' || i_id_error || ']';
+        l_mensaje := 'Error no registrado [' || i_clave || ']';
     END;
   
     RETURN k_cadena.f_unir_cadenas(l_mensaje,
@@ -134,7 +133,7 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
                                    nvl(i_wrap_char, c_wrap_char));
   END;
 
-  FUNCTION f_mensaje_error(i_id_error  IN VARCHAR2,
+  FUNCTION f_mensaje_error(i_clave     IN VARCHAR2,
                            i_cadena1   IN VARCHAR2 DEFAULT NULL,
                            i_cadena2   IN VARCHAR2 DEFAULT NULL,
                            i_cadena3   IN VARCHAR2 DEFAULT NULL,
@@ -153,16 +152,15 @@ CREATE OR REPLACE PACKAGE BODY k_error IS
       WITH lv_mensajes AS
        (SELECT mensaje
           FROM t_errores
-         WHERE id_error = i_id_error
+         WHERE clave = i_clave
            AND nvl(id_idioma, nvl(l_id_idioma, -1)) = nvl(l_id_idioma, -1)
            AND nvl(id_pais, nvl(l_id_pais, -1)) = nvl(l_id_pais, -1)
-         ORDER BY decode(id_error, NULL, 0, 1) +
-                  decode(id_idioma, NULL, 0, 1) +
+         ORDER BY decode(clave, NULL, 0, 1) + decode(id_idioma, NULL, 0, 1) +
                   decode(id_pais, NULL, 0, 1) DESC)
       SELECT mensaje INTO l_mensaje FROM lv_mensajes WHERE rownum = 1;
     EXCEPTION
       WHEN no_data_found THEN
-        l_mensaje := 'Error no registrado [' || i_id_error || ']';
+        l_mensaje := 'Error no registrado [' || i_clave || ']';
     END;
   
     RETURN k_cadena.f_unir_cadenas(l_mensaje,

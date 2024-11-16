@@ -815,7 +815,7 @@ Configure RiskAppKey:
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream
 
 <a id="refrescarSesion"></a>
 # **refrescarSesion**

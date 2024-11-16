@@ -62,7 +62,7 @@ begin
   -----------------------------------
 
   l_varchar2(1) :=q'!51!';
-  l_clob(2) :=q'!ID_ERROR!';
+  l_clob(2) :=q'!CLAVE!';
   l_clob(3) :=q'!0.1.0!';
   l_varchar2(4) :=q'!1!';
   l_clob(5) :=q'!S!';

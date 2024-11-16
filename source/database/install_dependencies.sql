@@ -38,3 +38,4 @@ SOFTWARE.
 @@dependencies/ZT_WORD.pkb
 @@dependencies/fn_gen_inserts.sql
 @@dependencies/create_console_objects.sql
+@@dependencies/om_tapigen_install.sql

@@ -33,7 +33,7 @@ namespace Risk.API.Services
         Respuesta<Dato> ValorParametro(string parametro);
         Respuesta<Dato> SignificadoCodigo(string dominio, string codigo);
         Respuesta<Pagina<Significado>> ListarSignificados(string dominio, PaginaParametros paginaParametros = null);
-        Respuesta<Pagina<Error>> ListarErrores(string idError = null, PaginaParametros paginaParametros = null);
+        Respuesta<Pagina<Error>> ListarErrores(string clave = null, PaginaParametros paginaParametros = null);
         Respuesta<Pagina<Aplicacion>> ListarAplicaciones(string idAplicacion = null, string claveAplicacion = null, PaginaParametros paginaParametros = null);
         Respuesta<Archivo> RecuperarArchivo(string tabla, string campo, string referencia, int? version = null);
         Respuesta<Dato> GuardarArchivo(string tabla, string campo, string referencia, Archivo archivo);

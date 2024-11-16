@@ -119,10 +119,10 @@ namespace Risk.API.Services
             return EntitiesMapper.GetRespuestaFromEntity<Pagina<Significado>, YPagina<YSignificado>>(entityRsp, datos);
         }
 
-        public Respuesta<Pagina<Error>> ListarErrores(string idError = null, PaginaParametros paginaParametros = null)
+        public Respuesta<Pagina<Error>> ListarErrores(string clave = null, PaginaParametros paginaParametros = null)
         {
             prms = new JObject();
-            prms.Add("id_error", idError);
+            prms.Add("clave", clave);
 
             if (paginaParametros != null)
             {
