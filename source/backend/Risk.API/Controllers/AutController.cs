@@ -34,6 +34,7 @@ using Risk.API.Attributes;
 using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -45,14 +46,14 @@ namespace Risk.API.Controllers
     [ApiController]
     public class AutController : RiskControllerBase
     {
-        private readonly ICacheHelper _cacheHelper;
+        private readonly ISettingsService _settingsService;
         private readonly IAutService _autService;
         private readonly IGenService _genService;
         private readonly INotificationHubClientConnection _notificationHubClientConnection;
 
-        public AutController(ICacheHelper cacheHelper, IAutService autService, IGenService genService, INotificationHubClientConnection notificationHubClientConnection, IConfiguration configuration) : base(configuration)
+        public AutController(ISettingsService settingsService, IAutService autService, IGenService genService, INotificationHubClientConnection notificationHubClientConnection, IConfiguration configuration) : base(configuration)
         {
-            _cacheHelper = cacheHelper;
+            _settingsService = settingsService;
             _autService = autService;
             _genService = genService;
             _notificationHubClientConnection = notificationHubClientConnection;
@@ -85,7 +86,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respValidarCredenciales);
             }
 
-            var accessToken = TokenHelper.GenerarAccessToken(requestBody.Usuario, _autService, _cacheHelper);
+            var accessToken = TokenHelper.GenerarAccessToken(requestBody.Usuario, _autService, _settingsService);
             var refreshToken = TokenHelper.GenerarRefreshToken();
 
             var respIniciarSesion = _autService.IniciarSesion(requestBody.Usuario, accessToken, refreshToken, null);
@@ -103,7 +104,7 @@ namespace Risk.API.Controllers
         {
             string usuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
 
-            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario, _autService, _cacheHelper);
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(usuario, _autService, _settingsService);
             var refreshTokenNuevo = TokenHelper.GenerarRefreshToken();
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, requestBody.RefreshToken, accessTokenNuevo, refreshTokenNuevo);
@@ -406,7 +407,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respRegistrarUsuario);
             }
 
-            var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _cacheHelper);
+            var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _settingsService);
 
             var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, null, usuario.Origen, requestBody.IdToken);
 
@@ -425,7 +426,7 @@ namespace Risk.API.Controllers
             string aliasUsuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
             UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
 
-            var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _cacheHelper);
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _settingsService);
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, usuario.Origen, requestBody.IdToken);
             return ProcesarRespuesta(respuesta);
@@ -450,7 +451,7 @@ namespace Risk.API.Controllers
                 return ProcesarRespuesta(respRegistrarUsuario);
             }
 
-            var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _cacheHelper);
+            var accessToken = TokenHelper.GenerarAccessToken(respRegistrarUsuario.Datos.Contenido, _autService, _settingsService);
 
             var respIniciarSesion = _autService.IniciarSesion(respRegistrarUsuario.Datos.Contenido, accessToken, null, null, usuario.Origen, requestBody.FbToken);
 
@@ -469,7 +470,7 @@ namespace Risk.API.Controllers
             string aliasUsuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
             UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _genService);
 
-            var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _cacheHelper);
+            var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _settingsService);
 
             var respuesta = _autService.RefrescarSesion(requestBody.AccessToken, null, accessTokenNuevo, null, usuario.Origen, requestBody.FbToken);
             return ProcesarRespuesta(respuesta);

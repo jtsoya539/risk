@@ -38,12 +38,13 @@ using Google.Apis.Auth;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Risk.Common.Helpers;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Helpers
 {
     public static class TokenHelper
     {
-        public static string GenerarAccessToken(string usuario, IAutService autService, ICacheHelper cacheHelper)
+        public static string GenerarAccessToken(string usuario, IAutService autService, ISettingsService settingsService)
         {
             autService.Version = string.Empty;
             var respDatosUsuario = autService.DatosUsuario(usuario);
@@ -78,7 +79,7 @@ namespace Risk.API.Helpers
             }
             int tiempoExpiracion = int.Parse(respTiempoExpiracionToken.Datos.Contenido);
 
-            var signingKey = Encoding.ASCII.GetBytes(cacheHelper.GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"));
+            var signingKey = Encoding.ASCII.GetBytes(settingsService.AccessTokenValidationKey);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

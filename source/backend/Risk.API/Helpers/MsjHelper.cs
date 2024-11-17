@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 
 namespace Risk.API.Helpers
@@ -34,50 +35,29 @@ namespace Risk.API.Helpers
     public class MsjHelper : IMsjHelper
     {
         private readonly ILogger<MsjHelper> _logger;
-        private readonly ICacheHelper _cacheHelper;
+        private readonly ISettingsService _settingsService;
         private readonly IMsjService _msjService;
 
-        public MsjHelper(ILogger<MsjHelper> logger, ICacheHelper cacheHelper, IMsjService msjService)
+        public MsjHelper(ILogger<MsjHelper> logger, ISettingsService settingsService, IMsjService msjService)
         {
             _logger = logger;
-            _cacheHelper = cacheHelper;
+            _settingsService = settingsService;
             _msjService = msjService;
         }
 
         public bool EnvioCorreosActivo()
         {
-            try
-            {
-                return _cacheHelper.GetDbConfigValue("ENVIO_CORREOS_ACTIVO").Equals("S");
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return _settingsService.EnableMailSender;
         }
 
         public bool EnvioNotificacionesActivo()
         {
-            try
-            {
-                return _cacheHelper.GetDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S");
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return _settingsService.EnablePushSender;
         }
 
         public bool EnvioMensajesActivo()
         {
-            try
-            {
-                return _cacheHelper.GetDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S");
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return _settingsService.EnableSMSSender;
         }
 
         public List<Correo> ListarCorreosPendientes()

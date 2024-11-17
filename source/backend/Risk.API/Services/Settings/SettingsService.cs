@@ -26,20 +26,19 @@ using System;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Risk.API.Services;
 using Risk.Common.Helpers;
 
-namespace Risk.API.Helpers
+namespace Risk.API.Services.Settings
 {
-    // https://dev.to/bytehide/caching-in-net-full-guide-31j4
-    public class CacheHelper : ICacheHelper
+    public class SettingsService : ISettingsService
     {
-        private readonly ILogger<CacheHelper> _logger;
+        private const double CACHE_EXPIRATION_MINUTES = 30;
+        private readonly ILogger<SettingsService> _logger;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _configuration;
         private readonly IGenService _genService;
 
-        public CacheHelper(ILogger<CacheHelper> logger, IMemoryCache cache, IConfiguration configuration, IGenService genService)
+        public SettingsService(ILogger<SettingsService> logger, IMemoryCache cache, IConfiguration configuration, IGenService genService)
         {
             _logger = logger;
             _cache = cache;
@@ -47,6 +46,7 @@ namespace Risk.API.Helpers
             _genService = genService;
         }
 
+        // https://dev.to/bytehide/caching-in-net-full-guide-31j4
         public string GetDbConfigValue(string key)
         {
             var cachedDataFound = _cache.TryGetValue<string>(key, out string cachedData);
@@ -61,7 +61,7 @@ namespace Risk.API.Helpers
                     return string.Empty;
                 }
                 cachedData = respuesta.Datos.Contenido;
-                _cache.Set<string>(key, cachedData, DateTimeOffset.Now.AddMinutes(30));
+                _cache.Set<string>(key, cachedData, DateTimeOffset.Now.AddMinutes(CACHE_EXPIRATION_MINUTES));
             }
 
             return cachedData;
@@ -75,10 +75,16 @@ namespace Risk.API.Helpers
             {
                 // Data not in cache, fetch and cache it
                 cachedData = _configuration.GetValue<T>(key);
-                _cache.Set<T>(key, cachedData, DateTimeOffset.Now.AddMinutes(30));
+                _cache.Set<T>(key, cachedData, DateTimeOffset.Now.AddMinutes(CACHE_EXPIRATION_MINUTES));
             }
 
             return cachedData;
         }
+
+        public bool EnableMailSender { get => GetDbConfigValue("ENVIO_CORREOS_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
+        public bool EnablePushSender { get => GetDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
+        public bool EnableSMSSender { get => GetDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
+        public string AccessTokenValidationKey { get => GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"); set => throw new NotImplementedException(); }
+        public double MsjConfigurationWorkerExecuteDelaySeconds { get => GetFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds"); set => throw new System.NotImplementedException(); }
     }
 }

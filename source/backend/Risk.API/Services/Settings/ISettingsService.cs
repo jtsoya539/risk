@@ -22,11 +22,14 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Helpers
+namespace Risk.API.Services.Settings
 {
-    public interface ICacheHelper
+    public interface ISettingsService
     {
-        string GetDbConfigValue(string key);
-        T GetFileConfigValue<T>(string key);
+        bool EnableMailSender { get; set; }
+        bool EnablePushSender { get; set; }
+        bool EnableSMSSender { get; set; }
+        string AccessTokenValidationKey { get; set; }
+        double MsjConfigurationWorkerExecuteDelaySeconds { get; set; }
     }
 }
