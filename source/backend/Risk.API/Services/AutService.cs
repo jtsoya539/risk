@@ -23,7 +23,6 @@ SOFTWARE.
 */
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
@@ -31,6 +30,7 @@ using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Mappers;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Services
 {
@@ -58,8 +58,8 @@ namespace Risk.API.Services
         private const string NOMBRE_REGISTRAR_UBICACION = "REGISTRAR_UBICACION";
         private const string NOMBRE_VALIDAR_PERMISO = "VALIDAR_PERMISO";
 
-        public AutService(ILogger<AutService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
-            : base(logger, configuration, httpContextAccessor, dbConnectionFactory)
+        public AutService(ILogger<AutService> logger, ISettingsService settingsService, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(logger, settingsService, httpContextAccessor, dbConnectionFactory)
         {
         }
 

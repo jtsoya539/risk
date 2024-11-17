@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Risk.Common.Helpers;
 
@@ -36,19 +37,19 @@ namespace Risk.API.Services.Settings
         private readonly ILogger<SettingsService> _logger;
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _configuration;
-        private readonly IGenService _genService;
+        private readonly IServiceProvider _services;
 
-        public SettingsService(ILogger<SettingsService> logger, IMemoryCache cache, IConfiguration configuration, IGenService genService)
+        public SettingsService(ILogger<SettingsService> logger, IMemoryCache cache, IConfiguration configuration, IServiceProvider services)
         {
             _logger = logger;
             _cache = cache;
             _configuration = configuration;
-            _genService = genService;
+            _services = services;
         }
 
         public string GetDbConfigValue(string key)
         {
-            var respuesta = _genService.ValorParametro(key);
+            var respuesta = _services.GetRequiredService<IGenService>().ValorParametro(key);
             if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
                 _logger.LogError($"Error al obtener valor de parámetro {key}: {respuesta}");

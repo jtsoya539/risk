@@ -23,13 +23,13 @@ SOFTWARE.
 */
 
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Risk.API.Entities;
 using Risk.API.Helpers;
 using Risk.API.Mappers;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Services
 {
@@ -41,8 +41,8 @@ namespace Risk.API.Services
         private const string NOMBRE_LISTAR_CIUDADES = "LISTAR_CIUDADES";
         private const string NOMBRE_LISTAR_BARRIOS = "LISTAR_BARRIOS";
 
-        public GloService(ILogger<GenService> logger, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
-            : base(logger, configuration, httpContextAccessor, dbConnectionFactory)
+        public GloService(ILogger<GenService> logger, ISettingsService settingsService, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
+            : base(logger, settingsService, httpContextAccessor, dbConnectionFactory)
         {
         }
 
