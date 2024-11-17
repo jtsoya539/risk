@@ -46,35 +46,46 @@ namespace Risk.API.Services.Settings
             _genService = genService;
         }
 
-        // https://dev.to/bytehide/caching-in-net-full-guide-31j4
         public string GetDbConfigValue(string key)
+        {
+            var respuesta = _genService.ValorParametro(key);
+            if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+            {
+                _logger.LogError($"Error al obtener valor de parámetro {key}: {respuesta}");
+                return string.Empty;
+            }
+
+            return respuesta.Datos.Contenido;
+        }
+
+        public T GetFileConfigValue<T>(string key)
+        {
+            return _configuration.GetValue<T>(key);
+        }
+
+        // https://dev.to/bytehide/caching-in-net-full-guide-31j4
+        public string GetCachedDbConfigValue(string key)
         {
             var cachedDataFound = _cache.TryGetValue<string>(key, out string cachedData);
 
             if (!cachedDataFound)
             {
                 // Data not in cache, fetch and cache it
-                var respuesta = _genService.ValorParametro(key);
-                if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
-                {
-                    _logger.LogError($"Error al obtener valor de parámetro {key}: {respuesta}");
-                    return string.Empty;
-                }
-                cachedData = respuesta.Datos.Contenido;
+                cachedData = GetDbConfigValue(key);
                 _cache.Set<string>(key, cachedData, DateTimeOffset.Now.AddMinutes(CACHE_EXPIRATION_MINUTES));
             }
 
             return cachedData;
         }
 
-        public T GetFileConfigValue<T>(string key)
+        public T GetCachedFileConfigValue<T>(string key)
         {
             var cachedDataFound = _cache.TryGetValue<T>(key, out T cachedData);
 
             if (!cachedDataFound)
             {
                 // Data not in cache, fetch and cache it
-                cachedData = _configuration.GetValue<T>(key);
+                cachedData = GetFileConfigValue<T>(key);
                 _cache.Set<T>(key, cachedData, DateTimeOffset.Now.AddMinutes(CACHE_EXPIRATION_MINUTES));
             }
 
@@ -82,33 +93,33 @@ namespace Risk.API.Services.Settings
         }
 
         #region Db Settings
-        public bool EnableMailSender { get => GetDbConfigValue("ENVIO_CORREOS_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
-        public bool EnablePushSender { get => GetDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
-        public bool EnableSMSSender { get => GetDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
-        public string AccessTokenValidationKey { get => GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"); set => throw new NotImplementedException(); }
-        public string GoogleTokenIssuer { get => _genService.ValorParametro("GOOGLE_EMISOR_TOKEN").Datos.Contenido; set => throw new NotImplementedException(); }
-        public string GoogleTokenAudience { get => _genService.ValorParametro("GOOGLE_IDENTIFICADOR_CLIENTE").Datos.Contenido; set => throw new NotImplementedException(); }
+        public bool EnableMailSender { get => GetCachedDbConfigValue("ENVIO_CORREOS_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
+        public bool EnablePushSender { get => GetCachedDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
+        public bool EnableSMSSender { get => GetCachedDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
+        public string AccessTokenValidationKey { get => GetCachedDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"); set => throw new NotImplementedException(); }
+        public string GoogleTokenIssuer { get => GetDbConfigValue("GOOGLE_EMISOR_TOKEN"); set => throw new NotImplementedException(); }
+        public string GoogleTokenAudience { get => GetDbConfigValue("GOOGLE_IDENTIFICADOR_CLIENTE"); set => throw new NotImplementedException(); }
         #endregion
 
         #region File Settings
-        public double MsjConfigurationWorkerExecuteDelaySeconds { get => GetFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds"); set => throw new System.NotImplementedException(); }
+        public double MsjConfigurationWorkerExecuteDelaySeconds { get => GetCachedFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds"); set => throw new System.NotImplementedException(); }
         // Gmail
-        public string MsjConfigurationGmailMailboxFromName { get => _configuration["MsjConfiguration:Gmail:MailboxFromName"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailMailboxFromAddress { get => _configuration["MsjConfiguration:Gmail:MailboxFromAddress"]; set => throw new NotImplementedException(); }
-        public bool MsjConfigurationGmailEnableOAuth2 { get => _configuration.GetValue<bool>("MsjConfiguration:Gmail:EnableOAuth2"); set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailUserName { get => _configuration["MsjConfiguration:Gmail:UserName"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailPassword { get => _configuration["MsjConfiguration:Gmail:Password"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailUserId { get => _configuration["MsjConfiguration:Gmail:UserId"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailClientId { get => _configuration["MsjConfiguration:Gmail:ClientId"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailClientSecret { get => _configuration["MsjConfiguration:Gmail:ClientSecret"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationGmailCredentialLocation { get => _configuration["MsjConfiguration:Gmail:CredentialLocation"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailMailboxFromName { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:MailboxFromName"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailMailboxFromAddress { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:MailboxFromAddress"); set => throw new NotImplementedException(); }
+        public bool MsjConfigurationGmailEnableOAuth2 { get => GetFileConfigValue<bool>("MsjConfiguration:Gmail:EnableOAuth2"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailUserName { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:UserName"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailPassword { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:Password"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailUserId { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:UserId"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailClientId { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:ClientId"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailClientSecret { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:ClientSecret"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailCredentialLocation { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:CredentialLocation"); set => throw new NotImplementedException(); }
         // NotificationHub
-        public string MsjConfigurationNotificationHubConnectionString { get => _configuration["MsjConfiguration:NotificationHub:ConnectionString"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationNotificationHubNotificationHubPath { get => _configuration["MsjConfiguration:NotificationHub:NotificationHubPath"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationNotificationHubConnectionString { get => GetFileConfigValue<string>("MsjConfiguration:NotificationHub:ConnectionString"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationNotificationHubNotificationHubPath { get => GetFileConfigValue<string>("MsjConfiguration:NotificationHub:NotificationHubPath"); set => throw new NotImplementedException(); }
         // Twilio
-        public string MsjConfigurationTwilioAccountSid { get => _configuration["MsjConfiguration:Twilio:AccountSid"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationTwilioAuthToken { get => _configuration["MsjConfiguration:Twilio:AuthToken"]; set => throw new NotImplementedException(); }
-        public string MsjConfigurationTwilioPhoneNumberFrom { get => _configuration["MsjConfiguration:Twilio:PhoneNumberFrom"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationTwilioAccountSid { get => GetFileConfigValue<string>("MsjConfiguration:Twilio:AccountSid"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationTwilioAuthToken { get => GetFileConfigValue<string>("MsjConfiguration:Twilio:AuthToken"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationTwilioPhoneNumberFrom { get => GetFileConfigValue<string>("MsjConfiguration:Twilio:PhoneNumberFrom"); set => throw new NotImplementedException(); }
         #endregion
     }
 }
