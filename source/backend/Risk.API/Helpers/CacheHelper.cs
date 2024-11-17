@@ -49,9 +49,9 @@ namespace Risk.API.Helpers
 
         public string GetDbConfigValue(string key)
         {
-            var cachedData = _cache.Get<string>(key);
+            var cachedDataFound = _cache.TryGetValue<string>(key, out string cachedData);
 
-            if (cachedData == null)
+            if (!cachedDataFound)
             {
                 // Data not in cache, fetch and cache it
                 var respuesta = _genService.ValorParametro(key);
@@ -69,9 +69,9 @@ namespace Risk.API.Helpers
 
         public T GetFileConfigValue<T>(string key)
         {
-            var cachedData = _cache.Get<T>(key);
+            var cachedDataFound = _cache.TryGetValue<T>(key, out T cachedData);
 
-            if (cachedData == null)
+            if (!cachedDataFound)
             {
                 // Data not in cache, fetch and cache it
                 cachedData = _configuration.GetValue<T>(key);
