@@ -26,7 +26,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Util;
 using Google.Apis.Util.Store;
 using MailKit.Net.Smtp;
 using MailKit.Security;
@@ -45,6 +44,8 @@ namespace Risk.API.Senders
         // Gmail Configuration
         private string mailboxFromName;
         private string mailboxFromAddress;
+        private string userName;
+        private string password;
         private SmtpClient smtpClient;
         private SaslMechanismOAuth2 oAuth2;
 
@@ -94,7 +95,13 @@ namespace Risk.API.Senders
             }
             else
             {
-                await smtpClient.AuthenticateAsync(_configuration["MsjConfiguration:Gmail:UserName"], _configuration["MsjConfiguration:Gmail:Password"]);
+                userName = _configuration["MsjConfiguration:Gmail:UserName"];
+                password = _configuration["MsjConfiguration:Gmail:Password"];
+
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    await smtpClient.AuthenticateAsync(userName, password);
+                }
             }
         }
 
