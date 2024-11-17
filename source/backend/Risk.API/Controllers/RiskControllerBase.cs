@@ -29,21 +29,21 @@ using System.Net.Mime;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 
 namespace Risk.API.Controllers
 {
     public class RiskControllerBase : ControllerBase
     {
-        protected readonly IConfiguration _configuration;
+        protected readonly ISettingsService _settingsService;
         private readonly bool _enableHttpStatusCodes;
 
-        public RiskControllerBase(IConfiguration configuration)
+        public RiskControllerBase(ISettingsService settingsService)
         {
-            _configuration = configuration;
-            _enableHttpStatusCodes = _configuration.GetValue<bool>("EnableHttpStatusCodes");
+            _settingsService = settingsService;
+            _enableHttpStatusCodes = _settingsService.EnableHttpStatusCodes;
         }
 
         protected IActionResult ProcesarRespuesta<T>(Respuesta<T> respuesta)
@@ -80,7 +80,7 @@ namespace Risk.API.Controllers
                 contenido = GZipHelper.Decompress(Convert.FromBase64String(archivo.Contenido));
                 if (archivo.TipoMime.Contains("text/", StringComparison.OrdinalIgnoreCase))
                 {
-                    contenido = EncodingHelper.ConvertToUTF8(contenido, _configuration["OracleConfiguration:CharacterSet"]);
+                    contenido = EncodingHelper.ConvertToUTF8(contenido, _settingsService.OracleConfigurationCharacterSet);
                 }
             }
             else if (archivo.Url != null)

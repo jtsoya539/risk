@@ -26,10 +26,9 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Risk.API.Attributes;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -43,7 +42,7 @@ namespace Risk.API.Controllers
     {
         private readonly IGloService _gloService;
 
-        public GloController(IGloService gloService, IConfiguration configuration) : base(configuration)
+        public GloController(ISettingsService settingsService, IGloService gloService) : base(settingsService)
         {
             _gloService = gloService;
         }

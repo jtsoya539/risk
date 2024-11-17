@@ -36,6 +36,12 @@ namespace Risk.API.Services.Settings
         #endregion
 
         #region File Settings
+        // OracleConfiguration
+        string OracleConfigurationCharacterSet { get; set; }
+        //
+        string JwtSigningKey { get; set; }
+        bool EnableHttpStatusCodes { get; set; }
+        // MsjConfiguration
         double MsjConfigurationWorkerExecuteDelaySeconds { get; set; }
         // Gmail
         string MsjConfigurationGmailMailboxFromName { get; set; }

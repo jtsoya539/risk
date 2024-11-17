@@ -26,10 +26,10 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -44,7 +44,7 @@ namespace Risk.API.Controllers
         private readonly IMsjService _msjService;
         private readonly IMsjHelper _msjHelper;
 
-        public MsjController(IMsjService msjService, IMsjHelper msjHelper, IConfiguration configuration) : base(configuration)
+        public MsjController(ISettingsService settingsService, IMsjService msjService, IMsjHelper msjHelper) : base(settingsService)
         {
             _msjService = msjService;
             _msjHelper = msjHelper;

@@ -28,7 +28,6 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using Risk.API.Attributes;
 using Risk.API.Helpers;
@@ -46,14 +45,12 @@ namespace Risk.API.Controllers
     [ApiController]
     public class AutController : RiskControllerBase
     {
-        private readonly ISettingsService _settingsService;
         private readonly IAutService _autService;
         private readonly IGenService _genService;
         private readonly INotificationHubClientConnection _notificationHubClientConnection;
 
-        public AutController(ISettingsService settingsService, IAutService autService, IGenService genService, INotificationHubClientConnection notificationHubClientConnection, IConfiguration configuration) : base(configuration)
+        public AutController(ISettingsService settingsService, IAutService autService, IGenService genService, INotificationHubClientConnection notificationHubClientConnection) : base(settingsService)
         {
-            _settingsService = settingsService;
             _autService = autService;
             _genService = genService;
             _notificationHubClientConnection = notificationHubClientConnection;

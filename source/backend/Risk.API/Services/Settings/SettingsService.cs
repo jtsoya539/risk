@@ -102,6 +102,12 @@ namespace Risk.API.Services.Settings
         #endregion
 
         #region File Settings
+        // OracleConfiguration
+        public string OracleConfigurationCharacterSet { get => GetFileConfigValue<string>("OracleConfiguration:CharacterSet"); set => throw new NotImplementedException(); }
+        //
+        public string JwtSigningKey { get => GetFileConfigValue<string>("JwtSigningKey"); set => throw new NotImplementedException(); }
+        public bool EnableHttpStatusCodes { get => GetFileConfigValue<bool>("EnableHttpStatusCodes"); set => throw new NotImplementedException(); }
+        // MsjConfiguration
         public double MsjConfigurationWorkerExecuteDelaySeconds { get => GetCachedFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds"); set => throw new System.NotImplementedException(); }
         // Gmail
         public string MsjConfigurationGmailMailboxFromName { get => GetFileConfigValue<string>("MsjConfiguration:Gmail:MailboxFromName"); set => throw new NotImplementedException(); }
