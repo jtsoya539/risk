@@ -25,10 +25,10 @@ SOFTWARE.
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Senders
 {
@@ -41,21 +41,21 @@ namespace Risk.API.Senders
         private string password;
         private SmtpClient smtpClient;
 
-        public SmtpSender(ILogger<SmtpSender> logger, IConfiguration configuration)
-            : base(logger, configuration)
+        public SmtpSender(ILogger<SmtpSender> logger, ISettingsService settingsService)
+            : base(logger, settingsService)
         {
         }
 
         public async Task Configurar()
         {
-            mailboxFromName = _configuration["MsjConfiguration:Gmail:MailboxFromName"];
-            mailboxFromAddress = _configuration["MsjConfiguration:Gmail:MailboxFromAddress"];
+            mailboxFromName = _settingsService.MsjConfigurationGmailMailboxFromName;
+            mailboxFromAddress = _settingsService.MsjConfigurationGmailMailboxFromAddress;
 
             smtpClient = new SmtpClient();
             smtpClient.Connect("mail.smtpbucket.com", 8025, SecureSocketOptions.Auto);
 
-            userName = _configuration["MsjConfiguration:Gmail:UserName"];
-            password = _configuration["MsjConfiguration:Gmail:Password"];
+            userName = _settingsService.MsjConfigurationGmailUserName;
+            password = _settingsService.MsjConfigurationGmailPassword;
 
             if (!string.IsNullOrEmpty(userName))
             {

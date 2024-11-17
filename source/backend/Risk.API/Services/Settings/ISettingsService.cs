@@ -37,6 +37,23 @@ namespace Risk.API.Services.Settings
 
         #region File Settings
         double MsjConfigurationWorkerExecuteDelaySeconds { get; set; }
+        // Gmail
+        string MsjConfigurationGmailMailboxFromName { get; set; }
+        string MsjConfigurationGmailMailboxFromAddress { get; set; }
+        bool MsjConfigurationGmailEnableOAuth2 { get; set; }
+        string MsjConfigurationGmailUserName { get; set; }
+        string MsjConfigurationGmailPassword { get; set; }
+        string MsjConfigurationGmailUserId { get; set; }
+        string MsjConfigurationGmailClientId { get; set; }
+        string MsjConfigurationGmailClientSecret { get; set; }
+        string MsjConfigurationGmailCredentialLocation { get; set; }
+        // NotificationHub
+        string MsjConfigurationNotificationHubConnectionString { get; set; }
+        string MsjConfigurationNotificationHubNotificationHubPath { get; set; }
+        // Twilio
+        string MsjConfigurationTwilioAccountSid { get; set; }
+        string MsjConfigurationTwilioAuthToken { get; set; }
+        string MsjConfigurationTwilioPhoneNumberFrom { get; set; }
         #endregion
     }
 }

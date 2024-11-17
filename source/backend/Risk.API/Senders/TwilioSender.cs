@@ -23,9 +23,9 @@ SOFTWARE.
 */
 
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
@@ -37,15 +37,15 @@ namespace Risk.API.Senders
         // Twilio Configuration
         private string phoneNumberFrom;
 
-        public TwilioSender(ILogger<TwilioSender> logger, IConfiguration configuration)
-            : base(logger, configuration)
+        public TwilioSender(ILogger<TwilioSender> logger, ISettingsService settingsService)
+            : base(logger, settingsService)
         {
         }
 
         public Task Configurar()
         {
-            TwilioClient.Init(_configuration["MsjConfiguration:Twilio:AccountSid"], _configuration["MsjConfiguration:Twilio:AuthToken"]);
-            phoneNumberFrom = _configuration["MsjConfiguration:Twilio:PhoneNumberFrom"];
+            TwilioClient.Init(_settingsService.MsjConfigurationTwilioAccountSid, _settingsService.MsjConfigurationTwilioAuthToken);
+            phoneNumberFrom = _settingsService.MsjConfigurationTwilioPhoneNumberFrom;
             return Task.CompletedTask;
         }
 

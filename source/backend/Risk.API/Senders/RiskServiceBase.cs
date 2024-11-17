@@ -22,20 +22,20 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Senders
 {
     public class RiskSenderBase
     {
         protected readonly ILogger<RiskSenderBase> _logger;
-        protected readonly IConfiguration _configuration;
+        protected readonly ISettingsService _settingsService;
 
-        public RiskSenderBase(ILogger<RiskSenderBase> logger, IConfiguration configuration)
+        public RiskSenderBase(ILogger<RiskSenderBase> logger, ISettingsService settingsService)
         {
             _logger = logger;
-            _configuration = configuration;
+            _settingsService = settingsService;
         }
     }
 }

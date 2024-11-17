@@ -81,12 +81,34 @@ namespace Risk.API.Services.Settings
             return cachedData;
         }
 
+        #region Db Settings
         public bool EnableMailSender { get => GetDbConfigValue("ENVIO_CORREOS_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
         public bool EnablePushSender { get => GetDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
         public bool EnableSMSSender { get => GetDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
         public string AccessTokenValidationKey { get => GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"); set => throw new NotImplementedException(); }
         public string GoogleTokenIssuer { get => _genService.ValorParametro("GOOGLE_EMISOR_TOKEN").Datos.Contenido; set => throw new NotImplementedException(); }
         public string GoogleTokenAudience { get => _genService.ValorParametro("GOOGLE_IDENTIFICADOR_CLIENTE").Datos.Contenido; set => throw new NotImplementedException(); }
+        #endregion
+
+        #region File Settings
         public double MsjConfigurationWorkerExecuteDelaySeconds { get => GetFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds"); set => throw new System.NotImplementedException(); }
+        // Gmail
+        public string MsjConfigurationGmailMailboxFromName { get => _configuration["MsjConfiguration:Gmail:MailboxFromName"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailMailboxFromAddress { get => _configuration["MsjConfiguration:Gmail:MailboxFromAddress"]; set => throw new NotImplementedException(); }
+        public bool MsjConfigurationGmailEnableOAuth2 { get => _configuration.GetValue<bool>("MsjConfiguration:Gmail:EnableOAuth2"); set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailUserName { get => _configuration["MsjConfiguration:Gmail:UserName"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailPassword { get => _configuration["MsjConfiguration:Gmail:Password"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailUserId { get => _configuration["MsjConfiguration:Gmail:UserId"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailClientId { get => _configuration["MsjConfiguration:Gmail:ClientId"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailClientSecret { get => _configuration["MsjConfiguration:Gmail:ClientSecret"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationGmailCredentialLocation { get => _configuration["MsjConfiguration:Gmail:CredentialLocation"]; set => throw new NotImplementedException(); }
+        // NotificationHub
+        public string MsjConfigurationNotificationHubConnectionString { get => _configuration["MsjConfiguration:NotificationHub:ConnectionString"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationNotificationHubNotificationHubPath { get => _configuration["MsjConfiguration:NotificationHub:NotificationHubPath"]; set => throw new NotImplementedException(); }
+        // Twilio
+        public string MsjConfigurationTwilioAccountSid { get => _configuration["MsjConfiguration:Twilio:AccountSid"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationTwilioAuthToken { get => _configuration["MsjConfiguration:Twilio:AuthToken"]; set => throw new NotImplementedException(); }
+        public string MsjConfigurationTwilioPhoneNumberFrom { get => _configuration["MsjConfiguration:Twilio:PhoneNumberFrom"]; set => throw new NotImplementedException(); }
+        #endregion
     }
 }
