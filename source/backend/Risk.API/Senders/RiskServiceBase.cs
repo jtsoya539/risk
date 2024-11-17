@@ -22,21 +22,20 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Services.Settings
-{
-    public interface ISettingsService
-    {
-        #region Db Settings
-        bool EnableMailSender { get; set; }
-        bool EnablePushSender { get; set; }
-        bool EnableSMSSender { get; set; }
-        string AccessTokenValidationKey { get; set; }
-        string GoogleTokenIssuer { get; set; }
-        string GoogleTokenAudience { get; set; }
-        #endregion
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-        #region File Settings
-        double MsjConfigurationWorkerExecuteDelaySeconds { get; set; }
-        #endregion
+namespace Risk.API.Senders
+{
+    public class RiskSenderBase
+    {
+        protected readonly ILogger<RiskSenderBase> _logger;
+        protected readonly IConfiguration _configuration;
+
+        public RiskSenderBase(ILogger<RiskSenderBase> logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            _configuration = configuration;
+        }
     }
 }

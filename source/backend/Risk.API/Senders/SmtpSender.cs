@@ -32,11 +32,8 @@ using Risk.API.Models;
 
 namespace Risk.API.Senders
 {
-    public class SmtpSender : IMsjSender<Correo>
+    public class SmtpSender : RiskSenderBase, IMsjSender<Correo>
     {
-        private readonly ILogger<SmtpSender> _logger;
-        private readonly IConfiguration _configuration;
-
         // SMTP Configuration
         private string mailboxFromName;
         private string mailboxFromAddress;
@@ -45,9 +42,8 @@ namespace Risk.API.Senders
         private SmtpClient smtpClient;
 
         public SmtpSender(ILogger<SmtpSender> logger, IConfiguration configuration)
+            : base(logger, configuration)
         {
-            _logger = logger;
-            _configuration = configuration;
         }
 
         public async Task Configurar()

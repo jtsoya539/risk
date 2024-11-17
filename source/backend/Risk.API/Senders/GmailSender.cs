@@ -36,11 +36,8 @@ using Risk.API.Models;
 
 namespace Risk.API.Senders
 {
-    public class GmailSender : IMsjSender<Correo>
+    public class GmailSender : RiskSenderBase, IMsjSender<Correo>
     {
-        private readonly ILogger<GmailSender> _logger;
-        private readonly IConfiguration _configuration;
-
         // Gmail Configuration
         private string mailboxFromName;
         private string mailboxFromAddress;
@@ -50,9 +47,8 @@ namespace Risk.API.Senders
         private SaslMechanismOAuth2 oAuth2;
 
         public GmailSender(ILogger<GmailSender> logger, IConfiguration configuration)
+            : base(logger, configuration)
         {
-            _logger = logger;
-            _configuration = configuration;
         }
 
         private async Task ConfigurarOAuth2Async()

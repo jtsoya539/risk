@@ -32,18 +32,14 @@ using Risk.API.Models;
 
 namespace Risk.API.Senders
 {
-    public class NotificationHubSender : IMsjSender<Notificacion>
+    public class NotificationHubSender : RiskSenderBase, IMsjSender<Notificacion>
     {
-        private readonly ILogger<NotificationHubSender> _logger;
-        private readonly IConfiguration _configuration;
-
         // Notification Hub Configuration
         private NotificationHubClient hubClient;
 
         public NotificationHubSender(ILogger<NotificationHubSender> logger, IConfiguration configuration)
+            : base(logger, configuration)
         {
-            _logger = logger;
-            _configuration = configuration;
         }
 
         public Task Configurar()

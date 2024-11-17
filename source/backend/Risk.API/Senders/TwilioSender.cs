@@ -32,18 +32,14 @@ using Twilio.Types;
 
 namespace Risk.API.Senders
 {
-    public class TwilioSender : IMsjSender<Mensaje>
+    public class TwilioSender : RiskSenderBase, IMsjSender<Mensaje>
     {
-        private readonly ILogger<TwilioSender> _logger;
-        private readonly IConfiguration _configuration;
-
         // Twilio Configuration
         private string phoneNumberFrom;
 
         public TwilioSender(ILogger<TwilioSender> logger, IConfiguration configuration)
+            : base(logger, configuration)
         {
-            _logger = logger;
-            _configuration = configuration;
         }
 
         public Task Configurar()
