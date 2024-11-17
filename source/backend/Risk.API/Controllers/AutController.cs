@@ -397,7 +397,7 @@ namespace Risk.API.Controllers
         public IActionResult IniciarSesionGoogle([FromBody] IniciarSesionGoogleRequestBody requestBody)
         {
             // Obtener datos del JWT
-            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _settingsService);
 
             // Registrar el usuario
             var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
@@ -424,7 +424,7 @@ namespace Risk.API.Controllers
         {
             // Obtener datos del JWT
             string aliasUsuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
-            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _genService);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenGoogle(requestBody.IdToken, _settingsService);
 
             var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _settingsService);
 
@@ -441,7 +441,7 @@ namespace Risk.API.Controllers
         public IActionResult IniciarSesionFacebook([FromBody] IniciarSesionFacebookRequestBody requestBody)
         {
             // Obtener datos del JWT
-            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _genService);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _settingsService);
 
             // Registrar el usuario
             var respRegistrarUsuario = _autService.RegistrarUsuario(usuario.Alias, null, usuario.Nombre, usuario.Apellido, usuario.DireccionCorreo, null, usuario.Origen, usuario.IdExterno);
@@ -468,7 +468,7 @@ namespace Risk.API.Controllers
         {
             // Obtener datos del JWT
             string aliasUsuario = TokenHelper.ObtenerUsuarioDeAccessToken(requestBody.AccessToken);
-            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _genService);
+            UsuarioExterno usuario = TokenHelper.ObtenerUsuarioDeTokenFacebook(requestBody.FbToken, _settingsService);
 
             var accessTokenNuevo = TokenHelper.GenerarAccessToken(aliasUsuario, _autService, _settingsService);
 

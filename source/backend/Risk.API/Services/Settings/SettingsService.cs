@@ -85,6 +85,8 @@ namespace Risk.API.Services.Settings
         public bool EnablePushSender { get => GetDbConfigValue("ENVIO_NOTIFICACIONES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
         public bool EnableSMSSender { get => GetDbConfigValue("ENVIO_MENSAJES_ACTIVO").Equals("S"); set => throw new NotImplementedException(); }
         public string AccessTokenValidationKey { get => GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"); set => throw new NotImplementedException(); }
+        public string GoogleTokenIssuer { get => _genService.ValorParametro("GOOGLE_EMISOR_TOKEN").Datos.Contenido; set => throw new NotImplementedException(); }
+        public string GoogleTokenAudience { get => _genService.ValorParametro("GOOGLE_IDENTIFICADOR_CLIENTE").Datos.Contenido; set => throw new NotImplementedException(); }
         public double MsjConfigurationWorkerExecuteDelaySeconds { get => GetFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds"); set => throw new System.NotImplementedException(); }
     }
 }

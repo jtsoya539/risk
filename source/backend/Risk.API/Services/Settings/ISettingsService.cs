@@ -30,6 +30,8 @@ namespace Risk.API.Services.Settings
         bool EnablePushSender { get; set; }
         bool EnableSMSSender { get; set; }
         string AccessTokenValidationKey { get; set; }
+        string GoogleTokenIssuer { get; set; }
+        string GoogleTokenAudience { get; set; }
         double MsjConfigurationWorkerExecuteDelaySeconds { get; set; }
     }
 }

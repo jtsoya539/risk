@@ -161,7 +161,7 @@ namespace Risk.API.Helpers
             return usuario;
         }
 
-        public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken, IGenService genService)
+        public static UsuarioExterno ObtenerUsuarioDeTokenGoogle(string idToken, ISettingsService settingsService)
         {
             // Validamos firma del token
             var validPayload = GoogleJsonWebSignature.ValidateAsync(idToken);
@@ -183,13 +183,11 @@ namespace Risk.API.Helpers
                 string audiencia = jwtToken.Claims.First(claim => claim.Type == "aud").Value;
 
                 // Validamos el emisor del token
-                var respValorEmisor = genService.ValorParametro("GOOGLE_EMISOR_TOKEN");
-                if (!respValorEmisor.Codigo.Equals(RiskConstants.CODIGO_OK) || !emisorToken.Contains(respValorEmisor.Datos.Contenido, StringComparison.OrdinalIgnoreCase))
+                if (!emisorToken.Contains(settingsService.GoogleTokenIssuer, StringComparison.OrdinalIgnoreCase))
                     throw new SecurityTokenValidationException("Emisor de token no válido.");
 
                 // Validamos el cliente del token
-                var respValorCliente = genService.ValorParametro("GOOGLE_IDENTIFICADOR_CLIENTE");
-                if (!respValorCliente.Codigo.Equals(RiskConstants.CODIGO_OK) || respValorCliente.Datos.Contenido != audiencia)
+                if (settingsService.GoogleTokenAudience != audiencia)
                     throw new SecurityTokenValidationException("Cliente de token no válido.");
 
                 MailAddress addr = new MailAddress(direccionCorreo);
@@ -210,7 +208,7 @@ namespace Risk.API.Helpers
             return usuario;
         }
 
-        public static UsuarioExterno ObtenerUsuarioDeTokenFacebook(string accessToken, IGenService genService)
+        public static UsuarioExterno ObtenerUsuarioDeTokenFacebook(string accessToken, ISettingsService settingsService)
         {
             UsuarioExterno usuario = null;
             try
