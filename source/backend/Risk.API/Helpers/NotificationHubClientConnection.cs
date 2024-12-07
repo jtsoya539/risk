@@ -23,20 +23,20 @@ SOFTWARE.
 */
 
 using Microsoft.Azure.NotificationHubs;
-using Microsoft.Extensions.Configuration;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Helpers
 {
     public class NotificationHubClientConnection : INotificationHubClientConnection
     {
-        private readonly IConfiguration _configuration;
+        private readonly ISettingsService _settingsService;
         public NotificationHubClient Hub { get; set; }
 
-        public NotificationHubClientConnection(IConfiguration configuration)
+        public NotificationHubClientConnection(ISettingsService settingsService)
         {
-            _configuration = configuration;
-            string connectionString = _configuration["MsjConfiguration:NotificationHub:ConnectionString"];
-            string notificationHubPath = _configuration["MsjConfiguration:NotificationHub:NotificationHubPath"];
+            _settingsService = settingsService;
+            string connectionString = _settingsService.MsjConfigurationNotificationHubConnectionString;
+            string notificationHubPath = _settingsService.MsjConfigurationNotificationHubNotificationHubPath;
             if (!connectionString.Equals(string.Empty) && !notificationHubPath.Equals(string.Empty))
             {
                 Hub = NotificationHubClient.CreateClientFromConnectionString(connectionString, notificationHubPath);

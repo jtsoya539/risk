@@ -23,44 +23,55 @@ SOFTWARE.
 */
 
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
+using MailKit.Security;
 using Microsoft.Extensions.Logging;
+using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services.Settings;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.Types;
 
 namespace Risk.API.Senders
 {
-    public class TwilioSender : RiskSenderBase, IMsjSender<Mensaje>
+    public class SmtpSender : RiskSenderBase, IMsjSender<Correo>
     {
-        // Twilio Configuration
-        private string phoneNumberFrom;
+        // SMTP Configuration
+        private string mailboxFromName;
+        private string mailboxFromAddress;
+        private string userName;
+        private string password;
+        private SmtpClient smtpClient;
 
-        public TwilioSender(ILogger<TwilioSender> logger, ISettingsService settingsService)
+        public SmtpSender(ILogger<SmtpSender> logger, ISettingsService settingsService)
             : base(logger, settingsService)
         {
         }
 
-        public Task Configurar()
+        public async Task Configurar()
         {
-            TwilioClient.Init(_settingsService.MsjConfigurationTwilioAccountSid, _settingsService.MsjConfigurationTwilioAuthToken);
-            phoneNumberFrom = _settingsService.MsjConfigurationTwilioPhoneNumberFrom;
-            return Task.CompletedTask;
+            mailboxFromName = _settingsService.MsjConfigurationGmailMailboxFromName;
+            mailboxFromAddress = _settingsService.MsjConfigurationGmailMailboxFromAddress;
+
+            smtpClient = new SmtpClient();
+            smtpClient.Connect("mail.smtpbucket.com", 8025, SecureSocketOptions.Auto);
+
+            userName = _settingsService.MsjConfigurationGmailUserName;
+            password = _settingsService.MsjConfigurationGmailPassword;
+
+            if (!string.IsNullOrEmpty(userName))
+            {
+                await smtpClient.AuthenticateAsync(userName, password);
+            }
         }
 
-        public Task Desconfigurar()
+        public async Task Desconfigurar()
         {
-            return Task.CompletedTask;
+            await smtpClient.DisconnectAsync(true);
         }
 
-        public async Task Enviar(Mensaje msj)
+        public async Task Enviar(Correo msj)
         {
-            var message = await MessageResource.CreateAsync(
-                from: new PhoneNumber(phoneNumberFrom),
-                to: new PhoneNumber(msj.NumeroTelefono),
-                body: msj.Contenido
-            );
+            var message = MailHelper.GetMimeMessageFromCorreo(msj);
+            await smtpClient.SendAsync(message);
         }
     }
 }

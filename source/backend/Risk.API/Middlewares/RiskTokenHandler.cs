@@ -26,22 +26,22 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
-using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 
 namespace Risk.API.Middlewares
 {
     public class RiskTokenHandler : TokenHandler
     {
-        private readonly ICacheHelper _cacheHelper;
+        private readonly ISettingsService _settingsService;
         private readonly IAutService _autService;
         private JwtSecurityTokenHandler _tokenHandler;
 
-        public RiskTokenHandler(ICacheHelper cacheHelper, IAutService autService)
+        public RiskTokenHandler(ISettingsService settingsService, IAutService autService)
         {
-            _cacheHelper = cacheHelper;
+            _settingsService = settingsService;
             _autService = autService;
             _tokenHandler = new JwtSecurityTokenHandler();
         }
@@ -50,7 +50,7 @@ namespace Risk.API.Middlewares
         {
             TokenValidationResult tokenValidationResult;
 
-            var signingKey = Encoding.ASCII.GetBytes(_cacheHelper.GetDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"));
+            var signingKey = Encoding.ASCII.GetBytes(_settingsService.AccessTokenValidationKey);
             validationParameters.IssuerSigningKey = new SymmetricSecurityKey(signingKey);
 
             tokenValidationResult = await _tokenHandler.ValidateTokenAsync(token, validationParameters);

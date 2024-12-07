@@ -26,52 +26,49 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Util;
 using Google.Apis.Util.Store;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Risk.API.Helpers;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Senders
 {
-    public class GmailSender : IMsjSender<Correo>
+    public class GmailSender : RiskSenderBase, IMsjSender<Correo>
     {
-        private readonly ILogger<GmailSender> _logger;
-        private readonly IConfiguration _configuration;
-
         // Gmail Configuration
         private string mailboxFromName;
         private string mailboxFromAddress;
+        private string userName;
+        private string password;
         private SmtpClient smtpClient;
         private SaslMechanismOAuth2 oAuth2;
 
-        public GmailSender(ILogger<GmailSender> logger, IConfiguration configuration)
+        public GmailSender(ILogger<GmailSender> logger, ISettingsService settingsService)
+            : base(logger, settingsService)
         {
-            _logger = logger;
-            _configuration = configuration;
         }
 
         private async Task ConfigurarOAuth2Async()
         {
             var clientSecrets = new ClientSecrets
             {
-                ClientId = _configuration["MsjConfiguration:Gmail:ClientId"],
-                ClientSecret = _configuration["MsjConfiguration:Gmail:ClientSecret"]
+                ClientId = _settingsService.MsjConfigurationGmailClientId,
+                ClientSecret = _settingsService.MsjConfigurationGmailClientSecret
             };
 
             var codeFlow = new GoogleAuthorizationCodeFlow(new GoogleAuthorizationCodeFlow.Initializer
             {
-                DataStore = new FileDataStore(_configuration["MsjConfiguration:Gmail:CredentialLocation"], true),
+                DataStore = new FileDataStore(_settingsService.MsjConfigurationGmailCredentialLocation, true),
                 Scopes = new[] { "https://mail.google.com/" },
                 ClientSecrets = clientSecrets
             });
             var codeReceiver = new LocalServerCodeReceiver();
 
             var authCode = new AuthorizationCodeInstalledApp(codeFlow, codeReceiver);
-            var credential = await authCode.AuthorizeAsync(_configuration["MsjConfiguration:Gmail:UserId"], CancellationToken.None);
+            var credential = await authCode.AuthorizeAsync(_settingsService.MsjConfigurationGmailUserId, CancellationToken.None);
 
             if (credential.Token.IsStale)
                 await credential.RefreshTokenAsync(CancellationToken.None);
@@ -81,20 +78,26 @@ namespace Risk.API.Senders
 
         public async Task Configurar()
         {
-            mailboxFromName = _configuration["MsjConfiguration:Gmail:MailboxFromName"];
-            mailboxFromAddress = _configuration["MsjConfiguration:Gmail:MailboxFromAddress"];
+            mailboxFromName = _settingsService.MsjConfigurationGmailMailboxFromName;
+            mailboxFromAddress = _settingsService.MsjConfigurationGmailMailboxFromAddress;
 
             smtpClient = new SmtpClient();
             smtpClient.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
 
-            if (_configuration.GetValue<bool>("MsjConfiguration:Gmail:EnableOAuth2"))
+            if (_settingsService.MsjConfigurationGmailEnableOAuth2)
             {
                 await ConfigurarOAuth2Async();
                 await smtpClient.AuthenticateAsync(oAuth2);
             }
             else
             {
-                await smtpClient.AuthenticateAsync(_configuration["MsjConfiguration:Gmail:UserName"], _configuration["MsjConfiguration:Gmail:Password"]);
+                userName = _settingsService.MsjConfigurationGmailUserName;
+                password = _settingsService.MsjConfigurationGmailPassword;
+
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    await smtpClient.AuthenticateAsync(userName, password);
+                }
             }
         }
 

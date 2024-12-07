@@ -31,20 +31,21 @@ using Microsoft.Extensions.Logging;
 using Risk.API.Helpers;
 using Risk.API.Models;
 using Risk.API.Senders;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Workers
 {
     public class MailWorker : BackgroundService
     {
         private readonly ILogger<MailWorker> _logger;
-        private readonly ICacheHelper _cacheHelper;
+        private readonly ISettingsService _settingsService;
         private readonly IMsjHelper _msjHelper;
         private readonly IMsjSender<Correo> _msjSender;
 
-        public MailWorker(ILogger<MailWorker> logger, ICacheHelper cacheHelper, IMsjHelper msjHelper, IMsjSender<Correo> msjSender)
+        public MailWorker(ILogger<MailWorker> logger, ISettingsService settingsService, IMsjHelper msjHelper, IMsjSender<Correo> msjSender)
         {
             _logger = logger;
-            _cacheHelper = cacheHelper;
+            _settingsService = settingsService;
             _msjHelper = msjHelper;
             _msjSender = msjSender;
         }
@@ -80,7 +81,7 @@ namespace Risk.API.Workers
                     await _msjSender.Desconfigurar();
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(_cacheHelper.GetFileConfigValue<double>("MsjConfiguration:WorkerExecuteDelaySeconds")), stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(_settingsService.MsjConfigurationWorkerExecuteDelaySeconds), stoppingToken);
             }
         }
     }

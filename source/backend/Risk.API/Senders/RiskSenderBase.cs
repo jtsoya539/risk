@@ -22,11 +22,20 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-namespace Risk.API.Helpers
+using Microsoft.Extensions.Logging;
+using Risk.API.Services.Settings;
+
+namespace Risk.API.Senders
 {
-    public interface ICacheHelper
+    public class RiskSenderBase
     {
-        string GetDbConfigValue(string key);
-        T GetFileConfigValue<T>(string key);
+        protected readonly ILogger<RiskSenderBase> _logger;
+        protected readonly ISettingsService _settingsService;
+
+        public RiskSenderBase(ILogger<RiskSenderBase> logger, ISettingsService settingsService)
+        {
+            _logger = logger;
+            _settingsService = settingsService;
+        }
     }
 }

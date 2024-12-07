@@ -42,6 +42,7 @@ using Risk.API.Middlewares;
 using Risk.API.Models;
 using Risk.API.Senders;
 using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.API.Workers;
 using Risk.Common.Helpers;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -88,6 +89,10 @@ namespace Risk.API
 
             services.AddMemoryCache();
 
+            // Add Settings service
+            services.AddSingleton<ISettingsService, SettingsService>();
+
+            // Add Db services
             //services.AddDbContext<RiskDbContext>(options => options.UseOracle(oracleConnection));
             services.AddSingleton<IDbConnectionFactory, RiskDbConnectionFactory>();
             services.AddSingleton<INotificationHubClientConnection, NotificationHubClientConnection>();
@@ -98,7 +103,7 @@ namespace Risk.API
 
             // Add Msj helper and senders
             services.AddSingleton<IMsjHelper, MsjHelper>();
-            services.AddSingleton<IMsjSender<Correo>, GmailSender>();
+            services.AddSingleton<IMsjSender<Correo>, SmtpSender>();
             services.AddSingleton<IMsjSender<Notificacion>, NotificationHubSender>();
             services.AddSingleton<IMsjSender<Mensaje>, TwilioSender>();
 
@@ -109,9 +114,6 @@ namespace Risk.API
                 services.AddHostedService<PushWorker>();
             if (Configuration.GetValue<bool>("MsjConfiguration:EnableSMSWorker"))
                 services.AddHostedService<SMSWorker>();
-
-            // Add Cache helper
-            services.AddSingleton<ICacheHelper, CacheHelper>();
 
             services.AddSingleton<TokenHandler, RiskTokenHandler>();
             services.AddSingleton<IPostConfigureOptions<JwtBearerOptions>, RiskJwtBearerPostConfigureOptions>();

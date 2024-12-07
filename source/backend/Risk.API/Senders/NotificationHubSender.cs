@@ -25,32 +25,28 @@ SOFTWARE.
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.NotificationHubs;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Risk.API.Models;
+using Risk.API.Services.Settings;
 
 namespace Risk.API.Senders
 {
-    public class NotificationHubSender : IMsjSender<Notificacion>
+    public class NotificationHubSender : RiskSenderBase, IMsjSender<Notificacion>
     {
-        private readonly ILogger<NotificationHubSender> _logger;
-        private readonly IConfiguration _configuration;
-
         // Notification Hub Configuration
         private NotificationHubClient hubClient;
 
-        public NotificationHubSender(ILogger<NotificationHubSender> logger, IConfiguration configuration)
+        public NotificationHubSender(ILogger<NotificationHubSender> logger, ISettingsService settingsService)
+            : base(logger, settingsService)
         {
-            _logger = logger;
-            _configuration = configuration;
         }
 
         public Task Configurar()
         {
             hubClient = NotificationHubClient.CreateClientFromConnectionString(
-                _configuration["MsjConfiguration:NotificationHub:ConnectionString"],
-                _configuration["MsjConfiguration:NotificationHub:NotificationHubPath"]
+                _settingsService.MsjConfigurationNotificationHubConnectionString,
+                _settingsService.MsjConfigurationNotificationHubNotificationHubPath
             );
             return Task.CompletedTask;
         }
