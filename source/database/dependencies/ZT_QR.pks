@@ -1,7 +1,7 @@
-ï»¿create or replace PACKAGE      ZT_QR AUTHID DEFINER AS
+CREATE OR REPLACE PACKAGE ZT_QR AS
 /******************************************************************************
     Author:     Zoran Tica
-                ZT-TECH, racunalniï¿½ke storitve s.p.
+                ZT-TECH, racunalniške storitve s.p.
                 http://www.zt-tech.eu
     
     PURPOSE:    A package for QR code data and image generation 
