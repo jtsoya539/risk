@@ -1,4 +1,4 @@
-Ôªøprompt Importing table t_idiomas...
+prompt Importing table t_idiomas...
 set feedback off
 set define off
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
@@ -14,13 +14,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (4, 'Akan', 'ak', 'aka', 'aka');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (5, 'Am√°rico', 'am', 'amh', 'amh');
+values (5, 'Am·rico', 'am', 'amh', 'amh');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (6, '√Årabe', 'ar', 'ara', 'ara');
+values (6, '¡rabe', 'ar', 'ara', 'ara');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (7, 'Aragon√©s', 'an', 'arg', 'arg');
+values (7, 'AragonÈs', 'an', 'arg', 'arg');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (8, 'Assamese', 'as', 'asm', 'asm');
@@ -35,7 +35,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (11, 'Aymara', 'ay', 'aym', 'aym');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (12, 'Azerbaiy√°n', 'az', 'aze', 'aze');
+values (12, 'Azerbaiy·n', 'az', 'aze', 'aze');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (13, 'Bashkir', 'ba', 'bak', 'bak');
@@ -44,10 +44,10 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (14, 'Bambara', 'bm', 'bam', 'bam');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (15, 'Belar√∫s', 'be', 'bel', 'bel');
+values (15, 'Belar˙s', 'be', 'bel', 'bel');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (16, 'Bengal√≠', 'bn', 'ben', 'ben');
+values (16, 'BengalÌ', 'bn', 'ben', 'ben');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (17, 'Bihari', 'bh', 'bih', null);
@@ -56,7 +56,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (18, 'Bislama', 'bi', 'bis', 'bis');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (19, 'Tibetano est√°ndar, Tibetano, Central', 'bo', 'bod', 'tib');
+values (19, 'Tibetano est·ndar, Tibetano, Central', 'bo', 'bod', 'tib');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (20, 'Bosnia', 'bs', 'bos', 'bos');
@@ -65,10 +65,10 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (21, 'Breton', 'br', 'bre', 'bre');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (22, 'B√∫lgaro', 'bg', 'bul', 'bul');
+values (22, 'B˙lgaro', 'bg', 'bul', 'bul');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (23, 'Catal√°n', 'ca', 'cat', 'cat');
+values (23, 'Catal·n', 'ca', 'cat', 'cat');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (24, 'Checo', 'cs', 'ces', 'cze');
@@ -80,7 +80,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (26, 'Chechenio', 'ce', 'che', 'che');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (27, 'Antiguo eslavo eclesi√°stico, Iglesia eslava, eslavo eclesi√°stico, antiguo B√∫lgaro, Esclavo viejo', 'cu', 'chu', 'chu');
+values (27, 'Antiguo eslavo eclesi·stico, Iglesia eslava, eslavo eclesi·stico, antiguo B˙lgaro, Esclavo viejo', 'cu', 'chu', 'chu');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (28, 'Chuvashia', 'cv', 'chv', 'chv');
@@ -95,13 +95,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (31, 'Cree', 'cr', 'cre', 'cre');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (32, 'Gal√©s', 'cy', 'cym', 'wel');
+values (32, 'GalÈs', 'cy', 'cym', 'wel');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (33, 'Dan√©s', 'da', 'dan', 'dan');
+values (33, 'DanÈs', 'da', 'dan', 'dan');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (34, 'Alem√°n', 'de', 'deu', 'ger');
+values (34, 'Alem·n', 'de', 'deu', 'ger');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (35, 'Divehi, Dhivehi, Maldivas', 'dv', 'div', 'div');
@@ -113,7 +113,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (37, 'Griego Moderno', 'el', 'ell', 'gre');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (38, 'Ingl√©s', 'en', 'eng', 'eng');
+values (38, 'InglÈs', 'en', 'eng', 'eng');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (39, 'Esperanto', 'eo', 'epo', 'epo');
@@ -137,10 +137,10 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (45, 'Fiji', 'fj', 'fij', 'fij');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (46, 'Finland√©s', 'fi', 'fin', 'fin');
+values (46, 'FinlandÈs', 'fi', 'fin', 'fin');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (47, 'Franc√©s', 'fr', 'fra', 'fre');
+values (47, 'FrancÈs', 'fr', 'fra', 'fre');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (48, 'Oeste de Frisia', 'fy', 'fry', 'fry');
@@ -149,7 +149,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (49, 'Fula, Fulah, Pulaar, Pular', 'ff', 'ful', 'ful');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (50, 'Ga√©lico escoc√©s, ga√©lico', 'gd', 'gla', 'gla');
+values (50, 'GaÈlico escocÈs, gaÈlico', 'gd', 'gla', 'gla');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (51, 'Irlanda', 'ga', 'gle', 'gle');
@@ -161,7 +161,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (53, 'Manx', 'gv', 'glv', 'glv');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (54, 'Guaran√≠', 'gn', 'grn', 'grn');
+values (54, 'GuaranÌ', 'gn', 'grn', 'grn');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (55, 'Gujarati', 'gu', 'guj', 'guj');
@@ -188,7 +188,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (62, 'Croacia', 'hr', 'hrv', 'hrv');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (63, 'H√∫ngaro', 'hu', 'hun', 'hun');
+values (63, 'H˙ngaro', 'hu', 'hun', 'hun');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (64, 'Armenio', 'hy', 'hye', 'arm');
@@ -218,22 +218,22 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (72, 'Inupiaq', 'ik', 'ipk', 'ipk');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (73, 'Island√©s', 'is', 'isl', 'ice');
+values (73, 'IslandÈs', 'is', 'isl', 'ice');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (74, 'Italiano', 'it', 'ita', 'ita');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (75, 'Javan√©s', 'jv', 'jav', 'jav');
+values (75, 'JavanÈs', 'jv', 'jav', 'jav');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (76, 'Japon√©s', 'ja', 'jpn', 'jpn');
+values (76, 'JaponÈs', 'ja', 'jpn', 'jpn');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (77, 'Kalaallisut, Groenlandia', 'kl', 'kal', 'kal');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (78, 'Canar√©s', 'kn', 'kan', 'kan');
+values (78, 'CanarÈs', 'kn', 'kan', 'kan');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (79, 'Cachemira', 'ks', 'kas', 'kas');
@@ -245,7 +245,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (81, 'Kanuri', 'kr', 'kau', 'kau');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (82, 'Kazajst√°n', 'kk', 'kaz', 'kaz');
+values (82, 'Kazajst·n', 'kk', 'kaz', 'kaz');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (83, 'Khmer', 'km', 'khm', 'khm');
@@ -257,7 +257,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (85, 'Kinyarwanda', 'rw', 'kin', 'kin');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (86, 'Kirguises, Kirguist√°n', 'ky', 'kir', 'kir');
+values (86, 'Kirguises, Kirguist·n', 'ky', 'kir', 'kir');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (87, 'Komi', 'kv', 'kom', 'kom');
@@ -284,7 +284,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (94, 'Letonia', 'lv', 'lav', 'lav');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (95, 'Limburgu√©s, Limburgan, Limburger', 'li', 'lim', 'lim');
+values (95, 'LimburguÈs, Limburgan, Limburger', 'li', 'lim', 'lim');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (96, 'Lingala', 'ln', 'lin', 'lin');
@@ -293,7 +293,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (97, 'Lituano', 'lt', 'lit', 'lit');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (98, 'Luxemburgu√©s, Luxemburgu√©s', 'lb', 'ltz', 'ltz');
+values (98, 'LuxemburguÈs, LuxemburguÈs', 'lb', 'ltz', 'ltz');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (99, 'Luba-Katanga', 'lu', 'lub', 'lub');
@@ -308,7 +308,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (102, 'Malayalam', 'ml', 'mal', 'mal');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (103, 'Marat√≠ (Marathi)', 'mr', 'mar', 'mar');
+values (103, 'MaratÌ (Marathi)', 'mr', 'mar', 'mar');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (104, 'Macedonia', 'mk', 'mkd', 'mac');
@@ -317,13 +317,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (105, 'Madagascar', 'mg', 'mlg', 'mlg');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (106, 'Malt√©s', 'mt', 'mlt', 'mlt');
+values (106, 'MaltÈs', 'mt', 'mlt', 'mlt');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (107, 'Mongolia', 'mn', 'mon', 'mon');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (108, 'MƒÅori', 'mi', 'mri', 'mao');
+values (108, 'Maori', 'mi', 'mri', 'mao');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (109, 'Malayo', 'ms', 'msa', 'may');
@@ -350,13 +350,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (116, 'Nepali', 'ne', 'nep', 'nep');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (117, 'Holand√©s', 'nl', 'nld', 'dut');
+values (117, 'HolandÈs', 'nl', 'nld', 'dut');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (118, 'Noruego Nynorsk', 'nn', 'nno', 'nno');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (119, 'Noruego Bokm√•l', 'nb', 'nob', 'nob');
+values (119, 'Noruego BokmÂl', 'nb', 'nob', 'nob');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (120, 'Noruego', 'no', 'nor', 'nor');
@@ -383,13 +383,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (127, 'Panjabi, Punjabi', 'pa', 'pan', 'pan');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (128, 'PƒÅli', 'pi', 'pli', 'pli');
+values (128, 'Pali', 'pi', 'pli', 'pli');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (129, 'Polaco', 'pl', 'pol', 'pol');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (130, 'Portugu√©s', 'pt', 'por', 'por');
+values (130, 'PortuguÈs', 'pt', 'por', 'por');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (131, 'Pashto, Pushto', 'ps', 'pus', 'pus');
@@ -413,10 +413,10 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (137, 'Sango', 'sg', 'sag', 'sag');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (138, 'S√°nscrito (samskrta)', 'sa', 'san', 'san');
+values (138, 'S·nscrito (samskrta)', 'sa', 'san', 'san');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (139, 'Cingal√©s, singal√©s', 'si', 'sin', 'sin');
+values (139, 'CingalÈs, singalÈs', 'si', 'sin', 'sin');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (140, 'Eslovaca', 'sk', 'slk', 'slo');
@@ -437,13 +437,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (145, 'Sindhi', 'sd', 'snd', 'snd');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (146, 'Somal√≠', 'so', 'som', 'som');
+values (146, 'SomalÌ', 'so', 'som', 'som');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (147, 'Southern Sotho', 'st', 'sot', 'sot');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (148, 'Espa√±ol, castellano', 'es', 'spa', 'spa');
+values (148, 'EspaÒol, castellano', 'es', 'spa', 'spa');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (149, 'Albania', 'sq', 'sqi', 'alb');
@@ -473,13 +473,13 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (157, 'Tamil', 'ta', 'tam', 'tam');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (158, 'T√°rtara', 'tt', 'tat', 'tat');
+values (158, 'T·rtara', 'tt', 'tat', 'tat');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (159, 'Telugu', 'te', 'tel', 'tel');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (160, 'Tayikist√°n', 'tg', 'tgk', 'tgk');
+values (160, 'Tayikist·n', 'tg', 'tgk', 'tgk');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (161, 'Tagalo', 'tl', 'tgl', 'tgl');
@@ -500,7 +500,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (166, 'Tsonga', 'ts', 'tso', 'tso');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (167, 'Turkmenist√°n', 'tk', 'tuk', 'tuk');
+values (167, 'Turkmenist·n', 'tk', 'tuk', 'tuk');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (168, 'Turco', 'tr', 'tur', 'tur');
@@ -527,7 +527,7 @@ insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (175, 'Vietnamita', 'vi', 'vie', 'vie');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
-values (176, 'Volap√ºk', 'vo', 'vol', 'vol');
+values (176, 'Volap¸k', 'vo', 'vol', 'vol');
 
 insert into t_idiomas (ID_IDIOMA, NOMBRE, ISO_639_1, ISO_639_2T, ISO_639_2B)
 values (177, 'Valonia', 'wa', 'wln', 'wln');
