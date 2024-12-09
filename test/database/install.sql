@@ -60,6 +60,7 @@ prompt
 @@packages/test_k_auditoria.pck
 @@packages/test_k_autenticacion.pck
 @@packages/test_k_autorizacion.pck
+@@packages/test_k_cadena.pck
 @@packages/test_k_clave.pck
 @@packages/test_k_dato.pck
 @@packages/test_k_dispositivo.pck

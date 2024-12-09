@@ -59,6 +59,7 @@ drop package test_k_archivo;
 drop package test_k_auditoria;
 drop package test_k_autenticacion;
 drop package test_k_autorizacion;
+drop package test_k_cadena;
 drop package test_k_clave;
 drop package test_k_dato;
 drop package test_k_dispositivo;
