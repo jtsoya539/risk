@@ -1,0 +1,12 @@
+services:
+
+  database:
+    image: jtsoya539/risk-database:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 1524:1521
+
+  redis:
+    image: redis:alpine
