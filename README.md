@@ -1,6 +1,7 @@
 ![RISK](docs/logo/logo.png)
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jtsoya539/risk)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jtsoya539_risk&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jtsoya539_risk)
 
 Bienvenido/a al repositorio del Proyecto RISK.
 
