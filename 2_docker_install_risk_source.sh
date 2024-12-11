@@ -18,7 +18,3 @@ sqlplus risk/risk@//localhost/XEPDB1 @install.sql
 
 export SQLPATH="/usr/src/risk/source/migrations/mig_000003/:$SQLPATH"
 sqlplus risk/risk@//localhost/XEPDB1 @install.sql
-
-# Install tests
-export SQLPATH="/usr/src/risk/test/:$SQLPATH"
-sqlplus risk/risk@//localhost/XEPDB1 @install.sql

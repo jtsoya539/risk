@@ -1,3 +1,5 @@
+name: risk
+
 services:
 
   database:
@@ -5,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      no_cache: true
+    pull_policy: build
     ports:
       - 1524:1521
 
