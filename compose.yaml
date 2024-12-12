@@ -14,3 +14,17 @@ services:
 
   redis:
     image: redis:alpine
+
+  backend:
+    image: jtsoya539/risk-backend:latest
+    build:
+      context: ./source/backend
+      dockerfile: ./Dockerfile
+      no_cache: true
+    pull_policy: build
+    ports:
+      - 5000:5000
+      - 5001:5001
+    depends_on:
+      - database
+      - redis
