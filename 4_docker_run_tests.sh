@@ -7,4 +7,5 @@ curl -Lk "${DOWNLOAD_URL}" -o utPLSQL-cli.zip
 unzip utPLSQL-cli.zip
 
 export NLS_LANG=AMERICAN_AMERICA.WE8MSWIN1252
-#utPLSQL-cli/bin/utplsql run risk/risk@//localhost/XEPDB1
+export JAVA_TOOL_OPTIONS='-Dfile.encoding=utf8'
+utPLSQL-cli/bin/utplsql run risk/risk@//localhost/XEPDB1
