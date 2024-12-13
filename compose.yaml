@@ -18,6 +18,8 @@ services:
     pull_policy: build
     ports:
       - 1521:1521
+    env_file:
+      - ./docker/database.env
 
   redis:
     image: redis:alpine
@@ -31,6 +33,8 @@ services:
     pull_policy: build
     ports:
       - 5000:5000
+    env_file:
+      - ./docker/backend.env
     depends_on:
       - database
       - redis

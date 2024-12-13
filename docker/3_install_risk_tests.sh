@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ "${SKIP_TESTS}" == "true" ]; then
-  echo "BUILDER: Tests installation and execution ignored"
+echo "BUILDER: Tests installation and execution ignored"
 else
-  echo "BUILDER: Tests installation and execution started"
+echo "BUILDER: Tests installation and execution started"
 
 # Install tests
 export SQLPATH="/usr/src/risk/test/:$SQLPATH"
