@@ -13,11 +13,11 @@ services:
     image: jtsoya539/risk-database:latest
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.database
       no_cache: true
     pull_policy: build
     ports:
-      - 1524:1521
+      - 1521:1521
 
   redis:
     image: redis:alpine
@@ -25,8 +25,8 @@ services:
   backend:
     image: jtsoya539/risk-backend:latest
     build:
-      context: ./source/backend
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./Dockerfile.backend
       no_cache: true
     pull_policy: build
     ports:
