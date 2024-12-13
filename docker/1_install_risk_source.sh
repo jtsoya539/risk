@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "BUILDER: Source installation started"
+
 # Create user
 export SQLPATH="/usr/src/risk/source/:$SQLPATH"
 sqlplus sys/$ORACLE_PASSWORD@//localhost/XEPDB1 as sysdba @create_code_user.sql $RISK_APP_USER $RISK_APP_USER_PASSWORD
