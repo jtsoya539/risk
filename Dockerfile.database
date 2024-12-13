@@ -15,4 +15,4 @@ COPY --from=mcr.microsoft.com/openjdk/jdk:21-ubuntu $JAVA_HOME $JAVA_HOME
 
 COPY ./source/database /usr/src/risk/source/
 COPY ./test/database /usr/src/risk/test/
-COPY *_docker_*.sh /container-entrypoint-initdb.d/
+COPY ./docker/*.sh /container-entrypoint-initdb.d/
