@@ -1,15 +1,16 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 5000
-EXPOSE 5001
 
-ENV ASPNETCORE_URLS=https://+:5001;http://+:5000
+ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_ENVIRONMENT=Development
 
 USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["Risk.API/Risk.API.csproj", "Risk.API/"]
+COPY ["Risk.Common/Risk.Common.csproj", "Risk.Common/"]
 RUN dotnet restore "Risk.API/Risk.API.csproj"
 COPY . .
 WORKDIR "/src/Risk.API"

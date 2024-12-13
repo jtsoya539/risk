@@ -2,6 +2,13 @@ name: risk
 
 services:
 
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    volumes:
+      - ../..:/workspaces:cached
+    network_mode: service:database
+    command: sleep infinity
+
   database:
     image: jtsoya539/risk-database:latest
     build:
@@ -24,7 +31,6 @@ services:
     pull_policy: build
     ports:
       - 5000:5000
-      - 5001:5001
     depends_on:
       - database
       - redis
