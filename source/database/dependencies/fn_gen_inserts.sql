@@ -49,8 +49,8 @@ is
   l_clob_all                   clob;
   l_line                       clob := '-----------------------------------';
   
-  l_buffer                     varchar2(32767);
-  c_buffer_length              constant integer := 32767;
+  l_buffer                     varchar2(2000);
+  c_buffer_length              constant integer := 2000;
 
   cons_date_frm                varchar2(32) := 'DD.MM.YYYY HH24:MI:SS';
   cons_timestamp_frm           varchar2(32) := 'DD.MM.YYYY HH24:MI:SSXFF';
@@ -349,14 +349,22 @@ begin
       if l_rec_tab(i).col_type = cons_blob_code then --blob
         l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=q'''||l_separator||l_separator||''';'||NL;
         l_clob_line := l_clob_line||'  l_blob :=empty_blob();'||NL;
-        IF dbms_lob.getlength(l_clob) > 0 THEN
-          FOR j IN 1 .. ceil(dbms_lob.getlength(l_clob) / c_buffer_length) LOOP
+        IF nvl(dbms_lob.getlength(l_clob), 0) > 0 THEN
+          FOR j IN 1 .. ceil(nvl(dbms_lob.getlength(l_clob), 0) / c_buffer_length) LOOP
             l_buffer := dbms_lob.substr(l_clob, c_buffer_length, (c_buffer_length * (j - 1)) + 1);
             l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=l_clob('||to_char(i)||') || q'''||l_separator||l_buffer||l_separator||''';'||NL;
           END LOOP;
           l_clob_line := l_clob_line||'  l_blob :=utl_compress.lz_uncompress(base64decode(l_clob('||to_char(i)||')));'||NL;
         END IF;
-      elsif l_rec_tab(i).col_type in (cons_clob_code, cons_char_code, cons_varchar2_code) then
+      elsif l_rec_tab(i).col_type in (cons_clob_code, cons_char_code, cons_varchar2_code) and nvl(dbms_lob.getlength(l_clob), 0) > c_buffer_length then
+        l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=q'''||l_separator||l_separator||''';'||NL;
+        IF nvl(dbms_lob.getlength(l_clob), 0) > 0 THEN
+          FOR j IN 1 .. ceil(nvl(dbms_lob.getlength(l_clob), 0) / c_buffer_length) LOOP
+            l_buffer := dbms_lob.substr(l_clob, c_buffer_length, (c_buffer_length * (j - 1)) + 1);
+            l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=l_clob('||to_char(i)||') || q'''||l_separator||l_buffer||l_separator||''';'||NL;
+          END LOOP;
+        END IF;
+      elsif l_rec_tab(i).col_type in (cons_clob_code, cons_char_code, cons_varchar2_code) and nvl(dbms_lob.getlength(l_clob), 0) <= c_buffer_length then
         l_clob_line := l_clob_line||'  l_clob('||to_char(i)||') :=q'''||l_separator||l_clob||l_separator||''';'||NL;
       else
         l_clob_line := l_clob_line||'  l_varchar2('||to_char(i)||') :=q'''||l_separator||l_clob||l_separator||''';'||NL;
