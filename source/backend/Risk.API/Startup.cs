@@ -87,7 +87,19 @@ namespace Risk.API
 
             services.AddHttpContextAccessor();
 
-            services.AddMemoryCache();
+            // Add Caching service
+            if (Configuration.GetValue<bool>("CachingConfiguration:EnableRedis"))
+            {
+                services.AddStackExchangeRedisCache(options =>
+                {
+                    options.Configuration = Configuration["CachingConfiguration:RedisConfiguration"];
+                    options.InstanceName = Configuration["CachingConfiguration:RedisInstanceName"];
+                });
+            }
+            else
+            {
+                services.AddDistributedMemoryCache();
+            }
 
             // Add Settings service
             services.AddSingleton<ISettingsService, SettingsService>();

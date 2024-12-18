@@ -23,28 +23,33 @@ SOFTWARE.
 */
 
 using System;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Risk.API.Extensions;
 using Risk.Common.Helpers;
 
 namespace Risk.API.Services.Settings
 {
     public class SettingsService : ISettingsService
     {
-        private const double CACHE_EXPIRATION_MINUTES = 30;
+        private readonly DistributedCacheEntryOptions _cacheOptions;
         private readonly ILogger<SettingsService> _logger;
-        private readonly IMemoryCache _cache;
+        private readonly IDistributedCache _cache;
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _services;
 
-        public SettingsService(ILogger<SettingsService> logger, IMemoryCache cache, IConfiguration configuration, IServiceProvider services)
+        public SettingsService(ILogger<SettingsService> logger, IDistributedCache cache, IConfiguration configuration, IServiceProvider services)
         {
             _logger = logger;
             _cache = cache;
             _configuration = configuration;
             _services = services;
+            _cacheOptions = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_configuration.GetValue<double>("CachingConfiguration:CacheExpirationMinutes"))
+            };
         }
 
         public string GetDbConfigValue(string key)
@@ -64,33 +69,28 @@ namespace Risk.API.Services.Settings
             return _configuration.GetValue<T>(key);
         }
 
+        // https://www.milanjovanovic.tech/blog/caching-in-aspnetcore-improving-application-performance
         // https://dev.to/bytehide/caching-in-net-full-guide-31j4
         public string GetCachedDbConfigValue(string key)
         {
-            var cachedDataFound = _cache.TryGetValue<string>(key, out string cachedData);
-
-            if (!cachedDataFound)
+            var cachedData = _cache.GetOrCreateAsync<string>(key, async () =>
             {
-                // Data not in cache, fetch and cache it
-                cachedData = GetDbConfigValue(key);
-                _cache.Set<string>(key, cachedData, DateTimeOffset.Now.AddMinutes(CACHE_EXPIRATION_MINUTES));
-            }
+                return GetDbConfigValue(key);
+            }, _cacheOptions);
 
-            return cachedData;
+            return cachedData.Result;
         }
 
+        // https://www.milanjovanovic.tech/blog/caching-in-aspnetcore-improving-application-performance
+        // https://dev.to/bytehide/caching-in-net-full-guide-31j4
         public T GetCachedFileConfigValue<T>(string key)
         {
-            var cachedDataFound = _cache.TryGetValue<T>(key, out T cachedData);
-
-            if (!cachedDataFound)
+            var cachedData = _cache.GetOrCreateAsync<T>(key, async () =>
             {
-                // Data not in cache, fetch and cache it
-                cachedData = GetFileConfigValue<T>(key);
-                _cache.Set<T>(key, cachedData, DateTimeOffset.Now.AddMinutes(CACHE_EXPIRATION_MINUTES));
-            }
+                return GetFileConfigValue<T>(key);
+            }, _cacheOptions);
 
-            return cachedData;
+            return cachedData.Result;
         }
 
         #region Db Settings

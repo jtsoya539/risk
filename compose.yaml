@@ -7,7 +7,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.database
-      no_cache: true
     pull_policy: build
     ports:
       - 1521:1521
@@ -22,7 +21,6 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile.backend
-      no_cache: true
     pull_policy: build
     ports:
       - 5000:5000
