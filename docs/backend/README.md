@@ -16,12 +16,25 @@ Este componente consiste en una API web ASP.NET Core que se encarga de recibir p
 2. Opcionalmente, instalar el editor Visual Studio Code con la extensión C# o C# Dev Kit.
 3. Clonar o descargar el repositorio de RISK.
 4. En el command prompt, ubicarse en la raíz del repositorio e ir hasta *source/backend/Risk.API* (contiene el archivo del proyecto *Risk.API.csproj*).
-5. Realizar las configuraciones necesarias en los archivos *appsettings.json* y *config/log/nlog.config*.
+5. Realizar las configuraciones necesarias en los archivos *appsettings.{Environment}.json* y *config/log/nlog.config*.
 6. Ejecutar el comando: `dotnet run`.
 
 ## Configuraciones
 
-### Archivo *appsettings.json*
+### Archivo *appsettings.{Environment}.json*
+#### Conexión a Base de Datos Oracle
+TO-DO
+
+#### Swagger
+TO-DO
+
+#### Mensajería
+TO-DO
+
+#### Logging
+TO-DO
+
+#### Caching
 TO-DO
 
 ### Archivo *config/log/nlog.config*

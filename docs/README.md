@@ -37,7 +37,7 @@ Consiste en una colección de objetos de Base de Datos Oracle (paquetes, types, 
 * [Oracle Database 12c o superior](https://www.oracle.com/database/technologies/oracle-database-software-downloads.html)
 
 ### Back-End
-* [.NET 8.0 o superior](https://dotnet.microsoft.com/en-us/download/dotnet)
+* [.NET 9.0 o superior](https://dotnet.microsoft.com/en-us/download/dotnet)
 
 Los servicios de mensajería tienen requerimientos especiales de terceros:
 
