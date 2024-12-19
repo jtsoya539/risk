@@ -16,6 +16,7 @@ CREATE OR REPLACE PACKAGE zt_word AS
     2.11       31/12/2021  Zoran Tica       5. Fixed special characters issue
     2.2        30/11/2023  Zoran Tica       6. Draw a table in the header or footer; procedure for document download
     2.3        22/08/2024  Zoran Tica       7. Line break in a paragraph
+    2.4        13/12/2024  Zoran Tica       8. Large text in a paragraph
 
     ----------------------------------------------------------------------------
     Copyright (C) 2017 - Zoran Tica
@@ -212,7 +213,8 @@ FUNCTION f_new_paragraph(
     p_text varchar2 default null,
     p_font r_font default null,
     p_replace_newline boolean default false,
-    p_newline_character varchar2 default chr(10)
+    p_newline_character varchar2 default chr(10),
+    p_text_clob clob default null
 ) RETURN pls_integer;
 
 
@@ -363,7 +365,8 @@ PROCEDURE p_add_text(
     p_font r_font default null,
     p_image_data r_image_data default null,
     p_replace_newline boolean default false,
-    p_newline_character varchar2 default chr(10)
+    p_newline_character varchar2 default chr(10),
+    p_text_clob clob default null
     );
 
 PROCEDURE p_add_line_break (
