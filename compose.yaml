@@ -29,5 +29,7 @@ services:
     env_file:
       - ./docker/backend.env
     depends_on:
-      - database
-      - redis
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_started
