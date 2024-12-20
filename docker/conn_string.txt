@@ -1,0 +1,1 @@
+CONN_STRING=SYS/oracle@database:1521/XEPDB1

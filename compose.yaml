@@ -33,3 +33,17 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+  
+  frontend:
+    image: jtsoya539/risk-frontend:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile.frontend
+    pull_policy: build
+    ports:
+      - 8181:8181
+    env_file:
+      - ./docker/frontend.env
+    depends_on:
+      database:
+        condition: service_healthy

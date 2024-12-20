@@ -17,4 +17,4 @@ COPY ./source/database /usr/src/risk/source/
 COPY ./test/database /usr/src/risk/test/
 COPY ./docker/*.sh /container-entrypoint-initdb.d/
 
-HEALTHCHECK --interval=2m CMD healthcheck.sh >/dev/null || exit 1
+HEALTHCHECK --interval=3m CMD healthcheck.sh >/dev/null || exit 1
