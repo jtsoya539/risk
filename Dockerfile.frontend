@@ -4,5 +4,6 @@ EXPOSE 8181
 ENV IGNORE_APEX=$IGNORE_APEX
 
 USER oracle
-COPY ./docker/conn_string.txt /opt/oracle/variables/
+COPY ./docker/frontend/conn_string.txt /opt/oracle/variables/
 COPY ./source/frontend /usr/src/risk/source/
+COPY ./docker/frontend/*.sh /ords-entrypoint.d/
