@@ -33,7 +33,7 @@ prompt APPLICATION 539 - RISK ADMIN
 -- Application Export:
 --   Application:     539
 --   Name:            RISK ADMIN
---   Date and Time:   03:48 Sunday December 22, 2024
+--   Date and Time:   04:12 Sunday December 22, 2024
 --   Exported By:     ADMIN@RISK.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -73,11 +73,11 @@ prompt APPLICATION 539 - RISK ADMIN
 --       Globalization:
 --       Reports:
 --       E-Mail:
---     Supporting Objects:  Included
+--     Supporting Objects:  Included (auto-install)
 --       Install scripts:          3
 --       Validations:              1
 --   Version:         24.1.0
---   Instance ID:     800150349774418
+--   Instance ID:     1200113446981873
 --
 
 prompt --application/delete_application
@@ -17339,7 +17339,7 @@ end;
 /
 prompt --application/end_environment
 begin
-wwv_flow_imp.import_end(p_auto_install_sup_obj => nvl(wwv_flow_application_install.get_auto_install_sup_obj, false)
+wwv_flow_imp.import_end(p_auto_install_sup_obj => nvl(wwv_flow_application_install.get_auto_install_sup_obj, true)
 );
 commit;
 end;
