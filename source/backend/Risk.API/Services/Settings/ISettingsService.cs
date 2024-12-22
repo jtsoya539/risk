@@ -22,6 +22,8 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+using System.Collections.Generic;
+
 namespace Risk.API.Services.Settings
 {
     public interface ISettingsService
@@ -33,6 +35,7 @@ namespace Risk.API.Services.Settings
         string AccessTokenValidationKey { get; set; }
         string GoogleTokenIssuer { get; set; }
         string GoogleTokenAudience { get; set; }
+        List<string> RiskApplicationsKeys { get; set; }
         #endregion
 
         #region File Settings

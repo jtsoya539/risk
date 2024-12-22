@@ -24,7 +24,7 @@ SOFTWARE.
 
 using Microsoft.AspNetCore.Http;
 using Risk.API.Helpers;
-using Risk.API.Services;
+using Risk.API.Services.Settings;
 using Risk.Common.Helpers;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -40,7 +40,7 @@ namespace Risk.API.Middlewares
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IAutService autService)
+        public async Task InvokeAsync(HttpContext context, ISettingsService settingsService)
         {
             if (context.Request.Path.StartsWithSegments(new PathString("/Api")))
             {
@@ -55,10 +55,7 @@ namespace Risk.API.Middlewares
                 }
                 else
                 {
-                    autService.Version = string.Empty;
-                    var respValidarClaveAplicacion = autService.ValidarClaveAplicacion(claveAplicacion);
-
-                    if (!respValidarClaveAplicacion.Codigo.Equals(RiskConstants.CODIGO_OK))
+                    if (!settingsService.RiskApplicationsKeys.Contains(claveAplicacion))
                     {
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
                         context.Response.ContentType = MediaTypeNames.Text.Plain;

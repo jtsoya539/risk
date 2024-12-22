@@ -57,6 +57,7 @@ namespace Risk.API.Services
         private const string NOMBRE_EDITAR_DATO_USUARIO = "EDITAR_DATO_USUARIO";
         private const string NOMBRE_REGISTRAR_UBICACION = "REGISTRAR_UBICACION";
         private const string NOMBRE_VALIDAR_PERMISO = "VALIDAR_PERMISO";
+        private const string NOMBRE_LISTAR_CLAVES_APLICACIONES = "LISTAR_CLAVES_APLICACIONES";
 
         public AutService(ILogger<AutService> logger, ISettingsService settingsService, IHttpContextAccessor httpContextAccessor, IDbConnectionFactory dbConnectionFactory)
             : base(logger, settingsService, httpContextAccessor, dbConnectionFactory)
@@ -383,6 +384,27 @@ namespace Risk.API.Services
             var entityRsp = rsp.ToObject<YRespuesta<YDato>>();
 
             return EntitiesMapper.GetRespuestaFromEntity<Dato, YDato>(entityRsp, EntitiesMapper.GetModelFromEntity<Dato, YDato>(entityRsp.Datos));
+        }
+
+        public Respuesta<Pagina<Dato>> ListarClavesAplicaciones(PaginaParametros paginaParametros = null)
+        {
+            prms = new JObject();
+
+            if (paginaParametros != null)
+            {
+                prms.Add("pagina_parametros", JToken.FromObject(ModelsMapper.GetEntityFromModel<PaginaParametros, YPaginaParametros>(paginaParametros)));
+            }
+
+            rsp = base.ProcesarOperacion(TipoOperacion.Servicio, NOMBRE_LISTAR_CLAVES_APLICACIONES, DOMINIO_OPERACION, prms);
+            var entityRsp = rsp.ToObject<YRespuesta<YPagina<SqlClaveAplicacion>>>();
+
+            Pagina<Dato> datos = null;
+            if (entityRsp.Datos != null)
+            {
+                datos = EntitiesMapper.GetPaginaFromEntity<Dato, SqlClaveAplicacion>(entityRsp.Datos, EntitiesMapper.GetModelListFromEntity<Dato, SqlClaveAplicacion>(entityRsp.Datos.Elementos));
+            }
+
+            return EntitiesMapper.GetRespuestaFromEntity<Pagina<Dato>, YPagina<SqlClaveAplicacion>>(entityRsp, datos);
         }
     }
 }

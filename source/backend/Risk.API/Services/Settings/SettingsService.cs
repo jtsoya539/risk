@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -100,6 +101,34 @@ namespace Risk.API.Services.Settings
         public string AccessTokenValidationKey { get => GetCachedDbConfigValue("CLAVE_VALIDACION_ACCESS_TOKEN"); set => throw new NotImplementedException(); }
         public string GoogleTokenIssuer { get => GetDbConfigValue("GOOGLE_EMISOR_TOKEN"); set => throw new NotImplementedException(); }
         public string GoogleTokenAudience { get => GetDbConfigValue("GOOGLE_IDENTIFICADOR_CLIENTE"); set => throw new NotImplementedException(); }
+        public List<string> RiskApplicationsKeys
+        {
+            get
+            {
+                var cachedData = _cache.GetOrCreateAsync<List<string>>("CLAVES_APLICACIONES", async () =>
+                {
+                    List<string> keys = new List<string>();
+
+                    var respuesta = _services.GetRequiredService<IAutService>().ListarClavesAplicaciones();
+                    if (!respuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+                    {
+                        _logger.LogError($"Error al obtener claves de aplicaciones: {respuesta}");
+                        return keys;
+                    }
+
+                    // Agrega las claves de las aplicaciones activas a la lista de keys
+                    foreach (var key in respuesta.Datos.Elementos)
+                    {
+                        keys.Add(key.Contenido);
+                    }
+
+                    return keys;
+                }, _cacheOptions);
+
+                return cachedData.Result;
+            }
+            set => throw new NotImplementedException();
+        }
         #endregion
 
         #region File Settings

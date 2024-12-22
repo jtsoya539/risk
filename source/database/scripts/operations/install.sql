@@ -16,6 +16,7 @@ prompt
 @@scripts/operations/servicio/aut/editar_usuario.sql
 @@scripts/operations/servicio/aut/generar_otp.sql
 @@scripts/operations/servicio/aut/iniciar_sesion.sql
+@@scripts/operations/servicio/aut/listar_claves_aplicaciones.sql
 @@scripts/operations/servicio/aut/refrescar_sesion.sql
 @@scripts/operations/servicio/aut/registrar_clave.sql
 @@scripts/operations/servicio/aut/registrar_dispositivo.sql
@@ -41,10 +42,10 @@ prompt
 @@scripts/operations/servicio/glo/listar_ciudades.sql
 @@scripts/operations/servicio/glo/listar_departamentos.sql
 @@scripts/operations/servicio/glo/listar_paises.sql
+@@scripts/operations/trabajo/gen/monitoreo_conflictos_12_horas.sql
+@@scripts/operations/trabajo/gen/monitoreo_conflictos_2_horas.sql
+@@scripts/operations/trabajo/gen/monitoreo_conflictos_6_horas.sql
 @@scripts/operations/trabajo/gen/monitoreo_conflictos_diario.sql
 @@scripts/operations/trabajo/gen/monitoreo_conflictos_hora.sql
 @@scripts/operations/trabajo/gen/monitoreo_conflictos_mensual.sql
 @@scripts/operations/trabajo/gen/monitoreo_conflictos_semanal.sql
-@@scripts/operations/trabajo/gen/monitoreo_conflictos_12_horas.sql
-@@scripts/operations/trabajo/gen/monitoreo_conflictos_2_horas.sql
-@@scripts/operations/trabajo/gen/monitoreo_conflictos_6_horas.sql

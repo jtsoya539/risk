@@ -48,5 +48,6 @@ namespace Risk.API.Services
         Respuesta<Dato> GenerarOtp(TipoMensajeria tipoMensajeria, string destino);
         Respuesta<Dato> ValidarOtp(string secret, int otp);
         Respuesta<Dato> ValidarPermiso(string idPermiso, AccionPermiso? accion = null);
+        Respuesta<Pagina<Dato>> ListarClavesAplicaciones(PaginaParametros paginaParametros = null);
     }
 }
