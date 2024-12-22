@@ -6,4 +6,4 @@ ENV IGNORE_APEX=$IGNORE_APEX
 USER oracle
 COPY ./docker/frontend/conn_string.txt /opt/oracle/variables/
 COPY ./source/frontend /usr/src/risk/source/
-COPY ./docker/frontend/*.sh /ords-entrypoint.d/
+COPY ./docker/frontend/[0-9]*.sh /ords-entrypoint.d/

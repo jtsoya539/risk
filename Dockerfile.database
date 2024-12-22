@@ -15,6 +15,6 @@ COPY --from=mcr.microsoft.com/openjdk/jdk:21-ubuntu $JAVA_HOME $JAVA_HOME
 
 COPY ./source/database /usr/src/risk/source/
 COPY ./test/database /usr/src/risk/test/
-COPY ./docker/database/*.sh /container-entrypoint-initdb.d/
+COPY ./docker/database/[0-9]*.sh /container-entrypoint-initdb.d/
 
-HEALTHCHECK --interval=3m CMD healthcheck.sh >/dev/null || exit 1
+HEALTHCHECK --start-period=6m --start-interval=3m CMD healthcheck.sh >/dev/null || exit 1
