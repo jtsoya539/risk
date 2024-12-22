@@ -6,7 +6,8 @@ else
 echo "BUILDER: APEX applications installation started"
 
 # Install APEX applications
-sql $RISK_DB_USER/$RISK_DB_PASSWORD@database:1521/XEPDB1
-exit
+export SQLPATH="/usr/src/risk/source/apex/:$SQLPATH"
+sql SYSTEM/oracle@database:1521/XEPDB1 @w2000988041184963.sql
+# sql SYSTEM/oracle@database:1521/XEPDB1 @f539.sql
 
 fi;
