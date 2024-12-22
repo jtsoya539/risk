@@ -6,7 +6,7 @@ else
 echo "BUILDER: APEX applications installation started"
 
 # Install APEX applications
-sql risk/risk@database:1521/XEPDB1
+sql $RISK_DB_USER/$RISK_DB_PASSWORD@database:1521/XEPDB1
 exit
 
 fi;

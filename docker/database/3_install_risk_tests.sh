@@ -7,6 +7,6 @@ echo "BUILDER: Tests installation and execution started"
 
 # Install tests
 export SQLPATH="/usr/src/risk/test/:$SQLPATH"
-sqlplus $RISK_APP_USER/$RISK_APP_USER_PASSWORD@//localhost/XEPDB1 @install.sql
+sqlplus $RISK_DB_USER/$RISK_DB_PASSWORD@//localhost/XEPDB1 @install.sql
 
 fi;

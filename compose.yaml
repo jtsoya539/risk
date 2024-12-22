@@ -11,7 +11,8 @@ services:
     ports:
       - 1521:1521
     env_file:
-      - ./docker/database.env
+      - ./docker/common.env
+      - ./docker/database/.env
 
   redis:
     image: redis:alpine
@@ -27,7 +28,8 @@ services:
     ports:
       - 5000:5000
     env_file:
-      - ./docker/backend.env
+      - ./docker/common.env
+      - ./docker/backend/.env
     depends_on:
       database:
         condition: service_healthy
@@ -43,7 +45,8 @@ services:
     ports:
       - 8181:8181
     env_file:
-      - ./docker/frontend.env
+      - ./docker/common.env
+      - ./docker/frontend/.env
     depends_on:
       database:
         condition: service_healthy

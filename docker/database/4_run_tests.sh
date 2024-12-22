@@ -13,6 +13,6 @@ curl -Lk "${DOWNLOAD_URL}" -o utPLSQL-cli.zip
 unzip utPLSQL-cli.zip
 
 export JAVA_TOOL_OPTIONS='-Dfile.encoding=utf8'
-utPLSQL-cli/bin/utplsql run $RISK_APP_USER/$RISK_APP_USER_PASSWORD@//localhost/XEPDB1
+utPLSQL-cli/bin/utplsql run $RISK_DB_USER/$RISK_DB_PASSWORD@//localhost/XEPDB1
 
 fi;
