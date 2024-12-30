@@ -6,7 +6,7 @@
 Bienvenido/a al repositorio del Proyecto RISK.
 
 # Introducción
-RISK es un mini framework que sigue el paradigma ["SmartDB"](https://asktom.oracle.com/ords/r/tech/catalog/series-landing-page?p5_series_id=15684323403093480964656912197598498105) y sirve como base para el back-end de aplicaciones de tipo LOB.
+RISK es un mini framework que sigue el paradigma ["SmartDB"](https://asktom.oracle.com/ords/r/tech/catalog/series-landing-page?p5_series_id=15684323403093480964656912197598498105) y sirve como base para el back-end de aplicaciones de tipo [LOB](https://en.wikipedia.org/wiki/Line_of_business).
 
 Consiste en una colección de objetos de Base de Datos Oracle (paquetes, types, tablas, entre otros) y una API web ASP.NET Core.
 
