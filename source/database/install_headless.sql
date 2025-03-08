@@ -22,22 +22,31 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+spool install_headless.log
+
 set define on
 
---accept v_user     char default 'risk_access' prompt 'Enter user (default ''risk_access''):'
+--accept v_app_name char default 'risk' prompt 'Enter app name (default ''risk''):'
 --accept v_password char default 'risk' prompt 'Enter password (default ''risk''):' hide
-DEFINE v_user = '&1'
+DEFINE v_app_name = '&1'
 DEFINE v_password = '&2'
 
--- Create user
-CREATE USER &v_user IDENTIFIED BY &v_password;
--- Grant system privileges
-GRANT CREATE SESSION TO &v_user;
--- Grant object privileges
-GRANT SELECT ON sys.v_$session  TO &v_user;
-GRANT SELECT ON sys.v_$sesstat  TO &v_user;
-GRANT SELECT ON sys.v_$statname TO &v_user;
--- GRANT EXECUTE ON risk.k_servicio TO api;
--- CREATE OR REPLACE SYNONYM api.k_servicio FOR risk.k_servicio;
+DEFINE v_data_user = '&v_app_name._data'
+DEFINE v_code_user = '&v_app_name._code'
+DEFINE v_access_user = '&v_app_name._access'
+
+-- Create users
+@@create_data_user.sql &v_data_user &v_password
+set define on
+@@create_code_user.sql &v_code_user &v_password
+set define on
+@@create_access_user.sql &v_access_user &v_password
+set define on
+
+-- Install source
+exec execute immediate 'ALTER SESSION SET CURRENT_SCHEMA=&v_code_user'
+@@install.sql
 
 set define off
+
+spool off

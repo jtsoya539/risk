@@ -24,7 +24,7 @@ SOFTWARE.
 
 set define on
 
---accept v_user     char default 'risk_access' prompt 'Enter user (default ''risk_access''):'
+--accept v_user     char default 'risk_data' prompt 'Enter user (default ''risk_data''):'
 --accept v_password char default 'risk' prompt 'Enter password (default ''risk''):' hide
 DEFINE v_user = '&1'
 DEFINE v_password = '&2'
@@ -32,12 +32,13 @@ DEFINE v_password = '&2'
 -- Create user
 CREATE USER &v_user IDENTIFIED BY &v_password;
 -- Grant system privileges
-GRANT CREATE SESSION TO &v_user;
+GRANT CREATE SESSION, ALTER SESSION, CREATE DATABASE LINK, CREATE MATERIALIZED VIEW, CREATE PROCEDURE, CREATE PUBLIC SYNONYM, CREATE ROLE, CREATE SEQUENCE, CREATE SYNONYM, CREATE TABLE, CREATE TRIGGER, CREATE TYPE, CREATE VIEW, UNLIMITED TABLESPACE TO &v_user;
+GRANT DEBUG CONNECT SESSION TO &v_user;
+GRANT CREATE JOB TO &v_user;
 -- Grant object privileges
-GRANT SELECT ON sys.v_$session  TO &v_user;
-GRANT SELECT ON sys.v_$sesstat  TO &v_user;
-GRANT SELECT ON sys.v_$statname TO &v_user;
--- GRANT EXECUTE ON risk.k_servicio TO api;
--- CREATE OR REPLACE SYNONYM api.k_servicio FOR risk.k_servicio;
+GRANT SELECT  ON sys.v_$session  TO &v_user;
+GRANT SELECT  ON sys.v_$sesstat  TO &v_user;
+GRANT SELECT  ON sys.v_$statname TO &v_user;
+GRANT EXECUTE ON sys.dbms_crypto TO &v_user;
 
 set define off

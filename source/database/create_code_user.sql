@@ -24,7 +24,7 @@ SOFTWARE.
 
 set define on
 
---accept v_user     char default 'risk' prompt 'Enter user (default ''risk''):'
+--accept v_user     char default 'risk_code' prompt 'Enter user (default ''risk_code''):'
 --accept v_password char default 'risk' prompt 'Enter password (default ''risk''):' hide
 DEFINE v_user = '&1'
 DEFINE v_password = '&2'
