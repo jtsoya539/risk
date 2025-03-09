@@ -40,5 +40,3 @@ GRANT SELECT  ON sys.v_$session  TO &v_user;
 GRANT SELECT  ON sys.v_$sesstat  TO &v_user;
 GRANT SELECT  ON sys.v_$statname TO &v_user;
 GRANT EXECUTE ON sys.dbms_crypto TO &v_user;
-
-set define off

@@ -22,6 +22,32 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+spool install_dependencies.log
+
+set feedback off
+set define off
+
+prompt ###################################
+prompt #   _____   _____   _____  _  __  #
+prompt #  |  __ \ |_   _| / ____|| |/ /  #
+prompt #  | |__) |  | |  | (___  | ' /   #
+prompt #  |  _  /   | |   \___ \ |  <    #
+prompt #  | | \ \  _| |_  ____) || . \   #
+prompt #  |_|  \_\|_____||_____/ |_|\_\  #
+prompt #                                 #
+prompt #            jtsoya539            #
+prompt ###################################
+
+prompt
+prompt ===================================
+prompt Installation started
+prompt ===================================
+prompt
+
+prompt
+prompt Installing dependencies...
+prompt -----------------------------------
+prompt
 @@dependencies/as_crypto.sql
 @@dependencies/as_pdf.pks
 @@dependencies/as_pdf.pkb
@@ -39,3 +65,11 @@ SOFTWARE.
 @@dependencies/fn_gen_inserts.sql
 @@dependencies/create_console_objects.sql
 @@dependencies/om_tapigen_install.sql
+
+prompt
+prompt ===================================
+prompt Installation completed
+prompt ===================================
+prompt
+
+spool off

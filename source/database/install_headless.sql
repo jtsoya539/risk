@@ -32,21 +32,20 @@ DEFINE v_app_name = '&1'
 DEFINE v_password = '&2'
 
 DEFINE v_data_user = '&v_app_name._data'
+DEFINE v_util_user = '&v_app_name._util'
 DEFINE v_code_user = '&v_app_name._code'
 DEFINE v_access_user = '&v_app_name._access'
 
 -- Create users
 @@create_data_user.sql &v_data_user &v_password
-set define on
+@@create_code_user.sql &v_util_user &v_password
 @@create_code_user.sql &v_code_user &v_password
-set define on
 @@create_access_user.sql &v_access_user &v_password
-set define on
 
 -- Install source
+exec execute immediate 'ALTER SESSION SET CURRENT_SCHEMA=&v_util_user'
+@@install_dependencies.sql
 exec execute immediate 'ALTER SESSION SET CURRENT_SCHEMA=&v_code_user'
 @@install.sql
-
-set define off
 
 spool off

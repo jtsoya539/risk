@@ -45,12 +45,6 @@ prompt ===================================
 prompt
 
 prompt
-prompt Installing dependencies...
-prompt -----------------------------------
-prompt
-@@install_dependencies.sql
-
-prompt
 prompt Creating sequences...
 prompt -----------------------------------
 prompt

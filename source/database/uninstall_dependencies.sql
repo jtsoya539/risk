@@ -22,6 +22,32 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+spool uninstall_dependencies.log
+
+set feedback off
+set define off
+
+prompt ###################################
+prompt #   _____   _____   _____  _  __  #
+prompt #  |  __ \ |_   _| / ____|| |/ /  #
+prompt #  | |__) |  | |  | (___  | ' /   #
+prompt #  |  _  /   | |   \___ \ |  <    #
+prompt #  | | \ \  _| |_  ____) || . \   #
+prompt #  |_|  \_\|_____||_____/ |_|\_\  #
+prompt #                                 #
+prompt #            jtsoya539            #
+prompt ###################################
+
+prompt
+prompt ===================================
+prompt Uninstallation started
+prompt ===================================
+prompt
+
+prompt
+prompt Uninstalling dependencies...
+prompt -----------------------------------
+prompt
 drop package as_crypto;
 drop package as_pdf;
 drop package as_xlsx;
@@ -33,3 +59,17 @@ drop package zt_word;
 drop function fn_gen_inserts;
 @@dependencies/drop_console_objects.sql
 @@dependencies/om_tapigen_uninstall.sql
+
+prompt
+prompt Purging recycle bin...
+prompt -----------------------------------
+prompt
+purge recyclebin;
+
+prompt
+prompt ===================================
+prompt Uninstallation completed
+prompt ===================================
+prompt
+
+spool off

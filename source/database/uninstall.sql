@@ -179,12 +179,6 @@ drop sequence s_id_dispositivo;
 drop sequence s_id_error;
 
 prompt
-prompt Uninstalling dependencies...
-prompt -----------------------------------
-prompt
-@@uninstall_dependencies.sql
-
-prompt
 prompt Purging recycle bin...
 prompt -----------------------------------
 prompt
