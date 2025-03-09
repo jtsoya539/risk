@@ -86,12 +86,6 @@ drop sequence s_id_mensaje;
 drop sequence s_id_notificacion;
 
 prompt
-prompt Uninstalling dependencies...
-prompt -----------------------------------
-prompt
-@@uninstall_dependencies.sql
-
-prompt
 prompt Purging recycle bin...
 prompt -----------------------------------
 prompt

@@ -22,4 +22,44 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
+spool uninstall_dependencies.log
+
+set feedback off
+set define off
+
+prompt ###################################
+prompt #   _____   _____   _____  _  __  #
+prompt #  |  __ \ |_   _| / ____|| |/ /  #
+prompt #  | |__) |  | |  | (___  | ' /   #
+prompt #  |  _  /   | |   \___ \ |  <    #
+prompt #  | | \ \  _| |_  ____) || . \   #
+prompt #  |_|  \_\|_____||_____/ |_|\_\  #
+prompt #                                 #
+prompt #            jtsoya539            #
+prompt ###################################
+
+prompt
+prompt ===================================
+prompt Uninstallation started
+prompt ===================================
+prompt
+
+prompt
+prompt Uninstalling dependencies...
+prompt -----------------------------------
+prompt
 --drop package example;
+
+prompt
+prompt Purging recycle bin...
+prompt -----------------------------------
+prompt
+purge recyclebin;
+
+prompt
+prompt ===================================
+prompt Uninstallation completed
+prompt ===================================
+prompt
+
+spool off

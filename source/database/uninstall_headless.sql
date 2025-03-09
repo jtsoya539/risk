@@ -22,38 +22,22 @@ SOFTWARE.
 -------------------------------------------------------------------------------
 */
 
-spool install_dependencies.log
+spool uninstall_headless.log
 
-set feedback off
-set define off
+set define on
 
-prompt ###################################
-prompt #   _____   _____   _____  _  __  #
-prompt #  |  __ \ |_   _| / ____|| |/ /  #
-prompt #  | |__) |  | |  | (___  | ' /   #
-prompt #  |  _  /   | |   \___ \ |  <    #
-prompt #  | | \ \  _| |_  ____) || . \   #
-prompt #  |_|  \_\|_____||_____/ |_|\_\  #
-prompt #                                 #
-prompt #            jtsoya539            #
-prompt ###################################
+--accept v_app_name char default 'risk' prompt 'Enter app name (default ''risk''):'
+DEFINE v_app_name = '&1'
 
-prompt
-prompt ===================================
-prompt Installation started
-prompt ===================================
-prompt
+DEFINE v_data_user = '&v_app_name._data'
+DEFINE v_util_user = '&v_app_name._util'
+DEFINE v_code_user = '&v_app_name.'
+DEFINE v_access_user = '&v_app_name._access'
 
-prompt
-prompt Installing dependencies...
-prompt -----------------------------------
-prompt
---@@dependencies/example.sql
-
-prompt
-prompt ===================================
-prompt Installation completed
-prompt ===================================
-prompt
+-- Drop users
+DROP USER &v_data_user CASCADE;
+DROP USER &v_util_user CASCADE;
+DROP USER &v_code_user CASCADE;
+DROP USER &v_access_user CASCADE;
 
 spool off

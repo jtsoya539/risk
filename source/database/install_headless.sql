@@ -33,7 +33,7 @@ DEFINE v_password = '&2'
 
 DEFINE v_data_user = '&v_app_name._data'
 DEFINE v_util_user = '&v_app_name._util'
-DEFINE v_code_user = '&v_app_name._code'
+DEFINE v_code_user = '&v_app_name.'
 DEFINE v_access_user = '&v_app_name._access'
 
 -- Create users
@@ -42,10 +42,40 @@ DEFINE v_access_user = '&v_app_name._access'
 @@create_code_user.sql &v_code_user &v_password
 @@create_access_user.sql &v_access_user &v_password
 
--- Install source
+-- Install dependencies
 exec execute immediate 'ALTER SESSION SET CURRENT_SCHEMA=&v_util_user'
 @@install_dependencies.sql
+set define on
+-- Grant object privileges to code user
+GRANT EXECUTE ON &v_util_user..as_crypto TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..as_pdf TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..as_xlsx TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..as_zip TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..csv TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..oos_util_totp TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..zt_qr TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..zt_word TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..fn_gen_inserts TO &v_code_user;
+CREATE OR REPLACE SYNONYM &v_code_user..as_crypto FOR &v_util_user..as_crypto;
+CREATE OR REPLACE SYNONYM &v_code_user..as_pdf FOR &v_util_user..as_pdf;
+CREATE OR REPLACE SYNONYM &v_code_user..as_xlsx FOR &v_util_user..as_xlsx;
+CREATE OR REPLACE SYNONYM &v_code_user..as_zip FOR &v_util_user..as_zip;
+CREATE OR REPLACE SYNONYM &v_code_user..csv FOR &v_util_user..csv;
+CREATE OR REPLACE SYNONYM &v_code_user..oos_util_totp FOR &v_util_user..oos_util_totp;
+CREATE OR REPLACE SYNONYM &v_code_user..zt_qr FOR &v_util_user..zt_qr;
+CREATE OR REPLACE SYNONYM &v_code_user..zt_word FOR &v_util_user..zt_word;
+CREATE OR REPLACE SYNONYM &v_code_user..fn_gen_inserts FOR &v_util_user..fn_gen_inserts;
+--
+
+-- Install source
 exec execute immediate 'ALTER SESSION SET CURRENT_SCHEMA=&v_code_user'
 @@install.sql
+set define on
+-- Grant object privileges to access user
+GRANT EXECUTE ON &v_code_user..k_servicio TO &v_access_user;
+GRANT EXECUTE ON &v_code_user..k_reporte TO &v_access_user;
+CREATE OR REPLACE SYNONYM &v_access_user..k_servicio FOR &v_code_user..k_servicio;
+CREATE OR REPLACE SYNONYM &v_access_user..k_reporte FOR &v_code_user..k_reporte;
+--
 
 spool off
