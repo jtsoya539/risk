@@ -152,21 +152,26 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                i_version    IN VARCHAR2 DEFAULT NULL)
     RETURN y_respuesta IS
     PRAGMA AUTONOMOUS_TRANSACTION;
-    l_rsp            y_respuesta;
-    l_prms           y_parametros;
-    l_ctx            y_parametros;
-    l_archivo        y_archivo;
-    l_nombre_reporte t_operaciones.nombre%TYPE;
-    l_tipo_reporte   t_reportes.tipo%TYPE;
-    l_sentencia      VARCHAR2(4000);
+    l_rsp                 y_respuesta;
+    l_prms                y_parametros;
+    l_ctx                 y_parametros;
+    l_archivo             y_archivo;
+    l_nombre_reporte      t_operaciones.nombre%TYPE;
+    l_tipo_implementacion t_operaciones.tipo_implementacion%TYPE;
+    l_tipo_reporte        t_reportes.tipo%TYPE;
+    l_consulta_sql        t_servicios.consulta_sql%TYPE;
+    l_sentencia           CLOB;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del reporte';
     BEGIN
-      SELECT upper(o.nombre), r.tipo
-        INTO l_nombre_reporte, l_tipo_reporte
+      SELECT upper(o.nombre), o.tipo_implementacion, r.tipo, r.consulta_sql
+        INTO l_nombre_reporte,
+             l_tipo_implementacion,
+             l_tipo_reporte,
+             l_consulta_sql
         FROM t_reportes r, t_operaciones o
        WHERE o.id_operacion = r.id_reporte
          AND o.activo = 'S'
@@ -248,9 +253,23 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      l_sentencia := 'BEGIN :1 := ' ||
-                     k_operacion.f_nombre_programa(i_id_reporte, i_version) ||
-                     '(:2); END;';
+      IF l_tipo_implementacion IN
+         (k_operacion.c_tipo_implementacion_paquete,
+          k_operacion.c_tipo_implementacion_funcion) THEN
+        l_sentencia := 'BEGIN :1 := ' ||
+                       k_operacion.f_nombre_programa(i_id_reporte,
+                                                     i_version) ||
+                       '(:2); END;';
+      ELSIF l_tipo_implementacion =
+            k_operacion.c_tipo_implementacion_bloque THEN
+        l_sentencia := 'DECLARE ' || l_consulta_sql || ' BEGIN :1 := ' ||
+                       k_operacion.f_nombre_programa(i_id_reporte,
+                                                     i_version) ||
+                       '(:2); END;';
+      END IF;
+    
+      -- Registra SQL
+      p_registrar_sql_ejecucion(i_id_reporte, l_sentencia);
     
       l_rsp.lugar := 'Procesando reporte';
       BEGIN

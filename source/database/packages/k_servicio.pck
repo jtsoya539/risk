@@ -97,20 +97,25 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                 i_version     IN VARCHAR2 DEFAULT NULL)
     RETURN y_respuesta IS
     PRAGMA AUTONOMOUS_TRANSACTION;
-    l_rsp             y_respuesta;
-    l_prms            y_parametros;
-    l_ctx             y_parametros;
-    l_nombre_servicio t_operaciones.nombre%TYPE;
-    l_tipo_servicio   t_servicios.tipo%TYPE;
-    l_sentencia       VARCHAR2(4000);
+    l_rsp                 y_respuesta;
+    l_prms                y_parametros;
+    l_ctx                 y_parametros;
+    l_nombre_servicio     t_operaciones.nombre%TYPE;
+    l_tipo_implementacion t_operaciones.tipo_implementacion%TYPE;
+    l_tipo_servicio       t_servicios.tipo%TYPE;
+    l_consulta_sql        t_servicios.consulta_sql%TYPE;
+    l_sentencia           CLOB;
   BEGIN
     -- Inicializa respuesta
     l_rsp := NEW y_respuesta();
   
     l_rsp.lugar := 'Buscando datos del servicio';
     BEGIN
-      SELECT upper(o.nombre), s.tipo
-        INTO l_nombre_servicio, l_tipo_servicio
+      SELECT upper(o.nombre), o.tipo_implementacion, s.tipo, s.consulta_sql
+        INTO l_nombre_servicio,
+             l_tipo_implementacion,
+             l_tipo_servicio,
+             l_consulta_sql
         FROM t_servicios s, t_operaciones o
        WHERE o.id_operacion = s.id_servicio
          AND o.activo = 'S'
@@ -192,9 +197,23 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     
     ELSE
       l_rsp.lugar := 'Construyendo sentencia';
-      l_sentencia := 'BEGIN :1 := ' ||
-                     k_operacion.f_nombre_programa(i_id_servicio, i_version) ||
-                     '(:2); END;';
+      IF l_tipo_implementacion IN
+         (k_operacion.c_tipo_implementacion_paquete,
+          k_operacion.c_tipo_implementacion_funcion) THEN
+        l_sentencia := 'BEGIN :1 := ' ||
+                       k_operacion.f_nombre_programa(i_id_servicio,
+                                                     i_version) ||
+                       '(:2); END;';
+      ELSIF l_tipo_implementacion =
+            k_operacion.c_tipo_implementacion_bloque THEN
+        l_sentencia := 'DECLARE ' || l_consulta_sql || ' BEGIN :1 := ' ||
+                       k_operacion.f_nombre_programa(i_id_servicio,
+                                                     i_version) ||
+                       '(:2); END;';
+      END IF;
+    
+      -- Registra SQL
+      lp_registrar_sql_ejecucion(i_id_servicio, l_sentencia);
     
       l_rsp.lugar := 'Procesando servicio';
       BEGIN

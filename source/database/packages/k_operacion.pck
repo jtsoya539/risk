@@ -40,6 +40,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   -- Tipos de Implementaciones
   c_tipo_implementacion_paquete CONSTANT CHAR(1) := 'K';
   c_tipo_implementacion_funcion CONSTANT CHAR(1) := 'F';
+  c_tipo_implementacion_bloque  CONSTANT CHAR(1) := 'B';
 
   -- Códigos de respuesta
   c_ok                       CONSTANT VARCHAR2(10) := '0';
@@ -782,7 +783,7 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
              upper(o.nombre),
              upper(o.dominio),
              o.version_actual,
-             nvl(o.tipo_implementacion, 'K')
+             nvl(o.tipo_implementacion, c_tipo_implementacion_paquete)
         INTO l_tipo_operacion,
              l_nombre_operacion,
              l_dominio_operacion,
@@ -795,16 +796,23 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
         raise_application_error(-20000, 'Operación inexistente');
     END;
   
-    l_nombre_programa := k_significado.f_referencia_codigo('TIPO_IMPLEMENTACION',
-                                                           l_tipo_implementacion) || '_' ||
-                         k_significado.f_significado_codigo('TIPO_OPERACION',
-                                                            l_tipo_operacion) || '_' ||
-                         l_dominio_operacion || CASE l_tipo_implementacion
-                           WHEN 'K' THEN
-                            '.'
-                           ELSE
-                            '_'
-                         END || l_nombre_operacion;
+    IF l_tipo_implementacion IN
+       (k_operacion.c_tipo_implementacion_paquete,
+        k_operacion.c_tipo_implementacion_funcion) THEN
+      l_nombre_programa := k_significado.f_referencia_codigo('TIPO_IMPLEMENTACION',
+                                                             l_tipo_implementacion) || '_' ||
+                           k_significado.f_significado_codigo('TIPO_OPERACION',
+                                                              l_tipo_operacion) || '_' ||
+                           l_dominio_operacion ||
+                           CASE l_tipo_implementacion
+                             WHEN c_tipo_implementacion_paquete THEN
+                              '.'
+                             ELSE
+                              '_'
+                           END || l_nombre_operacion;
+    ELSIF l_tipo_implementacion = k_operacion.c_tipo_implementacion_bloque THEN
+      l_nombre_programa := l_nombre_operacion;
+    END IF;
   
     IF nvl(i_version, l_version_actual) <> l_version_actual THEN
       l_nombre_programa := l_nombre_programa || '_' ||

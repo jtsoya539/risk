@@ -48,7 +48,7 @@ BEGIN
     END IF;
   
     -- Valida consulta SQL
-    IF :new.consulta_sql IS NOT NULL THEN
+    IF :new.consulta_sql IS NOT NULL AND :new.tipo = 'C' THEN
       BEGIN
         l_cursor := dbms_sql.open_cursor;
         dbms_sql.parse(l_cursor, :new.consulta_sql, dbms_sql.native);
