@@ -59,6 +59,7 @@ drop package zt_word;
 drop function fn_gen_inserts;
 @@dependencies/drop_console_objects.sql
 @@dependencies/om_tapigen_uninstall.sql
+@@dependencies/plex_uninstall.sql
 
 prompt
 prompt Purging recycle bin...

@@ -45,6 +45,7 @@ Dependencia|Descripción
 [fn_gen_inserts](https://github.com/teopost/oracle-scripts)|Genera script para insertar registros en una tabla
 [console](https://github.com/ogobrecht/console)|Herramienta para logging
 [om_tapigen](https://github.com/OraMUC/table-api-generator)|Generador de API's para tablas
+[plex](https://github.com/ogobrecht/plex)|Herramienta para exportación de objetos
 
 ### Configuración de PL/SQL Documentation (plsqldoc)
 

@@ -60,6 +60,7 @@ GRANT EXECUTE ON &v_util_user..console TO &v_code_user;
 GRANT SELECT ON &v_util_user..console_conf TO &v_code_user;
 GRANT SELECT ON &v_util_user..console_logs TO &v_code_user;
 GRANT EXECUTE ON &v_util_user..om_tapigen TO &v_code_user;
+GRANT EXECUTE ON &v_util_user..plex TO &v_code_user;
 CREATE OR REPLACE SYNONYM &v_code_user..as_crypto FOR &v_util_user..as_crypto;
 CREATE OR REPLACE SYNONYM &v_code_user..as_pdf FOR &v_util_user..as_pdf;
 CREATE OR REPLACE SYNONYM &v_code_user..as_xlsx FOR &v_util_user..as_xlsx;
@@ -73,6 +74,7 @@ CREATE OR REPLACE SYNONYM &v_code_user..console FOR &v_util_user..console;
 CREATE OR REPLACE SYNONYM &v_code_user..console_conf FOR &v_util_user..console_conf;
 CREATE OR REPLACE SYNONYM &v_code_user..console_logs FOR &v_util_user..console_logs;
 CREATE OR REPLACE SYNONYM &v_code_user..om_tapigen FOR &v_util_user..om_tapigen;
+CREATE OR REPLACE SYNONYM &v_code_user..plex FOR &v_util_user..plex;
 --
 
 -- Install source
