@@ -1,11 +1,14 @@
-create table T_OPERACION_LOGS
+锘縞reate table T_OPERACION_LOGS
 (
-  id_operacion_log NUMBER not null,
-  id_operacion     NUMBER,
-  contexto         CLOB,
-  version          VARCHAR2(100),
-  parametros       CLOB,
-  respuesta        CLOB
+  id_operacion_log  NUMBER not null,
+  id_operacion      NUMBER,
+  contexto          CLOB,
+  version           VARCHAR2(100),
+  parametros        CLOB,
+  respuesta         CLOB,
+  fecha_hora_inicio TIMESTAMP(3),
+  fecha_hora_fin    TIMESTAMP(3),
+  duracion          INTERVAL DAY(3) TO SECOND(3)
 )
 ;
 comment on table T_OPERACION_LOGS
@@ -13,15 +16,21 @@ comment on table T_OPERACION_LOGS
 comment on column T_OPERACION_LOGS.id_operacion_log
   is 'Identificador del log';
 comment on column T_OPERACION_LOGS.id_operacion
-  is 'Identificador de la operaci髇';
+  is 'Identificador de la operaci贸n';
 comment on column T_OPERACION_LOGS.contexto
-  is 'Contexto de la operaci髇';
+  is 'Contexto de la operaci贸n';
 comment on column T_OPERACION_LOGS.version
-  is 'Versi髇 de la operaci髇';
+  is 'Versi贸n de la operaci贸n';
 comment on column T_OPERACION_LOGS.parametros
-  is 'Par醡etros recibidos';
+  is 'Par谩metros recibidos';
 comment on column T_OPERACION_LOGS.respuesta
   is 'Respuesta enviada';
+comment on column T_OPERACION_LOGS.fecha_hora_inicio
+  is 'Fecha/hora de inicio de la ejecuci贸n de la operaci贸n';
+comment on column T_OPERACION_LOGS.fecha_hora_fin
+  is 'Fecha/hora de fin de la ejecuci贸n de la operaci贸n';
+comment on column T_OPERACION_LOGS.duracion
+  is 'Duraci贸n de la ejecuci贸n de la operaci贸n';
 alter table T_OPERACION_LOGS
   add constraint PK_OPERACION_LOGS primary key (ID_OPERACION_LOG);
 alter table T_OPERACION_LOGS

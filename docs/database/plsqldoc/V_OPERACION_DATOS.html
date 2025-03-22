@@ -6,7 +6,7 @@
  <META name="object" content="VIEW">
  <META name="name" content="V_OPERACION_DATOS">
  <META name="description" content="Logs de Operaciones">
- <META name="columns" content="ID_OPERACION_LOG ID_OPERACION NOMBRE_OPERACION VERSION CONTEXTO CTX_DIRECCION_IP CTX_CLAVE_APLICACION CTX_ACCESS_TOKEN CTX_USUARIO CTX_TOKEN_DISPOSITIVO CTX_ID_EJECUCION PARAMETROS PRMS RESPUESTA RSP_CODIGO RSP_MENSAJE RSP_MENSAJE_BD RSP_LUGAR RSP_DATOS">
+ <META name="columns" content="ID_OPERACION_LOG ID_OPERACION NOMBRE_OPERACION VERSION FECHA_HORA_INICIO FECHA_HORA_FIN DURACION CONTEXTO CTX_DIRECCION_IP CTX_CLAVE_APLICACION CTX_ACCESS_TOKEN CTX_USUARIO CTX_TOKEN_DISPOSITIVO CTX_ID_EJECUCION PARAMETROS PRMS RESPUESTA RSP_CODIGO RSP_MENSAJE RSP_MENSAJE_BD RSP_LUGAR RSP_DATOS">
 </HEAD>
 <BODY>
 <TABLE WIDTH="100%"><TR>
@@ -111,6 +111,57 @@ Y
 </TD>
 <TD VALIGN="TOP" CLASS="DESC_TEXT">
 Versi&#243;n de la operaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+FECHA_HORA_INICIO
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+TIMESTAMP(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Fecha/hora de inicio de la ejecuci&#243;n de la operaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+FECHA_HORA_FIN
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+TIMESTAMP(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Fecha/hora de fin de la ejecuci&#243;n de la operaci&#243;n
+</TD>
+</TR>
+<TR>
+<TD VALIGN="TOP" CLASS="LIST_ITEM">
+DURACION
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+INTERVAL DAY(3) TO SECOND(3)
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Y
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+&nbsp;
+</TD>
+<TD VALIGN="TOP" CLASS="DESC_TEXT">
+Duraci&#243;n de la ejecuci&#243;n de la operaci&#243;n
 </TD>
 </TR>
 <TR>
@@ -379,6 +430,9 @@ SELECT l.id_operacion_log,
        l.id_operacion,
        s.nombre nombre_operacion,
        l.version,
+       l.fecha_hora_inicio,
+       l.fecha_hora_fin,
+       l.duracion,
        -- contexto
        l.contexto,
        json_value(l.contexto, '$.direccion_ip') ctx_direccion_ip,
@@ -405,6 +459,9 @@ comment on column V_OPERACION_DATOS.ID_OPERACION_LOG is 'Identificador del log';
 comment on column V_OPERACION_DATOS.ID_OPERACION is 'Identificador de la operaci&#243;n';
 comment on column V_OPERACION_DATOS.NOMBRE_OPERACION is 'Nombre de la operaci&#243;n';
 comment on column V_OPERACION_DATOS.VERSION is 'Versi&#243;n de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.FECHA_HORA_INICIO is 'Fecha/hora de inicio de la ejecuci&#243;n de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.FECHA_HORA_FIN is 'Fecha/hora de fin de la ejecuci&#243;n de la operaci&#243;n';
+comment on column V_OPERACION_DATOS.DURACION is 'Duraci&#243;n de la ejecuci&#243;n de la operaci&#243;n';
 comment on column V_OPERACION_DATOS.CONTEXTO is 'Contexto de la operaci&#243;n';
 comment on column V_OPERACION_DATOS.CTX_DIRECCION_IP is 'Contexto de la operaci&#243;n: direccion_ip';
 comment on column V_OPERACION_DATOS.CTX_CLAVE_APLICACION is 'Contexto de la operaci&#243;n: clave_aplicacion';

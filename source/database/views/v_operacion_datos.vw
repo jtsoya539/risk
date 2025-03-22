@@ -1,8 +1,11 @@
-CREATE OR REPLACE FORCE VIEW V_OPERACION_DATOS AS
+锘緾REATE OR REPLACE FORCE VIEW V_OPERACION_DATOS AS
 SELECT l.id_operacion_log,
        l.id_operacion,
        s.nombre nombre_operacion,
        l.version,
+       l.fecha_hora_inicio,
+       l.fecha_hora_fin,
+       l.duracion,
        -- contexto
        l.contexto,
        json_value(l.contexto, '$.direccion_ip') ctx_direccion_ip,
@@ -26,18 +29,21 @@ SELECT l.id_operacion_log,
 ;
 comment on table V_OPERACION_DATOS is 'Logs de Operaciones';
 comment on column V_OPERACION_DATOS.ID_OPERACION_LOG is 'Identificador del log';
-comment on column V_OPERACION_DATOS.ID_OPERACION is 'Identificador de la operaci髇';
-comment on column V_OPERACION_DATOS.NOMBRE_OPERACION is 'Nombre de la operaci髇';
-comment on column V_OPERACION_DATOS.VERSION is 'Versi髇 de la operaci髇';
-comment on column V_OPERACION_DATOS.CONTEXTO is 'Contexto de la operaci髇';
-comment on column V_OPERACION_DATOS.CTX_DIRECCION_IP is 'Contexto de la operaci髇: direccion_ip';
-comment on column V_OPERACION_DATOS.CTX_CLAVE_APLICACION is 'Contexto de la operaci髇: clave_aplicacion';
-comment on column V_OPERACION_DATOS.CTX_ACCESS_TOKEN is 'Contexto de la operaci髇: access_token';
-comment on column V_OPERACION_DATOS.CTX_USUARIO is 'Contexto de la operaci髇: usuario';
-comment on column V_OPERACION_DATOS.CTX_TOKEN_DISPOSITIVO is 'Contexto de la operaci髇: token_dispositivo';
-comment on column V_OPERACION_DATOS.CTX_ID_EJECUCION is 'Contexto de la operaci髇: id_ejecucion';
-comment on column V_OPERACION_DATOS.PARAMETROS is 'Par醡etros recibidos';
-comment on column V_OPERACION_DATOS.PRMS is 'Par醡etros recibidos: ';
+comment on column V_OPERACION_DATOS.ID_OPERACION is 'Identificador de la operaci贸n';
+comment on column V_OPERACION_DATOS.NOMBRE_OPERACION is 'Nombre de la operaci贸n';
+comment on column V_OPERACION_DATOS.VERSION is 'Versi贸n de la operaci贸n';
+comment on column V_OPERACION_DATOS.FECHA_HORA_INICIO is 'Fecha/hora de inicio de la ejecuci贸n de la operaci贸n';
+comment on column V_OPERACION_DATOS.FECHA_HORA_FIN is 'Fecha/hora de fin de la ejecuci贸n de la operaci贸n';
+comment on column V_OPERACION_DATOS.DURACION is 'Duraci贸n de la ejecuci贸n de la operaci贸n';
+comment on column V_OPERACION_DATOS.CONTEXTO is 'Contexto de la operaci贸n';
+comment on column V_OPERACION_DATOS.CTX_DIRECCION_IP is 'Contexto de la operaci贸n: direccion_ip';
+comment on column V_OPERACION_DATOS.CTX_CLAVE_APLICACION is 'Contexto de la operaci贸n: clave_aplicacion';
+comment on column V_OPERACION_DATOS.CTX_ACCESS_TOKEN is 'Contexto de la operaci贸n: access_token';
+comment on column V_OPERACION_DATOS.CTX_USUARIO is 'Contexto de la operaci贸n: usuario';
+comment on column V_OPERACION_DATOS.CTX_TOKEN_DISPOSITIVO is 'Contexto de la operaci贸n: token_dispositivo';
+comment on column V_OPERACION_DATOS.CTX_ID_EJECUCION is 'Contexto de la operaci贸n: id_ejecucion';
+comment on column V_OPERACION_DATOS.PARAMETROS is 'Par谩metros recibidos';
+comment on column V_OPERACION_DATOS.PRMS is 'Par谩metros recibidos: ';
 comment on column V_OPERACION_DATOS.RESPUESTA is 'Respuesta enviada';
 comment on column V_OPERACION_DATOS.RSP_CODIGO is 'Respuesta enviada: codigo';
 comment on column V_OPERACION_DATOS.RSP_MENSAJE is 'Respuesta enviada: mensaje';

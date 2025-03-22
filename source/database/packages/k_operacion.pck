@@ -52,6 +52,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
 
   -- Otras constantes
   c_id_log                 CONSTANT VARCHAR2(50) := 'ID_LOG';
+  c_fecha_hora_inicio_log  CONSTANT VARCHAR2(50) := 'FECHA_HORA_INICIO_LOG';
   c_id_ope_par_automaticos CONSTANT PLS_INTEGER := 1000;
   c_id_operacion_contexto  CONSTANT PLS_INTEGER := 1001;
 
@@ -178,6 +179,9 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
       k_sistema.p_definir_parametro_number(c_id_log,
                                            s_id_operacion_log.nextval);
     END IF;
+    k_sistema.p_definir_parametro_string(c_fecha_hora_inicio_log,
+                                         to_char(current_timestamp,
+                                                 'YYYY-MM-DD HH24:MI:SS.FF'));
   EXCEPTION
     WHEN OTHERS THEN
       NULL;
@@ -190,7 +194,8 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
                             i_contexto         IN CLOB DEFAULT NULL,
                             i_version          IN VARCHAR2 DEFAULT NULL) IS
     PRAGMA AUTONOMOUS_TRANSACTION;
-    l_nivel_log t_operaciones.nivel_log%TYPE;
+    l_nivel_log         t_operaciones.nivel_log%TYPE;
+    l_fecha_hora_inicio t_operacion_logs.fecha_hora_inicio%TYPE;
   BEGIN
     BEGIN
       SELECT nivel_log
@@ -204,20 +209,29 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
   
     IF (l_nivel_log > 1 AND i_codigo_respuesta = c_ok) OR
        (l_nivel_log > 0 AND i_codigo_respuesta <> c_ok) THEN
+      l_fecha_hora_inicio := nvl(to_timestamp(k_sistema.f_valor_parametro_string(c_fecha_hora_inicio_log),
+                                              'YYYY-MM-DD HH24:MI:SS.FF'),
+                                 current_timestamp);
       INSERT INTO t_operacion_logs
         (id_operacion_log,
          id_operacion,
          contexto,
          version,
          parametros,
-         respuesta)
+         respuesta,
+         fecha_hora_inicio,
+         fecha_hora_fin,
+         duracion)
       VALUES
         (k_sistema.f_valor_parametro_number(c_id_log),
          i_id_operacion,
          i_contexto,
          substr(i_version, 1, 100),
          i_parametros,
-         i_respuesta);
+         i_respuesta,
+         l_fecha_hora_inicio,
+         current_timestamp,
+         current_timestamp - l_fecha_hora_inicio);
     END IF;
   
     COMMIT;
