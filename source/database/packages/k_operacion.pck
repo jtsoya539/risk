@@ -62,7 +62,7 @@ CREATE OR REPLACE PACKAGE k_operacion IS
   ex_error_general            EXCEPTION;
   PRAGMA EXCEPTION_INIT(ex_servicio_no_implementado, -6550);
 
-  PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER);
+  PROCEDURE p_inicializar_log(i_id_operacion IN NUMBER);
 
   PROCEDURE p_registrar_log(i_id_operacion     IN NUMBER,
                             i_parametros       IN CLOB,
@@ -162,7 +162,7 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY k_operacion IS
 
-  PROCEDURE p_reservar_id_log(i_id_operacion IN NUMBER) IS
+  PROCEDURE p_inicializar_log(i_id_operacion IN NUMBER) IS
     l_nivel_log t_operaciones.nivel_log%TYPE;
   BEGIN
     BEGIN
@@ -178,10 +178,10 @@ CREATE OR REPLACE PACKAGE BODY k_operacion IS
     IF l_nivel_log > 0 THEN
       k_sistema.p_definir_parametro_number(c_id_log,
                                            s_id_operacion_log.nextval);
+      k_sistema.p_definir_parametro_string(c_fecha_hora_inicio_log,
+                                           to_char(current_timestamp,
+                                                   'YYYY-MM-DD HH24:MI:SS.FF'));
     END IF;
-    k_sistema.p_definir_parametro_string(c_fecha_hora_inicio_log,
-                                         to_char(current_timestamp,
-                                                 'YYYY-MM-DD HH24:MI:SS.FF'));
   EXCEPTION
     WHEN OTHERS THEN
       NULL;

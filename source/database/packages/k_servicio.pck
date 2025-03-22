@@ -559,8 +559,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
     k_sistema.p_inicializar_parametros;
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_servicio);
-    -- Reserva identificador para log
-    k_operacion.p_reservar_id_log(i_id_servicio);
+    -- Inicializa datos para log
+    k_operacion.p_inicializar_log(i_id_servicio);
     -- Procesa servicio
     l_rsp := lf_procesar_servicio(i_id_servicio,
                                   i_parametros,
@@ -593,8 +593,8 @@ CREATE OR REPLACE PACKAGE BODY k_servicio IS
                                                 i_dominio);
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_servicio);
-    -- Reserva identificador para log
-    k_operacion.p_reservar_id_log(l_id_servicio);
+    -- Inicializa datos para log
+    k_operacion.p_inicializar_log(l_id_servicio);
     -- Procesa servicio
     l_rsp := lf_procesar_servicio(l_id_servicio,
                                   i_parametros,

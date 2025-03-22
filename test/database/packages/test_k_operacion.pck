@@ -3,13 +3,13 @@ CREATE OR REPLACE PACKAGE test_k_operacion IS
   --%suite(Tests unitarios del paquete k_operacion)
   --%tags(package)
 
-  --%context(Tests unitarios de p_reservar_id_log)
-  --%name(p_reservar_id_log)
+  --%context(Tests unitarios de p_inicializar_log)
+  --%name(p_inicializar_log)
 
   --%test()
-  PROCEDURE p_reservar_id_log_activo;
+  PROCEDURE p_inicializar_log_activo;
   --%test()
-  PROCEDURE p_reservar_id_log_inactivo;
+  PROCEDURE p_inicializar_log_inactivo;
   --%endcontext
 
   --%context(Tests unitarios de f_id_operacion)
@@ -66,7 +66,7 @@ END;
 /
 CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
 
-  PROCEDURE p_reservar_id_log_activo IS
+  PROCEDURE p_inicializar_log_activo IS
     l_id_operacion t_operaciones.id_operacion%TYPE;
   BEGIN
     -- Arrange
@@ -77,12 +77,12 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
     RETURNING id_operacion INTO l_id_operacion;
     k_sistema.p_inicializar_parametros;
     -- Act
-    k_operacion.p_reservar_id_log(l_id_operacion);
+    k_operacion.p_inicializar_log(l_id_operacion);
     -- Assert
     ut.expect(k_sistema.f_valor_parametro_number(k_operacion.c_id_log)).to_be_not_null();
   END;
 
-  PROCEDURE p_reservar_id_log_inactivo IS
+  PROCEDURE p_inicializar_log_inactivo IS
     l_id_operacion t_operaciones.id_operacion%TYPE;
   BEGIN
     -- Arrange
@@ -93,7 +93,7 @@ CREATE OR REPLACE PACKAGE BODY test_k_operacion IS
     RETURNING id_operacion INTO l_id_operacion;
     k_sistema.p_inicializar_parametros;
     -- Act
-    k_operacion.p_reservar_id_log(l_id_operacion);
+    k_operacion.p_inicializar_log(l_id_operacion);
     -- Assert
     ut.expect(k_sistema.f_valor_parametro_number(k_operacion.c_id_log)).to_be_null();
   END;

@@ -711,8 +711,8 @@ SELECT n.prioridad,
                                             dbms_utility.format_error_stack);
           END;
         
-          -- Reserva identificador para log
-          k_operacion.p_reservar_id_log(i_id_monitoreo);
+          -- Inicializa datos para log
+          k_operacion.p_inicializar_log(i_id_monitoreo);
         
           -- Registra log con datos de entrada y salida
           k_operacion.p_registrar_log(i_id_monitoreo,

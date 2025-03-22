@@ -841,8 +841,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
     k_sistema.p_inicializar_parametros;
     -- Registra ejecución
     lp_registrar_ejecucion(i_id_reporte);
-    -- Reserva identificador para log
-    k_operacion.p_reservar_id_log(i_id_reporte);
+    -- Inicializa datos para log
+    k_operacion.p_inicializar_log(i_id_reporte);
     -- Procesa reporte
     l_rsp := lf_procesar_reporte(i_id_reporte,
                                  i_parametros,
@@ -875,8 +875,8 @@ CREATE OR REPLACE PACKAGE BODY k_reporte IS
                                                i_dominio);
     -- Registra ejecución
     lp_registrar_ejecucion(l_id_reporte);
-    -- Reserva identificador para log
-    k_operacion.p_reservar_id_log(l_id_reporte);
+    -- Inicializa datos para log
+    k_operacion.p_inicializar_log(l_id_reporte);
     -- Procesa reporte
     l_rsp := lf_procesar_reporte(l_id_reporte,
                                  i_parametros,
