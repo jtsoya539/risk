@@ -109,7 +109,7 @@ prompt Creating views...
 prompt -----------------------------------
 prompt
 @@views/v_monitoreo_datos.vw
-@@views/v_operacion_datos.vw
+@@views/v_operacion_logs.vw
 
 prompt
 prompt Creating types...

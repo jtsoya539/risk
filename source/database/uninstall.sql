@@ -116,7 +116,7 @@ prompt Droping views...
 prompt -----------------------------------
 prompt
 drop view v_monitoreo_datos;
-drop view v_operacion_datos;
+drop view v_operacion_logs;
 
 prompt
 prompt Droping tables...
