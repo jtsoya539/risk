@@ -1,21 +1,21 @@
-create table T_PARAMETROS
+﻿create table T_PARAMETROS
 (
   id_parametro VARCHAR2(50) not null,
   descripcion  VARCHAR2(500),
   valor        VARCHAR2(4000),
-  id_dominio   VARCHAR2(5)
+  id_dominio   VARCHAR2(30)
 )
 ;
 comment on table T_PARAMETROS
   is 'Parametros';
 comment on column T_PARAMETROS.id_parametro
-  is 'Identificador del par�metro';
+  is 'Identificador del parámetro';
 comment on column T_PARAMETROS.descripcion
-  is 'Descripcion del par�metro';
+  is 'Descripcion del parámetro';
 comment on column T_PARAMETROS.valor
-  is 'Valor del par�metro';
+  is 'Valor del parámetro';
 comment on column T_PARAMETROS.id_dominio
-  is 'Dominio del par�metro';
+  is 'Dominio del parámetro';
 alter table T_PARAMETROS
   add constraint PK_PARAMETROS primary key (ID_PARAMETRO);
 alter table T_PARAMETROS

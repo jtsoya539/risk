@@ -1,9 +1,9 @@
-create table T_ERRORES
+﻿create table T_ERRORES
 (
   id_error   NUMBER not null,
   clave      VARCHAR2(100) not null,
   mensaje    VARCHAR2(4000),
-  id_dominio VARCHAR2(5),
+  id_dominio VARCHAR2(30),
   id_idioma  NUMBER(3),
   id_pais    NUMBER(3)
 )
@@ -21,7 +21,7 @@ comment on column T_ERRORES.id_dominio
 comment on column T_ERRORES.id_idioma
   is 'Idioma del error o texto';
 comment on column T_ERRORES.id_pais
-  is 'Pa�s del error o texto';
+  is 'País del error o texto';
 alter table T_ERRORES
   add constraint PK_ERRORES primary key (ID_ERROR);
 alter table T_ERRORES

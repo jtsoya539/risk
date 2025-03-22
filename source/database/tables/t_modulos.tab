@@ -1,6 +1,6 @@
-create table T_MODULOS
+Ôªøcreate table T_MODULOS
 (
-  id_modulo      VARCHAR2(5) not null,
+  id_modulo      VARCHAR2(30) not null,
   nombre         VARCHAR2(100) not null,
   detalle        VARCHAR2(2000),
   activo         VARCHAR2(1) default 'N' not null,
@@ -9,19 +9,19 @@ create table T_MODULOS
 )
 ;
 comment on table T_MODULOS
-  is 'MÛdulos';
+  is 'M√≥dulos';
 comment on column T_MODULOS.id_modulo
-  is 'Identificador del mÛdulo';
+  is 'Identificador del m√≥dulo';
 comment on column T_MODULOS.nombre
-  is 'Nombre del mÛdulo';
+  is 'Nombre del m√≥dulo';
 comment on column T_MODULOS.detalle
-  is 'Detalles adicionales del mÛdulo';
+  is 'Detalles adicionales del m√≥dulo';
 comment on column T_MODULOS.activo
-  is 'El mÛdulo est· activo? (S/N)';
+  is 'El m√≥dulo est√° activo? (S/N)';
 comment on column T_MODULOS.fecha_actual
-  is 'Fecha actual del mÛdulo';
+  is 'Fecha actual del m√≥dulo';
 comment on column T_MODULOS.version_actual
-  is 'Version actual del mÛdulo';
+  is 'Version actual del m√≥dulo';
 alter table T_MODULOS
   add constraint PK_MODULOS primary key (ID_MODULO);
 alter table T_MODULOS
