@@ -28,12 +28,24 @@ set serveroutput on size unlimited
 accept v_generate_tapi char default 'N' prompt 'Generate TAPI? (Y/N)'
 
 DECLARE
+  l_audit_column_mappings VARCHAR2(4000);
+  l_audit_user_expression VARCHAR2(4000);
+
   CURSOR cr_tablas IS
     SELECT lower(table_name) AS tabla
       FROM user_tables
      WHERE lower(table_name) LIKE 't\_%' ESCAPE '\';
 BEGIN
   IF upper('&v_generate_tapi') = 'Y' THEN
+    l_audit_column_mappings := 'created=' ||
+                               k_auditoria.g_nombre_campo_created ||
+                               ', created_by=' ||
+                               k_auditoria.g_nombre_campo_created_by ||
+                               ', updated=' ||
+                               k_auditoria.g_nombre_campo_updated ||
+                               ', updated_by=' ||
+                               k_auditoria.g_nombre_campo_updated_by;
+    l_audit_user_expression := 'substr(coalesce(k_sistema.f_usuario, user), 1, 300)';
     FOR t IN cr_tablas LOOP
       dbms_output.put_line('Generating TAPI for table ' || upper(t.tabla) ||
                            '...');
@@ -46,8 +58,8 @@ BEGIN
                                p_double_quote_names       => FALSE,
                                p_enable_dml_view          => TRUE,
                                p_enable_one_to_one_view   => TRUE,
-                               p_audit_column_mappings    => 'created=FECHA_INSERCION, created_by=USUARIO_INSERCION, updated=FECHA_MODIFICACION, updated_by=USUARIO_MODIFICACION',
-                               p_audit_user_expression    => 'substr(coalesce(k_sistema.f_usuario, user), 1, 300)');
+                               p_audit_column_mappings    => l_audit_column_mappings,
+                               p_audit_user_expression    => l_audit_user_expression);
       EXCEPTION
         WHEN OTHERS THEN
           dbms_output.put_line(SQLERRM);

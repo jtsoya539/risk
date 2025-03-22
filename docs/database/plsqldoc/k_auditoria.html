@@ -57,6 +57,91 @@ Elimina trigger de auditoria para una tabla
 </TD></TR>
 </TABLE>
 <BR>
+<A NAME="Variables"></A>
+<TABLE CLASS="SUB_TABLE"><TR><TD CLASS="SUB_TITLE">
+Variables
+</TD></TR></TABLE>
+<TABLE CLASS="SUB_TABLE">
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#G_NOMBRE_CAMPO_CREATED_BY">g_nombre_campo_created_by</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH="95%">
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#G_NOMBRE_CAMPO_CREATED">g_nombre_campo_created</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH="95%">
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#G_NOMBRE_CAMPO_UPDATED_BY">g_nombre_campo_updated_by</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH="95%">
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#G_NOMBRE_CAMPO_UPDATED">g_nombre_campo_updated</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH="95%">
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#G_PREFIJO_TABLA">g_prefijo_tabla</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH="95%">
+
+</TD></TR>
+<TR><TD VALIGN="TOP" CLASS="TYPE_ITEM">
+<A HREF="#G_PREFIJO_TRIGGER_AUDITORIA">g_prefijo_trigger_auditoria</A>&nbsp;&nbsp;
+</TD><TD CLASS="DESC_TEXT" WIDTH="95%">
+
+</TD></TR>
+</TABLE>
+<BR>
+<HR>
+<A NAME="G_NOMBRE_CAMPO_CREATED_BY"></A>
+<P CLASS="TYPE_TITLE">
+g_nombre_campo_created_by
+</P>
+<PRE CLASS="DECL_TEXT">
+g_nombre_campo_created_by VARCHAR2(30) := 'USUARIO_INSERCION';
+</PRE>
+<HR>
+<A NAME="G_NOMBRE_CAMPO_CREATED"></A>
+<P CLASS="TYPE_TITLE">
+g_nombre_campo_created
+</P>
+<PRE CLASS="DECL_TEXT">
+g_nombre_campo_created    VARCHAR2(30) := 'FECHA_INSERCION';
+</PRE>
+<HR>
+<A NAME="G_NOMBRE_CAMPO_UPDATED_BY"></A>
+<P CLASS="TYPE_TITLE">
+g_nombre_campo_updated_by
+</P>
+<PRE CLASS="DECL_TEXT">
+g_nombre_campo_updated_by VARCHAR2(30) := 'USUARIO_MODIFICACION';
+</PRE>
+<HR>
+<A NAME="G_NOMBRE_CAMPO_UPDATED"></A>
+<P CLASS="TYPE_TITLE">
+g_nombre_campo_updated
+</P>
+<PRE CLASS="DECL_TEXT">
+g_nombre_campo_updated    VARCHAR2(30) := 'FECHA_MODIFICACION';
+</PRE>
+<HR>
+<A NAME="G_PREFIJO_TABLA"></A>
+<P CLASS="TYPE_TITLE">
+g_prefijo_tabla
+</P>
+<PRE CLASS="DECL_TEXT">
+g_prefijo_tabla             VARCHAR2(30) := 't_';
+</PRE>
+<HR>
+<A NAME="G_PREFIJO_TRIGGER_AUDITORIA"></A>
+<P CLASS="TYPE_TITLE">
+g_prefijo_trigger_auditoria
+</P>
+<PRE CLASS="DECL_TEXT">
+g_prefijo_trigger_auditoria VARCHAR2(30) := 'ga_';
+</PRE>
 <HR>
 <A NAME="P_GENERAR_CAMPOS_AUDITORIA"></A>
 <P CLASS="TYPE_TITLE">

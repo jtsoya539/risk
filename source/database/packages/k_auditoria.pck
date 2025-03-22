@@ -30,6 +30,16 @@ CREATE OR REPLACE PACKAGE k_auditoria IS
   -------------------------------------------------------------------------------
   */
 
+  -- Nombres de campos de auditoria
+  g_nombre_campo_created_by VARCHAR2(30) := 'USUARIO_INSERCION';
+  g_nombre_campo_created    VARCHAR2(30) := 'FECHA_INSERCION';
+  g_nombre_campo_updated_by VARCHAR2(30) := 'USUARIO_MODIFICACION';
+  g_nombre_campo_updated    VARCHAR2(30) := 'FECHA_MODIFICACION';
+
+  -- Prefijos
+  g_prefijo_tabla             VARCHAR2(30) := 't_';
+  g_prefijo_trigger_auditoria VARCHAR2(30) := 'ga_';
+
   /**
   Genera campos de auditoria para una tabla
   
@@ -81,10 +91,10 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
     -- Genera campos
     l_sentencia := 'alter table ' || i_tabla || ' add
 (
-  usuario_insercion    VARCHAR2(300) DEFAULT SUBSTR(USER, 1, 300),
-  fecha_insercion      DATE DEFAULT SYSDATE,
-  usuario_modificacion VARCHAR2(300) DEFAULT SUBSTR(USER, 1, 300),
-  fecha_modificacion   DATE DEFAULT SYSDATE
+  ' || g_nombre_campo_created_by || ' VARCHAR2(300) DEFAULT SUBSTR(USER, 1, 300),
+  ' || g_nombre_campo_created || ' TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  ' || g_nombre_campo_updated_by || ' VARCHAR2(300) DEFAULT SUBSTR(USER, 1, 300),
+  ' || g_nombre_campo_updated || ' TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )';
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
@@ -93,32 +103,36 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
     END IF;
   
     -- Genera comentarios
-    l_sentencia := 'comment on column ' || i_tabla ||
-                   '.usuario_insercion is ''Usuario que realizó la inserción del registro''';
+    l_sentencia := 'comment on column ' || i_tabla || '.' ||
+                   g_nombre_campo_created_by ||
+                   ' is ''Usuario que realizó la inserción del registro''';
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
       dbms_output.put_line(l_sentencia);
     END IF;
   
-    l_sentencia := 'comment on column ' || i_tabla ||
-                   '.fecha_insercion is ''Fecha en que se realizó la inserción del registro''';
+    l_sentencia := 'comment on column ' || i_tabla || '.' ||
+                   g_nombre_campo_created ||
+                   ' is ''Fecha en que se realizó la inserción del registro''';
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
       dbms_output.put_line(l_sentencia);
     END IF;
   
-    l_sentencia := 'comment on column ' || i_tabla ||
-                   '.usuario_modificacion is ''Usuario que realizó la última modificación en el registro''';
+    l_sentencia := 'comment on column ' || i_tabla || '.' ||
+                   g_nombre_campo_updated_by ||
+                   ' is ''Usuario que realizó la última modificación en el registro''';
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
       dbms_output.put_line(l_sentencia);
     END IF;
   
-    l_sentencia := 'comment on column ' || i_tabla ||
-                   '.fecha_modificacion is ''Fecha en que se realizó la última modificación en el registro''';
+    l_sentencia := 'comment on column ' || i_tabla || '.' ||
+                   g_nombre_campo_updated ||
+                   ' is ''Fecha en que se realizó la última modificación en el registro''';
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
@@ -132,7 +146,9 @@ CREATE OR REPLACE PACKAGE BODY k_auditoria IS
     l_sentencia VARCHAR2(4000);
     l_trigger   VARCHAR2(30);
   BEGIN
-    l_trigger := lower(nvl(i_trigger, 'ga_' || substr(i_tabla, 3)));
+    l_trigger := lower(nvl(i_trigger,
+                           g_prefijo_trigger_auditoria ||
+                           substr(i_tabla, length(g_prefijo_tabla) + 1)));
   
     -- Genera trigger
     l_sentencia := 'CREATE OR REPLACE TRIGGER ' || l_trigger || '
@@ -165,17 +181,14 @@ BEGIN
 
   IF inserting THEN
     -- Auditoría para inserción de registros
-    :new.usuario_insercion := substr(coalesce(k_sistema.f_usuario, USER),
-                                     1,
-                                     300);
-    :new.fecha_insercion   := SYSDATE;
+    :new.' || lower(g_nombre_campo_created_by) ||
+                   ' := substr(coalesce(k_sistema.f_usuario, USER), 1, 300);
+    :new.' || lower(g_nombre_campo_created) || ' := CURRENT_TIMESTAMP;
   END IF;
 
   -- Auditoría para modificación de registros
-  :new.usuario_modificacion := substr(coalesce(k_sistema.f_usuario, USER),
-                                      1,
-                                      300);
-  :new.fecha_modificacion   := SYSDATE;
+  :new.' || lower(g_nombre_campo_updated_by) || ' := substr(coalesce(k_sistema.f_usuario, USER), 1, 300);
+  :new.' || lower(g_nombre_campo_updated) || ' := CURRENT_TIMESTAMP;
 END;';
   
     IF i_ejecutar THEN
@@ -190,32 +203,32 @@ END;';
     l_sentencia VARCHAR2(4000);
   BEGIN
     -- Elimina campos
-    l_sentencia := 'alter table ' || i_tabla ||
-                   ' drop column usuario_insercion';
+    l_sentencia := 'alter table ' || i_tabla || ' drop column ' ||
+                   g_nombre_campo_created_by;
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
       dbms_output.put_line(l_sentencia);
     END IF;
   
-    l_sentencia := 'alter table ' || i_tabla ||
-                   ' drop column fecha_insercion';
+    l_sentencia := 'alter table ' || i_tabla || ' drop column ' ||
+                   g_nombre_campo_created;
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
       dbms_output.put_line(l_sentencia);
     END IF;
   
-    l_sentencia := 'alter table ' || i_tabla ||
-                   ' drop column usuario_modificacion';
+    l_sentencia := 'alter table ' || i_tabla || ' drop column ' ||
+                   g_nombre_campo_updated_by;
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
       dbms_output.put_line(l_sentencia);
     END IF;
   
-    l_sentencia := 'alter table ' || i_tabla ||
-                   ' drop column fecha_modificacion';
+    l_sentencia := 'alter table ' || i_tabla || ' drop column ' ||
+                   g_nombre_campo_updated;
     IF i_ejecutar THEN
       EXECUTE IMMEDIATE l_sentencia;
     ELSE
@@ -229,7 +242,9 @@ END;';
     l_sentencia VARCHAR2(4000);
     l_trigger   VARCHAR2(30);
   BEGIN
-    l_trigger := lower(nvl(i_trigger, 'ga_' || substr(i_tabla, 3)));
+    l_trigger := lower(nvl(i_trigger,
+                           g_prefijo_trigger_auditoria ||
+                           substr(i_tabla, length(g_prefijo_tabla) + 1)));
   
     -- Genera trigger
     l_sentencia := 'drop trigger ' || l_trigger;
