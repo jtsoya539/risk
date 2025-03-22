@@ -1,4 +1,4 @@
-CREATE OR REPLACE TYPE y_significado UNDER y_objeto
+﻿CREATE OR REPLACE TYPE y_significado UNDER y_objeto
 (
 /**
 Agrupa datos de Significados.
@@ -33,11 +33,11 @@ SOFTWARE.
 /** Dominio */
   dominio VARCHAR2(50),
 /** Codigo */
-  codigo VARCHAR2(30),
+  codigo VARCHAR2(50),
 /** Significado */
-  significado VARCHAR2(300),
+  significado VARCHAR2(500),
 /** Referencia adicional */
-  referencia VARCHAR2(50),
+  referencia VARCHAR2(500),
 /** El significado esta activo? (S/N) */
   activo VARCHAR2(1),
 
@@ -48,6 +48,7 @@ SOFTWARE.
   OVERRIDING MEMBER FUNCTION to_json RETURN CLOB
 )
 /
+
 CREATE OR REPLACE TYPE BODY y_significado IS
 
   CONSTRUCTOR FUNCTION y_significado RETURN SELF AS RESULT AS
@@ -92,3 +93,4 @@ CREATE OR REPLACE TYPE BODY y_significado IS
 
 END;
 /
+

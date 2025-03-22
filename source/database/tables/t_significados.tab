@@ -1,9 +1,9 @@
-create table T_SIGNIFICADOS
+﻿create table T_SIGNIFICADOS
 (
   dominio     VARCHAR2(50) not null,
-  codigo      VARCHAR2(30) not null,
-  significado VARCHAR2(300),
-  referencia  VARCHAR2(50),
+  codigo      VARCHAR2(50) not null,
+  significado VARCHAR2(500),
+  referencia  VARCHAR2(500),
   activo      VARCHAR2(1) default 'N' not null
 )
 ;
