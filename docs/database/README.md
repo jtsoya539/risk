@@ -20,14 +20,17 @@ compile_schema.sql|Compila objetos inválidos del esquema actual.
 create_access_user.sql|Crea usuario y otorga permisos necesarios para llamar a los servicios del Proyecto RISK. Se debe ejecutar con SYS o SYSTEM.
 create_code_user.sql|Crea usuario y otorga permisos necesarios para instalar los objetos de Base de Datos del Proyecto RISK. Se debe ejecutar con SYS o SYSTEM. (Desarrollo)
 create_code_user_production.sql|Crea usuario y otorga permisos necesarios para instalar los objetos de Base de Datos del Proyecto RISK. Se debe ejecutar con SYS o SYSTEM. (Producción)
+create_data_user.sql|Crea usuario y otorga permisos necesarios para instalar las tablas y datos del Proyecto RISK. Se debe ejecutar con SYS o SYSTEM.
 generate_docs.sql|Genera archivos de documentación de objetos de Base de Datos con la herramienta *plsqldoc*. Se debe ejecutar desde un Command Window de PL/SQL Developer con el plug-in *plsqldoc* instalado (Ver [Configuración de PL/SQL Documentation (plsqldoc)](#configuración-de-plsql-documentation-plsqldoc)).
 install.sql|Instala en el esquema actual los objetos de Base de Datos del Proyecto RISK.
 install_audit.sql|Genera campos y triggers de auditoría para tablas del esquema actual.
 install_dependencies.sql|Instala en el esquema actual las dependencias de terceros (Ver [Dependencias](#dependencias)).
+install_headless.sql|Crea usuarios, otorga permisos necesarios e instala los objetos de Base de Datos del Proyecto RISK.
 install_tapi.sql|Genera API's para tablas del esquema actual.
 uninstall.sql|Desinstala del esquema actual los objetos de Base de Datos del Proyecto RISK.
 uninstall_audit.sql|Elimina campos y triggers de auditoría para tablas del esquema actual.
 uninstall_dependencies.sql|Desinstala del esquema actual las dependencias de terceros.
+uninstall_headless.sql|Elimina usuarios creados y sus objetos de Base de Datos.
 uninstall_tapi.sql|Elimina API's para tablas del esquema actual.
 
 ### Dependencias
