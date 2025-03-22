@@ -1,4 +1,4 @@
-Ôªøcreate table T_DOMINIOS
+create table T_DOMINIOS
 (
   id_dominio VARCHAR2(30) not null,
   nombre     VARCHAR2(100) not null,
@@ -16,9 +16,9 @@ comment on column T_DOMINIOS.nombre
 comment on column T_DOMINIOS.detalle
   is 'Detalles adicionales del dominio';
 comment on column T_DOMINIOS.activo
-  is 'El dominio est√° activo? (S/N)';
+  is 'El dominio est· activo? (S/N)';
 comment on column T_DOMINIOS.id_modulo
-  is 'M√≥dulo del dominio';
+  is 'MÛdulo del dominio';
 alter table T_DOMINIOS
   add constraint PK_DOMINIOS primary key (ID_DOMINIO);
 alter table T_DOMINIOS
@@ -27,4 +27,3 @@ alter table T_DOMINIOS
 alter table T_DOMINIOS
   add constraint CK_DOMINIOS_ACTIVO
   check (ACTIVO IN ('S', 'N'));
-
