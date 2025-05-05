@@ -6,12 +6,18 @@ ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Development
 
 USER app
+
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG configuration=Release
 WORKDIR /src
+
+# Instalar certificados raíz
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && update-ca-certificates
+
 COPY ["source/backend/Risk.API/Risk.API.csproj", "Risk.API/"]
 COPY ["source/backend/Risk.Common/Risk.Common.csproj", "Risk.Common/"]
 RUN dotnet restore "Risk.API/Risk.API.csproj"
+
 COPY ./source/backend .
 WORKDIR "/src/Risk.API"
 RUN dotnet build "Risk.API.csproj" -c $configuration -o /app/build
