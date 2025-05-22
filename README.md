@@ -21,7 +21,7 @@ Consiste en una colección de objetos de Base de Datos Oracle (paquetes, types, 
 * Definición de interfaz HTTP con la especificación OpenAPI (Swagger)
 
 # Documentación
-La documentación está disponible en la carpeta [docs](/docs/) del repositorio, o en línea en https://jtsoya539.github.io/risk/. La documentación generada de la API PL/SQL se puede consultar en https://jtsoya539.github.io/risk/database/plsqldoc/index.html.
+La documentación está disponible en la carpeta [docs](/docs/) del repositorio, o en línea en https://riskpy.github.io/risk/. La documentación generada de la API PL/SQL se puede consultar en https://riskpy.github.io/risk/database/plsqldoc/index.html.
 
 # Estructura del Repositorio
 * **[/docs/](/docs/)** Archivos de documentación
@@ -33,10 +33,10 @@ La documentación está disponible en la carpeta [docs](/docs/) del repositorio,
 * Damián Meza ([github.com/DamyGenius](https://github.com/DamyGenius))
 
 # Sugerencias
-Si tenés alguna duda o consulta, o querés reportar un error en el código o en la documentación, creá un nuevo [issue](https://github.com/jtsoya539/risk/issues).
+Si tenés alguna duda o consulta, o querés reportar un error en el código o en la documentación, creá un nuevo [issue](https://github.com/riskpy/risk/issues).
 
 # Contribuciones
-Cualquier contribución es siempre bienvenida. Si querés corregir un error o agregar una nueva característica, creá un [pull request](https://github.com/jtsoya539/risk/pulls).
+Cualquier contribución es siempre bienvenida. Si querés corregir un error o agregar una nueva característica, creá un [pull request](https://github.com/riskpy/risk/pulls).
 
 # Licencia
 El Proyecto RISK está licenciado bajo la licencia MIT. Ver el archivo [LICENSE](/LICENSE) para más detalles.

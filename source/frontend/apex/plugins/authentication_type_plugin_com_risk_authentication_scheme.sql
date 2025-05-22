@@ -187,7 +187,7 @@ unistr('    l_result.display_text := ''Credenciales inv\00E1lidas'';'),
 ,p_version_scn=>39539364642181
 ,p_subscribe_plugin_settings=>true
 ,p_version_identifier=>'v0.1.0'
-,p_about_url=>'https://jtsoya539.github.io/risk/'
+,p_about_url=>'https://riskpy.github.io/risk/'
 );
 end;
 /

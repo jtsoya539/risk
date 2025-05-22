@@ -35,7 +35,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Risk.API.Controllers
 {
-    [SwaggerTag("Servicios del dominio GENERAL", "https://jtsoya539.github.io/risk/")]
+    [SwaggerTag("Servicios del dominio GENERAL", "https://riskpy.github.io/risk/")]
     [Authorize(Roles = "ADMINISTRADOR,USUARIO,USUARIO_NUEVO")]
     [Route("Api/[controller]")]
     [ApiController]

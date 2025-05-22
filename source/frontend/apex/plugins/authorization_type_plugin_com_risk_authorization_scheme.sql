@@ -75,7 +75,7 @@ wwv_flow_imp_shared.create_plugin(
 ,p_version_scn=>39539363226869
 ,p_subscribe_plugin_settings=>true
 ,p_version_identifier=>'v0.1.0'
-,p_about_url=>'https://jtsoya539.github.io/risk/'
+,p_about_url=>'https://riskpy.github.io/risk/'
 );
 end;
 /
